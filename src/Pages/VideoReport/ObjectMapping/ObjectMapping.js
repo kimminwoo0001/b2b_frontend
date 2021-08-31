@@ -96,11 +96,11 @@ function ObjectMapping() {
           position: position,
           gameid: gameSelect,
           token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          id: sessionStorage.getItem("id"),
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
-        }
+        },
       });
       const dto = result.data;
 
@@ -349,7 +349,7 @@ function ObjectMapping() {
                       backgroundRepeat: "no-repeat",
                       backgroundSize: "contain",
                       borderRadius: "50%",
-                      border: `1px solid ${info.side}`
+                      border: `1px solid ${info.side}`,
                     }}
                   ></PlayerInfo>
                 </StyledTippy>

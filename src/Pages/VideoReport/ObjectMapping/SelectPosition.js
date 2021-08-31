@@ -6,13 +6,20 @@ function SelectPosition({ position, setPosition }) {
   const { t } = useTranslation();
   const pushPosition = (e) => {
     const { value } = e.target;
-    if (position.find((e) => e === value) && value !== "all") {
+
+    if (position.length === 5 && value !== "all") {
       setPosition(position.filter((e) => e === value));
-    } else if (position.length >= 0 && value !== "all") {
+    }
+    if (!position.find((e) => e === value) && value !== "all") {
       setPosition([...position.filter((e) => e !== ""), value]);
-    } else if (value === "all") {
+    }
+    if (position.find((e) => e === value) && position.length !== 5) {
+      setPosition(position.filter((e) => e !== value));
+    }
+    if (value === "all") {
       setPosition(["top", "jng", "mid", "bot", "sup"]);
     }
+    console.log(position);
   };
 
   return (
@@ -38,7 +45,7 @@ function SelectPosition({ position, setPosition }) {
             backgroundImage: `url(${"Images/ico-position-top.png"})`,
             backgroundSize: "18px 18px",
             backgroundRepeat: "no-repeat",
-            backgroundPosition: "center"
+            backgroundPosition: "center",
           }}
           isActive={position.find((e) => e === "top") && position.length !== 5}
         ></PositionButton>
@@ -50,7 +57,7 @@ function SelectPosition({ position, setPosition }) {
             backgroundImage: `url(${"Images/ico-position-jng.png"})`,
             backgroundSize: "18px 18px",
             backgroundRepeat: "no-repeat",
-            backgroundPosition: "center"
+            backgroundPosition: "center",
           }}
           isActive={position.find((e) => e === "jng") && position.length !== 5}
         ></PositionButton>
@@ -62,7 +69,7 @@ function SelectPosition({ position, setPosition }) {
             backgroundImage: `url(${"Images/ico-position-mid.png"})`,
             backgroundSize: "18px 18px",
             backgroundRepeat: "no-repeat",
-            backgroundPosition: "center"
+            backgroundPosition: "center",
           }}
           isActive={position.find((e) => e === "mid") && position.length !== 5}
         ></PositionButton>
@@ -74,7 +81,7 @@ function SelectPosition({ position, setPosition }) {
             backgroundImage: `url(${"Images/ico-position-bot.png"})`,
             backgroundSize: "18px 18px",
             backgroundRepeat: "no-repeat",
-            backgroundPosition: "center"
+            backgroundPosition: "center",
           }}
           isActive={position.find((e) => e === "bot") && position.length !== 5}
         ></PositionButton>
@@ -86,7 +93,7 @@ function SelectPosition({ position, setPosition }) {
             backgroundImage: `url(${"Images/ico-position-sup.png"})`,
             backgroundSize: "18px 18px",
             backgroundRepeat: "no-repeat",
-            backgroundPosition: "center"
+            backgroundPosition: "center",
           }}
           isActive={position.find((e) => e === "sup") && position.length !== 5}
         ></PositionButton>
