@@ -26,7 +26,7 @@ const sectorName = {
   12: 13,
   13: 14,
   14: "Error",
-  15: "None"
+  15: "None",
 };
 
 function WardMapping() {
@@ -67,7 +67,7 @@ function WardMapping() {
         minFrom={minFrom}
         setMinFrom={setMinFrom}
       />
-    )
+    ),
   };
 
   //맵핑 데이터 fetch 함수
@@ -90,14 +90,16 @@ function WardMapping() {
           firstTime: firstTime,
           secondTime: secondTime,
           token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          id: sessionStorage.getItem("id"),
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
-        }
+        },
       });
       const dto = response.data.warding;
       setWard(response.data.warding);
+      console.log(response);
+      console.log(filters.oppteam, filters.oppplayer, filters.oppchampion_eng);
 
       // sector 구분해서 섹터값 더하기
       if (dto.length > 0) {
@@ -311,7 +313,7 @@ function WardMapping() {
           style={{
             backgroundImage: `url(${
               mapSector ? mapSector : "Images/ward_map.png"
-            })`
+            })`,
           }}
         >
           {ward?.map((ward, idx) => {
@@ -347,7 +349,7 @@ function WardMapping() {
                         width: "18px",
                         backgroundImage: `url(Images/${ward.firstward
                           .replace(" ", "")
-                          .toLowerCase()}-${ward.side}.png)`
+                          .toLowerCase()}-${ward.side}.png)`,
                       }}
                     ></WardInfo>
                   </Tippy>
@@ -381,7 +383,7 @@ function WardMapping() {
                         width: "20px",
                         backgroundImage: `url(Images/${ward.secondward
                           .replace(" ", "")
-                          .toLowerCase()}-${ward.side}.png)`
+                          .toLowerCase()}-${ward.side}.png)`,
                       }}
                     ></WardInfo>
                   </Tippy>

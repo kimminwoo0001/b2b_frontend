@@ -18,7 +18,7 @@ function valuetext(value) {
 const WardSlider = withStyles({
   root: {
     color: "#f04545",
-    height: 2
+    height: 2,
   },
   thumb: {
     height: 13,
@@ -28,23 +28,23 @@ const WardSlider = withStyles({
     marginTop: -3,
     marginLeft: -7,
     "&:focus, &:hover, &$active": {
-      boxShadow: "inherit"
-    }
+      boxShadow: "inherit",
+    },
   },
   active: {},
   valueLabel: {
     left: "calc(-50%)",
-    top: -30
+    top: -30,
   },
   track: {
     height: 6,
-    borderRadius: 4
+    borderRadius: 4,
   },
   rail: {
     height: 6,
     backgroundColor: "#433f4e",
-    borderRadius: 4
-  }
+    borderRadius: 4,
+  },
 })(Slider);
 
 function SetByChampion({ minFrom, setMinFrom }) {
@@ -158,11 +158,11 @@ function SetByChampion({ minFrom, setMinFrom }) {
           league: filters.league,
           patch: filters.patch,
           token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          id: sessionStorage.getItem("id"),
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
-        }
+        },
       });
       const data = response.data.team;
       setFilterData({ ...filterData, team: data });
@@ -181,11 +181,11 @@ function SetByChampion({ minFrom, setMinFrom }) {
           patch: filters.patch,
           team: filters.team,
           token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          id: sessionStorage.getItem("id"),
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
-        }
+        },
       });
       const data = response.data.player;
       setFilterData({ ...filterData, player: data });
@@ -205,11 +205,11 @@ function SetByChampion({ minFrom, setMinFrom }) {
           team: filters.team,
           player: filters.player,
           token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          id: sessionStorage.getItem("id"),
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
-        }
+        },
       });
       const data = response.data.champion;
       setFilterData({ ...filterData, champion: data });
@@ -230,11 +230,11 @@ function SetByChampion({ minFrom, setMinFrom }) {
           player: filters.player,
           champion: filters.champion_eng,
           token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          id: sessionStorage.getItem("id"),
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
-        }
+        },
       });
       const data = response.data.opp_team;
       setFilterData({ ...filterData, oppteam: data });
@@ -256,11 +256,11 @@ function SetByChampion({ minFrom, setMinFrom }) {
           champion: filters.champion_eng,
           opp_team: filters.oppteam,
           token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          id: sessionStorage.getItem("id"),
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
-        }
+        },
       });
       const data = response.data.opp_player;
       setFilterData({ ...filterData, oppplayer: data });
@@ -283,11 +283,11 @@ function SetByChampion({ minFrom, setMinFrom }) {
           opp_team: filters.oppteam,
           opp_player: filters.oppplayer,
           token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          id: sessionStorage.getItem("id"),
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
-        }
+        },
       });
       const data = response.data.opp_champion;
       setFilterData({ ...filterData, oppchampion: data });
@@ -355,7 +355,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                                     champion_eng: "",
                                     oppteam: "",
                                     oppplayer: "",
-                                    oppchampion_eng: ""
+                                    oppchampion_eng: "",
                                   })
                                 );
                               }}
@@ -412,7 +412,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                                     champion_eng: "",
                                     oppteam: "",
                                     oppplayer: "",
-                                    oppchampion_eng: ""
+                                    oppchampion_eng: "",
                                   })
                                 );
                               }}
@@ -434,9 +434,10 @@ function SetByChampion({ minFrom, setMinFrom }) {
                       }}
                       className="menu-trigger2"
                     >
-                      <span className="Label3">{`${champArray.length} ${t(
-                        "video.object.champ"
-                      )}`}</span>
+                      <span className="Label3">
+                        <span className="champLength">{`${champArray.length}`}</span>
+                        {` ${t("video.object.champ")}`}
+                      </span>
                       <img
                         className="ArrowIcon"
                         src="Images/select-arrow.png"
@@ -504,7 +505,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                                   champion_eng: champArray,
                                   oppteam: "",
                                   oppplayer: "",
-                                  oppchampion_eng: ""
+                                  oppchampion_eng: "",
                                 })
                               );
                             }}
@@ -563,7 +564,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                                     champion_eng: filters.champion_eng,
                                     oppteam: oppteam,
                                     oppplayer: "",
-                                    oppchampion_eng: ""
+                                    oppchampion_eng: "",
                                   })
                                 );
                               }}
@@ -620,7 +621,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                                     champion_eng: filters.champion_eng,
                                     oppteam: filters.oppteam,
                                     oppplayer: oppplayer,
-                                    oppchampion_eng: ""
+                                    oppchampion_eng: "",
                                   })
                                 );
                               }}
@@ -642,9 +643,10 @@ function SetByChampion({ minFrom, setMinFrom }) {
                       }}
                       className="menu-trigger2"
                     >
-                      <span className="Label3">{`${champArray2.length} ${t(
-                        "video.object.champ"
-                      )}`}</span>
+                      <span className="Label3">
+                        <span className="champLength">{`${champArray2.length}`}</span>
+                        {` ${t("video.object.champ")}`}
+                      </span>
                       <img
                         className="ArrowIcon"
                         src="Images/select-arrow.png"
@@ -713,7 +715,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                                   champion_eng: champArray,
                                   oppteam: filters.oppteam,
                                   oppplayer: filters.oppplayer,
-                                  oppchampion_eng: champArray2
+                                  oppchampion_eng: champArray2,
                                 })
                               );
                             }}
@@ -976,10 +978,15 @@ const DropDownToggle = styled.div`
     text-align: left;
     color: rgb(255, 255, 255);
     width: 124px;
-    ::first-letter {
+    /* ::first-letter {
       color: #f04545;
-    }
+    } */
   }
+
+  .champLength {
+    color: #f04545;
+  }
+
   .Wrapper {
     display: flex;
     align-items: center;

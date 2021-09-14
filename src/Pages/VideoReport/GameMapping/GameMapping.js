@@ -87,13 +87,14 @@ function GameMapping() {
           object: "off",
           side: side,
           token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          id: sessionStorage.getItem("id"),
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
-        }
+        },
       });
       setGameListData(Object.values(response.data["match"]));
+      console.log(response.data.match);
     } catch (e) {
       console.log(e);
     }
@@ -109,11 +110,11 @@ function GameMapping() {
         params: {
           gameid: filters.gameid,
           token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          id: sessionStorage.getItem("id"),
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
-        }
+        },
       });
 
       // 맵핑 포지션
@@ -219,7 +220,7 @@ function GameMapping() {
                     width: "20px",
                     height: "20px",
                     borderRadius: "50%",
-                    marginRight: "4px"
+                    marginRight: "4px",
                   }}
                   alt=""
                 />
@@ -235,7 +236,7 @@ function GameMapping() {
                         width: "20px",
                         height: "20px",
                         borderRadius: "50%",
-                        marginRight: "4px"
+                        marginRight: "4px",
                       }}
                       alt=""
                     />
@@ -377,7 +378,7 @@ function GameMapping() {
                       backgroundRepeat: "no-repeat",
                       backgroundSize: "contain",
                       borderRadius: "50%",
-                      border: `1px solid ${info.side}`
+                      border: `1px solid ${info.side}`,
                     }}
                   ></PlayerInfo>
                 </StyledTippy>

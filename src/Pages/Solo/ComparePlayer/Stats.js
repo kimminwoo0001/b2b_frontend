@@ -10,7 +10,7 @@ import {
   Legend,
   ReferenceLine,
   ResponsiveContainer,
-  LabelList
+  LabelList,
 } from "recharts";
 import qs from "qs";
 import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
@@ -28,7 +28,7 @@ import {
   Opp_Champion_Eng,
   ResetChampion,
   ResetChampion2,
-  ResetOppChampion
+  ResetOppChampion,
 } from "../../../redux/modules/filtervalue";
 
 function Stats() {
@@ -65,7 +65,7 @@ function Stats() {
     filters.player,
     filters.patch,
     filters.resetchamp,
-    lang
+    lang,
   ]);
 
   //팀 필터 fetch 함수
@@ -85,11 +85,11 @@ function Stats() {
           champion: filters.champion_eng,
           oppchampion: filters.oppchampion_eng,
           token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          id: sessionStorage.getItem("id"),
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
-        }
+        },
       });
 
       setData(response?.data.player);
@@ -101,7 +101,7 @@ function Stats() {
             x1: line.percent.toFixed(1),
             y: lang === "kr" ? line.name : line.eng,
             value1: line.value.toFixed(1),
-            league: line.avg.toFixed(1)
+            league: line.avg.toFixed(1),
           };
         }
       );
@@ -112,7 +112,7 @@ function Stats() {
             x2: line.percent.toFixed(1),
             y: lang === "kr" ? line.name : line.eng,
             value2: line.value.toFixed(1),
-            league: line.avg.toFixed(1)
+            league: line.avg.toFixed(1),
           };
         }
       );
@@ -120,6 +120,7 @@ function Stats() {
         Object.assign(lineData[i], lineData2[i]);
         setLineStat(lineData);
       }
+      console.log(Object.values(lineData));
       //교전 능력치 비교 그래프 데이터 가공
       const matchData = Object.values(response?.data.player.MatchStat)?.map(
         (match) => {
@@ -127,7 +128,7 @@ function Stats() {
             x1: match.percent.toFixed(1),
             y: lang === "kr" ? match.name : match.eng,
             value1: match.value.toFixed(1),
-            league: match.avg.toFixed(1)
+            league: match.avg.toFixed(1),
           };
         }
       );
@@ -138,7 +139,7 @@ function Stats() {
             x2: match.percent.toFixed(1),
             y: lang === "kr" ? match.name : match.eng,
             value2: match.value.toFixed(1),
-            league: match.avg.toFixed(1)
+            league: match.avg.toFixed(1),
           };
         }
       );
@@ -173,11 +174,11 @@ function Stats() {
         player: filters.player,
         oppplayer: filters.oppplayer,
         token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        id: sessionStorage.getItem("id"),
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     });
     setChampFilter(response.data.champion);
     setChampEng(response.data.championEng);
@@ -195,11 +196,11 @@ function Stats() {
         player: filters.player,
         oppplayer: filters.oppplayer,
         token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        id: sessionStorage.getItem("id"),
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     });
     setOppFilter(response.data.champion);
     setOppEng(response.data.championEng);
@@ -671,7 +672,7 @@ function Stats() {
                       top: 25,
                       right: 21,
                       left: 60,
-                      bottom: 23
+                      bottom: 23,
                     }}
                     backgroundColor={"red"}
                   >
@@ -688,7 +689,7 @@ function Stats() {
                       domain={[-100, 100]}
                       tick={{ fill: "#84818e" }}
                       style={{
-                        fontSize: "12px"
+                        fontSize: "12px",
                       }}
                       unit={"%"}
                     />
@@ -700,7 +701,7 @@ function Stats() {
                       tick={{
                         fill: "#84818e",
                         fontSize: 12,
-                        width: 105
+                        width: 105,
                       }}
                     />
                     <Tooltip
@@ -751,7 +752,7 @@ function Stats() {
                       top: 25,
                       right: 21,
                       left: 60,
-                      bottom: 23
+                      bottom: 23,
                     }}
                     backgroundColor={"red"}
                   >
@@ -768,7 +769,7 @@ function Stats() {
                       stroke="#4e4c5c"
                       tick={{ fill: "#84818e" }}
                       style={{
-                        fontSize: "12px"
+                        fontSize: "12px",
                       }}
                       unit={"%"}
                     />
@@ -780,7 +781,7 @@ function Stats() {
                       tick={{
                         fill: "#84818e",
                         fontSize: 12,
-                        width: 105
+                        width: 105,
                       }}
                     />
                     <Tooltip

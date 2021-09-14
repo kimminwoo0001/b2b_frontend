@@ -11,7 +11,7 @@ import {
   ResetFilter,
   HandleTab,
   PatchFull,
-  ResetFilter2
+  ResetFilter2,
 } from "../../redux/modules/filtervalue";
 import { API } from "../config";
 import { useTranslation } from "react-i18next";
@@ -45,11 +45,11 @@ function TeamFilter() {
     const parsedMatchData = await axios.get(`${API}/api/filter/league`, {
       params: {
         token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        id: sessionStorage.getItem("id"),
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     });
 
     const convertData = [];
@@ -102,11 +102,11 @@ function TeamFilter() {
             : "21msi",
         // patch: filters.patch,
         token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        id: sessionStorage.getItem("id"),
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     });
     dispatch(PatchFull(result.data.patch));
   };
@@ -120,13 +120,14 @@ function TeamFilter() {
         league: filters.league,
         patch: filters.patch,
         token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        id: sessionStorage.getItem("id"),
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     });
     setTeamFilter(result.data.team);
+    console.log(result);
   };
 
   return (

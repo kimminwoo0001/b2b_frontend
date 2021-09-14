@@ -17,7 +17,7 @@ import {
   Opp_Champion_Eng,
   ResetChampion,
   ResetChampion2,
-  ResetOppChampion
+  ResetOppChampion,
 } from "../../../redux/modules/filtervalue";
 
 function PlayerBoard() {
@@ -73,11 +73,11 @@ function PlayerBoard() {
         champion: filters.champion_eng,
         oppchampion: filters.oppchampion_eng,
         token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        id: sessionStorage.getItem("id"),
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     });
 
     const data = response.data;
@@ -117,6 +117,7 @@ function PlayerBoard() {
     });
     setSeason({ x: seasonX, y: seasonY });
     setLoading(false);
+    console.log(data.info);
   };
 
   //챔피언 필터
@@ -129,14 +130,15 @@ function PlayerBoard() {
         patch: filters.patch,
         player: filters.player,
         token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        id: sessionStorage.getItem("id"),
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     });
     setChampFilter(response.data.champion);
     setChampEng(response.data.championEng);
+    console.log(response.data);
   };
 
   //상대 챔피언 필터
@@ -151,11 +153,11 @@ function PlayerBoard() {
         champion: filters.champion_eng,
         player: filters.player,
         token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        id: sessionStorage.getItem("id"),
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     });
 
     setOppFilter(response.data.champion);
@@ -173,11 +175,11 @@ function PlayerBoard() {
         player: filters.player,
         team: filters.team,
         token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        id: sessionStorage.getItem("id"),
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     });
     setSummary(response.data.summary);
   };
@@ -192,9 +194,9 @@ function PlayerBoard() {
         backgroundColor: "#f14444",
         borderColor: "#f14444",
         borderWidth: 2,
-        data: match?.y
-      }
-    ]
+        data: match?.y,
+      },
+    ],
   };
 
   const SeasonChart = {
@@ -206,9 +208,9 @@ function PlayerBoard() {
         backgroundColor: "#f14444",
         borderColor: "#f14444",
         borderWidth: 2,
-        data: season?.y
-      }
-    ]
+        data: season?.y,
+      },
+    ],
   };
   if (loading) return <LoadingImg />;
 
@@ -811,10 +813,10 @@ function PlayerBoard() {
                 data={MatchChart}
                 options={{
                   tooltips: {
-                    intersect: false
+                    intersect: false,
                   },
                   legend: {
-                    display: false
+                    display: false,
                   },
                   maintainAspectRatio: false,
                   scales: {
@@ -822,11 +824,11 @@ function PlayerBoard() {
                       {
                         ticks: {
                           fontColor: "#84818e",
-                          fontSize: 14
+                          fontSize: 14,
                         },
                         gridLines: { color: "rgb(47, 45, 56)" },
-                        offset: true
-                      }
+                        offset: true,
+                      },
                     ],
                     yAxes: [
                       {
@@ -835,14 +837,14 @@ function PlayerBoard() {
                           fontColor: "#84818e",
                           fontSize: 14,
                           min: graphDomain?.matchGraph["min"],
-                          max: graphDomain?.matchGraph["max"]
+                          max: graphDomain?.matchGraph["max"],
                         },
                         gridLines: {
-                          color: "rgb(58, 55, 69)"
-                        }
-                      }
-                    ]
-                  }
+                          color: "rgb(58, 55, 69)",
+                        },
+                      },
+                    ],
+                  },
                 }}
               />
             </PlayerCharts>
@@ -909,10 +911,10 @@ function PlayerBoard() {
                 data={SeasonChart}
                 options={{
                   tooltips: {
-                    intersect: false
+                    intersect: false,
                   },
                   legend: {
-                    display: false
+                    display: false,
                   },
                   maintainAspectRatio: false,
                   scales: {
@@ -920,11 +922,11 @@ function PlayerBoard() {
                       {
                         ticks: {
                           fontColor: "#84818e",
-                          fontSize: 14
+                          fontSize: 14,
                         },
                         gridLines: { color: "rgb(47, 45, 56)" },
-                        offset: true
-                      }
+                        offset: true,
+                      },
                     ],
                     yAxes: [
                       {
@@ -933,14 +935,14 @@ function PlayerBoard() {
                           fontColor: "#84818e",
                           fontSize: 14,
                           min: graphDomain?.seasonGraph["min"],
-                          max: graphDomain?.seasonGraph["max"]
+                          max: graphDomain?.seasonGraph["max"],
                         },
                         gridLines: {
-                          color: "rgb(58, 55, 69)"
-                        }
-                      }
-                    ]
-                  }
+                          color: "rgb(58, 55, 69)",
+                        },
+                      },
+                    ],
+                  },
                 }}
               />
             </PlayerCharts>
@@ -1697,6 +1699,8 @@ const DropDownContainer = styled.div`
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
+    // 솔로랭크 현황판 앞으로 나오게 함
+    z-index: 1;
   }
 
   .menu ul {

@@ -18,7 +18,7 @@ function valuetext(value) {
 const WardSlider = withStyles({
   root: {
     color: "#f04545",
-    height: 2
+    height: 2,
   },
   thumb: {
     height: 13,
@@ -28,23 +28,23 @@ const WardSlider = withStyles({
     marginTop: -3,
     marginLeft: -7,
     "&:focus, &:hover, &$active": {
-      boxShadow: "inherit"
-    }
+      boxShadow: "inherit",
+    },
   },
   active: {},
   valueLabel: {
     left: "calc(-50%)",
-    top: -30
+    top: -30,
   },
   track: {
     height: 6,
-    borderRadius: 4
+    borderRadius: 4,
   },
   rail: {
     height: 6,
     backgroundColor: "#433f4e",
-    borderRadius: 4
-  }
+    borderRadius: 4,
+  },
 })(Slider);
 
 function SetByPlayer({ minFrom, setMinFrom }) {
@@ -112,11 +112,11 @@ function SetByPlayer({ minFrom, setMinFrom }) {
           league: filters.league,
           patch: filters.patch,
           token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          id: sessionStorage.getItem("id"),
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
-        }
+        },
       });
       const data = response.data.team;
       setFilterData({ ...filterData, team: data });
@@ -135,11 +135,11 @@ function SetByPlayer({ minFrom, setMinFrom }) {
           patch: filters.patch,
           team: filters.team,
           token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          id: sessionStorage.getItem("id"),
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
-        }
+        },
       });
       const data = response.data.player;
       setFilterData({ ...filterData, player: data });
@@ -159,11 +159,11 @@ function SetByPlayer({ minFrom, setMinFrom }) {
           team: filters.team,
           player: filters.player,
           token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          id: sessionStorage.getItem("id"),
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
-        }
+        },
       });
       const data = response.data.champion;
       setFilterData({ ...filterData, champion: data });
@@ -223,7 +223,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
                                 champion_eng: "",
                                 oppteam: "",
                                 oppplayer: "",
-                                oppchampion_eng: ""
+                                oppchampion_eng: "",
                               })
                             );
                           }}
@@ -280,7 +280,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
                                 champion_eng: "",
                                 oppteam: "",
                                 oppplayer: "",
-                                oppchampion_eng: ""
+                                oppchampion_eng: "",
                               })
                             );
                           }}
@@ -303,9 +303,10 @@ function SetByPlayer({ minFrom, setMinFrom }) {
                 }}
                 className="menu-trigger2"
               >
-                <span className="Label2">{`${champArray.length} ${t(
-                  "video.object.champ"
-                )}`}</span>
+                <span className="Label2">
+                  <span className="champLength">{`${champArray.length}`}</span>
+                  {` ${t("video.object.champ")}`}
+                </span>
                 <img
                   className="ArrowIcon"
                   src="Images/select-arrow.png"
@@ -367,7 +368,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
                             champion_eng: champArray,
                             oppteam: "",
                             oppplayer: "",
-                            oppchampion_eng: ""
+                            oppchampion_eng: "",
                           })
                         );
                       }}
@@ -586,10 +587,15 @@ const DropDownToggle = styled.div`
     text-align: left;
     color: rgb(255, 255, 255);
     width: 488px;
-    ::first-letter {
+    /* ::first-letter {
       color: #f04545;
-    }
+    } */
   }
+
+  .champLength {
+    color: #f04545;
+  }
+
   .Wrapper {
     display: flex;
     align-items: center;
