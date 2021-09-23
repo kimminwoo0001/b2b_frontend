@@ -34,9 +34,9 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
   const [teamFilter, setTeamFilter] = useState();
   const [oppTeamFilter, setOppTeamFilter] = useState();
 
-  const LeagueLCK = "21sp_lck";
-  const LeagueLEC = "21sp_lec";
-  const LeagueLCS = "21sp_lcs";
+  const LeagueLCK = "lck";
+  const LeagueLEC = "lec";
+  const LeagueLCS = "lcs";
   const Msi = "21msi";
   const [isActiveLeague, setIsActiveLeague] = useDetectOutsideClick(
     dropdownRef,
@@ -110,10 +110,10 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
           league === "LCK"
             ? "21sp_lck"
             : league === "LEC"
-            ? "21sp_lec"
-            : league === "LCS"
-            ? "21sp_lcs"
-            : "21msi",
+              ? "21sp_lec"
+              : league === "LCS"
+                ? "21sp_lcs"
+                : "21msi",
         // patch: filters.patch,
         token: sessionStorage.getItem("token"),
         id: sessionStorage.getItem("id")
@@ -166,7 +166,7 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
     <>
       <BackScreen
         teamModal={teamModal}
-        // onClick={() => setTeamModal(false)}
+      // onClick={() => setTeamModal(false)}
       ></BackScreen>
       <TeamModalWrapper teamModal={teamModal}>
         <FilterContainer>
