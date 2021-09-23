@@ -27,9 +27,9 @@ function PickCombineModal({ openModal, setOpenModal }) {
   const [playerFilter, setPlayerFilter] = useState();
   // const [oppPlayerFilter, setOppPlayerFilter] = useState();
 
-  const LeagueLCK = "21sp_lck";
-  const LeagueLEC = "21sp_lec";
-  const LeagueLCS = "21sp_lcs";
+  const LeagueLCK = "lck";
+  const LeagueLEC = "lec";
+  const LeagueLCS = "lcs";
   // const [isActiveLeague, setIsActiveLeague] = useDetectOutsideClick(
   //   dropdownRef,
   //   false

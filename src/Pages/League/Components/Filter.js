@@ -47,7 +47,7 @@ function Filter() {
 
     const convertData = [];
     //  받아온 데이터를  LCS, LEC ,LCK, MSI 로 변환 시키는 과정
-    // ex) lck21sp ==> LCK
+    // ex) lck ==> LCK
     parsedMatchData?.data?.league?.forEach((el) => {
       if (el === Msi) {
         convertData.push("MSI");
@@ -65,7 +65,7 @@ function Filter() {
   };
 
   //아래 리그 dropdown에서 선택된 값을 백엔드 요청에 쓰일 수 있도록  다시 변환 시키는 과정
-  // ex) LCK ==> lck21sp
+  // ex) LCK ==> lck
   useEffect(() => {
     if (filters.convertleague === "LCK") {
       dispatch(League(LeagueLCK));
@@ -89,12 +89,12 @@ function Filter() {
           league === "LCK"
             ? "lck"
             : league === "LEC"
-            ? "lec"
-            : league === "LPL"
-            ? "lpl"
-            : league === "LCS"
-            ? "lcs"
-            : "21msi",
+              ? "lec"
+              : league === "LPL"
+                ? "lpl"
+                : league === "LCS"
+                  ? "lcs"
+                  : "21msi",
         // patch: filters.patch,
         token: sessionStorage.getItem("token"),
         id: sessionStorage.getItem("id")

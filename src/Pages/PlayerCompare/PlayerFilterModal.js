@@ -38,10 +38,10 @@ function PlayerFilterModal({ playerModal, setPlayerModal }) {
   const [playerFilter, setPlayerFilter] = useState();
   const [oppPlayerFilter, setOppPlayerFilter] = useState();
 
-  const LeagueLCK = "21sp_lck";
-  const LeagueLEC = "21sp_lec";
-  const LeagueLCS = "21sp_lcs";
-  const Msi = "21msi";
+  const LeagueLCK = "lck";
+  const LeagueLEC = "lec";
+  const LeagueLCS = "lcs";
+  const Msi = "msi";
   const [isActiveLeague, setIsActiveLeague] = useDetectOutsideClick(
     dropdownRef,
     false
@@ -103,12 +103,12 @@ function PlayerFilterModal({ playerModal, setPlayerModal }) {
       params: {
         league:
           league === "LCK"
-            ? "21sp_lck"
+            ? "lck"
             : league === "LEC"
-            ? "21sp_lec"
+            ? "lec"
             : league === "LCS"
-            ? "21sp_lcs"
-            : "21msi",
+            ? "lcs"
+            : "msi",
         // patch: filters.patch,
         token: sessionStorage.getItem("token"),
         id: sessionStorage.getItem("id")

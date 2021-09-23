@@ -37,7 +37,7 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
   const LeagueLCK = "lck";
   const LeagueLEC = "lec";
   const LeagueLCS = "lcs";
-  const Msi = "21msi";
+  const Msi = "msi";
   const [isActiveLeague, setIsActiveLeague] = useDetectOutsideClick(
     dropdownRef,
     false
@@ -108,12 +108,12 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
       params: {
         league:
           league === "LCK"
-            ? "21sp_lck"
+            ? "lck"
             : league === "LEC"
-              ? "21sp_lec"
+              ? "lec"
               : league === "LCS"
-                ? "21sp_lcs"
-                : "21msi",
+                ? "lcs"
+                : "msi",
         // patch: filters.patch,
         token: sessionStorage.getItem("token"),
         id: sessionStorage.getItem("id")
