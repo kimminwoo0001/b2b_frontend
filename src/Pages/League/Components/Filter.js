@@ -25,7 +25,7 @@ function Filter() {
   const LeagueLEC = "lec";
   const LeagueLCS = "lcs";
   const LeagueLPL = "lpl";
-  const Msi = "21msi";
+  const Msi = "msi";
 
   const dropdownRef = useRef(null);
   const [isActiveLeague, setIsActiveLeague] = useDetectOutsideClick(

@@ -10,13 +10,13 @@ function SelectPosition({ position, setPosition }) {
     if (position.length === 5 && value !== "all") {
       setPosition(position.filter((e) => e === value));
     }
-    if (!position.find((e) => e === value) && value !== "all") {
+    else if (!position.find((e) => e === value) && value !== "all") {
       setPosition([...position.filter((e) => e !== ""), value]);
     }
-    if (position.find((e) => e === value) && position.length !== 5) {
+    else if (position.find((e) => e === value) && position.length !== 5) {
       setPosition(position.filter((e) => e !== value));
     }
-    if (value === "all") {
+    else if (value === "all") {
       setPosition(["top", "jng", "mid", "bot", "sup"]);
     }
     console.log(position);

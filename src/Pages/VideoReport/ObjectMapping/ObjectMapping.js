@@ -137,23 +137,44 @@ function ObjectMapping() {
   }, 100);
 
   const handleConfirm = () => {
-    if (filters.champion_eng && side && period && position.length > 0) {
-      if (compareOpen) {
-        if (filters.oppchampion_eng) {
-          fetchingMapData();
-          setRange(0);
-        } else {
-          alert("상대 팀을 선택해주세요");
-        }
+    let unselectedItem = [];
+    const { team, champion_eng, player, oppteam, oppplayer, oppchampion_eng } = filters;
+
+    if (compareOpen) {
+      if (side && period && position.length > 0 && champion_eng.length > 0 && oppchampion_eng.length > 0) {
+        fetchingMapData();
+        setRange(0);
       } else {
+        if (team.length === 0) unselectedItem.push("팀");
+        if (player.length === 0) unselectedItem.push("선수");
+        if (champion_eng.length === 0) unselectedItem.push("챔피언");
+        if (oppteam.length === 0) unselectedItem.push("상대 팀");
+        if (oppplayer.length === 0) unselectedItem.push("상대 선수");
+        if (oppchampion_eng.length === 0) unselectedItem.push("상대 챔피언");
+      }
+    } else {
+      if (side && period && position.length > 0 && champion_eng.length > 0) {
         setchampInfo([]);
         fetchingMapData();
         setRange(0);
         setFast(false);
         setPlay(false);
+      } else {
+        if (team.length === 0) unselectedItem.push("팀");
+        if (player.length === 0) unselectedItem.push("선수");
+        if (champion_eng.length === 0) unselectedItem.push("챔피언");
       }
-    } else {
-      alert("모두 선택해주세요");
+    }
+
+    if (unselectedItem.length > 0) {
+      let unselectedSentence = "";
+      for (let i = 0; i < unselectedItem.length; i++) {
+        unselectedSentence += unselectedItem[i];
+        if (i !== unselectedItem.length - 1) {
+          unselectedSentence += ", ";
+        }
+      }
+      alert(`[${unselectedSentence}] 선택해주세요`);
     }
   };
 
@@ -291,11 +312,11 @@ function ObjectMapping() {
                   ) {
                     if (
                       Number(currentPos[range]?.player[i].x1) -
-                        Number(currentPos[range]?.player[i].x2) !==
-                        0 &&
+                      Number(currentPos[range]?.player[i].x2) !==
+                      0 &&
                       Number(currentPos[range]?.player[i].y1) -
-                        Number(currentPos[range]?.player[i].y2) !==
-                        0
+                      Number(currentPos[range]?.player[i].y2) !==
+                      0
                     ) {
                       x =
                         ((Number(currentPos[range]?.player[i].x1) +
@@ -377,9 +398,9 @@ function ObjectMapping() {
             <span className="current">
               {range
                 ? `${Math.floor((range + minTime) / 2 / 60)} : ${(
-                    ((range + minTime) / 2) %
-                    60
-                  ).toFixed(1)}`
+                  ((range + minTime) / 2) %
+                  60
+                ).toFixed(1)}`
                 : "00 : 00"}
             </span>
             <p>/</p>
