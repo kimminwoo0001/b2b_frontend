@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { signIn } from "./signIn";
-import { UserID, UserToken } from "../../redux/modules/user";
+import { UserID, UserToken, UserIP, UserDevice } from "../../redux/modules/user";
 import { useHistory } from "react-router-dom";
 import { Language } from "../../redux/modules/locale";
 
@@ -25,12 +26,21 @@ function Login() {
         dispatch(Language(token.language));
         dispatch(UserID(id));
         dispatch(UserToken(token.token));
+        getUserIP();
+        dispatch(UserDevice());
         history.push("/");
       }
     } catch (e) {
       alert("Login Fail\nWrong ID(password) or Time limit is exceeded");
     }
   };
+
+  const getUserIP = async () => {
+    const res = await axios.get('https://geolocation-db.com/json/')
+    dispatch(UserIP(res.data.IPv4));
+  }
+
+
 
   return (
     <LoginWrapper>
