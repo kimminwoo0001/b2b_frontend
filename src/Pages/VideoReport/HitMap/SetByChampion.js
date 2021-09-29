@@ -65,6 +65,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
   const [filterData, setFilterData] = useState({});
   const [champArray, setChampArray] = useState([]);
   const [champArray2, setChampArray2] = useState([]);
+  const isPageSolo = document.location.pathname === '/solo' ? true : false;
 
   function useOutsideAlerter(ref) {
     useEffect(() => {
@@ -151,21 +152,25 @@ function SetByChampion({ minFrom, setMinFrom }) {
 
   const getTeam = async () => {
     try {
-      const response = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingFilter`,
-        params: {
-          league: filters.league,
-          patch: filters.patch,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id"),
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        },
-      });
-      const data = response.data.team;
-      setFilterData({ ...filterData, team: data });
+      if (isPageSolo) {
+        setIsActive(!isActive);
+      } else {
+        const response = await axios.request({
+          method: "GET",
+          url: `${API2}/api/mappingFilter`,
+          params: {
+            league: filters.league,
+            patch: filters.patch,
+            token: sessionStorage.getItem("token"),
+            id: sessionStorage.getItem("id"),
+          },
+          paramsSerializer: (params) => {
+            return qs.stringify(params, { arrayFormat: "repeat" });
+          },
+        });
+        const data = response.data.team;
+        setFilterData({ ...filterData, team: data });
+      }
     } catch (e) {
       console.log(e);
     }
@@ -173,22 +178,26 @@ function SetByChampion({ minFrom, setMinFrom }) {
 
   const getPlayer = async () => {
     try {
-      const response = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingFilter`,
-        params: {
-          league: filters.league,
-          patch: filters.patch,
-          team: filters.team,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id"),
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        },
-      });
-      const data = response.data.player;
-      setFilterData({ ...filterData, player: data });
+      if (isPageSolo) {
+        setIsActive1(!isActive);
+      } else {
+        const response = await axios.request({
+          method: "GET",
+          url: `${API2}/api/mappingFilter`,
+          params: {
+            league: filters.league,
+            patch: filters.patch,
+            team: filters.team,
+            token: sessionStorage.getItem("token"),
+            id: sessionStorage.getItem("id"),
+          },
+          paramsSerializer: (params) => {
+            return qs.stringify(params, { arrayFormat: "repeat" });
+          },
+        });
+        const data = response.data.player;
+        setFilterData({ ...filterData, player: data });
+      }
     } catch (e) {
       console.log(e);
     }
@@ -463,7 +472,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                             <input
                               checked={
                                 filterData?.champion?.length ===
-                                champArray.length
+                                  champArray.length
                                   ? true
                                   : false
                               }
@@ -672,7 +681,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                             <input
                               checked={
                                 filterData?.oppchampion?.length ===
-                                champArray2.length
+                                  champArray2.length
                                   ? true
                                   : false
                               }
@@ -750,7 +759,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
               aria-labelledby="range-slider"
               getAriaValueText={valuetext}
               valueLabelFormat={valuetext}
-              // ValueLabelComponent={ValueLabelComponent}
+            // ValueLabelComponent={ValueLabelComponent}
             />
           </SliderContainer>
           <DefaultTime>

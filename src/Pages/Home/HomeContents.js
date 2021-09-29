@@ -7,9 +7,11 @@ import LoadingImg from "../../Components/LoadingImg/LoadingImg";
 import { API } from "../config";
 import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../../redux/modules/filtervalue";
+import { GetFilterAllItems } from "../../redux/modules/staticvalue";
 
 function HomeContents() {
   const filters = useSelector((state) => state.FilterReducer);
+  const staticvalue = useSelector((state) => state.StaticValueReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -22,6 +24,7 @@ function HomeContents() {
 
   useEffect(() => {
     fetchHomeData();
+    filterAlllItems();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -43,15 +46,23 @@ function HomeContents() {
       setLcsData(jsonData.data["LCS"]);
       setLplData(jsonData.data["LPL"]);
       // setVcsData(jsonData.data["VCS"]);
+
       dispatch(Loading(false));
+
+      //
     } catch (e) {
       console.log(e);
       dispatch(Loading(false));
     }
   };
 
+  const filterAlllItems = () => {
+    dispatch(GetFilterAllItems("a"));
+  }
+
   if (filters.loading) return <LoadingImg />;
 
+  console.log("staticvalue.filterObjects: ", staticvalue.filterObjects);
   return (
     <LeagueListWrapper>
       <BoxWrapper>

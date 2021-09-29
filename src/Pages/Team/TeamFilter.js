@@ -94,12 +94,12 @@ function TeamFilter() {
           league === "LCK"
             ? "lck"
             : league === "LEC"
-            ? "lec"
-            : league === "LCS"
-            ? "lcs"
-            : league === "LPL"
-            ? "lpl"
-            : "21msi",
+              ? "lec"
+              : league === "LCS"
+                ? "lcs"
+                : league === "LPL"
+                  ? "lpl"
+                  : "21msi",
         // patch: filters.patch,
         token: sessionStorage.getItem("token"),
         id: sessionStorage.getItem("id"),
@@ -566,7 +566,7 @@ const DropDownToggle = styled.div`
     list-style: none;
     padding: 0;
     margin: 0;
-    z-index: 10;
+    z-index: 1;
   }
 
   .menu li {

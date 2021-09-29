@@ -28,6 +28,7 @@ export const RESET_MAPPING = "filtervalue/RESET_MAPPING";
 export const RESET_MAPPINGTAB = "filtervalue/RESET_MAPPINGTAB";
 export const GET_GAME_ID = "filtervalue/GET_GAME_ID";
 
+
 export const Reset_MapTab = (payload) => {
   return {
     type: RESET_MAPPINGTAB,
@@ -218,6 +219,7 @@ export const GetGameId = (payload) => {
     payload
   };
 };
+
 
 const initialState = {
   patch: "",

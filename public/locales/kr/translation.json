@@ -189,7 +189,8 @@
     "tabs": {
       "board": "선수 상황판",
       "soloRank": "선수 솔랭 보고서",
-      "comparison": "선수 비교"
+      "comparison": "선수 비교",
+      "heatmap": "히트맵"
     },
     "playerboard": {
       "country": "국적",
@@ -199,8 +200,8 @@
       "bestScore": "최고 퍼포먼스",
       "summary": "종합 정보",
       "summaryLabel": "챔피언을 설정하시면 챔피언별 상세 데이터 확인이 가능합니다.",
-      "soloranksummary":"솔로랭크 현황판",
-      "soloranksummaryLabel":"선택한 패치버전과 관계 없이 최근 2주간 플레이 정보만 보여줍니다.",
+      "soloranksummary": "솔로랭크 현황판",
+      "soloranksummaryLabel": "선택한 패치버전과 관계 없이 최근 2주간 플레이 정보만 보여줍니다.",
       "apply": "적용",
       "reset": "초기화",
       "laneStat": "라인전 능력치",
@@ -220,7 +221,7 @@
       "winrate": "승률",
       "banrate": "밴률",
       "sbr": "PR",
-      "tier":"티어",
+      "tier": "티어",
       "performanceScore": "최근 경기 퍼포먼스 추세",
       "recentGame": "최근 5경기",
       "carrer": "통산 성적",

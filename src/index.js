@@ -12,6 +12,9 @@ import ErrorBoundary from "./Components/ErrorBoundary";
 // import reportWebVitals from "./reportWebVitals";
 import "./i18n";
 
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+
 const sagaMiddleware = createSagaMiddleware();
 // reportWebVitals();
 
@@ -20,6 +23,8 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
 
+const persistor = persistStore(store);
+
 // export const history = syncHistoryWithStore(createBrowserHistory, store);
 
 ReactDOM.render(
@@ -27,8 +32,10 @@ ReactDOM.render(
     <ErrorBoundary>
       <Suspense fallback={<div>Loading...</div>}>
         <Provider store={store}>
-          <Routes />
-          <GlobalStyles />
+          <PersistGate persistor={persistor}>
+            <Routes />
+            <GlobalStyles />
+          </PersistGate>
         </Provider>
       </Suspense>
     </ErrorBoundary>

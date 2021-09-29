@@ -5,7 +5,7 @@ import axios from "axios";
 import qs from "qs";
 import SetByChampion from "./SetByChampion";
 import SetByPlayer from "./SetByPlayer";
-import { Reset_MapTab } from "../../../redux/modules/filtervalue";
+import { Reset_MapTab, ResetChampion } from "../../../redux/modules/filtervalue";
 import h337 from "heatmap.js";
 import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
@@ -15,6 +15,7 @@ function HitMap() {
   const [minFrom, setMinFrom] = useState([0, 100]);
   let firstTime = minFrom[0] * 18;
   let secondTime = minFrom[1] * 18;
+  const isPageSolo = document.location.pathname === '/solo' ? true : false;
 
   const filters = useSelector((state) => state.FilterReducer);
   const resetHeatMap1 = useRef(null);
@@ -175,10 +176,16 @@ function HitMap() {
         <TabBox>
           <FilterTab
             onClick={() => {
-              setTab("player");
-              dispatch(Reset_MapTab());
-              resetHeatMap1.current.innerHTML = "";
-              resetHeatMap2.current.innerHTML = "";
+              if (tab !== "player") {
+                setTab("player");
+                if (isPageSolo) {
+                  dispatch(ResetChampion());
+                } else {
+                  dispatch(Reset_MapTab());
+                }
+                resetHeatMap1.current.innerHTML = "";
+                resetHeatMap2.current.innerHTML = "";
+              }
             }}
             isActive={tab === "player"}
           >
@@ -187,7 +194,11 @@ function HitMap() {
           <FilterTab
             onClick={() => {
               setTab("champion");
-              dispatch(Reset_MapTab());
+              if (isPageSolo) {
+                dispatch(ResetChampion());
+              } else {
+                dispatch(Reset_MapTab());
+              }
               resetHeatMap1.current.innerHTML = "";
               resetHeatMap2.current.innerHTML = "";
             }}

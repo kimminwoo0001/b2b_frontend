@@ -13,6 +13,7 @@ import {
   ResetFilter2
 } from "../../redux/modules/filtervalue";
 import ErrorBoundary from "../../Components/ErrorBoundary";
+import HitMap from "../VideoReport/HitMap/HitMap";
 
 function Player() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -24,7 +25,8 @@ function Player() {
   const BoardTab = {
     0: <PlayerBoard />,
     1: <ComparePlayer />,
-    2: <PlayerSoloRank />
+    2: <PlayerSoloRank />,
+    3: <HitMap />,
   };
 
   return (
@@ -33,7 +35,7 @@ function Player() {
         <PlayerSelectModal openModal={openModal} setOpenModal={setOpenModal} />
         <BoardWrapper>
           <TabContainer>
-            <PlayerAility
+            <TabContent
               onClick={() => {
                 dispatch(HandleTab(0));
                 dispatch(ResetChampion());
@@ -50,7 +52,7 @@ function Player() {
                 }
                 alt="arrowIcon"
               ></img>
-            </PlayerAility>
+            </TabContent>
             {/* <SoloReport
             onClick={() => {
               dispatch(HandleTab(1));
@@ -100,6 +102,23 @@ function Player() {
                 alt="arrowIcon"
               ></img>
             </Comparison>
+            <TabContent
+              onClick={() => {
+                dispatch(HandleTab(3));
+                dispatch(ResetFilter2());
+              }}
+              changeColor={filters.tab === 3}
+            >
+              <div>{t("solo.tabs.heatmap")}</div>
+              <img
+                src={
+                  filters.tab === 3
+                    ? "Images/ico-1depth-arrow-on.png"
+                    : "Images/ico-1depth-arrow-off.png"
+                }
+                alt="arrowIcon"
+              ></img>
+            </TabContent>
           </TabContainer>
           <div>{BoardTab[filters.tab]}</div>
         </BoardWrapper>
@@ -122,6 +141,7 @@ const TabContainer = styled.ul`
   /* padding-bottom: 15px; */
 `;
 
+/*
 const PlayerAility = styled.li`
   cursor: pointer;
   display: flex;
@@ -148,6 +168,35 @@ const PlayerAility = styled.li`
   img {
   }
 `;
+*/
+
+const TabContent = styled.li`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding-bottom: 15px;
+  color: #84818e;
+  margin-right: 30px;
+  ${(props) =>
+    props.changeColor &&
+    css`
+      color: #f04545;
+      border-bottom: 2px solid #f04545;
+    `}
+  div {
+    width: auto;
+    height: 17px;
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 13px;
+    line-height: 1.31;
+    letter-spacing: -0.65px;
+    text-align: left;
+    margin-right: 4px;
+  }
+  img {
+  }
+`;
+
 
 // const SoloReport = styled.li`
 //   cursor: pointer;
@@ -207,3 +256,4 @@ const Comparison = styled.li`
     margin: 0 2.5px;
   }
 `;
+

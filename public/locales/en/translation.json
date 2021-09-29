@@ -189,7 +189,8 @@
     "tabs": {
       "board": "Dashboard",
       "soloRank": "Solo Rank Analysis",
-      "comparison": "Player Comparison"
+      "comparison": "Player Comparison",
+      "heatmap": "Heatmap"
     },
     "playerboard": {
       "country": "Nationality",
@@ -199,8 +200,8 @@
       "bestScore": "Best Rating",
       "summary": "Summary",
       "summaryLabel": "Pick champions for detailed results",
-      "soloranksummary":"Solo Rank",
-      "soloranksummaryLabel":"Regardless of the patch version, only data from the last 14 days are shown.",
+      "soloranksummary": "Solo Rank",
+      "soloranksummaryLabel": "Regardless of the patch version, only data from the last 14 days are shown.",
       "apply": "Apply",
       "reset": "Reset",
       "laneStat": "Lane Phase Stats",
@@ -220,7 +221,7 @@
       "winrate": "Win %",
       "banrate": "Ban %",
       "sbr": "PR",
-      "tier":"Tier",
+      "tier": "Tier",
       "performanceScore": "Performance Rating",
       "recentGame": "Recent Games",
       "carrer": "Career Stats",

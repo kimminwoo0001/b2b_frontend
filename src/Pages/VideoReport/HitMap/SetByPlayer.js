@@ -59,6 +59,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
   const [isActive2, setIsActive2] = useState(false);
   const { t } = useTranslation();
   const [champArray, setChampArray] = useState([]);
+  const isPageSolo = document.location.pathname === '/solo' ? true : false;
 
   function useOutsideAlerter(ref) {
     useEffect(() => {
@@ -105,21 +106,25 @@ function SetByPlayer({ minFrom, setMinFrom }) {
 
   const getTeam = async () => {
     try {
-      const response = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingFilter`,
-        params: {
-          league: filters.league,
-          patch: filters.patch,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id"),
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        },
-      });
-      const data = response.data.team;
-      setFilterData({ ...filterData, team: data });
+      if (isPageSolo) {
+        setIsActive(!isActive);
+      } else {
+        const response = await axios.request({
+          method: "GET",
+          url: `${API2}/api/mappingFilter`,
+          params: {
+            league: filters.league,
+            patch: filters.patch,
+            token: sessionStorage.getItem("token"),
+            id: sessionStorage.getItem("id"),
+          },
+          paramsSerializer: (params) => {
+            return qs.stringify(params, { arrayFormat: "repeat" });
+          },
+        });
+        const data = response.data.team;
+        setFilterData({ ...filterData, team: data });
+      }
     } catch (e) {
       console.log(e);
     }
@@ -127,22 +132,27 @@ function SetByPlayer({ minFrom, setMinFrom }) {
 
   const getPlayer = async () => {
     try {
-      const response = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingFilter`,
-        params: {
-          league: filters.league,
-          patch: filters.patch,
-          team: filters.team,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id"),
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        },
-      });
-      const data = response.data.player;
-      setFilterData({ ...filterData, player: data });
+      if (isPageSolo) {
+        setIsActive(!isActive);
+      } else {
+        const response = await axios.request({
+          method: "GET",
+          url: `${API2}/api/mappingFilter`,
+          params: {
+            league: filters.league,
+            patch: filters.patch,
+            team: filters.team,
+            token: sessionStorage.getItem("token"),
+            id: sessionStorage.getItem("id"),
+          },
+          paramsSerializer: (params) => {
+            return qs.stringify(params, { arrayFormat: "repeat" });
+          },
+        });
+        const data = response.data.player;
+        setFilterData({ ...filterData, player: data });
+      }
+
     } catch (e) {
       console.log(e);
     }
@@ -366,9 +376,10 @@ function SetByPlayer({ minFrom, setMinFrom }) {
                             team: filters.team,
                             player: filters.player,
                             champion_eng: champArray,
+                            position: filters.position,
                             oppteam: "",
                             oppplayer: "",
-                            oppchampion_eng: "",
+                            oppchampion_eng: ""
                           })
                         );
                       }}
@@ -400,7 +411,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
               aria-labelledby="range-slider"
               getAriaValueText={valuetext}
               valueLabelFormat={valuetext}
-              // ValueLabelComponent={ValueLabelComponent}
+            // ValueLabelComponent={ValueLabelComponent}
             />
           </SliderContainer>
           <DefaultTime>
