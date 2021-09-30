@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useDispatch } from "react-redux";
@@ -7,13 +7,13 @@ import { signIn } from "./signIn";
 import { UserID, UserToken, UserIP, UserDevice } from "../../redux/modules/user";
 import { useHistory } from "react-router-dom";
 import { Language } from "../../redux/modules/locale";
-
 // import LocaleDropdown from "./LocaleDropdown";
 
 function Login() {
   const { handleSubmit, register } = useForm();
   const dispatch = useDispatch();
   let history = useHistory();
+  
 
   const onSubmit = async ({ id, password }) => {
     try {
@@ -27,7 +27,7 @@ function Login() {
         dispatch(UserID(id));
         dispatch(UserToken(token.token));
         getUserIP();
-        dispatch(UserDevice());
+        getUserDevice();
         history.push("/");
       }
     } catch (e) {
@@ -40,6 +40,9 @@ function Login() {
     dispatch(UserIP(res.data.IPv4));
   }
 
+  const getUserDevice = () => {
+    dispatch(UserDevice(navigator.userAgent));
+  }
 
 
   return (
