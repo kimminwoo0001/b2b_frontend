@@ -25,6 +25,8 @@ function Routes() {
   const token = sessionStorage.getItem("token");
   const refreshToken = useSelector((state) => state.User);
 
+  console.log("token, refreshToken : ", token, refreshToken);
+
   const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
       {...rest}
