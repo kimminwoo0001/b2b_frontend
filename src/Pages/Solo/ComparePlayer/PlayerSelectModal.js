@@ -15,6 +15,7 @@ import {
 
 function PlayerSelectModal({ openModal, setOpenModal }) {
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [oppTeam, setOppTeam] = useState();
@@ -33,8 +34,8 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
         league: filters.league,
         patch: filters.patch,
         team: filters.team,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -52,8 +53,8 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
         patch: filters.patch,
         team: team,
         position: filters.position,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -77,7 +78,7 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
     <>
       <BackScreen
         openModal={openModal}
-        // onClick={() => setOpenModal(false)}
+      // onClick={() => setOpenModal(false)}
       ></BackScreen>
       <Wrapper openModal={openModal}>
         <ModalNav>

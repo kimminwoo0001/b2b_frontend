@@ -27,6 +27,7 @@ import { useDetectOutsideClick } from "./useDetectOustsideClick";
 function PlayerFilterModal({ playerModal, setPlayerModal }) {
   // sidebar 선수 비교 눌렀을때 뜨는 모달창
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -65,8 +66,8 @@ function PlayerFilterModal({ playerModal, setPlayerModal }) {
   const fetchLeagueFilter = async () => {
     const parsedMatchData = await axios.get(`${API}/api/filter/league`, {
       params: {
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -105,13 +106,13 @@ function PlayerFilterModal({ playerModal, setPlayerModal }) {
           league === "LCK"
             ? "lck"
             : league === "LEC"
-            ? "lec"
-            : league === "LCS"
-            ? "lcs"
-            : "msi",
+              ? "lec"
+              : league === "LCS"
+                ? "lcs"
+                : "msi",
         // patch: filters.patch,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -128,8 +129,8 @@ function PlayerFilterModal({ playerModal, setPlayerModal }) {
       params: {
         league: filters.league,
         patch: patch,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -147,8 +148,8 @@ function PlayerFilterModal({ playerModal, setPlayerModal }) {
         league: filters.league,
         patch: filters.patch,
         team: team,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -166,8 +167,8 @@ function PlayerFilterModal({ playerModal, setPlayerModal }) {
         league: filters.league,
         patch: filters.patch,
         team: team,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -186,8 +187,8 @@ function PlayerFilterModal({ playerModal, setPlayerModal }) {
         patch: filters.patch,
         team: team,
         position: filters.position,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -201,7 +202,7 @@ function PlayerFilterModal({ playerModal, setPlayerModal }) {
     <>
       <BackScreen
         playerModal={playerModal}
-        // onClick={() => setPlayerModal(false)}
+      // onClick={() => setPlayerModal(false)}
       ></BackScreen>
       <PlayerModalWrapper playerModal={playerModal}>
         <FilterContainer>

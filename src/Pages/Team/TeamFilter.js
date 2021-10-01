@@ -19,6 +19,7 @@ import { useDetectOutsideClick } from "./useDetectOustsideClick";
 
 function TeamFilter() {
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [leagueFilter, setLeagueFilter] = useState();
@@ -44,8 +45,8 @@ function TeamFilter() {
   const fetchLeagueFilter = async () => {
     const parsedMatchData = await axios.get(`${API}/api/filter/league`, {
       params: {
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id"),
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -101,8 +102,8 @@ function TeamFilter() {
                   ? "lpl"
                   : "21msi",
         // patch: filters.patch,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id"),
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -119,8 +120,8 @@ function TeamFilter() {
       params: {
         league: filters.league,
         patch: filters.patch,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id"),
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });

@@ -20,9 +20,9 @@ function Login() {
       const token = await signIn({ id, password });
       // submit버튼 눌러서 로그인 성공시 token, locale, id 값을 세션스토리지랑 store에 이중으로 저장함
       if (token !== "fail") {
-        sessionStorage.setItem("token", token.token);
+        //sessionStorage.setItem("token", token.token);
         sessionStorage.setItem("i18nextLng", token.language);
-        sessionStorage.setItem("id", id);
+        //sessionStorage.setItem("id", id);
         dispatch(Language(token.language));
         dispatch(UserID(id));
         dispatch(UserToken(token.token));
@@ -39,8 +39,6 @@ function Login() {
     const res = await axios.get('https://geolocation-db.com/json/')
     dispatch(UserIP(res.data.IPv4));
   }
-
-
 
   return (
     <LoginWrapper>

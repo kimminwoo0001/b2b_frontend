@@ -10,6 +10,7 @@ import DataProcess from "../DataProcessing/DataProcess";
 function Nav() {
   // locale 값을 store에 저장된 값을 가져옴
   const lang = useSelector((state) => state.LocaleReducer);
+  const user = useSelector((state) => state.UserReducer);
   const { i18n } = useTranslation();
   let history = useHistory();
 
@@ -35,8 +36,8 @@ function Nav() {
       <Greet>
         <div>
           {lang === "en"
-            ? `Hello, ${sessionStorage.getItem("id")}`
-            : `${sessionStorage.getItem("id")} 님 안녕하세요!`}
+            ? `Hello, ${user.id}`
+            : `${user.id} 님 안녕하세요!`}
         </div>
         {/* <div>{t("title")}</div> */}
         {/* <div className="LastUpdate"></div> */}

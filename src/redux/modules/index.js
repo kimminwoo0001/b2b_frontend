@@ -11,14 +11,14 @@ import storageSession from 'redux-persist/lib/storage/session'
 const persistConfig = {
   key: "root",
   storage: storageSession,
-  whitelist: ["FilterReducer", "User"]
+  whitelist: ["FilterReducer", "UserReducer"]
 };
 
 const rootReducer = combineReducers({
   BanPickReducer: teambanpick,
   FilterReducer: filtervalue,
   LocaleReducer: locale,
-  User: user,
+  UserReducer: user,
   StaticValueReducer: staticvalue,
 });
 

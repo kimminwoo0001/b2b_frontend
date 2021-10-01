@@ -9,6 +9,7 @@ import TabforTop from "./TabforTop";
 
 function LeaguePick() {
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const [loading, setLoading] = useState(false);
   const [positionTab, setPositionTab] = useState(0);
   const [queryPosition, setQueryPosition] = useState();
@@ -97,8 +98,8 @@ function LeaguePick() {
         league: filters.league,
         patch: filters.patch,
         position: queryPosition,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });

@@ -24,9 +24,10 @@ function OppStat() {
   const { t } = useTranslation();
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const [loading, setLoading] = useState(false);
-  const { filters, lang } = useSelector((state) => ({
+  const { filters, lang, user } = useSelector((state) => ({
     filters: state.FilterReducer,
-    lang: state.LocaleReducer
+    lang: state.LocaleReducer,
+    user: state.UserReducer
   }));
   const [player, setPlayer] = useState();
   const [oppPlayer, setOppPlayer] = useState();
@@ -59,8 +60,8 @@ function OppStat() {
         oppplayer: filters.oppplayer,
         champion: filters.champion_eng,
         oppchampion: filters.oppchampion_eng,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -84,8 +85,8 @@ function OppStat() {
         oppplayer: filters.oppplayer,
         player: filters.player,
         oppchampion: filters.oppchampion_eng,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -108,8 +109,8 @@ function OppStat() {
         oppplayer: filters.player,
         player: filters.oppplayer,
         champion: filters.champion_eng,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -156,8 +157,8 @@ function OppStat() {
                       {filters.champion
                         ? filters.champion
                         : lang === "kr"
-                        ? `${filters.player} ${t("filters.allChampLabel2")}`
-                        : `${t("filters.allChampLabel2")} ${filters.player} `}
+                          ? `${filters.player} ${t("filters.allChampLabel2")}`
+                          : `${t("filters.allChampLabel2")} ${filters.player} `}
                     </span>
                     <img
                       className="ArrowIcon"
@@ -210,9 +211,8 @@ function OppStat() {
                       {filters.oppchampion
                         ? filters.oppchampion
                         : lang === "kr"
-                        ? `${filters.oppplayer} ${t("filters.allChampLabel2")}`
-                        : `${t("filters.allChampLabel2")} ${
-                            filters.oppplayer
+                          ? `${filters.oppplayer} ${t("filters.allChampLabel2")}`
+                          : `${t("filters.allChampLabel2")} ${filters.oppplayer
                           } `}
                     </span>
                     <img

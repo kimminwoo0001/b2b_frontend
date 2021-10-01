@@ -28,6 +28,7 @@ function mycomparator(a, b) {
 
 function ComparePosition() {
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const [loading, setLoading] = useState(false);
   const [teamName, setTeamName] = useState();
   const { t } = useTranslation();
@@ -63,8 +64,8 @@ function ComparePosition() {
         patch: filters.patch,
         team: filters.team,
         oppteam: filters.oppteam,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });

@@ -24,6 +24,7 @@ function PlayerBoard() {
   //선수 보고서 => 선수 상황판
   const filters = useSelector((state) => state.FilterReducer);
   const lang = useSelector((state) => state.LocaleReducer);
+  const user = useSelector((state) => state.UserReducer);
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -72,8 +73,8 @@ function PlayerBoard() {
         player: filters.player,
         champion: filters.champion_eng,
         oppchampion: filters.oppchampion_eng,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id"),
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -129,8 +130,8 @@ function PlayerBoard() {
         league: filters.league,
         patch: filters.patch,
         player: filters.player,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id"),
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -152,8 +153,8 @@ function PlayerBoard() {
         position: filters.position,
         champion: filters.champion_eng,
         player: filters.player,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id"),
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -174,8 +175,8 @@ function PlayerBoard() {
         patch: filters.patch,
         player: filters.player,
         team: filters.team,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id"),
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -258,9 +259,8 @@ function PlayerBoard() {
             <div className="AttendValue">
               <span className="Wins">{`${matchInfo?.match}${t(
                 "solo.playerboard.games"
-              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${
-                matchInfo?.loss
-              }${t("solo.playerboard.lose")}`}</span>
+              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${matchInfo?.loss
+                }${t("solo.playerboard.lose")}`}</span>
               <span className="WinRate">{`${matchInfo?.winrate.toFixed(
                 1
               )}%`}</span>

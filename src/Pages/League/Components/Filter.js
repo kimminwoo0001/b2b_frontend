@@ -17,8 +17,10 @@ import qs from "qs";
 function Filter() {
   //리그 필터
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const dispatch = useDispatch();
   const [leagueFilter, setLeagueFilter] = useState();
+
 
   const { t } = useTranslation();
   const LeagueLCK = "lck";
@@ -37,8 +39,8 @@ function Filter() {
   const fetchLeagueFilter = async () => {
     const parsedMatchData = await axios.get(`${API}/api/filter/league`, {
       params: {
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -96,8 +98,8 @@ function Filter() {
                   ? "lcs"
                   : "21msi",
         // patch: filters.patch,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });

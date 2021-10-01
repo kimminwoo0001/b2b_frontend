@@ -19,6 +19,7 @@ import qs from "qs";
 function CompareIngame() {
   //팀 비교 인게임 지표
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [teamName, setTeamName] = useState();
@@ -59,8 +60,8 @@ function CompareIngame() {
         patch: filters.patch,
         team: filters.team,
         oppteam: filters.oppteam,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -199,19 +200,17 @@ function CompareIngame() {
         <GameDataBox>
           <RedTeamData
           // changeColor={redData?.IngameStats["gameTime"].result === true}
-          >{`${redData?.IngameStats["match"]}${t("team.comparison.total")} ${
-            redData?.IngameStats["win"]
-          }${t("team.comparison.win")} ${redData?.IngameStats["lose"]}${t(
-            "team.comparison.lose"
-          )}`}</RedTeamData>
+          >{`${redData?.IngameStats["match"]}${t("team.comparison.total")} ${redData?.IngameStats["win"]
+            }${t("team.comparison.win")} ${redData?.IngameStats["lose"]}${t(
+              "team.comparison.lose"
+            )}`}</RedTeamData>
           <AverageLabel>{t("team.comparison.record")}</AverageLabel>
           <BlueTeamData
           // changeColor={blueData?.IngameStats["gameTime"].result === true}
-          >{`${blueData?.IngameStats["match"]}${t("team.comparison.total")} ${
-            blueData?.IngameStats["win"]
-          }${t("team.comparison.win")} ${blueData?.IngameStats["lose"]}${t(
-            "team.comparison.lose"
-          )}`}</BlueTeamData>
+          >{`${blueData?.IngameStats["match"]}${t("team.comparison.total")} ${blueData?.IngameStats["win"]
+            }${t("team.comparison.win")} ${blueData?.IngameStats["lose"]}${t(
+              "team.comparison.lose"
+            )}`}</BlueTeamData>
         </GameDataBox>
         <GameDataBox>
           <RedTeamData

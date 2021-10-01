@@ -12,6 +12,7 @@ import { GetFilterAllItems } from "../../redux/modules/staticvalue";
 function HomeContents() {
   const filters = useSelector((state) => state.FilterReducer);
   const staticvalue = useSelector((state) => state.StaticValueReducer);
+  const user = useSelector((state) => state.UserReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -37,8 +38,8 @@ function HomeContents() {
         method: "GET",
         url: `${API}/api/home/home`,
         params: {
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          token: user.token,
+          id: user.id
         }
       });
       setLckData(jsonData.data["LCK"]);
@@ -62,7 +63,7 @@ function HomeContents() {
 
   if (filters.loading) return <LoadingImg />;
 
-  console.log("staticvalue.filterObjects: ", staticvalue.filterObjects);
+  console.log("전역 변수 테스트", staticvalue);
   return (
     <LeagueListWrapper>
       <BoxWrapper>

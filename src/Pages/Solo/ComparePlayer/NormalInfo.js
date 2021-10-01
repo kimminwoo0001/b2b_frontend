@@ -21,6 +21,7 @@ import qs from "qs";
 function NormalInfo() {
   //기본정보 탭
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const lang = useSelector((state) => state.LocaleReducer);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -65,8 +66,8 @@ function NormalInfo() {
         oppplayer: filters.oppplayer,
         champion: filters.champion_eng,
         oppchampion: filters.oppchampion_eng,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -106,8 +107,8 @@ function NormalInfo() {
         patch: filters.patch,
         player: filters.player,
         oppplayer: filters.oppplayer,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -127,8 +128,8 @@ function NormalInfo() {
         champion: filters.champion_eng,
         player: filters.player,
         oppplayer: filters.oppplayer,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });

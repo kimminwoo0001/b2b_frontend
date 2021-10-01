@@ -16,6 +16,7 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
   const [oppTeam, setOppTeam] = useState();
   const { t } = useTranslation();
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
 
   const dispatch = useDispatch();
 
@@ -32,8 +33,8 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
         league: filters.league,
         patch: filters.patch,
         team: filters.team,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -47,7 +48,7 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
     <>
       <BackScreen
         openModal={openModal}
-        // onClick={() => setOpenModal(false)}
+      // onClick={() => setOpenModal(false)}
       ></BackScreen>
       <TeamModalWrapper openModal={openModal}>
         <ModalNav>

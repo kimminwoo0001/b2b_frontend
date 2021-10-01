@@ -22,16 +22,14 @@ import Footer from "./Components/Footer/Footer";
 import { useSelector } from "react-redux";
 
 function Routes() {
-  const token = sessionStorage.getItem("token");
-  const refreshToken = useSelector((state) => state.User);
-
-  console.log("token, refreshToken : ", token, refreshToken);
+  //const token = sessionStorage.getItem("token");
+  const user = useSelector((state) => state.UserReducer);
 
   const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
       {...rest}
       render={(props) =>
-        token || refreshToken.token ? (
+        user.token ? (
           <Component {...props} />
         ) : (
           <Redirect to="/login" />

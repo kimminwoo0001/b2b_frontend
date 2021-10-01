@@ -24,6 +24,7 @@ import { useDetectOutsideClick } from "./useDetectOustsideClick";
 function TeamFilterModal({ teamModal, setTeamModal }) {
   //사이드바에 있는 팀 비교 탭 모달창
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
 
   const dispatch = useDispatch();
 
@@ -58,8 +59,8 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
   const fetchLeagueFilter = async () => {
     const parsedMatchData = await axios.get(`${API}/api/filter/league`, {
       params: {
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -115,8 +116,8 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
                 ? "lcs"
                 : "msi",
         // patch: filters.patch,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -133,8 +134,8 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
       params: {
         league: filters.league,
         patch: patch,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -152,8 +153,8 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
         league: filters.league,
         patch: filters.patch,
         team: team,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });

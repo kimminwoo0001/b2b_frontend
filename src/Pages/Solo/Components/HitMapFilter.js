@@ -18,6 +18,7 @@ function HitMapFilter() {
   const dispatch = useDispatch();
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const [champFilter, setChampFilter] = useState();
   const [champEng, setChampEng] = useState();
   const [oppFilter, setOppFilter] = useState();
@@ -34,8 +35,8 @@ function HitMapFilter() {
         league: filters.league,
         patch: filters.patch,
         player: filters.player,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       }
     });
     setChampFilter(response.data.champion);
@@ -53,8 +54,8 @@ function HitMapFilter() {
         champion: filters.champion_eng,
         player: filters.player,
         oppplayer: filters.oppplayer,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       }
     });
     setOppFilter(response.data.champion);

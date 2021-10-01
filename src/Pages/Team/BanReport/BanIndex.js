@@ -27,6 +27,7 @@ import qs from "qs";
 
 function BanIndex() {
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const dispatch = useDispatch();
   const [phase1, setPhase1] = useState();
   const [phase2, setPhase2] = useState();
@@ -84,8 +85,8 @@ function BanIndex() {
         patch: filters.patch,
         team: filters.team,
         side: side,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });

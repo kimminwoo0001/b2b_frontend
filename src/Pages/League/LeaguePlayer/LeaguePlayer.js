@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 
 function LeaguePlayer() {
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const [positionClicked, setPositionClicked] = useState("top");
   const [loading, setIsLoading] = useState(false);
   const [playerData, setPlayerData] = useState();
@@ -37,8 +38,8 @@ function LeaguePlayer() {
         league: filters.league,
         patch: filters.patch,
         position: positionClicked,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });

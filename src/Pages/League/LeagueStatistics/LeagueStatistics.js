@@ -10,6 +10,7 @@ import qs from "qs";
 function LeagueStatistics() {
   //리그 통합 지수 텝
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const { t } = useTranslation();
   const lang = useSelector((state) => state.LocaleReducer);
   const [loading, setLoading] = useState(false);
@@ -51,8 +52,8 @@ function LeagueStatistics() {
       params: {
         league: filters.league,
         patch: filters.patch,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });

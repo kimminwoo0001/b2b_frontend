@@ -23,6 +23,7 @@ import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetec
 
 function SoloFilter() {
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const dispatch = useDispatch();
   const [leagueFilter, setLeagueFilter] = useState();
 
@@ -65,8 +66,8 @@ function SoloFilter() {
   const fetchLeagueFilter = async () => {
     const parsedMatchData = await axios.get(`${API}/api/filter/league`, {
       params: {
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -98,13 +99,13 @@ function SoloFilter() {
           league === "LCK"
             ? "lck"
             : league === "LEC"
-            ? "lec"
-            : league === "LCS"
-            ? "lcs"
-            : "21msi",
+              ? "lec"
+              : league === "LCS"
+                ? "lcs"
+                : "21msi",
         // patch: filters.patch,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -123,8 +124,8 @@ function SoloFilter() {
       params: {
         league: filters.league,
         patch: filters.patch,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -142,8 +143,8 @@ function SoloFilter() {
         league: filters.league,
         patch: filters.patch,
         team: filters.team,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });

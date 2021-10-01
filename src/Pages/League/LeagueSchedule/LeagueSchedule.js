@@ -15,6 +15,7 @@ import WeekFive from "./WeekFive";
 
 function LeagueSchedule() {
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const { t } = useTranslation();
   //week 상태 관리
   const [startDate, setStartDate] = useState(new Date());
@@ -79,8 +80,8 @@ function LeagueSchedule() {
         league: filters.league,
         year: convertYear(startDate),
         month: convertMonth(startDate),
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });

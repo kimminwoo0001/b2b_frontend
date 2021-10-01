@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 function PlayerCompare() {
   const filters = useSelector((state) => state.FilterReducer);
   const lang = useSelector((state) => state.LocaleReducer);
+  const user = useSelector((state) => state.UserReducer);
   const [data, setData] = useState();
   const [oppData, setOppData] = useState();
   const { t } = useTranslation();
@@ -31,8 +32,8 @@ function PlayerCompare() {
         player: filters.player,
         oppteam: filters.oppteam,
         oppplayer: filters.oppplayer,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });

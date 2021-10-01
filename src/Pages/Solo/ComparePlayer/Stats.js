@@ -34,6 +34,7 @@ import {
 function Stats() {
   //능력치 탭
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const lang = useSelector((state) => state.LocaleReducer);
   const [lineStat, setLineStat] = useState();
   const dispatch = useDispatch();
@@ -173,8 +174,8 @@ function Stats() {
         patch: filters.patch,
         player: filters.player,
         oppplayer: filters.oppplayer,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id"),
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -195,8 +196,8 @@ function Stats() {
         champion: filters.champion_eng,
         player: filters.player,
         oppplayer: filters.oppplayer,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id"),
+        token: user.token,
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -680,7 +681,7 @@ function Stats() {
                       // strokeDasharray="4 4"
                       horizontal={false}
                       vertical={false}
-                      // horizontalPoints={[40, 80, 120, 160, 200, 240]}
+                    // horizontalPoints={[40, 80, 120, 160, 200, 240]}
                     />
                     <XAxis
                       type={"number"}
@@ -760,7 +761,7 @@ function Stats() {
                       // strokeDasharray="4 4"
                       horizontal={false}
                       vertical={false}
-                      // horizontalPoints={[25, 75, 125, 175, 225]}
+                    // horizontalPoints={[25, 75, 125, 175, 225]}
                     />
                     <XAxis
                       domain={[0, 100]}

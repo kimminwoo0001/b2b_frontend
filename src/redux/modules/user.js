@@ -40,7 +40,7 @@ export default function UserReducer(state = initialState, action) {
     case USER_TOKEN:
       return { ...state, token: action.payload };
     case USER_ID:
-      return { ...state, user: action.payload };
+      return { ...state, id: action.payload };
     case User_IP:
       return { ...state, ip: action.payload }
     case User_Device:

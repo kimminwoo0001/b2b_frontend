@@ -9,6 +9,7 @@ import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetec
 
 function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const { t } = useTranslation();
   const [team1, setTeam1] = useState();
   const [team2, setTeam2] = useState();
@@ -36,8 +37,8 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
         patch: filters.patch,
         team1: el.Team1,
         team2: el.Team2,
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -59,8 +60,8 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
         patch: filters.patch,
         team1: player1.join(),
         team2: player2.join(),
-        token: sessionStorage.getItem("token"),
-        id: sessionStorage.getItem("id")
+        token: user.token,
+        id: user.id
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
@@ -82,9 +83,8 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
         <TabWrapper>
           <DateAndTime>
             <div className="Date">{el.Date}</div>
-            <div className="Time">{`${t("league.schedule.pm")} ${
-              el.Time
-            }`}</div>
+            <div className="Time">{`${t("league.schedule.pm")} ${el.Time
+              }`}</div>
           </DateAndTime>
           <BlueSide>
             <WinRate1></WinRate1>
@@ -213,9 +213,8 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
                         </div>
                         <nav
                           ref={dropdownRef}
-                          className={`menu ${
-                            isActive2 ? "active" : "inactive"
-                          }`}
+                          className={`menu ${isActive2 ? "active" : "inactive"
+                            }`}
                         >
                           <ul>
                             {team1?.jng?.map((data, idx) => {
@@ -267,9 +266,8 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
                         </div>
                         <nav
                           ref={dropdownRef}
-                          className={`menu ${
-                            isActive3 ? "active" : "inactive"
-                          }`}
+                          className={`menu ${isActive3 ? "active" : "inactive"
+                            }`}
                         >
                           <ul>
                             {team1?.mid?.map((data, idx) => {
@@ -323,9 +321,8 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
                         </div>
                         <nav
                           ref={dropdownRef}
-                          className={`menu ${
-                            isActive4 ? "active" : "inactive"
-                          }`}
+                          className={`menu ${isActive4 ? "active" : "inactive"
+                            }`}
                         >
                           <ul>
                             {team1?.bot?.map((data, idx) => {
@@ -377,9 +374,8 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
                         </div>
                         <nav
                           ref={dropdownRef}
-                          className={`menu ${
-                            isActive5 ? "active" : "inactive"
-                          }`}
+                          className={`menu ${isActive5 ? "active" : "inactive"
+                            }`}
                         >
                           <ul>
                             {team1?.sup?.map((data, idx) => {
@@ -446,9 +442,8 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
                         </div>
                         <nav
                           ref={dropdownRef}
-                          className={`menu ${
-                            isActive6 ? "active" : "inactive"
-                          }`}
+                          className={`menu ${isActive6 ? "active" : "inactive"
+                            }`}
                         >
                           <ul>
                             {team2?.top?.map((data, idx) => {
@@ -500,9 +495,8 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
                         </div>
                         <nav
                           ref={dropdownRef}
-                          className={`menu ${
-                            isActive7 ? "active" : "inactive"
-                          }`}
+                          className={`menu ${isActive7 ? "active" : "inactive"
+                            }`}
                         >
                           <ul>
                             {team2?.jng?.map((data, idx) => {
@@ -554,9 +548,8 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
                         </div>
                         <nav
                           ref={dropdownRef}
-                          className={`menu ${
-                            isActive8 ? "active" : "inactive"
-                          }`}
+                          className={`menu ${isActive8 ? "active" : "inactive"
+                            }`}
                         >
                           <ul>
                             {team2?.mid?.map((data, idx) => {
@@ -610,9 +603,8 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
                         </div>
                         <nav
                           ref={dropdownRef}
-                          className={`menu ${
-                            isActive9 ? "active" : "inactive"
-                          }`}
+                          className={`menu ${isActive9 ? "active" : "inactive"
+                            }`}
                         >
                           <ul>
                             {team2?.bot?.map((data, idx) => {
@@ -664,9 +656,8 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
                         </div>
                         <nav
                           ref={dropdownRef}
-                          className={`menu ${
-                            isActive10 ? "active" : "inactive"
-                          }`}
+                          className={`menu ${isActive10 ? "active" : "inactive"
+                            }`}
                         >
                           <ul>
                             {team2?.sup?.map((data, idx) => {
@@ -710,13 +701,13 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
             <WinRateButton
               Active={
                 Object.keys(roster1).length === 5 &&
-                Object.keys(roster2).length === 5
+                  Object.keys(roster2).length === 5
                   ? true
                   : false
               }
               onClick={() => {
                 Object.keys(roster1).length === 5 &&
-                Object.keys(roster2).length === 5
+                  Object.keys(roster2).length === 5
                   ? GetWinRate()
                   : alert("5개 이상 선택해주세요");
               }}
