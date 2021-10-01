@@ -51,25 +51,31 @@ function SetByPlayer({ minFrom, setMinFrom }) {
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
   const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef);
+  const isActive2 = useRef(false);
   const dispatch = useDispatch();
   const dropdownRef = useRef(null);
-  const [filterData, setFilterData] = useState({});
+  const [filterData, setFilterData] = useState();
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const [isActive1, setIsActive1] = useDetectOutsideClick(dropdownRef, false);
-  const [isActive2, setIsActive2] = useState(false);
   const { t } = useTranslation();
   const [champArray, setChampArray] = useState([]);
   const isPageSolo = document.location.pathname === '/solo' ? true : false;
+  useOutsideAlerter(wrapperRef, isActive2, filters, champArray);
 
-  function useOutsideAlerter(ref) {
+  function useOutsideAlerter(ref, isActive2, filters, champArray) {
+
     useEffect(() => {
       /**
        * Alert if clicked on outside of element
        */
       function handleClickOutside(event) {
-        if (ref.current && !ref.current.contains(event.target)) {
-          setIsActive2(false);
+        if (isActive2.current && ref?.current) {
+          if (!ref?.current.contains(event.target)) {
+            //setIsActive2(false);
+            isActive2.current = false;
+            console.log("filterData, champArray", filters, champArray)
+            clickChampionConfirm();
+          }
         }
       }
 
@@ -79,7 +85,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
         // Unbind the event listener on clean up
         document.removeEventListener("mousedown", handleClickOutside);
       };
-    }, [ref]);
+    }, [ref, isActive2, filters, champArray]);
   }
 
   const pushChampion = (champion) => {
@@ -152,6 +158,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
         });
         const data = response.data.player;
         setFilterData({ ...filterData, player: data });
+
       }
 
     } catch (e) {
@@ -182,6 +189,27 @@ function SetByPlayer({ minFrom, setMinFrom }) {
       console.log(e);
     }
   };
+
+  const clickChampionConfirm = () => {
+    isActive2.current = false;
+    console.log();
+    dispatch(
+      Reset_Map({
+        tab: filters.tab,
+        convertleague: filters.convertleague,
+        league: filters.league,
+        patch: filters.patch,
+        patchfilter: filters.patchfilter,
+        team: filters.team,
+        player: filters.player,
+        champion_eng: champArray,
+        position: filters.position,
+        oppteam: "",
+        oppplayer: "",
+        oppchampion_eng: ""
+      })
+    );
+  }
 
   return (
     <SetByPlayerContainer>
@@ -309,7 +337,8 @@ function SetByPlayer({ minFrom, setMinFrom }) {
             <div className="menu-container2">
               <button
                 onClick={() => {
-                  setIsActive2(!isActive2);
+                  //setIsActive2(!isActive2);
+                  isActive2.current = !isActive2.current;
                   getChampion();
                 }}
                 className="menu-trigger2"
@@ -324,10 +353,11 @@ function SetByPlayer({ minFrom, setMinFrom }) {
                   alt="arrowIcon"
                 />
               </button>
+              {console.log("isActive2.current:", isActive2.current)}
               {filterData?.champion ? (
                 <nav
                   ref={wrapperRef}
-                  className={`menu2 ${isActive2 ? "active" : "inactive"}`}
+                  className={`menu2 ${isActive2.current ? "active" : "inactive"}`}
                 >
                   <ul>
                     <li
@@ -366,23 +396,8 @@ function SetByPlayer({ minFrom, setMinFrom }) {
                     })}
                     <button
                       onClick={() => {
-                        setIsActive2(false);
-                        dispatch(
-                          Reset_Map({
-                            tab: filters.tab,
-                            convertleague: filters.convertleague,
-                            league: filters.league,
-                            patch: filters.patch,
-                            patchfilter: filters.patchfilter,
-                            team: filters.team,
-                            player: filters.player,
-                            champion_eng: champArray,
-                            position: filters.position,
-                            oppteam: "",
-                            oppplayer: "",
-                            oppchampion_eng: ""
-                          })
-                        );
+                        //setIsActive2(false);
+                        clickChampionConfirm();
                       }}
                     >
                       {t("video.object.confirm")}

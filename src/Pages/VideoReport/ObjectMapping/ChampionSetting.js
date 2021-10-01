@@ -43,7 +43,7 @@ function ChampionSetting({
        */
       function handleClickOutside(event) {
         if (ref.current && !ref.current.contains(event.target)) {
-          setIsActive2(false);
+          setIsActive2(false)
         }
       }
 
@@ -331,6 +331,51 @@ function ChampionSetting({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.oppchampion_eng, side, filters.patch]);
 
+  const clickPlayerConfirm = () => {
+    setIsActive2(false);
+    setGameSelect([]);
+    setGameOpen(true);
+    setChampArray2([]);
+    getGame();
+    dispatch(
+      Reset_Map({
+        tab: filters.tab,
+        convertleague: filters.convertleague,
+        league: filters.league,
+        patch: filters.patch,
+        patchfilter: filters.patchfilter,
+        team: filters.team,
+        player: filters.player,
+        champion_eng: champArray,
+        oppteam: "",
+        oppplayer: "",
+        oppchampion_eng: "",
+      })
+    );
+  }
+
+  const clickCompareConfirm = () => {
+    setIsActive5(false);
+    setGameSelect([]);
+    setGameOpen(true);
+    getGameAll();
+    dispatch(
+      Reset_Map({
+        tab: filters.tab,
+        convertleague: filters.convertleague,
+        league: filters.league,
+        patch: filters.patch,
+        patchfilter: filters.patchfilter,
+        team: filters.team,
+        player: filters.player,
+        champion_eng: champArray,
+        oppteam: filters.oppteam,
+        oppplayer: filters.oppplayer,
+        oppchampion_eng: champArray2,
+      })
+    );
+  }
+
   return (
     <ChampionSettingContainer>
       <FilterBox>
@@ -508,26 +553,7 @@ function ChampionSetting({
                     })}
                     <button
                       onClick={() => {
-                        setIsActive2(false);
-                        setGameSelect([]);
-                        setGameOpen(true);
-                        setChampArray2([]);
-                        getGame();
-                        dispatch(
-                          Reset_Map({
-                            tab: filters.tab,
-                            convertleague: filters.convertleague,
-                            league: filters.league,
-                            patch: filters.patch,
-                            patchfilter: filters.patchfilter,
-                            team: filters.team,
-                            player: filters.player,
-                            champion_eng: champArray,
-                            oppteam: "",
-                            oppplayer: "",
-                            oppchampion_eng: "",
-                          })
-                        );
+                        clickPlayerConfirm();
                       }}
                     >
                       {t("video.object.confirm")}
@@ -715,25 +741,7 @@ function ChampionSetting({
                     })}
                     <button
                       onClick={() => {
-                        setIsActive5(false);
-                        setGameSelect([]);
-                        setGameOpen(true);
-                        getGameAll();
-                        dispatch(
-                          Reset_Map({
-                            tab: filters.tab,
-                            convertleague: filters.convertleague,
-                            league: filters.league,
-                            patch: filters.patch,
-                            patchfilter: filters.patchfilter,
-                            team: filters.team,
-                            player: filters.player,
-                            champion_eng: champArray,
-                            oppteam: filters.oppteam,
-                            oppplayer: filters.oppplayer,
-                            oppchampion_eng: champArray2,
-                          })
-                        );
+                        clickCompareConfirm();
                       }}
                     >
                       {t("video.object.confirm")}
