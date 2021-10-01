@@ -48,6 +48,7 @@ function useIntervalNormal(callback) {
 
 function GameMapping() {
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
   // queryString 핸들링 상태값
@@ -86,8 +87,8 @@ function GameMapping() {
           team: filters.team,
           object: "off",
           side: side,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id"),
+          token: user.token,
+          id: user.id,
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
@@ -109,8 +110,8 @@ function GameMapping() {
         url: `${API2}/api/mappingPosition`,
         params: {
           gameid: filters.gameid,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id"),
+          token: user.token,
+          id: user.id,
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
@@ -278,11 +279,11 @@ function GameMapping() {
                 ) {
                   if (
                     Number(currentPos[range]?.player[i].x1) -
-                      Number(currentPos[range]?.player[i].x2) !==
-                      0 &&
+                    Number(currentPos[range]?.player[i].x2) !==
+                    0 &&
                     Number(currentPos[range]?.player[i].y1) -
-                      Number(currentPos[range]?.player[i].y2) !==
-                      0
+                    Number(currentPos[range]?.player[i].y2) !==
+                    0
                   ) {
                     var x =
                       ((Number(currentPos[range]?.player[i].x1) +
@@ -409,9 +410,8 @@ function GameMapping() {
             ).toFixed(1)}`}</span>
             <p>/</p>
             {maxTime ? (
-              <span className="max">{`${Math.floor(maxTime / 2 / 60)} : ${
-                (maxTime / 2) % 60
-              }`}</span>
+              <span className="max">{`${Math.floor(maxTime / 2 / 60)} : ${(maxTime / 2) % 60
+                }`}</span>
             ) : (
               <span className="max">{`00 : 00`}</span>
             )}

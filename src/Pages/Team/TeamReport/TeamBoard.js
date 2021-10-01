@@ -7,6 +7,7 @@ import { API } from "../../config";
 import qs from "qs";
 function TeamBoard() {
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const [all, setAll] = useState();
   const { t } = useTranslation();
 
@@ -24,8 +25,8 @@ function TeamBoard() {
           league: filters.league,
           patch: filters.patch,
           team: filters.team,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          token: user.token,
+          id: user.id
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });

@@ -85,8 +85,8 @@ function Stats() {
           oppplayer: filters.oppplayer,
           champion: filters.champion_eng,
           oppchampion: filters.oppchampion_eng,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id"),
+          token: user.token,
+          id: user.id,
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });

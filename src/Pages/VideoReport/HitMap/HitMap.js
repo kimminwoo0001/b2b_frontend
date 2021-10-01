@@ -18,6 +18,7 @@ function HitMap() {
   const isPageSolo = document.location.pathname === '/solo' ? true : false;
 
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const resetHeatMap1 = useRef(null);
   const resetHeatMap2 = useRef(null);
   // const [loading, setLoading] = useState(false);
@@ -41,8 +42,8 @@ function HitMap() {
           opp_player: filters.oppplayer,
           opp_champion: filters.oppchampion_eng,
           side: "all",
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id"),
+          token: user.token,
+          id: user.id,
           firstTime: firstTime,
           secondTime: secondTime
         },

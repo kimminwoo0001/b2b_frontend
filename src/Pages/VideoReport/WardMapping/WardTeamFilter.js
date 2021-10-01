@@ -49,6 +49,7 @@ const WardSlider = withStyles({
 
 function WardTeamFilter({ minFrom, setMinFrom }) {
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const dispatch = useDispatch();
   const dropdownRef = useRef(null);
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
@@ -68,8 +69,8 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
         params: {
           league: filters.league,
           patch: filters.patch,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          token: user.token,
+          id: user.id
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
@@ -153,7 +154,7 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
             aria-labelledby="range-slider"
             // getAriaValueText={valuetext}
             valueLabelFormat={valuetext}
-            // ValueLabelComponent={ValueLabelComponent}
+          // ValueLabelComponent={ValueLabelComponent}
           />
         </SliderContainer>
 

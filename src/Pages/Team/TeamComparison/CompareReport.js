@@ -7,6 +7,7 @@ import { API } from "../../config";
 import qs from "qs";
 function CompareReport() {
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const [board, setBoard] = useState();
   const { t } = useTranslation();
   //팀 비교 보고서
@@ -25,8 +26,8 @@ function CompareReport() {
           patch: filters.patch,
           team: filters.team,
           oppteam: filters.oppteam,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          token: user.token,
+          id: user.id
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });

@@ -49,6 +49,7 @@ const WardSlider = withStyles({
 
 function SetByPlayer({ minFrom, setMinFrom }) {
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef);
   const dispatch = useDispatch();
@@ -115,8 +116,8 @@ function SetByPlayer({ minFrom, setMinFrom }) {
           params: {
             league: filters.league,
             patch: filters.patch,
-            token: sessionStorage.getItem("token"),
-            id: sessionStorage.getItem("id"),
+            token: user.token,
+            id: user.id,
           },
           paramsSerializer: (params) => {
             return qs.stringify(params, { arrayFormat: "repeat" });
@@ -142,8 +143,8 @@ function SetByPlayer({ minFrom, setMinFrom }) {
             league: filters.league,
             patch: filters.patch,
             team: filters.team,
-            token: sessionStorage.getItem("token"),
-            id: sessionStorage.getItem("id"),
+            token: user.token,
+            id: user.id,
           },
           paramsSerializer: (params) => {
             return qs.stringify(params, { arrayFormat: "repeat" });
@@ -168,8 +169,8 @@ function SetByPlayer({ minFrom, setMinFrom }) {
           patch: filters.patch,
           team: filters.team,
           player: filters.player,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id"),
+          token: user.token,
+          id: user.id,
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });

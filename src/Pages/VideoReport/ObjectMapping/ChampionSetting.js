@@ -18,6 +18,7 @@ function ChampionSetting({
 }) {
   //오브젝트 별 동선 팀/선수 기준 설정 Step 에 있는 드랍다운
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const wrapperRef = useRef(null);
   const wrapperRef2 = useRef(null);
   useOutsideAlerter(wrapperRef);
@@ -123,8 +124,8 @@ function ChampionSetting({
         params: {
           league: filters.league,
           patch: filters.patch,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id"),
+          token: user.token,
+          id: user.id,
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
@@ -146,8 +147,8 @@ function ChampionSetting({
           league: filters.league,
           patch: filters.patch,
           team: filters.team,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id"),
+          token: user.token,
+          id: user.id,
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
@@ -170,8 +171,8 @@ function ChampionSetting({
           patch: filters.patch,
           team: filters.team,
           player: filters.player,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id"),
+          token: user.token,
+          id: user.id,
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
@@ -195,8 +196,8 @@ function ChampionSetting({
           team: filters.team,
           player: filters.player,
           champion: filters.champion_eng,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id"),
+          token: user.token,
+          id: user.id,
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
@@ -221,8 +222,8 @@ function ChampionSetting({
           player: filters.player,
           champion: filters.champion_eng,
           opp_team: filters.oppteam,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id"),
+          token: user.token,
+          id: user.id,
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
@@ -248,8 +249,8 @@ function ChampionSetting({
           champion: filters.champion_eng,
           opp_team: filters.oppteam,
           opp_player: filters.oppplayer,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id"),
+          token: user.token,
+          id: user.id,
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
@@ -275,8 +276,8 @@ function ChampionSetting({
           champion: champArray,
           compare: "off",
           side: side,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id"),
+          token: user.token,
+          id: user.id,
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
@@ -305,8 +306,8 @@ function ChampionSetting({
             opp_player: filters.oppplayer,
             opp_champion: filters.oppchampion_eng,
             side: side,
-            token: sessionStorage.getItem("token"),
-            id: sessionStorage.getItem("id"),
+            token: user.token,
+            id: user.id,
           },
           paramsSerializer: (params) => {
             return qs.stringify(params, { arrayFormat: "repeat" });

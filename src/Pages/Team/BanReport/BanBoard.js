@@ -7,6 +7,7 @@ import { API } from "../../config";
 import qs from "qs";
 function BanBoard() {
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   //밴픽 보고서
   const [all, setAll] = useState();
   const { t } = useTranslation();
@@ -25,8 +26,8 @@ function BanBoard() {
           league: filters.league,
           patch: filters.patch,
           team: filters.team,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          token: user.token,
+          id: user.id
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });

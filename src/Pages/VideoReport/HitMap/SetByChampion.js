@@ -49,6 +49,7 @@ const WardSlider = withStyles({
 
 function SetByChampion({ minFrom, setMinFrom }) {
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const wrapperRef = useRef(null);
   const wrapperRef2 = useRef(null);
   useOutsideAlerter(wrapperRef);
@@ -161,8 +162,8 @@ function SetByChampion({ minFrom, setMinFrom }) {
           params: {
             league: filters.league,
             patch: filters.patch,
-            token: sessionStorage.getItem("token"),
-            id: sessionStorage.getItem("id"),
+            token: user.token,
+            id: user.id,
           },
           paramsSerializer: (params) => {
             return qs.stringify(params, { arrayFormat: "repeat" });
@@ -188,8 +189,8 @@ function SetByChampion({ minFrom, setMinFrom }) {
             league: filters.league,
             patch: filters.patch,
             team: filters.team,
-            token: sessionStorage.getItem("token"),
-            id: sessionStorage.getItem("id"),
+            token: user.token,
+            id: user.id,
           },
           paramsSerializer: (params) => {
             return qs.stringify(params, { arrayFormat: "repeat" });
@@ -213,8 +214,8 @@ function SetByChampion({ minFrom, setMinFrom }) {
           patch: filters.patch,
           team: filters.team,
           player: filters.player,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id"),
+          token: user.token,
+          id: user.id,
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
@@ -238,8 +239,8 @@ function SetByChampion({ minFrom, setMinFrom }) {
           team: filters.team,
           player: filters.player,
           champion: filters.champion_eng,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id"),
+          token: user.token,
+          id: user.id,
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
@@ -264,8 +265,8 @@ function SetByChampion({ minFrom, setMinFrom }) {
           player: filters.player,
           champion: filters.champion_eng,
           opp_team: filters.oppteam,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id"),
+          token: user.token,
+          id: user.id,
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
@@ -291,8 +292,8 @@ function SetByChampion({ minFrom, setMinFrom }) {
           champion: filters.champion_eng,
           opp_team: filters.oppteam,
           opp_player: filters.oppplayer,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id"),
+          token: user.token,
+          id: user.id,
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });

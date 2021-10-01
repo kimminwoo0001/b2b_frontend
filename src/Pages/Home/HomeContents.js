@@ -33,6 +33,7 @@ function HomeContents() {
 
   const fetchHomeData = async () => {
     dispatch(Loading(true));
+    console.log(user)
     try {
       const jsonData = await axios.request({
         method: "GET",

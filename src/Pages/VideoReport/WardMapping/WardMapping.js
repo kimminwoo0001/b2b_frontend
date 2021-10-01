@@ -31,6 +31,7 @@ const sectorName = {
 
 function WardMapping() {
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   // 시간 설정 상태값
@@ -89,8 +90,8 @@ function WardMapping() {
           side: wardside,
           firstTime: firstTime,
           secondTime: secondTime,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id"),
+          token: user.token,
+          id: user.id,
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
@@ -311,9 +312,8 @@ function WardMapping() {
       <RightSection>
         <WardMap
           style={{
-            backgroundImage: `url(${
-              mapSector ? mapSector : "Images/ward_map.png"
-            })`,
+            backgroundImage: `url(${mapSector ? mapSector : "Images/ward_map.png"
+              })`,
           }}
         >
           {ward?.map((ward, idx) => {

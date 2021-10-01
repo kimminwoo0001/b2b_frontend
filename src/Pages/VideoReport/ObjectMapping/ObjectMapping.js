@@ -49,6 +49,7 @@ function useIntervalNormal(callback) {
 
 function ObjectMapping() {
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
   //맵핑 데이터 핸들링 상태값
@@ -95,8 +96,8 @@ function ObjectMapping() {
           time: period,
           position: position,
           gameid: gameSelect,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id"),
+          token: user.token,
+          id: user.id,
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });

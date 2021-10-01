@@ -54,6 +54,7 @@ function WardPlayerFilter({
   setMinFrom
 }) {
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const dispatch = useDispatch();
   const dropdownRef = useRef(null);
   const { t } = useTranslation();
@@ -77,8 +78,8 @@ function WardPlayerFilter({
         params: {
           league: filters.league,
           patch: filters.patch,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          token: user.token,
+          id: user.id
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
@@ -101,8 +102,8 @@ function WardPlayerFilter({
           league: filters.league,
           patch: filters.patch,
           team: filters.team,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          token: user.token,
+          id: user.id
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
@@ -125,8 +126,8 @@ function WardPlayerFilter({
           patch: filters.patch,
           team: filters.team,
           player: filters.player,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          token: user.token,
+          id: user.id
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
@@ -150,8 +151,8 @@ function WardPlayerFilter({
           team: filters.team,
           player: filters.player,
           champion: filters.champion_eng,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          token: user.token,
+          id: user.id
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
@@ -176,8 +177,8 @@ function WardPlayerFilter({
           player: filters.player,
           champion: filters.champion_eng,
           opp_team: filters.oppteam,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          token: user.token,
+          id: user.id
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
@@ -203,8 +204,8 @@ function WardPlayerFilter({
           champion: filters.champion_eng,
           opp_team: filters.oppteam,
           opp_player: filters.oppplayer,
-          token: sessionStorage.getItem("token"),
-          id: sessionStorage.getItem("id")
+          token: user.token,
+          id: user.id
         },
         paramsSerializer: (params) => {
           return qs.stringify(params, { arrayFormat: "repeat" });
@@ -591,7 +592,7 @@ function WardPlayerFilter({
             aria-labelledby="range-slider"
             getAriaValueText={valuetext}
             valueLabelFormat={valuetext}
-            // ValueLabelComponent={ValueLabelComponent}
+          // ValueLabelComponent={ValueLabelComponent}
           />
         </SliderContainer>
         <DefaultTime>
