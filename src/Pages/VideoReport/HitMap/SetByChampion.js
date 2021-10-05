@@ -52,30 +52,37 @@ function SetByChampion({ minFrom, setMinFrom }) {
   const user = useSelector((state) => state.UserReducer);
   const wrapperRef = useRef(null);
   const wrapperRef2 = useRef(null);
-  useOutsideAlerter(wrapperRef);
-  useOutsideAlerter2(wrapperRef2);
   const dispatch = useDispatch();
   const dropdownRef = useRef(null);
   const { t } = useTranslation();
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const [isActive1, setIsActive1] = useDetectOutsideClick(dropdownRef, false);
-  const [isActive2, setIsActive2] = useState(false);
+  //const [isActive2, setIsActive2] = useState();
+  const isActive2 = useRef(false);
   const [isActive3, setIsActive3] = useDetectOutsideClick(dropdownRef, false);
   const [isActive4, setIsActive4] = useDetectOutsideClick(dropdownRef, false);
-  const [isActive5, setIsActive5] = useState(false);
+  //const [isActive5, setIsActive5] = useState(false);
+  const isActive5 = useRef(false);
   const [filterData, setFilterData] = useState({});
   const [champArray, setChampArray] = useState([]);
   const [champArray2, setChampArray2] = useState([]);
   const isPageSolo = document.location.pathname === '/solo' ? true : false;
+  useOutsideAlerter(wrapperRef, isActive2, filters, champArray);
+  useOutsideAlerter2(wrapperRef2, isActive5, filters, champArray2);
 
-  function useOutsideAlerter(ref) {
+  function useOutsideAlerter(ref, isActive2, filters, champArray) {
     useEffect(() => {
       /**
        * Alert if clicked on outside of element
        */
       function handleClickOutside(event) {
-        if (ref.current && !ref.current.contains(event.target)) {
-          setIsActive2(false);
+        if (isActive2.current && ref?.current) {
+          if (!ref?.current.contains(event.target)) {
+            //setIsActive2(false);
+            isActive2.current = false;
+            console.log("filterData, champArray", filters, champArray)
+            clickChampionConfirm();
+          }
         }
       }
 
@@ -85,17 +92,22 @@ function SetByChampion({ minFrom, setMinFrom }) {
         // Unbind the event listener on clean up
         document.removeEventListener("mousedown", handleClickOutside);
       };
-    }, [ref]);
+    }, [ref, isActive2, filters, champArray]);
   }
 
-  function useOutsideAlerter2(ref) {
+  function useOutsideAlerter2(ref, isActive5, filters, champArray2) {
     useEffect(() => {
       /**
        * Alert if clicked on outside of element
        */
       function handleClickOutside(event) {
-        if (ref.current && !ref.current.contains(event.target)) {
-          setIsActive5(false);
+        if (isActive5.current && ref?.current) {
+          if (!ref?.current.contains(event.target)) {
+            //setIsActive5(false);
+            isActive5.current = false;
+            console.log("filterData, champArray", filters, champArray)
+            clickCompareConfirm();
+          }
         }
       }
 
@@ -105,7 +117,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
         // Unbind the event listener on clean up
         document.removeEventListener("mousedown", handleClickOutside);
       };
-    }, [ref]);
+    }, [ref, isActive5, filters, champArray2]);
   }
 
   const pushChampion = (champion) => {
@@ -305,6 +317,49 @@ function SetByChampion({ minFrom, setMinFrom }) {
       console.log(e);
     }
   };
+
+  const clickChampionConfirm = () => {
+    //setIsActive2(false);
+    isActive2.current = false;
+    setChampArray2([]);
+    dispatch(
+      Reset_Map({
+        tab: filters.tab,
+        convertleague: filters.convertleague,
+        league: filters.league,
+        patch: filters.patch,
+        patchfilter: filters.patchfilter,
+        team: filters.team,
+        position: filters.position,
+        player: filters.player,
+        champion_eng: champArray,
+        oppteam: "",
+        oppplayer: "",
+        oppchampion_eng: "",
+      })
+    );
+  }
+
+  const clickCompareConfirm = () => {
+    //setIsActive5(false);
+    isActive5.current = false;
+    dispatch(
+      Reset_Map({
+        tab: filters.tab,
+        convertleague: filters.convertleague,
+        league: filters.league,
+        patch: filters.patch,
+        patchfilter: filters.patchfilter,
+        team: filters.team,
+        player: filters.player,
+        position: filters.position,
+        champion_eng: champArray,
+        oppteam: filters.oppteam,
+        oppplayer: filters.oppplayer,
+        oppchampion_eng: champArray2,
+      })
+    );
+  }
   return (
     <SetByChampionContainer>
       <LeftSection>
@@ -439,7 +494,8 @@ function SetByChampion({ minFrom, setMinFrom }) {
                   <div className="menu-container2">
                     <button
                       onClick={() => {
-                        setIsActive2(!isActive2);
+                        //setIsActive2(!isActive2);
+                        isActive2.current = !isActive2.current;
                         getChampion();
                       }}
                       className="menu-trigger2"
@@ -457,7 +513,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                     {filterData?.champion ? (
                       <nav
                         ref={wrapperRef}
-                        className={`menu3 ${isActive2 ? "active" : "inactive"}`}
+                        className={`menu3 ${isActive2.current ? "active" : "inactive"}`}
                       >
                         <ul>
                           <li
@@ -501,24 +557,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                           })}
                           <button
                             onClick={() => {
-                              setIsActive2(false);
-                              setChampArray2([]);
-                              dispatch(
-                                Reset_Map({
-                                  tab: filters.tab,
-                                  convertleague: filters.convertleague,
-                                  league: filters.league,
-                                  patch: filters.patch,
-                                  patchfilter: filters.patchfilter,
-                                  team: filters.team,
-                                  position: filters.position,
-                                  player: filters.player,
-                                  champion_eng: champArray,
-                                  oppteam: "",
-                                  oppplayer: "",
-                                  oppchampion_eng: "",
-                                })
-                              );
+                              clickChampionConfirm();
                             }}
                           >
                             {t("video.object.confirm")}
@@ -651,7 +690,8 @@ function SetByChampion({ minFrom, setMinFrom }) {
                   <div className="menu-container2">
                     <button
                       onClick={() => {
-                        setIsActive5(!isActive5);
+                        //setIsActive5(!isActive5);
+                        isActive5.current = !isActive5.current
                         getOppChampion();
                       }}
                       className="menu-trigger2"
@@ -669,7 +709,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                     {filterData?.oppchampion ? (
                       <nav
                         ref={wrapperRef2}
-                        className={`menu3 ${isActive5 ? "active" : "inactive"}`}
+                        className={`menu3 ${isActive5.current ? "active" : "inactive"}`}
                       >
                         <ul>
                           <li
@@ -715,23 +755,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                           })}
                           <button
                             onClick={() => {
-                              setIsActive5(false);
-                              dispatch(
-                                Reset_Map({
-                                  tab: filters.tab,
-                                  convertleague: filters.convertleague,
-                                  league: filters.league,
-                                  patch: filters.patch,
-                                  patchfilter: filters.patchfilter,
-                                  team: filters.team,
-                                  player: filters.player,
-                                  position: filters.position,
-                                  champion_eng: champArray,
-                                  oppteam: filters.oppteam,
-                                  oppplayer: filters.oppplayer,
-                                  oppchampion_eng: champArray2,
-                                })
-                              );
+                              clickCompareConfirm();
                             }}
                           >
                             {t("video.object.confirm")}

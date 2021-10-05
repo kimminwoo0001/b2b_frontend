@@ -21,29 +21,36 @@ function ChampionSetting({
   const user = useSelector((state) => state.UserReducer);
   const wrapperRef = useRef(null);
   const wrapperRef2 = useRef(null);
-  useOutsideAlerter(wrapperRef);
-  useOutsideAlerter2(wrapperRef2);
   const dispatch = useDispatch();
   const dropdownRef = useRef(null);
   const { t } = useTranslation();
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const [isActive1, setIsActive1] = useDetectOutsideClick(dropdownRef, false);
-  const [isActive2, setIsActive2] = useState(false);
+  // const [isActive2, setIsActive2] = useState(false);
+  const isActive2 = useRef(false);
   const [isActive3, setIsActive3] = useDetectOutsideClick(dropdownRef, false);
   const [isActive4, setIsActive4] = useDetectOutsideClick(dropdownRef, false);
-  const [isActive5, setIsActive5] = useState(false);
+  //const [isActive5, setIsActive5] = useState(false);
+  const isActive5 = useRef(false);
   const [filterData, setFilterData] = useState({});
   const [champArray, setChampArray] = useState([]);
   const [champArray2, setChampArray2] = useState([]);
+  useOutsideAlerter(wrapperRef, isActive2, filters, champArray);
+  useOutsideAlerter2(wrapperRef2, isActive5, filters, champArray2);
 
-  function useOutsideAlerter(ref) {
+  function useOutsideAlerter(ref, isActive2, filters, champArray) {
     useEffect(() => {
       /**
        * Alert if clicked on outside of element
        */
       function handleClickOutside(event) {
-        if (ref.current && !ref.current.contains(event.target)) {
-          setIsActive2(false)
+        if (isActive2.current && ref?.current) {
+          if (!ref?.current.contains(event.target)) {
+            //setIsActive2(false);
+            isActive2.current = false;
+            console.log("filterData, champArray", filters, champArray)
+            clickChampionConfirm();
+          }
         }
       }
 
@@ -53,17 +60,22 @@ function ChampionSetting({
         // Unbind the event listener on clean up
         document.removeEventListener("mousedown", handleClickOutside);
       };
-    }, [ref]);
+    }, [ref, isActive2, filters, champArray]);
   }
 
-  function useOutsideAlerter2(ref) {
+  function useOutsideAlerter2(ref, isActive5, filters, champArray2) {
     useEffect(() => {
       /**
        * Alert if clicked on outside of element
        */
       function handleClickOutside(event) {
-        if (ref.current && !ref.current.contains(event.target)) {
-          setIsActive5(false);
+        if (isActive5.current && ref?.current) {
+          if (!ref?.current.contains(event.target)) {
+            //setIsActive5(false);
+            isActive5.current = false;
+            console.log("filterData, champArray", filters, champArray)
+            clickCompareConfirm();
+          }
         }
       }
 
@@ -73,7 +85,7 @@ function ChampionSetting({
         // Unbind the event listener on clean up
         document.removeEventListener("mousedown", handleClickOutside);
       };
-    }, [ref]);
+    }, [ref, isActive5, filters, champArray2]);
   }
 
   const pushChampion = (champion) => {
@@ -331,8 +343,9 @@ function ChampionSetting({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.oppchampion_eng, side, filters.patch]);
 
-  const clickPlayerConfirm = () => {
-    setIsActive2(false);
+  const clickChampionConfirm = () => {
+    //setIsActive2(false);
+    isActive2.current = false;
     setGameSelect([]);
     setGameOpen(true);
     setChampArray2([]);
@@ -355,7 +368,8 @@ function ChampionSetting({
   }
 
   const clickCompareConfirm = () => {
-    setIsActive5(false);
+    //setIsActive5(false);
+    isActive5.current = false;
     setGameSelect([]);
     setGameOpen(true);
     getGameAll();
@@ -375,6 +389,7 @@ function ChampionSetting({
       })
     );
   }
+
 
   return (
     <ChampionSettingContainer>
@@ -496,7 +511,8 @@ function ChampionSetting({
             <div className="menu-container2">
               <button
                 onClick={() => {
-                  setIsActive2(!isActive2);
+                  //setIsActive2(!isActive2);
+                  isActive2.current = !isActive2.current;
                   getChampion();
                 }}
                 className="menu-trigger2"
@@ -514,7 +530,7 @@ function ChampionSetting({
               {filterData?.champion ? (
                 <nav
                   ref={wrapperRef}
-                  className={`menu3 ${isActive2 ? "active" : "inactive"}`}
+                  className={`menu3 ${isActive2.current ? "active" : "inactive"}`}
                 >
                   <ul>
                     <li
@@ -553,7 +569,7 @@ function ChampionSetting({
                     })}
                     <button
                       onClick={() => {
-                        clickPlayerConfirm();
+                        clickChampionConfirm();
                       }}
                     >
                       {t("video.object.confirm")}
@@ -684,7 +700,8 @@ function ChampionSetting({
             <div className="menu-container2">
               <button
                 onClick={() => {
-                  setIsActive5(!isActive5);
+                  //setIsActive5(!isActive5);
+                  isActive5.current = !isActive5.current;
                   getOppChampion();
                 }}
                 className="menu-trigger2"
@@ -702,7 +719,7 @@ function ChampionSetting({
               {filterData?.oppchampion ? (
                 <nav
                   ref={wrapperRef2}
-                  className={`menu3 ${isActive5 ? "active" : "inactive"}`}
+                  className={`menu3 ${isActive5.current ? "active" : "inactive"}`}
                 >
                   <ul>
                     <li
@@ -770,7 +787,7 @@ function ChampionSetting({
           />
         </CompareButton>
       </FilterBox>
-    </ChampionSettingContainer>
+    </ChampionSettingContainer >
   );
 }
 
