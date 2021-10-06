@@ -27,6 +27,35 @@ function HitMap() {
   const { t } = useTranslation();
   //히트맵 데이터 fetch 함수
   const fetchingHeatMapData = async () => {
+    const { team, player, champion_eng, oppteam, oppplayer, oppchampion_eng } = filters;
+
+    let unselectedItem = [];
+    if (tab === 'player') {
+      if (team.length === 0) unselectedItem.push(t("video.vision.team"));
+      if (player.length === 0) unselectedItem.push(t("video.vision.player"));
+      if (champion_eng.length === 0) unselectedItem.push(t("video.vision.champ"));
+    } else if (tab === 'champion') {
+      if (team.length === 0) unselectedItem.push(t("video.vision.team"));
+      if (player.length === 0) unselectedItem.push(t("video.vision.player"));
+      if (champion_eng.length === 0) unselectedItem.push(t("video.vision.champ"));
+      if (oppteam.length === 0) unselectedItem.push(t("video.vision.team2"));
+      if (oppplayer.length === 0) unselectedItem.push(t("video.vision.player2"));
+      if (oppchampion_eng.length === 0) unselectedItem.push(t("video.vision.champ2"));
+    }
+
+    if (unselectedItem.length > 0) {
+      let unselectedSentence = "";
+      for (let i = 0; i < unselectedItem.length; i++) {
+        unselectedSentence += unselectedItem[i];
+        if (i !== unselectedItem.length - 1) {
+          unselectedSentence += ", ";
+        }
+      }
+      let alertMessage = t("video.vision.selectAlert").replace('###', unselectedSentence);
+      alert(alertMessage);
+      return;
+    }
+
     try {
       const result = await axios.request({
         method: "GET",
@@ -58,6 +87,7 @@ function HitMap() {
       console.log(e);
     } finally {
     }
+
   };
 
   //히트맵 블루팀 데이터 가공 함수
@@ -171,6 +201,10 @@ function HitMap() {
     champion: <SetByChampion setMinFrom={setMinFrom} minFrom={minFrom} />
   };
 
+  const activeConfirmBtn = () => {
+    console.log("I'm Alive");
+  }
+
   return (
     <HitMapContainer>
       <TopSection>
@@ -213,7 +247,10 @@ function HitMap() {
       <ButtonSection>
         <ConfirmButton
           onClick={() => fetchingHeatMapData()}
-          isActive={filters.champion_eng}
+          isActive={
+            tab === 'player' ? (filters.champion_eng.length > 0 ? true : false)
+              : (tab === 'champion' ? filters.champion_eng && filters.oppchampion_eng : false)
+          }
         >
           {t("video.heatmap.apply")}
         </ConfirmButton>
@@ -236,7 +273,7 @@ function HitMap() {
           </HitMapWrapper>
         </HitMapSide>
       </BottomSection>
-    </HitMapContainer>
+    </HitMapContainer >
   );
 }
 

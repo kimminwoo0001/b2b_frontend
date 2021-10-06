@@ -344,7 +344,10 @@
       "selectTeam": "Please choose a team.",
       "selectPlayer": "Please choose a player.",
       "selectChamp": "Please choose a champion.",
-      "label4": "Select"
+      "selectGame": "Please choose a game.",
+      "label4": "Select",
+      "game": "Game",
+      "selectAlert": "Please Select that [###]"
     },
     "object": {
       "step1": "Select",

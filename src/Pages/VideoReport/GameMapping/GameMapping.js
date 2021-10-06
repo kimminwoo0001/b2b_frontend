@@ -103,41 +103,46 @@ function GameMapping() {
 
   //맵핑 데이터 fetch 함수
   const fetchingMapData = async () => {
-    setLoading(true);
-    try {
-      const result = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingPosition`,
-        params: {
-          gameid: filters.gameid,
-          token: user.token,
-          id: user.id,
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        },
-      });
+    const gameid = filters?.gameid ?? '';
+    if (gameid.length > 0) {
+      setLoading(true);
+      try {
+        const result = await axios.request({
+          method: "GET",
+          url: `${API2}/api/mappingPosition`,
+          params: {
+            gameid: filters.gameid,
+            token: user.token,
+            id: user.id,
+          },
+          paramsSerializer: (params) => {
+            return qs.stringify(params, { arrayFormat: "repeat" });
+          },
+        });
 
-      // 맵핑 포지션
-      const dto = result.data;
+        // 맵핑 포지션
+        const dto = result.data;
 
-      for (let i = 0; i < dto.position.length; i++) {
-        if (dto.position[i].player) {
-          setMinTime(dto.position[i]);
-          setRange(dto.position[i].realCount);
-          break;
+        for (let i = 0; i < dto.position.length; i++) {
+          if (dto.position[i].player) {
+            setMinTime(dto.position[i]);
+            setRange(dto.position[i].realCount);
+            break;
+          }
         }
+        setVod(dto.vod);
+        setMaxTime(dto?.position[dto.position.length - 1]?.realCount);
+        setCurrentPos(dto.position);
+        setInfo(dto.info);
+        setTimeLineData(dto.timeline);
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setLoading(false);
+        setPlay(true);
       }
-      setVod(dto.vod);
-      setMaxTime(dto?.position[dto.position.length - 1]?.realCount);
-      setCurrentPos(dto.position);
-      setInfo(dto.info);
-      setTimeLineData(dto.timeline);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setLoading(false);
-      setPlay(true);
+    } else {
+      alert(t("video.vision.selectGame"))
     }
   };
 

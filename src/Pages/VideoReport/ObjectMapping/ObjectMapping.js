@@ -142,28 +142,30 @@ function ObjectMapping() {
     const { team, champion_eng, player, oppteam, oppplayer, oppchampion_eng } = filters;
 
     if (compareOpen) {
-      if (side && period && position.length > 0 && champion_eng.length > 0 && oppchampion_eng.length > 0) {
+      if (side && period && position.length > 0 && champion_eng.length > 0 && oppchampion_eng.length > 0 && gameSelect.length > 0) {
         fetchingMapData();
         setRange(0);
       } else {
-        if (team.length === 0) unselectedItem.push("팀");
-        if (player.length === 0) unselectedItem.push("선수");
-        if (champion_eng.length === 0) unselectedItem.push("챔피언");
-        if (oppteam.length === 0) unselectedItem.push("상대 팀");
-        if (oppplayer.length === 0) unselectedItem.push("상대 선수");
-        if (oppchampion_eng.length === 0) unselectedItem.push("상대 챔피언");
+        if (team.length === 0) unselectedItem.push(t("video.vision.team"));
+        if (player.length === 0) unselectedItem.push(t("video.vision.player"));
+        if (champion_eng.length === 0) unselectedItem.push(t("video.vision.champ"));
+        if (oppteam.length === 0) unselectedItem.push(t("video.vision.team2"));
+        if (oppplayer.length === 0) unselectedItem.push(t("video.vision.player2"));
+        if (oppchampion_eng.length === 0) unselectedItem.push(t("video.vision.champ2"));
+        if (gameSelect.length === 0) unselectedItem.push(t("video.vision.game"))
       }
     } else {
-      if (side && period && position.length > 0 && champion_eng.length > 0) {
+      if (side && period && position.length > 0 && champion_eng.length > 0 && gameSelect.length > 0) {
         setchampInfo([]);
         fetchingMapData();
         setRange(0);
         setFast(false);
         setPlay(false);
       } else {
-        if (team.length === 0) unselectedItem.push("팀");
-        if (player.length === 0) unselectedItem.push("선수");
-        if (champion_eng.length === 0) unselectedItem.push("챔피언");
+        if (team.length === 0) unselectedItem.push(t("video.vision.team"));
+        if (player.length === 0) unselectedItem.push(t("video.vision.player"));
+        if (champion_eng.length === 0) unselectedItem.push(t("video.vision.champ"));
+        if (gameSelect.length === 0) unselectedItem.push(t("video.vision.game"))
       }
     }
 
@@ -175,7 +177,8 @@ function ObjectMapping() {
           unselectedSentence += ", ";
         }
       }
-      alert(`[${unselectedSentence}] 선택해주세요`);
+      let alertMessage = t("video.vision.selectAlert").replace('###', unselectedSentence);
+      alert(alertMessage);
     }
   };
 
@@ -283,7 +286,7 @@ function ObjectMapping() {
           <ConfirmButton
             onClick={() => handleConfirm()}
             isActive={
-              filters.champion_eng && side && period && position.length > 0
+              filters.champion_eng && side && period && position.length > 0 && gameSelect.length > 0
             }
           >
             {t("video.object.apply")}

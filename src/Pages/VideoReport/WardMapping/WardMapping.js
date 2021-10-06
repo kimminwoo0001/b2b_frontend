@@ -155,7 +155,7 @@ function WardMapping() {
   const handleWardClick = () => {
     if (tab === "team") {
       if (!filters.team) {
-        alert("팀을 선택해주세요.");
+        alert(t("video.vision.selectTeam"));
         return;
       }
       if (secondTime - firstTime <= 0) {
@@ -166,15 +166,15 @@ function WardMapping() {
       }
     } else {
       if (!filters.team) {
-        alert("팀을 선택해주세요.");
+        alert(t("video.vision.selectTeam"));
         return;
       }
       if (!filters.player) {
-        alert("선수를 선택해주세요.");
+        alert(t("video.vision.selectPlayer"));
         return;
       }
       if (!filters.champion_eng) {
-        alert("챔피언을 선택해주세요.");
+        alert(t("video.vision.selectChamp"));
         return;
       }
       if (secondTime - firstTime <= 0) {
@@ -214,7 +214,10 @@ function WardMapping() {
           </TabContainer>
           <FilterContents>{contents[tab]}</FilterContents>
         </FilterContainer>
-        <WardButton onClick={() => handleWardClick()} isActive={filters.team}>
+        <WardButton
+          onClick={() => handleWardClick()}
+          isActive={tab === "player" ? filters.champion_eng : filters.team}
+        >
           {t("video.vision.checkWard")}
         </WardButton>
         <ViewContainer>
