@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { UserLogout } from "../../redux/modules";
 
 import { useHistory } from "react-router-dom";
 import LocaleDropdown from "../../Pages/Login/LocaleDropdown";
@@ -12,6 +14,7 @@ function Nav() {
   const lang = useSelector((state) => state.LocaleReducer);
   const user = useSelector((state) => state.UserReducer);
   const { i18n } = useTranslation();
+  const dispatch = useDispatch();
   let history = useHistory();
 
   useEffect(() => {
@@ -28,6 +31,7 @@ function Nav() {
   // 로그아웃 함수, 로그아웃 이벤트가 발생되면 session 값을 clear하고 로그인 페이지로 이동시킴
   const handleLogOut = () => {
     sessionStorage.clear();
+    dispatch(UserLogout());
     history.push("/login");
   };
 
@@ -35,9 +39,7 @@ function Nav() {
     <NavWrapper>
       <Greet>
         <div>
-          {lang === "en"
-            ? `Hello, ${user.id}`
-            : `${user.id} 님 안녕하세요!`}
+          {lang === "en" ? `Hello, ${user.id}` : `${user.id} 님 안녕하세요!`}
         </div>
         {/* <div>{t("title")}</div> */}
         {/* <div className="LastUpdate"></div> */}

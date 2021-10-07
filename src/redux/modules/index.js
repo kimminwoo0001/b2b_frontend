@@ -6,15 +6,22 @@ import user from "./user";
 import staticvalue from "./staticvalue";
 
 import { persistReducer } from "redux-persist";
-import storageSession from 'redux-persist/lib/storage/session'
+import storageSession from "redux-persist/lib/storage/session";
 
 const persistConfig = {
   key: "root",
   storage: storageSession,
-  whitelist: ["FilterReducer", "UserReducer"]
+  whitelist: ["FilterReducer", "UserReducer"],
 };
 
-const rootReducer = combineReducers({
+const Logout = "Logout";
+export const UserLogout = () => {
+  return {
+    type: Logout,
+  };
+};
+
+const appReducer = combineReducers({
   BanPickReducer: teambanpick,
   FilterReducer: filtervalue,
   LocaleReducer: locale,
@@ -22,5 +29,11 @@ const rootReducer = combineReducers({
   StaticValueReducer: staticvalue,
 });
 
-export default persistReducer(persistConfig, rootReducer);
+const rootReducer = (state, action) => {
+  if (action.type === Logout) {
+    return appReducer(undefined, action);
+  }
+  return appReducer(state, action);
+};
 
+export default persistReducer(persistConfig, rootReducer);
