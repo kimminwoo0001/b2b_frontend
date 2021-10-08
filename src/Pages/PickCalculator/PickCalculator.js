@@ -11,7 +11,7 @@ function PickCalculator() {
       <SideBar />
       <Filter />
       <ContentWrapper>
-        <Nav />
+        {/* <Nav /> */}
         <PickCombine />
       </ContentWrapper>
     </PickCalculatorWrapper>

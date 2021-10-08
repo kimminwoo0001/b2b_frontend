@@ -17,7 +17,6 @@ function Team() {
         <SideBar />
         <TeamFilter />
         <ContentWrapper>
-          <Nav />
           {filters.team !== "" && filters.patch.length > 0 ? (
             <TeamTabs />
           ) : (

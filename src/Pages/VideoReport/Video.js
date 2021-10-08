@@ -18,7 +18,7 @@ function Video() {
         <SideBar />
         <TeamFilter />
         <ContentWrapper>
-          <Nav />
+          {/* <Nav /> */}
           {filters.team !== "" && filters.patch.length > 0 ? (
             <VideoTabs />
           ) : (

@@ -17,7 +17,7 @@ function Solo() {
         <SideBar />
         <SoloFilter />
         <ContentWrapper>
-          <Nav />
+          {/* <Nav /> */}
           {filters.player !== "" && filters.patch.length > 0 ? (
             <Player />
           ) : (

@@ -12,12 +12,12 @@ function PlayerCompare() {
   const filters = useSelector((state) => state.FilterReducer);
 
   return (
-   <ErrorBoundary>
+    <ErrorBoundary>
       <SoloWrapper>
         <SideBar />
         <SoloFilter />
         <ContentWrapper>
-          <Nav />
+          {/* <Nav /> */}
           {filters.player !== "" ? <Player /> : <SelectFilter />}
         </ContentWrapper>
       </SoloWrapper>

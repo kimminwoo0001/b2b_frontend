@@ -17,7 +17,7 @@ function TeamCompare() {
         <SideBar />
         <TeamFilter />
         <ContentWrapper>
-          <Nav />
+          {/* <Nav /> */}
           {filters.team !== "" ? <TeamTabs /> : <SelectFilter />}
         </ContentWrapper>
       </TeamWrapper>

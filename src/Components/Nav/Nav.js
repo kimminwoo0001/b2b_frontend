@@ -73,7 +73,7 @@ function Nav() {
   );
 }
 
-export default Nav;
+// export default Nav;
 
 const NavWrapper = styled.div`
   display: flex;

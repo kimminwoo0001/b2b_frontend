@@ -17,7 +17,7 @@ function League() {
         <SideBar />
         <Filter />
         <ContentWrapper>
-          <Nav />
+          {/* <Nav /> *}
           {/* patch 값이 있으면 데이터를 보여주고 아니면 selectFilter화면을 보여주도록 */}
           {filters.patch.length !== 0 ? <LeagueTab /> : <SelectFilter />}
         </ContentWrapper>
