@@ -399,5 +399,10 @@
       "8min": "3'-8'",
       "side": "SIDE"
     }
+  },
+  "alert": {
+    "logout": {
+      "sessionExpires": "The session has expired and moves to the login page."
+    }
   }
 }

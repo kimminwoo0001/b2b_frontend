@@ -14,13 +14,23 @@ const persistConfig = {
   whitelist: ["FilterReducer", "UserReducer"]
 };
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   BanPickReducer: teambanpick,
   FilterReducer: filtervalue,
   LocaleReducer: locale,
   UserReducer: user,
   StaticValueReducer: staticvalue,
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === 'USER_LOGOUT') {
+    return appReducer(undefined, action)
+  }
+
+  return appReducer(state, action)
+}
+
+
 
 export default persistReducer(persistConfig, rootReducer);
 

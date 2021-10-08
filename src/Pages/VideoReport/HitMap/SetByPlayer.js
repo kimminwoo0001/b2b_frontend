@@ -79,6 +79,10 @@ function SetByPlayer({ minFrom, setMinFrom }) {
         }
       }
 
+      if (isPageSolo && !filterData) {
+        getChampion();
+      }
+
       // Bind the event listener
       document.addEventListener("mousedown", handleClickOutside);
       return () => {
@@ -86,6 +90,8 @@ function SetByPlayer({ minFrom, setMinFrom }) {
         document.removeEventListener("mousedown", handleClickOutside);
       };
     }, [ref, isActive2, filters, champArray]);
+
+
   }
 
   const pushChampion = (champion) => {
@@ -185,14 +191,17 @@ function SetByPlayer({ minFrom, setMinFrom }) {
       });
       const data = response.data.champion;
       setFilterData({ ...filterData, champion: data });
+      if (isPageSolo && champArray.length === 0 && !filterData) {
+        setChampArray(data);
+        clickChampionConfirm(data);
+      }
     } catch (e) {
       console.log(e);
     }
   };
 
-  const clickChampionConfirm = () => {
+  const clickChampionConfirm = (champArrayData = '') => {
     isActive2.current = false;
-    console.log();
     dispatch(
       Reset_Map({
         tab: filters.tab,
@@ -202,7 +211,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
         patchfilter: filters.patchfilter,
         team: filters.team,
         player: filters.player,
-        champion_eng: champArray,
+        champion_eng: champArray.length > 0 ? champArray : champArrayData,
         position: filters.position,
         oppteam: "",
         oppplayer: "",

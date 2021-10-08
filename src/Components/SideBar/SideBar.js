@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
 import { useLocation, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { InitailizeState } from "../../redux/modules/filtervalue";
 
 import TeamFilterModal from "../../Pages/TeamCompare/TeamFilterModal";
@@ -13,6 +13,8 @@ function Sidebar() {
   const [teamModal, setTeamModal] = useState(false);
   //플레이어 비교 마달창 상태 값
   const [playerModal, setPlayerModal] = useState(false);
+  const lang = useSelector((state) => state.LocaleReducer);
+  const user = useSelector((state) => state.UserReducer);
   const { t } = useTranslation();
 
   const pathName = useLocation().pathname;
@@ -69,85 +71,96 @@ function Sidebar() {
       />
       <SideBarWrapper>
         {/* <Link to="/utility"> */}
-        <TeamLogo>
-          <img src="/Images/profile-default.png" alt="profile"></img>
-        </TeamLogo>
+        <TSBLogo>
+          {/*<img src="/Images/profile-default.png" alt="profile"></img>*/}
+          <img src="/Images/logo.png" alt="profile"></img>
+        </TSBLogo>
         {/* </Link> */}
-        <MenuWrapper
-          onClick={() => {
-            history.push(menus[0].path);
-            dispatch(InitailizeState());
-          }}
-          changeColor={pathName === "/"}
-        >
-          <img src={menus[0].image} alt="menu"></img>
-          <div className="Name">{menus[0].name}</div>
-        </MenuWrapper>
-        <MenuWrapper
-          onClick={() => {
-            history.push(menus[1].path);
-            dispatch(InitailizeState());
-          }}
-          changeColor={pathName === "/league"}
-        >
-          <img src={menus[1].image} alt="menu"></img>
-          <div className="Name">{menus[1].name}</div>
-        </MenuWrapper>
-        <MenuWrapper
-          onClick={() => {
-            history.push(menus[2].path);
-            dispatch(InitailizeState());
-          }}
-          changeColor={pathName === "/team"}
-        >
-          <img src={menus[2].image} alt="menu"></img>
-          <div className="Name">{menus[2].name}</div>
-        </MenuWrapper>
-        <MenuWrapper
-          onClick={() => {
-            history.push(menus[3].path);
-            dispatch(InitailizeState());
-          }}
-          changeColor={pathName === "/solo"}
-        >
-          <img src={menus[3].image} alt="menu"></img>
-          <div className="Name">{menus[3].name}</div>
-        </MenuWrapper>
-        <MenuWrapper
-          onClick={() => {
-            history.push(menus[4].path);
-            dispatch(InitailizeState());
-          }}
-          changeColor={pathName === "/video"}
-        >
-          <img src={menus[4].image} alt="menu" width="20px" height="20px"></img>
-          <div className="Name">{menus[4].name}</div>
-        </MenuWrapper>
-        <MenuWrapper
-          onClick={() => {
-            if (history.location.pathname === "/teamCompare") {
-              history.push("/");
-            } else {
-              setTeamModal(true);
+
+        <Info>
+          <p class="user">
+            {lang === "en"
+              ? `Hello, ${user.id}`
+              : `${user.id} 님 안녕하세요!`}
+          </p>
+        </Info>
+
+        <MenuList>
+          <MenuWrapper
+            onClick={() => {
+              history.push(menus[0].path);
               dispatch(InitailizeState());
-            }
-          }}
-          changeColor={pathName === "/teamCompare"}
-        >
-          <img src={menus[5].image} alt="menu"></img>
-          <div className="Name">{menus[5].name}</div>
-        </MenuWrapper>
-        <MenuWrapper
-          onClick={() => {
-            setPlayerModal(true);
-            dispatch(InitailizeState());
-          }}
-          changeColor={pathName === "/playerCompare"}
-        >
-          <img src={menus[6].image} alt="menu"></img>
-          <div className="Name">{menus[6].name}</div>
-        </MenuWrapper>
-        {/* <MenuWrapper
+            }}
+            changeColor={pathName === "/"}
+          >
+            <img src={menus[0].image} alt="menu"></img>
+            <div className="Name">{menus[0].name}</div>
+          </MenuWrapper>
+          <MenuWrapper
+            onClick={() => {
+              history.push(menus[1].path);
+              dispatch(InitailizeState());
+            }}
+            changeColor={pathName === "/league"}
+          >
+            <img src={menus[1].image} alt="menu"></img>
+            <div className="Name">{menus[1].name}</div>
+          </MenuWrapper>
+          <MenuWrapper
+            onClick={() => {
+              history.push(menus[2].path);
+              dispatch(InitailizeState());
+            }}
+            changeColor={pathName === "/team"}
+          >
+            <img src={menus[2].image} alt="menu"></img>
+            <div className="Name">{menus[2].name}</div>
+          </MenuWrapper>
+          <MenuWrapper
+            onClick={() => {
+              history.push(menus[3].path);
+              dispatch(InitailizeState());
+            }}
+            changeColor={pathName === "/solo"}
+          >
+            <img src={menus[3].image} alt="menu"></img>
+            <div className="Name">{menus[3].name}</div>
+          </MenuWrapper>
+          <MenuWrapper
+            onClick={() => {
+              history.push(menus[4].path);
+              dispatch(InitailizeState());
+            }}
+            changeColor={pathName === "/video"}
+          >
+            <img src={menus[4].image} alt="menu" width="20px" height="20px"></img>
+            <div className="Name">{menus[4].name}</div>
+          </MenuWrapper>
+          <MenuWrapper
+            onClick={() => {
+              if (history.location.pathname === "/teamCompare") {
+                history.push("/");
+              } else {
+                setTeamModal(true);
+                dispatch(InitailizeState());
+              }
+            }}
+            changeColor={pathName === "/teamCompare"}
+          >
+            <img src={menus[5].image} alt="menu"></img>
+            <div className="Name">{menus[5].name}</div>
+          </MenuWrapper>
+          <MenuWrapper
+            onClick={() => {
+              setPlayerModal(true);
+              dispatch(InitailizeState());
+            }}
+            changeColor={pathName === "/playerCompare"}
+          >
+            <img src={menus[6].image} alt="menu"></img>
+            <div className="Name">{menus[6].name}</div>
+          </MenuWrapper>
+          {/* <MenuWrapper
           onClick={() => {
             history.push(menus[6].path);
             dispatch(InitailizeState());
@@ -175,6 +188,7 @@ function Sidebar() {
             계산기
           </div>
         </MenuWrapper> */}
+        </MenuList>
       </SideBarWrapper>
     </>
   );
@@ -186,11 +200,16 @@ const SideBarWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 72px;
-  position: sticky;
+
+  width: 200px;
+  //margin: 0 0 141px;
+  padding: 40px 30.3px 25px 9.7px;
+  background-color: var(--bg-gnb);
+  // background-color: orange;
+
+  // position: sticky;
   top: 0;
   bottom: 0;
-  background-color: #f04545;
   font-family: NotoSansKR, Apple SD Gothic Neo;
   font-size: 11px;
   font-weight: bold;
@@ -203,42 +222,92 @@ const SideBarWrapper = styled.div`
   }
 `;
 
-const TeamLogo = styled.div`
+const TSBLogo = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 47px;
-  height: 47px;
   margin-top: 19px;
   margin-bottom: 13.3px;
-  border-radius: 30px;
-  background-color: #0f0f12;
+  // border-radius: 30px;
+  // background-color: #0f0f12;
   img {
-    width: 22px;
-    height: 22px;
+    width: 135px;
+    height: 35.4px;
+    margin: 0 9.7px 29.6px 15.3px;
+    object-fit: contain;
   }
+`;
+
+const Info = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 138px;
+  height: 113px;
+  margin: 29.6px 6.7px 60px 15.3px;
+  .user {
+    width: 138px;
+    height: 52px;
+    padding: 25px 12px 0 0;
+    font-family: NotoSansKR;
+    font-size: 19px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.32;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+  }
+`;
+
+const MenuList = styled.div`
+  width: 160px;
+  height: 416px;
+  margin: 60px 0 157px;
 `;
 
 const MenuWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 72px;
-  height: 85px;
+  // flex-direction: column;
+  // align-items: center;
+  // justify-content: center;
+  width: 116px;
+  height: 24px;
+  margin: 16px 28.7px 25px 15.3px;
   cursor: pointer;
   .Name {
-    max-width: 60px;
-    width: auto;
-    line-height: 1.27;
+    // max-width: 60px;
+    // width: auto;
+    // line-height: 1.27;
+    width: 80px;
+    height: 17px;
+    margin: 4px 0 3px 12px;
+    font-family: NotoSansKR;
+    font-size: 12px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
   }
   img {
-    margin-bottom: 6.1px;
+    // margin-bottom: 6.1px;
+    width: 24px;
+    height: 24px;
+    margin: 0 12px 0 0;
+    object-fit: contain;
   }
   ${(props) =>
     props.changeColor &&
     css`
-      border-left: 2px solid white;
-      background-color: rgba(255, 255, 255, 0.15);
+      width: 160px;
+      height: 42px;
+      margin: 16px 0 16px;
+      padding: 9px 29px 9px 15px;
+      border-radius: 16px;
+      background-color: #5942ba;
     `}
 `;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import axios from "axios";
@@ -8,12 +9,16 @@ import { API } from "../config";
 import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../../redux/modules/filtervalue";
 import { GetFilterAllItems } from "../../redux/modules/staticvalue";
+import checkRequest from "../../lib/checkRequest";
+import persistReducer from "redux-persist/lib/persistReducer";
 
 function HomeContents() {
   const filters = useSelector((state) => state.FilterReducer);
   const staticvalue = useSelector((state) => state.StaticValueReducer);
   const user = useSelector((state) => state.UserReducer);
+
   const { t } = useTranslation();
+  let history = useHistory();
   const dispatch = useDispatch();
 
   //리그마다 데이터 저장하는 상태값
@@ -43,6 +48,12 @@ function HomeContents() {
           id: user.id
         }
       });
+
+      if (checkRequest(jsonData)) {
+        sessionStorage.clear();
+        history.push("/login");
+      }
+
       setLckData(jsonData.data["LCK"]);
       setLecData(jsonData.data["LEC"]);
       setLcsData(jsonData.data["LCS"]);
