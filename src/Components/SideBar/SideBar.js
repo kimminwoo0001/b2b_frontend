@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
 import { useLocation, useHistory } from "react-router-dom";
@@ -17,11 +17,22 @@ function Sidebar() {
   const [playerModal, setPlayerModal] = useState(false);
   const lang = useSelector((state) => state.LocaleReducer);
   const user = useSelector((state) => state.UserReducer);
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
 
   const pathName = useLocation().pathname;
   const dispatch = useDispatch();
   let history = useHistory();
+
+  useEffect(() => {
+    changeLanguage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang]);
+
+  // 다국어 지원 i18next 라이브러리  setting
+  // 변경 된 locale값을 라이브러리에 저장해서 씀
+  const changeLanguage = (language) => {
+    i18n.changeLanguage(lang);
+  };
 
   //onClick 이벤트가 발생할때마다 해당 path로 이동
   const menus = [
@@ -64,6 +75,8 @@ function Sidebar() {
     }
   ];
 
+
+
   // 로그아웃 함수, 로그아웃 이벤트가 발생되면 session 값을 clear하고 로그인 페이지로 이동시킴
   const handleLogOut = () => {
     sessionStorage.clear();
@@ -87,7 +100,7 @@ function Sidebar() {
         {/* </Link> */}
 
         <Info>
-          <div class="user">
+          <div className="user">
             {lang === "en" && <span className="text">Hello, </span>}
             {user.id}
             {lang !== "en" && <span className="text">님 안녕하세요!</span>}
