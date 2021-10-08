@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../../redux/modules/filtervalue";
 import { GetFilterAllItems } from "../../redux/modules/staticvalue";
 import checkRequest from "../../lib/checkRequest";
-import persistReducer from "redux-persist/lib/persistReducer";
 
 function HomeContents() {
   const filters = useSelector((state) => state.FilterReducer);

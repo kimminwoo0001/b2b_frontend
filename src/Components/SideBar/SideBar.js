@@ -4,9 +4,11 @@ import styled, { css } from "styled-components";
 import { useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { InitailizeState } from "../../redux/modules/filtervalue";
+import { UserLogout } from "../../redux/modules";
 
 import TeamFilterModal from "../../Pages/TeamCompare/TeamFilterModal";
 import PlayerFilterModal from "../../Pages/PlayerCompare/PlayerFilterModal";
+import LocaleDropdown from "../../Pages/Login/LocaleDropdown";
 
 function Sidebar() {
   //팀 비교 모달창 상태 값
@@ -62,6 +64,13 @@ function Sidebar() {
     }
   ];
 
+  // 로그아웃 함수, 로그아웃 이벤트가 발생되면 session 값을 clear하고 로그인 페이지로 이동시킴
+  const handleLogOut = () => {
+    sessionStorage.clear();
+    dispatch(UserLogout());
+    history.push("/login");
+  };
+
   return (
     <>
       <TeamFilterModal teamModal={teamModal} setTeamModal={setTeamModal} />
@@ -84,8 +93,17 @@ function Sidebar() {
             {lang !== "en" && <span className="text">님 안녕하세요!</span>}
           </div>
 
-          <div class="icon">
-
+          <div className="icon">
+            {user.alarm ?
+              <img className="Alert" src="Images/ico_alaram.png" alt="alertIconOn"></img>
+              : <img className="Alert" src="Images/ico-alarm.png" alt="alertIconOff"></img>
+            }
+            <img
+              className="LogOut"
+              src="Images/ico-logout.png"
+              alt="LogoutIcon"
+              onClick={() => handleLogOut()}
+            ></img>
           </div>
         </Info>
 
@@ -243,14 +261,14 @@ const TSBLogo = styled.div`
 `;
 
 const Info = styled.div`
-  display: flex;
-  justify-content: center;
+  display: block;
+  // justify-content: center;
   // align-items: center;
   width: 164px;
   height: 113px;
   margin: 29.6px 6.7px 0px 30.3px;
   .user {
-    width: 175px;
+    width: 164px;
     height: 52px;
     //padding: 0 12px 0 0;
     font-family: NotoSansKR;
@@ -267,9 +285,23 @@ const Info = styled.div`
     }
   }
   .icon {
-    width: 24px;
+    width: 80px;
     height: 24px;
-    object-fit: contain;
+    margin: 10px 0 0 0;
+    .Alert {
+      width: 24px;
+      height: 24px;
+      margin: 0 15px 0 0;
+      object-fit: contain;
+      cursor: pointer;
+    }
+    .LogOut {
+      width: 24px;
+      height: 24px;
+      margin: 0 0 0 15px;
+      object-fit: contain;
+      cursor: pointer;
+    }
   }
 `;
 

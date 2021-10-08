@@ -2,6 +2,7 @@ export const USER_TOKEN = "user/USER_TOKEN";
 export const USER_ID = "user/USER_ID";
 export const User_IP = "user/User_IP";
 export const User_Device = "user/User_Device";
+export const User_Alarm = "user/User_Alarm";
 
 export const UserToken = (payload) => {
   return {
@@ -31,6 +32,13 @@ export const UserDevice = (payload) => {
   };
 };
 
+export const UserAlarm = (payload) => {
+  return {
+    type: User_Alarm,
+    payload,
+  };
+};
+
 const initialState = "";
 
 export default function UserReducer(state = initialState, action) {
@@ -43,6 +51,8 @@ export default function UserReducer(state = initialState, action) {
       return { ...state, ip: action.payload };
     case User_Device:
       return { ...state, device: action.payload };
+    case User_Alarm:
+      return { ...state, alarm: action.payload };
     default:
       return state;
   }
