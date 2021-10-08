@@ -6,12 +6,19 @@ import user from "./user";
 import staticvalue from "./staticvalue";
 
 import { persistReducer } from "redux-persist";
-import storageSession from 'redux-persist/lib/storage/session'
+import storageSession from "redux-persist/lib/storage/session";
 
 const persistConfig = {
   key: "root",
   storage: storageSession,
-  whitelist: ["FilterReducer", "UserReducer"]
+  whitelist: ["FilterReducer", "UserReducer"],
+};
+
+const Logout = "Logout";
+export const UserLogout = () => {
+  return {
+    type: Logout,
+  };
 };
 
 const appReducer = combineReducers({
@@ -23,14 +30,10 @@ const appReducer = combineReducers({
 });
 
 const rootReducer = (state, action) => {
-  if (action.type === 'USER_LOGOUT') {
-    return appReducer(undefined, action)
+  if (action.type === Logout) {
+    return appReducer(undefined, action);
   }
-
-  return appReducer(state, action)
-}
-
-
+  return appReducer(state, action);
+};
 
 export default persistReducer(persistConfig, rootReducer);
-

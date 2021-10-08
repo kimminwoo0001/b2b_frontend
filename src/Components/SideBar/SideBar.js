@@ -78,11 +78,15 @@ function Sidebar() {
         {/* </Link> */}
 
         <Info>
-          <p class="user">
-            {lang === "en"
-              ? `Hello, ${user.id}`
-              : `${user.id} 님 안녕하세요!`}
-          </p>
+          <div class="user">
+            {lang === "en" && <span className="text">Hello, </span>}
+            {user.id}
+            {lang !== "en" && <span className="text">님 안녕하세요!</span>}
+          </div>
+
+          <div class="icon">
+
+          </div>
         </Info>
 
         <MenuList>
@@ -212,7 +216,7 @@ const SideBarWrapper = styled.div`
   bottom: 0;
   font-family: NotoSansKR, Apple SD Gothic Neo;
   font-size: 11px;
-  font-weight: bold;
+  // font-weight: bold;
   letter-spacing: -0.55px;
   text-align: center;
   color: #ffffff;
@@ -227,13 +231,13 @@ const TSBLogo = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 19px;
-  margin-bottom: 13.3px;
+  margin-bottom: 0px;
   // border-radius: 30px;
   // background-color: #0f0f12;
   img {
     width: 135px;
     height: 35.4px;
-    margin: 0 9.7px 29.6px 15.3px;
+    margin: 0 9.7px 0px 15.3px;
     object-fit: contain;
   }
 `;
@@ -241,30 +245,38 @@ const TSBLogo = styled.div`
 const Info = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
-  width: 138px;
+  // align-items: center;
+  width: 164px;
   height: 113px;
-  margin: 29.6px 6.7px 60px 15.3px;
+  margin: 29.6px 6.7px 0px 30.3px;
   .user {
-    width: 138px;
+    width: 175px;
     height: 52px;
-    padding: 25px 12px 0 0;
+    //padding: 0 12px 0 0;
     font-family: NotoSansKR;
     font-size: 19px;
-    font-weight: bold;
     font-stretch: normal;
     font-style: normal;
+    font-weight: bold;
     line-height: 1.32;
     letter-spacing: normal;
     text-align: left;
     color: #fff;
+    .text {
+      font-weight: 300;
+    }
+  }
+  .icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
   }
 `;
 
 const MenuList = styled.div`
   width: 160px;
   height: 416px;
-  margin: 60px 0 157px;
+  margin: 0 0 157px;
 `;
 
 const MenuWrapper = styled.div`
@@ -272,7 +284,7 @@ const MenuWrapper = styled.div`
   // flex-direction: column;
   // align-items: center;
   // justify-content: center;
-  width: 116px;
+  width: 150px;
   height: 24px;
   margin: 16px 28.7px 25px 15.3px;
   cursor: pointer;
@@ -280,7 +292,7 @@ const MenuWrapper = styled.div`
     // max-width: 60px;
     // width: auto;
     // line-height: 1.27;
-    width: 80px;
+    width: 100px;
     height: 17px;
     margin: 4px 0 3px 12px;
     font-family: NotoSansKR;
@@ -306,7 +318,7 @@ const MenuWrapper = styled.div`
       width: 160px;
       height: 42px;
       margin: 16px 0 16px;
-      padding: 9px 29px 9px 15px;
+      padding: 9px 0px 9px 15px;
       border-radius: 16px;
       background-color: #5942ba;
     `}
