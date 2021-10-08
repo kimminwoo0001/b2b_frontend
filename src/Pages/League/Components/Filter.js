@@ -18,6 +18,7 @@ function Filter() {
   //리그 필터
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
+  const lang = useSelector((state) => state.LocaleReducer);
   const dispatch = useDispatch();
   const [leagueFilter, setLeagueFilter] = useState();
 
@@ -65,6 +66,46 @@ function Filter() {
     });
     setLeagueFilter(convertData.sort());
   };
+
+  const menus = [
+    { name: t("sidebar.part1"), path: "/", image: "/Images/ico-home.png" },
+    {
+      name: t("sidebar.part2"),
+      path: "/league",
+      image: "/Images/ico-league.png"
+    },
+    { name: t("sidebar.part3"), path: "/team", image: "/Images/ico-team.png" },
+    {
+      name: t("sidebar.part4"),
+      path: "/solo",
+      image: "/Images/ico-player.png"
+    },
+    {
+      name: t("sidebar.part5"),
+      path: "/video",
+      image: "/Images/ico-team-video-all-on.png"
+    },
+    {
+      name: t("sidebar.part6"),
+      path: "/teamCompare",
+      image: "/Images/ico-team-compare.png"
+    },
+    {
+      name: t("sidebar.part7"),
+      path: "/playerCompare",
+      image: "/Images/ico-player-compare.png"
+    },
+    {
+      name: t("sidebar.part8"),
+      path: "/simulator",
+      image: "/Images/ico-itemsimulator.png"
+    },
+    {
+      name: t("sidebar.part9"),
+      path: "/calculator",
+      image: "/Images/ico-pick-calculator.png"
+    }
+  ];
 
   //아래 리그 dropdown에서 선택된 값을 백엔드 요청에 쓰일 수 있도록  다시 변환 시키는 과정
   // ex) LCK ==> lck
@@ -116,8 +157,17 @@ function Filter() {
   return (
     <FilterWrapper>
       <FilterHeader>
-        <img src="Images/ico-filter.png" alt="filterIcon"></img>
-        <label>Filter</label>
+        {/*<img src="Images/ico-filter.png" alt="filterIcon"></img>*/}
+        <div className="header">
+          {lang === 'kr' ? <label>{menus[filters.menu_num].name}</label>
+            : <label style={{ fontSize: '33px' }}>{menus[filters.menu_num].name}</label>}
+        </div>
+        <div className="description">
+          {t("filters.description")}
+        </div>
+
+
+
       </FilterHeader>
       <LeagueFilter>
         {/* 리그 dropdown */}
@@ -248,14 +298,15 @@ const PatchLabels = styled.div`
 `;
 
 const FilterWrapper = styled.div`
-  width: 130px;
+  width: 331px;
   position: sticky;
   top: 0;
   bottom: 0;
-  background-color: #2f2d38;
-  border-right: 1px solid #484655;
+  padding: 50px 41px 61px 40px;
+  background-color: #23212A;
+  // border-right: 1px solid #484655;
 `;
-
+/*
 const FilterHeader = styled.div`
   height: 49px;
   border-bottom: 1px solid #484655;
@@ -273,7 +324,38 @@ const FilterHeader = styled.div`
     text-align: left;
     color: #84818e;
   }
+`;*/
+
+const FilterHeader = styled.div`
+  width: 250px;
+  font-family: NotoSansKR;
+  color: #fff;
+  .header {
+    height: 70px;
+    font-size: 40px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 0.88;
+    letter-spacing: normal;
+    text-align: left;
+  }
+  .description {
+    // height: 47px;
+    //margin: 20px 0 0;
+    font-size: 15px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.73;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+  }
+  
+  
 `;
+
 
 const LeagueFilter = styled.div`
   height: 61px;

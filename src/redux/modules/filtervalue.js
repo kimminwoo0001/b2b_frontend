@@ -27,6 +27,7 @@ export const OPP_CHAMPION_ENG = "filtervalue/OPP_CHAMPION_ENG";
 export const RESET_MAPPING = "filtervalue/RESET_MAPPING";
 export const RESET_MAPPINGTAB = "filtervalue/RESET_MAPPINGTAB";
 export const GET_GAME_ID = "filtervalue/GET_GAME_ID";
+export const MENU_NUM = "filtervalue/MENU_NUM";
 
 
 export const Reset_MapTab = (payload) => {
@@ -220,6 +221,13 @@ export const GetGameId = (payload) => {
   };
 };
 
+export const MenuNum = (payload) => {
+  return {
+    type: MENU_NUM,
+    payload
+  };
+};
+
 
 const initialState = {
   patch: "",
@@ -240,7 +248,8 @@ const initialState = {
   loading: false,
   resetchamp: "",
   click: 0,
-  gameid: ""
+  gameid: "",
+  menu_num: "",
 };
 
 export default function FilterReducer(state = initialState, action) {
@@ -362,6 +371,11 @@ export default function FilterReducer(state = initialState, action) {
         oppchampion: "",
         champion_eng: "",
         oppchampion_eng: ""
+      };
+    case MENU_NUM:
+      return {
+        ...state,
+        menu_num: action.payload
       };
     default:
       return state;

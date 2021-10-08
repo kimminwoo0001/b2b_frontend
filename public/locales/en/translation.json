@@ -304,7 +304,8 @@
     "noPlayer": "Player has not been selected.",
     "noTeam": "Team has not been selected.",
     "onePatch": "There should be at least one patch version.",
-    "dataProcess": "Data collection process is ongoing. It may cause slight delay between loadings."
+    "dataProcess": "Data collection process is ongoing. It may cause slight delay between loadings.",
+    "description": "You can see the data you want to see at a glance. Please choose an option."
   },
   "video": {
     "tab": {
