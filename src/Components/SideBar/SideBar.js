@@ -82,7 +82,7 @@ function Sidebar() {
         {/* <Link to="/utility"> */}
         <TSBLogo>
           {/*<img src="/Images/profile-default.png" alt="profile"></img>*/}
-          <img src="/Images/logo.png" alt="profile"></img>
+          <img src="/Images/logo.png" alt="profile" onClick={() => history.push("/")}></img>
         </TSBLogo>
         {/* </Link> */}
 
@@ -211,6 +211,7 @@ function Sidebar() {
           </div>
         </MenuWrapper> */}
         </MenuList>
+        <LocaleDropdown />
       </SideBarWrapper>
     </>
   );
@@ -226,7 +227,7 @@ const SideBarWrapper = styled.div`
   width: 200px;
   //margin: 0 0 141px;
   padding: 40px 30.3px 25px 9.7px;
-  background-color: var(--bg-gnb);
+  background-color: #16151c;
   // background-color: orange;
 
   // position: sticky;
@@ -257,6 +258,7 @@ const TSBLogo = styled.div`
     height: 35.4px;
     margin: 0 9.7px 0px 15.3px;
     object-fit: contain;
+    cursor: pointer;
   }
 `;
 

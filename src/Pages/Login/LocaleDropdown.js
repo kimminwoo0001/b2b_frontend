@@ -86,11 +86,12 @@ const DropDown = styled.div`
   .menu-trigger {
     display: flex;
     align-items: center;
-    border-radius: 3px;
-    border: solid 1px rgb(58, 55, 69);
-    width: 224px;
+    width: 144px;
     height: 33px;
-    background-color: rgb(47, 45, 56);
+    margin: 0px 0.7px 0 15.3px;
+    padding: 5px 11px 4px;
+    border-radius: 16px;
+    border: solid 1px #3a3745;
   }
 
   .menu-trigger:hover {
@@ -132,7 +133,7 @@ const DropDown = styled.div`
     position: absolute;
     top: 35px;
     right: 0;
-    width: 224px;
+    width: 144px;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
     opacity: 0;
     visibility: hidden;

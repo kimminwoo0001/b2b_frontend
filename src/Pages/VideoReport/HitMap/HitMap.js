@@ -201,10 +201,6 @@ function HitMap() {
     champion: <SetByChampion setMinFrom={setMinFrom} minFrom={minFrom} />
   };
 
-  const activeConfirmBtn = () => {
-    console.log("I'm Alive");
-  }
-
   return (
     <HitMapContainer>
       <TopSection>

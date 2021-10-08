@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import Nav from "../../Components/Nav/Nav";
+//import Nav from "../../Components/Nav/Nav";
 import SideBar from "../../Components/SideBar/SideBar";
 import HomeContents from "./HomeContents";
 import ErrorBoundary from "../../Components/ErrorBoundary";
@@ -12,7 +12,7 @@ function Home() {
       <HomeWrapper>
         <SideBar />
         <ContentWrapper>
-          <Nav />
+          {/*<Nav />*/}
 
           <HomeContents />
         </ContentWrapper>
@@ -29,7 +29,8 @@ const HomeWrapper = styled.div`
   min-height: 100vh;
   overflow: auto;
   display: flex;
-  background-color: #23212a;
+  background-color: #23212A;
+};
 `;
 
 const ContentWrapper = styled.div`
