@@ -231,7 +231,7 @@ export const MenuNum = (payload) => {
 
 const initialState = {
   patch: "",
-  league: undefined,
+  league: [],
   team: "",
   player: "",
   oppplayer: "",
@@ -257,7 +257,20 @@ export default function FilterReducer(state = initialState, action) {
     case INITIAL_STATE:
       return initialState;
     case LEAGUE:
-      return { ...state, league: action.payload };
+      console.log(state)
+      if (state.league.length === 0) {
+        return { ...state, league: [action.payload] };
+      }
+      if (state.league.find((e) => e === action.payload)) {
+        return {
+          ...state,
+          league: state.league.filter((e) => e !== action.payload)
+        };
+      }
+      return {
+        ...state,
+        league: [...state.league.filter((e) => e !== ""), action.payload]
+      };
     case PATCH:
       if (state.patch.length === 0) {
         return { ...state, patch: [action.payload] };

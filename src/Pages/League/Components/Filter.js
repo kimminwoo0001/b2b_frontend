@@ -107,6 +107,11 @@ function Filter() {
     }
   ];
 
+  // 페이지 오픈 시, 리그 데이터를 받아오도록 추가.
+  useEffect(() => {
+    fetchLeagueFilter();
+  }, []);
+
   //아래 리그 dropdown에서 선택된 값을 백엔드 요청에 쓰일 수 있도록  다시 변환 시키는 과정
   // ex) LCK ==> lck
   useEffect(() => {
@@ -122,7 +127,7 @@ function Filter() {
       dispatch(League(LeagueLPL));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.convertleague]);
+  }, [filters.league]);
 
   // 패치 필터 fetch 함수
   const fetchingPatchFilter = async (league) => {
@@ -169,48 +174,34 @@ function Filter() {
 
 
       </FilterHeader>
-      <LeagueFilter>
-        {/* 리그 dropdown */}
-        <label>League</label>
-        <DropDownToggle className="container">
-          <div className="menu-container">
-            <button
-              onClick={() => {
-                setIsActiveLeague(!isActiveLeague);
-                fetchLeagueFilter();
-              }}
-              className="menu-trigger"
-            >
-              <img
-                className="ChampIconImg"
-                width="14px"
-                height="14px"
-                src={
-                  filters.convertleague !== ""
-                    ? `Images/ico-league-${filters.convertleague.toLowerCase()}.png`
-                    : "Images/ico-filter-none.png"
-                }
-                alt="champIcon"
-              />
-              <span className="Label">
-                {filters.convertleague !== ""
-                  ? filters.convertleague
-                  : t("filters.leagueLabel")}
-              </span>
-              <img
-                className="ArrowIcon"
-                src="Images/ico-filter-arrow.png"
-                alt="arrowIcon"
-              />
-            </button>
-            <nav
-              ref={dropdownRef}
-              className={`menu ${isActiveLeague ? "active" : "inactive"}`}
-            >
+      <FilterBody>
+        <LeagueFilter>
+          {/* 리그 dropdown */}
+          <label>{t("label.league")}</label>
+          <DropDownToggle className="container">
+            <div className="menu-container">
               <ul>
+                {console.log("필터 리그: ", filters.league)}
                 {leagueFilter?.map((league, idx) => {
                   return (
-                    <div className="Wrapper" key={idx}>
+                    <Selected
+                      key={idx}
+                      isChecked={filters.league?.includes(league) ? true : false}
+                      onClick={() => {
+                        dispatch(League(league));
+                        //dispatch(ConvertedLeague(league));
+                        //dispatch(ResetFilter(league));
+                        setIsActiveLeague(!isActiveLeague);
+                        fetchingPatchFilter(league);
+                      }}
+                    >
+                      {console.log(filters.league?.includes(league))}
+                      <input
+                        type="checkbox"
+                        checked={filters.league?.includes(league) ? true : false}
+                        readOnly
+                      />
+                      {league}
                       <img
                         className="ChampIconImg"
                         width="14px"
@@ -218,66 +209,64 @@ function Filter() {
                         src={`Images/ico-league-${league.toLowerCase()}.png`}
                         alt="champIcon"
                       />
-                      <li
-                        onClick={() => {
-                          dispatch(ConvertedLeague(league));
-                          dispatch(ResetFilter(league));
-                          setIsActiveLeague(!isActiveLeague);
-                          fetchingPatchFilter(league);
-                        }}
-                        key={idx}
-                      >
-                        {league}
-                      </li>
-                    </div>
+                    </Selected>
                   );
                 })}
               </ul>
-            </nav>
-          </div>
-        </DropDownToggle>
-      </LeagueFilter>
-      <PatchFilter>
-        <label>Patch Version</label>
-        {!filters.patchfilter ? (
-          // 리그가 선택되지 않았을 때 보여주는 레이아웃
-          <PatchLabels>
-            <img
-              className="ChampIconImg"
-              width="14px"
-              height="14px"
-              src={
-                filters.patch !== ""
-                  ? `Images/ico-filter-version.png`
-                  : "Images/ico-filter-none.png"
-              }
-              alt="champIcon"
-            />
-            <span className="Label">{t("filters.patchLabel")}</span>
-          </PatchLabels>
-        ) : (
-          filters.patchfilter?.map((patch, idx) => {
-            return (
-              // 리그가 선택되었을때 보여주는 체크박스와 패치 리스트
-              <SelectedPatch
-                key={idx}
-                isChecked={filters.patch.includes(patch) ? true : false}
-                onClick={() => dispatch(Patch(patch))}
-              >
-                <input
-                  checked={filters.patch.includes(patch) ? true : false}
-                  type="checkbox"
-                  readOnly
-                ></input>
-                <div className="Version">
-                  {patch === "11.6" ? "11.6 (P.O)" : patch}
-                </div>
-              </SelectedPatch>
-            );
-          })
-        )}
-      </PatchFilter>
-    </FilterWrapper>
+            </div >
+          </DropDownToggle >
+        </LeagueFilter >
+        <PatchFilter>
+          <label>Patch Version</label>
+          {!filters.patchfilter ? (
+            // 리그가 선택되지 않았을 때 보여주는 레이아웃
+            <PatchLabels>
+              <img
+                className="ChampIconImg"
+                width="14px"
+                height="14px"
+                src={
+                  filters.patch !== ""
+                    ? `Images/ico-filter-version.png`
+                    : "Images/ico-filter-none.png"
+                }
+                alt="champIcon"
+              />
+              <span className="Label">{t("filters.patchLabel")}</span>
+            </PatchLabels>
+          ) : (
+            filters.patchfilter?.map((patch, idx) => {
+              return (
+                // 리그가 선택되었을때 보여주는 체크박스와 패치 리스트
+                <Selected
+                  key={idx}
+                  isChecked={filters.patch.includes(patch) ? true : false}
+                  onClick={() => dispatch(Patch(patch))}
+                >
+                  <input
+                    checked={filters.patch.includes(patch) ? true : false}
+                    type="checkbox"
+                    readOnly
+                  ></input>
+                  <div className="Version">
+                    {patch === "11.6" ? "11.6 (P.O)" : patch}
+                  </div>
+                </Selected>
+              );
+            })
+          )}
+        </PatchFilter>
+
+      </FilterBody >
+      <button
+        className="Selected"
+        onClick={() => {
+
+        }}
+      >
+        선택완료
+      </button>
+    </FilterWrapper >
   );
 }
 
@@ -305,6 +294,22 @@ const FilterWrapper = styled.div`
   padding: 50px 41px 61px 40px;
   background-color: #23212A;
   // border-right: 1px solid #484655;
+  .Selected {
+    width: 250px;
+    height: 42px;
+    margin: 20px 0 0;
+    padding: 11px;
+    border-radius: 16px;
+    background-color: #5942ba;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #fff;
+  }
 `;
 /*
 const FilterHeader = styled.div`
@@ -352,13 +357,24 @@ const FilterHeader = styled.div`
     text-align: left;
     color: #fff;
   }
-  
-  
+`;
+
+const FilterBody = styled.div`
+  width: 250px;
+  margin: 20px 0 20px;
+  padding: 20px 7px 20px 30px;
+  border-radius: 33px;
+  background-color: #2f2d38;
+  align-items: center;
+  justify-content: center;
+
+ 
+
 `;
 
 
 const LeagueFilter = styled.div`
-  height: 61px;
+  //height: 61px;
   border-bottom: 1px solid #484655;
   label {
     width: 35px;
@@ -375,7 +391,7 @@ const LeagueFilter = styled.div`
 const PatchFilter = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  //align-items: center;
   min-height: 61px;
   border-bottom: 1px solid #484655;
   label {
@@ -390,7 +406,7 @@ const PatchFilter = styled.div`
   }
 `;
 
-const SelectedPatch = styled.div`
+const Selected = styled.div`
   display: flex;
   align-items: center;
   padding: 4.5px 12px;
@@ -475,7 +491,7 @@ const DropDownToggle = styled.div`
   .menu-container {
     position: relative;
     display: flex;
-    justify-content: center;
+    //justify-content: center;
     align-items: center;
   }
 

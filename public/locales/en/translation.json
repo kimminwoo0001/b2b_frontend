@@ -405,5 +405,13 @@
     "logout": {
       "sessionExpires": "The session has expired and moves to the login page."
     }
+  },
+  "label": {
+    "league": "League",
+    "year": "Year",
+    "season": "Season",
+    "team": "Team",
+    "player": "Player",
+    "patchVersion": "Patch Version"
   }
 }
