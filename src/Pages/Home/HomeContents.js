@@ -211,7 +211,7 @@ function HomeContents() {
                       </td>
                       <td>
                         {leagueData.PO === true ? <PlayOff>P.O</PlayOff> : ""}
-                        {leagueData.PL === true ? <PL>P.L</PL> : ""}
+                        {leagueData.PL === true ? <PL>P.L</PL> : ""} {/* 사용안 할 예정*/}
                       </td>
                       <td className="Win">{leagueData.WinSeries}</td>
                       <td className="Lose">{leagueData.LossSeries}</td>

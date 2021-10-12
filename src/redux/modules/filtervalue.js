@@ -27,6 +27,7 @@ export const OPP_CHAMPION_ENG = "filtervalue/OPP_CHAMPION_ENG";
 export const RESET_MAPPING = "filtervalue/RESET_MAPPING";
 export const RESET_MAPPINGTAB = "filtervalue/RESET_MAPPINGTAB";
 export const GET_GAME_ID = "filtervalue/GET_GAME_ID";
+export const MENU_NUM = "filtervalue/MENU_NUM";
 
 
 export const Reset_MapTab = (payload) => {
@@ -220,10 +221,17 @@ export const GetGameId = (payload) => {
   };
 };
 
+export const MenuNum = (payload) => {
+  return {
+    type: MENU_NUM,
+    payload
+  };
+};
+
 
 const initialState = {
   patch: "",
-  league: undefined,
+  league: [],
   team: "",
   player: "",
   oppplayer: "",
@@ -240,7 +248,8 @@ const initialState = {
   loading: false,
   resetchamp: "",
   click: 0,
-  gameid: ""
+  gameid: "",
+  menu_num: "",
 };
 
 export default function FilterReducer(state = initialState, action) {
@@ -248,7 +257,20 @@ export default function FilterReducer(state = initialState, action) {
     case INITIAL_STATE:
       return initialState;
     case LEAGUE:
-      return { ...state, league: action.payload };
+      console.log(state)
+      if (state.league.length === 0) {
+        return { ...state, league: [action.payload] };
+      }
+      if (state.league.find((e) => e === action.payload)) {
+        return {
+          ...state,
+          league: state.league.filter((e) => e !== action.payload)
+        };
+      }
+      return {
+        ...state,
+        league: [...state.league.filter((e) => e !== ""), action.payload]
+      };
     case PATCH:
       if (state.patch.length === 0) {
         return { ...state, patch: [action.payload] };
@@ -362,6 +384,11 @@ export default function FilterReducer(state = initialState, action) {
         oppchampion: "",
         champion_eng: "",
         oppchampion_eng: ""
+      };
+    case MENU_NUM:
+      return {
+        ...state,
+        menu_num: action.payload
       };
     default:
       return state;
