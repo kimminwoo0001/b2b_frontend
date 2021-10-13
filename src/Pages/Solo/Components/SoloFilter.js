@@ -24,22 +24,29 @@ import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetec
 function SoloFilter() {
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
+  const lang = useSelector((state) => state.LocaleReducer);
   const dispatch = useDispatch();
   const [leagueFilter, setLeagueFilter] = useState();
-
   const [teamFilter, setTeamFilter] = useState();
-  const { t } = useTranslation();
   const [playerFilter, setPlayerFilter] = useState();
+  const { t } = useTranslation();
+
   const LeagueLCK = "lck";
   const LeagueLEC = "lec";
   const LeagueLCS = "lcs";
+  const LeagueLPL = "lpl";
   const Msi = "21msi";
+  const nameLeague = '/league';
+  const nameTeam = '/team';
+  const nameSolo = '/solo';
+  const nameVideo = '/video';
+  const pagePath = document.location.pathname;
+
   const dropdownRef = useRef(null);
   const [isActiveLeague, setIsActiveLeague] = useDetectOutsideClick(
     dropdownRef,
     false
   );
-
   const [isActiveTeam, setIsActiveTeam] = useDetectOutsideClick(
     dropdownRef,
     false
@@ -48,6 +55,11 @@ function SoloFilter() {
     dropdownRef,
     false
   );
+
+  // 페이지 오픈 시, 리그 데이터를 받아오도록 추가.
+  useEffect(() => {
+    fetchLeagueFilter();
+  }, []);
 
   useEffect(() => {
     if (filters.convertleague === "LCK") {
@@ -58,9 +70,11 @@ function SoloFilter() {
       dispatch(League(LeagueLCS));
     } else if (filters.convertleague === "MSI") {
       dispatch(League(Msi));
+    } else if (filters.convertleague === "LPL") {
+      dispatch(League(LeagueLPL));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.convertleague]);
+  }, [filters.league]);
 
   // 리그 필터 fetch 해오는 함수
   const fetchLeagueFilter = async () => {
@@ -76,14 +90,16 @@ function SoloFilter() {
     console.log(parsedMatchData);
     const convertData = [];
     parsedMatchData?.data?.league?.forEach((el) => {
-      if (el === LeagueLCS) {
+      if (el === Msi) {
+        convertData.push("MSI");
+      } else if (el === LeagueLCS) {
         convertData.push("LCS");
       } else if (el === LeagueLEC) {
         convertData.push("LEC");
       } else if (el === LeagueLCK) {
         convertData.push("LCK");
-      } else if (el === Msi) {
-        convertData.push("MSI");
+      } else if (el === LeagueLPL && pagePath.includes(nameLeague, nameTeam)) {
+        convertData.push("LPL");
       }
     });
     setLeagueFilter(convertData.sort());
@@ -159,13 +175,82 @@ function SoloFilter() {
     }
   };
 
+  const menus = [
+    {
+      name: t("sidebar.part1"),
+      path: "/",
+      image: "/Images/sidebar_newLogo/ico-home.png",
+    },
+    {
+      name: t("sidebar.part2"),
+      path: "/league",
+      image: "/Images/sidebar_newLogo/ico-league.png",
+    },
+    {
+      name: t("sidebar.part3"),
+      path: "/team",
+      image: "/Images/sidebar_newLogo/ico-team.png",
+    },
+    {
+      name: t("sidebar.part4"),
+      path: "/metaAnalysis",
+      image: "/Images/sidebar_newLogo/ico-meta.png",
+    },
+    {
+      name: t("sidebar.part5"),
+      path: "/solo",
+      image: "/Images/sidebar_newLogo/ico-player.png",
+    },
+    {
+      name: t("sidebar.part6"),
+      path: "/video",
+      image: "/Images/sidebar_newLogo/ico-movie.png",
+    },
+    {
+      name: t("sidebar.part7"),
+      path: "/matchAnalysis",
+      image: "/Images/sidebar_newLogo/ico-match.png",
+    },
+    {
+      name: t("sidebar.part8"),
+      path: "/teamCompare",
+      image: "/Images/sidebar_newLogo/ico-teamcom.png",
+    },
+    {
+      name: t("sidebar.part9"),
+      path: "/playerCompare",
+      image: "/Images/sidebar_newLogo/ico-playercom.png",
+    },
+    {
+      name: t("sidebar.part10"),
+      path: "/simulator",
+      image: "/Images/ico-itemsimulator.png",
+    },
+    {
+      name: t("sidebar.part11"),
+      path: "/calculator",
+      image: "/Images/ico-pick-calculator.png",
+    },
+  ];
+
+  // 페이지 오픈 시, 리그 데이터를 받아오도록 추가.
+  useEffect(() => {
+    fetchLeagueFilter();
+  }, []);
+
   return (
     <FilterWrapper>
       <FilterHeader>
-        <img src="Images/ico-filter.png" alt="filterIcon"></img>
-        <label>Filter</label>
+        {/*<img src="Images/ico-filter.png" alt="filterIcon"></img>*/}
+        <div className="header">
+          {lang === 'kr' ? <label>{menus[filters.menu_num].name}</label>
+            : <label style={{ fontSize: '33px' }}>{menus[filters.menu_num].name}</label>}
+        </div>
+        <div className="description">
+          {t("filters.description")}
+        </div>
       </FilterHeader>
-      <LeagueFilter>
+      <Filters>
         <label>League</label>
         <DropDownToggle className="container">
           <div className="menu-container">
@@ -181,15 +266,15 @@ function SoloFilter() {
                 width="14px"
                 height="14px"
                 src={
-                  filters.convertleague !== ""
-                    ? `Images/ico-league-${filters.convertleague.toLowerCase()}.png`
+                  filters.league.length !== 0
+                    ? `Images/ico-league-${filters.league[0].toLowerCase()}.png`
                     : "Images/ico-filter-none.png"
                 }
                 alt="champIcon"
               />
               <span className="Label">
-                {filters.convertleague !== ""
-                  ? filters.convertleague
+                {filters.league.length !== 0
+                  ? filters.league
                   : t("filters.leagueLabel")}
               </span>
               <img
@@ -215,8 +300,9 @@ function SoloFilter() {
                       />
                       <li
                         onClick={() => {
-                          dispatch(ConvertedLeague(league));
-                          dispatch(ResetFilter(league));
+                          dispatch(League(league));
+                          //dispatch(ConvertedLeague(league));
+                          //dispatch(ResetFilter(league));
                           setIsActiveLeague(!isActiveLeague);
                           fetchingPatchFilter(league);
                         }}
@@ -231,8 +317,8 @@ function SoloFilter() {
             </nav>
           </div>
         </DropDownToggle>
-      </LeagueFilter>
-      <PatchFilter>
+      </Filters>
+      <Filters>
         <label>Patch Version</label>
         {!filters.patchfilter ? (
           <PatchLabels>
@@ -252,7 +338,7 @@ function SoloFilter() {
         ) : (
           filters.patchfilter?.map((patch, idx) => {
             return (
-              <SelectedPatch
+              <Selected
                 key={idx}
                 isChecked={filters.patch.includes(patch) ? true : false}
                 onClick={() => dispatch(Patch(patch))}
@@ -266,12 +352,12 @@ function SoloFilter() {
                 <div className="Version">
                   {patch === "11.6" ? "11.6 (P.O)" : patch}
                 </div>
-              </SelectedPatch>
+              </Selected>
             );
           })
         )}
-      </PatchFilter>
-      <FilterTeam>
+      </Filters>
+      <Filters>
         <label>Team</label>
         <DropDownToggle className="container">
           <div className="menu-container">
@@ -287,14 +373,14 @@ function SoloFilter() {
                 width="14px"
                 height="14px"
                 src={
-                  filters.team !== ""
+                  filters.team.length !== 0
                     ? `Images/TeamLogo/${filters.team}.png`
                     : "Images/ico-filter-none.png"
                 }
                 alt="champIcon"
               />
               <span className="Label">
-                {filters.team !== "" ? filters.team : t("filters.teamLabel")}
+                {filters.team.length !== 0 ? filters.team : t("filters.teamLabel")}
               </span>
               <img
                 className="ArrowIcon"
@@ -334,8 +420,8 @@ function SoloFilter() {
             </nav>
           </div>
         </DropDownToggle>
-      </FilterTeam>
-      <FilterPlayer>
+      </Filters>
+      <Filters>
         <label>Player</label>
         <DropDownToggle className="container">
           <div className="menu-container">
@@ -402,7 +488,7 @@ function SoloFilter() {
             </nav>
           </div>
         </DropDownToggle>
-      </FilterPlayer>
+      </Filters>
     </FilterWrapper>
   );
 }
@@ -424,36 +510,94 @@ const PatchLabels = styled.div`
 `;
 
 const FilterWrapper = styled.div`
-  width: 130px;
-  /* height: 100vh; */
-  background-color: #2f2d38;
+  width: 331px;
   position: sticky;
   top: 0;
   bottom: 0;
-  border-right: 1px solid #484655;
+  padding: 50px 41px 61px 40px;
+  background-color: #23212A;
+  // border-right: 1px solid #484655;
+  .Selected {
+    width: 250px;
+    height: 42px;
+    margin: 20px 0 0;
+    padding: 11px;
+    border-radius: 16px;
+    background-color: #5942ba;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #fff;
+  }
 `;
+/*
+const FilterHeader = styled.div`
+  height: 49px;
+  border-bottom: 1px solid #484655;
+  img {
+    margin-left: 9px;
+    margin-top: 17px;
+  }
+  label {
+    width: 24px;
+    height: 15px;
+    margin: 0 0 0px 6px;
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 11px;
+    line-height: 1.36;
+    text-align: left;
+    color: #84818e;
+  }
+`;*/
 
 const FilterHeader = styled.div`
-height: 49px;
-border-bottom: 1px solid #484655;
-img{
-  margin-left: 9px;
-  margin-top: 17px;
-}
-label{
-  width: 24px;
-  height: 15px;
-  margin: 0 0 0px 6px;
-  font-family: NotoSansKR, Apple SD Gothic Neo;;
-  font-size: 11px;
-  line-height: 1.36;
-  text-align: left;
-  color: #84818e;
-}
-}`;
+  width: 250px;
+  font-family: NotoSansKR;
+  color: #fff;
+  .header {
+    height: 70px;
+    font-size: 40px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 0.88;
+    letter-spacing: normal;
+    text-align: left;
+  }
+  .description {
+    // height: 47px;
+    //margin: 20px 0 0;
+    font-size: 15px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.73;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+  }
+`;
+
+const FilterBody = styled.div`
+  width: 250px;
+  margin: 20px 0 20px;
+  padding: 20px 7px 20px 30px;
+  border-radius: 33px;
+  background-color: #2f2d38;
+  align-items: center;
+  justify-content: center;
+
+ 
+
+`;
+
 
 const LeagueFilter = styled.div`
-  height: 61px;
+  //height: 61px;
   border-bottom: 1px solid #484655;
   label {
     width: 35px;
@@ -470,7 +614,7 @@ const LeagueFilter = styled.div`
 const PatchFilter = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  //align-items: center;
   min-height: 61px;
   border-bottom: 1px solid #484655;
   label {
@@ -484,7 +628,26 @@ const PatchFilter = styled.div`
     color: #84818e;
   }
 `;
-const SelectedPatch = styled.div`
+
+const Filters = styled.div`
+  display: flex;
+  flex-direction: column;
+  //align-items: center;
+  min-height: 61px;
+  border-bottom: 1px solid #484655;
+  label {
+    width: 120px;
+    height: 15px;
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    margin: 7.6px 0 11px 8px;
+    font-size: 11px;
+    line-height: 1.36;
+    text-align: left;
+    color: #84818e;
+  }
+`;
+
+const Selected = styled.div`
   display: flex;
   align-items: center;
   padding: 4.5px 12px;
@@ -533,36 +696,28 @@ const SelectedPatch = styled.div`
       outline: none !important;
     }
   }
-`;
-const FilterTeam = styled.div`
-  height: 61px;
-  border-bottom: 1px solid #484655;
-  label {
-    width: 120px;
-    height: 15px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    margin: 7.6px 0 11px 8px;
-    font-size: 11px;
-    line-height: 1.36;
-    text-align: left;
-    color: #84818e;
-  }
+  /* display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4.5px 12px;
+  width: 110px;
+  height: 25px;
+  border-radius: 30px;
+  background-color: rgb(72, 70, 85);
+  margin-bottom: 6px;
+
+  > img {
+    cursor: pointer;
+    :hover {
+      transform: scale(1.1);
+      -webkit-transform: scale(1.1);
+      -moz-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+      -o-transform: scale(1.1);
+    }
+  } */
 `;
 
-const FilterPlayer = styled.div`
-  height: 61px;
-  border-bottom: 1px solid #484655;
-  label {
-    width: 120px;
-    height: 15px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    margin: 7.6px 0 11px 8px;
-    font-size: 11px;
-    line-height: 1.36;
-    text-align: left;
-    color: #84818e;
-  }
-`;
 const DropDownToggle = styled.div`
   margin: 0;
   padding: 0;
@@ -577,7 +732,7 @@ const DropDownToggle = styled.div`
   .menu-container {
     position: relative;
     display: flex;
-    justify-content: center;
+    //justify-content: center;
     align-items: center;
   }
 
@@ -649,6 +804,7 @@ const DropDownToggle = styled.div`
 
   .menu.active {
     opacity: 1;
+
     visibility: visible;
     transform: translateY(0);
     z-index: 10;
@@ -677,10 +833,10 @@ const DropDownToggle = styled.div`
   .menu li {
     text-decoration: none;
     padding: 15px 20px;
+    width: 128px;
     display: block;
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 11px;
-    width: 128px;
     letter-spacing: -0.55px;
     text-align: left;
     color: rgb(255, 255, 255);
