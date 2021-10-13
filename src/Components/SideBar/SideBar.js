@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
 import { useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { InitailizeState } from "../../redux/modules/filtervalue";
+import { MenuNum, InitailizeState } from "../../redux/modules/filtervalue";
 import { UserLogout } from "../../redux/modules";
 
 import TeamFilterModal from "../../Pages/TeamCompare/TeamFilterModal";
@@ -52,11 +52,6 @@ function Sidebar() {
       image: "/Images/sidebar_newLogo/ico-team.png",
     },
     {
-      name: t("sidebar.part10"),
-      path: "/metaAnalysis",
-      image: "/Images/sidebar_newLogo/ico-meta.png",
-    },
-    {
       name: t("sidebar.part4"),
       path: "/solo",
       image: "/Images/sidebar_newLogo/ico-player.png",
@@ -65,11 +60,6 @@ function Sidebar() {
       name: t("sidebar.part5"),
       path: "/video",
       image: "/Images/sidebar_newLogo/ico-movie.png",
-    },
-    {
-      name: t("sidebar.part11"),
-      path: "/matchAnalysis",
-      image: "/Images/sidebar_newLogo/ico-match.png",
     },
     {
       name: t("sidebar.part6"),
@@ -90,6 +80,16 @@ function Sidebar() {
       name: t("sidebar.part9"),
       path: "/calculator",
       image: "/Images/ico-pick-calculator.png",
+    },
+    {
+      name: t("sidebar.part10"),
+      path: "/metaAnalysis",
+      image: "/Images/sidebar_newLogo/ico-meta.png",
+    },
+    {
+      name: t("sidebar.part11"),
+      path: "/matchAnalysis",
+      image: "/Images/sidebar_newLogo/ico-match.png",
     },
   ];
 
@@ -154,6 +154,7 @@ function Sidebar() {
             onClick={() => {
               history.push(menus[0].path);
               dispatch(InitailizeState());
+              dispatch(MenuNum(0));
             }}
             changeColor={pathName === "/"}
           >
@@ -164,6 +165,7 @@ function Sidebar() {
             onClick={() => {
               history.push(menus[1].path);
               dispatch(InitailizeState());
+              dispatch(MenuNum(1));
             }}
             changeColor={pathName === "/league"}
           >
@@ -174,6 +176,7 @@ function Sidebar() {
             onClick={() => {
               history.push(menus[2].path);
               dispatch(InitailizeState());
+              dispatch(MenuNum(2));
             }}
             changeColor={pathName === "/team"}
           >
@@ -182,10 +185,22 @@ function Sidebar() {
           </MenuWrapper>
           <MenuWrapper
             onClick={() => {
-              history.push(menus[3].path);
+              history.push(menus[9].path);
               dispatch(InitailizeState());
+              dispatch(MenuNum(3));
             }}
             changeColor={pathName === "/metaAnalysis"}
+          >
+            <img src={menus[9].image} alt="menu"></img>
+            <div className="Name">{menus[9].name}</div>
+          </MenuWrapper>
+          <MenuWrapper
+            onClick={() => {
+              history.push(menus[3].path);
+              dispatch(InitailizeState());
+              dispatch(MenuNum(4));
+            }}
+            changeColor={pathName === "/solo"}
           >
             <img src={menus[3].image} alt="menu"></img>
             <div className="Name">{menus[3].name}</div>
@@ -194,36 +209,28 @@ function Sidebar() {
             onClick={() => {
               history.push(menus[4].path);
               dispatch(InitailizeState());
-            }}
-            changeColor={pathName === "/solo"}
-          >
-            <img src={menus[4].image} alt="menu"></img>
-            <div className="Name">{menus[4].name}</div>
-          </MenuWrapper>
-          <MenuWrapper
-            onClick={() => {
-              history.push(menus[5].path);
-              dispatch(InitailizeState());
+              dispatch(MenuNum(5));
             }}
             changeColor={pathName === "/video"}
           >
             <img
-              src={menus[5].image}
+              src={menus[4].image}
               alt="menu"
               // width="20px"
               // height="20px"
             ></img>
-            <div className="Name">{menus[5].name}</div>
+            <div className="Name">{menus[4].name}</div>
           </MenuWrapper>
           <MenuWrapper
             onClick={() => {
-              history.push(menus[6].path);
+              history.push(menus[10].path);
               dispatch(InitailizeState());
+              dispatch(MenuNum(6));
             }}
             changeColor={pathName === "/matchAnalysis"}
           >
-            <img src={menus[6].image} alt="menu"></img>
-            <div className="Name">{menus[6].name}</div>
+            <img src={menus[10].image} alt="menu"></img>
+            <div className="Name">{menus[10].name}</div>
           </MenuWrapper>
           <MenuWrapper
             onClick={() => {
@@ -232,22 +239,24 @@ function Sidebar() {
               } else {
                 setTeamModal(true);
                 dispatch(InitailizeState());
+                dispatch(MenuNum(7));
               }
             }}
             changeColor={pathName === "/teamCompare"}
           >
-            <img src={menus[7].image} alt="menu"></img>
-            <div className="Name">{menus[7].name}</div>
+            <img src={menus[5].image} alt="menu"></img>
+            <div className="Name">{menus[5].name}</div>
           </MenuWrapper>
           <MenuWrapper
             onClick={() => {
               setPlayerModal(true);
               dispatch(InitailizeState());
+              dispatch(MenuNum(8));
             }}
             changeColor={pathName === "/playerCompare"}
           >
-            <img src={menus[8].image} alt="menu"></img>
-            <div className="Name">{menus[8].name}</div>
+            <img src={menus[6].image} alt="menu"></img>
+            <div className="Name">{menus[6].name}</div>
           </MenuWrapper>
           {/* <MenuWrapper
           onClick={() => {
