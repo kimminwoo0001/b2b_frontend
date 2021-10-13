@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
 import { useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { InitailizeState } from "../../redux/modules/filtervalue";
+import { MenuNum, InitailizeState } from "../../redux/modules/filtervalue";
 import { UserLogout } from "../../redux/modules";
 
 import TeamFilterModal from "../../Pages/TeamCompare/TeamFilterModal";
@@ -154,6 +154,7 @@ function Sidebar() {
             onClick={() => {
               history.push(menus[0].path);
               dispatch(InitailizeState());
+              dispatch(MenuNum(0));
             }}
             changeColor={pathName === "/"}
           >
@@ -164,6 +165,7 @@ function Sidebar() {
             onClick={() => {
               history.push(menus[1].path);
               dispatch(InitailizeState());
+              dispatch(MenuNum(1));
             }}
             changeColor={pathName === "/league"}
           >
@@ -174,6 +176,7 @@ function Sidebar() {
             onClick={() => {
               history.push(menus[2].path);
               dispatch(InitailizeState());
+              dispatch(MenuNum(2));
             }}
             changeColor={pathName === "/team"}
           >
@@ -184,6 +187,7 @@ function Sidebar() {
             onClick={() => {
               history.push(menus[3].path);
               dispatch(InitailizeState());
+              dispatch(MenuNum(3));
             }}
             changeColor={pathName === "/metaAnalysis"}
           >
@@ -194,6 +198,7 @@ function Sidebar() {
             onClick={() => {
               history.push(menus[4].path);
               dispatch(InitailizeState());
+              dispatch(MenuNum(4));
             }}
             changeColor={pathName === "/solo"}
           >
@@ -210,8 +215,8 @@ function Sidebar() {
             <img
               src={menus[5].image}
               alt="menu"
-              // width="20px"
-              // height="20px"
+            // width="20px"
+            // height="20px"
             ></img>
             <div className="Name">{menus[5].name}</div>
           </MenuWrapper>
@@ -232,6 +237,7 @@ function Sidebar() {
               } else {
                 setTeamModal(true);
                 dispatch(InitailizeState());
+                dispatch(MenuNum(5));
               }
             }}
             changeColor={pathName === "/teamCompare"}
@@ -243,6 +249,7 @@ function Sidebar() {
             onClick={() => {
               setPlayerModal(true);
               dispatch(InitailizeState());
+              dispatch(MenuNum(6));
             }}
             changeColor={pathName === "/playerCompare"}
           >
@@ -277,9 +284,9 @@ function Sidebar() {
             계산기
           </div>
         </MenuWrapper> */}
-        </MenuList>
+        </MenuList >
         <LocaleDropdown />
-      </SideBarWrapper>
+      </SideBarWrapper >
     </>
   );
 }
