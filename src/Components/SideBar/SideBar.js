@@ -52,11 +52,6 @@ function Sidebar() {
       image: "/Images/sidebar_newLogo/ico-team.png",
     },
     {
-      name: t("sidebar.part10"),
-      path: "/metaAnalysis",
-      image: "/Images/sidebar_newLogo/ico-meta.png",
-    },
-    {
       name: t("sidebar.part4"),
       path: "/solo",
       image: "/Images/sidebar_newLogo/ico-player.png",
@@ -65,11 +60,6 @@ function Sidebar() {
       name: t("sidebar.part5"),
       path: "/video",
       image: "/Images/sidebar_newLogo/ico-movie.png",
-    },
-    {
-      name: t("sidebar.part11"),
-      path: "/matchAnalysis",
-      image: "/Images/sidebar_newLogo/ico-match.png",
     },
     {
       name: t("sidebar.part6"),
@@ -90,6 +80,16 @@ function Sidebar() {
       name: t("sidebar.part9"),
       path: "/calculator",
       image: "/Images/ico-pick-calculator.png",
+    },
+    {
+      name: t("sidebar.part10"),
+      path: "/metaAnalysis",
+      image: "/Images/sidebar_newLogo/ico-meta.png",
+    },
+    {
+      name: t("sidebar.part11"),
+      path: "/matchAnalysis",
+      image: "/Images/sidebar_newLogo/ico-match.png",
     },
   ];
 
