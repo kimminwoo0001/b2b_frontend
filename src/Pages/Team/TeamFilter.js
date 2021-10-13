@@ -1,7 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import qs from "qs";
-import axios from "axios";
-import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Patch,
@@ -13,17 +10,20 @@ import {
   PatchFull,
   ResetFilter2,
 } from "../../redux/modules/filtervalue";
+import axios from "axios";
+import styled, { css } from "styled-components";
 import { API } from "../config";
 import { useTranslation } from "react-i18next";
 import { useDetectOutsideClick } from "./useDetectOustsideClick";
+import qs from "qs";
 
 function TeamFilter() {
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
-  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [leagueFilter, setLeagueFilter] = useState();
 
+  const { t } = useTranslation();
   const [teamFilter, setTeamFilter] = useState();
   const LeagueLCK = "lck";
   const LeagueLEC = "lec";
@@ -95,12 +95,12 @@ function TeamFilter() {
           league === "LCK"
             ? "lck"
             : league === "LEC"
-              ? "lec"
-              : league === "LCS"
-                ? "lcs"
-                : league === "LPL"
-                  ? "lpl"
-                  : "21msi",
+            ? "lec"
+            : league === "LCS"
+            ? "lcs"
+            : league === "LPL"
+            ? "lpl"
+            : "21msi",
         // patch: filters.patch,
         token: user.token,
         id: user.id,
@@ -274,7 +274,9 @@ function TeamFilter() {
                 alt="champIcon"
               />
               <span className="Label">
-                {filters.team.length !== 0 ? filters.team : t("filters.teamLabel")}
+                {filters.team.length !== 0
+                  ? filters.team
+                  : t("filters.teamLabel")}
               </span>
               <img
                 className="ArrowIcon"

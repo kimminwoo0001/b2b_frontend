@@ -7,7 +7,7 @@ import {
   ResetFilter,
   PatchFull,
   Year,
-  Season
+  Season,
 } from "../../../redux/modules/filtervalue";
 import axios from "axios";
 import styled, { css } from "styled-components";
@@ -15,7 +15,6 @@ import { API } from "../../config";
 import { useTranslation } from "react-i18next";
 import { useDetectOutsideClick } from "./useDetectOustsideClick";
 import qs from "qs";
-import { Search } from "semantic-ui-react";
 
 function Filter() {
   //리그 필터
@@ -24,7 +23,6 @@ function Filter() {
   const lang = useSelector((state) => state.LocaleReducer);
   const dispatch = useDispatch();
   const [leagueFilter, setLeagueFilter] = useState();
-
 
   const { t } = useTranslation();
   const LeagueLCK = "lck";
@@ -44,11 +42,11 @@ function Filter() {
     const parsedMatchData = await axios.get(`${API}/api/filter/league`, {
       params: {
         token: user.token,
-        id: user.id
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     });
 
     const convertData = [];
@@ -75,39 +73,39 @@ function Filter() {
     {
       name: t("sidebar.part2"),
       path: "/league",
-      image: "/Images/ico-league.png"
+      image: "/Images/ico-league.png",
     },
     { name: t("sidebar.part3"), path: "/team", image: "/Images/ico-team.png" },
     {
       name: t("sidebar.part4"),
       path: "/solo",
-      image: "/Images/ico-player.png"
+      image: "/Images/ico-player.png",
     },
     {
       name: t("sidebar.part5"),
       path: "/video",
-      image: "/Images/ico-team-video-all-on.png"
+      image: "/Images/ico-team-video-all-on.png",
     },
     {
       name: t("sidebar.part6"),
       path: "/teamCompare",
-      image: "/Images/ico-team-compare.png"
+      image: "/Images/ico-team-compare.png",
     },
     {
       name: t("sidebar.part7"),
       path: "/playerCompare",
-      image: "/Images/ico-player-compare.png"
+      image: "/Images/ico-player-compare.png",
     },
     {
       name: t("sidebar.part8"),
       path: "/simulator",
-      image: "/Images/ico-itemsimulator.png"
+      image: "/Images/ico-itemsimulator.png",
     },
     {
       name: t("sidebar.part9"),
       path: "/calculator",
-      image: "/Images/ico-pick-calculator.png"
-    }
+      image: "/Images/ico-pick-calculator.png",
+    },
   ];
 
   // 페이지 오픈 시, 리그 데이터를 받아오도록 추가.
@@ -140,19 +138,19 @@ function Filter() {
           league === "LCK"
             ? "lck"
             : league === "LEC"
-              ? "lec"
-              : league === "LPL"
-                ? "lpl"
-                : league === "LCS"
-                  ? "lcs"
-                  : "21msi",
+            ? "lec"
+            : league === "LPL"
+            ? "lpl"
+            : league === "LCS"
+            ? "lcs"
+            : "21msi",
         // patch: filters.patch,
         token: user.token,
-        id: user.id
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     });
     dispatch(PatchFull(result.data.patch));
   };
@@ -167,12 +165,15 @@ function Filter() {
       <FilterHeader>
         {/*<img src="Images/ico-filter.png" alt="filterIcon"></img>*/}
         <div className="header">
-          {lang === 'kr' ? <label>{menus[filters.menu_num].name}</label>
-            : <label style={{ fontSize: '33px' }}>{menus[filters.menu_num].name}</label>}
+          {lang === "kr" ? (
+            <label>{menus[filters.menu_num].name}</label>
+          ) : (
+            <label style={{ fontSize: "33px" }}>
+              {menus[filters.menu_num].name}
+            </label>
+          )}
         </div>
-        <div className="description">
-          {t("filters.description")}
-        </div>
+        <div className="description">{t("filters.description")}</div>
       </FilterHeader>
       <FilterBody>
         <Filters>
@@ -186,7 +187,9 @@ function Filter() {
                   return (
                     <Selected
                       key={idx}
-                      isChecked={filters.league?.includes(league) ? true : false}
+                      isChecked={
+                        filters.league?.includes(league) ? true : false
+                      }
                       onClick={() => {
                         dispatch(League(league));
                         //dispatch(ConvertedLeague(league));
@@ -198,7 +201,9 @@ function Filter() {
                       {console.log(filters.league?.includes(league))}
                       <input
                         type="checkbox"
-                        checked={filters.league?.includes(league) ? true : false}
+                        checked={
+                          filters.league?.includes(league) ? true : false
+                        }
                         readOnly
                       />
                       {league}
@@ -213,9 +218,9 @@ function Filter() {
                   );
                 })}
               </ul>
-            </div >
-          </DropDownToggle >
-        </Filters >
+            </div>
+          </DropDownToggle>
+        </Filters>
         <Filters>
           <label>{t("label.year")}</label>
           {filters.year?.map((year, idx) => {
@@ -231,9 +236,7 @@ function Filter() {
                   type="checkbox"
                   readOnly
                 ></input>
-                <div className="Version">
-                  {year}
-                </div>
+                <div className="Version">{year}</div>
               </Selected>
             );
           })}
@@ -253,9 +256,7 @@ function Filter() {
                   type="checkbox"
                   readOnly
                 ></input>
-                <div className="Version">
-                  {season}
-                </div>
+                <div className="Version">{season}</div>
               </Selected>
             );
           })}
@@ -300,17 +301,11 @@ function Filter() {
             })
           )}
         </Filters>
-
-      </FilterBody >
-      <button
-        className="Selected"
-        onClick={() => {
-
-        }}
-      >
+      </FilterBody>
+      <button className="Selected" onClick={() => {}}>
         선택완료
       </button>
-    </FilterWrapper >
+    </FilterWrapper>
   );
 }
 
@@ -336,7 +331,7 @@ const FilterWrapper = styled.div`
   top: 0;
   bottom: 0;
   padding: 50px 41px 61px 40px;
-  background-color: #23212A;
+  background-color: #23212a;
   // border-right: 1px solid #484655;
   .Selected {
     width: 250px;
@@ -411,11 +406,7 @@ const FilterBody = styled.div`
   background-color: #2f2d38;
   align-items: center;
   justify-content: center;
-
- 
-
 `;
-
 
 const LeagueFilter = styled.div`
   //height: 61px;

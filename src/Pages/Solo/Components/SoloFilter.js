@@ -1,7 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import qs from "qs";
-import axios from "axios";
-import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Patch,
@@ -15,11 +12,14 @@ import {
   ResetChampion,
   HandleTab,
   ResetFilter2,
-  PatchFull
+  PatchFull,
 } from "../../../redux/modules/filtervalue";
+import axios from "axios";
+import styled, { css } from "styled-components";
 import { API } from "../../config";
 import { useTranslation } from "react-i18next";
 import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
+import qs from "qs";
 
 function SoloFilter() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -71,7 +71,7 @@ function SoloFilter() {
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     });
     console.log(parsedMatchData);
     const convertData = [];
@@ -99,17 +99,17 @@ function SoloFilter() {
           league === "LCK"
             ? "lck"
             : league === "LEC"
-              ? "lec"
-              : league === "LCS"
-                ? "lcs"
-                : "21msi",
+            ? "lec"
+            : league === "LCS"
+            ? "lcs"
+            : "21msi",
         // patch: filters.patch,
         token: user.token,
         id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     });
     const patchResponse = result.data.patch;
 
@@ -129,7 +129,7 @@ function SoloFilter() {
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     });
     setTeamFilter(result.data.team);
   };
@@ -148,7 +148,7 @@ function SoloFilter() {
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     });
 
     setPlayerFilter(Object.values(result.data));
