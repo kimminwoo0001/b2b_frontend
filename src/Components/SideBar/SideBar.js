@@ -215,8 +215,8 @@ function Sidebar() {
             <img
               src={menus[5].image}
               alt="menu"
-              // width="20px"
-              // height="20px"
+            // width="20px"
+            // height="20px"
             ></img>
             <div className="Name">{menus[5].name}</div>
           </MenuWrapper>
