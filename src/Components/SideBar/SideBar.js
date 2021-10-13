@@ -36,46 +36,62 @@ function Sidebar() {
 
   //onClick 이벤트가 발생할때마다 해당 path로 이동
   const menus = [
-    { name: t("sidebar.part1"), path: "/", image: "/Images/ico-home.png" },
+    {
+      name: t("sidebar.part1"),
+      path: "/",
+      image: "/Images/sidebar_newLogo/ico-home.png",
+    },
     {
       name: t("sidebar.part2"),
       path: "/league",
-      image: "/Images/ico-league.png"
+      image: "/Images/sidebar_newLogo/ico-league.png",
     },
-    { name: t("sidebar.part3"), path: "/team", image: "/Images/ico-team.png" },
+    {
+      name: t("sidebar.part3"),
+      path: "/team",
+      image: "/Images/sidebar_newLogo/ico-team.png",
+    },
+    {
+      name: t("sidebar.part10"),
+      path: "/metaAnalysis",
+      image: "/Images/sidebar_newLogo/ico-meta.png",
+    },
     {
       name: t("sidebar.part4"),
       path: "/solo",
-      image: "/Images/ico-player.png"
+      image: "/Images/sidebar_newLogo/ico-player.png",
     },
     {
       name: t("sidebar.part5"),
       path: "/video",
-      image: "/Images/ico-team-video-all-on.png"
+      image: "/Images/sidebar_newLogo/ico-movie.png",
+    },
+    {
+      name: t("sidebar.part11"),
+      path: "/matchAnalysis",
+      image: "/Images/sidebar_newLogo/ico-match.png",
     },
     {
       name: t("sidebar.part6"),
       path: "/teamCompare",
-      image: "/Images/ico-team-compare.png"
+      image: "/Images/sidebar_newLogo/ico-teamcom.png",
     },
     {
       name: t("sidebar.part7"),
       path: "/playerCompare",
-      image: "/Images/ico-player-compare.png"
+      image: "/Images/sidebar_newLogo/ico-playercom.png",
     },
     {
       name: t("sidebar.part8"),
       path: "/simulator",
-      image: "/Images/ico-itemsimulator.png"
+      image: "/Images/ico-itemsimulator.png",
     },
     {
       name: t("sidebar.part9"),
       path: "/calculator",
-      image: "/Images/ico-pick-calculator.png"
-    }
+      image: "/Images/ico-pick-calculator.png",
+    },
   ];
-
-
 
   // 로그아웃 함수, 로그아웃 이벤트가 발생되면 session 값을 clear하고 로그인 페이지로 이동시킴
   const handleLogOut = () => {
@@ -95,7 +111,11 @@ function Sidebar() {
         {/* <Link to="/utility"> */}
         <TSBLogo>
           {/*<img src="/Images/profile-default.png" alt="profile"></img>*/}
-          <img src="/Images/logo.png" alt="profile" onClick={() => history.push("/")}></img>
+          <img
+            src="/Images/logo.png"
+            alt="profile"
+            onClick={() => history.push("/")}
+          ></img>
         </TSBLogo>
         {/* </Link> */}
 
@@ -107,10 +127,19 @@ function Sidebar() {
           </div>
 
           <div className="icon">
-            {user.alarm ?
-              <img className="Alert" src="Images/ico_alaram.png" alt="alertIconOn"></img>
-              : <img className="Alert" src="Images/ico-alarm.png" alt="alertIconOff"></img>
-            }
+            {user.alarm ? (
+              <img
+                className="Alert"
+                src="Images/ico_alaram.png"
+                alt="alertIconOn"
+              ></img>
+            ) : (
+              <img
+                className="Alert"
+                src="Images/ico-alarm.png"
+                alt="alertIconOff"
+              ></img>
+            )}
             <img
               className="LogOut"
               src="Images/ico-logout.png"
@@ -160,7 +189,7 @@ function Sidebar() {
               dispatch(InitailizeState());
               dispatch(MenuNum(3));
             }}
-            changeColor={pathName === "/solo"}
+            changeColor={pathName === "/metaAnalysis"}
           >
             <img src={menus[3].image} alt="menu"></img>
             <div className="Name">{menus[3].name}</div>
@@ -171,10 +200,35 @@ function Sidebar() {
               dispatch(InitailizeState());
               dispatch(MenuNum(4));
             }}
+            changeColor={pathName === "/solo"}
+          >
+            <img src={menus[4].image} alt="menu"></img>
+            <div className="Name">{menus[4].name}</div>
+          </MenuWrapper>
+          <MenuWrapper
+            onClick={() => {
+              history.push(menus[5].path);
+              dispatch(InitailizeState());
+            }}
             changeColor={pathName === "/video"}
           >
-            <img src={menus[4].image} alt="menu" width="20px" height="20px"></img>
-            <div className="Name">{menus[4].name}</div>
+            <img
+              src={menus[5].image}
+              alt="menu"
+              // width="20px"
+              // height="20px"
+            ></img>
+            <div className="Name">{menus[5].name}</div>
+          </MenuWrapper>
+          <MenuWrapper
+            onClick={() => {
+              history.push(menus[6].path);
+              dispatch(InitailizeState());
+            }}
+            changeColor={pathName === "/matchAnalysis"}
+          >
+            <img src={menus[6].image} alt="menu"></img>
+            <div className="Name">{menus[6].name}</div>
           </MenuWrapper>
           <MenuWrapper
             onClick={() => {
@@ -188,8 +242,8 @@ function Sidebar() {
             }}
             changeColor={pathName === "/teamCompare"}
           >
-            <img src={menus[5].image} alt="menu"></img>
-            <div className="Name">{menus[5].name}</div>
+            <img src={menus[7].image} alt="menu"></img>
+            <div className="Name">{menus[7].name}</div>
           </MenuWrapper>
           <MenuWrapper
             onClick={() => {
@@ -199,8 +253,8 @@ function Sidebar() {
             }}
             changeColor={pathName === "/playerCompare"}
           >
-            <img src={menus[6].image} alt="menu"></img>
-            <div className="Name">{menus[6].name}</div>
+            <img src={menus[8].image} alt="menu"></img>
+            <div className="Name">{menus[8].name}</div>
           </MenuWrapper>
           {/* <MenuWrapper
           onClick={() => {

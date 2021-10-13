@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 
 import Home from "./Pages/Home/Home";
@@ -19,6 +19,8 @@ import TeamCompare from "./Pages/TeamCompare/TeamCompare";
 import PlayerCompare from "./Pages/PlayerCompare/PlayerCompare";
 import Video from "./Pages/VideoReport/Video";
 import Footer from "./Components/Footer/Footer";
+import MetaAnalysis from "./Pages/MetaAnalysis/MetaAnalysis";
+import MatchAnalysis from "./Pages/MatchAnalysis/MatchAnalysis";
 import { useSelector } from "react-redux";
 
 function Routes() {
@@ -29,11 +31,7 @@ function Routes() {
     <Route
       {...rest}
       render={(props) =>
-        user.token ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/login" />
-        )
+        user.token ? <Component {...props} /> : <Redirect to="/login" />
       }
     />
   );
@@ -44,6 +42,8 @@ function Routes() {
         <PrivateRoute exact path="/" component={Home} />
         <PrivateRoute exact path="/league" component={League} />
         <PrivateRoute exact path="/team" component={Team} />
+        <PrivateRoute exact path="/metaAnalysis" component={MetaAnalysis} />
+        <PrivateRoute exact path="/matchAnalysis" component={MatchAnalysis} />
         <PrivateRoute exact path="/solo" component={Solo} />
         <PrivateRoute exact path="/video" component={Video} />
         <PrivateRoute exact path="/utility" component={Utility} />
