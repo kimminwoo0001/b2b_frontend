@@ -408,6 +408,11 @@
     }
   },
   "label": {
-    "league": "리그"
+    "league": "리그",
+    "year": "Year",
+    "season": "Season",
+    "team": "Team",
+    "player": "Player",
+    "patchVersion": "Patch Version"
   }
 }

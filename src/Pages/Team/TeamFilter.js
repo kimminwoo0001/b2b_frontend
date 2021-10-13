@@ -83,7 +83,7 @@ function TeamFilter() {
       dispatch(League(Msi));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.convertleague]);
+  }, [filters.league]);
 
   // 패치 필터 fetch 함수
   const fetchingPatchFilter = async (league) => {
@@ -193,8 +193,9 @@ function TeamFilter() {
                         />
                         <li
                           onClick={() => {
-                            dispatch(ConvertedLeague(league));
-                            dispatch(ResetFilter(league));
+                            dispatch(League(league));
+                            //dispatch(ConvertedLeague(league));
+                            //dispatch(ResetFilter(league));
                             setIsActiveLeague(!isActiveLeague);
                             fetchingPatchFilter(league);
                           }}
@@ -266,14 +267,14 @@ function TeamFilter() {
                 width="14px"
                 height="14px"
                 src={
-                  filters.team !== ""
+                  filters.team.length !== 0
                     ? `Images/TeamLogo/${filters.team}.png`
                     : "Images/ico-filter-none.png"
                 }
                 alt="champIcon"
               />
               <span className="Label">
-                {filters.team !== "" ? filters.team : t("filters.teamLabel")}
+                {filters.team.length !== 0 ? filters.team : t("filters.teamLabel")}
               </span>
               <img
                 className="ArrowIcon"

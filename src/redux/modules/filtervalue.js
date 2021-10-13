@@ -28,6 +28,8 @@ export const RESET_MAPPING = "filtervalue/RESET_MAPPING";
 export const RESET_MAPPINGTAB = "filtervalue/RESET_MAPPINGTAB";
 export const GET_GAME_ID = "filtervalue/GET_GAME_ID";
 export const MENU_NUM = "filtervalue/MENU_NUM";
+export const YEAR = "filtervalue/YEAR";
+export const SEASON = "filtervalue/SEASON";
 
 
 export const Reset_MapTab = (payload) => {
@@ -228,11 +230,27 @@ export const MenuNum = (payload) => {
   };
 };
 
+export const Year = (payload) => {
+  return {
+    type: YEAR,
+    payload
+  };
+};
+
+export const Season = (payload) => {
+  return {
+    type: SEASON,
+    payload
+  };
+};
+
 
 const initialState = {
-  patch: "",
   league: [],
-  team: "",
+  year: [],
+  season: [],
+  team: [],
+  patch: [],
   player: "",
   oppplayer: "",
   oppteam: "",
@@ -288,7 +306,19 @@ export default function FilterReducer(state = initialState, action) {
     case PATCH_FULL:
       return { ...state, patchfilter: action.payload };
     case TEAM:
-      return { ...state, team: action.payload };
+      if (state.team.length === 0) {
+        return { ...state, team: [action.payload] };
+      }
+      if (state.team.find((e) => e === action.payload)) {
+        return {
+          ...state,
+          team: state.team.filter((e) => e !== action.payload)
+        };
+      }
+      return {
+        ...state,
+        team: [...state.team.filter((e) => e !== ""), action.payload]
+      };
     case OPP_TEAM:
       return { ...state, oppteam: action.payload };
     case PLAYER:
@@ -389,6 +419,34 @@ export default function FilterReducer(state = initialState, action) {
       return {
         ...state,
         menu_num: action.payload
+      };
+    case YEAR:
+      if (state.year.length === 0) {
+        return { ...state, year: [action.payload] };
+      }
+      if (state.year.find((e) => e === action.payload)) {
+        return {
+          ...state,
+          year: state.year.filter((e) => e !== action.payload)
+        };
+      }
+      return {
+        ...state,
+        year: [...state.year.filter((e) => e !== ""), action.payload]
+      };
+    case SEASON:
+      if (state.season.length === 0) {
+        return { ...state, season: [action.payload] };
+      }
+      if (state.season.find((e) => e === action.payload)) {
+        return {
+          ...state,
+          season: state.season.filter((e) => e !== action.payload)
+        };
+      }
+      return {
+        ...state,
+        season: [...state.season.filter((e) => e !== ""), action.payload]
       };
     default:
       return state;

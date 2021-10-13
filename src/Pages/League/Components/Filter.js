@@ -5,7 +5,9 @@ import {
   League,
   ConvertedLeague,
   ResetFilter,
-  PatchFull
+  PatchFull,
+  Year,
+  Season
 } from "../../../redux/modules/filtervalue";
 import axios from "axios";
 import styled, { css } from "styled-components";
@@ -13,6 +15,7 @@ import { API } from "../../config";
 import { useTranslation } from "react-i18next";
 import { useDetectOutsideClick } from "./useDetectOustsideClick";
 import qs from "qs";
+import { Search } from "semantic-ui-react";
 
 function Filter() {
   //리그 필터
@@ -170,12 +173,9 @@ function Filter() {
         <div className="description">
           {t("filters.description")}
         </div>
-
-
-
       </FilterHeader>
       <FilterBody>
-        <LeagueFilter>
+        <Filters>
           {/* 리그 dropdown */}
           <label>{t("label.league")}</label>
           <DropDownToggle className="container">
@@ -215,8 +215,52 @@ function Filter() {
               </ul>
             </div >
           </DropDownToggle >
-        </LeagueFilter >
-        <PatchFilter>
+        </Filters >
+        <Filters>
+          <label>{t("label.year")}</label>
+          {filters.year?.map((year, idx) => {
+            return (
+              // 리그가 선택되었을때 보여주는 체크박스와 패치 리스트
+              <Selected
+                key={idx}
+                isChecked={filters.patch.includes(year) ? true : false}
+                onClick={() => dispatch(Year(year))}
+              >
+                <input
+                  checked={filters.patch.includes(year) ? true : false}
+                  type="checkbox"
+                  readOnly
+                ></input>
+                <div className="Version">
+                  {year}
+                </div>
+              </Selected>
+            );
+          })}
+        </Filters>
+        <Filters>
+          <label>{t("label.season")}</label>
+          {filters.season?.map((season, idx) => {
+            return (
+              // 리그가 선택되었을때 보여주는 체크박스와 패치 리스트
+              <Selected
+                key={idx}
+                isChecked={filters.patch.includes(season) ? true : false}
+                onClick={() => dispatch(Season(season))}
+              >
+                <input
+                  checked={filters.patch.includes(season) ? true : false}
+                  type="checkbox"
+                  readOnly
+                ></input>
+                <div className="Version">
+                  {season}
+                </div>
+              </Selected>
+            );
+          })}
+        </Filters>
+        <Filters>
           <label>Patch Version</label>
           {!filters.patchfilter ? (
             // 리그가 선택되지 않았을 때 보여주는 레이아웃
@@ -255,7 +299,7 @@ function Filter() {
               );
             })
           )}
-        </PatchFilter>
+        </Filters>
 
       </FilterBody >
       <button
@@ -389,6 +433,24 @@ const LeagueFilter = styled.div`
 `;
 
 const PatchFilter = styled.div`
+  display: flex;
+  flex-direction: column;
+  //align-items: center;
+  min-height: 61px;
+  border-bottom: 1px solid #484655;
+  label {
+    width: 120px;
+    height: 15px;
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    margin: 7.6px 0 11px 8px;
+    font-size: 11px;
+    line-height: 1.36;
+    text-align: left;
+    color: #84818e;
+  }
+`;
+
+const Filters = styled.div`
   display: flex;
   flex-direction: column;
   //align-items: center;
