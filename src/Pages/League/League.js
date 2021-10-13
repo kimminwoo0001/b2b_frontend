@@ -2,12 +2,13 @@ import React from "react";
 import styled from "styled-components";
 
 import SideBar from "../../Components/SideBar/SideBar";
-import Filter from "./Components/Filter";
-import Nav from "../../Components/Nav/Nav";
+import Filter from "../../Components/Filter/Filter";
 import LeagueTab from "./LeagueTab";
 import { useSelector } from "react-redux";
 import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 import ErrorBoundary from "../../Components/ErrorBoundary";
+// import Filter from "./Components/Filter";
+// import Nav from "../../Components/Nav/Nav";
 
 function League() {
   const filters = useSelector((state) => state.FilterReducer);

@@ -2,12 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 
-import Nav from "../../Components/Nav/Nav";
 import SideBar from "../../Components/SideBar/SideBar";
-import SoloFilter from "../Solo/Components/SoloFilter";
+import Filter from "../../Components/Filter/Filter";
 import Player from "./Player";
 import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 import ErrorBoundary from "../../Components/ErrorBoundary";
+// import Nav from "../../Components/Nav/Nav";
+// import SoloFilter from "../Solo/Components/SoloFilter";
 
 function Solo() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -15,7 +16,7 @@ function Solo() {
     <ErrorBoundary>
       <SoloWrapper>
         <SideBar />
-        <SoloFilter />
+        <Filter />
         <ContentWrapper>
           {/* <Nav /> */}
           {filters.player !== "" && filters.patch.length > 0 ? (

@@ -3,12 +3,13 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 
 import SideBar from "../../Components/SideBar/SideBar";
-import TeamFilter from "../Team/TeamFilter";
-import Nav from "../../Components/Nav/Nav";
-
+import Filter from "../../Components/Filter/Filter";
 import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 import VideoTabs from "./VideoTabs";
 import ErrorBoundary from "../../Components/ErrorBoundary";
+// import TeamFilter from "../Team/TeamFilter";
+// import Nav from "../../Components/Nav/Nav";
+
 function Video() {
   const filters = useSelector((state) => state.FilterReducer);
 
@@ -16,7 +17,7 @@ function Video() {
     <ErrorBoundary>
       <VideoWrapper>
         <SideBar />
-        <TeamFilter />
+        <Filter />
         <ContentWrapper>
           {/* <Nav /> */}
           {filters.team !== "" && filters.patch.length > 0 ? (

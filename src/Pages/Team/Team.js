@@ -3,11 +3,13 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 
 import SideBar from "../../Components/SideBar/SideBar";
-import TeamFilter from "./TeamFilter";
-import Nav from "../../Components/Nav/Nav";
+import Filter from "../../Components/Filter/Filter";
 import TeamTabs from "./TeamTabs";
 import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 import ErrorBoundary from "../../Components/ErrorBoundary";
+// import TeamFilter from "./TeamFilter";
+// import Nav from "../../Components/Nav/Nav";
+
 function Team() {
   const filters = useSelector((state) => state.FilterReducer);
 
@@ -15,7 +17,7 @@ function Team() {
     <ErrorBoundary>
       <TeamWrapper>
         <SideBar />
-        <TeamFilter />
+        <Filter />
         <ContentWrapper>
           {filters.team !== "" && filters.patch.length > 0 ? (
             <TeamTabs />
