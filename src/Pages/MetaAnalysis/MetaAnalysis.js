@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import SideBar from "../../Components/SideBar/SideBar";
-import Filter from "../League/Components/Filter";
+import Filter from "../../Components/Filter/Filter";
 // import Nav from "../../Components/Nav/Nav";
 // import LeagueTab from "./LeagueTab";
 // import { useSelector } from "react-redux";

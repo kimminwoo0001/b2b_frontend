@@ -95,12 +95,12 @@ function TeamFilter() {
           league === "LCK"
             ? "lck"
             : league === "LEC"
-            ? "lec"
-            : league === "LCS"
-            ? "lcs"
-            : league === "LPL"
-            ? "lpl"
-            : "21msi",
+              ? "lec"
+              : league === "LCS"
+                ? "lcs"
+                : league === "LPL"
+                  ? "lpl"
+                  : "21msi",
         // patch: filters.patch,
         token: user.token,
         id: user.id,
@@ -128,7 +128,6 @@ function TeamFilter() {
       },
     });
     setTeamFilter(result.data.team);
-    console.log(result);
   };
 
   return (
