@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled, { css } from 'styled-components';
 import SetWardData from './SetWardData/SetWardData';
 import SetPiData from './SetPiData/SetPiData';
@@ -9,17 +9,18 @@ function PiArea() {
     const [tab, setTab] = useState(0);
     const [gameIdInput, setGameIdInput] = useState('');
     const [gameIdSearchData, setGameIdSearchData] = useState([]);
+    const [clickedGameId, setClickedGameId] = useState("");
+    const [entireData, setEntireData] = useState([]);
 
     const tabContents = {
         0: <SetWardData />,
         1: <SetPiData />
     }
 
-    // onchange 
+    // onchange
     const handleInput = (e) => {
         setGameIdInput(e.target.value)
     }
-
 
     //onkeyup 
     const handleSearch = async () => {
@@ -45,9 +46,28 @@ function PiArea() {
         })
         setGameIdSearchData(response.data.items);
         setGameIdInput('');
+    }
+
+    // dropdown 내 game id 클릭 시 해당 id에 대한 data fetching
+    // ** click하면서 dropdown 닫기 구현할 것 
+    const handleGameIdClick = async (id) => {
+        setClickedGameId(id);
 
     }
 
+    // gameid 저장 후 data fetching
+    // 여기서 받아온 data로 ward 및 pi 둘다에 뿌려줌
+    useEffect(async () => {
+        const response = await axios.request({
+            method: "GET",
+            url: `${API3}/searchByGameAjax.do`,
+            params: {
+                gameid: clickedGameId,
+            }
+        })
+
+        // setEntireData(response)
+    }, [clickedGameId])
 
     return (
         <PiAreaWrapper>
@@ -57,7 +77,11 @@ function PiArea() {
                 <GameIdSearchList isOpen={gameIdSearchData.length > 1}>{
                     gameIdSearchData?.map((el) => {
                         return (
-                            <SearchList key={el.gameid}>{el.gameid}</SearchList>
+                            <SearchList key={el.gameid} onClick={() => handleGameIdClick(el.gameid)}>
+                                <div>{el.gameid}</div>
+                                <span>{el.date.substring(0, 11)}</span>
+                                <span>{el.team}</span>
+                            </SearchList>
                         )
                     })
                 }</GameIdSearchList>
@@ -105,19 +129,24 @@ const GameIdSearchList = styled.ul`
 background-color: #fff;
 display: ${(props) => props.isOpen ? "block" : "none"};
 border-radius: 10px;
-padding: 10px;
 border-top: 1px solid black;
 `;
 
 const SearchList = styled.li`
-margin: 5px 0;
+
+border-radius: 10px;
+padding: 5px 10px;
 cursor: pointer;
+color: #b4b4b4;
+&:hover {
+    color: black;
+    background-color: #b4b4b4;
+}
 `;
 
 
 const TabWrapper = styled.div`
     margin:5px 0;
-
 `;
 
 const WardTab = styled.button`
@@ -151,8 +180,6 @@ const YoutubeURL = styled.input`
     border-radius: 5px;
     margin-bottom: 5px;
     padding: 10px;
-
-
 `;
 
 const TabContents = styled.div`
