@@ -26,4 +26,12 @@ export default function StaticValueReducer(state = initialState, action) {
 
 const initialState = {
   filterObjects: null,
+  filterHeader: {
+    "league": "league",
+    "year": "year",
+    "season": "season",
+    "team": "team",
+    "player": "player",
+    "patch": "patch"
+  }
 };

@@ -156,6 +156,66 @@ function Filter() {
     }
   };
 
+  const deleteFilter = (data, action, filename = "none") => {
+    filename += ".csv";
+    var BOM = "\uFEFF";
+    var csvString = BOM;
+    var table = document.getElementById("pickTable");
+
+    for (var rowCnt = 0; rowCnt < table.rows.length; rowCnt++) {
+      var rowData = table.rows[rowCnt].cells;
+      for (var colCnt = 0; colCnt < rowData.length; colCnt++) {
+        var columnData = rowData[colCnt].innerText;
+        if (columnData == null || columnData.length === 0) {
+          columnData = "".replace(/"/g, '""');
+        }
+        else {
+          columnData = columnData.toString().replace(/"/g, '""'); // escape double quotes
+        }
+        csvString = csvString + '"' + columnData + '",';
+      }
+      csvString = csvString.substring(0, csvString.length - 1);
+      csvString = csvString + "\r\n";
+    }
+    csvString = csvString.substring(0, csvString.length - 1);
+
+    // IE 10, 11, Edge Run
+    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+
+      var blob = new Blob([decodeURIComponent(csvString)], {
+        type: 'text/csv;charset=utf8'
+      });
+
+      window.navigator.msSaveOrOpenBlob(blob, filename);
+
+    } else if (window.Blob && window.URL) {
+      // HTML5 Blob
+      var blob = new Blob([csvString], { type: 'text/csv;charset=utf8' });
+      var csvUrl = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.setAttribute('style', 'display:none');
+      a.setAttribute('href', csvUrl);
+      a.setAttribute('download', filename);
+      document.body.appendChild(a);
+
+      a.click()
+      a.remove();
+    } else {
+      // Data URI
+      var csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csvString);
+      var blob = new Blob([csvString], { type: 'text/csv;charset=utf8' });
+      var csvUrl = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.setAttribute('style', 'display:none');
+      a.setAttribute('target', '_blank');
+      a.setAttribute('href', csvData);
+      a.setAttribute('download', filename);
+      document.body.appendChild(a);
+      a.click()
+      a.remove();
+    }
+  }
+
   const menus = [
     {
       name: t("sidebar.part1"),
@@ -257,6 +317,70 @@ function Filter() {
           {t("filters.description")}
         </div>
       </FilterHeader>
+      <SelectedFilter>
+        <SelectedArea>
+          <header><label>{t("label.league")}</label></header>
+          <section>
+            {filters.league.length > 0 && filters.league?.map((data, idx) => {
+              return <SelectedData key={idx}>
+                <img
+                  className="deleteIcon"
+                  width="18px"
+                  height="18px"
+                  src={`Images/ic_close_wh_18.png`}
+                  alt="delete icon"
+                  onClick={() =>
+                    deleteFilter(data, "linkedIn_" + idx)
+                  }
+                />
+                <span id={"linkedIn_" + idx}>
+                  &nbsp;{data}
+                </span>
+
+              </SelectedData>
+            })}
+          </section>
+        </SelectedArea>
+        <SelectedArea>
+          <header><label>{t("label.year")}</label></header>
+          <section>
+            {filters.year.length > 0 && filters.year?.map((data, idx) => {
+              return <SelectedData key={idx}>{data}</SelectedData>
+            })}
+          </section>
+        </SelectedArea>
+        <SelectedArea>
+          <header><label>{t("label.season")}</label></header>
+          <section>
+            {filters.season.length > 0 && filters.season?.map((data, idx) => {
+              return <SelectedData key={idx}>{data}</SelectedData>
+            })}
+          </section>
+        </SelectedArea>
+        {[nameSolo, nameTeam, nameVideo].includes(pagePath) && <SelectedArea>
+          <header><label>{t("label.team")}</label></header>
+          <section>
+            {filters.patch.length > 0 && filters.team?.map((data, idx) => {
+              return <SelectedData key={idx}>{data}</SelectedData>
+            })}
+          </section>
+        </SelectedArea>}
+        {pagePath === nameSolo && <SelectedArea>
+          <header><label>{t("label.player")}</label></header>
+          <section>
+            {filters.player.length > 0 && <SelectedData>{filters.player}</SelectedData>}
+          </section>
+        </SelectedArea>}
+        <SelectedArea>
+          <header><label>{t("label.patchVersion")}</label></header>
+          <section>
+            {console.log(filters.patch)}
+            {filters.patch.length > 0 && filters.patch?.map((data, idx) => {
+              return <SelectedData key={idx}>{data}</SelectedData>
+            })}
+          </section>
+        </SelectedArea>
+      </SelectedFilter>
       <Filters>
         {/* 리그 dropdown */}
         <label>{t("label.league")}</label>
@@ -554,6 +678,41 @@ const FilterHeader = styled.div`
   }
 `;
 
+const SelectedFilter = styled.div`
+  width: 271px;
+  margin: 0 0 41px;
+  padding: 0 0 47px;
+`;
+
+const SelectedArea = styled.div`
+width: 271px;
+margin: 10px 0;
+header label {
+  font-size: 18px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.22;
+  letter-spacing: normal;
+  text-align: left;
+  color: #fff;
+}
+`;
+
+const SelectedData = styled.div`
+  display: inline-block;
+  height: 42px;
+  margin: 5px 10px 0 0;
+  padding: 11px 20px;
+  border-radius: 16px;
+  background-color: #5942ba;
+  color: #fff;
+  img {
+    cursor: pointer;
+    object-fit: contain;
+  }
+`;
+
 const FilterBody = styled.div`
   width: 250px;
   margin: 20px 0 20px;
@@ -678,7 +837,7 @@ const Selected = styled.div`
   background-color: rgb(72, 70, 85);
   margin-bottom: 6px;
 
-  > img {
+  > img  {
     cursor: pointer;
     :hover {
       transform: scale(1.1);

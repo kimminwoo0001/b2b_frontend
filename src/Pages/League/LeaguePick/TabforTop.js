@@ -73,6 +73,68 @@ const useSortableData2 = (tiers, config = null) => {
   return { tiers: sortedItems, requestSorts, sortConfig };
 };
 
+function tabledata(tableid) {
+  const BOM = "\uFEFF"; //바이트 순서 표식
+  let result = BOM;
+
+  const table = document.getElementById(tableid);
+  for (let rowCnt = 0; rowCnt < table.rows.length; rowCnt++) {
+    let rowData = table.rows[rowCnt].cells;
+    for (let colCnt = 0; colCnt < rowData.length; colCnt++) {
+      let columnData = rowData[colCnt].innerText;
+      if (columnData == null || columnData.length === 0) {
+        columnData = "".replace(/"/g, '""');
+      }
+      else {
+        columnData = columnData.toString().replace(/"/g, '""'); // escape double quotes
+      }
+      result = result + '"' + columnData + '",';
+    }
+    result = result.substring(0, result.length - 1);
+    result = result + "\r\n";
+  }
+  result = result.substring(0, result.length - 1);
+
+  return result;
+}
+
+const exportCSV = (filename = "none", tableid) => {
+  filename += ".csv";
+  let csvString = tabledata(tableid);
+  // IE 10, 11, Edge Run
+  if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+
+    const blob = new Blob([decodeURIComponent(csvString)], {
+      type: 'text/csv;charset=utf8'
+    });
+    window.navigator.msSaveOrOpenBlob(blob, filename);
+  } else if (window.Blob && window.URL) {
+    // HTML5 Blob
+    const blob = new Blob([csvString], { type: 'text/csv;charset=utf8' });
+    const csvUrl = URL.createObjectURL(blob);
+    let a = document.createElement('a');
+    a.setAttribute('style', 'display:none');
+    a.setAttribute('href', csvUrl);
+    a.setAttribute('download', filename);
+    document.body.appendChild(a);
+    a.click()
+    a.remove();
+  } else {
+    // Data URI
+    const csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csvString);
+    const blob = new Blob([csvString], { type: 'text/csv;charset=utf8' });
+    const csvUrl = URL.createObjectURL(blob);
+    let a = document.createElement('a');
+    a.setAttribute('style', 'display:none');
+    a.setAttribute('target', '_blank');
+    a.setAttribute('href', csvData);
+    a.setAttribute('download', filename);
+    document.body.appendChild(a);
+    a.click()
+    a.remove();
+  }
+}
+
 function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
   //주요픽 정렬 오름차 내림차 상태 값
   const { items, requestSort } = useSortableData(
@@ -83,14 +145,22 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
   const lang = useSelector((state) => state.LocaleReducer);
   const { t } = useTranslation();
   const filters = useSelector((state) => state.FilterReducer);
+
+
+
   return (
     <PickTabWrapper>
       <TopRow>
         <MainPicks>
           <Header>
-            <div>{t("league.draft.mostPick")}</div>
+            <span>{t("league.draft.mostPick")}</span>
+            <ExportButton onClick={() => {
+              exportCSV(t("league.draft.mostPick"), "pickTable");
+            }}>
+              Export(CSV)
+            </ExportButton>
           </Header>
-          <PickTable>
+          <PickTable id="pickTable">
             <thead>
               <tr>
                 <th className="Champion">{t("league.draft.champion")}</th>
@@ -344,11 +414,10 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                             ? pick?.opp_champion.championKor
                             : pick?.opp_champion.champion}
                         </div>
-                        <div className="WinLose2">{`${
-                          pick?.opp_champion.win
-                        }${t("league.draft.w")} ${pick?.opp_champion.lose}${t(
-                          "league.draft.l"
-                        )}`}</div>
+                        <div className="WinLose2">{`${pick?.opp_champion.win
+                          }${t("league.draft.w")} ${pick?.opp_champion.lose}${t(
+                            "league.draft.l"
+                          )}`}</div>
                       </div>
                       <img
                         src={pick?.opp_champion.championImage}
@@ -512,13 +581,26 @@ const Header = styled.div`
   height: 42.5px;
   padding: 15px 0 0 13px;
   border-bottom: 1px solid rgb(35, 33, 42);
-  div {
-    font-family: Poppins;
-    color: #84818e;
-    font-size: 13px;
-    font-weight: bold;
-  }
+  font-family: Poppins;
+  color: #84818e;
+  font-size: 13px;
+  font-weight: bold;
 `;
+
+const ExportButton = styled.div`
+  display: inline-block;
+  float: right;
+  color: #fff;
+  cursor: pointer;
+  height: 30px;
+  line-height: 30px;  
+  margin-top: -10px;
+  padding: 0 10px;
+  background-color: #5942ba;
+  border-radius: 3px;
+`;
+
+
 const UniqueTable = styled.table`
   width: 100%;
 
