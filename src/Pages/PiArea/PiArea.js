@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import SetWardData from "./SetWardData/SetWardData";
 import SetPiData from "./SetPiData/SetPiData";
 import axios from "axios";
 import { API3 } from "../config";
 
-function PiArea() {
+const PiArea = () => {
   const [tab, setTab] = useState(0);
   const [gameIdInput, setGameIdInput] = useState("");
   const [gameIdSearchData, setGameIdSearchData] = useState([]);
@@ -28,7 +28,7 @@ function PiArea() {
     setYoutubeUrl(e.target.value);
   };
 
-  //onkeyup
+  //검색창 game id data fetching
   const handleSearch = async () => {
     if (gameIdInput.length < 3) {
       return;
@@ -45,7 +45,7 @@ function PiArea() {
   };
 
   // dropdown 내 game id 클릭 시 해당 id에 대한 data fetching
-  const handleGameIdClick = async (id) => {
+  const handleGameIdClick = (id) => {
     setClickedGameId(id);
     // list 드롭다운 닫기
     setGameIdSearchData([]);
@@ -55,7 +55,6 @@ function PiArea() {
 
   // game id 받아온 data에서 youtube url 추출해서 input value에 넣기
   const handleYoutubeData = (data) => {
-    console.log(data);
     if (data.length !== 0) {
       if (data[3][0].Vod !== "") {
         setYoutubeUrl(data[3][0].vod);
@@ -69,6 +68,9 @@ function PiArea() {
 
   // gameid 저장 후 data fetching => 여기서 받아온 data로 ward 및 pi 둘다에 뿌려줌
   useEffect(() => {
+    if (!clickedGameId) {
+      return;
+    }
     const fetchClickedData = async () => {
       const response = await axios.request({
         method: "GET",
@@ -82,6 +84,18 @@ function PiArea() {
     };
     fetchClickedData();
   }, [clickedGameId]);
+
+  // db저장 submit 함수
+  // const handleSubmit = async () => {
+  //   const response = await axios.request(`${API4}/setWardPostition.do`, {
+  //     method:"POST",
+  //     data: {
+  //       youtubeUrl,
+
+  //     }
+
+  //   })
+  // }
 
   return (
     <PiAreaWrapper>
@@ -120,20 +134,20 @@ function PiArea() {
           type="text"
           placeholder="Youtube URL을 입력하세요. 공유 -> 시작 시간 : 꼭 체크해주세요!"
           onChange={(e) => handleUrlInput(e)}
-          //   onClick={() => setYoutubeUrl("")}
           value={youtubeUrl || ""}
         />
         <TabContents>{tabContents[tab]}</TabContents>
       </InnerWrapper>
     </PiAreaWrapper>
   );
-}
+};
 
 export default PiArea;
 
 const PiAreaWrapper = styled.section`
   background-color: #23212a;
   padding: 40px;
+  height: 100vh;
 `;
 
 const InnerWrapper = styled.div`
@@ -160,12 +174,13 @@ const GameIdInput = styled.input`
 const GameIdSearchList = styled.ul`
   background-color: #fff;
   display: ${(props) => (props.isOpen ? "block" : "none")};
-  border-radius: 10px;
   border-top: 1px solid black;
+  /* scroll bar */
+  overflow: scroll;
+  height: 200px;
 `;
 
 const SearchList = styled.li`
-  border-radius: 10px;
   padding: 5px 10px;
   cursor: pointer;
   color: #b4b4b4;
@@ -213,7 +228,7 @@ const YoutubeURL = styled.input`
 `;
 
 const TabContents = styled.div`
-  background-color: #5942ba;
-  padding: 10px;
+  background-color: #23212a;
+  padding: 10px 0;
   border-radius: 5px;
 `;
