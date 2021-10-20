@@ -2,6 +2,10 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
 import { useSelector } from "react-redux";
+import * as clipboard from 'clipboard-polyfill/text';
+import XLSX from "xlsx";
+
+
 
 // 주요픽 데이터 sorting Hooks
 const useSortableData = (items, config = null) => {
@@ -135,6 +139,22 @@ const exportCSV = (filename = "none", tableid) => {
   }
 }
 
+const exportXlsx = (tableName, tableid) => {
+  var wb = XLSX.utils.table_to_book(document.getElementById(tableid), { sheet: tableName, raw: true });
+  XLSX.writeFile(wb, (tableName + '.xlsx'));
+}
+
+const copyClipboard = (tableid) => {
+  clipboard.writeText(tabledata(tableid)).then(
+    function () {
+      console.log("success!");
+    },
+    function () {
+      console.log("error!");
+    }
+  );
+}
+
 function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
   //주요픽 정렬 오름차 내림차 상태 값
   const { items, requestSort } = useSortableData(
@@ -147,7 +167,6 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
   const filters = useSelector((state) => state.FilterReducer);
 
 
-
   return (
     <PickTabWrapper>
       <TopRow>
@@ -158,6 +177,18 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
               exportCSV(t("league.draft.mostPick"), "pickTable");
             }}>
               Export(CSV)
+            </ExportButton>
+
+            <ExportButton onClick={() => {
+              exportXlsx(t("league.draft.mostPick"), "pickTable");
+            }}>
+              Export(XLSX)
+            </ExportButton>
+
+            <ExportButton onClick={() => {
+              copyClipboard("pickTable");
+            }}>
+              Copy
             </ExportButton>
           </Header>
           <PickTable id="pickTable">
@@ -595,6 +626,7 @@ const ExportButton = styled.div`
   height: 30px;
   line-height: 30px;  
   margin-top: -10px;
+  margin-right: 5px;
   padding: 0 10px;
   background-color: #5942ba;
   border-radius: 3px;
