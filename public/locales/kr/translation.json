@@ -58,6 +58,7 @@
       "picks": "픽",
       "banRate": "픽밴률",
       "winRate": "승률",
+      "probRate": "조정 승률",
       "kp": "킬관여",
       "result": "승패",
       "opponent": "상대 챔피언",
