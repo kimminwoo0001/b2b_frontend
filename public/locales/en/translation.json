@@ -58,6 +58,7 @@
       "picks": "Pick",
       "banRate": "P/B Rate",
       "winRate": "Win Rate",
+      "probRate": "Prob. Rate",
       "kp": "KP%",
       "result": "Result",
       "opponent": "Opponent",
