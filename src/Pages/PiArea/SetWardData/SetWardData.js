@@ -8,14 +8,13 @@ const SetWardData = ({ data }) => {
   const canvas = canvasRef.current;
 
   const [dotColor, setDotColor] = useState("#0000ff");
-  const [cord, setCord] = useState();
+  const [cord, setCord] = useState("");
   const [position, setPosition] = useState(0);
 
   const inputRefs1 = useRef([]);
   const inputRefs2 = useRef([]);
   inputRefs1.current = [];
   inputRefs2.current = [];
-
 
   // gameid 검색 후 클릭 시 모든 좌표를 canvas에 그려줌
   const initCanvas = (data) => {
@@ -98,30 +97,57 @@ const SetWardData = ({ data }) => {
     setCord(`${cordX},${cordY}`);
   };
 
+  // setCord 되면 input창 밸류값을 해당 cord로 바꿔줌
   useEffect(() => {
     if (!cord) {
       return;
     }
     inputRefs1.current[position].value = cord;
-  }, [cord])
+  }, [cord]);
 
   // input창 클릭 시 해당 좌표 표기 + 새로운 좌표값 표기
 
   const handleFirstInputClick = (e, id) => {
+    console.log(inputRefs1.current);
     const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, 512, 512);
-    ctx.fillStyle = dotColor;
-    ctx.fillRect(inputRefs1.current[id].value.split(',')[0], inputRefs1.current[id].value.split(',')[1], 5, 5);
-
+    if (ctx) {
+      ctx.clearRect(0, 0, 512, 512);
+      ctx.fillStyle = dotColor;
+      ctx.fillRect(
+        inputRefs1.current[id].value.split(",")[0],
+        inputRefs1.current[id].value.split(",")[1],
+        5,
+        5
+      );
+    }
+    // position 값을 클릭한 input창에 해당하는 값으로 setting
     setPosition(id);
-    // inputRefs1.current[id].value = cord;
-  }
+
+    // eslint-disable-next-line default-case
+    switch (id) {
+      case 0:
+        labelRef.current = "TOP 1";
+        break;
+      case 1:
+        labelRef.current = "JNG 1";
+        break;
+      case 2:
+        labelRef.current = "MID 1";
+        break;
+      case 3:
+        labelRef.current = "BOT 1";
+        break;
+      case 4:
+        labelRef.current = "SUP 1";
+        break;
+      default:
+        labelRef.current = "TOP 1";
+    }
+  };
 
   const handleSecondInputClick = (id) => {
-
     inputRefs2.current[id].value = cord;
-  }
-
+  };
 
   useEffect(() => {
     if (!wardData) {
@@ -158,7 +184,9 @@ const SetWardData = ({ data }) => {
                     value={
                       data.firstwardPosition === null
                         ? "null"
-                        : (inputRefs1.current.value ? inputRefs1.current.value : data.firstwardPosition)
+                        : inputRefs1.current.value
+                        ? inputRefs1.current.value
+                        : data.firstwardPosition
                     }
                     ref={(ref) => (inputRefs1.current[idx] = ref)}
                     onClick={(e) => handleFirstInputClick(e, idx)}
