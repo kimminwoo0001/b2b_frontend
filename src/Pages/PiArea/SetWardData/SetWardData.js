@@ -5,17 +5,17 @@ const SetWardData = ({ data }) => {
   const wardData = data[0];
   const labelRef = useRef("TOP1");
   const canvasRef = useRef(null);
+  const canvas = canvasRef.current;
 
   const [dotColor, setDotColor] = useState("#0000ff");
   const [cord, setCord] = useState();
+  const [position, setPosition] = useState(0);
 
   const inputRefs1 = useRef([]);
   const inputRefs2 = useRef([]);
   inputRefs1.current = [];
   inputRefs2.current = [];
 
-  console.log(wardData)
-  const canvas = canvasRef.current;
 
   // gameid 검색 후 클릭 시 모든 좌표를 canvas에 그려줌
   const initCanvas = (data) => {
@@ -86,22 +86,35 @@ const SetWardData = ({ data }) => {
     }
   };
 
-  // map 클릭 시 기존 좌표 clear
+  // map 클릭 시 기존 좌표 clear 후 클릭 좌표 SET
   const handleClickCanvas = (e) => {
     const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, 512, 512);
     const cordX = e.pageX - ctx.canvas.offsetLeft;
     const cordY = e.pageY - ctx.canvas.offsetTop;
+
+    ctx.clearRect(0, 0, 512, 512);
     ctx.fillStyle = dotColor;
     ctx.fillRect(cordX, cordY, 5, 5);
     setCord(`${cordX},${cordY}`);
   };
 
-  // 클릭한 좌표 표시하기
+  useEffect(() => {
+    if (!cord) {
+      return;
+    }
+    inputRefs1.current[position].value = cord;
+  }, [cord])
 
-  const handleFirstInputClick = (id) => {
+  // input창 클릭 시 해당 좌표 표기 + 새로운 좌표값 표기
 
-    inputRefs1.current[id].value = cord;
+  const handleFirstInputClick = (e, id) => {
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, 512, 512);
+    ctx.fillStyle = dotColor;
+    ctx.fillRect(inputRefs1.current[id].value.split(',')[0], inputRefs1.current[id].value.split(',')[1], 5, 5);
+
+    setPosition(id);
+    // inputRefs1.current[id].value = cord;
   }
 
   const handleSecondInputClick = (id) => {
@@ -148,7 +161,7 @@ const SetWardData = ({ data }) => {
                         : (inputRefs1.current.value ? inputRefs1.current.value : data.firstwardPosition)
                     }
                     ref={(ref) => (inputRefs1.current[idx] = ref)}
-                    onClick={() => handleFirstInputClick(idx)}
+                    onClick={(e) => handleFirstInputClick(e, idx)}
                   />
                 </div>
                 <div>
@@ -160,7 +173,7 @@ const SetWardData = ({ data }) => {
                         : data.secondwardPosition
                     }
                     ref={(ref) => (inputRefs2.current[idx] = ref)}
-                    onClick={() => handleSecondInputClick(idx)}
+                    // onClick={() => handleSecondInputClick(idx)}
                   />
                 </div>
               </DataWrapper>
