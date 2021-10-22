@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled, { css } from "styled-components";
 
-const SetWardData = ({ data }) => {
-  const wardData = data[0];
+const SetWardData = ({ wardData, setWard }) => {
   const labelRef = useRef("TOP1");
   const canvasRef = useRef(null);
   const canvas = canvasRef.current;
 
   const [dotColor, setDotColor] = useState("#0000ff");
   const [cord, setCord] = useState("");
+  // default로 input창 지정
   const [position, setPosition] = useState(0);
 
   const inputRefs1 = useRef([]);
@@ -18,7 +18,7 @@ const SetWardData = ({ data }) => {
 
   // gameid 검색 후 클릭 시 모든 좌표를 canvas에 그려줌
   const initCanvas = (data) => {
-    if (!data) {
+    if (data.length === 0) {
       return;
     }
 
@@ -95,20 +95,38 @@ const SetWardData = ({ data }) => {
     ctx.fillStyle = dotColor;
     ctx.fillRect(cordX, cordY, 5, 5);
     setCord(`${cordX},${cordY}`);
+
+
+
   };
 
-  // setCord 되면 input창 밸류값을 해당 cord로 바꿔줌
+  // setCord 되면 현재 position의 input창 값을 해당 좌표로 바꿔줌
   useEffect(() => {
+    handleUpdate();
     if (!cord) {
       return;
     }
     inputRefs1.current[position].value = cord;
   }, [cord]);
 
+  const handleUpdate = () => {
+    const filtered = wardData.map((data) => {
+      if (data.firstwardPosition === inputRefs1.current[position].value) {
+        data.firstwardPosition = cord;
+      }
+      return data;
+    })
+    console.log(filtered);
+    setWard(filtered);
+  }
+
+  // useEffect(() => {
+
+  // }, [position])
+
   // input창 클릭 시 해당 좌표 표기 + 새로운 좌표값 표기
 
-  const handleFirstInputClick = (e, id) => {
-    console.log(inputRefs1.current);
+  const handleFirstInputClick = (id) => {
     const ctx = canvas.getContext("2d");
     if (ctx) {
       ctx.clearRect(0, 0, 512, 512);
@@ -120,6 +138,7 @@ const SetWardData = ({ data }) => {
         5
       );
     }
+
     // position 값을 클릭한 input창에 해당하는 값으로 setting
     setPosition(id);
 
@@ -144,6 +163,7 @@ const SetWardData = ({ data }) => {
         labelRef.current = "TOP 1";
     }
   };
+
 
   const handleSecondInputClick = (id) => {
     inputRefs2.current[id].value = cord;
@@ -182,14 +202,15 @@ const SetWardData = ({ data }) => {
                   <FirstData
                     readOnly
                     value={
+                      // data.firstwardPosition === null
+                      //   ? "null"
+                      //   : inputRefs1.current.value
                       data.firstwardPosition === null
                         ? "null"
-                        : inputRefs1.current.value
-                        ? inputRefs1.current.value
                         : data.firstwardPosition
                     }
                     ref={(ref) => (inputRefs1.current[idx] = ref)}
-                    onClick={(e) => handleFirstInputClick(e, idx)}
+                    onMouseDown={() => handleFirstInputClick(idx)}
                   />
                 </div>
                 <div>

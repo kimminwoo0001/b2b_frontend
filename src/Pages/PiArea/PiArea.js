@@ -11,11 +11,11 @@ const PiArea = () => {
   const [gameIdSearchData, setGameIdSearchData] = useState([]);
   const [clickedGameId, setClickedGameId] = useState("");
   const [entireData, setEntireData] = useState([]);
+  const [ward, setWard] = useState([]);
   const [youtubeUrl, setYoutubeUrl] = useState("");
-
   const tabContents = {
-    0: <SetWardData data={entireData} />,
-    1: <SetPiData data={entireData} />,
+    0: <SetWardData wardData={ward} setWard={setWard} />,
+    1: <SetPiData />,
   };
 
   // onchange
@@ -84,6 +84,11 @@ const PiArea = () => {
     };
     fetchClickedData();
   }, [clickedGameId]);
+
+  useEffect(() => {
+    setWard(entireData[0]);
+    console.log(entireData[0])
+  }, [entireData])
 
   // db저장 submit 함수
   // const handleSubmit = async () => {
