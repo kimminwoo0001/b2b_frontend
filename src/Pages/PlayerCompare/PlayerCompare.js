@@ -17,7 +17,7 @@ function PlayerCompare() {
         <SideBar />
         <SoloFilter />
         <ContentWrapper>
-          {/* <Nav /> */}
+          <Nav />
           {filters.player !== "" ? <Player /> : <SelectFilter />}
         </ContentWrapper>
       </SoloWrapper>

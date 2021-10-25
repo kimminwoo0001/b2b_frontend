@@ -15,6 +15,7 @@ import {
   Legend
 } from "recharts";
 import qs from "qs";
+import checkSeason from "../../../lib/checkSeason";
 
 function CompareIngame() {
   //팀 비교 인게임 지표
@@ -57,6 +58,8 @@ function CompareIngame() {
       url: `${API}/api/team/comparisonPi`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         team: filters.team,
         oppteam: filters.oppteam,

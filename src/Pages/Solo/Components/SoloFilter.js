@@ -20,6 +20,7 @@ import { API } from "../../config";
 import { useTranslation } from "react-i18next";
 import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
 import qs from "qs";
+import checkSeason from "../../../lib/checkSeason";
 
 function SoloFilter() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -115,10 +116,10 @@ function SoloFilter() {
           league === "LCK"
             ? "lck"
             : league === "LEC"
-            ? "lec"
-            : league === "LCS"
-            ? "lcs"
-            : "21msi",
+              ? "lec"
+              : league === "LCS"
+                ? "lcs"
+                : "21msi",
         // patch: filters.patch,
         token: user.token,
         id: user.id,
@@ -139,6 +140,8 @@ function SoloFilter() {
       url: `${API}/api/filter/team`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         token: user.token,
         id: user.id,
@@ -157,6 +160,8 @@ function SoloFilter() {
       url: `${API}/api/filter/player`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         team: filters.team,
         token: user.token,

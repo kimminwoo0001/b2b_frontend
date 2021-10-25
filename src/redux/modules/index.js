@@ -4,6 +4,7 @@ import teambanpick from "../modules/teambanpick";
 import locale from "./locale";
 import user from "./user";
 import staticvalue from "./staticvalue";
+import tablevalue from "./tablevalue";
 
 import { persistReducer } from "redux-persist";
 import storageSession from "redux-persist/lib/storage/session";
@@ -11,7 +12,7 @@ import storageSession from "redux-persist/lib/storage/session";
 const persistConfig = {
   key: "root",
   storage: storageSession,
-  whitelist: ["FilterReducer", "UserReducer"],
+  whitelist: ["FilterReducer", "UserReducer", "StaticValueReducer"],
 };
 
 const Logout = "Logout";
@@ -27,6 +28,7 @@ const appReducer = combineReducers({
   LocaleReducer: locale,
   UserReducer: user,
   StaticValueReducer: staticvalue,
+  TableReducer: tablevalue
 });
 
 const rootReducer = (state, action) => {

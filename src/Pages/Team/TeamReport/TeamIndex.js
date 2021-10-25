@@ -12,6 +12,7 @@ import axios from "axios";
 import { API } from "../../config";
 import { useSelector } from "react-redux";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
+import checkSeason from "../../../lib/checkSeason";
 
 function TeamIndex() {
   //팀 존력 보고서 팀 지표 텝
@@ -51,6 +52,8 @@ function TeamIndex() {
       url: `${API}/api/team/analysis`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         team: filters.team,
         token: user.token,

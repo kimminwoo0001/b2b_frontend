@@ -6,6 +6,7 @@ import styled, { css } from "styled-components";
 import { useDetectOutsideClick } from "../../Components/SelectFilter/useDetectOustsideClick";
 import PickCombineModal from "./PickCombineModal";
 import { API } from "../config";
+import checkSeason from "../../lib/checkSeason";
 
 const PositionImage = [
   {
@@ -57,7 +58,11 @@ function PickCombine() {
     const result = await axios.request({
       method: "GET",
       url: `${API}/api/filter/team`,
-      params: { league: filters.league, patch: filters.patch }
+      params: {
+        league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+      }
     });
     setTeamFilter(result.data.team);
   };

@@ -30,6 +30,11 @@ export const GET_GAME_ID = "filtervalue/GET_GAME_ID";
 export const MENU_NUM = "filtervalue/MENU_NUM";
 export const YEAR = "filtervalue/YEAR";
 export const SEASON = "filtervalue/SEASON";
+export const RESET_LEAGUE = "filtervalue/RESET_LEAGUE";
+export const RESET_YEAR = "filtervalue/RESET_YEAR";
+export const RESET_SEASON = "filtervalue/RESET_SEASON";
+export const RESET_TEAM = "filtervalue/RESET_TEAM";
+export const FILTER_MENU_SWITCH = "filtervalue/FILTER_MENU_SWITCH";
 
 
 export const Reset_MapTab = (payload) => {
@@ -244,6 +249,36 @@ export const Season = (payload) => {
   };
 };
 
+export const ResetLeague = () => {
+  return {
+    type: RESET_LEAGUE
+  }
+}
+
+export const ResetYear = () => {
+  return {
+    type: RESET_YEAR
+  }
+}
+
+export const ResetSeason = () => {
+  return {
+    type: RESET_SEASON
+  }
+}
+
+export const ResetTeam = () => {
+  return {
+    type: RESET_TEAM
+  }
+}
+
+export const FilterMenuSwitch = (payload) => {
+  return {
+    type: FILTER_MENU_SWITCH,
+    payload
+  }
+}
 
 const initialState = {
   league: [],
@@ -251,6 +286,7 @@ const initialState = {
   season: [],
   team: [],
   patch: [],
+  patchfilter: [],
   player: "",
   oppplayer: "",
   oppteam: "",
@@ -268,6 +304,7 @@ const initialState = {
   click: 0,
   gameid: "",
   menu_num: "",
+  filterMenuState: true
 };
 
 export default function FilterReducer(state = initialState, action) {
@@ -307,22 +344,18 @@ export default function FilterReducer(state = initialState, action) {
       return { ...state, patchfilter: action.payload };
     case TEAM:
       if (state.team.length === 0) {
-        return { ...state, team: [action.payload] };
+        return { ...state, team: action.payload };
+      } else {
+        return { ...state, team: "" };
       }
-      if (state.team.find((e) => e === action.payload)) {
-        return {
-          ...state,
-          team: state.team.filter((e) => e !== action.payload)
-        };
-      }
-      return {
-        ...state,
-        team: [...state.team.filter((e) => e !== ""), action.payload]
-      };
     case OPP_TEAM:
       return { ...state, oppteam: action.payload };
     case PLAYER:
-      return { ...state, player: action.payload };
+      if (state.player.length === 0) {
+        return { ...state, player: action.payload };
+      } else {
+        return { ...state, player: "" };
+      }
     case OPP_PLAYER:
       return { ...state, oppplayer: action.payload };
     case CHAMPION:
@@ -448,6 +481,48 @@ export default function FilterReducer(state = initialState, action) {
         ...state,
         season: [...state.season.filter((e) => e !== ""), action.payload]
       };
+    case RESET_LEAGUE:
+      return {
+        ...state,
+        league: [],
+        year: [],
+        season: [],
+        team: [],
+        patch: [],
+        player: "",
+        patchfilter: []
+      };
+    case RESET_YEAR:
+      return {
+        ...state,
+        year: [],
+        season: [],
+        team: [],
+        patch: [],
+        player: "",
+        patchfilter: []
+      };
+    case RESET_SEASON:
+      return {
+        ...state,
+        season: [],
+        team: [],
+        patch: [],
+        player: "",
+        patchfilter: []
+      };
+    case RESET_TEAM:
+      return {
+        ...state,
+        team: [],
+        patch: [],
+        player: "",
+      };
+    case FILTER_MENU_SWITCH:
+      return {
+        ...state,
+        filterMenuState: action.payload
+      }
     default:
       return state;
   }

@@ -8,19 +8,19 @@ import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 import VideoTabs from "./VideoTabs";
 import ErrorBoundary from "../../Components/ErrorBoundary";
 // import TeamFilter from "../Team/TeamFilter";
-// import Nav from "../../Components/Nav/Nav";
+import Nav from "../../Components/Nav/Nav";
 
 function Video() {
   const filters = useSelector((state) => state.FilterReducer);
 
   return (
     <ErrorBoundary>
+      <Nav />
       <VideoWrapper>
         <SideBar />
         <Filter />
         <ContentWrapper>
-          {/* <Nav /> */}
-          {filters.team !== "" && filters.patch.length > 0 ? (
+          {filters.team !== "" && filters.season.length > 0 ? (
             <VideoTabs />
           ) : (
             <SelectFilter />

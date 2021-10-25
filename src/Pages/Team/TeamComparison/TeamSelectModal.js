@@ -10,6 +10,7 @@ import {
   HandleTab
 } from "../../../redux/modules/filtervalue";
 import { API } from "../../config";
+import checkSeason from "../../../lib/checkSeason";
 
 function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
   //팀 비교 텝 누를 떄 뜨는 모달창
@@ -31,6 +32,8 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
       url: `${API}/api/filter/oppteam`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         team: filters.team,
         token: user.token,

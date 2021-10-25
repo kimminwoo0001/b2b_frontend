@@ -14,7 +14,6 @@ function Login() {
   const dispatch = useDispatch();
   let history = useHistory();
 
-
   const onSubmit = async ({ id, password }) => {
     try {
       const token = await signIn({ id, password });

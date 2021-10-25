@@ -9,6 +9,7 @@ import { Reset_MapTab, ResetChampion } from "../../../redux/modules/filtervalue"
 import h337 from "heatmap.js";
 import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
+import checkSeason from "../../../lib/checkSeason";
 
 function HitMap() {
   // 시간 설정 상태값
@@ -62,6 +63,8 @@ function HitMap() {
         url: `${API2}/api/mappingPosition`,
         params: {
           league: filters.league,
+          year: filters.year,
+          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
           patch: filters.patch,
           team: filters.team,
           player: filters.player,

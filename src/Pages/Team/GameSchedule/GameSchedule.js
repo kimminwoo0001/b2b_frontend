@@ -7,6 +7,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { API } from "../../config";
 import { useTranslation } from "react-i18next";
+import checkSeason from "../../../lib/checkSeason";
 
 import First from "./First";
 import Second from "./Second";
@@ -84,6 +85,8 @@ function GameSchedule() {
       url: `${API}/api/team/schedule`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         year: convertYear(startDate),
         month: convertMonth(startDate),
         team: filters.team,

@@ -7,19 +7,19 @@ import Filter from "../../Components/Filter/Filter";
 import Player from "./Player";
 import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 import ErrorBoundary from "../../Components/ErrorBoundary";
-// import Nav from "../../Components/Nav/Nav";
+import Nav from "../../Components/Nav/Nav";
 // import SoloFilter from "../Solo/Components/SoloFilter";
 
 function Solo() {
   const filters = useSelector((state) => state.FilterReducer);
   return (
     <ErrorBoundary>
+      <Nav />
       <SoloWrapper>
         <SideBar />
         <Filter />
         <ContentWrapper>
-          {/* <Nav /> */}
-          {filters.player !== "" && filters.patch.length > 0 ? (
+          {filters.player !== "" && filters.season.length > 0 ? (
             <Player />
           ) : (
             <SelectFilter />

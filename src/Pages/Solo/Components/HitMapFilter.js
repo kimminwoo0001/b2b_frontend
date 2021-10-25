@@ -12,6 +12,7 @@ import {
   ResetChampion,
   ResetChampion2
 } from "../../../redux/modules/filtervalue";
+import checkSeason from "../../../lib/checkSeason";
 
 function HitMapFilter() {
   const dropdownRef = useRef(null);
@@ -33,6 +34,8 @@ function HitMapFilter() {
       url: `${API}/api/filter/champion`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         player: filters.player,
         token: user.token,
@@ -49,6 +52,8 @@ function HitMapFilter() {
       url: `${API}/api/filter/oppplayerchamp?`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         position: filters.position,
         champion: filters.champion_eng,

@@ -8,19 +8,21 @@ import { useSelector } from "react-redux";
 import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 import ErrorBoundary from "../../Components/ErrorBoundary";
 // import Filter from "./Components/Filter";
-// import Nav from "../../Components/Nav/Nav";
+import Nav from "../../Components/Nav/Nav";
+import CloseFilter from "../../Components/Filter/CloseFilter";
 
 function League() {
   const filters = useSelector((state) => state.FilterReducer);
   return (
     <ErrorBoundary>
+      <Nav />
       <LeagueWrapper>
         <SideBar />
         <Filter />
+        {filters.filterMenuState ? "" : <CloseFilter />}
         <ContentWrapper>
-          {/* <Nav /> *}
-          {/* patch 값이 있으면 데이터를 보여주고 아니면 selectFilter화면을 보여주도록 */}
-          {filters.patch.length !== 0 ? <LeagueTab /> : <SelectFilter />}
+          {/* season 값이 있으면 데이터를 보여주고 아니면 selectFilter화면을 보여주도록 */}
+          {filters.season.length !== 0 ? <LeagueTab /> : <SelectFilter />}
         </ContentWrapper>
       </LeagueWrapper>
     </ErrorBoundary>
@@ -35,7 +37,10 @@ const LeagueWrapper = styled.div`
   min-height: 100vh;
   overflow: auto;
   display: flex;
-  background-color: #23212a;
+  background-color: #16151c;
+  transition: all 1s ease;
+
+  
 `;
 
 const ContentWrapper = styled.div`

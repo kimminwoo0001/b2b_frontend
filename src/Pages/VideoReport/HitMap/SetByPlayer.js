@@ -9,6 +9,7 @@ import { API2 } from "../../config";
 import qs from "qs";
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
+import checkSeason from "../../../lib/checkSeason";
 
 function valuetext(value) {
   const time = value * 9000;
@@ -127,6 +128,8 @@ function SetByPlayer({ minFrom, setMinFrom }) {
           url: `${API2}/api/mappingFilter`,
           params: {
             league: filters.league,
+            year: filters.year,
+            season: filters.season,
             patch: filters.patch,
             token: user.token,
             id: user.id,
@@ -153,6 +156,8 @@ function SetByPlayer({ minFrom, setMinFrom }) {
           url: `${API2}/api/mappingFilter`,
           params: {
             league: filters.league,
+            year: filters.year,
+            season: filters.season,
             patch: filters.patch,
             team: filters.team,
             token: user.token,
@@ -179,6 +184,8 @@ function SetByPlayer({ minFrom, setMinFrom }) {
         url: `${API2}/api/mappingFilter`,
         params: {
           league: filters.league,
+          year: filters.year,
+          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
           patch: filters.patch,
           team: filters.team,
           player: filters.player,
@@ -204,9 +211,12 @@ function SetByPlayer({ minFrom, setMinFrom }) {
     isActive2.current = false;
     dispatch(
       Reset_Map({
+        menu_num: filters.menu_num,
         tab: filters.tab,
         convertleague: filters.convertleague,
         league: filters.league,
+        year: filters.year,
+        season: filters.season,
         patch: filters.patch,
         patchfilter: filters.patchfilter,
         team: filters.team,
@@ -261,9 +271,12 @@ function SetByPlayer({ minFrom, setMinFrom }) {
                           onClick={() => {
                             dispatch(
                               Reset_Map({
+                                menu_num: filters.menu_num,
                                 tab: filters.tab,
                                 convertleague: filters.convertleague,
                                 league: filters.league,
+                                year: filters.year,
+                                season: filters.season,
                                 patch: filters.patch,
                                 patchfilter: filters.patchfilter,
                                 team: team,
@@ -318,9 +331,12 @@ function SetByPlayer({ minFrom, setMinFrom }) {
                             setChampArray([]);
                             dispatch(
                               Reset_Map({
+                                menu_num: filters.menu_num,
                                 tab: filters.tab,
                                 convertleague: filters.convertleague,
                                 league: filters.league,
+                                year: filters.year,
+                                season: filters.season,
                                 patch: filters.patch,
                                 patchfilter: filters.patchfilter,
                                 team: filters.team,

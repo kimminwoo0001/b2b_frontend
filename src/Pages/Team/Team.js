@@ -8,18 +8,19 @@ import TeamTabs from "./TeamTabs";
 import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 import ErrorBoundary from "../../Components/ErrorBoundary";
 // import TeamFilter from "./TeamFilter";
-// import Nav from "../../Components/Nav/Nav";
+import Nav from "../../Components/Nav/Nav";
 
 function Team() {
   const filters = useSelector((state) => state.FilterReducer);
 
   return (
     <ErrorBoundary>
+      <Nav />
       <TeamWrapper>
         <SideBar />
         <Filter />
         <ContentWrapper>
-          {filters.team !== "" && filters.patch.length > 0 ? (
+          {filters.team !== "" && filters.season.length > 0 ? (
             <TeamTabs />
           ) : (
             <SelectFilter />

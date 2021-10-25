@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import ErrorBoundary from "../../Components/ErrorBoundary";
 import Nav from "../../Components/Nav/Nav";
 import SideBar from "../../Components/SideBar/SideBar";
 import Filter from "../League/Components/Filter";
@@ -7,14 +8,17 @@ import PickCombine from "./PickCombine";
 
 function PickCalculator() {
   return (
-    <PickCalculatorWrapper>
-      <SideBar />
-      <Filter />
-      <ContentWrapper>
-        {/* <Nav /> */}
-        <PickCombine />
-      </ContentWrapper>
-    </PickCalculatorWrapper>
+    <ErrorBoundary>
+      <Nav />
+      <PickCalculatorWrapper>
+        <SideBar />
+        <Filter />
+        <ContentWrapper>
+          <PickCombine />
+        </ContentWrapper>
+      </PickCalculatorWrapper>
+    </ErrorBoundary>
+
   );
 }
 

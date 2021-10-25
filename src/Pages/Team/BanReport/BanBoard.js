@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { API } from "../../config";
 import qs from "qs";
+import checkSeason from "../../../lib/checkSeason";
+
 function BanBoard() {
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
@@ -24,6 +26,8 @@ function BanBoard() {
         url: `${API}/api/report/team/banpick`,
         params: {
           league: filters.league,
+          year: filters.year,
+          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
           patch: filters.patch,
           team: filters.team,
           token: user.token,

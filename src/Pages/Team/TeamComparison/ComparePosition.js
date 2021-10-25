@@ -7,6 +7,7 @@ import qs from "qs";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
+import checkSeason from "../../../lib/checkSeason";
 
 function mycomparator(a, b) {
   var num1 = 0;
@@ -61,6 +62,8 @@ function ComparePosition() {
       url: `${API}/api/team/comparison`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         team: filters.team,
         oppteam: filters.oppteam,

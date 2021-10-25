@@ -19,6 +19,7 @@ import {
   ResetChampion2,
   ResetOppChampion,
 } from "../../../redux/modules/filtervalue";
+import checkSeason from "../../../lib/checkSeason";
 
 function PlayerBoard() {
   //선수 보고서 => 선수 상황판
@@ -68,6 +69,8 @@ function PlayerBoard() {
       url: `${API}/api/player/playerboard`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         team: filters.team,
         player: filters.player,
@@ -128,6 +131,8 @@ function PlayerBoard() {
       url: `${API}/api/filter/champion`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         player: filters.player,
         token: user.token,
@@ -149,6 +154,8 @@ function PlayerBoard() {
       url: `${API}/api/filter/oppchampion`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         position: filters.position,
         champion: filters.champion_eng,
@@ -172,6 +179,8 @@ function PlayerBoard() {
       url: `${API}/api/report/player/select`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         player: filters.player,
         team: filters.team,

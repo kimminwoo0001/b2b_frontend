@@ -9,6 +9,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import { API2 } from "../../config";
 import qs from "qs";
+import checkSeason from "../../../lib/checkSeason";
 
 function valuetext(value) {
   const time = value * 5100;
@@ -68,6 +69,8 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
         url: `${API2}/api/mappingFilter`,
         params: {
           league: filters.league,
+          year: filters.year,
+          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
           patch: filters.patch,
           token: user.token,
           id: user.id
@@ -113,9 +116,12 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
                       onClick={() => {
                         dispatch(
                           Reset_Map({
+                            menu_num: filters.menu_num,
                             tab: filters.tab,
                             convertleague: filters.convertleague,
                             league: filters.league,
+                            year: filters.year,
+                            season: filters.season,
                             patch: filters.patch,
                             patchfilter: filters.patchfilter,
                             team: team,

@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import qs from "qs";
 import TabforTop from "./TabforTop";
+import checkSeason from "../../../lib/checkSeason";
 
 function LeaguePick() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -64,7 +65,6 @@ function LeaguePick() {
 
   useEffect(() => {
     fetchingPickData();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters, queryPosition]);
 
@@ -91,11 +91,14 @@ function LeaguePick() {
   // week 데이터 fetch 함수
   const fetchingPickData = async () => {
     setLoading(true);
+
     const result = await axios.request({
       method: "GET",
       url: `${API}/api/league/pick`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         position: queryPosition,
         token: user.token,

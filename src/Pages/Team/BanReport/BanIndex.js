@@ -24,6 +24,7 @@ import {
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import All from "./All";
 import qs from "qs";
+import checkSeason from "../../../lib/checkSeason";
 
 function BanIndex() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -82,6 +83,8 @@ function BanIndex() {
       url: `${API}/api/team/pick`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         team: filters.team,
         side: side,

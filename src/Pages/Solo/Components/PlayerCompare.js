@@ -5,6 +5,7 @@ import { API } from "../../config";
 import { useTranslation } from "react-i18next";
 import qs from "qs";
 import { useSelector } from "react-redux";
+import checkSeason from "../../../lib/checkSeason";
 
 function PlayerCompare() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -27,6 +28,8 @@ function PlayerCompare() {
       url: `${API}/api/player/comparisonRecord`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         team: filters.team,
         player: filters.player,

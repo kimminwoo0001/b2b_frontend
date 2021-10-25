@@ -7,6 +7,7 @@ import { API } from "../../config";
 import { useSelector } from "react-redux";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import qs from "qs";
+import checkSeason from "../../../lib/checkSeason";
 function LeagueStatistics() {
   //리그 통합 지수 텝
   const filters = useSelector((state) => state.FilterReducer);
@@ -51,6 +52,8 @@ function LeagueStatistics() {
       url: `${API}/api/league/totalinfo`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         token: user.token,
         id: user.id,

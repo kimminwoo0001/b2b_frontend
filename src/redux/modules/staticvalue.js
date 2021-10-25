@@ -1,9 +1,9 @@
-export const Get_Filter_All_Items = "staticvalue/Get_Filter_All_Items";
+export const GET_FILTER_ALL_ITMES = "staticvalue/Get_Filter_All_Items";
 
 
 export const GetFilterAllItems = (payload) => {
   return {
-    type: Get_Filter_All_Items,
+    type: GET_FILTER_ALL_ITMES,
     payload
   };
 }
@@ -14,7 +14,7 @@ export default function StaticValueReducer(state = initialState, action) {
       return {
         initialState
       }
-    case Get_Filter_All_Items:
+    case GET_FILTER_ALL_ITMES:
       return {
         ...state,
         filterObjects: action.payload

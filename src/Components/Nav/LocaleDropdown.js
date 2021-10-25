@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { useDetectOutsideClick } from "../../Components/SelectFilter/useDetectOustsideClick";
+import { useDetectOutsideClick } from "../SelectFilter/useDetectOustsideClick";
 import { Language } from "../../redux/modules/locale";
 
 function LocaleDropdown() {
@@ -14,20 +14,23 @@ function LocaleDropdown() {
     <LocaleDropdownWrapper>
       <DropDown className="container">
         <div className="menu-container">
-          <button
+          <img src="Images/ico_global.png" alt="globalIcon" onClick={() => {
+            setIsActive(!isActive);
+          }} />
+          {/* <button
             onClick={() => {
               setIsActive(!isActive);
             }}
             className="menu-trigger"
           >
-            <img src="Images/ico-login-global.png" alt="globalIcon"></img>
+            
             <span className="Label">{region}</span>
             <img
               className="ArrowIcon"
               src="Images/ico-filter-arrow.png"
               alt="arrowIcon"
             />
-          </button>
+          </button> */}
           <nav
             ref={dropdownRef}
             className={`menu ${isActive ? "active" : "inactive"}`}
@@ -81,6 +84,10 @@ const DropDown = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    img {
+      cursor: pointer;
+    }
   }
 
   .menu-trigger {

@@ -10,6 +10,7 @@ import {
   GetOppPlayer
 } from "../../redux/modules/filtervalue";
 import { API } from "../config";
+import checkSeason from "../../lib/checkSeason";
 
 // import { useDetectOutsideClick } from "../../Components/SelectFilter/useDetectOustsideClick";
 
@@ -113,7 +114,11 @@ function PickCombineModal({ openModal, setOpenModal }) {
     const result = await axios.request({
       method: "GET",
       url: `${API}/api/filter/team`,
-      params: { league: filters.league, patch: filters.patch }
+      params: {
+        league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "", patch: filters.patch
+      }
     });
     setTeamFilter(result.data.team);
   };
@@ -125,6 +130,8 @@ function PickCombineModal({ openModal, setOpenModal }) {
       url: `${API}/api/filter/player`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         team: filters.team
       }
@@ -138,6 +145,8 @@ function PickCombineModal({ openModal, setOpenModal }) {
       url: `${API}/api/filter/player`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         team: filters.oppteam
       }

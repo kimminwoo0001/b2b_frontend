@@ -7,6 +7,7 @@ import { Reset_Map } from "../../../redux/modules/filtervalue";
 import { API2 } from "../../config";
 import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
 import qs from "qs";
+import checkSeason from "../../../lib/checkSeason";
 
 function ChampionSetting({
   setGameData,
@@ -19,6 +20,7 @@ function ChampionSetting({
   //오브젝트 별 동선 팀/선수 기준 설정 Step 에 있는 드랍다운
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
+  const staticvalue = useSelector((state) => state.StaticValueReducer);
   const wrapperRef = useRef(null);
   const wrapperRef2 = useRef(null);
   const dispatch = useDispatch();
@@ -128,13 +130,29 @@ function ChampionSetting({
     }
   };
 
-  const getTeam = async () => {
+  const getTeam = () => {
     try {
+      let teamList = []
+      for (let league of filters.league) {
+        for (let year of filters.year) {
+          for (let season of filters.season) {
+            if (staticvalue.filterObjects[league][year][season]) {
+              const ObjectKeys = Object.keys(staticvalue.filterObjects[league][year][season]);
+              teamList = teamList.concat(ObjectKeys);
+            }
+          }
+        }
+      }
+      teamList = teamList.filter((item, pos) => teamList.indexOf(item) === pos).sort();
+
+      /*
       const response = await axios.request({
         method: "GET",
         url: `${API2}/api/mappingFilter`,
         params: {
           league: filters.league,
+          year: filters.year,
+          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
           patch: filters.patch,
           token: user.token,
           id: user.id,
@@ -144,19 +162,22 @@ function ChampionSetting({
         },
       });
       const data = response.data.team;
-      setFilterData({ ...filterData, team: data });
+      */
+      setFilterData({ ...filterData, team: teamList });
     } catch (e) {
       console.log(e);
     }
   };
 
-  const getPlayer = async () => {
+  const getPlayer = () => {
     try {
-      const response = await axios.request({
+      /*const response = await axios.request({
         method: "GET",
         url: `${API2}/api/mappingFilter`,
         params: {
           league: filters.league,
+          year: filters.year,
+          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
           patch: filters.patch,
           team: filters.team,
           token: user.token,
@@ -167,7 +188,53 @@ function ChampionSetting({
         },
       });
       const data = response.data.player;
-      setFilterData({ ...filterData, player: data });
+      */
+      let players = [];
+      let playerList = []
+      for (let league of filters.league) {
+        for (let year of filters.year) {
+          for (let season of filters.season) {
+            if (staticvalue.filterObjects[league][year][season][filters.team]) {
+              const ObjectKeys = Object.values(staticvalue.filterObjects[league][year][season][filters.team]);
+              console.log("ObjectKeys", ObjectKeys);
+              playerList = playerList.concat(ObjectKeys);
+            }
+          }
+        }
+      }
+      playerList = playerList.filter((item, pos) => playerList.indexOf(item) === pos).sort();
+
+      for (let i = 0; i < playerList.length; i++) {
+        const name = playerList[i].split('#')[1];
+        const position = playerList[i].split('#')[0];
+        if (position === "1") {
+          players[i] = {
+            position: 'top',
+            name: name
+          };
+        } else if (position === "2") {
+          players[i] = {
+            position: 'jng',
+            name: name
+          };
+        } else if (position === "3") {
+          players[i] = {
+            position: 'mid',
+            name: name
+          };
+        } else if (position === "4") {
+          players[i] = {
+            position: 'bot',
+            name: name
+          };
+        } else if (position === "5") {
+          players[i] = {
+            position: 'sup',
+            name: name
+          };
+        }
+      }
+      setFilterData({ ...filterData, player: players });
     } catch (e) {
       console.log(e);
     }
@@ -180,6 +247,8 @@ function ChampionSetting({
         url: `${API2}/api/mappingFilter`,
         params: {
           league: filters.league,
+          year: filters.year,
+          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
           patch: filters.patch,
           team: filters.team,
           player: filters.player,
@@ -204,6 +273,8 @@ function ChampionSetting({
         url: `${API2}/api/mappingFilter`,
         params: {
           league: filters.league,
+          year: filters.year,
+          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
           patch: filters.patch,
           team: filters.team,
           player: filters.player,
@@ -229,6 +300,8 @@ function ChampionSetting({
         url: `${API2}/api/mappingFilter`,
         params: {
           league: filters.league,
+          year: filters.year,
+          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
           patch: filters.patch,
           team: filters.team,
           player: filters.player,
@@ -255,6 +328,8 @@ function ChampionSetting({
         url: `${API2}/api/mappingFilter`,
         params: {
           league: filters.league,
+          year: filters.year,
+          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
           patch: filters.patch,
           team: filters.team,
           player: filters.player,
@@ -277,11 +352,14 @@ function ChampionSetting({
 
   const getGame = async () => {
     try {
+      /*
       const response = await axios.request({
         method: "GET",
         url: `${API2}/api/mappingFilter`,
         params: {
           league: filters.league,
+          year: filters.year,
+          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
           patch: filters.patch,
           team: filters.team,
           player: filters.player,
@@ -297,6 +375,7 @@ function ChampionSetting({
       });
 
       setGameData(Object.values(response.data["match"]));
+      */
     } catch (e) {
       console.log(e);
     }
@@ -310,6 +389,8 @@ function ChampionSetting({
           url: `${API2}/api/mappingFilter`,
           params: {
             league: filters.league,
+            year: filters.year,
+            season: filters.season,
             patch: filters.patch,
             team: filters.team,
             player: filters.player,
@@ -352,9 +433,12 @@ function ChampionSetting({
     getGame();
     dispatch(
       Reset_Map({
+        menu_num: filters.menu_num,
         tab: filters.tab,
         convertleague: filters.convertleague,
         league: filters.league,
+        year: filters.year,
+        season: filters.season,
         patch: filters.patch,
         patchfilter: filters.patchfilter,
         team: filters.team,
@@ -375,9 +459,12 @@ function ChampionSetting({
     getGameAll();
     dispatch(
       Reset_Map({
+        menu_num: filters.menu_num,
         tab: filters.tab,
         convertleague: filters.convertleague,
         league: filters.league,
+        year: filters.year,
+        season: filters.season,
         patch: filters.patch,
         patchfilter: filters.patchfilter,
         team: filters.team,
@@ -427,9 +514,12 @@ function ChampionSetting({
                           setChampArray2([]);
                           dispatch(
                             Reset_Map({
+                              menu_num: filters.menu_num,
                               tab: filters.tab,
                               convertleague: filters.convertleague,
                               league: filters.league,
+                              year: filters.year,
+                              season: filters.season,
                               patch: filters.patch,
                               patchfilter: filters.patchfilter,
                               team: team,
@@ -484,9 +574,12 @@ function ChampionSetting({
                           setChampArray2([]);
                           dispatch(
                             Reset_Map({
+                              menu_num: filters.menu_num,
                               tab: filters.tab,
                               convertleague: filters.convertleague,
                               league: filters.league,
+                              year: filters.year,
+                              season: filters.season,
                               patch: filters.patch,
                               patchfilter: filters.patchfilter,
                               team: filters.team,
@@ -616,9 +709,12 @@ function ChampionSetting({
                           setChampArray2([]);
                           dispatch(
                             Reset_Map({
+                              menu_num: filters.menu_num,
                               tab: filters.tab,
                               convertleague: filters.convertleague,
                               league: filters.league,
+                              year: filters.year,
+                              season: filters.season,
                               patch: filters.patch,
                               patchfilter: filters.patchfilter,
                               team: filters.team,
@@ -673,9 +769,12 @@ function ChampionSetting({
                           setIsActive4(false);
                           dispatch(
                             Reset_Map({
+                              menu_num: filters.menu_num,
                               tab: filters.tab,
                               convertleague: filters.convertleague,
                               league: filters.league,
+                              year: filters.year,
+                              season: filters.season,
                               patch: filters.patch,
                               patchfilter: filters.patchfilter,
                               team: filters.team,

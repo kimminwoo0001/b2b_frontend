@@ -6,8 +6,9 @@ import { useDispatch } from "react-redux";
 import { UserLogout } from "../../redux/modules";
 
 import { useHistory } from "react-router-dom";
-import LocaleDropdown from "../../Pages/Login/LocaleDropdown";
+import LocaleDropdown from "./LocaleDropdown";
 import DataProcess from "../DataProcessing/DataProcess";
+import SearchBox from "./SearchBox";
 
 function Nav() {
   // locale 값을 store에 저장된 값을 가져옴
@@ -37,38 +38,30 @@ function Nav() {
 
   return (
     <NavWrapper>
-      <Greet>
-        <div>
-          {lang === "en" ? `Hello, ${user.id}` : `${user.id} 님 안녕하세요!`}
-        </div>
-        {/* <div>{t("title")}</div> */}
-        {/* <div className="LastUpdate"></div> */}
+      <div className="nav-left">
+        <img className="logo"
+          src="/Images/logo.png"
+          alt="profile"
+          onClick={() => history.push("/")}
+        />
+        <SearchBox />
+      </div>
+      <div className="nav-mid">
         <DataProcess />
-      </Greet>
-
-      <ContentsWrapper>
-        {/* <input
-          type="text"
-          placeholder="리그, 팀명 및 선수를 검색하세요"
-        ></input> */}
-        {/* <select
-          onChange={(e) => {
-            dispatch(Language(e.target.value));
-            sessionStorage.setItem("i18nextLng", e.target.value);
-          }}
-        >
-          <option value="kr">한국어</option>
-          <option value="en">English</option>
-        </select> */}
-        <LocaleDropdown />
-        <img className="Alert" src="Images/ico-alarm.png" alt="alertIcon"></img>
-        <img
-          className="LogOut"
-          src="Images/ico-logout.png"
-          alt="LogoutIcon"
-          onClick={() => handleLogOut()}
-        ></img>
-      </ContentsWrapper>
+      </div>
+      <div className="nav-right">
+        <ContentsWrapper>
+          <img className="Alert" src="Images/ico-alarm.png" alt="alertIcon"></img>
+          <img
+            className="LogOut"
+            src="Images/ico-logout.png"
+            alt="LogoutIcon"
+            onClick={() => handleLogOut()}
+          ></img>
+          <LocaleDropdown />
+          <lable>{lang === "en" ? `Hello, ${user.id}` : `${user.id} 님 안녕하세요!`}</lable>
+        </ContentsWrapper>
+      </div>
     </NavWrapper>
   );
 }
@@ -76,33 +69,58 @@ function Nav() {
 export default Nav;
 
 const NavWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  height: 48.5px;
   width: 100%;
-  border-bottom: 1px solid #3b3945;
-  /* position: sticky;
-  top: 4px; */
+  height: 66px;
+  padding: 12px 35px 0 0;
+  background-color: #16151c;
+
+  .nav-left {
+    display: flex;
+    width: 33%;
+    float: left;
+
+    .logo {
+      width: 158px;
+      height: 37px;
+      margin: 3px 18px 13px 24px;
+      object-fit: contain;
+    }
+  }
+  
+  .nav-mid {
+    display: flex;
+    width: 30%;
+    float: middle;
+  }
+
+  .nav-right {
+    width: 33%;
+    float: right;
+    lable {
+      padding-left: 20px;
+      font-family: NotoSansKR, Apple SD Gothic Neo;
+      font-size: 12px;
+      letter-spacing: -0.6px;
+      text-align: left;
+      color: #ffffff;
+    }
+  }
+
+  
 `;
 
 const Greet = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: f;
 
   div {
     /* width: 160px; */
 
-    margin: 0px 0px 0px 20px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
-    text-align: left;
-    color: #ffffff;
+    
   }
   .LastUpdate {
     width: 180px;
-
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 12px;
     letter-spacing: -0.6px;
@@ -114,8 +132,8 @@ const Greet = styled.div`
 
 const ContentsWrapper = styled.div`
   display: flex;
+  justify-content: flex-end;
   align-items: center;
-  justify-content: center;
   > select {
     background-color: #23212a;
     color: #84818e;
@@ -129,21 +147,6 @@ const ContentsWrapper = styled.div`
   .LogOut {
     margin-right: 20px;
     cursor: pointer;
-  }
-  input {
-    width: 306px;
-    height: 32px;
-    background-color: #2f2d38;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
-    letter-spacing: -0.65px;
-    text-align: left;
-    color: #84818e;
-    margin-right: 24.5px;
-    padding: 6px 0 6px 12px;
-    background-image: url("Images/ico-champ-search.png");
-    background-repeat: no-repeat;
-    background-position: 280px center;
   }
   > button {
     width: 50px;

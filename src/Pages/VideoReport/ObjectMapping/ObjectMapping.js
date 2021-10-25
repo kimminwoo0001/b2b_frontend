@@ -12,6 +12,7 @@ import Tippy from "@tippy.js/react";
 import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
 import ObjectTooltip from "./ObjectTooltip";
+import checkSeason from "../../../lib/checkSeason";
 
 function useInterval(callback) {
   const savedCallback = useRef();
@@ -84,6 +85,8 @@ function ObjectMapping() {
         url: `${API2}/api/mappingPosition`,
         params: {
           league: filters.league,
+          year: filters.year,
+          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
           patch: filters.patch,
           team: filters.team,
           player: filters.player,

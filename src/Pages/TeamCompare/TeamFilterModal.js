@@ -20,6 +20,7 @@ import {
 import { API } from "../config";
 import { useTranslation } from "react-i18next";
 import { useDetectOutsideClick } from "./useDetectOustsideClick";
+import checkSeason from "../../lib/checkSeason";
 
 function TeamFilterModal({ teamModal, setTeamModal }) {
   //사이드바에 있는 팀 비교 탭 모달창
@@ -133,6 +134,8 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
       url: `${API}/api/filter/team`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: patch,
         token: user.token,
         id: user.id
@@ -151,6 +154,8 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
       url: `${API}/api/filter/oppteam`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         team: team,
         token: user.token,

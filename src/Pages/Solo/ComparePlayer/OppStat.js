@@ -16,6 +16,7 @@ import {
   ResetChampion,
   ResetChampion2
 } from "../../../redux/modules/filtervalue";
+import checkSeason from "../../../lib/checkSeason";
 
 function OppStat() {
   //상대 전적 기록 탭
@@ -53,6 +54,8 @@ function OppStat() {
       url: `${API}/api/player/comparisonRecord`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         team: filters.team,
         player: filters.player,
@@ -78,6 +81,8 @@ function OppStat() {
       url: `${API}/api/filter/vschampion`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         position: filters.position,
         team: filters.team,
@@ -102,6 +107,8 @@ function OppStat() {
       url: `${API}/api/filter/vschampion`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         position: filters.position,
         team: filters.oppteam,

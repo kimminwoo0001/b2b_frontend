@@ -10,6 +10,8 @@ import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
 import qs from "qs";
 import WardTooltip from "./WardTooltip";
+import checkSeason from "../../../lib/checkSeason";
+
 const sectorName = {
   0: 1,
   1: 2,
@@ -79,6 +81,8 @@ function WardMapping() {
         url: `${API2}/api/waddingFilter`,
         params: {
           league: filters.league,
+          year: filters.year,
+          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
           patch: filters.patch,
           team: filters.team,
           player: filters.player,

@@ -16,6 +16,7 @@ import { API } from "../config";
 import { useTranslation } from "react-i18next";
 import { useDetectOutsideClick } from "./useDetectOustsideClick";
 import qs from "qs";
+import checkSeason from "../../lib/checkSeason";
 
 function TeamFilter() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -119,6 +120,8 @@ function TeamFilter() {
       url: `${API}/api/filter/team`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         token: user.token,
         id: user.id,

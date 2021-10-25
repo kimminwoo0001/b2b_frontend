@@ -30,6 +30,7 @@ import {
   ResetChampion2,
   ResetOppChampion,
 } from "../../../redux/modules/filtervalue";
+import checkSeason from "../../../lib/checkSeason";
 
 function Stats() {
   //능력치 탭
@@ -78,6 +79,10 @@ function Stats() {
         url: `${API}/api/player/comparisonStat`,
         params: {
           league: filters.league,
+          year: filters.year,
+          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+          year: filters.year,
+          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
           patch: filters.patch,
           team: filters.team,
           player: filters.player,
@@ -171,6 +176,8 @@ function Stats() {
       url: `${API}/api/filter/champion2`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         player: filters.player,
         oppplayer: filters.oppplayer,
@@ -192,6 +199,8 @@ function Stats() {
       url: `${API}/api/filter/oppchampion2`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "", year: filters.year,
         patch: filters.patch,
         champion: filters.champion_eng,
         player: filters.player,

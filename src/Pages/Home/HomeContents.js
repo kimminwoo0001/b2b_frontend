@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -9,9 +9,10 @@ import { API } from "../config";
 import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../../redux/modules/filtervalue";
 import { GetFilterAllItems } from "../../redux/modules/staticvalue";
+
 import checkRequest from "../../lib/checkRequest";
 
-function HomeContents() {
+const HomeContents = memo(() => {
   const filters = useSelector((state) => state.FilterReducer);
   const staticvalue = useSelector((state) => state.StaticValueReducer);
   const user = useSelector((state) => state.UserReducer);
@@ -29,7 +30,7 @@ function HomeContents() {
 
   useEffect(() => {
     fetchHomeData();
-    filterAlllItems();
+    fetchFilterData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -60,7 +61,6 @@ function HomeContents() {
       // setVcsData(jsonData.data["VCS"]);
 
       dispatch(Loading(false));
-
       //
     } catch (e) {
       console.log(e);
@@ -68,9 +68,24 @@ function HomeContents() {
     }
   };
 
-  const filterAlllItems = () => {
-    dispatch(GetFilterAllItems("a"));
-  }
+  const fetchFilterData = async () => {
+    dispatch(Loading(true));
+    try {
+      const jsonData = await axios.request({
+        method: "GET",
+        url: `${API}/api/test/test`,
+        params: {
+          token: user.token,
+          id: user.id
+        }
+      });
+      dispatch(GetFilterAllItems(jsonData.data));
+      dispatch(Loading(false));
+    } catch (e) {
+      console.log(e);
+      dispatch(Loading(false));
+    }
+  };
 
   if (filters.loading) return <LoadingImg />;
 
@@ -324,7 +339,7 @@ function HomeContents() {
       </BoxWrapper>
     </LeagueListWrapper>
   );
-}
+});
 
 export default HomeContents;
 

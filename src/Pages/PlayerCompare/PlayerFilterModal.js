@@ -23,6 +23,7 @@ import {
 import { API } from "../config";
 
 import { useDetectOutsideClick } from "./useDetectOustsideClick";
+import checkSeason from "../../lib/checkSeason";
 
 function PlayerFilterModal({ playerModal, setPlayerModal }) {
   // sidebar 선수 비교 눌렀을때 뜨는 모달창
@@ -128,6 +129,8 @@ function PlayerFilterModal({ playerModal, setPlayerModal }) {
       url: `${API}/api/filter/team`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: patch,
         token: user.token,
         id: user.id,
@@ -146,6 +149,8 @@ function PlayerFilterModal({ playerModal, setPlayerModal }) {
       url: `${API}/api/filter/oppteam`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         team: team,
         token: user.token,
@@ -165,6 +170,8 @@ function PlayerFilterModal({ playerModal, setPlayerModal }) {
       url: `${API}/api/filter/player`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         team: team,
         token: user.token,
@@ -184,6 +191,8 @@ function PlayerFilterModal({ playerModal, setPlayerModal }) {
       url: `${API}/api/filter/oppplayer`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         team: team,
         position: filters.position,

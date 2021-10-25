@@ -3,16 +3,20 @@ import styled from "styled-components";
 import SideBar from "../../Components/SideBar/SideBar";
 import Nav from "../../Components/Nav/Nav";
 import UtilityTab from "./UtilityTab";
+import ErrorBoundary from "../../Components/ErrorBoundary";
 
 function Utility() {
   return (
-    <UtilityWrapper>
-      <SideBar />
-      <ContentWrapper>
-        {/* <Nav /> */}
-        <UtilityTab />
-      </ContentWrapper>
-    </UtilityWrapper>
+    <ErrorBoundary>
+      <Nav />
+      <UtilityWrapper>
+        <SideBar />
+        <ContentWrapper>
+          <UtilityTab />
+        </ContentWrapper>
+      </UtilityWrapper>
+    </ErrorBoundary>
+
   );
 }
 

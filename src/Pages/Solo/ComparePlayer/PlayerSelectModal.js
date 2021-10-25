@@ -12,6 +12,7 @@ import {
   ResetChampion,
   HandleTab
 } from "../../../redux/modules/filtervalue";
+import checkSeason from "../../../lib/checkSeason";
 
 function PlayerSelectModal({ openModal, setOpenModal }) {
   const filters = useSelector((state) => state.FilterReducer);
@@ -32,6 +33,8 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
       url: `${API}/api/filter/oppteam`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         team: filters.team,
         token: user.token,
@@ -50,6 +53,8 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
       url: `${API}/api/filter/oppplayer`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         team: team,
         position: filters.position,

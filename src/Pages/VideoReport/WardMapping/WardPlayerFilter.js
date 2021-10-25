@@ -9,6 +9,7 @@ import { API2 } from "../../config";
 import qs from "qs";
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
+import checkSeason from "../../../lib/checkSeason";
 
 function valuetext(value) {
   const time = value * 5100;
@@ -77,6 +78,8 @@ function WardPlayerFilter({
         url: `${API2}/api/mappingFilter`,
         params: {
           league: filters.league,
+          year: filters.year,
+          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
           patch: filters.patch,
           token: user.token,
           id: user.id
@@ -100,6 +103,8 @@ function WardPlayerFilter({
         url: `${API2}/api/mappingFilter`,
         params: {
           league: filters.league,
+          year: filters.year,
+          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
           patch: filters.patch,
           team: filters.team,
           token: user.token,
@@ -123,6 +128,8 @@ function WardPlayerFilter({
         url: `${API2}/api/mappingFilter`,
         params: {
           league: filters.league,
+          year: filters.year,
+          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
           patch: filters.patch,
           team: filters.team,
           player: filters.player,
@@ -147,6 +154,8 @@ function WardPlayerFilter({
         url: `${API2}/api/mappingFilter`,
         params: {
           league: filters.league,
+          year: filters.year,
+          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
           patch: filters.patch,
           team: filters.team,
           player: filters.player,
@@ -172,6 +181,8 @@ function WardPlayerFilter({
         url: `${API2}/api/mappingFilter`,
         params: {
           league: filters.league,
+          year: filters.year,
+          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
           patch: filters.patch,
           team: filters.team,
           player: filters.player,
@@ -198,6 +209,8 @@ function WardPlayerFilter({
         url: `${API2}/api/mappingFilter`,
         params: {
           league: filters.league,
+          year: filters.year,
+          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
           patch: filters.patch,
           team: filters.team,
           player: filters.player,
@@ -258,9 +271,12 @@ function WardPlayerFilter({
                           onClick={() => {
                             dispatch(
                               Reset_Map({
+                                menu_num: filters.menu_num,
                                 tab: filters.tab,
                                 convertleague: filters.convertleague,
                                 league: filters.league,
+                                year: filters.year,
+                                season: filters.season,
                                 patch: filters.patch,
                                 patchfilter: filters.patchfilter,
                                 team: team,
@@ -313,9 +329,12 @@ function WardPlayerFilter({
                           onClick={() => {
                             dispatch(
                               Reset_Map({
+                                menu_num: filters.menu_num,
                                 tab: filters.tab,
                                 convertleague: filters.convertleague,
                                 league: filters.league,
+                                year: filters.year,
+                                season: filters.season,
                                 patch: filters.patch,
                                 patchfilter: filters.patchfilter,
                                 team: filters.team,
@@ -368,9 +387,12 @@ function WardPlayerFilter({
                           onClick={() => {
                             dispatch(
                               Reset_Map({
+                                menu_num: filters.menu_num,
                                 tab: filters.tab,
                                 convertleague: filters.convertleague,
                                 league: filters.league,
+                                year: filters.year,
+                                season: filters.season,
                                 patch: filters.patch,
                                 patchfilter: filters.patchfilter,
                                 team: filters.team,
@@ -425,9 +447,12 @@ function WardPlayerFilter({
                           onClick={() => {
                             dispatch(
                               Reset_Map({
+                                menu_num: filters.menu_num,
                                 tab: filters.tab,
                                 convertleague: filters.convertleague,
                                 league: filters.league,
+                                year: filters.year,
+                                season: filters.season,
                                 patch: filters.patch,
                                 patchfilter: filters.patchfilter,
                                 team: filters.team,
@@ -480,9 +505,12 @@ function WardPlayerFilter({
                           onClick={() => {
                             dispatch(
                               Reset_Map({
+                                menu_num: filters.menu_num,
                                 tab: filters.tab,
                                 convertleague: filters.convertleague,
                                 league: filters.league,
+                                year: filters.year,
+                                season: filters.season,
                                 patch: filters.patch,
                                 patchfilter: filters.patchfilter,
                                 team: filters.team,
@@ -535,9 +563,12 @@ function WardPlayerFilter({
                           onClick={() => {
                             dispatch(
                               Reset_Map({
+                                menu_num: filters.menu_num,
                                 tab: filters.tab,
                                 convertleague: filters.convertleague,
                                 league: filters.league,
+                                year: filters.year,
+                                season: filters.season,
                                 patch: filters.patch,
                                 patchfilter: filters.patchfilter,
                                 team: filters.team,

@@ -17,6 +17,7 @@ import {
   ResetOppChampion
 } from "../../../redux/modules/filtervalue";
 import qs from "qs";
+import checkSeason from "../../../lib/checkSeason";
 
 function NormalInfo() {
   //기본정보 탭
@@ -59,6 +60,8 @@ function NormalInfo() {
       url: `${API}/api/player/comparison`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         team: filters.team,
         player: filters.player,
@@ -104,6 +107,8 @@ function NormalInfo() {
       url: `${API}/api/filter/champion2`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         player: filters.player,
         oppplayer: filters.oppplayer,
@@ -124,6 +129,8 @@ function NormalInfo() {
       url: `${API}/api/filter/oppchampion2?`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         champion: filters.champion_eng,
         player: filters.player,

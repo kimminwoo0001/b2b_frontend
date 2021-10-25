@@ -2,9 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
 import { useSelector } from "react-redux";
-import * as clipboard from 'clipboard-polyfill/text';
-import XLSX from "xlsx";
-
+import ExportUtil from "../Components/ExportUtil";
 
 
 // 주요픽 데이터 sorting Hooks
@@ -77,7 +75,7 @@ const useSortableData2 = (tiers, config = null) => {
   return { tiers: sortedItems, requestSorts, sortConfig };
 };
 
-function tabledata(tableid) {
+function tabledata(tableid, type) {
   const BOM = "\uFEFF"; //바이트 순서 표식
   let result = BOM;
 
@@ -92,7 +90,8 @@ function tabledata(tableid) {
       else {
         columnData = columnData.toString().replace(/"/g, '""'); // escape double quotes
       }
-      result = result + '"' + columnData + '",';
+      console.log(result);
+      result = type === 'csv' ? result + '"' + columnData + '",' : result + columnData + '\t';
     }
     result = result.substring(0, result.length - 1);
     result = result + "\r\n";
@@ -100,59 +99,6 @@ function tabledata(tableid) {
   result = result.substring(0, result.length - 1);
 
   return result;
-}
-
-const exportCSV = (filename = "none", tableid) => {
-  filename += ".csv";
-  let csvString = tabledata(tableid);
-  // IE 10, 11, Edge Run
-  if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-
-    const blob = new Blob([decodeURIComponent(csvString)], {
-      type: 'text/csv;charset=utf8'
-    });
-    window.navigator.msSaveOrOpenBlob(blob, filename);
-  } else if (window.Blob && window.URL) {
-    // HTML5 Blob
-    const blob = new Blob([csvString], { type: 'text/csv;charset=utf8' });
-    const csvUrl = URL.createObjectURL(blob);
-    let a = document.createElement('a');
-    a.setAttribute('style', 'display:none');
-    a.setAttribute('href', csvUrl);
-    a.setAttribute('download', filename);
-    document.body.appendChild(a);
-    a.click()
-    a.remove();
-  } else {
-    // Data URI
-    const csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csvString);
-    const blob = new Blob([csvString], { type: 'text/csv;charset=utf8' });
-    const csvUrl = URL.createObjectURL(blob);
-    let a = document.createElement('a');
-    a.setAttribute('style', 'display:none');
-    a.setAttribute('target', '_blank');
-    a.setAttribute('href', csvData);
-    a.setAttribute('download', filename);
-    document.body.appendChild(a);
-    a.click()
-    a.remove();
-  }
-}
-
-const exportXlsx = (tableName, tableid) => {
-  var wb = XLSX.utils.table_to_book(document.getElementById(tableid), { sheet: tableName, raw: true });
-  XLSX.writeFile(wb, (tableName + '.xlsx'));
-}
-
-const copyClipboard = (tableid) => {
-  clipboard.writeText(tabledata(tableid)).then(
-    function () {
-      console.log("success!");
-    },
-    function () {
-      console.log("error!");
-    }
-  );
 }
 
 function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
@@ -173,23 +119,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
         <MainPicks>
           <Header>
             <span>{t("league.draft.mostPick")}</span>
-            <ExportButton onClick={() => {
-              exportCSV(t("league.draft.mostPick"), "pickTable");
-            }}>
-              Export(CSV)
-            </ExportButton>
-
-            <ExportButton onClick={() => {
-              exportXlsx(t("league.draft.mostPick"), "pickTable");
-            }}>
-              Export(XLSX)
-            </ExportButton>
-
-            <ExportButton onClick={() => {
-              copyClipboard("pickTable");
-            }}>
-              Copy
-            </ExportButton>
+            <ExportUtil filename={t("league.draft.mostPick")} tableid="pickTable" />
           </Header>
           <PickTable id="pickTable">
             <thead>
@@ -630,6 +560,7 @@ const Header = styled.div`
 
 const ExportButton = styled.div`
   display: inline-block;
+  font-weight: normal;
   float: right;
   color: #fff;
   cursor: pointer;

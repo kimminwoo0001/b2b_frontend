@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { API } from "../../../config";
 import qs from "qs";
 import { useDetectOutsideClick } from "../../Components/useDetectOustsideClick";
+import checkSeason from "../../../../lib/checkSeason";
 
 function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
   const filters = useSelector((state) => state.FilterReducer);
@@ -34,6 +35,8 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
       url: `${API}/api/filter/roster`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         team1: el.Team1,
         team2: el.Team2,
@@ -57,6 +60,8 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
       url: `${API}/api/filter/roster2`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         team1: player1.join(),
         team2: player2.join(),

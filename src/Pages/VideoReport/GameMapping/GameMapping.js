@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
 import Tippy from "@tippy.js/react";
 import ObjectTooltip from "../ObjectMapping/ObjectTooltip";
+import checkSeason from "../../../lib/checkSeason";
 
 //fast 버튼 setinterval 메모리 최적화 함수
 function useInterval(callback) {
@@ -83,6 +84,8 @@ function GameMapping() {
         url: `${API2}/api/mappingFilter`,
         params: {
           league: filters.league,
+          year: filters.year,
+          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
           patch: filters.patch,
           team: filters.team,
           object: "off",

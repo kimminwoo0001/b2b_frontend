@@ -8,7 +8,7 @@ import { UserLogout } from "../../redux/modules";
 
 import TeamFilterModal from "../../Pages/TeamCompare/TeamFilterModal";
 import PlayerFilterModal from "../../Pages/PlayerCompare/PlayerFilterModal";
-import LocaleDropdown from "../../Pages/Login/LocaleDropdown";
+import LocaleDropdown from "../Nav/LocaleDropdown";
 
 function Sidebar() {
   //팀 비교 모달창 상태 값
@@ -109,16 +109,17 @@ function Sidebar() {
       />
       <SideBarWrapper>
         {/* <Link to="/utility"> */}
-        <TSBLogo>
-          {/*<img src="/Images/profile-default.png" alt="profile"></img>*/}
-          <img
+        {/* <TSBLogo>
+      {<img src="/Images/profile-default.png" alt="profile"></img>}
+      <img
             src="/Images/logo.png"
             alt="profile"
             onClick={() => history.push("/")}
           ></img>
         </TSBLogo>
+        */}
         {/* </Link> */}
-
+        {/* 
         <Info>
           <div className="user">
             {lang === "en" && <span className="text">Hello, </span>}
@@ -148,7 +149,7 @@ function Sidebar() {
             ></img>
           </div>
         </Info>
-
+      */}
         <MenuList>
           <MenuWrapper
             onClick={() => {
@@ -287,7 +288,9 @@ function Sidebar() {
           </div>
         </MenuWrapper> */}
         </MenuList>
-        <LocaleDropdown />
+        {/* 
+          <LocaleDropdown />
+        */}
       </SideBarWrapper>
     </>
   );
@@ -296,22 +299,12 @@ function Sidebar() {
 export default Sidebar;
 
 const SideBarWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
   width: 200px;
-  //margin: 0 0 141px;
-  padding: 40px 30.3px 25px 9.7px;
+  margin: 0 0;
+  padding: 26px 7px 103px 12px;
   background-color: #16151c;
-  // background-color: orange;
-
-  // position: sticky;
-  top: 0;
-  bottom: 0;
   font-family: NotoSansKR, Apple SD Gothic Neo;
   font-size: 11px;
-  // font-weight: bold;
   letter-spacing: -0.55px;
   text-align: center;
   color: #ffffff;
@@ -384,9 +377,9 @@ const Info = styled.div`
 `;
 
 const MenuList = styled.div`
-  width: 160px;
+  width: 161px;
   height: 416px;
-  margin: 0 0 157px;
+  margin: 0 20px 636px 0;
 `;
 
 const MenuWrapper = styled.div`
