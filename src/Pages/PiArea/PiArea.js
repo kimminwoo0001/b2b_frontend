@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import SetWardData from "./SetWardData/SetWardData";
 import SetPiData from "./SetPiData/SetPiData";
 import axios from "axios";
-import { API3 } from "../config";
+import { API4 } from "../config";
 
 const PiArea = () => {
   const [tab, setTab] = useState(0);
@@ -13,6 +13,7 @@ const PiArea = () => {
   const [entireData, setEntireData] = useState([]);
   const [ward, setWard] = useState([]);
   const [youtubeUrl, setYoutubeUrl] = useState("");
+
   const tabContents = {
     0: <SetWardData wardData={ward} setWard={setWard} />,
     1: <SetPiData />,
@@ -36,7 +37,7 @@ const PiArea = () => {
 
     const response = await axios.request({
       method: "GET",
-      url: `${API3}/gameidsearchAjax.do`,
+      url: `${API4}/gameidsearchAjax.do`,
       params: {
         q: gameIdInput,
       },
@@ -71,10 +72,11 @@ const PiArea = () => {
     if (!clickedGameId) {
       return;
     }
+    // setEntireData("");
     const fetchClickedData = async () => {
       const response = await axios.request({
         method: "GET",
-        url: `${API3}/searchByGameidAjax.do`,
+        url: `${API4}/searchByGameidAjax.do`,
         params: {
           gameid: clickedGameId,
         },
@@ -87,20 +89,47 @@ const PiArea = () => {
 
   useEffect(() => {
     setWard(entireData[0]);
-    console.log(entireData[0])
-  }, [entireData])
+    console.log(entireData[0]);
+  }, [entireData]);
 
   // db저장 submit 함수
-  // const handleSubmit = async () => {
-  //   const response = await axios.request(`${API4}/setWardPostition.do`, {
-  //     method:"POST",
-  //     data: {
-  //       youtubeUrl,
-
-  //     }
-
-  //   })
-  // }
+  const handleSubmit = async () => {
+    console.log(ward);
+    let data = {
+      video: youtubeUrl,
+      gameid: clickedGameId,
+      btop1: ward[0].firstwardPosition,
+      btop2: ward[0].secondwardPosition,
+      bjng1: ward[1].firstwardPosition,
+      bjng2: ward[1].secondwardPosition,
+      bmid1: ward[2].firstwardPosition,
+      bmid2: ward[2].secondwardPosition,
+      bbot1: ward[3].firstwardPosition,
+      bbot2: ward[3].secondwardPosition,
+      bsup1: ward[4].firstwardPosition,
+      bsup2: ward[4].secondwardPosition,
+      rtop1: ward[5].firstwardPosition,
+      rtop2: ward[5].secondwardPosition,
+      rjng1: ward[6].firstwardPosition,
+      rjng2: ward[6].secondwardPosition,
+      rmid1: ward[7].firstwardPosition,
+      rmid2: ward[7].secondwardPosition,
+      rbot1: ward[8].firstwardPosition,
+      rbot2: ward[8].secondwardPosition,
+      rsup1: ward[9].firstwardPosition,
+      rsup2: ward[9].secondwardPosition,
+    };
+    const response = await axios.post(
+      `${API4}/setWardPostition.do`,
+      JSON.stringify(data),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response);
+  };
 
   return (
     <PiAreaWrapper>
@@ -142,6 +171,7 @@ const PiArea = () => {
           value={youtubeUrl || ""}
         />
         <TabContents>{tabContents[tab]}</TabContents>
+        {ward && <SubmitBtn onClick={handleSubmit}>저장하기</SubmitBtn>}
       </InnerWrapper>
     </PiAreaWrapper>
   );
@@ -236,4 +266,16 @@ const TabContents = styled.div`
   background-color: #23212a;
   padding: 10px 0;
   border-radius: 5px;
+`;
+
+const SubmitBtn = styled.button`
+  background-color: #fff;
+  width: 100%;
+  border-radius: 5px;
+  padding: 10px;
+  font-weight: bold;
+  &:hover {
+    color: #fff;
+    background-color: #5942ba;
+  }
 `;

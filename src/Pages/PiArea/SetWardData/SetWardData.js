@@ -1,54 +1,50 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled, { css } from "styled-components";
 
-const SetWardData = ({ wardData, setWard }) => {
+const SetWardData = ({ wardData }) => {
+  console.log(wardData);
   const labelRef = useRef("TOP1");
   const canvasRef = useRef(null);
   const canvas = canvasRef.current;
-
-  const [dotColor, setDotColor] = useState("#0000ff");
-  const [cord, setCord] = useState("");
-  // default로 input창 지정
-  const [position, setPosition] = useState(0);
-
   const inputRefs1 = useRef([]);
   const inputRefs2 = useRef([]);
-  inputRefs1.current = [];
-  inputRefs2.current = [];
 
-  // gameid 검색 후 클릭 시 모든 좌표를 canvas에 그려줌
-  const initCanvas = (data) => {
-    if (data.length === 0) {
+  const [cord, setCord] = useState("");
+  const [position, setPosition] = useState(0);
+  const [currentLocation, setCurrentLocation] = useState(inputRefs1.current);
+
+  // gameid 클릭 시 모든 data의 좌표를 canvas에 그려줌
+  const initCanvas = () => {
+    if (wardData.length === 0) {
       return;
     }
-
     const canvas = canvasRef.current;
     canvas.width = 512;
     canvas.height = 512;
     canvas.getContext("2d").fillStyle = "#0000ff";
     for (let i = 0; i < 5; i++) {
-      if (data[i].firstwardPosition === null) {
+      if (wardData[i].firstwardPosition === null) {
         return;
       }
       canvas
         .getContext("2d")
         .fillRect(
-          data[i].firstwardPosition.split(",")[0],
-          data[i].firstwardPosition.split(",")[1],
+          wardData[i].firstwardPosition.split(",")[0],
+          wardData[i].firstwardPosition.split(",")[1],
           5,
           5
         );
     }
     canvas.getContext("2d").fillStyle = "#00eeff";
     for (let i = 0; i < 5; i++) {
-      if (data[i].secondwardPosition === null) {
+      if (wardData[i].secondwardPosition === null) {
         return;
       }
       canvas
         .getContext("2d")
         .fillRect(
-          data[i].secondwardPosition.split(",")[0],
-          data[i].secondwardPosition.split(",")[1],
+          wardData[i].secondwardPosition.split(",")[0],
+          wardData[i].secondwardPosition.split(",")[1],
           5,
           5
         );
@@ -56,14 +52,14 @@ const SetWardData = ({ wardData, setWard }) => {
 
     canvas.getContext("2d").fillStyle = "#ff0000";
     for (let i = 5; i < 10; i++) {
-      if (data[i].firstwardPosition === null) {
+      if (wardData[i].firstwardPosition === null) {
         return;
       }
       canvas
         .getContext("2d")
         .fillRect(
-          data[i].firstwardPosition.split(",")[0],
-          data[i].firstwardPosition.split(",")[1],
+          wardData[i].firstwardPosition.split(",")[0],
+          wardData[i].firstwardPosition.split(",")[1],
           5,
           5
         );
@@ -71,109 +67,123 @@ const SetWardData = ({ wardData, setWard }) => {
 
     canvas.getContext("2d").fillStyle = "#ff99f9";
     for (let i = 5; i < 10; i++) {
-      if (data[i].secondwardPosition === null) {
+      if (wardData[i].secondwardPosition === null) {
         return;
       }
       canvas
         .getContext("2d")
         .fillRect(
-          data[i].secondwardPosition.split(",")[0],
-          data[i].secondwardPosition.split(",")[1],
+          wardData[i].secondwardPosition.split(",")[0],
+          wardData[i].secondwardPosition.split(",")[1],
           5,
           5
         );
     }
   };
 
-  // map 클릭 시 기존 좌표 clear 후 클릭 좌표 SET
+  // map 클릭 시 기존 좌표 clear 후 클릭한 좌표 setting
   const handleClickCanvas = (e) => {
+    const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     const cordX = e.pageX - ctx.canvas.offsetLeft;
     const cordY = e.pageY - ctx.canvas.offsetTop;
 
     ctx.clearRect(0, 0, 512, 512);
-    ctx.fillStyle = dotColor;
+    const color = () => {
+      if (
+        currentLocation[position].className.includes("first") &&
+        position < 5
+      ) {
+        return "#0000ff";
+      }
+      if (
+        currentLocation[position].className.includes("first") &&
+        position >= 5
+      ) {
+        return "#ff0000";
+      }
+      if (
+        currentLocation[position].className.includes("second") &&
+        position < 5
+      ) {
+        return "#00eeff";
+      }
+      if (
+        currentLocation[position].className.includes("second") &&
+        position >= 5
+      ) {
+        return "#ff99f9";
+      }
+    };
+
+    ctx.fillStyle = color();
     ctx.fillRect(cordX, cordY, 5, 5);
     setCord(`${cordX},${cordY}`);
-
-
-
   };
 
-  // setCord 되면 현재 position의 input창 값을 해당 좌표로 바꿔줌
+  // setCord 되면 현재 position의 input창의 value값을 cord로 바꿔줌 + war data도 변경
   useEffect(() => {
-    handleUpdate();
     if (!cord) {
       return;
     }
-    inputRefs1.current[position].value = cord;
+    handleUpdate();
+    currentLocation[position].value = cord;
   }, [cord]);
 
+  // ward data 배열 업데이트 함수
   const handleUpdate = () => {
-    const filtered = wardData.map((data) => {
-      if (data.firstwardPosition === inputRefs1.current[position].value) {
+    return wardData.map((data) => {
+      if (data.firstwardPosition === currentLocation[position].value) {
         data.firstwardPosition = cord;
       }
+      if (data.secondwardPosition === currentLocation[position].value) {
+        data.secondwardPosition = cord;
+      }
+      // wardata의 firstwardPosition/secondwardPosition의 값이 null이거나 ""인경우는 어떻게 ????
       return data;
-    })
-    console.log(filtered);
-    setWard(filtered);
-  }
+    });
+  };
 
-  // useEffect(() => {
-
-  // }, [position])
-
-  // input창 클릭 시 해당 좌표 표기 + 새로운 좌표값 표기
-
-  const handleFirstInputClick = (id) => {
+  // input창 클릭 시 해당 value값 표기
+  const handleInputClick = (e, id) => {
+    setPosition(id);
     const ctx = canvas.getContext("2d");
+    const color = () => {
+      if (e.target.className.includes("first") && id < 5) {
+        return "#0000ff";
+      } else if (e.target.className.includes("first") && id >= 5) {
+        return "#ff0000";
+      } else if (e.target.className.includes("second") && id < 5) {
+        return "#00eeff";
+      } else if (e.target.className.includes("second") && id >= 5) {
+        return "#ff99f9";
+      }
+    };
     if (ctx) {
       ctx.clearRect(0, 0, 512, 512);
-      ctx.fillStyle = dotColor;
+      ctx.fillStyle = color();
       ctx.fillRect(
-        inputRefs1.current[id].value.split(",")[0],
-        inputRefs1.current[id].value.split(",")[1],
+        e.target.value.split(",")[0],
+        e.target.value.split(",")[1],
         5,
         5
       );
     }
 
-    // position 값을 클릭한 input창에 해당하는 값으로 setting
-    setPosition(id);
-
-    // eslint-disable-next-line default-case
-    switch (id) {
-      case 0:
-        labelRef.current = "TOP 1";
-        break;
-      case 1:
-        labelRef.current = "JNG 1";
-        break;
-      case 2:
-        labelRef.current = "MID 1";
-        break;
-      case 3:
-        labelRef.current = "BOT 1";
-        break;
-      case 4:
-        labelRef.current = "SUP 1";
-        break;
-      default:
-        labelRef.current = "TOP 1";
+    if (e.target.className.includes("second")) {
+      setCurrentLocation(inputRefs2.current);
+    } else if (e.target.className.includes("first")) {
+      setCurrentLocation(inputRefs1.current);
     }
-  };
-
-
-  const handleSecondInputClick = (id) => {
-    inputRefs2.current[id].value = cord;
   };
 
   useEffect(() => {
     if (!wardData) {
       return;
     }
-    initCanvas(wardData);
+    initCanvas();
+    setPosition(0);
+    setCurrentLocation(inputRefs1.current);
   }, [wardData]);
 
   return (
@@ -200,29 +210,20 @@ const SetWardData = ({ wardData, setWard }) => {
                 <SecondWard>{`${data.secondward} = ${data.secondwardTime}`}</SecondWard>
                 <div>
                   <FirstData
+                    className="first"
                     readOnly
-                    value={
-                      // data.firstwardPosition === null
-                      //   ? "null"
-                      //   : inputRefs1.current.value
-                      data.firstwardPosition === null
-                        ? "null"
-                        : data.firstwardPosition
-                    }
+                    value={data.firstwardPosition}
                     ref={(ref) => (inputRefs1.current[idx] = ref)}
-                    onMouseDown={() => handleFirstInputClick(idx)}
+                    onClick={(e) => handleInputClick(e, idx)}
                   />
                 </div>
                 <div>
                   <SecondData
+                    className="second"
                     readOnly
-                    value={
-                      data.secondwardPosition === null
-                        ? "null"
-                        : data.secondwardPosition
-                    }
+                    value={data.secondwardPosition}
                     ref={(ref) => (inputRefs2.current[idx] = ref)}
-                    // onClick={() => handleSecondInputClick(idx)}
+                    onClick={(e) => handleInputClick(e, idx)}
                   />
                 </div>
               </DataWrapper>
@@ -231,7 +232,6 @@ const SetWardData = ({ wardData, setWard }) => {
           {!wardData && <Message>보고싶은 경기를 검색해주세요.</Message>}
         </DataByPosition>
       </WardDataWrapper>
-      {wardData && <SubmitBtn>저장하기</SubmitBtn>}
     </>
   );
 };
@@ -322,16 +322,4 @@ const Message = styled.div`
   color: #fff;
   font-size: 24px;
   font-weight: bold;
-`;
-
-const SubmitBtn = styled.button`
-  background-color: #fff;
-  width: 100%;
-  border-radius: 5px;
-  padding: 10px;
-  font-weight: bold;
-  &:hover {
-    color: #fff;
-    background-color: #5942ba;
-  }
 `;
