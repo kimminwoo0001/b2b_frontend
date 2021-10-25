@@ -12,11 +12,12 @@ const PiArea = () => {
   const [clickedGameId, setClickedGameId] = useState("");
   const [entireData, setEntireData] = useState([]);
   const [ward, setWard] = useState([]);
+  const [pi, setPI] = useState([]);
   const [youtubeUrl, setYoutubeUrl] = useState("");
 
   const tabContents = {
     0: <SetWardData wardData={ward} setWard={setWard} />,
-    1: <SetPiData />,
+    1: <SetPiData piData={pi} />,
   };
 
   // onchange
@@ -26,6 +27,9 @@ const PiArea = () => {
 
   // youtube url input onchange
   const handleUrlInput = (e) => {
+    if (!e.target.value.includes("?t=")) {
+      alert("youtube url에 시작 시간을 추가해주세요!");
+    }
     setYoutubeUrl(e.target.value);
   };
 
@@ -89,7 +93,7 @@ const PiArea = () => {
 
   useEffect(() => {
     setWard(entireData[0]);
-    console.log(entireData[0]);
+    setPI(entireData[1]);
   }, [entireData]);
 
   // db저장 submit 함수
