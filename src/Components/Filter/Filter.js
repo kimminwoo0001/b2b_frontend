@@ -42,6 +42,13 @@ const Filter = memo(() => {
   const [seasonFilter, setSeasonFilter] = useState([]);
   const [teamFilter, setTeamFilter] = useState([]);
   const [playerFilter, setPlayerFilter] = useState([]);
+
+  const [league, setLeague] = useState(filters.league);
+  const [year, setYear] = useState(filters.year);
+  const [season, setSeason] = useState(filters.season);
+  const [team, setTeam] = useState(filters.team);
+  const [player, setPlayer] = useState(filters.player);
+  const [patch, setPatch] = useState(filters.patch);
   const { t } = useTranslation();
 
   const nameLeague = '/league';
@@ -72,34 +79,49 @@ const Filter = memo(() => {
   }, []);
 
   useEffect(() => {
-    fetchYearFilter();
-    fetchActiveFilter();
-  }, [filters.league]);
+    if (league !== filters.league) {
+      fetchYearFilter();
+      fetchActiveFilter();
+      setLeague(filters.league);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters.league]); // 배열은 어떡하라고
 
   useEffect(() => {
-    fetchSeasonFilter();
+    if (year !== filters.year) {
+      fetchSeasonFilter();
+      setYear(filters.year);
+    }
   }, [filters.year]);
 
 
   useEffect(() => {
-    if (filters.year.length > 0) {
-      if ([nameLeague].includes(pagePath)) {
-        dispatch(HandleTab(1))
-      } else {
-        fetchingTeamFilter();
+    if (season !== filters.season) {
+      if (filters.year.length > 0) {
+        if ([nameLeague].includes(pagePath)) {
+          dispatch(HandleTab(1))
+        } else {
+          fetchingTeamFilter();
+        }
+        fetchingPatchFilter();
       }
-      fetchingPatchFilter();
+      dispatch(ResetTeam())
+      setSeason(filters.season)
     }
-    dispatch(ResetTeam())
   }, [filters.season]);
 
   useEffect(() => {
-    if ([nameTeam, nameVideo].includes(pagePath)) {
-      if (filters.team.length !== 0)
-        dispatch(HandleTab(0));
-    } else {
-      fetchingPlayerFilter();
+    if (team !== filters.team) {
+      if ([nameTeam, nameVideo].includes(pagePath)) {
+        if (filters.team.length !== 0) {
+          dispatch(HandleTab(0));
+        }
+      } else {
+        fetchingPlayerFilter();
+      }
+      setTeam(filters.team);
     }
+
   }, [filters.team]);
 
   useEffect(() => {
@@ -109,7 +131,7 @@ const Filter = memo(() => {
 
   useEffect(() => {
     console.log(filters.patch);
-  }, [filters.patchfilter]);
+  }, [filters.patch]);
 
   const fetchActiveFilter = () => {
     if (leagueFilter?.length > 0)
@@ -248,7 +270,7 @@ const Filter = memo(() => {
       params: {
         league: filters.league,
         year: filters.year,
-        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+        season: filters.season,
         token: user.token,
         id: user.id,
       },
@@ -263,7 +285,7 @@ const Filter = memo(() => {
 
   //팀 필터 fetch 함수
   return (
-    <FilterWrapper className={filters.filterMenuState ? "" : "filter-close"}>
+    <FilterWrapper>
       <FilterHeader />
       {filters.filterMenuState && <>
         <SelectedFilter
@@ -388,13 +410,12 @@ export default Filter;
 
 
 const FilterWrapper = styled.div`
+  
   padding: 29px 24px 0px 6px;
   box-shadow: 5px 5px 30px 0 rgba(0, 0, 0, 0.15);
   background-color: #23212a;
-
-  .filter-close {
-    display: none;
-  }
+  height: 100%;
+  
 
   .Selected {
     width: 250px;

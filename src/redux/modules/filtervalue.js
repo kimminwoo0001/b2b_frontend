@@ -346,7 +346,12 @@ export default function FilterReducer(state = initialState, action) {
       if (state.team.length === 0) {
         return { ...state, team: action.payload };
       } else {
-        return { ...state, team: "" };
+        if (action.payload === state.team) {
+          return { ...state, team: "" };
+        } else {
+          return { ...state, team: action.payload };
+        }
+
       }
     case OPP_TEAM:
       return { ...state, oppteam: action.payload };

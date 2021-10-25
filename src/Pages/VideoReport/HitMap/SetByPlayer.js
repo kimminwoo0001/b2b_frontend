@@ -185,7 +185,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
         params: {
           league: filters.league,
           year: filters.year,
-          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+          season: filters.season,
           patch: filters.patch,
           team: filters.team,
           player: filters.player,

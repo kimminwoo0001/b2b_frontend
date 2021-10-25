@@ -152,7 +152,7 @@ function ChampionSetting({
         params: {
           league: filters.league,
           year: filters.year,
-          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+          season: filters.season,
           patch: filters.patch,
           token: user.token,
           id: user.id,
@@ -177,7 +177,7 @@ function ChampionSetting({
         params: {
           league: filters.league,
           year: filters.year,
-          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+          season: filters.season,
           patch: filters.patch,
           team: filters.team,
           token: user.token,
@@ -248,7 +248,7 @@ function ChampionSetting({
         params: {
           league: filters.league,
           year: filters.year,
-          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+          season: filters.season,
           patch: filters.patch,
           team: filters.team,
           player: filters.player,
@@ -274,7 +274,7 @@ function ChampionSetting({
         params: {
           league: filters.league,
           year: filters.year,
-          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+          season: filters.season,
           patch: filters.patch,
           team: filters.team,
           player: filters.player,
@@ -301,7 +301,7 @@ function ChampionSetting({
         params: {
           league: filters.league,
           year: filters.year,
-          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+          season: filters.season,
           patch: filters.patch,
           team: filters.team,
           player: filters.player,
@@ -329,7 +329,7 @@ function ChampionSetting({
         params: {
           league: filters.league,
           year: filters.year,
-          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+          season: filters.season,
           patch: filters.patch,
           team: filters.team,
           player: filters.player,
@@ -359,7 +359,7 @@ function ChampionSetting({
         params: {
           league: filters.league,
           year: filters.year,
-          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+          season: filters.season,
           patch: filters.patch,
           team: filters.team,
           player: filters.player,
@@ -433,6 +433,7 @@ function ChampionSetting({
     getGame();
     dispatch(
       Reset_Map({
+        ...filters,
         menu_num: filters.menu_num,
         tab: filters.tab,
         convertleague: filters.convertleague,
@@ -459,6 +460,7 @@ function ChampionSetting({
     getGameAll();
     dispatch(
       Reset_Map({
+        ...filters,
         menu_num: filters.menu_num,
         tab: filters.tab,
         convertleague: filters.convertleague,
@@ -500,6 +502,7 @@ function ChampionSetting({
                   alt="arrowIcon"
                 />
               </button>
+              {console.log("isActive", isActive)}
               <nav
                 ref={dropdownRef}
                 className={`menu ${isActive ? "active" : "inactive"}`}
@@ -514,6 +517,7 @@ function ChampionSetting({
                           setChampArray2([]);
                           dispatch(
                             Reset_Map({
+                              ...filters,
                               menu_num: filters.menu_num,
                               tab: filters.tab,
                               convertleague: filters.convertleague,
@@ -574,6 +578,7 @@ function ChampionSetting({
                           setChampArray2([]);
                           dispatch(
                             Reset_Map({
+                              ...filters,
                               menu_num: filters.menu_num,
                               tab: filters.tab,
                               convertleague: filters.convertleague,
@@ -583,7 +588,7 @@ function ChampionSetting({
                               patch: filters.patch,
                               patchfilter: filters.patchfilter,
                               team: filters.team,
-                              player: player,
+                              player: player.name,
                               champion_eng: "",
                               oppteam: "",
                               oppplayer: "",
@@ -592,7 +597,7 @@ function ChampionSetting({
                           );
                         }}
                       >
-                        {player}
+                        {player.name}
                       </li>
                     );
                   })}
@@ -709,6 +714,7 @@ function ChampionSetting({
                           setChampArray2([]);
                           dispatch(
                             Reset_Map({
+                              ...filters,
                               menu_num: filters.menu_num,
                               tab: filters.tab,
                               convertleague: filters.convertleague,
@@ -769,6 +775,7 @@ function ChampionSetting({
                           setIsActive4(false);
                           dispatch(
                             Reset_Map({
+                              ...filters,
                               menu_num: filters.menu_num,
                               tab: filters.tab,
                               convertleague: filters.convertleague,

@@ -123,4 +123,11 @@ const NoHeader = styled.div`
   width: 60px;
   height: 60px;
   object-fit: contain;
+  img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    vertical-align: middle;
+    cursor: pointer;
+  }
 `;

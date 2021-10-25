@@ -138,12 +138,12 @@ function Filter() {
           league === "LCK"
             ? "lck"
             : league === "LEC"
-            ? "lec"
-            : league === "LPL"
-            ? "lpl"
-            : league === "LCS"
-            ? "lcs"
-            : "21msi",
+              ? "lec"
+              : league === "LPL"
+                ? "lpl"
+                : league === "LCS"
+                  ? "lcs"
+                  : "21msi",
         // patch: filters.patch,
         token: user.token,
         id: user.id,
@@ -302,14 +302,14 @@ function Filter() {
           )}
         </Filters>
       </FilterBody>
-      <button className="Selected" onClick={() => {}}>
+      <button className="Selected" onClick={() => { }}>
         선택완료
       </button>
     </FilterWrapper>
   );
 }
 
-export default Filter;
+//export default Filter;
 
 const PatchLabels = styled.div`
   display: flex;

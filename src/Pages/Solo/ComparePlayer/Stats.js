@@ -80,9 +80,9 @@ function Stats() {
         params: {
           league: filters.league,
           year: filters.year,
-          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+          season: filters.season,
           year: filters.year,
-          season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+          season: filters.season,
           patch: filters.patch,
           team: filters.team,
           player: filters.player,
@@ -177,7 +177,7 @@ function Stats() {
       params: {
         league: filters.league,
         year: filters.year,
-        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+        season: filters.season,
         patch: filters.patch,
         player: filters.player,
         oppplayer: filters.oppplayer,
@@ -200,7 +200,7 @@ function Stats() {
       params: {
         league: filters.league,
         year: filters.year,
-        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "", year: filters.year,
+        season: filters.season, year: filters.year,
         patch: filters.patch,
         champion: filters.champion_eng,
         player: filters.player,

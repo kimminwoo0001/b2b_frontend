@@ -33,7 +33,7 @@ const DataProcessWrapper = styled.div`
   justify-content: center;
   align-items: center;
   padding: 0 30px;
-  width: auto;
+  //width: auto;
   > img {
     width: 20px;
     height: 20px;

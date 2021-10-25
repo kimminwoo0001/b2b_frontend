@@ -36,7 +36,7 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
       params: {
         league: filters.league,
         year: filters.year,
-        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+        season: filters.season,
         patch: filters.patch,
         team1: el.Team1,
         team2: el.Team2,
@@ -61,7 +61,7 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
       params: {
         league: filters.league,
         year: filters.year,
-        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+        season: filters.season,
         patch: filters.patch,
         team1: player1.join(),
         team2: player2.join(),

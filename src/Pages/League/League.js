@@ -18,8 +18,12 @@ function League() {
       <Nav />
       <LeagueWrapper>
         <SideBar />
-        <Filter />
-        {filters.filterMenuState ? "" : <CloseFilter />}
+        <div className={filters.filterMenuState ? "filter-open" : "filter-close"}>
+          <Filter />
+        </div>
+        <div className={filters.filterMenuState ? "filter-close" : "filter-open"}>
+          <CloseFilter />
+        </div>
         <ContentWrapper>
           {/* season 값이 있으면 데이터를 보여주고 아니면 selectFilter화면을 보여주도록 */}
           {filters.season.length !== 0 ? <LeagueTab /> : <SelectFilter />}
@@ -40,7 +44,13 @@ const LeagueWrapper = styled.div`
   background-color: #16151c;
   transition: all 1s ease;
 
-  
+  .filter-close {
+    display: none;
+  }
+
+  .filter-open{
+
+  }
 `;
 
 const ContentWrapper = styled.div`

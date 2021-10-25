@@ -117,7 +117,7 @@ function PickCombineModal({ openModal, setOpenModal }) {
       params: {
         league: filters.league,
         year: filters.year,
-        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "", patch: filters.patch
+        season: filters.season, patch: filters.patch
       }
     });
     setTeamFilter(result.data.team);
@@ -131,7 +131,7 @@ function PickCombineModal({ openModal, setOpenModal }) {
       params: {
         league: filters.league,
         year: filters.year,
-        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+        season: filters.season,
         patch: filters.patch,
         team: filters.team
       }
@@ -146,7 +146,7 @@ function PickCombineModal({ openModal, setOpenModal }) {
       params: {
         league: filters.league,
         year: filters.year,
-        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+        season: filters.season,
         patch: filters.patch,
         team: filters.oppteam
       }

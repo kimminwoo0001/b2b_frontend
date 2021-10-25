@@ -39,12 +39,14 @@ function Nav() {
   return (
     <NavWrapper>
       <div className="nav-left">
-        <img className="logo"
-          src="/Images/logo.png"
-          alt="profile"
-          onClick={() => history.push("/")}
-        />
-        <SearchBox />
+        <div className="nav-flex">
+          <img className="logo"
+            src="/Images/logo.png"
+            alt="profile"
+            onClick={() => history.push("/")}
+          />
+          <SearchBox />
+        </div>
       </div>
       <div className="nav-mid">
         <DataProcess />
@@ -69,16 +71,15 @@ function Nav() {
 export default Nav;
 
 const NavWrapper = styled.div`
+
   width: 100%;
   height: 66px;
   padding: 12px 35px 0 0;
   background-color: #16151c;
-
+  display: table;
   .nav-left {
-    display: flex;
-    width: 33%;
-    float: left;
-
+    display: table-cell;
+    vertical-align: middle;
     .logo {
       width: 158px;
       height: 37px;
@@ -87,15 +88,16 @@ const NavWrapper = styled.div`
     }
   }
   
-  .nav-mid {
+  .nav-flex {
     display: flex;
-    width: 30%;
-    float: middle;
+  }
+  
+  .nav-mid {
+    display: table-cell;
   }
 
   .nav-right {
-    width: 33%;
-    float: right;
+    display: table-cell;
     lable {
       padding-left: 20px;
       font-family: NotoSansKR, Apple SD Gothic Neo;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ErrorBoundary from "../../Components/ErrorBoundary";
 import Nav from "../../Components/Nav/Nav";
 import SideBar from "../../Components/SideBar/SideBar";
-import Filter from "../League/Components/Filter";
+import Filter from "../../Components/Filter/Filter";
 import PickCombine from "./PickCombine";
 
 function PickCalculator() {

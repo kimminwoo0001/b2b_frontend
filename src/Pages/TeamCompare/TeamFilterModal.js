@@ -26,7 +26,7 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
   //사이드바에 있는 팀 비교 탭 모달창
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
-
+  const staticvalue = useSelector((state) => state.StaticValueReducer);
   const dispatch = useDispatch();
 
   const dropdownRef = useRef(null);
@@ -58,65 +58,29 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
 
   // 리그 필터 fetch 해오는 함수
   const fetchLeagueFilter = async () => {
-    const parsedMatchData = await axios.get(`${API}/api/filter/league`, {
-      params: {
-        token: user.token,
-        id: user.id
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    });
-    const convertData = [];
-    parsedMatchData?.data?.league?.forEach((el) => {
-      if (el === LeagueLCS) {
-        convertData.push("LCS");
-      } else if (el === LeagueLEC) {
-        convertData.push("LEC");
-      } else if (el === LeagueLCK) {
-        convertData.push("LCK");
-      } else if (el === Msi) {
-        convertData.push("MSI");
-      }
-    });
-    setLeagueFilter(convertData.sort());
+    const leagueList = Object.keys(staticvalue.filterObjects);
+    setLeagueFilter(leagueList.sort());
   };
 
   useEffect(() => {
-    if (filters.convertleague === "LCK") {
-      dispatch(League(LeagueLCK));
-    } else if (filters.convertleague === "LEC") {
-      dispatch(League(LeagueLEC));
-    } else if (filters.convertleague === "LCS") {
-      dispatch(League(LeagueLCS));
-    } else if (filters.convertleague === "MSI") {
-      dispatch(League(Msi));
-    }
+    dispatch(League(LeagueLCK));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.convertleague]);
 
   // 패치 필터 fetch 함수
   const fetchingPatchFilter = async (league) => {
-    if (filters.convertleague === "LCK") {
-      dispatch(League(LeagueLCK));
-    } else if (filters.convertleague === "LEC") {
-      dispatch(League(LeagueLEC));
-    } else if (filters.convertleague === "LCS") {
-      dispatch(League(LeagueLCS));
-    } else if (filters.convertleague === "MSI") {
-      dispatch(League(Msi));
-    }
+    // if (filters.convertleague === "LCK") {
+    //   dispatch(League(LeagueLCK));
+    // } else if (filters.convertleague === "LEC") {
+    //   dispatch(League(LeagueLEC));
+    // } else if (filters.convertleague === "LCS") {
+    //   dispatch(League(LeagueLCS));
+    // } else if (filters.convertleague === "MSI") {
+    //   dispatch(League(Msi));
+    // }
     const result = await axios.get(`${API}/api/filter/patch`, {
       params: {
-        league:
-          league === "LCK"
-            ? "lck"
-            : league === "LEC"
-              ? "lec"
-              : league === "LCS"
-                ? "lcs"
-                : "msi",
-        // patch: filters.patch,
+        league: league,
         token: user.token,
         id: user.id
       },
@@ -134,9 +98,7 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
       url: `${API}/api/filter/team`,
       params: {
         league: filters.league,
-        year: filters.year,
-        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
-        patch: patch,
+        //patch: patch,
         token: user.token,
         id: user.id
       },
@@ -154,8 +116,6 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
       url: `${API}/api/filter/oppteam`,
       params: {
         league: filters.league,
-        year: filters.year,
-        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
         patch: filters.patch,
         team: team,
         token: user.token,
@@ -231,10 +191,11 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
                             />
                             <li
                               onClick={() => {
-                                dispatch(ResetFilter(league));
+                                dispatch(League(league));
                                 setIsActiveLeague(!isActiveLeague);
                                 fetchingPatchFilter(league);
-                                dispatch(ConvertedLeague(league));
+                                // dispatch(ResetFilter(league));
+                                // dispatch(ConvertedLeague(league));
                                 setTeamFilter([]);
                                 setOppTeamFilter([]);
                               }}

@@ -55,7 +55,7 @@ function OppStat() {
       params: {
         league: filters.league,
         year: filters.year,
-        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+        season: filters.season,
         patch: filters.patch,
         team: filters.team,
         player: filters.player,
@@ -82,7 +82,7 @@ function OppStat() {
       params: {
         league: filters.league,
         year: filters.year,
-        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+        season: filters.season,
         patch: filters.patch,
         position: filters.position,
         team: filters.team,
@@ -108,7 +108,7 @@ function OppStat() {
       params: {
         league: filters.league,
         year: filters.year,
-        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+        season: filters.season,
         patch: filters.patch,
         position: filters.position,
         team: filters.oppteam,

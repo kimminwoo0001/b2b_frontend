@@ -70,7 +70,7 @@ function PlayerBoard() {
       params: {
         league: filters.league,
         year: filters.year,
-        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+        season: filters.season,
         patch: filters.patch,
         team: filters.team,
         player: filters.player,
@@ -132,7 +132,7 @@ function PlayerBoard() {
       params: {
         league: filters.league,
         year: filters.year,
-        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+        season: filters.season,
         patch: filters.patch,
         player: filters.player,
         token: user.token,
@@ -155,7 +155,7 @@ function PlayerBoard() {
       params: {
         league: filters.league,
         year: filters.year,
-        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+        season: filters.season,
         patch: filters.patch,
         position: filters.position,
         champion: filters.champion_eng,
@@ -180,7 +180,7 @@ function PlayerBoard() {
       params: {
         league: filters.league,
         year: filters.year,
-        season: checkSeason(filters) ? filters.season?.map(season => season.substring(5)) : "",
+        season: filters.season,
         patch: filters.patch,
         player: filters.player,
         team: filters.team,
