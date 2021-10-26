@@ -75,5 +75,6 @@
   },
   "devDependencies": {
     "redux-devtools": "^3.7.0"
-  }
+  },
+  "proxy": "https://nunu.gg:8443/"
 }

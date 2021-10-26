@@ -1,28 +1,67 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import styled from "styled-components";
 import { Form, Icon, Label, Menu, Table } from "semantic-ui-react";
+const _piColumnsCount = 11; // pi 컬럼 갯수
+const _piRowsCount = 10; // pi 로우 갯수
 
-const SetPiData = ({ piData }) => {
+
+const SetPiData = ({ piData, setPi }) => {
   const piObj = piData[0];
   const values = Object.values(piObj);
-  const newPiData = [];
-
+  const [newPiData, setNewPiData] = useState([]);
   const inputRef = useRef([]);
   const rowRef = useRef([]);
-  const [totalData, setTotalData] = useState();
-  const [input, setInput] = useState("");
+  //const [totalData, setTotalData] = useState();
+  //const [input, setInput] = useState([]);
   const [inputlocation, setInputLocation] = useState(0);
   const [currentLocation, setCurrentLocation] = useState(inputRef.current);
 
-  //   const [rowlocation, setRowLocation] = useState(0);
+  useEffect(() => {
+    handleValues();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!piData) {
+      return;
+    }
+    if (newPiData.length > 0) {
+      console.log("newPiData", newPiData);
+      //setTotalData(newPiData);
+
+    }
+  }, [newPiData, inputlocation])
 
   const handleValues = () => {
-    for (let i = 0; i < values.length; i += 11) {
-      newPiData.push(values.slice(i, i + 11));
+    if (values.length === 0) {
+      let totalAry = []
+      for (let i = 0; i < _piRowsCount; i++) {
+        let rowAry = [];
+        for (let j = 0; j < _piColumnsCount; j++) {
+          rowAry.push(0);
+        }
+        totalAry.push(rowAry);
+      }
+      setNewPiData(totalAry);
+    } else {
+      let totalAry = []
+      for (let i = 0; i < values.length; i += _piColumnsCount) {
+        if ([null, ""].includes(values.slice(i, i + _piColumnsCount))) {
+          let rowAry = [];
+          for (let j = 0; j < _piColumnsCount; j++) {
+            rowAry.push(0);
+          }
+          totalAry.push(rowAry);
+        } else {
+          totalAry.push(values.slice(i, i + _piColumnsCount));
+        }
+      }
+      setNewPiData(totalAry);
     }
   };
 
-  const handleClick = (e, idx) => {
+  const handleClick = (e, idx, cell) => {
+    console.log(cell)
     setInputLocation(idx);
     // console.log(currentLocation);
     // if (inputlocation === idx && POSITIONS2[idx] === "blue_top") {
@@ -30,22 +69,25 @@ const SetPiData = ({ piData }) => {
     // }
   };
 
-  const handleInput = (e, idx) => {
+  const handleInput = (e, row, col) => {
     // input과 동시에 data 바꾸기
-    const value = e.target.value;
-    setInput(value);
-  };
-
-  useEffect(() => {
-    if (!piData) {
+    let value = Number(e.target.value);
+    if (isNaN(value)) {
       return;
     }
-    handleValues();
-    if (newPiData) {
-      setTotalData(newPiData);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
+    console.log("value", value);
+
+    let totalAry = newPiData;
+    totalAry[row][col] = value;
+    setNewPiData([
+      ...totalAry]);
+    setInputLocation(row);
+    // setPi(newPiData);
+    //setTotalData(newPiData);
+    //setInput(value);
+  };
+
 
   return (
     <TableWrapper>
@@ -59,22 +101,20 @@ const SetPiData = ({ piData }) => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {totalData?.map((data, idx) => {
+          {newPiData?.map((data, row) => {
             return (
               <Table.Row
-                key={idx}
-                ref={(ref) => (rowRef.current[idx] = ref)}
-                // onClick={(e) => handleClick(e, idx)}
-              >
-                <Table.Cell>{POSITIONS2[idx]}</Table.Cell>
-                {data?.map((data2, idx2) => {
+                key={row}
+                ref={(ref) => (rowRef.current[row] = ref)}>
+                <Table.Cell>{POSITIONS2[row]}</Table.Cell>
+                {data?.map((data2, col) => {
                   return (
                     <Table.Cell>
                       <Form.Input
-                        value={input ? input : data2}
-                        onClick={(e) => handleClick(e, idx2)}
-                        onChange={(e) => handleInput(e, idx2)}
-                        ref={(ref) => (inputRef.current[idx2] = ref)}
+                        value={newPiData[row][col]}
+                        onClick={(e) => handleClick(e, row, col)}
+                        onChange={(e) => handleInput(e, row, col)}
+                        ref={(ref) => (inputRef.current[col] = ref)}
                       />
                     </Table.Cell>
                   );
@@ -119,6 +159,5 @@ const POSITIONS2 = [
 const TableWrapper = styled.div`
   overflow: scroll;
   width: 1000px;
-
   background-color: #fff;
 `;

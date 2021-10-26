@@ -14,10 +14,10 @@ const PiArea = () => {
   const [ward, setWard] = useState([]);
   const [pi, setPI] = useState([]);
   const [youtubeUrl, setYoutubeUrl] = useState("");
-
+  console.log(pi[0][0]);
   const tabContents = {
     0: <SetWardData wardData={ward} setWard={setWard} />,
-    1: <SetPiData piData={pi} />,
+    1: <SetPiData piData={pi} setPi={setPI} />,
   };
 
   // onchange
@@ -100,7 +100,7 @@ const PiArea = () => {
   const handleSubmit = async () => {
     console.log(ward);
     let data = {
-      video: youtubeUrl,
+      vod: youtubeUrl,
       gameid: clickedGameId,
       btop1: ward[0].firstwardPosition,
       btop2: ward[0].secondwardPosition,
@@ -122,6 +122,8 @@ const PiArea = () => {
       rbot2: ward[8].secondwardPosition,
       rsup1: ward[9].firstwardPosition,
       rsup2: ward[9].secondwardPosition,
+      gameid: clickedGameId,
+      table_value: pi,
     };
     const response = await axios.post(
       `${API4}/setWardPostition.do`,

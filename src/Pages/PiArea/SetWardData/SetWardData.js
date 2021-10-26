@@ -132,16 +132,32 @@ const SetWardData = ({ wardData }) => {
 
   // ward data 배열 업데이트 함수
   const handleUpdate = () => {
-    return wardData.map((data) => {
-      if (data.firstwardPosition === currentLocation[position].value) {
-        data.firstwardPosition = cord;
-      }
-      if (data.secondwardPosition === currentLocation[position].value) {
-        data.secondwardPosition = cord;
-      }
-      // wardata의 firstwardPosition/secondwardPosition의 값이 null이거나 ""인경우는 어떻게 ????
-      return data;
-    });
+
+    if (currentLocation[position].className.includes('first')) {
+      wardData[position].firstwardPosition = cord;
+    } else {
+      wardData[position].secondwardPosition = cord;
+    }
+    return wardData;
+
+
+    // return wardData.map((data) => {
+
+    //   if ([null, ""].includes(data.firstwardPosition) === false) {
+    //     console.log("여기2");
+    //     if (data.firstwardPosition === currentLocation[position].value) {
+    //       console.log("여기3");
+    //       data.firstwardPosition = cord;
+    //     }
+    //   }
+
+    //   if (data.secondwardPosition === currentLocation[position].value) {
+    //     data.secondwardPosition = cord;
+    //   }
+    //   // wardata의 firstwardPosition/secondwardPosition의 값이 null이거나 ""인경우는 어떻게 ????
+
+    //   return data;
+    // });
   };
 
   // input창 클릭 시 해당 value값 표기
