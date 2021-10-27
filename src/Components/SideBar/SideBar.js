@@ -314,67 +314,67 @@ const SideBarWrapper = styled.div`
   }
 `;
 
-const TSBLogo = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 19px;
-  margin-bottom: 0px;
-  // border-radius: 30px;
-  // background-color: #0f0f12;
-  img {
-    width: 135px;
-    height: 35.4px;
-    margin: 0 9.7px 0px 15.3px;
-    object-fit: contain;
-    cursor: pointer;
-  }
-`;
+// const TSBLogo = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   margin-top: 19px;
+//   margin-bottom: 0px;
+//   // border-radius: 30px;
+//   // background-color: #0f0f12;
+//   img {
+//     width: 135px;
+//     height: 35.4px;
+//     margin: 0 9.7px 0px 15.3px;
+//     object-fit: contain;
+//     cursor: pointer;
+//   }
+// `;
 
-const Info = styled.div`
-  display: block;
-  // justify-content: center;
-  // align-items: center;
-  width: 164px;
-  height: 113px;
-  margin: 29.6px 6.7px 0px 30.3px;
-  .user {
-    width: 164px;
-    height: 52px;
-    //padding: 0 12px 0 0;
-    font-family: NotoSansKR;
-    font-size: 19px;
-    font-stretch: normal;
-    font-style: normal;
-    font-weight: bold;
-    line-height: 1.32;
-    letter-spacing: normal;
-    text-align: left;
-    color: #fff;
-    .text {
-      font-weight: 300;
-    }
-  }
-  .icon {
-    width: 80px;
-    height: 24px;
-    margin: 10px 0 0 0;
-    .Alert {
-      width: 24px;
-      height: 24px;
-      margin: 0 15px 0 0;
-      object-fit: contain;
-      cursor: pointer;
-    }
-    .LogOut {
-      width: 24px;
-      height: 24px;
-      margin: 0 0 0 15px;
-      object-fit: contain;
-      cursor: pointer;
-    }
-  }
-`;
+// const Info = styled.div`
+//   display: block;
+//   // justify-content: center;
+//   // align-items: center;
+//   width: 164px;
+//   height: 113px;
+//   margin: 29.6px 6.7px 0px 30.3px;
+//   .user {
+//     width: 164px;
+//     height: 52px;
+//     //padding: 0 12px 0 0;
+//     font-family: NotoSansKR;
+//     font-size: 19px;
+//     font-stretch: normal;
+//     font-style: normal;
+//     font-weight: bold;
+//     line-height: 1.32;
+//     letter-spacing: normal;
+//     text-align: left;
+//     color: #fff;
+//     .text {
+//       font-weight: 300;
+//     }
+//   }
+//   .icon {
+//     width: 80px;
+//     height: 24px;
+//     margin: 10px 0 0 0;
+//     .Alert {
+//       width: 24px;
+//       height: 24px;
+//       margin: 0 15px 0 0;
+//       object-fit: contain;
+//       cursor: pointer;
+//     }
+//     .LogOut {
+//       width: 24px;
+//       height: 24px;
+//       margin: 0 0 0 15px;
+//       object-fit: contain;
+//       cursor: pointer;
+//     }
+//   }
+// `;
 
 const MenuList = styled.div`
   width: 161px;

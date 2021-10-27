@@ -338,6 +338,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
     dispatch(
       Reset_Map({
         menu_num: filters.menu_num,
+        filterMenuState: filters.filterMenuState,
         tab: filters.tab,
         convertleague: filters.convertleague,
         league: filters.league,
@@ -362,6 +363,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
     dispatch(
       Reset_Map({
         menu_num: filters.menu_num,
+        filterMenuState: filters.filterMenuState,
         tab: filters.tab,
         convertleague: filters.convertleague,
         league: filters.league,
@@ -430,6 +432,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                                 dispatch(
                                   Reset_Map({
                                     menu_num: filters.menu_num,
+                                    filterMenuState: filters.filterMenuState,
                                     tab: filters.tab,
                                     convertleague: filters.convertleague,
                                     league: filters.league,
@@ -490,6 +493,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                                 dispatch(
                                   Reset_Map({
                                     menu_num: filters.menu_num,
+                                    filterMenuState: filters.filterMenuState,
                                     tab: filters.tab,
                                     convertleague: filters.convertleague,
                                     league: filters.league,
@@ -630,6 +634,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                                 dispatch(
                                   Reset_Map({
                                     menu_num: filters.menu_num,
+                                    filterMenuState: filters.filterMenuState,
                                     tab: filters.tab,
                                     convertleague: filters.convertleague,
                                     league: filters.league,
@@ -691,6 +696,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                                 dispatch(
                                   Reset_Map({
                                     menu_num: filters.menu_num,
+                                    filterMenuState: filters.filterMenuState,
                                     tab: filters.tab,
                                     convertleague: filters.convertleague,
                                     league: filters.league,

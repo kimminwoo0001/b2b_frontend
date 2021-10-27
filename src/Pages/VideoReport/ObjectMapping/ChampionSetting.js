@@ -352,7 +352,6 @@ function ChampionSetting({
 
   const getGame = async () => {
     try {
-      /*
       const response = await axios.request({
         method: "GET",
         url: `${API2}/api/mappingFilter`,
@@ -375,7 +374,6 @@ function ChampionSetting({
       });
 
       setGameData(Object.values(response.data["match"]));
-      */
     } catch (e) {
       console.log(e);
     }

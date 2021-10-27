@@ -31,16 +31,16 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
   const dispatch = useDispatch();
 
   const dropdownRef = useRef(null);
-  const [leagueFilter, setLeagueFilter] = useState();
   const { t } = useTranslation();
 
-  const [teamFilter, setTeamFilter] = useState();
+  const [leagueFilter, setLeagueFilter] = useState([]);
+  const [yearFilter, setYearFilter] = useState([]);
+  const [seasonFilter, setSeasonFilter] = useState([]);
+  const [teamFilter, setTeamFilter] = useState([]);
+  const [playerFilter, setPlayerFilter] = useState([]);
   const [oppTeamFilter, setOppTeamFilter] = useState();
 
-  const LeagueLCK = "lck";
-  const LeagueLEC = "lec";
-  const LeagueLCS = "lcs";
-  const Msi = "msi";
+
   const [isActiveLeague, setIsActiveLeague] = useDetectOutsideClick(
     dropdownRef,
     false
@@ -61,25 +61,29 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
 
   // 리그 필터 fetch 해오는 함수
   const fetchLeagueFilter = () => {
-    const leagueList = Object.keys(staticvalue.filterObjects);
+    console.log(yearFilter);
+    const leagueList = Object.keys(staticvalue.filterObjects).map(key => Object.keys(staticvalue.filterObjects[key]) == '2021' && yearFilter)
+    console.log(leagueList);
     setLeagueFilter(leagueList.sort());
   };
 
   const fetchYearFilter = () => {
-    // let yearList = [];
+    let yearList = [];
 
-    // for (let i = 0; i < Object.values(staticvalue.filterObjects).length; i++) {
-    //   yearList.push(Object.keys(Object.values(staticvalue.filterObjects)[i]));
-    // }
+    for (let i = 0; i < Object.values(staticvalue.filterObjects).length; i++) {
+      yearList.push(Object.keys(Object.values(staticvalue.filterObjects)[i]));
+    }
 
-    // let recentYear = yearList.filter((item, pos) => yearList.indexOf(item) === pos).sort();
-    // recentYear = recentYear[0];
+    const recentYear = yearList.filter((item, pos) => yearList.indexOf(item) === pos).sort();
 
-    // console.log(recentYear);
+    setYearFilter(recentYear[0]);
   }
 
   useEffect(() => {
-    fetchYearFilter();
+    const pagePath = document.location.pathname;
+    if (pagePath === "/teamCompare") {
+      fetchYearFilter();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
