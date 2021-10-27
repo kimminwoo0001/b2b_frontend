@@ -3,6 +3,8 @@ import styled, { css } from "styled-components";
 import SetWardData from "./SetWardData/SetWardData";
 import SetPiData from "./SetPiData/SetPiData";
 import axios from "axios";
+import qs from "qs";
+
 import { API4 } from "../config";
 
 const PiArea = () => {
@@ -14,11 +16,11 @@ const PiArea = () => {
   const [ward, setWard] = useState([]);
   const [pi, setPI] = useState([]);
   const [youtubeUrl, setYoutubeUrl] = useState("");
-  console.log(pi[0][0]);
   const tabContents = {
     0: <SetWardData wardData={ward} setWard={setWard} />,
     1: <SetPiData piData={pi} setPi={setPI} />,
   };
+
 
   // onchange
   const handleInput = (e) => {
@@ -96,9 +98,38 @@ const PiArea = () => {
     setPI(entireData[1]);
   }, [entireData]);
 
+
   // db저장 submit 함수
   const handleSubmit = async () => {
-    console.log(ward);
+
+    // table_value key에 들어갈 배열 가공함수
+
+    let newPi = [];
+    const makeNewArray = (arr) => {
+
+      // pi data가 그대로인 경우
+      if (arr.length === 1) {
+        const values = Object.values(arr[0]);
+        for (let i = 0; i < values.length; i++) {
+          newPi.push(values[i]);
+        }
+      }
+
+      // pi data가 수정되어 저장된 경우
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[i].length; j++) {
+          newPi.push(arr[i][j]);
+        }
+      }
+      return newPi;
+    }
+
+    makeNewArray(pi);
+    axios.defaults.baseURL = `${API4}`;
+    axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
+    console.log(pi)
     let data = {
       vod: youtubeUrl,
       gameid: clickedGameId,
@@ -122,18 +153,38 @@ const PiArea = () => {
       rbot2: ward[8].secondwardPosition,
       rsup1: ward[9].firstwardPosition,
       rsup2: ward[9].secondwardPosition,
-      gameid: clickedGameId,
-      table_value: pi,
+      table_value: newPi,
     };
-    const response = await axios.post(
-      `${API4}/setWardPostition.do`,
-      JSON.stringify(data),
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
+    // const response = await axios.get(
+    //   // `${API4}/setWardPostition.do`,
+    //   `/setWardPostition.do`, {
+    //   params: data
+    // },
+    //   {
+    //     headers: {
+    //       "Content-Type": " application/x-www-form-urlencoded",
+    //     },
+    //   }
+    // );
+    // console.log(response);
+
+    const options = {
+      headers: {
+        'Access-Control-Allow-Headers': 'Original,Content-Type,Authorization,X-Auth-Token',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS',
       }
-    );
+    }
+
+    const response = await axios.get(`${API4}/setWardPostition.do`, {
+      params: {
+        data,
+      }, options,
+      paramsSerializer: (params) => {
+        return qs.stringify(params, { arrayFormat: "repeat" })
+      }
+    });
+
     console.log(response);
   };
 

@@ -83,7 +83,7 @@ const SetPiData = ({ piData, setPi }) => {
     setNewPiData([
       ...totalAry]);
     setInputLocation(row);
-    // setPi(newPiData);
+    setPi(newPiData);
     //setTotalData(newPiData);
     //setInput(value);
   };
