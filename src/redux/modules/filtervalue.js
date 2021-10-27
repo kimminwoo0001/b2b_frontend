@@ -454,6 +454,7 @@ export default function FilterReducer(state = initialState, action) {
         oppchampion_eng: ""
       };
     case MENU_NUM:
+      console.log("redux : ", state);
       return {
         ...state,
         menu_num: action.payload

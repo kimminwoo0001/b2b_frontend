@@ -18,7 +18,8 @@ import {
   HandleTab,
   Position,
   ResetFilter,
-  PatchFull
+  PatchFull,
+  MenuNum
 } from "../../redux/modules/filtervalue";
 import { API } from "../config";
 
@@ -29,6 +30,7 @@ function PlayerFilterModal({ playerModal, setPlayerModal }) {
   // sidebar 선수 비교 눌렀을때 뜨는 모달창
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
+  const staticvalue = useSelector((state) => state.StaticValueReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -65,29 +67,8 @@ function PlayerFilterModal({ playerModal, setPlayerModal }) {
 
   // 리그 필터 fetch 해오는 함수
   const fetchLeagueFilter = async () => {
-    const parsedMatchData = await axios.get(`${API}/api/filter/league`, {
-      params: {
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    });
-    console.log(parsedMatchData);
-    const convertData = [];
-    parsedMatchData?.data?.league?.forEach((el) => {
-      if (el === LeagueLCS) {
-        convertData.push("LCS");
-      } else if (el === LeagueLEC) {
-        convertData.push("LEC");
-      } else if (el === LeagueLCK) {
-        convertData.push("LCK");
-      } else if (el === Msi) {
-        convertData.push("MSI");
-      }
-    });
-    setLeagueFilter(convertData.sort());
+    const leagueList = Object.keys(staticvalue.filterObjects);
+    setLeagueFilter(leagueList.sort());
   };
 
   // 패치 필터 fetch 함수
@@ -448,6 +429,7 @@ function PlayerFilterModal({ playerModal, setPlayerModal }) {
                 className="Close"
                 onClick={() => {
                   dispatch(InitailizeState());
+                  dispatch(MenuNum(4));
                   setPlayerModal(false);
                   history.push("/solo");
                   setTeamFilter([]);

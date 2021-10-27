@@ -42,7 +42,6 @@ const LeagueWrapper = styled.div`
   overflow: auto;
   display: flex;
   background-color: #16151c;
-  transition: all 1s ease;
 
   .filter-close {
     display: none;

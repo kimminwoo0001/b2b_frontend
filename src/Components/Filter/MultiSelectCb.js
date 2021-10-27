@@ -21,7 +21,7 @@ const MultiSelectCb = memo(({ idx, filterData, mapData, pngPath, clickEvent }) =
         }
         readOnly
       />
-      {
+      {/*
         pngPath &&
         <img
           className="IconImg"
@@ -30,8 +30,8 @@ const MultiSelectCb = memo(({ idx, filterData, mapData, pngPath, clickEvent }) =
           src={`Images/${pngPath.toLowerCase()}.png`}
           alt="Icon"
         />
-      }
-      <span>&nbsp;{mapData === "11.6" ? "11.6 (P.O)" : mapData}</span>
+      */}
+      <span>{mapData === "11.6" ? "11.6 (P.O)" : mapData}</span>
     </Selecter>
   );
 });

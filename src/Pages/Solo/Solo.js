@@ -8,6 +8,7 @@ import Player from "./Player";
 import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 import ErrorBoundary from "../../Components/ErrorBoundary";
 import Nav from "../../Components/Nav/Nav";
+import CloseFilter from "../../Components/Filter/CloseFilter";
 // import SoloFilter from "../Solo/Components/SoloFilter";
 
 function Solo() {
@@ -17,7 +18,12 @@ function Solo() {
       <Nav />
       <SoloWrapper>
         <SideBar />
-        <Filter />
+        <div className={filters.filterMenuState ? "filter-open" : "filter-close"}>
+          <Filter />
+        </div>
+        <div className={filters.filterMenuState ? "filter-close" : "filter-open"}>
+          <CloseFilter />
+        </div>
         <ContentWrapper>
           {filters.player !== "" && filters.season.length > 0 ? (
             <Player />
@@ -38,7 +44,15 @@ const SoloWrapper = styled.div`
   min-height: 100vh;
   overflow: auto;
   display: flex;
-  background-color: #23212a;
+  background-color: #16151c;
+
+  .filter-close {
+    display: none;
+  }
+
+  .filter-open{
+
+  }
 `;
 
 const ContentWrapper = styled.div`

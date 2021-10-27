@@ -94,9 +94,9 @@ function PlayerBoard() {
     setInfo(data.info);
     setCarrer(data.records.careerrecords);
     setChampRecord(Object.values(data.records.championrecords));
-    setLeaguePlayerInfo(Object.values(data.soloInfo.leaguePlayerInfo));
-    setLeaguePlayerTotal(Object.values(data.soloInfo.leaguePlayerTotal));
-    setUserPlayerTotal(Object.values(data.soloInfo.userPlayerTotal));
+    // setLeaguePlayerInfo(Object.values(data.soloInfo.leaguePlayerInfo));
+    // setLeaguePlayerTotal(Object.values(data.soloInfo.leaguePlayerTotal));
+    // setUserPlayerTotal(Object.values(data.soloInfo.userPlayerTotal));
     setSbr(data.stats.sbrStats);
     setLine(Object.values(data.stats.lineStats));
     setEngage(Object.values(data.stats.engagementStats));
@@ -581,6 +581,7 @@ function PlayerBoard() {
           </TopBox>
         </AbilityContents>
       </AbilitySection>
+      {/* // 솔로랭크 당분간 주석 처리.
       <AbilitySection>
         <InfoNavBar>
           <LeftInfo>
@@ -764,6 +765,7 @@ function PlayerBoard() {
           </TopBox>
         </AbilityContents>
       </AbilitySection>
+      */}
       <RecordWrapper>
         <RecordSection>
           <CompetitionRecord>

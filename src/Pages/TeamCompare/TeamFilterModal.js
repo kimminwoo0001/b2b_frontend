@@ -15,7 +15,8 @@ import {
   GetOppTeam,
   HandleTab,
   ResetFilter,
-  PatchFull
+  PatchFull,
+  MenuNum
 } from "../../redux/modules/filtervalue";
 import { API } from "../config";
 import { useTranslation } from "react-i18next";
@@ -56,16 +57,31 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
     }
   };
 
+
+
   // 리그 필터 fetch 해오는 함수
-  const fetchLeagueFilter = async () => {
+  const fetchLeagueFilter = () => {
     const leagueList = Object.keys(staticvalue.filterObjects);
     setLeagueFilter(leagueList.sort());
   };
 
+  const fetchYearFilter = () => {
+    // let yearList = [];
+
+    // for (let i = 0; i < Object.values(staticvalue.filterObjects).length; i++) {
+    //   yearList.push(Object.keys(Object.values(staticvalue.filterObjects)[i]));
+    // }
+
+    // let recentYear = yearList.filter((item, pos) => yearList.indexOf(item) === pos).sort();
+    // recentYear = recentYear[0];
+
+    // console.log(recentYear);
+  }
+
   useEffect(() => {
-    dispatch(League(LeagueLCK));
+    fetchYearFilter();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.convertleague]);
+  }, []);
 
   // 패치 필터 fetch 함수
   const fetchingPatchFilter = async (league) => {
@@ -164,8 +180,8 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
                       alt="champIcon"
                     />
                     <span className="Label">
-                      {filters.convertleague !== ""
-                        ? filters.convertleague
+                      {filters.league.length === 1
+                        ? filters.league
                         : t("filters.leagueLabel")}
                     </span>
                     <img
@@ -191,7 +207,8 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
                             />
                             <li
                               onClick={() => {
-                                dispatch(League(league));
+                                league === filters.league &&
+                                  dispatch(League(league));
                                 setIsActiveLeague(!isActiveLeague);
                                 fetchingPatchFilter(league);
                                 // dispatch(ResetFilter(league));
@@ -324,6 +341,7 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
                 className="Close"
                 onClick={() => {
                   dispatch(InitailizeState());
+                  dispatch(MenuNum(3));
                   setTeamModal(false);
                   history.push("/team");
                   setTeamFilter([]);

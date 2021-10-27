@@ -9,6 +9,7 @@ import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 import ErrorBoundary from "../../Components/ErrorBoundary";
 // import TeamFilter from "./TeamFilter";
 import Nav from "../../Components/Nav/Nav";
+import CloseFilter from "../../Components/Filter/CloseFilter";
 
 function Team() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -18,7 +19,12 @@ function Team() {
       <Nav />
       <TeamWrapper>
         <SideBar />
-        <Filter />
+        <div className={filters.filterMenuState ? "filter-open" : "filter-close"}>
+          <Filter />
+        </div>
+        <div className={filters.filterMenuState ? "filter-close" : "filter-open"}>
+          <CloseFilter />
+        </div>
         <ContentWrapper>
           {filters.team !== "" && filters.season.length > 0 ? (
             <TeamTabs />
@@ -39,7 +45,15 @@ const TeamWrapper = styled.div`
   min-height: 100vh;
   overflow: auto;
   display: flex;
-  background-color: #23212a;
+  background-color: #16151c;
+
+  .filter-close {
+    display: none;
+  }
+
+  .filter-open{
+
+  }
 `;
 
 const ContentWrapper = styled.div`

@@ -9,6 +9,7 @@ import VideoTabs from "./VideoTabs";
 import ErrorBoundary from "../../Components/ErrorBoundary";
 // import TeamFilter from "../Team/TeamFilter";
 import Nav from "../../Components/Nav/Nav";
+import CloseFilter from "../../Components/Filter/CloseFilter";
 
 function Video() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -18,7 +19,12 @@ function Video() {
       <Nav />
       <VideoWrapper>
         <SideBar />
-        <Filter />
+        <div className={filters.filterMenuState ? "filter-open" : "filter-close"}>
+          <Filter />
+        </div>
+        <div className={filters.filterMenuState ? "filter-close" : "filter-open"}>
+          <CloseFilter />
+        </div>
         <ContentWrapper>
           {filters.team !== "" && filters.season.length > 0 ? (
             <VideoTabs />
@@ -39,7 +45,15 @@ const VideoWrapper = styled.div`
   min-height: 100vh;
   overflow: auto;
   display: flex;
-  background-color: #23212a;
+  background-color: #16151c;
+
+  .filter-close {
+    display: none;
+  }
+
+  .filter-open{
+
+  }
 `;
 
 const ContentWrapper = styled.div`
