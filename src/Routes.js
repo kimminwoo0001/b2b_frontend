@@ -23,6 +23,7 @@ import MetaAnalysis from "./Pages/MetaAnalysis/MetaAnalysis";
 import MatchAnalysis from "./Pages/MatchAnalysis/MatchAnalysis";
 import { useSelector } from "react-redux";
 import PiArea from "./Pages/PiArea/PiArea";
+import GameReport from './Pages/GameReport/GameReport'
 
 function Routes() {
   //const token = sessionStorage.getItem("token");
@@ -47,6 +48,7 @@ function Routes() {
         <PrivateRoute exact path="/matchAnalysis" component={MatchAnalysis} />
         <PrivateRoute exact path="/solo" component={Solo} />
         <PrivateRoute exact path="/video" component={Video} />
+        <PrivateRoute exact path="/gameReport" component={GameReport} />
         <PrivateRoute exact path="/utility" component={Utility} />
         <PrivateRoute exact path="/simulator" component={ItemSimulator} />
         <PrivateRoute exact path="/calculator" component={PickCalculator} />
