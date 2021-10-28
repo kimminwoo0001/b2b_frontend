@@ -5,6 +5,7 @@ import locale from "./locale";
 import user from "./user";
 import staticvalue from "./staticvalue";
 import tablevalue from "./tablevalue";
+import pivalue from "./pivalue";
 
 import { persistReducer } from "redux-persist";
 import storageSession from "redux-persist/lib/storage/session";
@@ -28,7 +29,8 @@ const appReducer = combineReducers({
   LocaleReducer: locale,
   UserReducer: user,
   StaticValueReducer: staticvalue,
-  TableReducer: tablevalue
+  TableReducer: tablevalue,
+  PiAreaReducer: pivalue,
 });
 
 const rootReducer = (state, action) => {

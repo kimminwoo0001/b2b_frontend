@@ -22,6 +22,7 @@ import Footer from "./Components/Footer/Footer";
 import MetaAnalysis from "./Pages/MetaAnalysis/MetaAnalysis";
 import MatchAnalysis from "./Pages/MatchAnalysis/MatchAnalysis";
 import { useSelector } from "react-redux";
+import PiArea from "./Pages/PiArea/PiArea";
 
 function Routes() {
   //const token = sessionStorage.getItem("token");
@@ -51,6 +52,8 @@ function Routes() {
         <PrivateRoute exact path="/calculator" component={PickCalculator} />
         <PrivateRoute exact path="/teamCompare" component={TeamCompare} />
         <PrivateRoute exact path="/playerCompare" component={PlayerCompare} />
+        {/* pi only */}
+        <PrivateRoute exact path="/piArea" component={PiArea} />
         <Route exact path="/error" component={NotFound} />
         <Route exact path="/login" component={Login} />
       </Switch>
