@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import qs from "qs";
 import TabforTop from "./TabforTop";
-import checkSeason from "../../../lib/checkSeason";
+
 
 function LeaguePick() {
   const filters = useSelector((state) => state.FilterReducer);

@@ -5,7 +5,7 @@ import { API } from "../../config";
 import { useTranslation } from "react-i18next";
 import qs from "qs";
 import { useSelector } from "react-redux";
-import checkSeason from "../../../lib/checkSeason";
+
 
 function PlayerCompare() {
   const filters = useSelector((state) => state.FilterReducer);

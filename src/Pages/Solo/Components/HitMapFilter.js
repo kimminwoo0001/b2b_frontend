@@ -12,7 +12,7 @@ import {
   ResetChampion,
   ResetChampion2
 } from "../../../redux/modules/filtervalue";
-import checkSeason from "../../../lib/checkSeason";
+
 
 function HitMapFilter() {
   const dropdownRef = useRef(null);

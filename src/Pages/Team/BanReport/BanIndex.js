@@ -24,7 +24,7 @@ import {
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import All from "./All";
 import qs from "qs";
-import checkSeason from "../../../lib/checkSeason";
+
 
 function BanIndex() {
   const filters = useSelector((state) => state.FilterReducer);

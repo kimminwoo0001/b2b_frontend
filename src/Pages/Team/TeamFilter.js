@@ -16,7 +16,7 @@ import { API } from "../config";
 import { useTranslation } from "react-i18next";
 import { useDetectOutsideClick } from "./useDetectOustsideClick";
 import qs from "qs";
-import checkSeason from "../../lib/checkSeason";
+
 
 function TeamFilter() {
   const filters = useSelector((state) => state.FilterReducer);

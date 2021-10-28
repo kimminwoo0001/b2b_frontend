@@ -7,7 +7,7 @@ import qs from "qs";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
-import checkSeason from "../../../lib/checkSeason";
+
 
 function mycomparator(a, b) {
   var num1 = 0;

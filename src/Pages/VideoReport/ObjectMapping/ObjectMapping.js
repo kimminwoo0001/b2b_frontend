@@ -12,7 +12,7 @@ import Tippy from "@tippy.js/react";
 import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
 import ObjectTooltip from "./ObjectTooltip";
-import checkSeason from "../../../lib/checkSeason";
+
 
 function useInterval(callback) {
   const savedCallback = useRef();

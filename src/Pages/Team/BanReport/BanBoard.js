@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { API } from "../../config";
 import qs from "qs";
-import checkSeason from "../../../lib/checkSeason";
+
 
 function BanBoard() {
   const filters = useSelector((state) => state.FilterReducer);

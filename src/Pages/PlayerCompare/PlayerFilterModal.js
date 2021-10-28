@@ -24,7 +24,7 @@ import {
 import { API } from "../config";
 
 import { useDetectOutsideClick } from "./useDetectOustsideClick";
-import checkSeason from "../../lib/checkSeason";
+
 
 function PlayerFilterModal({ playerModal, setPlayerModal }) {
   // sidebar 선수 비교 눌렀을때 뜨는 모달창

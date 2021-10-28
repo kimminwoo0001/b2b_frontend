@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { MenuNum, InitailizeState } from "../../redux/modules/filtervalue";
 import { UserLogout } from "../../redux/modules";
 
-import TeamFilterModal from "../../Pages/TeamCompare/TeamFilterModal";
+import TeamFilterModal from "../Filter/TeamFilterModal";
 import PlayerFilterModal from "../../Pages/PlayerCompare/PlayerFilterModal";
 import LocaleDropdown from "../Nav/LocaleDropdown";
 
@@ -235,13 +235,9 @@ function Sidebar() {
           </MenuWrapper>
           <MenuWrapper
             onClick={() => {
-              if (history.location.pathname === "/teamCompare") {
-                history.push("/");
-              } else {
-                setTeamModal(true);
-                dispatch(InitailizeState());
-                dispatch(MenuNum(7));
-              }
+              setTeamModal(true);
+              dispatch(InitailizeState());
+              dispatch(MenuNum(7));
             }}
             changeColor={pathName === "/teamCompare"}
           >

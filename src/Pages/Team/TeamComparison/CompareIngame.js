@@ -15,7 +15,7 @@ import {
   Legend
 } from "recharts";
 import qs from "qs";
-import checkSeason from "../../../lib/checkSeason";
+
 
 function CompareIngame() {
   //팀 비교 인게임 지표

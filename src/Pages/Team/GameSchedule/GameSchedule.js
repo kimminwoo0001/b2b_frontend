@@ -7,7 +7,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { API } from "../../config";
 import { useTranslation } from "react-i18next";
-import checkSeason from "../../../lib/checkSeason";
+
 
 import First from "./First";
 import Second from "./Second";

@@ -10,7 +10,7 @@ import {
   HandleTab
 } from "../../../redux/modules/filtervalue";
 import { API } from "../../config";
-import checkSeason from "../../../lib/checkSeason";
+
 
 function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
   //팀 비교 텝 누를 떄 뜨는 모달창

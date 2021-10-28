@@ -20,7 +20,7 @@ import { API } from "../../config";
 import { useTranslation } from "react-i18next";
 import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
 import qs from "qs";
-import checkSeason from "../../../lib/checkSeason";
+
 
 function SoloFilter() {
   const filters = useSelector((state) => state.FilterReducer);

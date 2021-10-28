@@ -9,7 +9,7 @@ import { API2 } from "../../config";
 import qs from "qs";
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
-import checkSeason from "../../../lib/checkSeason";
+
 
 function valuetext(value) {
   const time = value * 5100;

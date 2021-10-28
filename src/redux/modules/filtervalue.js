@@ -35,6 +35,8 @@ export const RESET_YEAR = "filtervalue/RESET_YEAR";
 export const RESET_SEASON = "filtervalue/RESET_SEASON";
 export const RESET_TEAM = "filtervalue/RESET_TEAM";
 export const FILTER_MENU_SWITCH = "filtervalue/FILTER_MENU_SWITCH";
+export const CONVERSION_LEAGUE = "filtervalue/CONVERSION_LEAGUE";
+export const CONVERSION_SEASON_INIT = "filtervalue/CONVERSION_SEASON_INIT";
 
 
 export const Reset_MapTab = (payload) => {
@@ -280,6 +282,20 @@ export const FilterMenuSwitch = (payload) => {
   }
 }
 
+export const ConversionLeague = (payload) => {
+  return {
+    type: CONVERSION_LEAGUE,
+    payload
+  }
+}
+
+export const ConversionSeasonInit = (payload) => {
+  return {
+    type: CONVERSION_SEASON_INIT,
+    payload
+  }
+}
+
 const initialState = {
   league: [],
   year: [],
@@ -341,7 +357,11 @@ export default function FilterReducer(state = initialState, action) {
         patch: [...state.patch.filter((e) => e !== ""), action.payload]
       };
     case PATCH_FULL:
-      return { ...state, patchfilter: action.payload };
+      return {
+        ...state,
+        patchfilter: action.payload,
+        patch: action.payload
+      };
     case TEAM:
       if (state.team.length === 0) {
         return { ...state, team: action.payload };
@@ -528,6 +548,16 @@ export default function FilterReducer(state = initialState, action) {
       return {
         ...state,
         filterMenuState: action.payload
+      }
+    case CONVERSION_LEAGUE:
+      return {
+        ...state,
+        league: action.payload
+      }
+    case CONVERSION_SEASON_INIT:
+      return {
+        ...state,
+        season: action.payload
       }
     default:
       return state;

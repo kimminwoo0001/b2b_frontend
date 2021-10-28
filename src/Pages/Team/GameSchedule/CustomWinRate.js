@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { API } from "../../config";
 import qs from "qs";
 import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
-import checkSeason from "../../../lib/checkSeason";
+
 
 function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
   const filters = useSelector((state) => state.FilterReducer);

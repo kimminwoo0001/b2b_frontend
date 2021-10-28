@@ -5,7 +5,7 @@ import PlayerBoard from "../Solo/PlayerBoard/PlayerBoard";
 // import PlayerVideo from "../Solo/PlayerVideo/PlayerVideo";
 import PlayerSoloRank from "../Solo/PlayerSoloRank/PlayerSoloRank";
 import ComparePlayer from "../Solo/ComparePlayer/ComparePlayer";
-import PlayerSelectModal from "../Solo/ComparePlayer/PlayerSelectModal";
+import PlayerSelectModal from "../../Components/Filter/PlayerSelectModal";
 import { useTranslation } from "react-i18next";
 import {
   HandleTab,

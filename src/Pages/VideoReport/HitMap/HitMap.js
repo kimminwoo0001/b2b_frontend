@@ -9,7 +9,7 @@ import { Reset_MapTab, ResetChampion } from "../../../redux/modules/filtervalue"
 import h337 from "heatmap.js";
 import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
-import checkSeason from "../../../lib/checkSeason";
+
 
 function HitMap() {
   // 시간 설정 상태값

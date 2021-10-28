@@ -7,7 +7,7 @@ import { Reset_Map } from "../../../redux/modules/filtervalue";
 import { API2 } from "../../config";
 import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
 import qs from "qs";
-import checkSeason from "../../../lib/checkSeason";
+
 
 function ChampionSetting({
   setGameData,

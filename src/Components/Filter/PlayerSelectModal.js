@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import qs from "qs";
 import axios from "axios";
-import { API } from "../../config";
+import { API } from "../../Pages/config";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -11,8 +11,8 @@ import {
   GetOppPlayer,
   ResetChampion,
   HandleTab
-} from "../../../redux/modules/filtervalue";
-import checkSeason from "../../../lib/checkSeason";
+} from "../../redux/modules/filtervalue";
+
 
 function PlayerSelectModal({ openModal, setOpenModal }) {
   const filters = useSelector((state) => state.FilterReducer);

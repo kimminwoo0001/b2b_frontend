@@ -8,6 +8,7 @@ import TeamTabs from "../Team/TeamTabs";
 import { useSelector } from "react-redux";
 import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 import ErrorBoundary from "../../Components/ErrorBoundary";
+import Filter from "../../Components/Filter/Filter";
 function TeamCompare() {
   const filters = useSelector((state) => state.FilterReducer);
 
@@ -15,7 +16,7 @@ function TeamCompare() {
     <ErrorBoundary>
       <TeamWrapper>
         <SideBar />
-        <TeamFilter />
+        <Filter />
         <ContentWrapper>
           <Nav />
           {filters.team !== "" ? <TeamTabs /> : <SelectFilter />}

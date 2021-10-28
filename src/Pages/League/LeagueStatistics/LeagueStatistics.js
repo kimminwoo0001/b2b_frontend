@@ -7,7 +7,8 @@ import { API } from "../../config";
 import { useSelector } from "react-redux";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import qs from "qs";
-import checkSeason from "../../../lib/checkSeason";
+import checkRequestBase from "../../../lib/checkRequestBase";
+
 function LeagueStatistics() {
   //리그 통합 지수 텝
   const filters = useSelector((state) => state.FilterReducer);
@@ -39,7 +40,9 @@ function LeagueStatistics() {
   // const [chart, setChart] = useState();
 
   useEffect(() => {
-    fetchingStatisticData();
+    if (checkRequestBase(filters)) {
+      fetchingStatisticData();
+    }
     // colorChange();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters, lang]);

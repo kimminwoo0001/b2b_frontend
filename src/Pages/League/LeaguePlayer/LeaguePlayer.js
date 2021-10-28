@@ -4,7 +4,7 @@ import axios from "axios";
 import { API } from "../../config";
 import qs from "qs";
 import TabTop from "./Components/TabTop";
-import checkSeason from "../../../lib/checkSeason";
+
 
 import { useSelector } from "react-redux";
 

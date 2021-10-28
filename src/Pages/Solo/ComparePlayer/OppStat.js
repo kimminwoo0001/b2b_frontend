@@ -16,7 +16,7 @@ import {
   ResetChampion,
   ResetChampion2
 } from "../../../redux/modules/filtervalue";
-import checkSeason from "../../../lib/checkSeason";
+
 
 function OppStat() {
   //상대 전적 기록 탭

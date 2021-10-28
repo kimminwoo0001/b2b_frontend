@@ -19,7 +19,7 @@ import {
   ResetChampion2,
   ResetOppChampion,
 } from "../../../redux/modules/filtervalue";
-import checkSeason from "../../../lib/checkSeason";
+
 
 function PlayerBoard() {
   //선수 보고서 => 선수 상황판

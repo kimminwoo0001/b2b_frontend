@@ -16,14 +16,19 @@ import {
   HandleTab,
   ResetFilter,
   PatchFull,
-  MenuNum
+  MenuNum,
+  ConversionLeague,
+  Season,
+  ResetSeason,
+  Year,
+  ConversionSeasonInit
 } from "../../redux/modules/filtervalue";
-import { API } from "../config";
+import { API } from "../../Pages/config";
 import { useTranslation } from "react-i18next";
-import { useDetectOutsideClick } from "./useDetectOustsideClick";
-import checkSeason from "../../lib/checkSeason";
+import { useDetectOutsideClick } from "../../Pages/TeamCompare/useDetectOustsideClick";
 
-function TeamFilterModal({ teamModal, setTeamModal }) {
+
+const TeamFilterModal = ({ teamModal, setTeamModal, fetchLeagueFilter }) => {
   //사이드바에 있는 팀 비교 탭 모달창
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
@@ -40,6 +45,12 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
   const [playerFilter, setPlayerFilter] = useState([]);
   const [oppTeamFilter, setOppTeamFilter] = useState();
 
+  const [league, setLeague] = useState(filters.league);
+  const [year, setYear] = useState(filters.year);
+  const [season, setSeason] = useState(filters.season);
+  const [team, setTeam] = useState(filters.team);
+  const [player, setPlayer] = useState(filters.player);
+  const [patch, setPatch] = useState(filters.patch);
 
   const [isActiveLeague, setIsActiveLeague] = useDetectOutsideClick(
     dropdownRef,
@@ -58,57 +69,60 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
   };
 
 
-
-  // 리그 필터 fetch 해오는 함수
-  const fetchLeagueFilter = () => {
-    console.log(yearFilter);
-    const leagueList = Object.keys(staticvalue.filterObjects).map(key => Object.keys(staticvalue.filterObjects[key]) == '2021' && yearFilter)
-    console.log(leagueList);
-    setLeagueFilter(leagueList.sort());
-  };
-
-  const fetchYearFilter = () => {
-    let yearList = [];
-
-    for (let i = 0; i < Object.values(staticvalue.filterObjects).length; i++) {
-      yearList.push(Object.keys(Object.values(staticvalue.filterObjects)[i]));
-    }
-
-    const recentYear = yearList.filter((item, pos) => yearList.indexOf(item) === pos).sort();
-
-    setYearFilter(recentYear[0]);
-  }
-
   useEffect(() => {
-    const pagePath = document.location.pathname;
-    if (pagePath === "/teamCompare") {
+    if (filters.menu_num === 7) {
       fetchYearFilter();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [filters.menu_num]);
+
+
+  const fetchYearFilter = () => {
+    let yearList = [];
+    for (let i = 0; i < Object.values(staticvalue.filterObjects).length; i++) {
+      yearList.push(Object.keys(Object.values(staticvalue.filterObjects)[i])[0]);
+    }
+    const recentYear = yearList.filter((item, pos) => yearList.indexOf(item) === pos).sort().reverse();
+    dispatch(Year(recentYear[0]));
+  }
+
+  const fetchSeasonFilter = () => {
+    let seasonList = []
+    if (filters.year.length !== 0) {
+      for (let league of filters.league) {
+        for (let year of filters.year) {
+          const ObjectKeys = Object.keys(staticvalue.filterObjects[league][year]);
+          seasonList = seasonList.concat(ObjectKeys);
+        }
+      }
+      seasonList = seasonList.filter((item, pos) => seasonList.indexOf(item) === pos).sort();
+      if (filters.season.length === 0) {
+        dispatch(Season(seasonList[0]));
+      };
+    } else {
+      dispatch(ResetSeason())
+    }
+    setSeasonFilter(seasonList);
+    dispatch(ConversionSeasonInit(seasonList));
+  };
+
+
 
   // 패치 필터 fetch 함수
-  const fetchingPatchFilter = async (league) => {
-    // if (filters.convertleague === "LCK") {
-    //   dispatch(League(LeagueLCK));
-    // } else if (filters.convertleague === "LEC") {
-    //   dispatch(League(LeagueLEC));
-    // } else if (filters.convertleague === "LCS") {
-    //   dispatch(League(LeagueLCS));
-    // } else if (filters.convertleague === "MSI") {
-    //   dispatch(League(Msi));
-    // }
+  const fetchingPatchFilter = async () => {
     const result = await axios.get(`${API}/api/filter/patch`, {
       params: {
-        league: league,
+        league: filters.league,
+        year: filters.year,
+        season: filters.season,
         token: user.token,
-        id: user.id
+        id: user.id,
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
       }
     });
-    dispatch(PatchFull(result.data.patch));
+    dispatch(PatchFull(result.data.patch ?? []));
   };
 
   //팀 필터 fetch 함수
@@ -118,7 +132,9 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
       url: `${API}/api/filter/team`,
       params: {
         league: filters.league,
-        //patch: patch,
+        year: filters.year,
+        season: filters.season,
+        patch: filters.patch,
         token: user.token,
         id: user.id
       },
@@ -136,6 +152,8 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
       url: `${API}/api/filter/oppteam`,
       params: {
         league: filters.league,
+        year: filters.year,
+        season: filters.season,
         patch: filters.patch,
         team: team,
         token: user.token,
@@ -183,6 +201,7 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
                       }
                       alt="champIcon"
                     />
+                    {console.log(filters.league)}
                     <span className="Label">
                       {filters.league.length === 1
                         ? filters.league
@@ -211,10 +230,9 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
                             />
                             <li
                               onClick={() => {
-                                league === filters.league &&
-                                  dispatch(League(league));
+                                dispatch(ConversionLeague([league]));
                                 setIsActiveLeague(!isActiveLeague);
-                                fetchingPatchFilter(league);
+                                //fetchingPatchFilter(league);
                                 // dispatch(ResetFilter(league));
                                 // dispatch(ConvertedLeague(league));
                                 setTeamFilter([]);
@@ -232,6 +250,54 @@ function TeamFilterModal({ teamModal, setTeamModal }) {
                 </div>
               </DropDownToggle>
             </LeagueFilter>
+            <PatchFilter>
+              <label>Season</label>
+              {seasonFilter.length === 0 ? (
+                <PatchLabels>
+                  <img
+                    className="ChampIconImg"
+                    width="14px"
+                    height="14px"
+                    src={
+                      filters.patch !== ""
+                        ? `Images/ico-filter-version.png`
+                        : "Images/ico-filter-none.png"
+                    }
+                    alt="champIcon"
+                  />
+                  <span className="Label">{t("filters.patchLabel")}</span>
+                </PatchLabels>
+              ) : (
+                seasonFilter?.map((season, idx) => {
+                  return (
+                    <SelectedPatch
+                      key={idx}
+                      // draggable="true"
+                      // onDragStart={(event) => {
+                      //   handleMouseEvent(event);
+                      // }}
+                      // onMouseUp={(event) => {
+                      //   handleMouseEvent(event);
+                      // }}
+                      isChecked={filters.season.includes(season) ? true : false}
+                      onClick={() => {
+                        dispatch(Season(season));
+                      }}
+                    >
+                      <input
+                        id={idx}
+                        checked={filters.season.includes(season) ? true : false}
+                        type="checkbox"
+                        readOnly
+                      ></input>
+                      <div className="Version">
+                        {season}
+                      </div>
+                    </SelectedPatch>
+                  );
+                })
+              )}
+            </PatchFilter>
             <PatchFilter>
               <label>Patch Version</label>
               {!filters.patchfilter ? (

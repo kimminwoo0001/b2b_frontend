@@ -6,7 +6,7 @@ import styled, { css } from "styled-components";
 import { useDetectOutsideClick } from "../../Components/SelectFilter/useDetectOustsideClick";
 import PickCombineModal from "./PickCombineModal";
 import { API } from "../config";
-import checkSeason from "../../lib/checkSeason";
+
 
 const PositionImage = [
   {

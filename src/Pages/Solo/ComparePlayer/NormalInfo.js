@@ -17,7 +17,7 @@ import {
   ResetOppChampion
 } from "../../../redux/modules/filtervalue";
 import qs from "qs";
-import checkSeason from "../../../lib/checkSeason";
+
 
 function NormalInfo() {
   //기본정보 탭

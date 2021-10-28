@@ -30,7 +30,7 @@ import {
   ResetChampion2,
   ResetOppChampion,
 } from "../../../redux/modules/filtervalue";
-import checkSeason from "../../../lib/checkSeason";
+
 
 function Stats() {
   //능력치 탭
