@@ -91,6 +91,11 @@ function Sidebar() {
       path: "/calculator",
       image: "/Images/ico-pick-calculator.png",
     },
+    {
+      name: t("sidebar.part12"),
+      path: "/gameReport",
+      image: "/Images/sidebar_newLogo/ico_game.png",
+    },
   ];
 
   // 로그아웃 함수, 로그아웃 이벤트가 발생되면 session 값을 clear하고 로그인 페이지로 이동시킴
@@ -217,10 +222,22 @@ function Sidebar() {
             <img
               src={menus[5].image}
               alt="menu"
-            // width="20px"
-            // height="20px"
             ></img>
             <div className="Name">{menus[5].name}</div>
+          </MenuWrapper>
+          <MenuWrapper
+            onClick={() => {
+              history.push(menus[11].path);
+              dispatch(InitailizeState());
+              dispatch(MenuNum(11));
+            }}
+            changeColor={pathName === "/gameReport"}
+          >
+            <img
+              src={menus[11].image}
+              alt="menu"
+            ></img>
+            <div className="Name">{menus[11].name}</div>
           </MenuWrapper>
           <MenuWrapper
             onClick={() => {
