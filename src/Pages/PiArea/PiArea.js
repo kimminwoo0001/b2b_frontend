@@ -96,6 +96,7 @@ const PiArea = () => {
   useEffect(() => {
     setWard(entireData[0]);
     setPI(entireData[1]);
+    console.log(entireData)
   }, [entireData]);
 
 
@@ -104,32 +105,34 @@ const PiArea = () => {
 
     // table_value key에 들어갈 배열 가공함수
 
-    let newPi = [];
-    const makeNewArray = (arr) => {
+    // let newPi = [];
+    // const makeNewArray = (arr) => {
 
-      // pi data가 그대로인 경우
-      if (arr.length === 1) {
-        const values = Object.values(arr[0]);
-        for (let i = 0; i < values.length; i++) {
-          newPi.push(values[i]);
-        }
-      }
+    //   // pi data가 그대로인 경우
+    //   if (arr.length === 1) {
+    //     const values = Object.values(arr[0]);
+    //     for (let i = 0; i < values.length; i++) {
+    //       newPi.push(values[i]);
+    //     }
+    //   }
 
-      // pi data가 수정되어 저장된 경우
-      for (let i = 0; i < arr.length; i++) {
-        for (let j = 0; j < arr[i].length; j++) {
-          newPi.push(arr[i][j]);
-        }
-      }
-      return newPi;
-    }
+    //   // pi data가 수정되어 저장된 경우
+    //   for (let i = 0; i < arr.length; i++) {
+    //     for (let j = 0; j < arr[i].length; j++) {
+    //       newPi.push(arr[i][j]);
+    //     }
+    //   }
+    //   return newPi;
+    // }
 
-    makeNewArray(pi);
+    // makeNewArray(pi);
     axios.defaults.baseURL = `${API4}`;
     axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
     axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
-    console.log(pi)
+    console.log(pi[0])
+    // console.log(newPi)
+
     let data = {
       vod: youtubeUrl,
       gameid: clickedGameId,
@@ -153,7 +156,7 @@ const PiArea = () => {
       rbot2: ward[8].secondwardPosition,
       rsup1: ward[9].firstwardPosition,
       rsup2: ward[9].secondwardPosition,
-      table_value: newPi,
+      table_value: pi[0],
     };
     // const response = await axios.get(
     //   // `${API4}/setWardPostition.do`,

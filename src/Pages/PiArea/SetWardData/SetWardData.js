@@ -163,6 +163,7 @@ const SetWardData = ({ wardData }) => {
   // input창 클릭 시 해당 value값 표기
   const handleInputClick = (e, id) => {
     setPosition(id);
+    const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     const color = () => {
       if (e.target.className.includes("first") && id < 5) {

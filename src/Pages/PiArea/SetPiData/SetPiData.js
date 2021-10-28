@@ -83,7 +83,7 @@ const SetPiData = ({ piData, setPi }) => {
     setNewPiData([
       ...totalAry]);
     setInputLocation(row);
-    setPi(newPiData);
+    setPi([newPiData.flat(Infinity)]);
     //setTotalData(newPiData);
     //setInput(value);
   };
@@ -102,12 +102,13 @@ const SetPiData = ({ piData, setPi }) => {
         </Table.Header>
         <Table.Body>
           {newPiData?.map((data, row) => {
+            {console.log(newPiData)}
             return (
               <Table.Row
                 key={row}
                 ref={(ref) => (rowRef.current[row] = ref)}>
                 <Table.Cell>{POSITIONS2[row]}</Table.Cell>
-                {data?.map((data2, col) => {
+                {data?.map((data2, col) => {        
                   return (
                     <Table.Cell>
                       <Form.Input
