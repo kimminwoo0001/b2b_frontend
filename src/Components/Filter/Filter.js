@@ -93,7 +93,7 @@ const Filter = memo(() => {
   }, []);
 
   useEffect(() => {
-    if (league !== filters.league) {
+    if (JSON.stringify(league) !== JSON.stringify(filters.league)) {
       if (isComparePage) {
         fetchSeasonFilter()
       } else {
@@ -106,7 +106,7 @@ const Filter = memo(() => {
   }, [filters.league]); // 배열은 어떡하라고
 
   useEffect(() => {
-    if (year !== filters.year) {
+    if (JSON.stringify(year) !== JSON.stringify(filters.year)) {
       fetchSeasonFilter();
       setYear(filters.year);
     }
@@ -114,7 +114,7 @@ const Filter = memo(() => {
 
 
   useEffect(() => {
-    if (season !== filters.season) {
+    if (JSON.stringify(season) !== JSON.stringify(filters.season)) {
       if (filters.year.length > 0) {
         if ([nameLeague].includes(pagePath)) {
           dispatch(HandleTab(1))
@@ -129,7 +129,7 @@ const Filter = memo(() => {
   }, [filters.season]);
 
   useEffect(() => {
-    if (team !== filters.team) {
+    if (JSON.stringify(team) !== JSON.stringify(filters.team)) {
       if ([nameTeam, nameVideo].includes(pagePath)) {
         if (filters.team.length !== 0) {
           dispatch(HandleTab(0));
@@ -147,8 +147,10 @@ const Filter = memo(() => {
 
 
   useEffect(() => {
-    if (patch !== filters.patch) {
-      fetchingTeamFilter();
+    if (JSON.stringify(patch) !== JSON.stringify(filters.patch)) {
+      if (isComparePage === false) {
+        fetchingTeamFilter();
+      }
       setPatch(filters.patch);
     }
   }, [filters.patch])
