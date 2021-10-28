@@ -6,15 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { MenuNum, InitailizeState } from "../../redux/modules/filtervalue";
 import { UserLogout } from "../../redux/modules";
 
-import TeamFilterModal from "../Filter/TeamFilterModal";
-import PlayerFilterModal from "../../Pages/PlayerCompare/PlayerFilterModal";
 import LocaleDropdown from "../Nav/LocaleDropdown";
 
 function Sidebar() {
   //팀 비교 모달창 상태 값
-  const [teamModal, setTeamModal] = useState(false);
-  //플레이어 비교 마달창 상태 값
-  const [playerModal, setPlayerModal] = useState(false);
   const lang = useSelector((state) => state.LocaleReducer);
   const user = useSelector((state) => state.UserReducer);
   const { i18n, t } = useTranslation();
@@ -102,11 +97,6 @@ function Sidebar() {
 
   return (
     <>
-      <TeamFilterModal teamModal={teamModal} setTeamModal={setTeamModal} />
-      <PlayerFilterModal
-        playerModal={playerModal}
-        setPlayerModal={setPlayerModal}
-      />
       <SideBarWrapper>
         {/* <Link to="/utility"> */}
         {/* <TSBLogo>
@@ -235,7 +225,7 @@ function Sidebar() {
           </MenuWrapper>
           <MenuWrapper
             onClick={() => {
-              setTeamModal(true);
+              history.push(menus[7].path);
               dispatch(InitailizeState());
               dispatch(MenuNum(7));
             }}
@@ -246,7 +236,7 @@ function Sidebar() {
           </MenuWrapper>
           <MenuWrapper
             onClick={() => {
-              setPlayerModal(true);
+              history.push(menus[8].path);
               dispatch(InitailizeState());
               dispatch(MenuNum(8));
             }}

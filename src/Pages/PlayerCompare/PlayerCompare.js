@@ -8,6 +8,8 @@ import SideBar from "../../Components/SideBar/SideBar";
 import SoloFilter from "../Solo/Components/SoloFilter";
 import Player from "../Solo/Player";
 import ErrorBoundary from "../../Components/ErrorBoundary";
+import Filter from "../../Components/Filter/Filter";
+import CloseFilter from "../../Components/Filter/CloseFilter";
 function PlayerCompare() {
   const filters = useSelector((state) => state.FilterReducer);
 
@@ -15,7 +17,12 @@ function PlayerCompare() {
     <ErrorBoundary>
       <SoloWrapper>
         <SideBar />
-        <SoloFilter />
+        <div className={filters.filterMenuState ? "filter-open" : "filter-close"}>
+          <Filter />
+        </div>
+        <div className={filters.filterMenuState ? "filter-close" : "filter-open"}>
+          <CloseFilter />
+        </div>
         <ContentWrapper>
           <Nav />
           {filters.player !== "" ? <Player /> : <SelectFilter />}
@@ -34,6 +41,14 @@ const SoloWrapper = styled.div`
   overflow: auto;
   display: flex;
   background-color: #23212a;
+
+  .filter-close {
+    display: none;
+  }
+
+  .filter-open{
+
+  }
 `;
 
 const ContentWrapper = styled.div`

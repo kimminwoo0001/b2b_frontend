@@ -79,8 +79,6 @@ const Filter = memo(() => {
     false
   );
 
-
-
   // 페이지 오픈 시, 리그 데이터를 받아오도록 추가.
   useEffect(() => {
     if (pagePath === nameTeamCompare) {
@@ -107,8 +105,12 @@ const Filter = memo(() => {
 
   useEffect(() => {
     if (JSON.stringify(year) !== JSON.stringify(filters.year)) {
-      fetchSeasonFilter();
-      setYear(filters.year);
+      if (isComparePage) {
+        fetchLeagueFilter();
+      } else {
+        fetchSeasonFilter();
+        setYear(filters.year);
+      }
     }
   }, [filters.year]);
 
@@ -155,6 +157,21 @@ const Filter = memo(() => {
     }
   }, [filters.patch])
 
+  useEffect(() => {
+
+  }, [filters.patchfilter])
+
+  useEffect(() => {
+    if (filters.menu_num === 7) {
+      fetchYearFilter();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters.menu_num]);
+
+  useEffect(() => {
+    console.log("teamModal", teamModal);
+  }, [teamModal])
+
   const fetchActiveFilter = () => {
     if (leagueFilter?.length > 0)
       fetchLeagueFilter();
@@ -187,6 +204,14 @@ const Filter = memo(() => {
   const fetchYearFilter = () => {
     let yearList = []
     if (isComparePage) {
+      let yearList = [];
+      for (let i = 0; i < Object.values(staticvalue.filterObjects).length; i++) {
+        yearList.push(Object.keys(Object.values(staticvalue.filterObjects)[i])[0]);
+      }
+      const recentYear = yearList.filter((item, pos) => yearList.indexOf(item) === pos).sort().reverse();
+      dispatch(Year(recentYear[0]));
+      setYearFilter(recentYear);
+    } else {
       if (filters.league.length === 0) {
         dispatch(ResetYear())
       } else if (filters.league.length > 0) {
@@ -198,14 +223,6 @@ const Filter = memo(() => {
         dispatch(Year(yearList[0]));
       }
       setYearFilter(yearList);
-    } else {
-      let yearList = [];
-      for (let i = 0; i < Object.values(staticvalue.filterObjects).length; i++) {
-        yearList.push(Object.keys(Object.values(staticvalue.filterObjects)[i])[0]);
-      }
-      const recentYear = yearList.filter((item, pos) => yearList.indexOf(item) === pos).sort().reverse();
-      dispatch(Year(recentYear[0]));
-      setYearFilter(recentYear);
     }
   };
 
@@ -228,12 +245,13 @@ const Filter = memo(() => {
     setSeasonFilter(seasonList);
     if (isComparePage) {
       dispatch(ConversionSeasonInit(seasonList));
+      fetchingTeamFilter();
     }
   };
 
   const fetchingTeamFilter = () => {
     let teamList = []
-    if (filters.season.length !== 0 && isNeedTeam) {
+    if (filters.season.length !== 0 && (isNeedTeam || isComparePage)) {
       for (let league of filters.league) {
         for (let year of filters.year) {
           for (let season of filters.season) {
@@ -331,10 +349,20 @@ const Filter = memo(() => {
       {pagePath === nameTeamCompare
         && <TeamFilterModal
           teamModal={teamModal} setTeamModal={setTeamModal}
-          fetchLeagueFilter={() => { fetchLeagueFilter() }}
+          fetchLeagueFilter={fetchLeagueFilter}
+          leagueFilter={leagueFilter}
+          seasonFilter={seasonFilter}
+          teamFilter={teamFilter} setTeamFilter={setTeamFilter}
         />}
       {pagePath === namePlayerCompare
-        && <PlayerFilterModal playerModal={playerModal} setPlayerModal={setPlayerModal} />}
+        && <PlayerFilterModal
+          playerModal={playerModal} setPlayerModal={setPlayerModal}
+          fetchLeagueFilter={fetchLeagueFilter}
+          leagueFilter={leagueFilter}
+          seasonFilter={seasonFilter}
+          teamFilter={teamFilter} setTeamFilter={setTeamFilter}
+          playerFilter={playerFilter} setPlayerFilter={setPlayerFilter}
+        />}
       <FilterWrapper>
         <FilterHeader />
         {filters.filterMenuState && <>

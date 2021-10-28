@@ -19,14 +19,17 @@ import {
   Position,
   ResetFilter,
   PatchFull,
-  MenuNum
+  MenuNum,
+  ConversionLeague
 } from "../../redux/modules/filtervalue";
 import { API } from "../config";
 
 import { useDetectOutsideClick } from "./useDetectOustsideClick";
 
 
-function PlayerFilterModal({ playerModal, setPlayerModal }) {
+function PlayerFilterModal({ playerModal, setPlayerModal,
+  fetchLeagueFilter, leagueFilter, seasonFilter,
+  teamFilter, setTeamFilter, playerFilter, setPlayerFilter }) {
   // sidebar 선수 비교 눌렀을때 뜨는 모달창
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
@@ -36,16 +39,9 @@ function PlayerFilterModal({ playerModal, setPlayerModal }) {
 
   const dropdownRef = useRef(null);
   //필터 상태값
-  const [leagueFilter, setLeagueFilter] = useState();
-  const [teamFilter, setTeamFilter] = useState();
   const [oppTeamFilter, setOppTeamFilter] = useState();
-  const [playerFilter, setPlayerFilter] = useState();
   const [oppPlayerFilter, setOppPlayerFilter] = useState();
 
-  const LeagueLCK = "lck";
-  const LeagueLEC = "lec";
-  const LeagueLCS = "lcs";
-  const Msi = "msi";
   const [isActiveLeague, setIsActiveLeague] = useDetectOutsideClick(
     dropdownRef,
     false
@@ -63,64 +59,6 @@ function PlayerFilterModal({ playerModal, setPlayerModal }) {
     } else {
       alert(t("filters.noPlayer"));
     }
-  };
-
-  // 리그 필터 fetch 해오는 함수
-  const fetchLeagueFilter = async () => {
-    const leagueList = Object.keys(staticvalue.filterObjects);
-    setLeagueFilter(leagueList.sort());
-  };
-
-  // 패치 필터 fetch 함수
-  const fetchingPatchFilter = async (league) => {
-    if (filters.convertleague === "LCK") {
-      dispatch(League(LeagueLCK));
-    } else if (filters.convertleague === "LEC") {
-      dispatch(League(LeagueLEC));
-    } else if (filters.convertleague === "LCS") {
-      dispatch(League(LeagueLCS));
-    } else if (filters.convertleague === "MSI") {
-      dispatch(League(Msi));
-    }
-    const result = await axios.get(`${API}/api/filter/patch`, {
-      params: {
-        league:
-          league === "LCK"
-            ? "lck"
-            : league === "LEC"
-              ? "lec"
-              : league === "LCS"
-                ? "lcs"
-                : "msi",
-        // patch: filters.patch,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    });
-    dispatch(PatchFull(result.data.patch));
-  };
-
-  //팀 필터 fetch 함수
-  const fetchingTeamFilter = async (patch) => {
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/team`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: patch,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    });
-    setTeamFilter(result.data.team);
   };
 
   // opp 팀 필터 fetch 함수
@@ -251,10 +189,10 @@ function PlayerFilterModal({ playerModal, setPlayerModal }) {
                             />
                             <li
                               onClick={() => {
-                                dispatch(ConvertedLeague(league));
-                                dispatch(ResetFilter(league));
+                                dispatch(ConversionLeague([league]));
                                 setIsActiveLeague(!isActiveLeague);
-                                fetchingPatchFilter(league);
+                                //dispatch(ResetFilter(league));
+                                //fetchingPatchFilter(league);
                                 setTeamFilter([]);
                                 setOppTeamFilter([]);
                               }}
@@ -295,7 +233,7 @@ function PlayerFilterModal({ playerModal, setPlayerModal }) {
                       isChecked={filters.patch.includes(patch) ? true : false}
                       onClick={() => {
                         dispatch(Patch(patch));
-                        fetchingTeamFilter(patch);
+                        //fetchingTeamFilter(patch);
                       }}
                     >
                       <input
@@ -450,6 +388,36 @@ function PlayerFilterModal({ playerModal, setPlayerModal }) {
 
 export default PlayerFilterModal;
 
+const FilterContainer = styled.div`
+  display: flex;
+  border-bottom: 1px solid #484655;
+`;
+
+const BackScreen = styled.div`
+  display: ${(props) => (props.playerModal ? "block" : "none")};
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  position: fixed;
+  z-index: 3;
+  background-color: rgba(0, 0, 0, 1);
+  opacity: 1;
+`;
+
+const PlayerModalWrapper = styled.div`
+  display: ${(props) => (props.playerModal ? "block" : "none")};
+  width: 774px;
+  min-height: 517px;
+  background-color: #2f2d38;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  opacity: 3;
+  position: fixed;
+  z-index: 3;
+`;
+
 const TeamBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -546,35 +514,7 @@ const SelectedPatch = styled.div`
   }
 `;
 
-const FilterContainer = styled.div`
-  display: flex;
-  border-bottom: 1px solid #484655;
-`;
 
-const BackScreen = styled.div`
-  display: ${(props) => (props.playerModal ? "block" : "none")};
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  position: fixed;
-  z-index: 3;
-  background-color: rgba(0, 0, 0, 1);
-  opacity: 1;
-`;
-
-const PlayerModalWrapper = styled.div`
-  display: ${(props) => (props.playerModal ? "block" : "none")};
-  width: 774px;
-  min-height: 517px;
-  background-color: #2f2d38;
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  opacity: 3;
-  position: fixed;
-  z-index: 3;
-`;
 
 const LeagueFilter = styled.div`
   height: 61px;

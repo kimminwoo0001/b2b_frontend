@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 import ErrorBoundary from "../../Components/ErrorBoundary";
 import Filter from "../../Components/Filter/Filter";
+import CloseFilter from "../../Components/Filter/CloseFilter";
 function TeamCompare() {
   const filters = useSelector((state) => state.FilterReducer);
 
@@ -16,7 +17,12 @@ function TeamCompare() {
     <ErrorBoundary>
       <TeamWrapper>
         <SideBar />
-        <Filter />
+        <div className={filters.filterMenuState ? "filter-open" : "filter-close"}>
+          <Filter />
+        </div>
+        <div className={filters.filterMenuState ? "filter-close" : "filter-open"}>
+          <CloseFilter />
+        </div>
         <ContentWrapper>
           <Nav />
           {filters.team !== "" ? <TeamTabs /> : <SelectFilter />}
@@ -34,6 +40,14 @@ const TeamWrapper = styled.div`
   min-height: 100vh;
   display: flex;
   background-color: #23212a;
+
+  .filter-close {
+    display: none;
+  }
+
+  .filter-open{
+
+  }
 `;
 
 const ContentWrapper = styled.div`

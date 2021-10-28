@@ -22,7 +22,10 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchingTeamFilter();
+    console.log("openModal", openModal);
+    if (openModal) {
+      fetchingTeamFilter();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openModal]);
 

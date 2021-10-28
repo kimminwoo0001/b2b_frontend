@@ -28,30 +28,15 @@ import { useTranslation } from "react-i18next";
 import { useDetectOutsideClick } from "../../Pages/TeamCompare/useDetectOustsideClick";
 
 
-const TeamFilterModal = ({ teamModal, setTeamModal, fetchLeagueFilter }) => {
+const TeamFilterModal = ({ teamModal, setTeamModal, fetchLeagueFilter,
+  leagueFilter, seasonFilter, teamFilter, setTeamFilter }) => {
   //사이드바에 있는 팀 비교 탭 모달창
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
-  const staticvalue = useSelector((state) => state.StaticValueReducer);
   const dispatch = useDispatch();
-
   const dropdownRef = useRef(null);
   const { t } = useTranslation();
-
-  const [leagueFilter, setLeagueFilter] = useState([]);
-  const [yearFilter, setYearFilter] = useState([]);
-  const [seasonFilter, setSeasonFilter] = useState([]);
-  const [teamFilter, setTeamFilter] = useState([]);
-  const [playerFilter, setPlayerFilter] = useState([]);
   const [oppTeamFilter, setOppTeamFilter] = useState();
-
-  const [league, setLeague] = useState(filters.league);
-  const [year, setYear] = useState(filters.year);
-  const [season, setSeason] = useState(filters.season);
-  const [team, setTeam] = useState(filters.team);
-  const [player, setPlayer] = useState(filters.player);
-  const [patch, setPatch] = useState(filters.patch);
-
   const [isActiveLeague, setIsActiveLeague] = useDetectOutsideClick(
     dropdownRef,
     false
@@ -60,7 +45,8 @@ const TeamFilterModal = ({ teamModal, setTeamModal, fetchLeagueFilter }) => {
   let history = useHistory();
   const handleConfirm = () => {
     if (filters.oppteam) {
-      history.push("/teamCompare");
+      //history.push("/teamCompare");
+      setTeamModal(false);
       dispatch(GetOppTeam(filters.oppteam));
       dispatch(HandleTab(2));
     } else {
@@ -68,85 +54,9 @@ const TeamFilterModal = ({ teamModal, setTeamModal, fetchLeagueFilter }) => {
     }
   };
 
-
-  useEffect(() => {
-    if (filters.menu_num === 7) {
-      fetchYearFilter();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.menu_num]);
-
-
-  const fetchYearFilter = () => {
-    let yearList = [];
-    for (let i = 0; i < Object.values(staticvalue.filterObjects).length; i++) {
-      yearList.push(Object.keys(Object.values(staticvalue.filterObjects)[i])[0]);
-    }
-    const recentYear = yearList.filter((item, pos) => yearList.indexOf(item) === pos).sort().reverse();
-    dispatch(Year(recentYear[0]));
-  }
-
-  const fetchSeasonFilter = () => {
-    let seasonList = []
-    if (filters.year.length !== 0) {
-      for (let league of filters.league) {
-        for (let year of filters.year) {
-          const ObjectKeys = Object.keys(staticvalue.filterObjects[league][year]);
-          seasonList = seasonList.concat(ObjectKeys);
-        }
-      }
-      seasonList = seasonList.filter((item, pos) => seasonList.indexOf(item) === pos).sort();
-      if (filters.season.length === 0) {
-        dispatch(Season(seasonList[0]));
-      };
-    } else {
-      dispatch(ResetSeason())
-    }
-    setSeasonFilter(seasonList);
-    dispatch(ConversionSeasonInit(seasonList));
-  };
-
-
-
-  // 패치 필터 fetch 함수
-  const fetchingPatchFilter = async () => {
-    const result = await axios.get(`${API}/api/filter/patch`, {
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    });
-    dispatch(PatchFull(result.data.patch ?? []));
-  };
-
-  //팀 필터 fetch 함수
-  const fetchingTeamFilter = async (patch) => {
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/team`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        token: user.token,
-        id: user.id
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    });
-    setTeamFilter(result.data.team);
-  };
-
   // opp 팀 필터 fetch 함수
   const fetchingOppTeamFilter = async (team) => {
+    console.log("a");
     const result = await axios.request({
       method: "GET",
       url: `${API}/api/filter/oppteam`,
@@ -183,6 +93,7 @@ const TeamFilterModal = ({ teamModal, setTeamModal, fetchLeagueFilter }) => {
               <label>League</label>
               <DropDownToggle className="container">
                 <div className="menu-container">
+                  {console.log(filters)}
                   <button
                     onClick={() => {
                       setIsActiveLeague(!isActiveLeague);
@@ -330,7 +241,7 @@ const TeamFilterModal = ({ teamModal, setTeamModal, fetchLeagueFilter }) => {
                       isChecked={filters.patch.includes(patch) ? true : false}
                       onClick={() => {
                         dispatch(Patch(patch));
-                        fetchingTeamFilter(patch);
+                        //fetchingTeamFilter(patch);
                         console.log(filters.league);
                       }}
                     >

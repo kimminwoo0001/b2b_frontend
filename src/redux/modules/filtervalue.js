@@ -541,7 +541,6 @@ export default function FilterReducer(state = initialState, action) {
       return {
         ...state,
         team: [],
-        patch: [],
         player: "",
       };
     case FILTER_MENU_SWITCH:

@@ -28,15 +28,17 @@ function TeamTabs() {
 
   return (
     <>
-      <TeamSelectModal
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-        whichTeam={whichTeam}
-        setWhichTeam={setWhichTeam}
-      />
-      <TeamTabsWrapper>
-        <TabContainer>
-          {/* <Schedule
+      {
+        true && <>
+          <TeamSelectModal
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+            whichTeam={whichTeam}
+            setWhichTeam={setWhichTeam}
+          />
+          <TeamTabsWrapper>
+            <TabContainer>
+              {/* <Schedule
             onClick={() => {
               dispatch(HandleTab(0));
               dispatch(ResetFilter2());
@@ -53,86 +55,89 @@ function TeamTabs() {
               alt="arrowIcon"
             ></img>
           </Schedule> */}
-          <Pick
-            onClick={() => {
-              dispatch(HandleTab(0));
-              dispatch(ResetFilter2());
-            }}
-            changeColor={filters.tab === 0}
-          >
-            <div>{t("team.tab.draft")}</div>
-            <img
-              src={
-                filters.tab === 0
-                  ? "Images/ico-1depth-arrow-on.png"
-                  : "Images/ico-1depth-arrow-off.png"
-              }
-              alt="arrowIcon"
-            ></img>
-          </Pick>
+              <Pick
+                onClick={() => {
+                  dispatch(HandleTab(0));
+                  dispatch(ResetFilter2());
+                }}
+                changeColor={filters.tab === 0}
+              >
+                <div>{t("team.tab.draft")}</div>
+                <img
+                  src={
+                    filters.tab === 0
+                      ? "Images/ico-1depth-arrow-on.png"
+                      : "Images/ico-1depth-arrow-off.png"
+                  }
+                  alt="arrowIcon"
+                ></img>
+              </Pick>
 
-          {filters.league.indexOf("lpl") === -1 ? (
-            <Statistics
-              onClick={() => {
-                dispatch(HandleTab(1));
-                dispatch(ResetFilter2());
-              }}
-              changeColor={filters.tab === 1}
-            >
-              <div>{t("team.tab.analysis")}</div>
-              <img
-                src={
-                  filters.tab === 1
-                    ? "Images/ico-1depth-arrow-on.png"
-                    : "Images/ico-1depth-arrow-off.png"
-                }
-                alt="arrowIcon"
-              ></img>
-            </Statistics>
-          ) : (
-            <div></div>
-          )}
+              {filters.league.indexOf("lpl") === -1 ? (
+                <Statistics
+                  onClick={() => {
+                    dispatch(HandleTab(1));
+                    dispatch(ResetFilter2());
+                  }}
+                  changeColor={filters.tab === 1}
+                >
+                  <div>{t("team.tab.analysis")}</div>
+                  <img
+                    src={
+                      filters.tab === 1
+                        ? "Images/ico-1depth-arrow-on.png"
+                        : "Images/ico-1depth-arrow-off.png"
+                    }
+                    alt="arrowIcon"
+                  ></img>
+                </Statistics>
+              ) : (
+                <div></div>
+              )}
 
-          {filters.league.indexOf("lpl") === -1 ? (
-            <TeamCompare
-              onClick={() => {
-                dispatch(HandleTab(2));
-                setOpenModal(true);
-              }}
-              changeColor={filters.tab === 2}
-            >
-              <div>
-                {filters.getoppteam ? (
-                  <div className="GetOpp">
-                    <div>{t("team.tab.comparison")}:</div>
-                    <img
-                      width="16px"
-                      height="16px"
-                      src={`Images/TeamLogo/${filters.getoppteam}.png`}
-                      alt="TeamLogo"
-                      className="TeamLogo"
-                    />
-                    <div>{filters.getoppteam}</div>
+              {filters.league.indexOf("lpl") === -1 ? (
+                <TeamCompare
+                  onClick={() => {
+                    dispatch(HandleTab(2));
+                    setOpenModal(true);
+                  }}
+                  changeColor={filters.tab === 2}
+                >
+                  <div>
+                    {filters.getoppteam ? (
+                      <div className="GetOpp">
+                        <div>{t("team.tab.comparison")}:</div>
+                        <img
+                          width="16px"
+                          height="16px"
+                          src={`Images/TeamLogo/${filters.getoppteam}.png`}
+                          alt="TeamLogo"
+                          className="TeamLogo"
+                        />
+                        <div>{filters.getoppteam}</div>
+                      </div>
+                    ) : (
+                      t("team.tab.comparison")
+                    )}
                   </div>
-                ) : (
-                  t("team.tab.comparison")
-                )}
-              </div>
-              <img
-                src={
-                  filters.tab === 2
-                    ? "Images/ico-1depth-arrow-on.png"
-                    : "Images/ico-1depth-arrow-off.png"
-                }
-                alt="arrowIcon"
-              ></img>
-            </TeamCompare>
-          ) : (
-            <div></div>
-          )}
-        </TabContainer>
-        <div>{TeamTab[filters.tab]}</div>
-      </TeamTabsWrapper>
+                  <img
+                    src={
+                      filters.tab === 2
+                        ? "Images/ico-1depth-arrow-on.png"
+                        : "Images/ico-1depth-arrow-off.png"
+                    }
+                    alt="arrowIcon"
+                  ></img>
+                </TeamCompare>
+              ) : (
+                <div></div>
+              )}
+            </TabContainer>
+            <div>{TeamTab[filters.tab]}</div>
+          </TeamTabsWrapper>
+        </>
+      }
+
     </>
   );
 }
