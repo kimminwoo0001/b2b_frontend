@@ -15,6 +15,7 @@ function TeamCompare() {
 
   return (
     <ErrorBoundary>
+      <Nav />
       <TeamWrapper>
         <SideBar />
         <div className={filters.filterMenuState ? "filter-open" : "filter-close"}>
@@ -24,7 +25,6 @@ function TeamCompare() {
           <CloseFilter />
         </div>
         <ContentWrapper>
-          <Nav />
           {filters.team !== "" ? <TeamTabs /> : <SelectFilter />}
         </ContentWrapper>
       </TeamWrapper>

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import qs from "qs";
 import axios from "axios";
@@ -20,11 +20,13 @@ import {
   ResetFilter,
   PatchFull,
   MenuNum,
-  ConversionLeague
+  SetLeague,
+  Season,
+  CompareModal
 } from "../../redux/modules/filtervalue";
-import { API } from "../config";
+import { API } from "../../Pages/config";
 
-import { useDetectOutsideClick } from "./useDetectOustsideClick";
+import { useDetectOutsideClick } from "../../Pages/PlayerCompare/useDetectOustsideClick";
 
 
 function PlayerFilterModal({ playerModal, setPlayerModal,
@@ -33,7 +35,6 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
   // sidebar 선수 비교 눌렀을때 뜨는 모달창
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
-  const staticvalue = useSelector((state) => state.StaticValueReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -49,13 +50,25 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
 
   let history = useHistory();
 
+  useEffect(() => {
+    setOppTeamFilter();
+    setOppPlayerFilter();
+  }, [])
+
+  useEffect(() => {
+    if (filters.compareModal === false) {
+      setOppTeamFilter();
+      setOppPlayerFilter();
+    }
+  }, [filters.compareModal])
+
   // 확인하기 버튼 조건
   const handleConfirm = () => {
     if (filters.oppplayer) {
-      history.push("/playerCompare");
+      //history.push("/playerCompare");
       dispatch(GetOppPlayer(filters.oppplayer));
       dispatch(HandleTab(1));
-      setPlayerModal(false);
+      dispatch(CompareModal(false));
     } else {
       alert(t("filters.noPlayer"));
     }
@@ -189,7 +202,7 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
                             />
                             <li
                               onClick={() => {
-                                dispatch(ConversionLeague([league]));
+                                dispatch(SetLeague([league]));
                                 setIsActiveLeague(!isActiveLeague);
                                 //dispatch(ResetFilter(league));
                                 //fetchingPatchFilter(league);
@@ -208,6 +221,47 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
                 </div>
               </DropDownToggle>
             </LeagueFilter>
+            <PatchFilter>
+              <label>Season</label>
+              {seasonFilter.length === 0 ? (
+                <PatchLabels>
+                  <img
+                    className="ChampIconImg"
+                    width="14px"
+                    height="14px"
+                    src={
+                      filters.patch !== ""
+                        ? `Images/ico-filter-version.png`
+                        : "Images/ico-filter-none.png"
+                    }
+                    alt="champIcon"
+                  />
+                  <span className="Label">{t("filters.patchLabel")}</span>
+                </PatchLabels>
+              ) : (
+                seasonFilter?.map((season, idx) => {
+                  return (
+                    <SelectedPatch
+                      key={idx}
+                      isChecked={filters.season.includes(season) ? true : false}
+                      onClick={() => {
+                        dispatch(Season(season));
+                      }}
+                    >
+                      <input
+                        id={idx}
+                        checked={filters.season.includes(season) ? true : false}
+                        type="checkbox"
+                        readOnly
+                      ></input>
+                      <div className="Version">
+                        {season}
+                      </div>
+                    </SelectedPatch>
+                  );
+                })
+              )}
+            </PatchFilter>
             <PatchFilter>
               <label>Patch Version</label>
               {!filters.patchfilter ? (
@@ -268,7 +322,8 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
                             dispatch(Team(team));
                             dispatch(OppPlayer(""));
                             fetchingPlayerFilter(team);
-                            fetchingOppTeamFilter(team);
+                            setOppTeamFilter([]);
+                            setOppPlayerFilter([]);
                           }}
                           currentTeam={filters.team === team}
                         >
@@ -291,7 +346,9 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
                             dispatch(OppPlayer(""));
                             dispatch(Player(player.name));
                             dispatch(Position(player.position));
-                            fetchingOppPlayerFilter(player);
+                            dispatch(OppTeam([]));
+                            //fetchingOppPlayerFilter(player);
+                            fetchingOppTeamFilter(filters.team);
                           }}
                           currentTeam={filters.player === player.name}
                         >
@@ -368,7 +425,7 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
                 onClick={() => {
                   dispatch(InitailizeState());
                   dispatch(MenuNum(4));
-                  setPlayerModal(false);
+                  dispatch(CompareModal(false));
                   history.push("/solo");
                   setTeamFilter([]);
                   setPlayerFilter([]);

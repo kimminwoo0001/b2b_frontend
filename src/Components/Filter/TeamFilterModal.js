@@ -17,18 +17,19 @@ import {
   ResetFilter,
   PatchFull,
   MenuNum,
-  ConversionLeague,
+  SetLeague,
   Season,
   ResetSeason,
   Year,
-  ConversionSeasonInit
+  SetSeason,
+  CompareModal
 } from "../../redux/modules/filtervalue";
 import { API } from "../../Pages/config";
 import { useTranslation } from "react-i18next";
 import { useDetectOutsideClick } from "../../Pages/TeamCompare/useDetectOustsideClick";
 
 
-const TeamFilterModal = ({ teamModal, setTeamModal, fetchLeagueFilter,
+const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
   leagueFilter, seasonFilter, teamFilter, setTeamFilter }) => {
   //사이드바에 있는 팀 비교 탭 모달창
   const filters = useSelector((state) => state.FilterReducer);
@@ -42,11 +43,21 @@ const TeamFilterModal = ({ teamModal, setTeamModal, fetchLeagueFilter,
     false
   );
 
+  useEffect(() => {
+    setOppTeamFilter();
+  }, [])
+
+  useEffect(() => {
+    if (filters.compareModal === false) {
+      setOppTeamFilter();
+    }
+  }, [filters.compareModal])
+
   let history = useHistory();
   const handleConfirm = () => {
     if (filters.oppteam) {
       //history.push("/teamCompare");
-      setTeamModal(false);
+      dispatch(CompareModal(false));
       dispatch(GetOppTeam(filters.oppteam));
       dispatch(HandleTab(2));
     } else {
@@ -141,7 +152,7 @@ const TeamFilterModal = ({ teamModal, setTeamModal, fetchLeagueFilter,
                             />
                             <li
                               onClick={() => {
-                                dispatch(ConversionLeague([league]));
+                                dispatch(SetLeague([league]));
                                 setIsActiveLeague(!isActiveLeague);
                                 //fetchingPatchFilter(league);
                                 // dispatch(ResetFilter(league));
@@ -322,8 +333,8 @@ const TeamFilterModal = ({ teamModal, setTeamModal, fetchLeagueFilter,
                 className="Close"
                 onClick={() => {
                   dispatch(InitailizeState());
-                  dispatch(MenuNum(3));
-                  setTeamModal(false);
+                  dispatch(MenuNum(2));
+                  dispatch(CompareModal(false));
                   history.push("/team");
                   setTeamFilter([]);
                   setOppTeamFilter([]);

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
 import { useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { MenuNum, InitailizeState } from "../../redux/modules/filtervalue";
+import { MenuNum, InitailizeState, CompareModal } from "../../redux/modules/filtervalue";
 import { UserLogout } from "../../redux/modules";
 
 import LocaleDropdown from "../Nav/LocaleDropdown";
@@ -31,62 +31,62 @@ function Sidebar() {
 
   //onClick 이벤트가 발생할때마다 해당 path로 이동
   const menus = [
-    {
+    { // menus[0] Home
       name: t("sidebar.part1"),
       path: "/",
       image: "/Images/sidebar_newLogo/ico-home.png",
     },
-    {
+    { // menus[1] 리그 보고서
       name: t("sidebar.part2"),
       path: "/league",
       image: "/Images/sidebar_newLogo/ico-league.png",
     },
-    {
+    { // menus[2] 팀 보고서
       name: t("sidebar.part3"),
       path: "/team",
       image: "/Images/sidebar_newLogo/ico-team.png",
     },
-    {
+    { // menus[3] 메타 분석
       name: t("sidebar.part4"),
       path: "/metaAnalysis",
       image: "/Images/sidebar_newLogo/ico-meta.png",
     },
-    {
+    { // menus[4] 선수 보고서
       name: t("sidebar.part5"),
       path: "/solo",
       image: "/Images/sidebar_newLogo/ico-player.png",
     },
-    {
+    { // menus[5] 영상 보고서
       name: t("sidebar.part6"),
       path: "/video",
       image: "/Images/sidebar_newLogo/ico-movie.png",
     },
-    {
+    { // menus[6] 매치 분석
       name: t("sidebar.part7"),
       path: "/matchAnalysis",
       image: "/Images/sidebar_newLogo/ico-match.png",
     },
-    {
+    { // menus[7] 팀 비교
       name: t("sidebar.part8"),
       path: "/teamCompare",
       image: "/Images/sidebar_newLogo/ico-teamcom.png",
     },
-    {
+    { // menus[8] 선수 비교
       name: t("sidebar.part9"),
       path: "/playerCompare",
       image: "/Images/sidebar_newLogo/ico-playercom.png",
     },
-    {
+    { // menus[9] 아이템 시뮬레이터
       name: t("sidebar.part10"),
       path: "/simulator",
       image: "/Images/ico-itemsimulator.png",
     },
-    {
+    { // menus[10] 픽 계산기
       name: t("sidebar.part11"),
       path: "/calculator",
       image: "/Images/ico-pick-calculator.png",
     },
-    {
+    { // menus[11] 게임 보고서
       name: t("sidebar.part12"),
       path: "/gameReport",
       image: "/Images/sidebar_newLogo/ico_game.png",
@@ -146,7 +146,7 @@ function Sidebar() {
         </Info>
       */}
         <MenuList>
-          <MenuWrapper
+          <MenuWrapper // Home
             onClick={() => {
               history.push(menus[0].path);
               dispatch(InitailizeState());
@@ -157,7 +157,7 @@ function Sidebar() {
             <img src={menus[0].image} alt="menu"></img>
             <div className="Name">{menus[0].name}</div>
           </MenuWrapper>
-          <MenuWrapper
+          <MenuWrapper // 리그 보고서
             onClick={() => {
               history.push(menus[1].path);
               dispatch(InitailizeState());
@@ -168,7 +168,7 @@ function Sidebar() {
             <img src={menus[1].image} alt="menu"></img>
             <div className="Name">{menus[1].name}</div>
           </MenuWrapper>
-          <MenuWrapper
+          <MenuWrapper // 팀 보고서
             onClick={() => {
               history.push(menus[2].path);
               dispatch(InitailizeState());
@@ -179,7 +179,7 @@ function Sidebar() {
             <img src={menus[2].image} alt="menu"></img>
             <div className="Name">{menus[2].name}</div>
           </MenuWrapper>
-          <MenuWrapper
+          <MenuWrapper // 메타 분석
             onClick={() => {
               history.push(menus[3].path);
               dispatch(InitailizeState());
@@ -190,7 +190,7 @@ function Sidebar() {
             <img src={menus[3].image} alt="menu"></img>
             <div className="Name">{menus[3].name}</div>
           </MenuWrapper>
-          <MenuWrapper
+          <MenuWrapper // 선수 보고서
             onClick={() => {
               history.push(menus[4].path);
               dispatch(InitailizeState());
@@ -201,7 +201,7 @@ function Sidebar() {
             <img src={menus[4].image} alt="menu"></img>
             <div className="Name">{menus[4].name}</div>
           </MenuWrapper>
-          <MenuWrapper
+          <MenuWrapper // 영상 보고서
             onClick={() => {
               history.push(menus[5].path);
               dispatch(InitailizeState());
@@ -215,7 +215,7 @@ function Sidebar() {
             ></img>
             <div className="Name">{menus[5].name}</div>
           </MenuWrapper>
-          <MenuWrapper
+          <MenuWrapper // 게임 보고서
             onClick={() => {
               history.push(menus[11].path);
               dispatch(InitailizeState());
@@ -229,7 +229,7 @@ function Sidebar() {
             ></img>
             <div className="Name">{menus[11].name}</div>
           </MenuWrapper>
-          <MenuWrapper
+          <MenuWrapper // 매치 분석
             onClick={() => {
               history.push(menus[6].path);
               dispatch(InitailizeState());
@@ -240,7 +240,7 @@ function Sidebar() {
             <img src={menus[6].image} alt="menu"></img>
             <div className="Name">{menus[6].name}</div>
           </MenuWrapper>
-          <MenuWrapper
+          <MenuWrapper // 팀 비교
             onClick={() => {
               history.push(menus[7].path);
               dispatch(InitailizeState());
@@ -251,7 +251,7 @@ function Sidebar() {
             <img src={menus[7].image} alt="menu"></img>
             <div className="Name">{menus[7].name}</div>
           </MenuWrapper>
-          <MenuWrapper
+          <MenuWrapper // 선수 비교
             onClick={() => {
               history.push(menus[8].path);
               dispatch(InitailizeState());

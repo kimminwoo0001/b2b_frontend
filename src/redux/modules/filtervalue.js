@@ -35,9 +35,10 @@ export const RESET_YEAR = "filtervalue/RESET_YEAR";
 export const RESET_SEASON = "filtervalue/RESET_SEASON";
 export const RESET_TEAM = "filtervalue/RESET_TEAM";
 export const FILTER_MENU_SWITCH = "filtervalue/FILTER_MENU_SWITCH";
-export const CONVERSION_LEAGUE = "filtervalue/CONVERSION_LEAGUE";
-export const CONVERSION_SEASON_INIT = "filtervalue/CONVERSION_SEASON_INIT";
-
+export const SET_LEAGUE = "filtervalue/SET_LEAGUE";
+export const SET_YEAR = "filtervalue/SET_YEAR";
+export const SET_SEASON = "filtervalue/SET_SEASON";
+export const COMPARE_MODAL = "filtervalue/COMPARE_MODAL";
 
 export const Reset_MapTab = (payload) => {
   return {
@@ -282,16 +283,30 @@ export const FilterMenuSwitch = (payload) => {
   }
 }
 
-export const ConversionLeague = (payload) => {
+export const SetLeague = (payload) => {
   return {
-    type: CONVERSION_LEAGUE,
+    type: SET_LEAGUE,
     payload
   }
 }
 
-export const ConversionSeasonInit = (payload) => {
+export const SetYear = (payload) => {
   return {
-    type: CONVERSION_SEASON_INIT,
+    type: SET_YEAR,
+    payload
+  }
+}
+
+export const SetSeason = (payload) => {
+  return {
+    type: SET_SEASON,
+    payload
+  }
+}
+
+export const CompareModal = (payload) => {
+  return {
+    type: COMPARE_MODAL,
     payload
   }
 }
@@ -320,7 +335,8 @@ const initialState = {
   click: 0,
   gameid: "",
   menu_num: "",
-  filterMenuState: true
+  filterMenuState: true,
+  compareModal: true
 };
 
 export default function FilterReducer(state = initialState, action) {
@@ -376,10 +392,10 @@ export default function FilterReducer(state = initialState, action) {
     case OPP_TEAM:
       return { ...state, oppteam: action.payload };
     case PLAYER:
-      if (state.player.length === 0) {
-        return { ...state, player: action.payload };
-      } else {
+      if (state.player === action.payload) {
         return { ...state, player: "" };
+      } else {
+        return { ...state, player: action.payload };
       }
     case OPP_PLAYER:
       return { ...state, oppplayer: action.payload };
@@ -548,15 +564,25 @@ export default function FilterReducer(state = initialState, action) {
         ...state,
         filterMenuState: action.payload
       }
-    case CONVERSION_LEAGUE:
+    case SET_LEAGUE:
       return {
         ...state,
         league: action.payload
       }
-    case CONVERSION_SEASON_INIT:
+    case SET_YEAR:
+      return {
+        ...state,
+        year: action.payload
+      }
+    case SET_SEASON:
       return {
         ...state,
         season: action.payload
+      }
+    case COMPARE_MODAL:
+      return {
+        ...state,
+        compareModal: action.payload
       }
     default:
       return state;

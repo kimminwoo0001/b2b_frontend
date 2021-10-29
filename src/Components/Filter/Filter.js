@@ -16,7 +16,8 @@ import {
   HandleTab,
   ResetFilter2,
   PatchFull,
-  ConversionSeasonInit,
+  SetSeason,
+  SetYear,
 } from "../../redux/modules/filtervalue";
 import axios from "axios";
 import styled, { css } from "styled-components";
@@ -31,12 +32,11 @@ import SelectedFilter from "./Selected/SelectedFilter";
 import { gsap } from "gsap"; // 애니메이션 추가
 import FilterItem from "./FilterItem";
 import TeamFilterModal from "./TeamFilterModal";
-import PlayerFilterModal from "../../Pages/PlayerCompare/PlayerFilterModal";
+import PlayerFilterModal from "./PlayerFilterModal";
 
 const Filter = memo(() => {
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
-  const lang = useSelector((state) => state.LocaleReducer);
   const staticvalue = useSelector((state) => state.StaticValueReducer);
 
   const dispatch = useDispatch();
@@ -52,8 +52,6 @@ const Filter = memo(() => {
   const [team, setTeam] = useState(filters.team);
   const [player, setPlayer] = useState(filters.player);
   const [patch, setPatch] = useState(filters.patch);
-  const [teamModal, setTeamModal] = useState(false); //팀 비교 모달창 상태 값
-  const [playerModal, setPlayerModal] = useState(false); //플레이어 비교 마달창 상태 값
   const { t } = useTranslation();
 
   const nameLeague = '/league';
@@ -81,11 +79,7 @@ const Filter = memo(() => {
 
   // 페이지 오픈 시, 리그 데이터를 받아오도록 추가.
   useEffect(() => {
-    if (pagePath === nameTeamCompare) {
-      setTeamModal(true);
-    } else if (pagePath === namePlayerCompare) {
-      setPlayerModal(true);
-    } else {
+    if (isComparePage === false) {
       fetchLeagueFilter();
     }
   }, []);
@@ -162,15 +156,11 @@ const Filter = memo(() => {
   }, [filters.patchfilter])
 
   useEffect(() => {
-    if (filters.menu_num === 7) {
+    if (isComparePage) {
       fetchYearFilter();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.menu_num]);
-
-  useEffect(() => {
-    console.log("teamModal", teamModal);
-  }, [teamModal])
+  }, [filters.compareModal]);
 
   const fetchActiveFilter = () => {
     if (leagueFilter?.length > 0)
@@ -209,7 +199,7 @@ const Filter = memo(() => {
         yearList.push(Object.keys(Object.values(staticvalue.filterObjects)[i])[0]);
       }
       const recentYear = yearList.filter((item, pos) => yearList.indexOf(item) === pos).sort().reverse();
-      dispatch(Year(recentYear[0]));
+      dispatch(SetYear([recentYear[0]]));
       setYearFilter(recentYear);
     } else {
       if (filters.league.length === 0) {
@@ -220,7 +210,7 @@ const Filter = memo(() => {
           yearList = yearList.concat(ObjectKeys);
         }
         yearList = yearList.filter((item, pos) => yearList.indexOf(item) === pos).sort().reverse();
-        dispatch(Year(yearList[0]));
+        dispatch(Year(yearList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택 
       }
       setYearFilter(yearList);
     }
@@ -237,14 +227,14 @@ const Filter = memo(() => {
       }
       seasonList = seasonList.filter((item, pos) => seasonList.indexOf(item) === pos);
       if (filters.season.length === 0) {
-        dispatch(Season(seasonList[0]));
+        dispatch(Season(seasonList[0]));  // 리그 선택 시, 가장 최근 Year, Season을 자동 선택 
       };
     } else {
       dispatch(ResetSeason())
     }
     setSeasonFilter(seasonList);
     if (isComparePage) {
-      dispatch(ConversionSeasonInit(seasonList));
+      dispatch(SetSeason(seasonList));
       fetchingTeamFilter();
     }
   };
@@ -348,7 +338,7 @@ const Filter = memo(() => {
     <>
       {pagePath === nameTeamCompare
         && <TeamFilterModal
-          teamModal={teamModal} setTeamModal={setTeamModal}
+          teamModal={filters.compareModal}
           fetchLeagueFilter={fetchLeagueFilter}
           leagueFilter={leagueFilter}
           seasonFilter={seasonFilter}
@@ -356,7 +346,7 @@ const Filter = memo(() => {
         />}
       {pagePath === namePlayerCompare
         && <PlayerFilterModal
-          playerModal={playerModal} setPlayerModal={setPlayerModal}
+          playerModal={filters.compareModal}
           fetchLeagueFilter={fetchLeagueFilter}
           leagueFilter={leagueFilter}
           seasonFilter={seasonFilter}

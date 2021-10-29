@@ -15,6 +15,7 @@ function PlayerCompare() {
 
   return (
     <ErrorBoundary>
+      <Nav />
       <SoloWrapper>
         <SideBar />
         <div className={filters.filterMenuState ? "filter-open" : "filter-close"}>
@@ -24,7 +25,7 @@ function PlayerCompare() {
           <CloseFilter />
         </div>
         <ContentWrapper>
-          <Nav />
+
           {filters.player !== "" ? <Player /> : <SelectFilter />}
         </ContentWrapper>
       </SoloWrapper>
