@@ -63,14 +63,14 @@ function TeamTabs() {
                 changeColor={filters.tab === 0}
               >
                 <div>{t("team.tab.draft")}</div>
-                <img
+                {/* <img
                   src={
                     filters.tab === 0
                       ? "Images/ico-1depth-arrow-on.png"
                       : "Images/ico-1depth-arrow-off.png"
                   }
                   alt="arrowIcon"
-                ></img>
+                ></img> */}
               </Pick>
 
               {filters.league.indexOf("lpl") === -1 ? (
@@ -82,14 +82,14 @@ function TeamTabs() {
                   changeColor={filters.tab === 1}
                 >
                   <div>{t("team.tab.analysis")}</div>
-                  <img
+                  {/* <img
                     src={
                       filters.tab === 1
                         ? "Images/ico-1depth-arrow-on.png"
                         : "Images/ico-1depth-arrow-off.png"
                     }
                     alt="arrowIcon"
-                  ></img>
+                  ></img> */}
                 </Statistics>
               ) : (
                 <div></div>
@@ -104,7 +104,7 @@ function TeamTabs() {
                   changeColor={filters.tab === 2}
                 >
                   <div>
-                    {filters.getoppteam ? (
+                    {/* {filters.getoppteam ? (
                       <div className="GetOpp">
                         <div>{t("team.tab.comparison")}:</div>
                         <img
@@ -118,16 +118,17 @@ function TeamTabs() {
                       </div>
                     ) : (
                       t("team.tab.comparison")
-                    )}
+                    )} */}
+                    {t("team.tab.comparison")}
                   </div>
-                  <img
+                  {/* <img
                     src={
                       filters.tab === 2
                         ? "Images/ico-1depth-arrow-on.png"
                         : "Images/ico-1depth-arrow-off.png"
                     }
                     alt="arrowIcon"
-                  ></img>
+                  ></img> */}
                 </TeamCompare>
               ) : (
                 <div></div>
@@ -148,6 +149,8 @@ const TeamTabsWrapper = styled.div`
   margin: 21px 0 25px 22px;
   width: 1097px;
   /* height: calc(100vh - 95px); */
+  background-color: #16151a;
+  
 `;
 
 const TabContainer = styled.ul`
@@ -166,7 +169,7 @@ const TabContainer = styled.ul`
 //   ${(props) =>
 //     props.changeColor &&
 //     css`
-//       color: #f04545;
+//       color: #fff;
 //       border-bottom: 2px solid #f04545;
 //     `}
 //   div {
@@ -193,8 +196,8 @@ const Pick = styled.li`
   ${(props) =>
     props.changeColor &&
     css`
-      color: #f04545;
-      border-bottom: 2px solid #f04545;
+      color: #fff;
+      /* border-bottom: 2px solid #f04545; */
     `}
   div {
     width: auto;
@@ -220,8 +223,8 @@ const Statistics = styled.li`
   ${(props) =>
     props.changeColor &&
     css`
-      color: #f04545;
-      border-bottom: 2px solid #f04545;
+      color: #fff;
+      /* border-bottom: 2px solid #f04545; */
     `}
   div {
     width: auto;
@@ -247,8 +250,8 @@ const TeamCompare = styled.li`
   ${(props) =>
     props.changeColor &&
     css`
-      color: #f04545;
-      border-bottom: 2px solid #f04545;
+      color: #fff;
+      /* border-bottom: 2px solid #f04545; */
     `}
   div {
     width: auto;

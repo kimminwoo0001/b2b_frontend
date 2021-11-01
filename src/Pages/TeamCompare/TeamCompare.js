@@ -54,4 +54,5 @@ const ContentWrapper = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
+  background-color: #16151a;
 `;

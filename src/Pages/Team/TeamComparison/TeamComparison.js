@@ -18,27 +18,27 @@ function TeamComparison({ filteredData }) {
   return (
     <TeamCompareTabWrapper>
       <TeamCompareTab>
-        <InGameTab
+        <Tab
           onClick={() => setIsClicked(0)}
           changeColor={isClicked === 0}
         >
           <div>{t("team.comparison.ingamesStat")}</div>
-        </InGameTab>
+        </Tab>
         <LineMargin></LineMargin>
-        <PositionTab
+        <Tab
           onClick={() => setIsClicked(1)}
           changeColor={isClicked === 1}
         >
           <div>{t("team.comparison.lanes")}</div>
-        </PositionTab>
+        </Tab>
 
         <LineMargin></LineMargin>
-        {/* <ReportTab
+        {/* <Tab
           onClick={() => setIsClicked(2)}
           changeColor={isClicked === 2}
         >
           <div>{t("team.comparison.insights")}</div>
-        </ReportTab> */}
+        </Tab> */}
         <LastMargin></LastMargin>
       </TeamCompareTab>
       <TabContents>{currentTab[isClicked]}</TabContents>
@@ -54,6 +54,7 @@ const TeamCompareTab = styled.div`
   display: flex;
   margin-top: 21.5px;
 `;
+
 const LastMargin = styled.div`
   width: 842px;
   border-bottom: solid 1px rgb(124, 119, 139);
@@ -64,23 +65,23 @@ const LineMargin = styled.div`
   border-bottom: solid 1px rgb(124, 119, 139);
 `;
 
-const PositionTab = styled.button`
+const Tab = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 125px;
   height: 36px;
-  border: solid 1px rgb(67, 63, 78);
+  padding-bottom: 20px;
   color: rgb(132, 129, 142);
   border-bottom: 1px solid rgb(124, 119, 139);
   ${(props) =>
     props.changeColor &&
     css`
       color: rgb(255, 255, 255);
-      border-top: solid 1px rgb(124, 119, 139);
-      border-right: solid 1px rgb(124, 119, 139);
-      border-left: solid 1px rgb(124, 119, 139);
-      border-bottom: none;
+      border-top: none;
+      border-right: none;
+      border-left: none;
+      border-bottom: 1px solid  #fff;
     `}
 
   div {
@@ -90,32 +91,7 @@ const PositionTab = styled.button`
     text-align: center;
   }
 `;
-
-const InGameTab = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 125px;
-  height: 36px;
-  border: solid 1px rgb(67, 63, 78);
-  color: rgb(132, 129, 142);
-  border-bottom: 1px solid rgb(124, 119, 139);
-  ${(props) =>
-    props.changeColor &&
-    css`
-      color: rgb(255, 255, 255);
-      border-top: solid 1px rgb(124, 119, 139);
-      border-right: solid 1px rgb(124, 119, 139);
-      border-left: solid 1px rgb(124, 119, 139);
-      border-bottom: none;
-    `}
-  div {
-    width: auto;
-    font-family: Poppins;
-    font-size: 13px;
-    text-align: center;
-  }
-`;
+;
 
 // const ReportTab = styled.div`
 //   display: flex;
@@ -145,4 +121,6 @@ const InGameTab = styled.button`
 //   }
 // `;
 
-const TabContents = styled.div``;
+const TabContents = styled.div`
+
+`;

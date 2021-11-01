@@ -65,7 +65,7 @@ const Filter = memo(() => {
   const [isActiveLeague, setIsActiveLeague] = useDetectOutsideClick(
     dropdownRef,
     false
-  );
+  );  
   const [isActiveTeam, setIsActiveTeam] = useDetectOutsideClick(
     dropdownRef,
     false
@@ -93,7 +93,7 @@ const Filter = memo(() => {
       setLeague(filters.league);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.league]); // 배열은 어떡하라고
+  }, [filters.league]); 
 
   useEffect(() => {
     if (JSON.stringify(year) !== JSON.stringify(filters.year)) {
