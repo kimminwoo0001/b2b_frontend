@@ -279,7 +279,8 @@ function PlayerBoard() {
             <div className="PerformanceTitle">
               {t("solo.playerboard.avgScore")}
             </div>
-            <div className="PerformanceValue">{sbr?.sbrAvg.toFixed(1)}</div>
+
+            <div className="PerformanceValue">{sbr?.sbrAvg.toFixed(1)} / {sbr?.price > 0 ? sbr?.price : "출전 경기 부족"}</div>
           </div>
           <div className="AverageBoxTwo">
             <div className="PerformanceTitle">
