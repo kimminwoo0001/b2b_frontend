@@ -57,7 +57,7 @@ function PlayerBoard() {
 
   useEffect(() => {
     GetPlayerBoardData();
-    GetPlayerSummary();
+    //GetPlayerSummary();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.player, filters.resetchamp, filters.patch, lang]);
 
@@ -173,26 +173,26 @@ function PlayerBoard() {
   };
 
   //선수 키워드 fetch 함수
-  const GetPlayerSummary = async () => {
-    const response = await axios.request({
-      method: "GET",
-      url: `${API}/api/report/player/select`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        player: filters.player,
-        team: filters.team,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      },
-    });
-    setSummary(response.data.summary);
-  };
+  // const GetPlayerSummary = async () => {
+  //   const response = await axios.request({
+  //     method: "GET",
+  //     url: `${API}/api/report/player/select`,
+  //     params: {
+  //       league: filters.league,
+  //       year: filters.year,
+  //       season: filters.season,
+  //       patch: filters.patch,
+  //       player: filters.player,
+  //       team: filters.team,
+  //       token: user.token,
+  //       id: user.id,
+  //     },
+  //     paramsSerializer: (params) => {
+  //       return qs.stringify(params, { arrayFormat: "repeat" });
+  //     },
+  //   });
+  //   setSummary(response.data.summary);
+  // };
 
   // 그래프 세팅 값
   const MatchChart = {
