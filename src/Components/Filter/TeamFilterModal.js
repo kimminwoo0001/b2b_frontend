@@ -34,6 +34,7 @@ const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
   //사이드바에 있는 팀 비교 탭 모달창
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
+  const selector = useSelector((state) => state.SelectorReducer);
   const dispatch = useDispatch();
   const dropdownRef = useRef(null);
   const { t } = useTranslation();
@@ -155,8 +156,8 @@ const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
                                 //fetchingPatchFilter(league);
                                 // dispatch(ResetFilter(league));
                                 // dispatch(ConvertedLeague(league));
-                                setTeamFilter([]);
-                                setOppTeamFilter([]);
+                                league !== filters.league[0] && dispatch(setTeamFilter([]));
+                                league !== filters.league[0] && setOppTeamFilter([]);
                               }}
                               key={idx}
                             >
@@ -220,7 +221,7 @@ const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
             </PatchFilter>
             <PatchFilter>
               <label>Patch Version</label>
-              {!filters.patchfilter ? (
+              {!selector.patchFilter ? (
                 <PatchLabels>
                   <img
                     className="ChampIconImg"
@@ -236,7 +237,7 @@ const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
                   <span className="Label">{t("filters.patchLabel")}</span>
                 </PatchLabels>
               ) : (
-                filters.patchfilter?.map((patch, idx) => {
+                selector.patchFilter?.map((patch, idx) => {
                   return (
                     <SelectedPatch
                       key={idx}
@@ -334,7 +335,7 @@ const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
                   dispatch(MenuNum(2));
                   dispatch(CompareModal(false));
                   history.push("/team");
-                  setTeamFilter([]);
+                  dispatch(setTeamFilter([]));
                   setOppTeamFilter([]);
                 }}
               >

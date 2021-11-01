@@ -263,7 +263,7 @@ function Filter() {
         </Filters>
         <Filters>
           <label>Patch Version</label>
-          {!filters.patchfilter ? (
+          {!selector.patchFilter ? (
             // 리그가 선택되지 않았을 때 보여주는 레이아웃
             <PatchLabels>
               <img
@@ -280,7 +280,7 @@ function Filter() {
               <span className="Label">{t("filters.patchLabel")}</span>
             </PatchLabels>
           ) : (
-            filters.patchfilter?.map((patch, idx) => {
+            selector.patchFilter?.map((patch, idx) => {
               return (
                 // 리그가 선택되었을때 보여주는 체크박스와 패치 리스트
                 <Selected

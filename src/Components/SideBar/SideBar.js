@@ -7,6 +7,7 @@ import { MenuNum, InitailizeState, CompareModal } from "../../redux/modules/filt
 import { UserLogout } from "../../redux/modules";
 
 import LocaleDropdown from "../Nav/LocaleDropdown";
+import { SelectorInitailizeState } from "../../redux/modules/selectorvalue";
 
 function Sidebar() {
   //팀 비교 모달창 상태 값
@@ -150,6 +151,7 @@ function Sidebar() {
             onClick={() => {
               history.push(menus[0].path);
               dispatch(InitailizeState());
+              dispatch(SelectorInitailizeState());
               dispatch(MenuNum(0));
             }}
             changeColor={pathName === "/"}
@@ -161,6 +163,7 @@ function Sidebar() {
             onClick={() => {
               history.push(menus[1].path);
               dispatch(InitailizeState());
+              dispatch(SelectorInitailizeState());
               dispatch(MenuNum(1));
             }}
             changeColor={pathName === "/league"}
@@ -172,6 +175,7 @@ function Sidebar() {
             onClick={() => {
               history.push(menus[2].path);
               dispatch(InitailizeState());
+              dispatch(SelectorInitailizeState());
               dispatch(MenuNum(2));
             }}
             changeColor={pathName === "/team"}
@@ -194,6 +198,7 @@ function Sidebar() {
             onClick={() => {
               history.push(menus[4].path);
               dispatch(InitailizeState());
+              dispatch(SelectorInitailizeState());
               dispatch(MenuNum(4));
             }}
             changeColor={pathName === "/solo"}
@@ -205,6 +210,7 @@ function Sidebar() {
             onClick={() => {
               history.push(menus[5].path);
               dispatch(InitailizeState());
+              dispatch(SelectorInitailizeState());
               dispatch(MenuNum(5));
             }}
             changeColor={pathName === "/video"}
@@ -244,6 +250,7 @@ function Sidebar() {
             onClick={() => {
               history.push(menus[7].path);
               dispatch(InitailizeState());
+              dispatch(SelectorInitailizeState());
               dispatch(MenuNum(7));
             }}
             changeColor={pathName === "/teamCompare"}
@@ -255,6 +262,7 @@ function Sidebar() {
             onClick={() => {
               history.push(menus[8].path);
               dispatch(InitailizeState());
+              dispatch(SelectorInitailizeState());
               dispatch(MenuNum(8));
             }}
             changeColor={pathName === "/playerCompare"}

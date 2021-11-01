@@ -18,7 +18,9 @@ import {
   PatchFull,
   SetSeason,
   SetYear,
+  SetPatch,
 } from "../../redux/modules/filtervalue";
+import { setLeagueFilter, setPatchFilter, setPlayerFilter, setSeasonFilter, setTeamFilter, setYearFilter } from '../../redux/modules/selectorvalue'
 import axios from "axios";
 import styled, { css } from "styled-components";
 import { API } from "../../Pages/config";
@@ -38,13 +40,9 @@ const Filter = memo(() => {
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
   const staticvalue = useSelector((state) => state.StaticValueReducer);
+  const selector = useSelector((state) => state.SelectorReducer);
 
   const dispatch = useDispatch();
-  const [leagueFilter, setLeagueFilter] = useState([]);
-  const [yearFilter, setYearFilter] = useState([]);
-  const [seasonFilter, setSeasonFilter] = useState([]);
-  const [teamFilter, setTeamFilter] = useState([]);
-  const [playerFilter, setPlayerFilter] = useState([]);
 
   const [league, setLeague] = useState(filters.league);
   const [year, setYear] = useState(filters.year);
@@ -152,10 +150,6 @@ const Filter = memo(() => {
   }, [filters.patch])
 
   useEffect(() => {
-
-  }, [filters.patchfilter])
-
-  useEffect(() => {
     if (isComparePage) {
       fetchYearFilter();
     }
@@ -163,17 +157,17 @@ const Filter = memo(() => {
   }, [filters.compareModal]);
 
   const fetchActiveFilter = () => {
-    if (leagueFilter?.length > 0)
+    if (selector.leagueFilter?.length > 0)
       fetchLeagueFilter();
-    if (yearFilter?.length > 0)
+    if (selector.yearFilter?.length > 0)
       fetchYearFilter();
-    if (seasonFilter?.length > 0)
+    if (selector.seasonFilter?.length > 0)
       fetchSeasonFilter();
-    if (teamFilter?.length > 0)
+    if (selector.teamFilter?.length > 0)
       fetchingTeamFilter();
-    if (playerFilter?.length > 0)
+    if (selector.playerFilter?.length > 0)
       fetchingPlayerFilter();
-    if (filters?.patchfilter > 0)
+    if (filters?.patchFilter > 0)
       fetchingPatchFilter();
   }
 
@@ -188,7 +182,7 @@ const Filter = memo(() => {
     } else {
       leagueList = Object.keys(staticvalue.filterObjects);
     }
-    setLeagueFilter(leagueList.sort());
+    dispatch(setLeagueFilter(leagueList.sort()));
   };
 
   const fetchYearFilter = () => {
@@ -200,7 +194,7 @@ const Filter = memo(() => {
       }
       const recentYear = yearList.filter((item, pos) => yearList.indexOf(item) === pos).sort().reverse();
       dispatch(SetYear([recentYear[0]]));
-      setYearFilter(recentYear);
+      dispatch(setYearFilter(recentYear));
     } else {
       if (filters.league.length === 0) {
         dispatch(ResetYear())
@@ -212,7 +206,7 @@ const Filter = memo(() => {
         yearList = yearList.filter((item, pos) => yearList.indexOf(item) === pos).sort().reverse();
         dispatch(Year(yearList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택 
       }
-      setYearFilter(yearList);
+      dispatch(setYearFilter(yearList));
     }
   };
 
@@ -232,7 +226,7 @@ const Filter = memo(() => {
     } else {
       dispatch(ResetSeason())
     }
-    setSeasonFilter(seasonList);
+    dispatch(setSeasonFilter(seasonList));
     if (isComparePage) {
       dispatch(SetSeason(seasonList));
       fetchingTeamFilter();
@@ -256,7 +250,7 @@ const Filter = memo(() => {
     } else {
       dispatch(ResetTeam())
     }
-    setTeamFilter(teamList);
+    dispatch(setTeamFilter(teamList));
   };
 
   //플레이어 필터 fetch 함수
@@ -310,7 +304,7 @@ const Filter = memo(() => {
     } else {
       dispatch(ResetPlayer())
     }
-    setPlayerFilter(players);
+    dispatch(setPlayerFilter(players));
   };
 
   // 패치 필터 fetch 함수
@@ -330,7 +324,8 @@ const Filter = memo(() => {
       },
     });
     const patchResponse = result.data.patch ?? [];
-    dispatch(PatchFull(patchResponse ?? []));
+    dispatch(setPatchFilter(patchResponse));
+    dispatch(SetPatch(patchResponse));
   };
 
   //팀 필터 fetch 함수
@@ -340,18 +335,18 @@ const Filter = memo(() => {
         && <TeamFilterModal
           teamModal={filters.compareModal}
           fetchLeagueFilter={fetchLeagueFilter}
-          leagueFilter={leagueFilter}
-          seasonFilter={seasonFilter}
-          teamFilter={teamFilter} setTeamFilter={setTeamFilter}
+          leagueFilter={selector.leagueFilter}
+          seasonFilter={selector.seasonFilter}
+          teamFilter={selector.teamFilter} setTeamFilter={setTeamFilter}
         />}
       {pagePath === namePlayerCompare
         && <PlayerFilterModal
           playerModal={filters.compareModal}
           fetchLeagueFilter={fetchLeagueFilter}
-          leagueFilter={leagueFilter}
-          seasonFilter={seasonFilter}
-          teamFilter={teamFilter} setTeamFilter={setTeamFilter}
-          playerFilter={playerFilter} setPlayerFilter={setPlayerFilter}
+          leagueFilter={selector.leagueFilter}
+          seasonFilter={selector.seasonFilter}
+          teamFilter={selector.teamFilter} setTeamFilter={setTeamFilter}
+          playerFilter={selector.playerFilter} setPlayerFilter={setPlayerFilter}
         />}
       <FilterWrapper>
         <FilterHeader />
@@ -363,8 +358,8 @@ const Filter = memo(() => {
           <FilterGroup>
             <FilterItem
               title={t("label.league")}
-              isHaveFilter={leagueFilter.length > 0 ? true : false}
-              multiFilter={leagueFilter?.map((league, idx) => {
+              isHaveFilter={selector.leagueFilter.length > 0 ? true : false}
+              multiFilter={selector.leagueFilter?.map((league, idx) => {
                 return (
                   <MultiSelectCb
                     idx={idx}
@@ -379,8 +374,8 @@ const Filter = memo(() => {
               })}
             />
             <FilterItem title={t("label.year")}
-              isHaveFilter={yearFilter.length > 0 ? true : false}
-              multiFilter={yearFilter?.map((year, idx) => {
+              isHaveFilter={selector.yearFilter.length > 0 ? true : false}
+              multiFilter={selector.yearFilter?.map((year, idx) => {
                 return (
                   <MultiSelectCb
                     idx={idx}
@@ -395,8 +390,8 @@ const Filter = memo(() => {
             />
 
             <FilterItem title={t("label.season")}
-              isHaveFilter={seasonFilter.length > 0 ? true : false}
-              multiFilter={seasonFilter?.map((season, idx) => {
+              isHaveFilter={selector.seasonFilter.length > 0 ? true : false}
+              multiFilter={selector.seasonFilter?.map((season, idx) => {
                 return (
                   <MultiSelectCb
                     idx={idx}
@@ -411,8 +406,8 @@ const Filter = memo(() => {
             />
 
             {isNeedTeam && <FilterItem title={t("label.team")}
-              isHaveFilter={teamFilter.length > 0 ? true : false}
-              multiFilter={teamFilter?.map((team, idx) => {
+              isHaveFilter={selector.teamFilter.length > 0 ? true : false}
+              multiFilter={selector.teamFilter?.map((team, idx) => {
                 return (
                   <MultiSelectCb
                     idx={idx}
@@ -429,8 +424,8 @@ const Filter = memo(() => {
             {
               pagePath === nameSolo &&
               <FilterItem title={t("label.player")}
-                isHaveFilter={playerFilter.length > 0 ? true : false}
-                multiFilter={playerFilter?.map((player, idx) => {
+                isHaveFilter={selector.playerFilter.length > 0 ? true : false}
+                multiFilter={selector.playerFilter?.map((player, idx) => {
                   return (
                     <MultiSelectCb
                       idx={idx}
@@ -451,8 +446,8 @@ const Filter = memo(() => {
               />
             }
             <FilterItem title={t("label.patchVersion")}
-              isHaveFilter={filters.patchfilter.length > 0 ? true : false}
-              multiFilter={filters.patchfilter?.map((patch, idx) => {
+              isHaveFilter={selector.patchFilter.length > 0 ? true : false}
+              multiFilter={selector.patchFilter?.map((patch, idx) => {
                 return (
                   <MultiSelectCb
                     idx={idx}

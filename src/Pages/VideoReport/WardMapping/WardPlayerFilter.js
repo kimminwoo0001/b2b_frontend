@@ -279,7 +279,7 @@ function WardPlayerFilter({
                                 year: filters.year,
                                 season: filters.season,
                                 patch: filters.patch,
-                                patchfilter: filters.patchfilter,
+
                                 team: team,
                                 player: "",
                                 champion_eng: "",
@@ -338,7 +338,7 @@ function WardPlayerFilter({
                                 year: filters.year,
                                 season: filters.season,
                                 patch: filters.patch,
-                                patchfilter: filters.patchfilter,
+
                                 team: filters.team,
                                 player: player,
                                 champion_eng: "",
@@ -397,7 +397,7 @@ function WardPlayerFilter({
                                 year: filters.year,
                                 season: filters.season,
                                 patch: filters.patch,
-                                patchfilter: filters.patchfilter,
+
                                 team: filters.team,
                                 player: filters.player,
                                 champion_eng: champion,
@@ -458,7 +458,7 @@ function WardPlayerFilter({
                                 year: filters.year,
                                 season: filters.season,
                                 patch: filters.patch,
-                                patchfilter: filters.patchfilter,
+
                                 team: filters.team,
                                 player: filters.player,
                                 champion_eng: filters.champion_eng,
@@ -517,7 +517,7 @@ function WardPlayerFilter({
                                 year: filters.year,
                                 season: filters.season,
                                 patch: filters.patch,
-                                patchfilter: filters.patchfilter,
+
                                 team: filters.team,
                                 player: filters.player,
                                 champion_eng: filters.champion_eng,
@@ -576,7 +576,7 @@ function WardPlayerFilter({
                                 year: filters.year,
                                 season: filters.season,
                                 patch: filters.patch,
-                                patchfilter: filters.patchfilter,
+
                                 team: filters.team,
                                 player: filters.player,
                                 champion_eng: filters.champion_eng,

@@ -5,7 +5,6 @@ import styled from "styled-components";
 import Nav from "../../Components/Nav/Nav";
 import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 import SideBar from "../../Components/SideBar/SideBar";
-import SoloFilter from "../Solo/Components/SoloFilter";
 import Player from "../Solo/Player";
 import ErrorBoundary from "../../Components/ErrorBoundary";
 import Filter from "../../Components/Filter/Filter";
@@ -25,7 +24,6 @@ function PlayerCompare() {
           <CloseFilter />
         </div>
         <ContentWrapper>
-
           {filters.player !== "" ? <Player /> : <SelectFilter />}
         </ContentWrapper>
       </SoloWrapper>

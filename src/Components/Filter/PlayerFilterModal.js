@@ -34,6 +34,7 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
   teamFilter, setTeamFilter, playerFilter, setPlayerFilter }) {
   // sidebar 선수 비교 눌렀을때 뜨는 모달창
   const filters = useSelector((state) => state.FilterReducer);
+  const selector = useSelector((state) => state.SelectorReducer);
   const user = useSelector((state) => state.UserReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -113,7 +114,7 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
         return qs.stringify(params, { arrayFormat: "repeat" });
       }
     });
-    setPlayerFilter(result.data);
+    dispatch(setPlayerFilter(result.data));
   };
 
   //상대 선수 필터 fetch 함수
@@ -206,8 +207,8 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
                                 setIsActiveLeague(!isActiveLeague);
                                 //dispatch(ResetFilter(league));
                                 //fetchingPatchFilter(league);
-                                setTeamFilter([]);
-                                setOppTeamFilter([]);
+                                league !== filters.league[0] && dispatch(setTeamFilter([]));
+                                league !== filters.league[0] && setOppTeamFilter([]);
                               }}
                               key={idx}
                             >
@@ -264,7 +265,7 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
             </PatchFilter>
             <PatchFilter>
               <label>Patch Version</label>
-              {!filters.patchfilter ? (
+              {!selector.patchFilter ? (
                 <PatchLabels>
                   <img
                     className="ChampIconImg"
@@ -280,7 +281,7 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
                   <span className="Label">{t("filters.patchLabel")}</span>
                 </PatchLabels>
               ) : (
-                filters.patchfilter?.map((patch, idx) => {
+                selector.patchFilter?.map((patch, idx) => {
                   return (
                     <SelectedPatch
                       key={idx}
@@ -427,8 +428,8 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
                   dispatch(MenuNum(4));
                   dispatch(CompareModal(false));
                   history.push("/solo");
-                  setTeamFilter([]);
-                  setPlayerFilter([]);
+                  dispatch(setTeamFilter([]));
+                  dispatch(setPlayerFilter([]));
                   setOppPlayerFilter([]);
                   setOppTeamFilter([]);
                 }}
