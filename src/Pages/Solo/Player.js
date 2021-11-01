@@ -102,7 +102,7 @@ function Player() {
                 alt="arrowIcon"
               ></img>
             </Comparison>
-            <TabContent
+            {/* <TabContent
               onClick={() => {
                 dispatch(HandleTab(3));
                 dispatch(ResetFilter2());
@@ -118,7 +118,7 @@ function Player() {
                 }
                 alt="arrowIcon"
               ></img>
-            </TabContent>
+            </TabContent> */}
           </TabContainer>
           <div>{BoardTab[filters.tab]}</div>
         </BoardWrapper>

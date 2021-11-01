@@ -62,7 +62,7 @@ function LeagueTab() {
           <div></div>
         )}
 
-        <Information
+        {/* <Information
           onClick={() => setActiveTab(3)}
           changeColor={activeTab === 3}
         >
@@ -75,7 +75,7 @@ function LeagueTab() {
             }
             alt="arrowIcon"
           ></img>
-        </Information>
+        </Information> */}
       </TabContainer>
       <div>{BoardTab[activeTab]}</div>
     </LeagueTabWrapper>

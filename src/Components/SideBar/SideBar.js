@@ -179,7 +179,7 @@ function Sidebar() {
             <img src={menus[2].image} alt="menu"></img>
             <div className="Name">{menus[2].name}</div>
           </MenuWrapper>
-          <MenuWrapper // 메타 분석
+          {/* <MenuWrapper // 메타 분석
             onClick={() => {
               history.push(menus[3].path);
               dispatch(InitailizeState());
@@ -189,7 +189,7 @@ function Sidebar() {
           >
             <img src={menus[3].image} alt="menu"></img>
             <div className="Name">{menus[3].name}</div>
-          </MenuWrapper>
+          </MenuWrapper> */}
           <MenuWrapper // 선수 보고서
             onClick={() => {
               history.push(menus[4].path);
@@ -215,7 +215,7 @@ function Sidebar() {
             ></img>
             <div className="Name">{menus[5].name}</div>
           </MenuWrapper>
-          <MenuWrapper // 게임 보고서
+          {/* <MenuWrapper // 게임 보고서
             onClick={() => {
               history.push(menus[11].path);
               dispatch(InitailizeState());
@@ -228,8 +228,8 @@ function Sidebar() {
               alt="menu"
             ></img>
             <div className="Name">{menus[11].name}</div>
-          </MenuWrapper>
-          <MenuWrapper // 매치 분석
+          </MenuWrapper> */}
+          {/* <MenuWrapper // 매치 분석
             onClick={() => {
               history.push(menus[6].path);
               dispatch(InitailizeState());
@@ -239,7 +239,7 @@ function Sidebar() {
           >
             <img src={menus[6].image} alt="menu"></img>
             <div className="Name">{menus[6].name}</div>
-          </MenuWrapper>
+          </MenuWrapper> */}
           <MenuWrapper // 팀 비교
             onClick={() => {
               history.push(menus[7].path);

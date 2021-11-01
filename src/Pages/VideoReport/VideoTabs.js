@@ -58,7 +58,7 @@ function VideoTabs() {
               alt="arrowIcon"
             ></img>
           </TabContent>
-          <TabContent
+          {/* <TabContent
             onClick={() => {
               dispatch(HandleTab(2));
               dispatch(Reset_MapTab());
@@ -74,7 +74,7 @@ function VideoTabs() {
               }
               alt="arrowIcon"
             ></img>
-          </TabContent>
+          </TabContent> */}
           <TabContent
             onClick={() => {
               dispatch(HandleTab(3));

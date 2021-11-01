@@ -168,15 +168,15 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
                       width="14px"
                       height="14px"
                       src={
-                        filters.convertleague !== ""
-                          ? `Images/ico-league-${filters.convertleague.toLowerCase()}.png`
+                        filters.league.length === 1
+                          ? `Images/ico-league-${filters.league[0].toLowerCase()}.png`
                           : "Images/ico-filter-none.png"
                       }
                       alt="champIcon"
                     />
                     <span className="Label">
-                      {filters.convertleague !== ""
-                        ? filters.convertleague
+                      {filters.league.length === 1
+                        ? filters.league
                         : t("filters.leagueLabel")}
                     </span>
                     <img

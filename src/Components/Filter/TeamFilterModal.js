@@ -104,7 +104,6 @@ const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
               <label>League</label>
               <DropDownToggle className="container">
                 <div className="menu-container">
-                  {console.log(filters)}
                   <button
                     onClick={() => {
                       setIsActiveLeague(!isActiveLeague);
@@ -117,13 +116,12 @@ const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
                       width="14px"
                       height="14px"
                       src={
-                        filters.convertleague !== ""
-                          ? `Images/ico-league-${filters.convertleague.toLowerCase()}.png`
+                        filters.league.length === 1
+                          ? `Images/ico-league-${filters.league[0].toLowerCase()}.png`
                           : "Images/ico-filter-none.png"
                       }
                       alt="champIcon"
                     />
-                    {console.log(filters.league)}
                     <span className="Label">
                       {filters.league.length === 1
                         ? filters.league
