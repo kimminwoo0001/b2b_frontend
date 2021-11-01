@@ -187,7 +187,8 @@
       "record": "Records",
       "total": "G",
       "win": "W",
-      "lose": "L"
+      "lose": "L",
+      "times" : "times"
     }
   },
   "solo": {

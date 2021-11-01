@@ -181,15 +181,17 @@ function CompareIngame() {
   return (
     <CompareIngameWrapper>
       <DisplayTeams>
-        <div className="RedSide"></div>
-        <div className="TeamOne">{teamName?.team}</div>
+        <div className="RedSide">
         <img
           src={`Images/TeamLogo/${filters.team}.png`}
           width="54px"
           height="54px"
           alt="teamIcon"
         />
+        <div className="TeamOne">{teamName?.team}</div>
+        </div>
         <div className="Vs">VS</div>
+        <div className="BlueSide">
         <img
           src={`Images/TeamLogo/${filters.oppteam}.png`}
           width="54px"
@@ -197,24 +199,26 @@ function CompareIngame() {
           alt="teamIcon"
         />
         <div className="TeamTwo">{teamName?.oppteam}</div>
-        <div className="BlueSide"></div>
+     
+        </div>
+         
       </DisplayTeams>
       <CompareStats>
-        <GameDataBox>
+        {/* <GameDataBox>
           <RedTeamData
-          // changeColor={redData?.IngameStats["gameTime"].result === true}
+          changeColor={redData?.IngameStats["gameTime"].result === true}
           >{`${redData?.IngameStats["match"]}${t("team.comparison.total")} ${redData?.IngameStats["win"]
             }${t("team.comparison.win")} ${redData?.IngameStats["lose"]}${t(
               "team.comparison.lose"
             )}`}</RedTeamData>
           <AverageLabel>{t("team.comparison.record")}</AverageLabel>
           <BlueTeamData
-          // changeColor={blueData?.IngameStats["gameTime"].result === true}
+          changeColor={blueData?.IngameStats["gameTime"].result === true}
           >{`${blueData?.IngameStats["match"]}${t("team.comparison.total")} ${blueData?.IngameStats["win"]
             }${t("team.comparison.win")} ${blueData?.IngameStats["lose"]}${t(
               "team.comparison.lose"
             )}`}</BlueTeamData>
-        </GameDataBox>
+        </GameDataBox> */}
         <GameDataBox>
           <RedTeamData
             changeColor={redData?.IngameStats["gameTime"].result === true}
@@ -252,13 +256,16 @@ function CompareIngame() {
         <GameDataBox>
           <RedTeamData
             changeColor={redData?.IngameStats["dragons"].result === true}
-          >{`${redData?.IngameStats["dragons"].value.toFixed(1)}`}</RedTeamData>
+          >{`${redData?.IngameStats["dragons"].value.toFixed(1)}${t(
+            "team.comparison.times"
+          )}`}</RedTeamData>
           <AverageLabel>{t("team.comparison.slayedDragon")}</AverageLabel>
           <BlueTeamData
             changeColor={blueData?.IngameStats["dragons"].result === true}
           >{`${blueData?.IngameStats["dragons"].value.toFixed(
-            1
-          )}`}</BlueTeamData>
+            1)}${t(
+              "team.comparison.times"
+            )}`}</BlueTeamData>
         </GameDataBox>
         <GameDataBox>
           <RedTeamData
@@ -280,23 +287,31 @@ function CompareIngame() {
         <GameDataBox>
           <RedTeamData
             changeColor={redData?.IngameStats["heralds"].result === true}
-          >{`${redData?.IngameStats["heralds"].value.toFixed(1)}`}</RedTeamData>
+          >{`${redData?.IngameStats["heralds"].value.toFixed(1)}${t(
+            "team.comparison.times"
+          )}`}</RedTeamData>
           <AverageLabel>{t("team.comparison.avgHerald")}</AverageLabel>
           <BlueTeamData
             changeColor={blueData?.IngameStats["heralds"].result === true}
           >{`${blueData?.IngameStats["heralds"].value.toFixed(
             1
+          )}${t(
+            "team.comparison.times"
           )}`}</BlueTeamData>
         </GameDataBox>
         <GameDataBox>
           <RedTeamData
             changeColor={redData?.IngameStats["barons"].result === true}
-          >{`${redData?.IngameStats["barons"].value.toFixed(1)}`}</RedTeamData>
+          >{`${redData?.IngameStats["barons"].value.toFixed(1)}${t(
+            "team.comparison.times"
+          )}`}</RedTeamData>
           <AverageLabel>{t("team.comparison.baron")}</AverageLabel>
           <BlueTeamData
             changeColor={blueData?.IngameStats["barons"].result === true}
           >{`${blueData?.IngameStats["barons"].value.toFixed(
             1
+          )}${t(
+            "team.comparison.times"
           )}`}</BlueTeamData>
         </GameDataBox>
         <GameDataBox>
@@ -327,6 +342,8 @@ function CompareIngame() {
             }
           >{`${redData?.IngameStats["numberOfTeamFight"].winRate.toFixed(
             1
+          )}${t(
+            "team.comparison.times"
           )}`}</RedTeamData>
           <AverageLabel>{t("team.comparison.avgTeamFight")}</AverageLabel>
           <BlueTeamData
@@ -335,6 +352,8 @@ function CompareIngame() {
             }
           >{`${blueData?.IngameStats["numberOfTeamFight"].winRate.toFixed(
             1
+          )}${t(
+            "team.comparison.times"
           )}`}</BlueTeamData>
         </GameDataBox>
       </CompareStats>
@@ -489,112 +508,108 @@ const CustomTool = styled.div`
   }
 `;
 
-const CompareIngameWrapper = styled.div``;
+const CompareIngameWrapper = styled.div`
+
+
+`;
 
 const DisplayTeams = styled.div`
+  background-color: #16151a;
+  position: relative;
+  color: #fff;
   display: flex;
-  align-items: center;
-  margin-top: 28px;
-  margin-bottom: 31px;
-  width: 100%;
-  height: 79px;
-  border: solid 1px rgb(58, 55, 69);
-  background-color: rgb(47, 45, 56);
-  .RedSide {
-    width: 145px;
-    height: 77px;
-    background-image: url("Images/left-red-gradient.png");
-  }
-  .BlueSide {
-    width: 145px;
-    height: 77px;
-    background-image: url("Images/right-blue-gradient.png");
-  }
-  .TeamOne {
-    font-family: Poppins;
-    width: 244px;
-    font-size: 15px;
-    font-weight: 500;
-    text-align: right;
-    color: rgb(132, 129, 142);
-    margin: 0 23px 0 0px;
-  }
-  .TeamTwo {
-    font-family: Poppins;
-    width: 244px;
-    font-size: 15px;
-    font-weight: 500;
-    text-align: left;
-    color: rgb(132, 129, 142);
-    margin: 0 0px 0 23px;
-  }
-  .Vs {
-    width: 40px;
-    /* height: 43px; */
+  justify-content: space-around;
+  padding : 60px 20px;
+  margin-bottom: 20px;
+
+  .RedSide, .BlueSide {
+    display: flex;
+    flex-direction: column;
+    width: 475px;
+    align-items: center;
     font-family: Poppins;
     font-size: 30px;
     font-weight: bold;
-    color: rgb(107, 105, 121);
-    margin: 0 62px;
+  }
+
+  .Vs {
+    position: absolute;
+    top: 50%;
+    font-family: Poppins;
+    font-size: 30px;
+    font-weight: bold;
+    color :#6b6979 ;  
   }
 `;
 
 const CompareStats = styled.div``;
 
-const ChartBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 31px;
-`;
 
 const GameDataBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
+  padding: 10px 140px;
+  border-top: 1px solid  #433f4e;
+  color: #fff;
 `;
+
+const RedTeamData = styled.div`
+  width:30%;
+  text-align: center;
+  font-family: NotoSansKR, Apple SD Gothic Neo;
+  font-size: 23px;
+  font-weight: bold;
+  ${(props) =>
+    props.changeColor ? 
+    css`
+      color: #f04545;
+    ` : 
+    css`
+    opacity: 0.3;
+  `
+  }   
+`;
+
 
 const AverageLabel = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 128px;
-  height: 22px;
-  background-color: rgb(47, 45, 56);
+  width:30%;/
   font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 13px;
-  font-weight: bold;
+  font-size: 23px;
+  font-weight: 300;
   letter-spacing: -0.95px;
-
-  color: rgb(129, 126, 144);
   margin: 0 30px;
 `;
 
-const RedTeamData = styled.div`
-  /* display: flex; */
-  width: 300px;
-  font-family: Poppins;
-  font-size: 13px;
-  text-align: right;
-  color: #84818e;
-  ${(props) =>
-    props.changeColor &&
-    css`
-      color: #f04545;
-    `}
-`;
 
 const BlueTeamData = styled.div`
-  width: 300px;
-  font-family: Poppins;
-  font-size: 13px;
-  text-align: left;
-  color: #84818e;
+  display: flex;
+  justify-content: space-around;
+  padding : 20px;
+  width:30%;
+  font-size: 23px;
+  font-weight: bold;
+  font-family: NotoSansKR, Apple SD Gothic Neo;
   ${(props) =>
-    props.changeColor &&
+    props.changeColor ? 
     css`
       color: #f04545;
-    `}
+    ` : 
+    css`
+    opacity: 0.3;
+  `
+  } 
+`;
+
+// chart styling
+
+const ChartBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 31px;
 `;
 
 const FirstGankChart = styled.div`

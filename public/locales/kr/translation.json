@@ -186,7 +186,8 @@
       "record": "전적",
       "total": "전",
       "win": "승",
-      "lose": "패"
+      "lose": "패",
+      "times" : "회"
     }
   },
   "solo": {
