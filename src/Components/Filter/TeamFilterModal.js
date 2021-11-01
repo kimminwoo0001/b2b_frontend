@@ -34,6 +34,7 @@ const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
   //사이드바에 있는 팀 비교 탭 모달창
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
+  const selector = useSelector((state) => state.SelectorReducer);
   const dispatch = useDispatch();
   const dropdownRef = useRef(null);
   const { t } = useTranslation();
@@ -104,7 +105,6 @@ const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
               <label>League</label>
               <DropDownToggle className="container">
                 <div className="menu-container">
-                  {console.log(filters)}
                   <button
                     onClick={() => {
                       setIsActiveLeague(!isActiveLeague);
@@ -117,13 +117,12 @@ const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
                       width="14px"
                       height="14px"
                       src={
-                        filters.convertleague !== ""
-                          ? `Images/ico-league-${filters.convertleague.toLowerCase()}.png`
+                        filters.league.length === 1
+                          ? `Images/ico-league-${filters.league[0].toLowerCase()}.png`
                           : "Images/ico-filter-none.png"
                       }
                       alt="champIcon"
                     />
-                    {console.log(filters.league)}
                     <span className="Label">
                       {filters.league.length === 1
                         ? filters.league
@@ -157,8 +156,8 @@ const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
                                 //fetchingPatchFilter(league);
                                 // dispatch(ResetFilter(league));
                                 // dispatch(ConvertedLeague(league));
-                                setTeamFilter([]);
-                                setOppTeamFilter([]);
+                                league !== filters.league[0] && dispatch(setTeamFilter([]));
+                                league !== filters.league[0] && setOppTeamFilter([]);
                               }}
                               key={idx}
                             >
@@ -222,7 +221,7 @@ const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
             </PatchFilter>
             <PatchFilter>
               <label>Patch Version</label>
-              {!filters.patchfilter ? (
+              {!selector.patchFilter ? (
                 <PatchLabels>
                   <img
                     className="ChampIconImg"
@@ -238,7 +237,7 @@ const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
                   <span className="Label">{t("filters.patchLabel")}</span>
                 </PatchLabels>
               ) : (
-                filters.patchfilter?.map((patch, idx) => {
+                selector.patchFilter?.map((patch, idx) => {
                   return (
                     <SelectedPatch
                       key={idx}
@@ -336,7 +335,7 @@ const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
                   dispatch(MenuNum(2));
                   dispatch(CompareModal(false));
                   history.push("/team");
-                  setTeamFilter([]);
+                  dispatch(setTeamFilter([]));
                   setOppTeamFilter([]);
                 }}
               >

@@ -439,7 +439,7 @@ function ChampionSetting({
         year: filters.year,
         season: filters.season,
         patch: filters.patch,
-        patchfilter: filters.patchfilter,
+
         team: filters.team,
         player: filters.player,
         champion_eng: champArray,
@@ -466,7 +466,7 @@ function ChampionSetting({
         year: filters.year,
         season: filters.season,
         patch: filters.patch,
-        patchfilter: filters.patchfilter,
+
         team: filters.team,
         player: filters.player,
         champion_eng: champArray,
@@ -523,7 +523,6 @@ function ChampionSetting({
                               year: filters.year,
                               season: filters.season,
                               patch: filters.patch,
-                              patchfilter: filters.patchfilter,
                               team: team,
                               player: "",
                               champion_eng: "",
@@ -584,7 +583,7 @@ function ChampionSetting({
                               year: filters.year,
                               season: filters.season,
                               patch: filters.patch,
-                              patchfilter: filters.patchfilter,
+
                               team: filters.team,
                               player: player.name,
                               champion_eng: "",
@@ -720,7 +719,7 @@ function ChampionSetting({
                               year: filters.year,
                               season: filters.season,
                               patch: filters.patch,
-                              patchfilter: filters.patchfilter,
+
                               team: filters.team,
                               player: filters.player,
                               champion_eng: filters.champion_eng,
@@ -781,7 +780,7 @@ function ChampionSetting({
                               year: filters.year,
                               season: filters.season,
                               patch: filters.patch,
-                              patchfilter: filters.patchfilter,
+
                               team: filters.team,
                               player: filters.player,
                               champion_eng: filters.champion_eng,

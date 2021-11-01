@@ -132,6 +132,8 @@ function OppStat() {
     <OppStatWrapper>
       <PlayerCompare />
       <OppStatContents>
+
+        {/*
         <ChampionSettingNav>
           <SettingTitle>
             <span className="Title">{t("solo.comparison.champSetting")}</span>
@@ -142,6 +144,7 @@ function OppStat() {
               alt="noticeIcon"
             />
             <span className="Alert">{t("solo.comparison.settingLabel")}</span> */}
+        {/*
           </SettingTitle>
           <DropDownContainer>
             <div className="DropDown">
@@ -279,6 +282,7 @@ function OppStat() {
             </button>
           </DropDownContainer>
         </ChampionSettingNav>
+        */}
         <ComapreValue>
           <DisplayValue>
             <div className="Wrapper">
@@ -761,328 +765,328 @@ function OppStat() {
 export default OppStat;
 
 const OppStatWrapper = styled.div`
-  /* height: calc(100vh - 215px); */
-  height: 100%;
-`;
+        /* height: calc(100vh - 215px); */
+        height: 100%;
+        `;
 
 const OppStatContents = styled.div`
-  margin-top: 22px;
-  width: 100%;
-  border: solid 1px rgb(58, 55, 69);
-  background-color: rgb(47, 45, 56);
-`;
+        margin-top: 22px;
+        width: 100%;
+        border: solid 1px rgb(58, 55, 69);
+        background-color: rgb(47, 45, 56);
+        `;
 
 const ChampionSettingNav = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  height: 115px;
-  border-bottom: solid 1px rgb(58, 55, 69);
-`;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        height: 115px;
+        border-bottom: solid 1px rgb(58, 55, 69);
+        `;
 
 const SettingTitle = styled.div`
-  display: flex;
-  align-items: center;
-  .Title {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
-    font-weight: bold;
-    letter-spacing: -0.65px;
-    color: rgb(255, 255, 255);
-    margin: 0 15px 0 23px;
+        display: flex;
+        align-items: center;
+        .Title {
+          font - family: NotoSansKR, Apple SD Gothic Neo;
+        font-size: 13px;
+        font-weight: bold;
+        letter-spacing: -0.65px;
+        color: rgb(255, 255, 255);
+        margin: 0 15px 0 23px;
   }
-  .Alert {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
-    color: rgb(132, 129, 142);
-    margin-left: 4px;
+        .Alert {
+          font - family: NotoSansKR, Apple SD Gothic Neo;
+        font-size: 12px;
+        letter-spacing: -0.6px;
+        color: rgb(132, 129, 142);
+        margin-left: 4px;
   }
-`;
+        `;
 
 const ComapreValue = styled.div`
-  min-height: 571px;
-`;
+        min-height: 571px;
+        `;
 
 const PlayerValue = styled.div`
-  display: flex;
-  font-family: Poppins;
-  font-size: 16px;
-  text-align: center;
-  margin-right: 5px;
-  color: #817e90;
-  .Slash {
-    color: #817e90;
-    margin: 0 4px 0 4px;
+        display: flex;
+        font-family: Poppins;
+        font-size: 16px;
+        text-align: center;
+        margin-right: 5px;
+        color: #817e90;
+        .Slash {
+          color: #817e90;
+        margin: 0 4px 0 4px;
   }
-  .KDAValue {
-    color: rgb(255, 255, 255);
-    font-weight: bold;
-    margin-left: 8px;
+        .KDAValue {
+          color: rgb(255, 255, 255);
+        font-weight: bold;
+        margin-left: 8px;
   }
-  ${(props) =>
+        ${(props) =>
     props.color &&
     css`
       color: rgb(255, 255, 255);
     `}
-`;
+        `;
 
 const OppValue = styled.div`
-  display: flex;
-  font-family: Poppins;
-  font-size: 16px;
-  text-align: center;
-  margin-right: 5px;
-  color: #817e90;
-  .Slash {
-    color: #817e90;
-    margin: 0 4px 0 4px;
+        display: flex;
+        font-family: Poppins;
+        font-size: 16px;
+        text-align: center;
+        margin-right: 5px;
+        color: #817e90;
+        .Slash {
+          color: #817e90;
+        margin: 0 4px 0 4px;
   }
-  .KDAValue {
-    color: rgb(255, 255, 255);
-    font-weight: bold;
-    margin-left: 8px;
+        .KDAValue {
+          color: rgb(255, 255, 255);
+        font-weight: bold;
+        margin-left: 8px;
   }
-  ${(props) =>
+        ${(props) =>
     props.color &&
     css`
       color: rgb(255, 255, 255);
     `}
-`;
+        `;
 
 const DisplayValue = styled.div`
-  height: 58px;
-  border-bottom: 1px solid rgb(35, 33, 42);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  :nth-child(10) {
-    border-bottom: none;
+        height: 58px;
+        border-bottom: 1px solid rgb(35, 33, 42);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        :nth-child(10) {
+          border - bottom: none;
   }
-  :hover {
-    background-color: #3a3745;
+        :hover {
+          background - color: #3a3745;
   }
-  .ComparedValue {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: Poppins;
-    font-size: 16px;
-    text-align: center;
-    color: #f04545;
-    img {
-      margin: 0 5px 0 5px;
+        .ComparedValue {
+          display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Poppins;
+        font-size: 16px;
+        text-align: center;
+        color: #f04545;
+        img {
+          margin: 0 5px 0 5px;
     }
   }
-  .OppComparedValue {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: Poppins;
-    font-size: 16px;
-    text-align: center;
-    color: #817e90;
-    img {
-      margin: 0 5px 0 5px;
+        .OppComparedValue {
+          display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Poppins;
+        font-size: 16px;
+        text-align: center;
+        color: #817e90;
+        img {
+          margin: 0 5px 0 5px;
     }
   }
-  .Wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 489px;
+        .Wrapper {
+          display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 489px;
   }
 
-  .ValueTitle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 220px;
-    height: 22px;
-    background-color: rgb(58, 55, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: -0.6px;
-    text-align: center;
-    color: rgb(129, 126, 144);
+        .ValueTitle {
+          display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 220px;
+        height: 22px;
+        background-color: rgb(58, 55, 69);
+        font-family: NotoSansKR, Apple SD Gothic Neo;
+        font-size: 12px;
+        font-weight: bold;
+        letter-spacing: -0.6px;
+        text-align: center;
+        color: rgb(129, 126, 144);
   }
-`;
+        `;
 
 const ComparedValue = styled.div`
-  display: flex;
-  align-items: center;
-  font-family: Poppins;
-  font-size: 16px;
-  text-align: center;
-  color: #817e90;
-  img {
-    margin: 0 5px 0 5px;
+        display: flex;
+        align-items: center;
+        font-family: Poppins;
+        font-size: 16px;
+        text-align: center;
+        color: #817e90;
+        img {
+          margin: 0 5px 0 5px;
   }
-  ${(props) =>
+        ${(props) =>
     props.color &&
     css`
       color: #f04545;
     `}
-`;
+        `;
 
 const OppComparedValue = styled.div`
-  display: flex;
-  align-items: center;
-  font-family: Poppins;
-  font-size: 16px;
-  text-align: center;
-  color: #817e90;
-  img {
-    margin: 0 5px 0 5px;
+        display: flex;
+        align-items: center;
+        font-family: Poppins;
+        font-size: 16px;
+        text-align: center;
+        color: #817e90;
+        img {
+          margin: 0 5px 0 5px;
   }
-  ${(props) =>
+        ${(props) =>
     props.color &&
     css`
       color: #0075bf;
     `}
-`;
+        `;
 
 const DropDownContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 13px 0 0 23px;
+        display: flex;
+        align-items: center;
+        margin: 13px 0 0 23px;
 
-  .Vs {
-    font-family: Poppins;
-    font-size: 15px;
-    font-weight: bold;
-    color: rgb(132, 129, 142);
-    margin: 0 15px;
+        .Vs {
+          font - family: Poppins;
+        font-size: 15px;
+        font-weight: bold;
+        color: rgb(132, 129, 142);
+        margin: 0 15px;
   }
-  .Select {
-    width: 84px;
-    height: 40px;
-    border-radius: 3px;
-    background-color: rgb(240, 69, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: -0.6px;
-    color: rgb(255, 255, 255);
-    margin: 0 10px;
+        .Select {
+          width: 84px;
+        height: 40px;
+        border-radius: 3px;
+        background-color: rgb(240, 69, 69);
+        font-family: NotoSansKR, Apple SD Gothic Neo;
+        font-size: 12px;
+        font-weight: bold;
+        letter-spacing: -0.6px;
+        color: rgb(255, 255, 255);
+        margin: 0 10px;
   }
-  .Reset {
-    display: flex;
-    align-items: center;
-    width: 64px;
-    height: 40px;
-    border-radius: 3px;
-    border: solid 1px #474554;
-    background-color: #3a3745;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
-    letter-spacing: -0.55px;
-    color: rgb(175, 173, 190);
-    p {
-      margin-left: 5px;
+        .Reset {
+          display: flex;
+        align-items: center;
+        width: 64px;
+        height: 40px;
+        border-radius: 3px;
+        border: solid 1px #474554;
+        background-color: #3a3745;
+        font-family: NotoSansKR, Apple SD Gothic Neo;
+        font-size: 11px;
+        letter-spacing: -0.55px;
+        color: rgb(175, 173, 190);
+        p {
+          margin - left: 5px;
     }
   }
-`;
+        `;
 
 const DropDown = styled.div`
-  margin: 0;
-  padding: 0;
-  * {
-    box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        * {
+          box - sizing: border-box;
   }
 
-  body {
-    font-family: Arial, Helvetica, sans-serif;
+        body {
+          font - family: Arial, Helvetica, sans-serif;
   }
 
-  .menu-container {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+        .menu-container {
+          position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
   }
 
-  .menu-trigger {
-    display: flex;
-    align-items: center;
-    width: 421px;
-    height: 40px;
-    background-color: #23212a;
+        .menu-trigger {
+          display: flex;
+        align-items: center;
+        width: 421px;
+        height: 40px;
+        background-color: #23212a;
   }
 
-  .menu-trigger:hover {
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+        .menu-trigger:hover {
+          box - shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
   }
 
-  .SelectedLabel {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
-    text-align: left;
-    color: rgb(255, 255, 255);
-    width: 180px;
-    margin-left: 20px;
+        .SelectedLabel {
+          font - family: NotoSansKR, Apple SD Gothic Neo;
+        font-size: 12px;
+        letter-spacing: -0.6px;
+        text-align: left;
+        color: rgb(255, 255, 255);
+        width: 180px;
+        margin-left: 20px;
   }
 
-  .Label {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
-    text-align: left;
-    color: rgb(255, 255, 255);
-    margin: 0 0px 0 11.4px;
-    /* padding-right: 29.6px; */
-    width: 350px;
+        .Label {
+          font - family: NotoSansKR, Apple SD Gothic Neo;
+        font-size: 12px;
+        letter-spacing: -0.6px;
+        text-align: left;
+        color: rgb(255, 255, 255);
+        margin: 0 0px 0 11.4px;
+        /* padding-right: 29.6px; */
+        width: 350px;
   }
 
-  .ArrowIcon {
-    /* position: fixed; */
-    /* margin-left: 390px; */
+        .ArrowIcon {
+          /* position: fixed; */
+          /* margin-left: 390px; */
+        }
+
+        .ChampIconImg {
+          /* position: fixed; */
+          margin - left: 13.1px;
   }
 
-  .ChampIconImg {
-    /* position: fixed; */
-    margin-left: 13.1px;
+        .menu {
+          background: rgb(35, 33, 42);
+        position: absolute;
+        top: 40px;
+        right: 0;
+        width: 421px;
+        box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-20px);
+        transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
   }
 
-  .menu {
-    background: rgb(35, 33, 42);
-    position: absolute;
-    top: 40px;
-    right: 0;
-    width: 421px;
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-20px);
-    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+        .menu.active {
+          opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
   }
 
-  .menu.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+        .menu ul {
+          list - style: none;
+        padding: 0;
+        margin: 0;
   }
 
-  .menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .menu li {
-    text-decoration: none;
-    padding: 15px 20px;
-    display: block;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
-    letter-spacing: -0.55px;
-    text-align: left;
-    color: rgb(255, 255, 255);
-    cursor: pointer;
-    :hover {
-      background-color: rgb(60, 58, 72);
+        .menu li {
+          text - decoration: none;
+        padding: 15px 20px;
+        display: block;
+        font-family: NotoSansKR, Apple SD Gothic Neo;
+        font-size: 11px;
+        letter-spacing: -0.55px;
+        text-align: left;
+        color: rgb(255, 255, 255);
+        cursor: pointer;
+        :hover {
+          background - color: rgb(60, 58, 72);
     }
   }
-`;
+        `;

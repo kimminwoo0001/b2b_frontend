@@ -9,7 +9,6 @@ import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 import ErrorBoundary from "../../Components/ErrorBoundary";
 import Nav from "../../Components/Nav/Nav";
 import CloseFilter from "../../Components/Filter/CloseFilter";
-// import SoloFilter from "../Solo/Components/SoloFilter";
 
 function Solo() {
   const filters = useSelector((state) => state.FilterReducer);

@@ -39,6 +39,7 @@ export const SET_LEAGUE = "filtervalue/SET_LEAGUE";
 export const SET_YEAR = "filtervalue/SET_YEAR";
 export const SET_SEASON = "filtervalue/SET_SEASON";
 export const COMPARE_MODAL = "filtervalue/COMPARE_MODAL";
+export const SET_PATCH = "filtervalue/SET_PATCH";
 
 export const Reset_MapTab = (payload) => {
   return {
@@ -300,6 +301,13 @@ export const SetYear = (payload) => {
 export const SetSeason = (payload) => {
   return {
     type: SET_SEASON,
+    payload
+  }
+}
+
+export const SetPatch = (payload) => {
+  return {
+    type: SET_PATCH,
     payload
   }
 }
@@ -578,6 +586,11 @@ export default function FilterReducer(state = initialState, action) {
       return {
         ...state,
         season: action.payload
+      }
+    case SET_PATCH:
+      return {
+        ...state,
+        patch: action.payload
       }
     case COMPARE_MODAL:
       return {

@@ -123,7 +123,6 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
                             year: filters.year,
                             season: filters.season,
                             patch: filters.patch,
-                            patchfilter: filters.patchfilter,
                             team: team,
                             player: "",
                             champion_eng: "",
