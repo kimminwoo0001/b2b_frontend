@@ -356,10 +356,10 @@ const Filter = memo(() => {
       <FilterWrapper>
         <FilterHeader />
         {filters.filterMenuState && <>
-          <SelectedFilter
+          {Number(filters.tab) >= 0 && <SelectedFilter
             pagePath={pagePath} nameSolo={nameSolo}
             nameTeam={nameTeam} nameVideo={nameVideo}
-          />
+          />}
           <FilterGroup>
             <FilterItem
               title={t("label.league")}

@@ -80,7 +80,6 @@ const FilterHeader = memo(() => {
           <div className="header">
             {/*<img src="Images/ico-filter.png" alt="filterIcon"></img>*/}
             <img src="Images/btn_view_off.png" alt="filterIcon" onClick={() => filterSwitch()} />
-            {console.log("[filters.menu_num]", filters.menu_num)}
             {lang === 'kr' ? <label>{menus[filters.menu_num].name}</label>
               : <label style={{ fontSize: '33px' }}>{menus[filters.menu_num].name}</label>}
           </div>
