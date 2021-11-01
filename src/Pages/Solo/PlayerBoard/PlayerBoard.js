@@ -893,7 +893,7 @@ function PlayerBoard() {
                           <p className="Slash">/</p>
                           <span className="Deaths">{career.death}</span>
                           <p className="Slash">/</p>
-                          <span className="Support">{career.assist}</span>
+                          <span className="Support">{career.assists}</span>
                           <span className="Rate">{`${career.kda.toFixed(
                             2
                           )}:1`}</span>
