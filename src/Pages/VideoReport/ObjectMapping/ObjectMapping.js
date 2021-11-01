@@ -48,6 +48,24 @@ function useIntervalNormal(callback) {
   }, []);
 }
 
+function addZero(num) {
+  if (num < 10) {
+    return "0" + String(num);
+  } else {
+    return num;
+  }
+}
+
+function secondZero(num) {
+  if (num > 0) {
+    return "50";
+  } else {
+    return "00";
+  }
+  console.log("num:", num)
+}
+
+
 function ObjectMapping() {
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
@@ -404,11 +422,8 @@ function ObjectMapping() {
           <TimeStamp>
             <span className="current">
               {range
-                ? `${Math.floor((range + minTime) / 2 / 60)} : ${(
-                  ((range + minTime) / 2) %
-                  60
-                ).toFixed(1)}`
-                : "00 : 00"}
+                ? `${addZero(Math.floor((range + minTime) / 2 / 60))} : ${addZero(Math.floor((range + minTime) / 2 % 60))} : ${secondZero((((range + minTime) / 2) % 1).toFixed(1))}`
+                : "00 : 00 : 00"}
             </span>
             <p>/</p>
             {maxTime ? (
@@ -416,7 +431,7 @@ function ObjectMapping() {
                 (maxTime + minTime) / 2 / 60
               )} : ${((maxTime + minTime) / 2) % 60}`}</span>
             ) : (
-              <span className="max">{`00 : 00`}</span>
+              <span className="max">{`00 : 00 : 00`}</span>
             )}
           </TimeStamp>
         </RangeWrapper>
@@ -640,7 +655,7 @@ const TimeStamp = styled.div`
     margin: 0 4px 0 4px;
   }
   > .current {
-    width: 45%;
+    width: 60%;
     color: rgb(240, 69, 69);
     text-align: right;
   }
