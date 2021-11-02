@@ -8,90 +8,6 @@ import * as clipboard from 'clipboard-polyfill/text';
 import XLSX from "xlsx";
 import timeFormat from "../../../lib/timeFormat";
 
-
-function tabledata(tableid, type) {
-  const BOM = "\uFEFF"; //바이트 순서 표식
-  let result = BOM;
-
-  const table = document.getElementById(tableid);
-  for (let rowCnt = 0; rowCnt < table.rows.length; rowCnt++) {
-    let rowData = table.rows[rowCnt].cells;
-    for (let colCnt = 0; colCnt < rowData.length; colCnt++) {
-      let columnData = rowData[colCnt].innerText;
-      if (columnData == null || columnData.length === 0) {
-        columnData = "".replace(/"/g, '""');
-      }
-      else {
-        columnData = columnData.toString().replace(/"/g, '""'); // escape double quotes
-      }
-      console.log(result);
-      result = type === 'csv' ? result + '"' + columnData + '",' : result + columnData + '\t';
-    }
-    result = result.substring(0, result.length - 1);
-    result = result + "\r\n";
-  }
-  result = result.substring(0, result.length - 1);
-
-  return result;
-}
-
-const exportCSV = (filename = "none", tableid, tblData) => {
-
-  filename = timeFormat.nowTime() + filename + ".csv";
-  let csvString = tabledata(tableid, "csv");
-  // IE 10, 11, Edge Run
-  if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-
-    const blob = new Blob([decodeURIComponent(csvString)], {
-      type: 'text/csv;charset=utf8'
-    });
-    window.navigator.msSaveOrOpenBlob(blob, filename);
-  } else if (window.Blob && window.URL) {
-    // HTML5 Blob
-    const blob = new Blob([csvString], { type: 'text/csv;charset=utf8' });
-    const csvUrl = URL.createObjectURL(blob);
-    let a = document.createElement('a');
-    a.setAttribute('style', 'display:none');
-    a.setAttribute('href', csvUrl);
-    a.setAttribute('download', filename);
-    document.body.appendChild(a);
-    a.click()
-    a.remove();
-  } else {
-    // Data URI
-    const csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csvString);
-    const blob = new Blob([csvString], { type: 'text/csv;charset=utf8' });
-    const csvUrl = URL.createObjectURL(blob);
-    let a = document.createElement('a');
-    a.setAttribute('style', 'display:none');
-    a.setAttribute('target', '_blank');
-    a.setAttribute('href', csvData);
-    a.setAttribute('download', filename);
-    document.body.appendChild(a);
-    a.click()
-    a.remove();
-  }
-}
-
-const exportXlsx = (tableName, tableid, tblData) => {
-  var wb = XLSX.utils.table_to_book(document.getElementById(tableid), { sheet: tableName, raw: true });
-  XLSX.writeFile(wb, (timeFormat.nowTime() + tableName + '.xlsx'));
-}
-
-const copyClipboard = (tableid) => {
-  clipboard.writeText(tabledata(tableid, 'clipboard')).then(
-    function () {
-      console.log("success!");
-    },
-    function () {
-      console.log("error!");
-    }
-  );
-}
-
-
-
-
 const ExportUtil = ({ filename = "none", tableid }) => {
   const { t } = useTranslation();
   const dropdownRef = useRef(null);
@@ -100,7 +16,7 @@ const ExportUtil = ({ filename = "none", tableid }) => {
   const dispatch = useDispatch();
   const tblvalue = useSelector((state) => state.TableReducer);
 
-  const getTableHeaders = (tableid) => {
+  const getTableHeaders = () => {
     const table = document.getElementById(tableid);
     const rowData = table.rows[0].cells;
     let result = [];
@@ -117,6 +33,101 @@ const ExportUtil = ({ filename = "none", tableid }) => {
     dispatch(setTableHeaders(result));
   };
 
+  function tabledata(type) {
+    const BOM = "\uFEFF"; //바이트 순서 표식
+    let result = BOM;
+    const table = document.getElementById(tableid);
+    let selectedCol = [];
+    if (type === "csv") {
+      for (let i = 0; i < tblHeaders.current.length; i++) {
+        for (let select of tblvalue.headers) {
+          if (select === tblHeaders.current[i]) {
+            selectedCol.push(i);
+            break;
+          }
+        }
+      }
+    }
+
+    for (let rowCnt = 0; rowCnt < table.rows.length; rowCnt++) {
+      let rowData = table.rows[rowCnt].cells;
+      for (let colCnt = 0; colCnt < rowData.length; colCnt++) {
+        if (selectedCol.includes(colCnt) === false) {
+          break;
+        }
+        let columnData = rowData[colCnt].innerText;
+        if (columnData == null || columnData.length === 0) {
+          columnData = "".replace(/"/g, '""');
+        }
+        else {
+          columnData = columnData.toString().replace(/"/g, '""'); // escape double quotes
+        }
+        console.log(result);
+        result = type === 'csv' ? result + '"' + columnData + '",' : result + columnData + '\t';
+      }
+      result = result.substring(0, result.length - 1);
+      result = result + "\r\n";
+    }
+    result = result.substring(0, result.length - 1);
+
+    return result;
+  }
+
+  const exportCSV = (filename = "none") => {
+
+    filename = timeFormat.nowTime() + filename + ".csv";
+    let csvString = tabledata("csv");
+    // IE 10, 11, Edge Run
+    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+
+      const blob = new Blob([decodeURIComponent(csvString)], {
+        type: 'text/csv;charset=utf8'
+      });
+      window.navigator.msSaveOrOpenBlob(blob, filename);
+    } else if (window.Blob && window.URL) {
+      // HTML5 Blob
+      const blob = new Blob([csvString], { type: 'text/csv;charset=utf8' });
+      const csvUrl = URL.createObjectURL(blob);
+      let a = document.createElement('a');
+      a.setAttribute('style', 'display:none');
+      a.setAttribute('href', csvUrl);
+      a.setAttribute('download', filename);
+      document.body.appendChild(a);
+      a.click()
+      a.remove();
+    } else {
+      // Data URI
+      const csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csvString);
+      const blob = new Blob([csvString], { type: 'text/csv;charset=utf8' });
+      const csvUrl = URL.createObjectURL(blob);
+      let a = document.createElement('a');
+      a.setAttribute('style', 'display:none');
+      a.setAttribute('target', '_blank');
+      a.setAttribute('href', csvData);
+      a.setAttribute('download', filename);
+      document.body.appendChild(a);
+      a.click()
+      a.remove();
+    }
+  }
+
+  const exportXlsx = (tableName, tblData) => {
+    var wb = XLSX.utils.table_to_book(document.getElementById(tableid), { sheet: tableName, raw: true });
+    XLSX.writeFile(wb, (timeFormat.nowTime() + tableName + '.xlsx'));
+  }
+
+  const copyClipboard = () => {
+    clipboard.writeText(tabledata('clipboard')).then(
+      function () {
+        console.log("success!");
+      },
+      function () {
+        console.log("error!");
+      }
+    );
+  }
+
+
   return (
     <>
       <DropDown>
@@ -124,14 +135,14 @@ const ExportUtil = ({ filename = "none", tableid }) => {
           <button
             onClick={() => {
               setIsActive(!isActive);
-              getTableHeaders(tableid);
+              getTableHeaders();
             }}
             className="menu-trigger"
           >
             <span className="Label">Export</span>
             <img
               className="ArrowIcon"
-              src="Images/ico-filter-arrow.png"
+              src="Images/btn_view_detail.png"
               alt="arrowIcon"
             />
           </button>
@@ -183,7 +194,7 @@ const ExportUtil = ({ filename = "none", tableid }) => {
         </div>
       </DropDown >
       <ExportButton onClick={() => {
-        copyClipboard("pickTable");
+        copyClipboard();
       }}>
         Copy
       </ExportButton>
@@ -262,31 +273,36 @@ const Selected = styled.div`
 `;
 
 const DropDown = styled.div`
-  width: 140px;
+  width: 100px;
   float: right;
   line-height: 30px;  
-  margin-top: -10px;
+  margin-top: -11.5px;
   margin-right: 20px;
   padding: 0 10px;
   display: inline-block;
+
+  img {
+    margin-left: 10px;
+    transform:rotate(90deg);
+  }
 
   .menu-container {
     position: relative;
     display: inline-block;
     justify-content: center;
     align-items: center;
-    
   }
 
   .menu-trigger {
     display: flex;
     align-items: center;
-    width: 144px;
+    width: 100px;
     height: 33px;
     margin: 0px;
     padding: 5px 11px 4px;
-    border-radius: 16px;
-    border: solid 1px #3a3745;
+    border-radius: 3px;
+    border: solid 1px;
+    background-color: #5942ba;
   }
 
   .menu-trigger:hover {
@@ -319,12 +335,12 @@ const DropDown = styled.div`
     background: rgb(35, 33, 42);
     position: absolute;
     top: 0px;
-    left: 150px;
+    left: 110px;
     width: 144px;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-20px);
+    transform: translateX(-20px);
     transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
    
   }
