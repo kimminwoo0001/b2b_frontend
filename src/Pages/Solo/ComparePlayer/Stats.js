@@ -31,7 +31,6 @@ import {
   ResetOppChampion,
 } from "../../../redux/modules/filtervalue";
 
-
 function Stats() {
   //능력치 탭
   const filters = useSelector((state) => state.FilterReducer);
@@ -200,7 +199,8 @@ function Stats() {
       params: {
         league: filters.league,
         year: filters.year,
-        season: filters.season, year: filters.year,
+        season: filters.season,
+        year: filters.year,
         patch: filters.patch,
         champion: filters.champion_eng,
         player: filters.player,
@@ -407,7 +407,7 @@ function Stats() {
         )}`}</div>
       </PlayerStatWrapper>
       <StatCompare>
-        <ChampionSettingNav>
+        {/* <ChampionSettingNav>
           <SettingTitle>
             <span className="Title">{t("solo.comparison.champSetting")}</span>
             <img
@@ -554,7 +554,7 @@ function Stats() {
               <p>{t("solo.comparison.reset")}</p>
             </button>
           </DropDownContainer>
-        </ChampionSettingNav>
+        </ChampionSettingNav> */}
         <CompareByStat>
           <SimpleCompare>
             {statData?.map((stat, idx) => {
@@ -690,7 +690,7 @@ function Stats() {
                       // strokeDasharray="4 4"
                       horizontal={false}
                       vertical={false}
-                    // horizontalPoints={[40, 80, 120, 160, 200, 240]}
+                      // horizontalPoints={[40, 80, 120, 160, 200, 240]}
                     />
                     <XAxis
                       type={"number"}
@@ -770,7 +770,7 @@ function Stats() {
                       // strokeDasharray="4 4"
                       horizontal={false}
                       vertical={false}
-                    // horizontalPoints={[25, 75, 125, 175, 225]}
+                      // horizontalPoints={[25, 75, 125, 175, 225]}
                     />
                     <XAxis
                       domain={[0, 100]}

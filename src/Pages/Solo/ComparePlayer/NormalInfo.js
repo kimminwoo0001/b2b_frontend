@@ -14,10 +14,9 @@ import {
   Opp_Champion_Eng,
   ResetChampion,
   ResetChampion2,
-  ResetOppChampion
+  ResetOppChampion,
 } from "../../../redux/modules/filtervalue";
 import qs from "qs";
-
 
 function NormalInfo() {
   //기본정보 탭
@@ -74,7 +73,7 @@ function NormalInfo() {
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     });
 
     const copy = response.data[filters.player];
@@ -87,7 +86,7 @@ function NormalInfo() {
       investment: copy.investment.toFixed(1),
       loss: copy.loss.toFixed(1),
       match: copy.match.toFixed(1),
-      gold: copy.gold.toFixed(1)
+      gold: copy.gold.toFixed(1),
     });
     //상대 선수 데이터
     setOppPlayer({
@@ -95,7 +94,7 @@ function NormalInfo() {
       investment: copyoppData.investment.toFixed(1),
       loss: copyoppData.loss.toFixed(1),
       match: copyoppData.match.toFixed(1),
-      gold: copyoppData.gold.toFixed(1)
+      gold: copyoppData.gold.toFixed(1),
     });
     setLoading(false);
   };
@@ -117,7 +116,7 @@ function NormalInfo() {
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     });
     setChampFilter(response.data.champion);
     setChampEng(response.data.championEng);
@@ -140,7 +139,7 @@ function NormalInfo() {
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     });
     setOppFilter(response.data.champion);
     setOppEng(response.data.championEng);
@@ -153,7 +152,7 @@ function NormalInfo() {
       t("solo.comparison.smartDmg"),
       t("solo.comparison.smartTank"),
       t("solo.comparison.teamfight"),
-      t("solo.comparison.growth")
+      t("solo.comparison.growth"),
     ],
     datasets: [
       {
@@ -169,9 +168,9 @@ function NormalInfo() {
           player?.investment,
           player?.loss,
           player?.match,
-          player?.gold
+          player?.gold,
         ],
-        pointStyle: "line"
+        pointStyle: "line",
       },
       {
         label: filters.oppplayer,
@@ -186,11 +185,11 @@ function NormalInfo() {
           oppPlayer?.investment,
           oppPlayer?.loss,
           oppPlayer?.match,
-          oppPlayer?.gold
+          oppPlayer?.gold,
         ],
-        pointStyle: "line"
-      }
-    ]
+        pointStyle: "line",
+      },
+    ],
   };
 
   //오각형 그래프 옵션
@@ -201,8 +200,8 @@ function NormalInfo() {
       callbacks: {
         title: function (tooltipItem, data) {
           return data.labels[tooltipItem[0].index];
-        }
-      }
+        },
+      },
     },
     legend: {
       display: true,
@@ -210,8 +209,8 @@ function NormalInfo() {
       align: "start",
       labels: {
         usePointStyle: true,
-        fontColor: "rgb(255, 255, 255)"
-      }
+        fontColor: "rgb(255, 255, 255)",
+      },
     },
     scale: {
       ticks: {
@@ -219,16 +218,16 @@ function NormalInfo() {
         max: 100,
         stepSize: 20,
         showLabelBackdrop: false,
-        backdropColor: "rgba(203, 197, 11, 1)"
+        backdropColor: "rgba(203, 197, 11, 1)",
       },
       angleLines: {
         color: "rgb(67, 63, 78)",
-        lineWidth: 1
+        lineWidth: 1,
       },
       gridLines: {
-        color: "rgb(67, 63, 78)"
-      }
-    }
+        color: "rgb(67, 63, 78)",
+      },
+    },
   };
   if (loading) return <LoadingImg />;
   return (
@@ -348,7 +347,7 @@ function NormalInfo() {
         )}`}</div>
       </PlayerStatWrapper>
       <NormalCompare>
-        <ChampionSettingNav>
+        {/* <ChampionSettingNav>
           <SettingTitle>
             <span className="Title">{t("solo.comparison.champSetting")}</span>
             <img
@@ -496,7 +495,7 @@ function NormalInfo() {
               <p>{t("solo.comparison.reset")}</p>
             </button>
           </DropDownContainer>
-        </ChampionSettingNav>
+        </ChampionSettingNav> */}
         <CompareChart>
           <Radar type="radar" data={RadarData} options={options} />
         </CompareChart>
