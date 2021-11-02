@@ -2,10 +2,12 @@ import React, { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { TableHeaders } from "../../../redux/modules/tablevalue";
+import { setTableHeaders, TableHeaders } from "../../../redux/modules/tablevalue";
 import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
 import * as clipboard from 'clipboard-polyfill/text';
 import XLSX from "xlsx";
+import timeFormat from "../../../lib/timeFormat";
+
 
 function tabledata(tableid, type) {
   const BOM = "\uFEFF"; //바이트 순서 표식
@@ -33,8 +35,9 @@ function tabledata(tableid, type) {
   return result;
 }
 
-const exportCSV = (filename = "none", tableid) => {
-  filename += ".csv";
+const exportCSV = (filename = "none", tableid, tblData) => {
+
+  filename = timeFormat.nowTime() + filename + ".csv";
   let csvString = tabledata(tableid, "csv");
   // IE 10, 11, Edge Run
   if (window.navigator && window.navigator.msSaveOrOpenBlob) {
@@ -70,9 +73,9 @@ const exportCSV = (filename = "none", tableid) => {
   }
 }
 
-const exportXlsx = (tableName, tableid) => {
+const exportXlsx = (tableName, tableid, tblData) => {
   var wb = XLSX.utils.table_to_book(document.getElementById(tableid), { sheet: tableName, raw: true });
-  XLSX.writeFile(wb, (tableName + '.xlsx'));
+  XLSX.writeFile(wb, (timeFormat.nowTime() + tableName + '.xlsx'));
 }
 
 const copyClipboard = (tableid) => {
@@ -95,7 +98,7 @@ const ExportUtil = ({ filename = "none", tableid }) => {
   const tblHeaders = useRef([]);
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const dispatch = useDispatch();
-  const tblReducer = useSelector((state) => state.TableReducer);
+  const tblvalue = useSelector((state) => state.TableReducer);
 
   const getTableHeaders = (tableid) => {
     const table = document.getElementById(tableid);
@@ -111,6 +114,7 @@ const ExportUtil = ({ filename = "none", tableid }) => {
     }
 
     tblHeaders.current = result;
+    dispatch(setTableHeaders(result));
   };
 
   return (
@@ -136,14 +140,14 @@ const ExportUtil = ({ filename = "none", tableid }) => {
             className={`menu ${isActive ? "active" : "inactive"}`}
           >
             <header>Choose Columns</header>
-
+            {console.log(tblvalue)}
             <ul>
               {tblHeaders.current.map((header, idx) => {
                 return (
                   <Selected
                     key={idx}
                     isChecked={
-                      tblReducer.headers?.includes(header) ? true : false
+                      tblvalue.headers?.includes(header) ? true : false
                     }
                     onClick={() => {
                       dispatch(TableHeaders(header));
@@ -152,7 +156,7 @@ const ExportUtil = ({ filename = "none", tableid }) => {
                     <input
                       type="checkbox"
                       checked={
-                        tblReducer.headers?.includes(header) ? true : false
+                        tblvalue.headers?.includes(header) ? true : false
                       }
                       readOnly
                     />
@@ -163,13 +167,13 @@ const ExportUtil = ({ filename = "none", tableid }) => {
             </ul>
             <div className="export-file">
               <button onClick={() => {
-                exportCSV(filename, tableid);
+                exportCSV(filename, tableid, tblvalue.headers);
                 setIsActive(false);
               }}>
                 CSV
               </button>
               <button onClick={() => {
-                exportXlsx(filename, tableid);
+                exportXlsx(filename, tableid, tblvalue.headers);
                 setIsActive(false);
               }}>
                 XLSX

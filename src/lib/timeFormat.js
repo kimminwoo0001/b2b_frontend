@@ -10,4 +10,10 @@ function ward(value) {
   return `${addZero(Math.floor(time / 1000 / 60))} : ${addZero(Math.floor((time / 1000) % 60))}`;
 }
 
-export default { hitmap, ward }
+function nowTime() {
+  const now = new Date();
+  return `${now.getFullYear()}-${addZero(now.getMonth() + 1)}-${addZero(now.getDay())} `
+}
+
+
+export default { hitmap, ward, nowTime }
