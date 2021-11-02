@@ -16,7 +16,7 @@ function ComparePlayer() {
   const currentTab = {
     0: <NormalInfo />,
     1: <Stats />,
-    2: <OppStat />
+    2: <OppStat />,
   };
 
   return (
@@ -68,34 +68,34 @@ const ComparePlayerTabs = styled.div`
 `;
 const LineMargin = styled.div`
   width: 6px;
-  border-bottom: solid 1px rgb(124, 119, 139);
+  border-bottom: 1px solid #433f4e;
 `;
 
 const LastMargin = styled.div`
   width: 721px;
-  border-bottom: solid 1px rgb(124, 119, 139);
+  border-bottom: 1px solid #433f4e;
 `;
 
 const NormalInfoTab = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 125px;
+  width: 100px;
   height: 36px;
-  border: solid 1px rgb(67, 63, 78);
   color: rgb(132, 129, 142);
-  border-bottom: 1px solid rgb(124, 119, 139);
+  border-bottom: 1px solid #433f4e;
   font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 13px;
+  font-size: 18px;
+  padding-bottom: 20px;
 
   ${(props) =>
     props.changeColor &&
     css`
       color: rgb(255, 255, 255);
-      border-top: solid 1px rgb(124, 119, 139);
-      border-right: solid 1px rgb(124, 119, 139);
-      border-left: solid 1px rgb(124, 119, 139);
-      border-bottom: none;
+      border-top: none;
+      border-right: none;
+      border-left: none;
+      border-bottom: solid 1px #fff;
     `}
 `;
 
@@ -103,22 +103,23 @@ const StatTab = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 125px;
+  width: 100px;
   height: 36px;
-  border: solid 1px rgb(67, 63, 78);
   color: rgb(132, 129, 142);
-  border-bottom: 1px solid rgb(124, 119, 139);
+  border-bottom: 1px solid #433f4e;
+
   font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 13px;
+  font-size: 18px;
+  padding-bottom: 20px;
 
   ${(props) =>
     props.changeColor &&
     css`
       color: rgb(255, 255, 255);
-      border-top: solid 1px rgb(124, 119, 139);
-      border-right: solid 1px rgb(124, 119, 139);
-      border-left: solid 1px rgb(124, 119, 139);
-      border-bottom: none;
+      border-top: none;
+      border-right: none;
+      border-left: none;
+      border-bottom: solid 1px #fff;
     `}
 `;
 
@@ -126,22 +127,23 @@ const OppStatTab = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 125px;
+  width: 150px;
   height: 36px;
-  border: solid 1px rgb(67, 63, 78);
   color: rgb(132, 129, 142);
-  border-bottom: 1px solid rgb(124, 119, 139);
+  border-bottom: 1px solid #433f4e;
+
   font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 13px;
+  font-size: 18px;
+  padding-bottom: 20px;
 
   ${(props) =>
     props.changeColor &&
     css`
       color: rgb(255, 255, 255);
-      border-top: solid 1px rgb(124, 119, 139);
-      border-right: solid 1px rgb(124, 119, 139);
-      border-left: solid 1px rgb(124, 119, 139);
-      border-bottom: none;
+      border-top: none;
+      border-right: none;
+      border-left: none;
+      border-bottom: solid 1px #fff;
     `}
 `;
 

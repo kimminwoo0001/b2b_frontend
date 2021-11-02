@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import qs from "qs";
 import { useSelector } from "react-redux";
 
-
 function PlayerCompare() {
   const filters = useSelector((state) => state.FilterReducer);
   const lang = useSelector((state) => state.LocaleReducer);
@@ -40,7 +39,7 @@ function PlayerCompare() {
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     });
 
     setData(result.data[filters.player]);
@@ -48,95 +47,124 @@ function PlayerCompare() {
     // dispatch(Loading(false));
   };
 
+  console.log(filters.team, filters.oppteam);
+
   return (
     <PlayerCompareWrapper>
-      <div className="RedSidePlayer">
+      <Red>
         <img
-          src={data?.playerInfo.Image}
-          width="94px"
-          height="74px"
-          alt="PlayerIcon"
-          onError={(e) => {
-            e.target.src = "Images/player_error_image.png";
-          }}
+          src={`Images/TeamLogo/${filters.team}.png`}
+          alt="team logo"
+          width="54px"
+          height="54px"
         />
-      </div>
-      <img
-        className="PositionIcon"
-        src={`Images/ico-position-${filters.position}.png`}
-        width="28.6px"
-        height="28.6px"
-        alt="PositionIcon"
-      />
-      <div className="NameContainer">
-        <span className="NickName">
-          {lang === "kr" ? data?.playerInfo.NativeName : data?.playerInfo.Name}
-        </span>
-        <span className="RealName">{data?.playerInfo.ID}</span>
-      </div>
-      <div className="AverageBox">
-        <div className="PerformanceTitle">{t("solo.comparison.avgScore")}</div>
-        <PerformanceValue
-          color={data?.sbrAvg < oppData?.sbrAvg}
-          className="PerformanceValue"
-        >
-          {data?.sbrAvg.toFixed(1)}
-        </PerformanceValue>
-      </div>
-      <div className="AverageBoxTwo">
-        <div className="PerformanceTitle">{t("solo.comparison.bestScore")}</div>
-        <PerformanceValue
-          color={data?.sbrMax < oppData?.sbrMax}
-          className="PerformanceValue"
-        >
-          {data?.sbrMax.toFixed(1)}
-        </PerformanceValue>
-      </div>
+
+        <div className="NameContainer">
+          <span className="RealName">{data?.playerInfo.ID}</span>
+          <span className="NickName">
+            {lang === "kr"
+              ? data?.playerInfo.NativeName
+              : data?.playerInfo.Name}
+          </span>
+        </div>
+        <img
+          className="PositionIcon"
+          src={`Images/ico-position-${filters.position}.png`}
+          width="28.6px"
+          height="28.6px"
+          alt="PositionIcon"
+        />
+        <div className="RedSidePlayer">
+          <img
+            src={data?.playerInfo.Image}
+            width="212px"
+            height="168px"
+            alt="PlayerIcon"
+            onError={(e) => {
+              e.target.src = "Images/player_error_image.png";
+            }}
+          />
+        </div>
+        <div className="AverageBox">
+          <div className="PerformanceTitle">
+            {t("solo.comparison.avgScore")}
+          </div>
+          <PerformanceValue
+            color={data?.sbrAvg < oppData?.sbrAvg}
+            className="PerformanceValue"
+          >
+            {data?.sbrAvg.toFixed(1)}
+          </PerformanceValue>
+        </div>
+        <div className="AverageBoxTwo">
+          <div className="PerformanceTitle">
+            {t("solo.comparison.bestScore")}
+          </div>
+          <PerformanceValue
+            color={data?.sbrMax < oppData?.sbrMax}
+            className="PerformanceValue"
+          >
+            {data?.sbrMax.toFixed(1)}
+          </PerformanceValue>
+        </div>
+      </Red>
       <div className="Vs">VS</div>
-      <div className="AverageBox">
-        <div className="PerformanceTitle">{t("solo.comparison.avgScore")}</div>
-        <PerformanceValue2
-          color={data?.sbrAvg > oppData?.sbrAvg}
-          className="PerformanceValueBlue"
-        >
-          {oppData?.sbrAvg.toFixed(1)}
-        </PerformanceValue2>
-      </div>
-      <div className="AverageBoxTwo">
-        <div className="PerformanceTitle">{t("solo.comparison.bestScore")}</div>
-        <PerformanceValue2
-          color={data?.sbrMax > oppData?.sbrMax}
-          className="PerformanceValueBlue"
-        >
-          {oppData?.sbrMax.toFixed(1)}
-        </PerformanceValue2>
-      </div>
-      <div className="NameContainerBlue">
-        <span className="NickName">
-          {lang === "kr"
-            ? oppData?.playerInfo.NativeName
-            : oppData?.playerInfo.Name}
-        </span>
-        <span className="RealName">{oppData?.playerInfo.ID}</span>
-      </div>
-      <img
-        className="PositionIcon"
-        src={`Images/ico-position-${filters.position}.png`}
-        alt="PositionIcon"
-        width="28.6px"
-        height="28.6px"
-      />
-      <div className="BlueSidePlayer">
+      <Blue>
         <img
-          src={oppData?.playerInfo.Image}
-          width="94px"
-          height="74px"
-          alt="PlayerIcon"
-          onError={(e) => {
-            e.target.src = "Images/player_error_image.png";
-          }}
+          src={`Images/TeamLogo/${filters.oppteam}.png`}
+          alt="oppteam logo"
+          width="54px"
+          height="54px"
         />
-      </div>
+        <div className="NameContainer">
+          <span className="RealName">{oppData?.playerInfo.ID}</span>
+          <span className="NickName">
+            {lang === "kr"
+              ? oppData?.playerInfo.NativeName
+              : oppData?.playerInfo.Name}
+          </span>
+        </div>
+        <img
+          className="PositionIcon"
+          src={`Images/ico-position-${filters.position}.png`}
+          alt="PositionIcon"
+          width="28.6px"
+          height="28.6px"
+        />
+        <div className="BlueSidePlayer">
+          <img
+            src={oppData?.playerInfo.Image}
+            width="212px"
+            height="168px"
+            alt="PlayerIcon"
+            onError={(e) => {
+              e.target.src = "Images/player_error_image.png";
+            }}
+          />
+        </div>
+        <div className="AverageBox">
+          <div className="PerformanceTitle">
+            {t("solo.comparison.avgScore")}
+          </div>
+          <PerformanceValue2
+            color={data?.sbrAvg > oppData?.sbrAvg}
+            className="PerformanceValueBlue"
+          >
+            {oppData?.sbrAvg.toFixed(1)}
+          </PerformanceValue2>
+        </div>
+        <div className="AverageBoxTwo">
+          <div className="PerformanceTitle">
+            {t("solo.comparison.bestScore")}
+          </div>
+          <PerformanceValue2
+            color={data?.sbrMax > oppData?.sbrMax}
+            className="PerformanceValueBlue"
+          >
+            {oppData?.sbrMax.toFixed(1)}
+          </PerformanceValue2>
+        </div>
+      </Blue>
     </PlayerCompareWrapper>
   );
 }
@@ -145,75 +173,59 @@ export default PlayerCompare;
 
 const PlayerCompareWrapper = styled.div`
   display: flex;
+  justify-content: space-around;
   align-items: center;
   margin-top: 28px;
   width: 100%;
-  border: solid 1px rgb(58, 55, 69);
-  background-color: rgb(47, 45, 56);
-  background-image: url("Images/full-gradient.png");
-  background-repeat: no-repeat;
-  .RedSidePlayer {
-    width: 105px;
-    height: 77px;
-  }
-  .BlueSidePlayer {
-    display: flex;
-    justify-content: flex-end;
-    width: 105px;
-    height: 77px;
-  }
+  /* width: 760px; */
+  background-color: #16151a;
 
   .NameContainer {
     display: flex;
-    width: 140px;
     flex-direction: column;
-    margin-left: 9.4px;
+    align-items: center;
   }
-  .NameContainerBlue {
-    display: flex;
-    width: 140px;
-    flex-direction: column;
-    margin-right: 9.4px;
-    text-align: right;
-  }
+
   .NickName {
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
+    font-size: 20px;
     color: rgb(132, 129, 142);
-    margin-bottom: 3px;
+    margin-bottom: 10px;
+    margin-top: 20px;
   }
   .RealName {
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 15px;
+    font-size: 30px;
     font-weight: bold;
     letter-spacing: -0.75px;
     color: rgb(255, 255, 255);
   }
+
+  .PositionIcon {
+    margin-top: 10px;
+  }
   .PerformanceTitle {
-    /* width: 80px; */
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-size: 20px;
     font-weight: bold;
-    letter-spacing: -0.6px;
-    text-align: left;
     color: rgb(132, 129, 142);
-    margin-bottom: 4.7px;
+    margin-right: 10px;
+    margin-top: 10px;
     text-align: center;
   }
 
   .AverageBox {
-    width: 80px;
+    display: flex;
     :nth-child(7) {
       margin-right: 35px;
     }
+    margin-top: 10px;
   }
-  .AverageBoxTwo {
-    width: 80px;
 
-    :nth-of-type(4) {
-      margin-left: 35px;
-    }
+  .AverageBoxTwo {
+    display: flex;
   }
+
   .Vs {
     font-family: Poppins;
     font-size: 30px;
@@ -224,12 +236,28 @@ const PlayerCompareWrapper = styled.div`
   }
 `;
 
+const Red = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  /* justify-content: space-around; */
+`;
+const Blue = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
+
 const PerformanceValue = styled.div`
   font-family: NotoSansKR, Apple SD Gothic Neo;
   font-size: 20px;
   font-weight: bold;
   text-align: center;
   color: rgb(240, 69, 69);
+  text-align: center;
+  margin-top: 10px;
 
   .PerformanceValueBlue {
     font-family: NotoSansKR, Apple SD Gothic Neo;
@@ -237,6 +265,7 @@ const PerformanceValue = styled.div`
     font-weight: bold;
     text-align: center;
     color: #0075bf;
+    margin-top: 10px;
   }
   ${(props) =>
     props.color &&
@@ -251,6 +280,9 @@ const PerformanceValue2 = styled.div`
   font-weight: bold;
   text-align: center;
   color: #0075bf;
+  text-align: center;
+  margin-top: 10px;
+
   ${(props) =>
     props.color &&
     css`

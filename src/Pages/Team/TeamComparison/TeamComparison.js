@@ -69,11 +69,13 @@ const Tab = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 125px;
+  width: 157px;
   height: 36px;
   padding-bottom: 20px;
   color: rgb(132, 129, 142);
   border-bottom: 1px solid rgb(124, 119, 139);
+  font-weight: bold;
+  font-size: 18px;
   ${(props) =>
     props.changeColor &&
     css`
@@ -87,7 +89,6 @@ const Tab = styled.button`
   div {
     width: auto;
     font-family: Poppins;
-    font-size: 13px;
     text-align: center;
   }
 `;
