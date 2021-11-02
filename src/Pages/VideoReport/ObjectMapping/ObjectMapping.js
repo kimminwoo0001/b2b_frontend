@@ -12,6 +12,7 @@ import Tippy from "@tippy.js/react";
 import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
 import ObjectTooltip from "./ObjectTooltip";
+import addZero from "../../../lib/addZero";
 
 
 function useInterval(callback) {
@@ -404,17 +405,14 @@ function ObjectMapping() {
           <TimeStamp>
             <span className="current">
               {range
-                ? `${Math.floor((range + minTime) / 2 / 60)} : ${(
-                  ((range + minTime) / 2) %
-                  60
-                ).toFixed(1)}`
+                ? `${addZero(Math.floor((range + minTime) / 2 / 60))} : ${addZero(Math.floor((range + minTime) / 2 % 60))}`
                 : "00 : 00"}
             </span>
             <p>/</p>
             {maxTime ? (
-              <span className="max">{`${Math.floor(
+              <span className="max">{`${addZero(Math.floor(
                 (maxTime + minTime) / 2 / 60
-              )} : ${((maxTime + minTime) / 2) % 60}`}</span>
+              ))} : ${addZero(((maxTime + minTime) / 2) % 60)}`}</span>
             ) : (
               <span className="max">{`00 : 00`}</span>
             )}
