@@ -14,9 +14,8 @@ import {
   Opp_Champion,
   Opp_Champion_Eng,
   ResetChampion,
-  ResetChampion2
+  ResetChampion2,
 } from "../../../redux/modules/filtervalue";
-
 
 function OppStat() {
   //상대 전적 기록 탭
@@ -28,7 +27,7 @@ function OppStat() {
   const { filters, lang, user } = useSelector((state) => ({
     filters: state.FilterReducer,
     lang: state.LocaleReducer,
-    user: state.UserReducer
+    user: state.UserReducer,
   }));
   const [player, setPlayer] = useState();
   const [oppPlayer, setOppPlayer] = useState();
@@ -68,7 +67,7 @@ function OppStat() {
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     });
     setPlayer(result.data[filters.player]);
     setOppPlayer(result.data[filters.oppplayer]);
@@ -95,7 +94,7 @@ function OppStat() {
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     });
     setChampFilter(response.data.champion);
     setChampEng(response.data.championEng);
@@ -121,7 +120,7 @@ function OppStat() {
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     });
     setOppFilter(response.data.champion);
     setOppEng(response.data.championEng);
@@ -132,7 +131,6 @@ function OppStat() {
     <OppStatWrapper>
       <PlayerCompare />
       <OppStatContents>
-
         {/*
         <ChampionSettingNav>
           <SettingTitle>
@@ -765,24 +763,24 @@ function OppStat() {
 export default OppStat;
 
 const OppStatWrapper = styled.div`
-        /* height: calc(100vh - 215px); */
-        height: 100%;
-        `;
+  /* height: calc(100vh - 215px); */
+  height: 100%;
+`;
 
 const OppStatContents = styled.div`
-        margin-top: 22px;
-        width: 100%;
-        border: solid 1px rgb(58, 55, 69);
-        background-color: rgb(47, 45, 56);
-        `;
+  margin-top: 22px;
+  width: 100%;
+  /* border: solid 1px rgb(58, 55, 69); */
+  background-color: #16151a;
+`;
 
 const ChampionSettingNav = styled.div`
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        height: 115px;
-        border-bottom: solid 1px rgb(58, 55, 69);
-        `;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 115px;
+  border-bottom: solid 1px rgb(58, 55, 69);
+`;
 
 const SettingTitle = styled.div`
         display: flex;
@@ -805,63 +803,64 @@ const SettingTitle = styled.div`
         `;
 
 const ComapreValue = styled.div`
-        min-height: 571px;
-        `;
+  min-height: 571px;
+`;
 
 const PlayerValue = styled.div`
-        display: flex;
-        font-family: Poppins;
-        font-size: 16px;
-        text-align: center;
-        margin-right: 5px;
-        color: #817e90;
-        .Slash {
-          color: #817e90;
-        margin: 0 4px 0 4px;
+  display: flex;
+  font-family: Poppins;
+  font-size: 16px;
+  text-align: center;
+  margin-right: 5px;
+  color: #817e90;
+  .Slash {
+    color: #817e90;
+    margin: 0 4px 0 4px;
   }
-        .KDAValue {
-          color: rgb(255, 255, 255);
-        font-weight: bold;
-        margin-left: 8px;
+  .KDAValue {
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    margin-left: 8px;
   }
-        ${(props) =>
+  ${(props) =>
     props.color &&
     css`
       color: rgb(255, 255, 255);
     `}
-        `;
+`;
 
 const OppValue = styled.div`
-        display: flex;
-        font-family: Poppins;
-        font-size: 16px;
-        text-align: center;
-        margin-right: 5px;
-        color: #817e90;
-        .Slash {
-          color: #817e90;
-        margin: 0 4px 0 4px;
+  display: flex;
+  font-family: Poppins;
+  font-size: 16px;
+  text-align: center;
+  margin: 5px 0;
+  color: #817e90;
+  .Slash {
+    color: #817e90;
+    margin: 0 4px 0 4px;
   }
-        .KDAValue {
-          color: rgb(255, 255, 255);
-        font-weight: bold;
-        margin-left: 8px;
+  .KDAValue {
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    margin-left: 8px;
   }
-        ${(props) =>
+  ${(props) =>
     props.color &&
     css`
       color: rgb(255, 255, 255);
     `}
-        `;
+`;
 
 const DisplayValue = styled.div`
         height: 58px;
-        border-bottom: 1px solid rgb(35, 33, 42);
+        border-bottom: 1px solid #433f4e;
         display: flex;
         align-items: center;
         justify-content: center;
-        :nth-child(10) {
-          border - bottom: none;
+        padding: 40px 0;
+        :last-child {
+          border-bottom: none; 
   }
         :hover {
           background - color: #3a3745;
@@ -871,7 +870,8 @@ const DisplayValue = styled.div`
         align-items: center;
         justify-content: center;
         font-family: Poppins;
-        font-size: 16px;
+   
+
         text-align: center;
         color: #f04545;
         img {
@@ -883,7 +883,6 @@ const DisplayValue = styled.div`
         align-items: center;
         justify-content: center;
         font-family: Poppins;
-        font-size: 16px;
         text-align: center;
         color: #817e90;
         img {
@@ -895,6 +894,10 @@ const DisplayValue = styled.div`
         justify-content: center;
         align-items: center;
         width: 489px;
+          div {
+        font-size: 23px;
+
+          }
   }
 
         .ValueTitle {
@@ -903,49 +906,50 @@ const DisplayValue = styled.div`
         justify-content: center;
         width: 220px;
         height: 22px;
-        background-color: rgb(58, 55, 69);
         font-family: NotoSansKR, Apple SD Gothic Neo;
-        font-size: 12px;
+        font-size: 23px;
         font-weight: bold;
         letter-spacing: -0.6px;
         text-align: center;
-        color: rgb(129, 126, 144);
+        color:#fff;
   }
         `;
 
 const ComparedValue = styled.div`
-        display: flex;
-        align-items: center;
-        font-family: Poppins;
-        font-size: 16px;
-        text-align: center;
-        color: #817e90;
-        img {
-          margin: 0 5px 0 5px;
+  display: flex;
+  align-items: center;
+  font-family: Poppins;
+  font-size: 23px;
+
+  text-align: center;
+  color: #817e90;
+  img {
+    margin: 0 5px 0 5px;
   }
-        ${(props) =>
+  ${(props) =>
     props.color &&
     css`
       color: #f04545;
     `}
-        `;
+`;
 
 const OppComparedValue = styled.div`
-        display: flex;
-        align-items: center;
-        font-family: Poppins;
-        font-size: 16px;
-        text-align: center;
-        color: #817e90;
-        img {
-          margin: 0 5px 0 5px;
+  display: flex;
+  align-items: center;
+  font-family: Poppins;
+  font-size: 23px;
+
+  text-align: center;
+  color: #817e90;
+  img {
+    margin: 0 5px 0 5px;
   }
-        ${(props) =>
+  ${(props) =>
     props.color &&
     css`
       color: #0075bf;
     `}
-        `;
+`;
 
 const DropDownContainer = styled.div`
         display: flex;
