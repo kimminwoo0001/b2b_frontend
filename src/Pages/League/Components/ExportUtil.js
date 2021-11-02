@@ -47,13 +47,16 @@ const ExportUtil = ({ filename = "none", tableid }) => {
           }
         }
       }
+    } else {
+      getTableHeaders();
+      selectedCol = Object.keys(tblHeaders.current).map(x => Number(x));
     }
 
     for (let rowCnt = 0; rowCnt < table.rows.length; rowCnt++) {
       let rowData = table.rows[rowCnt].cells;
       for (let colCnt = 0; colCnt < rowData.length; colCnt++) {
         if (selectedCol.includes(colCnt) === false) {
-          break;
+          continue;
         }
         let columnData = rowData[colCnt].innerText;
         if (columnData == null || columnData.length === 0) {
@@ -212,13 +215,17 @@ const ExportButton = styled.div`
   float: right;
   color: #fff;
   cursor: pointer;
-  height: 30px;
+  height: 33px;
+  width: 70px;
   line-height: 30px;  
-  margin-top: -10px;
+  margin-top: -11.5px;
   margin-right: 5px;
   padding: 0 10px;
   background-color: #5942ba;
   border-radius: 3px;
+  border: solid 1px #000;
+  align-items: center;
+  text-align: center;
 `;
 
 const Selected = styled.div`
