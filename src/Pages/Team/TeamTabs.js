@@ -155,7 +155,7 @@ const TeamTabsWrapper = styled.div`
 
 const TabContainer = styled.ul`
   display: flex;
-  border-bottom: 1px solid #433f4e;
+  /* border-bottom: 1px solid #433f4e; */
   /* padding-bottom: 15px; */
 `;
 
@@ -203,7 +203,8 @@ const Pick = styled.li`
     width: auto;
     height: 17px;
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
+    font-weight: bold;
+  font-size: 18px;
     line-height: 1.31;
     letter-spacing: -0.65px;
     text-align: left;
@@ -230,7 +231,8 @@ const Statistics = styled.li`
     width: auto;
     height: 17px;
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
+    font-weight: bold;
+  font-size: 18px;
     line-height: 1.31;
     letter-spacing: -0.65px;
     text-align: left;
@@ -257,7 +259,8 @@ const TeamCompare = styled.li`
     width: auto;
     height: 17px;
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
+    font-weight: bold;
+  font-size: 18px;
     line-height: 1.31;
     letter-spacing: -0.65px;
     text-align: left;

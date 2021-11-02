@@ -72,13 +72,6 @@ function Player() {
                 {filters.getoppplayer ? (
                   <div className="GetOpp">
                     <div>{t("solo.tabs.comparison")} :</div>
-                    {/* <img
-                      width="16px"
-                      height="16px"
-                      src={`Images/TeamLogo/${filters.oppteam}.png`}
-                      alt="TeamLogo"
-                      className="TeamLogo"
-                    /> */}
                     <div>{filters.getoppplayer}</div>
                   </div>
                 ) : (
@@ -160,6 +153,8 @@ const TabContent = styled.li`
   color: #84818e;
   margin-right: 30px;
   font-weight: bold;
+  font-size: 18px;
+
   ${(props) =>
     props.changeColor &&
     css`
@@ -169,7 +164,6 @@ const TabContent = styled.li`
     width: auto;
     height: 17px;
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
     line-height: 1.31;
     letter-spacing: -0.65px;
     text-align: left;
@@ -215,6 +209,9 @@ const Comparison = styled.li`
   color: #84818e;
   margin-right: 30px;
   font-weight: bold;
+  font-size: 18px;
+
+
   ${(props) =>
     props.changeColor &&
     css`
@@ -224,7 +221,6 @@ const Comparison = styled.li`
     width: auto;
     height: 17px;
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
     line-height: 1.31;
     letter-spacing: -0.65px;
     text-align: left;
