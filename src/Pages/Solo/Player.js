@@ -44,14 +44,6 @@ function Player() {
               changeColor={filters.tab === 0}
             >
               <div>{t("solo.tabs.board")}</div>
-              <img
-                src={
-                  filters.tab === 0
-                    ? "Images/ico-1depth-arrow-on.png"
-                    : "Images/ico-1depth-arrow-off.png"
-                }
-                alt="arrowIcon"
-              ></img>
             </TabContent>
             {/* <SoloReport
             onClick={() => {
@@ -80,31 +72,23 @@ function Player() {
                 {filters.getoppplayer ? (
                   <div className="GetOpp">
                     <div>{t("solo.tabs.comparison")} :</div>
-                    <img
+                    {/* <img
                       width="16px"
                       height="16px"
                       src={`Images/TeamLogo/${filters.oppteam}.png`}
                       alt="TeamLogo"
                       className="TeamLogo"
-                    />
+                    /> */}
                     <div>{filters.getoppplayer}</div>
                   </div>
                 ) : (
                   t("solo.tabs.comparison")
                 )}
               </div>
-              <img
-                src={
-                  filters.tab === 1
-                    ? "Images/ico-1depth-arrow-on.png"
-                    : "Images/ico-1depth-arrow-off.png"
-                }
-                alt="arrowIcon"
-              ></img>
             </Comparison>
             {/* <TabContent
               onClick={() => {
-                dispatch(HandleTab(3));
+                dispatch(HandleTab(3));d
                 dispatch(ResetFilter2());
               }}
               changeColor={filters.tab === 3}
@@ -137,8 +121,6 @@ const BoardWrapper = styled.div`
 
 const TabContainer = styled.ul`
   display: flex;
-  border-bottom: 1px solid #433f4e;
-  /* padding-bottom: 15px; */
 `;
 
 /*
@@ -177,11 +159,11 @@ const TabContent = styled.li`
   padding-bottom: 15px;
   color: #84818e;
   margin-right: 30px;
+  font-weight: bold;
   ${(props) =>
     props.changeColor &&
     css`
-      color: #f04545;
-      border-bottom: 2px solid #f04545;
+      color: #fff;
     `}
   div {
     width: auto;
@@ -232,11 +214,11 @@ const Comparison = styled.li`
   padding-bottom: 15px;
   color: #84818e;
   margin-right: 30px;
+  font-weight: bold;
   ${(props) =>
     props.changeColor &&
     css`
-      color: #f04545;
-      border-bottom: 2px solid #f04545;
+      color: #fff;
     `}
   div {
     width: auto;

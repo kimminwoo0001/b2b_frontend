@@ -509,8 +509,6 @@ const CustomTool = styled.div`
 `;
 
 const CompareIngameWrapper = styled.div`
-
-
 `;
 
 const DisplayTeams = styled.div`
@@ -576,7 +574,7 @@ const AverageLabel = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width:30%;/
+  width:30%;
   font-family: NotoSansKR, Apple SD Gothic Neo;
   font-size: 23px;
   font-weight: 300;
