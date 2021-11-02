@@ -47,7 +47,6 @@ function PlayerCompare() {
     // dispatch(Loading(false));
   };
 
-  console.log(filters.team, filters.oppteam);
 
   return (
     <PlayerCompareWrapper>
