@@ -12,6 +12,7 @@ import Tippy from "@tippy.js/react";
 import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
 import ObjectTooltip from "./ObjectTooltip";
+import addZero from "../../../lib/addZero";
 
 
 function useInterval(callback) {
@@ -47,24 +48,6 @@ function useIntervalNormal(callback) {
     return () => clearInterval(id);
   }, []);
 }
-
-function addZero(num) {
-  if (num < 10) {
-    return "0" + String(num);
-  } else {
-    return num;
-  }
-}
-
-function secondZero(num) {
-  if (num > 0) {
-    return "50";
-  } else {
-    return "00";
-  }
-  console.log("num:", num)
-}
-
 
 function ObjectMapping() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -422,16 +405,16 @@ function ObjectMapping() {
           <TimeStamp>
             <span className="current">
               {range
-                ? `${addZero(Math.floor((range + minTime) / 2 / 60))} : ${addZero(Math.floor((range + minTime) / 2 % 60))} : ${secondZero((((range + minTime) / 2) % 1).toFixed(1))}`
-                : "00 : 00 : 00"}
+                ? `${addZero(Math.floor((range + minTime) / 2 / 60))} : ${addZero(Math.floor((range + minTime) / 2 % 60))}`
+                : "00 : 00"}
             </span>
             <p>/</p>
             {maxTime ? (
-              <span className="max">{`${Math.floor(
+              <span className="max">{`${addZero(Math.floor(
                 (maxTime + minTime) / 2 / 60
-              )} : ${((maxTime + minTime) / 2) % 60}`}</span>
+              ))} : ${addZero(((maxTime + minTime) / 2) % 60)}`}</span>
             ) : (
-              <span className="max">{`00 : 00 : 00`}</span>
+              <span className="max">{`00 : 00`}</span>
             )}
           </TimeStamp>
         </RangeWrapper>
@@ -655,7 +638,7 @@ const TimeStamp = styled.div`
     margin: 0 4px 0 4px;
   }
   > .current {
-    width: 60%;
+    width: 45%;
     color: rgb(240, 69, 69);
     text-align: right;
   }

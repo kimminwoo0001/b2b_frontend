@@ -9,12 +9,7 @@ import { API2 } from "../../config";
 import qs from "qs";
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
-
-
-function valuetext(value) {
-  const time = value * 9000;
-  return `${Math.floor(time / 1000 / 60)} : ${Math.floor((time / 1000) % 60)}`;
-}
+import timeFormat from "../../../lib/timeFormat";
 
 const WardSlider = withStyles({
   root: {
@@ -820,8 +815,8 @@ function SetByChampion({ minFrom, setMinFrom }) {
               onChange={handleChange}
               valueLabelDisplay="on"
               aria-labelledby="range-slider"
-              getAriaValueText={valuetext}
-              valueLabelFormat={valuetext}
+              getAriaValueText={timeFormat.hitmap}
+              valueLabelFormat={timeFormat.hitmap}
             // ValueLabelComponent={ValueLabelComponent}
             />
           </SliderContainer>
