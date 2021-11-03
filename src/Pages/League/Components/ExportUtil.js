@@ -37,27 +37,10 @@ const ExportUtil = ({ filename = "none", tableid }) => {
     const BOM = "\uFEFF"; //바이트 순서 표식
     let result = BOM;
     const table = document.getElementById(tableid);
-    let selectedCol = [];
-    if (type === "csv") {
-      for (let i = 0; i < tblHeaders.current.length; i++) {
-        for (let select of tblvalue.headers) {
-          if (select === tblHeaders.current[i]) {
-            selectedCol.push(i);
-            break;
-          }
-        }
-      }
-    } else {
-      getTableHeaders();
-      selectedCol = Object.keys(tblHeaders.current).map(x => Number(x));
-    }
 
     for (let rowCnt = 0; rowCnt < table.rows.length; rowCnt++) {
       let rowData = table.rows[rowCnt].cells;
       for (let colCnt = 0; colCnt < rowData.length; colCnt++) {
-        if (selectedCol.includes(colCnt) === false) {
-          continue;
-        }
         let columnData = rowData[colCnt].innerText;
         if (columnData == null || columnData.length === 0) {
           columnData = "".replace(/"/g, '""');
@@ -76,46 +59,58 @@ const ExportUtil = ({ filename = "none", tableid }) => {
     return result;
   }
 
-  const exportCSV = (filename = "none") => {
+  function tableData2(tableName) {
+    let ws = XLSX.utils.table_to_sheet(document.getElementById(tableid), { sheet: tableName, raw: true });
+    let range = XLSX.utils.decode_range(ws['!ref']);
+    let result = [];
+    let row;
+    let rowNum;
+    let colNum;
+    let selectedCol = [];
 
-    filename = timeFormat.nowTime() + filename + ".csv";
-    let csvString = tabledata("csv");
-    // IE 10, 11, Edge Run
-    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-
-      const blob = new Blob([decodeURIComponent(csvString)], {
-        type: 'text/csv;charset=utf8'
-      });
-      window.navigator.msSaveOrOpenBlob(blob, filename);
-    } else if (window.Blob && window.URL) {
-      // HTML5 Blob
-      const blob = new Blob([csvString], { type: 'text/csv;charset=utf8' });
-      const csvUrl = URL.createObjectURL(blob);
-      let a = document.createElement('a');
-      a.setAttribute('style', 'display:none');
-      a.setAttribute('href', csvUrl);
-      a.setAttribute('download', filename);
-      document.body.appendChild(a);
-      a.click()
-      a.remove();
-    } else {
-      // Data URI
-      const csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csvString);
-      const blob = new Blob([csvString], { type: 'text/csv;charset=utf8' });
-      const csvUrl = URL.createObjectURL(blob);
-      let a = document.createElement('a');
-      a.setAttribute('style', 'display:none');
-      a.setAttribute('target', '_blank');
-      a.setAttribute('href', csvData);
-      a.setAttribute('download', filename);
-      document.body.appendChild(a);
-      a.click()
-      a.remove();
+    for (let i = 0; i < tblHeaders.current.length; i++) {
+      for (let select of tblvalue.headers) {
+        if (select === tblHeaders.current[i]) {
+          selectedCol.push(i);
+          break;
+        }
+      }
     }
+
+    for (rowNum = range.s.r; rowNum <= range.e.r; rowNum++) {
+      row = [];
+      for (colNum = range.s.c; colNum <= range.e.c; colNum++) {
+        if (selectedCol.includes(colNum) === false) {
+          continue;
+        }
+        let nextCell = ws[XLSX.utils.encode_cell({ r: rowNum, c: colNum })];
+        if (typeof nextCell === 'undefined') {
+          row.push(void 0);
+        } else {
+          //row.push(nextCell.w);
+          row.push(nextCell.v);
+        }
+      }
+      result.push(row);
+    }
+
+    return result
   }
 
-  const exportXlsx = (tableName, tblData) => {
-    var wb = XLSX.utils.table_to_book(document.getElementById(tableid), { sheet: tableName, raw: true });
+  const exportCSV = (tableName, selectedCol) => {
+
+    let resultArray = tableData2(filename, selectedCol);
+    let wa = XLSX.utils.aoa_to_sheet(resultArray);
+    let wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, wa, tableName);
+    XLSX.writeFile(wb, (timeFormat.nowTime() + tableName + '.csv'));
+  }
+
+  const exportXlsx = (tableName, selectedCol) => {
+    let resultArray = tableData2(filename, selectedCol);
+    let wa = XLSX.utils.aoa_to_sheet(resultArray);
+    let wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, wa, tableName);
     XLSX.writeFile(wb, (timeFormat.nowTime() + tableName + '.xlsx'));
   }
 
@@ -129,6 +124,7 @@ const ExportUtil = ({ filename = "none", tableid }) => {
       }
     );
   }
+
 
 
   return (
@@ -181,13 +177,13 @@ const ExportUtil = ({ filename = "none", tableid }) => {
             </ul>
             <div className="export-file">
               <button onClick={() => {
-                exportCSV(filename, tableid, tblvalue.headers);
+                exportCSV(filename, tblvalue.headers);
                 setIsActive(false);
               }}>
                 CSV
               </button>
               <button onClick={() => {
-                exportXlsx(filename, tableid, tblvalue.headers);
+                exportXlsx(filename, tblvalue.headers);
                 setIsActive(false);
               }}>
                 XLSX

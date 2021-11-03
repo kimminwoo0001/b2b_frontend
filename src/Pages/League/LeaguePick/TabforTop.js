@@ -119,9 +119,9 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
         <MainPicks>
           <Header>
             <span>{t("league.draft.mostPick")}</span>
-            <ExportUtil filename={t("league.draft.mostPick")} tableid="pickTable" />
+            <ExportUtil filename={t("league.draft.mostPick")} tableid="mostPick-table" />
           </Header>
-          <PickTable id="pickTable">
+          <PickTable id="mostPick-table">
             <thead>
               <tr>
                 <th className="Champion">{t("league.draft.champion")}</th>
@@ -198,9 +198,10 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
         </MainPicks>
         <ChampionTier>
           <Header>
-            <div>{t("league.draft.champtier")}</div>
+            <span>{t("league.draft.champtier")}</span>
+            <ExportUtil filename={t("league.draft.champtier")} tableid="champtier-table" />
           </Header>
-          <TierTable>
+          <TierTable id="champtier-table">
             <thead>
               <tr>
                 <th className="Champion">{t("league.draft.champion")}</th>
@@ -315,9 +316,9 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
       <BottomRow>
         <MatchHistory>
           <Header>
-            <div>{t("league.draft.against")}</div>
+            <span>{t("league.draft.against")}</span>
           </Header>
-          <MatchWrapper>
+          <MatchWrapper id="against-table">
             {pickDifference?.map((pick, idx) => {
               return (
                 <MatchContents key={idx}>
@@ -440,9 +441,10 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
         </MatchHistory>
         <UniquePicks>
           <Header>
-            <div>{t("league.draft.unique")}</div>
+            <span>{t("league.draft.unique")}</span>
+            <ExportUtil filename={t("league.draft.unique")} tableid="unique-table" />
           </Header>
-          <UniqueTable>
+          <UniqueTable id="unique-table">
             <thead>
               <UniqueNavBar>
                 <th className="Champion">{t("league.draft.champion")}</th>
