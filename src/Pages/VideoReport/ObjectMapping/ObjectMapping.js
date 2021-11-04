@@ -103,17 +103,18 @@ function ObjectMapping() {
         id: user.id,
       };
       axiosRequest(url, params, function (e) {
+        debugger;
         const dto = e.data;
         setMinTime(dto?.position[0].realCount ? dto?.position[0].realCount : 0);
         setMaxTime(dto.position.length - 1);
         setCurrentPos(dto.position);
         setchampInfo(dto.info);
+        setPlay(true);
       })
     } catch (e) {
       console.log(e);
     } finally {
       setLoading(false);
-      setPlay(true);
     }
   };
 
@@ -389,10 +390,10 @@ function ObjectMapping() {
             id="rangeSlider"
             type="range"
             onChange={(e) => {
-              setRange(e.target.value);
+              setRange(Number(e.target.value));
             }}
             onKeyPress={(e) => {
-              setRange(e.target.value);
+              setRange(Number(e.target.value));
             }}
             step="1"
           />

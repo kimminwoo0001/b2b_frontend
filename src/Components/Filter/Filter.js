@@ -265,7 +265,7 @@ const Filter = memo(() => {
           for (let season of filters.season) {
             const seasonData = staticvalue.filterObjects[league][year][season];
             if (seasonData) {
-              if (seasonData.[filters.team]) {
+              if (seasonData[filters.team]) {
                 const ObjectKeys = Object.values(seasonData[filters.team]);
                 console.log("ObjectKeys", ObjectKeys);
                 playerList = playerList.concat(ObjectKeys);
