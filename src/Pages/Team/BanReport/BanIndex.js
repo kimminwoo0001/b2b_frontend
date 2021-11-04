@@ -24,6 +24,7 @@ import {
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import All from "./All";
 import qs from "qs";
+import axiosRequest from "../../../lib/axiosRequest";
 
 
 function BanIndex() {
@@ -76,78 +77,75 @@ function BanIndex() {
   }, [filters.team, side, filters.patch]);
 
   //밴지표 전체 데이터 가져오는 함수
-  const fetchingBanIndex = async () => {
+  const fetchingBanIndex = () => {
     setLoading(true);
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/team/pick`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        team: filters.team,
-        side: side,
-        token: user.token,
-        id: user.id
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    });
-    dispatch(Pick1(result.data.Picks[0].order));
-    dispatch(Pick2(result.data.Picks[1].order));
-    dispatch(Pick3(result.data.Picks[2].order));
-    dispatch(Pick4(result.data.Picks[3].order));
-    dispatch(Pick5(result.data.Picks[4].order));
-    dispatch(Ban1(result.data.Bans[0].BanInfos));
-    dispatch(Ban2(result.data.Bans[1].BanInfos));
-    dispatch(Ban3(result.data.Bans[2].BanInfos));
-    dispatch(Ban4(result.data.Bans[3].BanInfos));
-    dispatch(Ban5(result.data.Bans[4].BanInfos));
-    dispatch(Baned1(result.data.Baneds[0].BanInfos));
-    dispatch(Baned2(result.data.Baneds[1].BanInfos));
-    dispatch(Baned3(result.data.Baneds[2].BanInfos));
-    dispatch(Baned4(result.data.Baneds[3].BanInfos));
-    dispatch(Baned5(result.data.Baneds[4].BanInfos));
+    const url = `${API}/api/team/pick`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      team: filters.team,
+      side: side,
+      token: user.token,
+      id: user.id
+    };
 
-    let phaseArray1 = [];
-    Object.keys(result.data.phased.phase1).forEach((key) => {
-      phaseArray1.push({
-        champion: key,
-        value: result.data.phased.phase1[key]
+    axiosRequest(url, params, function (e) {
+      dispatch(Pick1(e.data.Picks[0].order));
+      dispatch(Pick2(e.data.Picks[1].order));
+      dispatch(Pick3(e.data.Picks[2].order));
+      dispatch(Pick4(e.data.Picks[3].order));
+      dispatch(Pick5(e.data.Picks[4].order));
+      dispatch(Ban1(e.data.Bans[0].BanInfos));
+      dispatch(Ban2(e.data.Bans[1].BanInfos));
+      dispatch(Ban3(e.data.Bans[2].BanInfos));
+      dispatch(Ban4(e.data.Bans[3].BanInfos));
+      dispatch(Ban5(e.data.Bans[4].BanInfos));
+      dispatch(Baned1(e.data.Baneds[0].BanInfos));
+      dispatch(Baned2(e.data.Baneds[1].BanInfos));
+      dispatch(Baned3(e.data.Baneds[2].BanInfos));
+      dispatch(Baned4(e.data.Baneds[3].BanInfos));
+      dispatch(Baned5(e.data.Baneds[4].BanInfos));
+
+      let phaseArray1 = [];
+      Object.keys(e.data.phased.phase1).forEach((key) => {
+        phaseArray1.push({
+          champion: key,
+          value: e.data.phased.phase1[key]
+        });
       });
-    });
 
-    let phaseArray2 = [];
-    Object.keys(result.data.phased.phase2).forEach((key) => {
-      phaseArray2.push({
-        champion: key,
-        value: result.data.phased.phase2[key]
+      let phaseArray2 = [];
+      Object.keys(e.data.phased.phase2).forEach((key) => {
+        phaseArray2.push({
+          champion: key,
+          value: e.data.phased.phase2[key]
+        });
       });
-    });
 
-    let phaseArray2_1 = [];
-    Object.keys(result.data.phased2.phase1).forEach((key) => {
-      phaseArray2_1.push({
-        champion: key,
-        value: result.data.phased2.phase1[key]
+      let phaseArray2_1 = [];
+      Object.keys(e.data.phased2.phase1).forEach((key) => {
+        phaseArray2_1.push({
+          champion: key,
+          value: e.data.phased2.phase1[key]
+        });
       });
-    });
 
-    let phaseArray2_2 = [];
-    Object.keys(result.data.phased2.phase2).forEach((key) => {
-      phaseArray2_2.push({
-        champion: key,
-        value: result.data.phased2.phase2[key]
+      let phaseArray2_2 = [];
+      Object.keys(e.data.phased2.phase2).forEach((key) => {
+        phaseArray2_2.push({
+          champion: key,
+          value: e.data.phased2.phase2[key]
+        });
       });
-    });
 
-    setPhase1(phaseArray1);
-    setPhase2(phaseArray2);
-    setPhase2_1(phaseArray2_1);
-    setPhase2_2(phaseArray2_2);
-    setLoading(false);
+      setPhase1(phaseArray1);
+      setPhase2(phaseArray2);
+      setPhase2_1(phaseArray2_1);
+      setPhase2_2(phaseArray2_2);
+
+    }).finally(setLoading(false))
   };
 
   if (loading) return <LoadingImg />;

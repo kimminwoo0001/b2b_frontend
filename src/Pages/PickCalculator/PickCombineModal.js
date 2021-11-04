@@ -10,6 +10,7 @@ import {
   GetOppPlayer
 } from "../../redux/modules/filtervalue";
 import { API } from "../config";
+import axiosRequest from "../../lib/axiosRequest";
 
 
 // import { useDetectOutsideClick } from "../../Components/SelectFilter/useDetectOustsideClick";
@@ -99,60 +100,58 @@ function PickCombineModal({ openModal, setOpenModal }) {
   };
 
   // 패치 필터 fetch 함수
-  const fetchingPatchFilter = async () => {
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/patch`,
-      params: { league: filters.league }
-    });
-    console.log(result);
-    // setPatchFilter(result.data.patch);
+  const fetchingPatchFilter = () => {
+    const url = `${API}/api/filter/patch`;
+    const params = { league: filters.league }
+    axiosRequest(url, params, function (e) {
+      console.log(e);
+      // setPatchFilter(result.data.patch);
+    })
   };
 
   //팀 필터 fetch 함수
   const fetchingTeamFilter = async () => {
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/team`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season, patch: filters.patch
-      }
-    });
-    setTeamFilter(result.data.team);
+    const url = `${API}/api/filter/team`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season, patch: filters.patch
+    };
+    axiosRequest(url, params, function (e) {
+      setTeamFilter(e.data.team);
+    })
   };
 
   //플레이어 필터 fetch 함수
   const fetchingPlayerFilter = async () => {
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/player`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        team: filters.team
-      }
-    });
-    setPlayerFilter(result.data.player);
+    const url = `${API}/api/filter/player`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      team: filters.team
+    }
+    axiosRequest(url, params, function (e) {
+      setPlayerFilter(e.data.player);
+    })
   };
 
   const fetchingOppPlayerFilter = async () => {
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/player`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        team: filters.oppteam
-      }
-    });
-    console.log(result);
-    // setOppPlayerFilter(result.data.player);
+    const url = `${API}/api/filter/player`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      team: filters.oppteam
+    };
+
+    axiosRequest(url, params, function (e) {
+      console.log(e);
+      // setOppPlayerFilter(result.data.player);
+    })
+
   };
 
   return (

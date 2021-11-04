@@ -5,6 +5,7 @@ import { API } from "../../config";
 import { useTranslation } from "react-i18next";
 import qs from "qs";
 import { useSelector } from "react-redux";
+import axiosRequest from "../../../lib/axiosRequest";
 
 function PlayerCompare() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -20,33 +21,26 @@ function PlayerCompare() {
   }, [filters]);
 
   //팀 필터 fetch 함수
-  const GetPerformance = async () => {
-    //
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/player/comparisonRecord`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        team: filters.team,
-        player: filters.player,
-        oppteam: filters.oppteam,
-        oppplayer: filters.oppplayer,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      },
+  const GetPerformance = () => {
+    const url = `${API}/api/player/comparisonRecord`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      team: filters.team,
+      player: filters.player,
+      oppteam: filters.oppteam,
+      oppplayer: filters.oppplayer,
+      token: user.token,
+      id: user.id,
+    };
+    axiosRequest(url, params, function (e) {
+      setData(e.data[filters.player]);
+      setOppData(e.data[filters.oppplayer]);
     });
-
-    setData(result.data[filters.player]);
-    setOppData(result.data[filters.oppplayer]);
     // dispatch(Loading(false));
   };
-
 
   return (
     <PlayerCompareWrapper>

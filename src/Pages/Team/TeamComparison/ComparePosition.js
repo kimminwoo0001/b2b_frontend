@@ -7,6 +7,7 @@ import qs from "qs";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
+import axiosRequest from "../../../lib/axiosRequest";
 
 
 function mycomparator(a, b) {
@@ -55,165 +56,159 @@ function ComparePosition() {
   ];
 
   //포지션 그래프 fetch 함수
-  const GetPositionGraphData = async () => {
+  const GetPositionGraphData = () => {
     setLoading(true);
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/team/comparison`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        team: filters.team,
-        oppteam: filters.oppteam,
-        token: user.token,
-        id: user.id
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    });
-    setTeamName({
-      team: result.data.teamName,
-      oppteam: result.data.oppteamName
-    });
-    //top데이터 받아와서 그래프에 넣기 위해 가공하는 과정
-    const topData = [];
-    const topArray = [];
-    Object.values(result?.data["top"]).forEach((patch) => {
-      const topValues = [];
-      for (let i = 0; i < sortedPatch.length; i++) {
-        if (Object.keys(patch).includes(sortedPatch[i])) {
-          for (let j = 0; j < sortedPatch.length; j++) {
-            if (sortedPatch[i] === Object.keys(patch)[j]) {
-              topValues.push(Object.values(patch)[j]);
-            }
-          }
-        } else {
-          topValues.push(null);
-        }
-      }
-      topData.push(topValues);
-    });
-
-    for (let i = 0; i < topData.length; i++) {
-      topArray.push({
-        player: Object.keys(result.data["top"])[i],
-        data: topData[i]
-      });
+    const url = `${API}/api/team/comparison`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      team: filters.team,
+      oppteam: filters.oppteam,
+      token: user.token,
+      id: user.id
     }
-    setTop(topArray);
-
-    //정글데이터 받아와서 그래프에 넣기 위해 가공하는 과정
-    const jngData = [];
-    const jngArray = [];
-    Object.values(result?.data["jng"]).forEach((patch) => {
-      const jngValues = [];
-      for (let i = 0; i < sortedPatch.length; i++) {
-        if (Object.keys(patch).includes(sortedPatch[i])) {
-          for (let j = 0; j < sortedPatch.length; j++) {
-            if (sortedPatch[i] === Object.keys(patch)[j]) {
-              jngValues.push(Object.values(patch)[j]);
-            }
-          }
-        } else {
-          jngValues.push(null);
-        }
-      }
-
-      jngData.push(jngValues);
-    });
-    for (let i = 0; i < jngData.length; i++) {
-      jngArray.push({
-        player: Object.keys(result.data["jng"])[i],
-        data: jngData[i]
+    axiosRequest(url, params, function (e) {
+      setTeamName({
+        team: e.data.teamName,
+        oppteam: e.data.oppteamName
       });
-    }
-    setJng(jngArray);
-
-    //미드 데이터 받아와서 그래프에 넣기 위해 가공하는 과정
-    const midData = [];
-    const midArray = [];
-    Object.values(result?.data["mid"]).forEach((patch) => {
-      const midValues = [];
-      for (let i = 0; i < sortedPatch.length; i++) {
-        if (Object.keys(patch).includes(sortedPatch[i])) {
-          for (let j = 0; j < sortedPatch.length; j++) {
-            if (sortedPatch[i] === Object.keys(patch)[j]) {
-              midValues.push(Object.values(patch)[j]);
+      //top데이터 받아와서 그래프에 넣기 위해 가공하는 과정
+      const topData = [];
+      const topArray = [];
+      Object.values(e?.data["top"]).forEach((patch) => {
+        const topValues = [];
+        for (let i = 0; i < sortedPatch.length; i++) {
+          if (Object.keys(patch).includes(sortedPatch[i])) {
+            for (let j = 0; j < sortedPatch.length; j++) {
+              if (sortedPatch[i] === Object.keys(patch)[j]) {
+                topValues.push(Object.values(patch)[j]);
+              }
             }
+          } else {
+            topValues.push(null);
           }
-        } else {
-          midValues.push(null);
         }
-      }
-
-      midData.push(midValues);
-    });
-    for (let i = 0; i < midData.length; i++) {
-      midArray.push({
-        player: Object.keys(result.data["mid"])[i],
-        data: midData[i]
+        topData.push(topValues);
       });
-    }
-    setMid(midArray);
 
-    //원딜 데이터 받아와서 그래프에 넣기 위해 가공하는 과정
-    const botData = [];
-    const botArray = [];
-    Object.values(result?.data["bot"]).forEach((patch) => {
-      const botValues = [];
-      for (let i = 0; i < sortedPatch.length; i++) {
-        if (Object.keys(patch).includes(sortedPatch[i])) {
-          for (let j = 0; j < sortedPatch.length; j++) {
-            if (sortedPatch[i] === Object.keys(patch)[j]) {
-              botValues.push(Object.values(patch)[j]);
+      for (let i = 0; i < topData.length; i++) {
+        topArray.push({
+          player: Object.keys(e.data["top"])[i],
+          data: topData[i]
+        });
+      }
+      setTop(topArray);
+
+      //정글데이터 받아와서 그래프에 넣기 위해 가공하는 과정
+      const jngData = [];
+      const jngArray = [];
+      Object.values(e?.data["jng"]).forEach((patch) => {
+        const jngValues = [];
+        for (let i = 0; i < sortedPatch.length; i++) {
+          if (Object.keys(patch).includes(sortedPatch[i])) {
+            for (let j = 0; j < sortedPatch.length; j++) {
+              if (sortedPatch[i] === Object.keys(patch)[j]) {
+                jngValues.push(Object.values(patch)[j]);
+              }
             }
+          } else {
+            jngValues.push(null);
           }
-        } else {
-          botValues.push(null);
         }
-      }
 
-      botData.push(botValues);
-    });
-    for (let i = 0; i < botData.length; i++) {
-      botArray.push({
-        player: Object.keys(result.data["bot"])[i],
-        data: botData[i]
+        jngData.push(jngValues);
       });
-    }
-    setBot(botArray);
+      for (let i = 0; i < jngData.length; i++) {
+        jngArray.push({
+          player: Object.keys(e.data["jng"])[i],
+          data: jngData[i]
+        });
+      }
+      setJng(jngArray);
 
-    //서포터 데이터 받아와서 그래프에 넣기 위해 가공하는 과정
-    const supData = [];
-    const supArray = [];
-    Object.values(result?.data["sup"]).forEach((patch) => {
-      const supValues = [];
-      for (let i = 0; i < sortedPatch.length; i++) {
-        if (Object.keys(patch).includes(sortedPatch[i])) {
-          for (let j = 0; j < sortedPatch.length; j++) {
-            if (sortedPatch[i] === Object.keys(patch)[j]) {
-              supValues.push(Object.values(patch)[j]);
+      //미드 데이터 받아와서 그래프에 넣기 위해 가공하는 과정
+      const midData = [];
+      const midArray = [];
+      Object.values(e?.data["mid"]).forEach((patch) => {
+        const midValues = [];
+        for (let i = 0; i < sortedPatch.length; i++) {
+          if (Object.keys(patch).includes(sortedPatch[i])) {
+            for (let j = 0; j < sortedPatch.length; j++) {
+              if (sortedPatch[i] === Object.keys(patch)[j]) {
+                midValues.push(Object.values(patch)[j]);
+              }
             }
+          } else {
+            midValues.push(null);
           }
-        } else {
-          supValues.push(null);
         }
-      }
 
-      supData.push(supValues);
-    });
-    for (let i = 0; i < supData.length; i++) {
-      supArray.push({
-        player: Object.keys(result.data["sup"])[i],
-        data: supData[i]
+        midData.push(midValues);
       });
-    }
-    setSup(supArray);
+      for (let i = 0; i < midData.length; i++) {
+        midArray.push({
+          player: Object.keys(e.data["mid"])[i],
+          data: midData[i]
+        });
+      }
+      setMid(midArray);
 
-    setLoading(false);
+      //원딜 데이터 받아와서 그래프에 넣기 위해 가공하는 과정
+      const botData = [];
+      const botArray = [];
+      Object.values(e?.data["bot"]).forEach((patch) => {
+        const botValues = [];
+        for (let i = 0; i < sortedPatch.length; i++) {
+          if (Object.keys(patch).includes(sortedPatch[i])) {
+            for (let j = 0; j < sortedPatch.length; j++) {
+              if (sortedPatch[i] === Object.keys(patch)[j]) {
+                botValues.push(Object.values(patch)[j]);
+              }
+            }
+          } else {
+            botValues.push(null);
+          }
+        }
+
+        botData.push(botValues);
+      });
+      for (let i = 0; i < botData.length; i++) {
+        botArray.push({
+          player: Object.keys(e.data["bot"])[i],
+          data: botData[i]
+        });
+      }
+      setBot(botArray);
+
+      //서포터 데이터 받아와서 그래프에 넣기 위해 가공하는 과정
+      const supData = [];
+      const supArray = [];
+      Object.values(e?.data["sup"]).forEach((patch) => {
+        const supValues = [];
+        for (let i = 0; i < sortedPatch.length; i++) {
+          if (Object.keys(patch).includes(sortedPatch[i])) {
+            for (let j = 0; j < sortedPatch.length; j++) {
+              if (sortedPatch[i] === Object.keys(patch)[j]) {
+                supValues.push(Object.values(patch)[j]);
+              }
+            }
+          } else {
+            supValues.push(null);
+          }
+        }
+
+        supData.push(supValues);
+      });
+      for (let i = 0; i < supData.length; i++) {
+        supArray.push({
+          player: Object.keys(e.data["sup"])[i],
+          data: supData[i]
+        });
+      }
+      setSup(supArray);
+    }).finally(setLoading(false));
   };
 
   //그래프 세팅

@@ -12,6 +12,7 @@ import WeekTwo from "./WeekTwo";
 import WeekThree from "./WeekThree";
 import WeekFour from "./WeekFour";
 import WeekFive from "./WeekFive";
+import axiosRequest from "../../../lib/axiosRequest";
 
 function LeagueSchedule() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -72,36 +73,34 @@ function LeagueSchedule() {
   }, [convertYear(startDate), convertMonth(startDate)]);
 
   // week 데이터 featch 함수
-  const fetchingWeekData = async () => {
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/league/schedule`,
-      params: {
-        league: filters.league,
-        year: convertYear(startDate),
-        month: convertMonth(startDate),
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    });
-    setWeekData1(result.data[0].week);
-    setWeekData2(result.data[1].week);
-    setWeekData3(result.data[2].week);
-    setWeekData4(result.data[3].week);
-    setWeekData5(result.data[4].week);
+  const fetchingWeekData = () => {
+    const url = `${API}/api/league/schedule`;
+    const params = {
+      league: filters.league,
+      year: convertYear(startDate),
+      month: convertMonth(startDate),
+      token: user.token,
+      id: user.id,
+    }
+    axiosRequest(url, params, function (e) {
+      setWeekData1(e.data[0].week);
+      setWeekData2(e.data[1].week);
+      setWeekData3(e.data[2].week);
+      setWeekData4(e.data[3].week);
+      setWeekData5(e.data[4].week);
 
-    result.data.forEach((week, idx) => {
-      if (week.thisWeek === true) {
-        setWhichWeek(idx + 1);
-        setThisWeek(idx + 1);
-      } else if ((week.thisWeek = false)) {
-        setThisWeek(0);
-        setWhichWeek(0);
-      }
-    });
+      e.data.forEach((week, idx) => {
+        if (week.thisWeek === true) {
+          setWhichWeek(idx + 1);
+          setThisWeek(idx + 1);
+        } else if ((week.thisWeek = false)) {
+          setThisWeek(0);
+          setWhichWeek(0);
+        }
+      });
+    })
+
+
   };
 
   return (

@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import qs from "qs";
 import TabforTop from "./TabforTop";
+import axiosRequest from "../../../lib/axiosRequest";
 
 
 function LeaguePick() {
@@ -89,36 +90,32 @@ function LeaguePick() {
   };
 
   // week 데이터 fetch 함수
-  const fetchingPickData = async () => {
+  const fetchingPickData = () => {
     setLoading(true);
 
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/league/pick`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        position: queryPosition,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    });
+    let url = `${API}/api/league/pick`;
+    let params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      position: queryPosition,
+      token: user.token,
+      id: user.id
+    };
 
-    //주요픽 데이터 저장
-    setImportantPicks(result.data.importantPick);
-    //주요픽간의전적 저장
-    setPickDifference(result.data.pickDiff);
-    //챔피언 티어 저장
-    setTier(result.data.championTier);
-    //유니크픽 데이터 저장
-    setUniquePick(result.data.uniquePick);
-
-    setLoading(false);
+    axiosRequest(url, params, function (e) {
+      //주요픽 데이터 저장
+      setImportantPicks(e.data.importantPick);
+      //주요픽간의전적 저장
+      setPickDifference(e.data.pickDiff);
+      //챔피언 티어 저장
+      setTier(e.data.championTier);
+      //유니크픽 데이터 저장
+      setUniquePick(e.data.uniquePick);
+    }).finally(
+      setLoading(false)
+    );
   };
 
   if (loading) return <LoadingImg />;

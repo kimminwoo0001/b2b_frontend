@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import qs from "qs";
-import axios from "axios";
+
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { createBrowserHistory } from "history";
@@ -27,6 +27,7 @@ import {
 import { API } from "../../Pages/config";
 import { useTranslation } from "react-i18next";
 import { useDetectOutsideClick } from "../../Pages/TeamCompare/useDetectOustsideClick";
+import axiosRequest from "../../lib/axiosRequest";
 
 
 const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
@@ -67,25 +68,20 @@ const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
   };
 
   // opp 팀 필터 fetch 함수
-  const fetchingOppTeamFilter = async (team) => {
-    console.log("a");
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/oppteam`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        team: team,
-        token: user.token,
-        id: user.id
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    });
-    setOppTeamFilter(result.data.oppteam);
+  const fetchingOppTeamFilter = (team) => {
+    const url = `${API}/api/filter/oppteam`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      team: team,
+      token: user.token,
+      id: user.id
+    }
+    axiosRequest(url, params, function (e) {
+      setOppTeamFilter(e.data.oppteam);
+    })
   };
 
   return (

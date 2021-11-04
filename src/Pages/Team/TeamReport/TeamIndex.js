@@ -12,6 +12,8 @@ import axios from "axios";
 import { API } from "../../config";
 import { useSelector } from "react-redux";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
+import axiosRequest from "../../../lib/axiosRequest";
+
 
 
 function TeamIndex() {
@@ -45,12 +47,12 @@ function TeamIndex() {
   }, [filters]);
 
   // 팀 전력 보고서 데이터 featch 함수
-  const fetchingStatisticData = async () => {
+  const fetchingStatisticData = () => {
     setLoading(true);
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/team/analysis`,
-      params: {
+    try {
+
+      let url = `${API}/api/team/analysis`;
+      let params = {
         league: filters.league,
         year: filters.year,
         season: filters.season,
@@ -58,44 +60,48 @@ function TeamIndex() {
         team: filters.team,
         token: user.token,
         id: user.id
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
       }
-    });
-    //팀 평균 데이터 fetch
-    setTeamStats(result.data.teamStats);
 
-    //리그 평균 데이터 fetch
-    setLeagueStat(result.data.leagueStat);
+      axiosRequest(url, params, function (e) {
+        //팀 평균 데이터 fetch
+        setTeamStats(e.data.teamStats);
 
-    //SRB 데이터 fetch
-    setSbrAnalysis(result.data.sbrAnalysis);
+        //리그 평균 데이터 fetch
+        setLeagueStat(e.data.leagueStat);
 
-    //첫 갱 라인 데이터 fetch
-    const gameX = [];
-    const gameY = [];
-    setGankCount(result.data.firstGank);
-    result.data.firstGank.firstGankList.forEach((game) => {
-      gameX.push(game.position);
-      gameY.push(game.gankCount);
-    });
-    setGankCountX(gameX);
-    setGankCountY(gameY);
+        //SRB 데이터 fetch
+        setSbrAnalysis(e.data.sbrAnalysis);
 
-    //라인별 서포팅 횟수 데이터 fetch
+        //첫 갱 라인 데이터 fetch
+        const gameX = [];
+        const gameY = [];
+        setGankCount(e.data.firstGank);
+        e.data.firstGank.firstGankList.forEach((game) => {
+          gameX.push(game.position);
+          gameY.push(game.gankCount);
+        });
+        setGankCountX(gameX);
+        setGankCountY(gameY);
 
-    const supportX = [];
-    const supportY = [];
-    setSupportTimeData(result.data.supportedTime);
-    result.data.supportedTime.supportedTimeList.forEach((support) => {
-      supportX.push(support.position);
-      supportY.push(support.value);
-    });
+        //라인별 서포팅 횟수 데이터 fetch
 
-    setSupportTimeX(supportX);
-    setSupportTimeY(supportY);
-    setLoading(false);
+        const supportX = [];
+        const supportY = [];
+        setSupportTimeData(e.data.supportedTime);
+        e.data.supportedTime.supportedTimeList.forEach((support) => {
+          supportX.push(support.position);
+          supportY.push(support.value);
+        });
+
+        setSupportTimeX(supportX);
+        setSupportTimeY(supportY);
+        setLoading(false);
+      })
+
+
+    } catch (e) {
+      alert(e);
+    }
   };
 
   //갱킹 그래프 옵션

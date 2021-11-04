@@ -6,6 +6,7 @@ import axios from "axios";
 import qs from "qs";
 
 import { API4 } from "../config";
+import axiosRequest from "../../lib/axiosRequest";
 
 const PiArea = () => {
   const [tab, setTab] = useState(0);
@@ -41,14 +42,14 @@ const PiArea = () => {
       return;
     }
 
-    const response = await axios.request({
-      method: "GET",
-      url: `${API4}/gameidsearchAjax.do`,
-      params: {
-        q: gameIdInput,
-      },
-    });
-    setGameIdSearchData(response.data.items);
+    const url = `${API4}/gameidsearchAjax.do`;
+    const params = {
+      q: gameIdInput,
+    }
+
+    axiosRequest(url, params, function (e) {
+      setGameIdSearchData(e.data.items);
+    })
   };
 
   // dropdown 내 game id 클릭 시 해당 id에 대한 data fetching
@@ -80,15 +81,16 @@ const PiArea = () => {
     }
     // setEntireData("");
     const fetchClickedData = async () => {
-      const response = await axios.request({
-        method: "GET",
-        url: `${API4}/searchByGameidAjax.do`,
-        params: {
-          gameid: clickedGameId,
-        },
-      });
-      setEntireData(response.data);
-      handleYoutubeData(response.data);
+
+      const url = `${API4}/searchByGameidAjax.do`;
+      const params = {
+        gameid: clickedGameId,
+      }
+      axiosRequest(url, params, function (e) {
+        setEntireData(e.data);
+        handleYoutubeData(e.data);
+      })
+
     };
     fetchClickedData();
   }, [clickedGameId]);

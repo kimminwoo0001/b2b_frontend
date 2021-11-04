@@ -15,6 +15,7 @@ import {
   Legend
 } from "recharts";
 import qs from "qs";
+import axiosRequest from "../../../lib/axiosRequest";
 
 
 function CompareIngame() {
@@ -51,90 +52,84 @@ function CompareIngame() {
   }, [filters.oppteam, filters.patch]);
 
   //밴지표 전체 데이터 가져오는 함수
-  const GetInGameData = async () => {
+  const GetInGameData = () => {
     setLoading(true);
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/team/comparisonPi`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        team: filters.team,
-        oppteam: filters.oppteam,
-        token: user.token,
-        id: user.id
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    });
-
-    setTeamName({
-      team: result.data[filters.team].teamName,
-      oppteam: result.data[filters.oppteam].teamName
-    });
-    let gankTicks = "";
-    //첫 갱크 데이터 min,max,stepsize 값
-    if (
-      result.data[Team]?.firstGank.firstGankMax >
-      result.data[OppTeam]?.firstGank.firstGankMax
-    ) {
-      setGankDomain(result.data[Team]?.firstGank);
-      gankTicks = result.data[Team];
-    } else {
-      setGankDomain(result.data[OppTeam]?.firstGank);
-      gankTicks = result.data[OppTeam];
+    const url = `${API}/api/team/comparisonPi`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      team: filters.team,
+      oppteam: filters.oppteam,
+      token: user.token,
+      id: user.id
     }
-
-    //첫 갱크 데이터 가져와서 x,y로 나눠서 배열로 만듬
-    const gankData = result.data[Team]?.firstGank.firstGankList?.map((gank) => {
-      return { x: gank.position, y1: gank.gankCount };
-    });
-
-    const gankData2 = result.data[OppTeam]?.firstGank.firstGankList?.map(
-      (gank) => {
-        return { x: gank.position, y2: gank.gankCount };
+    axiosRequest(url, params, function (e) {
+      setTeamName({
+        team: e.data[filters.team].teamName,
+        oppteam: e.data[filters.oppteam].teamName
+      });
+      let gankTicks = "";
+      //첫 갱크 데이터 min,max,stepsize 값
+      if (
+        e.data[Team]?.firstGank.firstGankMax >
+        e.data[OppTeam]?.firstGank.firstGankMax
+      ) {
+        setGankDomain(e.data[Team]?.firstGank);
+        gankTicks = e.data[Team];
+      } else {
+        setGankDomain(e.data[OppTeam]?.firstGank);
+        gankTicks = e.data[OppTeam];
       }
-    );
-    for (let i = 0; i < gankData.length; i++) {
-      Object.assign(gankData[i], gankData2[i]);
-      setGank(gankData);
-    }
-    //첫 서포팅 데이터 min, max, stepsize값
-    let supTicks = "";
-    if (
-      result.data[Team]?.supportedTime.supportedTimeMax >
-      result.data[OppTeam]?.supportedTime.supportedTimeMax
-    ) {
-      supTicks = result.data[Team];
-      setSupportDomain(result.data[Team]?.supportedTime);
-    } else {
-      supTicks = result.data[OppTeam];
-      setSupportDomain(result.data[OppTeam]?.supportedTime);
-    }
 
-    //첫 서포팅 데이터 가져와서 x,y로 나눠서 배열로 만듬
-    const supData = result.data[Team]?.supportedTime.supportedTimeList?.map(
-      (sup) => {
-        return { x: sup.position, y1: sup.value };
+      //첫 갱크 데이터 가져와서 x,y로 나눠서 배열로 만듬
+      const gankData = e.data[Team]?.firstGank.firstGankList?.map((gank) => {
+        return { x: gank.position, y1: gank.gankCount };
+      });
+
+      const gankData2 = e.data[OppTeam]?.firstGank.firstGankList?.map(
+        (gank) => {
+          return { x: gank.position, y2: gank.gankCount };
+        }
+      );
+      for (let i = 0; i < gankData.length; i++) {
+        Object.assign(gankData[i], gankData2[i]);
+        setGank(gankData);
       }
-    );
-    const supData2 = result.data[OppTeam]?.supportedTime.supportedTimeList.map(
-      (sup) => {
-        return { x: sup.position, y2: sup.value };
+      //첫 서포팅 데이터 min, max, stepsize값
+      let supTicks = "";
+      if (
+        e.data[Team]?.supportedTime.supportedTimeMax >
+        e.data[OppTeam]?.supportedTime.supportedTimeMax
+      ) {
+        supTicks = e.data[Team];
+        setSupportDomain(e.data[Team]?.supportedTime);
+      } else {
+        supTicks = e.data[OppTeam];
+        setSupportDomain(e.data[OppTeam]?.supportedTime);
       }
-    );
-    for (let i = 0; i < supData.length; i++) {
-      Object.assign(supData[i], supData2[i]);
-      setSupport(supData);
-    }
-    hanldleTicks(gankTicks, supTicks);
-    //Team, OppTeam을 나눠서 데이터를 저장함
-    setRedData(result.data[Team]);
-    setBlueData(result.data[OppTeam]);
-    setLoading(false);
+
+      //첫 서포팅 데이터 가져와서 x,y로 나눠서 배열로 만듬
+      const supData = e.data[Team]?.supportedTime.supportedTimeList?.map(
+        (sup) => {
+          return { x: sup.position, y1: sup.value };
+        }
+      );
+      const supData2 = e.data[OppTeam]?.supportedTime.supportedTimeList.map(
+        (sup) => {
+          return { x: sup.position, y2: sup.value };
+        }
+      );
+      for (let i = 0; i < supData.length; i++) {
+        Object.assign(supData[i], supData2[i]);
+        setSupport(supData);
+      }
+      hanldleTicks(gankTicks, supTicks);
+      //Team, OppTeam을 나눠서 데이터를 저장함
+      setRedData(e.data[Team]);
+      setBlueData(e.data[OppTeam]);
+    }).finally(setLoading(false));
   };
 
   //그래프 y 축 max값 받아오는거 비교해서 더 높은것으로 출력 해주는 함수
@@ -182,26 +177,26 @@ function CompareIngame() {
     <CompareIngameWrapper>
       <DisplayTeams>
         <div className="RedSide">
-        <img
-          src={`Images/TeamLogo/${filters.team}.png`}
-          width="54px"
-          height="54px"
-          alt="teamIcon"
-        />
-        <div className="TeamOne">{teamName?.team}</div>
+          <img
+            src={`Images/TeamLogo/${filters.team}.png`}
+            width="54px"
+            height="54px"
+            alt="teamIcon"
+          />
+          <div className="TeamOne">{teamName?.team}</div>
         </div>
         <div className="Vs">VS</div>
         <div className="BlueSide">
-        <img
-          src={`Images/TeamLogo/${filters.oppteam}.png`}
-          width="54px"
-          height="54px"
-          alt="teamIcon"
-        />
-        <div className="TeamTwo">{teamName?.oppteam}</div>
-     
+          <img
+            src={`Images/TeamLogo/${filters.oppteam}.png`}
+            width="54px"
+            height="54px"
+            alt="teamIcon"
+          />
+          <div className="TeamTwo">{teamName?.oppteam}</div>
+
         </div>
-         
+
       </DisplayTeams>
       <CompareStats>
         {/* <GameDataBox>
@@ -559,11 +554,11 @@ const RedTeamData = styled.div`
   font-size: 23px;
   font-weight: bold;
   ${(props) =>
-    props.changeColor ? 
-    css`
+    props.changeColor ?
+      css`
       color: #f04545;
-    ` : 
-    css`
+    ` :
+      css`
     opacity: 0.3;
   `
   }   
@@ -592,11 +587,11 @@ const BlueTeamData = styled.div`
   font-weight: bold;
   font-family: NotoSansKR, Apple SD Gothic Neo;
   ${(props) =>
-    props.changeColor ? 
-    css`
+    props.changeColor ?
+      css`
       color: #f04545;
-    ` : 
-    css`
+    ` :
+      css`
     opacity: 0.3;
   `
   } 

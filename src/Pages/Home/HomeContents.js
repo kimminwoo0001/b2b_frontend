@@ -11,6 +11,7 @@ import { Loading } from "../../redux/modules/filtervalue";
 import { GetFilterAllItems } from "../../redux/modules/staticvalue";
 
 import checkRequest from "../../lib/checkRequest";
+import axiosRequest from "../../lib/axiosRequest";
 
 const HomeContents = memo(() => {
   const filters = useSelector((state) => state.FilterReducer);
@@ -36,31 +37,27 @@ const HomeContents = memo(() => {
 
   // 홈 데이터 fetch 해오는 함수
 
-  const fetchHomeData = async () => {
+  const fetchHomeData = () => {
     dispatch(Loading(true));
     console.log(user)
     try {
-      const jsonData = await axios.request({
-        method: "GET",
-        url: `${API}/api/home/home`,
-        params: {
-          token: user.token,
-          id: user.id
-        }
-      });
-
-      if (checkRequest(jsonData)) {
-        sessionStorage.clear();
-        history.push("/login");
+      const url = `${API}/api/home/home`;
+      const params = {
+        token: user.token,
+        id: user.id
       }
-
-      setLckData(jsonData.data["LCK"]);
-      setLecData(jsonData.data["LEC"]);
-      setLcsData(jsonData.data["LCS"]);
-      setLplData(jsonData.data["LPL"]);
-      // setVcsData(jsonData.data["VCS"]);
-
-      dispatch(Loading(false));
+      axiosRequest(url, params, function (e) {
+        if (checkRequest(e)) {
+          sessionStorage.clear();
+          history.push("/login");
+        }
+        setLckData(e.data["LCK"]);
+        setLecData(e.data["LEC"]);
+        setLcsData(e.data["LCS"]);
+        setLplData(e.data["LPL"]);
+        // setVcsData(jsonData.data["VCS"]);
+        dispatch(Loading(false));
+      })
       //
     } catch (e) {
       console.log(e);
@@ -68,19 +65,18 @@ const HomeContents = memo(() => {
     }
   };
 
-  const fetchFilterData = async () => {
+  const fetchFilterData = () => {
     dispatch(Loading(true));
     try {
-      const jsonData = await axios.request({
-        method: "GET",
-        url: `${API}/api/test/test`,
-        params: {
-          token: user.token,
-          id: user.id
-        }
-      });
-      dispatch(GetFilterAllItems(jsonData.data));
-      dispatch(Loading(false));
+      const url = `${API}/api/test/test`;
+      const params = {
+        token: user.token,
+        id: user.id
+      }
+      axiosRequest(url, params, function (e) {
+        dispatch(GetFilterAllItems(e.data));
+        dispatch(Loading(false));
+      })
     } catch (e) {
       console.log(e);
       dispatch(Loading(false));

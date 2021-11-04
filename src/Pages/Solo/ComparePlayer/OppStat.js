@@ -16,6 +16,7 @@ import {
   ResetChampion,
   ResetChampion2,
 } from "../../../redux/modules/filtervalue";
+import axiosRequest from "../../../lib/axiosRequest";
 
 function OppStat() {
   //상대 전적 기록 탭
@@ -46,84 +47,74 @@ function OppStat() {
   }, [filters.oppplayer, filters.resetchamp, filters.patch]);
 
   //팀 필터 fetch 함수
-  const GetComparisonStat = async () => {
+  const GetComparisonStat = () => {
     setLoading(true);
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/player/comparisonRecord`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        team: filters.team,
-        player: filters.player,
-        oppteam: filters.oppteam,
-        oppplayer: filters.oppplayer,
-        champion: filters.champion_eng,
-        oppchampion: filters.oppchampion_eng,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      },
+    const url = `${API}/api/player/comparisonRecord`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      team: filters.team,
+      player: filters.player,
+      oppteam: filters.oppteam,
+      oppplayer: filters.oppplayer,
+      champion: filters.champion_eng,
+      oppchampion: filters.oppchampion_eng,
+      token: user.token,
+      id: user.id,
+    };
+    axiosRequest(url, params, function (e) {
+      setPlayer(e.data[filters.player]);
+      setOppPlayer(e.data[filters.oppplayer]);
+    }).finally((e) => {
+      setLoading(false);
     });
-    setPlayer(result.data[filters.player]);
-    setOppPlayer(result.data[filters.oppplayer]);
-    setLoading(false);
   };
 
-  const GetChampionFilter = async () => {
-    const response = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/vschampion`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        position: filters.position,
-        team: filters.team,
-        oppteam: filters.oppteam,
-        oppplayer: filters.oppplayer,
-        player: filters.player,
-        oppchampion: filters.oppchampion_eng,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      },
+  const GetChampionFilter = () => {
+    const url = `${API}/api/filter/vschampion`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      position: filters.position,
+      team: filters.team,
+      oppteam: filters.oppteam,
+      oppplayer: filters.oppplayer,
+      player: filters.player,
+      oppchampion: filters.oppchampion_eng,
+      token: user.token,
+      id: user.id,
+    };
+    axiosRequest(url, params, function (e) {
+      setChampFilter(e.data.champion);
+      setChampEng(e.data.championEng);
     });
-    setChampFilter(response.data.champion);
-    setChampEng(response.data.championEng);
   };
 
-  const GetOppFilter = async () => {
-    const response = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/vschampion`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        position: filters.position,
-        team: filters.oppteam,
-        oppteam: filters.team,
-        oppplayer: filters.player,
-        player: filters.oppplayer,
-        champion: filters.champion_eng,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      },
+  const GetOppFilter = () => {
+    const url = `${API}/api/filter/vschampion`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      position: filters.position,
+      team: filters.oppteam,
+      oppteam: filters.team,
+      oppplayer: filters.player,
+      player: filters.oppplayer,
+      champion: filters.champion_eng,
+      token: user.token,
+      id: user.id,
+    };
+
+    axiosRequest(url, params, function (e) {
+      setOppFilter(e.data.champion);
+      setOppEng(e.data.championEng);
     });
-    setOppFilter(response.data.champion);
-    setOppEng(response.data.championEng);
   };
 
   if (loading) return <LoadingImg />;
@@ -783,24 +774,24 @@ const ChampionSettingNav = styled.div`
 `;
 
 const SettingTitle = styled.div`
-        display: flex;
-        align-items: center;
-        .Title {
-          font - family: NotoSansKR, Apple SD Gothic Neo;
-        font-size: 13px;
-        font-weight: bold;
-        letter-spacing: -0.65px;
-        color: rgb(255, 255, 255);
-        margin: 0 15px 0 23px;
+  display: flex;
+  align-items: center;
+  .Title {
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: -0.65px;
+    color: rgb(255, 255, 255);
+    margin: 0 15px 0 23px;
   }
-        .Alert {
-          font - family: NotoSansKR, Apple SD Gothic Neo;
-        font-size: 12px;
-        letter-spacing: -0.6px;
-        color: rgb(132, 129, 142);
-        margin-left: 4px;
+  .Alert {
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 12px;
+    letter-spacing: -0.6px;
+    color: rgb(132, 129, 142);
+    margin-left: 4px;
   }
-        `;
+`;
 
 const ComapreValue = styled.div`
   min-height: 571px;
@@ -853,67 +844,65 @@ const OppValue = styled.div`
 `;
 
 const DisplayValue = styled.div`
-        height: 58px;
-        border-bottom: 1px solid #433f4e;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 40px 0;
-        :last-child {
-          border-bottom: none; 
+  height: 58px;
+  border-bottom: 1px solid #433f4e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+  :last-child {
+    border-bottom: none;
   }
-        :hover {
-          background - color: #3a3745;
+  :hover {
+    background-color: #3a3745;
   }
-        .ComparedValue {
-          display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: Poppins;
-   
+  .ComparedValue {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Poppins;
 
-        text-align: center;
-        color: #f04545;
-        img {
-          margin: 0 5px 0 5px;
+    text-align: center;
+    color: #f04545;
+    img {
+      margin: 0 5px 0 5px;
     }
   }
-        .OppComparedValue {
-          display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: Poppins;
-        text-align: center;
-        color: #817e90;
-        img {
-          margin: 0 5px 0 5px;
+  .OppComparedValue {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Poppins;
+    text-align: center;
+    color: #817e90;
+    img {
+      margin: 0 5px 0 5px;
     }
   }
-        .Wrapper {
-          display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 489px;
-          div {
-        font-size: 23px;
-
-          }
+  .Wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 489px;
+    div {
+      font-size: 23px;
+    }
   }
 
-        .ValueTitle {
-          display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 220px;
-        height: 22px;
-        font-family: NotoSansKR, Apple SD Gothic Neo;
-        font-size: 23px;
-        font-weight: bold;
-        letter-spacing: -0.6px;
-        text-align: center;
-        color:#fff;
+  .ValueTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 220px;
+    height: 22px;
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 23px;
+    font-weight: bold;
+    letter-spacing: -0.6px;
+    text-align: center;
+    color: #fff;
   }
-        `;
+`;
 
 const ComparedValue = styled.div`
   display: flex;
@@ -952,145 +941,145 @@ const OppComparedValue = styled.div`
 `;
 
 const DropDownContainer = styled.div`
-        display: flex;
-        align-items: center;
-        margin: 13px 0 0 23px;
+  display: flex;
+  align-items: center;
+  margin: 13px 0 0 23px;
 
-        .Vs {
-          font - family: Poppins;
-        font-size: 15px;
-        font-weight: bold;
-        color: rgb(132, 129, 142);
-        margin: 0 15px;
+  .Vs {
+    font-family: Poppins;
+    font-size: 15px;
+    font-weight: bold;
+    color: rgb(132, 129, 142);
+    margin: 0 15px;
   }
-        .Select {
-          width: 84px;
-        height: 40px;
-        border-radius: 3px;
-        background-color: rgb(240, 69, 69);
-        font-family: NotoSansKR, Apple SD Gothic Neo;
-        font-size: 12px;
-        font-weight: bold;
-        letter-spacing: -0.6px;
-        color: rgb(255, 255, 255);
-        margin: 0 10px;
+  .Select {
+    width: 84px;
+    height: 40px;
+    border-radius: 3px;
+    background-color: rgb(240, 69, 69);
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: -0.6px;
+    color: rgb(255, 255, 255);
+    margin: 0 10px;
   }
-        .Reset {
-          display: flex;
-        align-items: center;
-        width: 64px;
-        height: 40px;
-        border-radius: 3px;
-        border: solid 1px #474554;
-        background-color: #3a3745;
-        font-family: NotoSansKR, Apple SD Gothic Neo;
-        font-size: 11px;
-        letter-spacing: -0.55px;
-        color: rgb(175, 173, 190);
-        p {
-          margin - left: 5px;
+  .Reset {
+    display: flex;
+    align-items: center;
+    width: 64px;
+    height: 40px;
+    border-radius: 3px;
+    border: solid 1px #474554;
+    background-color: #3a3745;
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 11px;
+    letter-spacing: -0.55px;
+    color: rgb(175, 173, 190);
+    p {
+      margin-left: 5px;
     }
   }
-        `;
+`;
 
 const DropDown = styled.div`
-        margin: 0;
-        padding: 0;
-        * {
-          box - sizing: border-box;
+  margin: 0;
+  padding: 0;
+  * {
+    box-sizing: border-box;
   }
 
-        body {
-          font - family: Arial, Helvetica, sans-serif;
+  body {
+    font-family: Arial, Helvetica, sans-serif;
   }
 
-        .menu-container {
-          position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+  .menu-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
-        .menu-trigger {
-          display: flex;
-        align-items: center;
-        width: 421px;
-        height: 40px;
-        background-color: #23212a;
+  .menu-trigger {
+    display: flex;
+    align-items: center;
+    width: 421px;
+    height: 40px;
+    background-color: #23212a;
   }
 
-        .menu-trigger:hover {
-          box - shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+  .menu-trigger:hover {
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
   }
 
-        .SelectedLabel {
-          font - family: NotoSansKR, Apple SD Gothic Neo;
-        font-size: 12px;
-        letter-spacing: -0.6px;
-        text-align: left;
-        color: rgb(255, 255, 255);
-        width: 180px;
-        margin-left: 20px;
+  .SelectedLabel {
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 12px;
+    letter-spacing: -0.6px;
+    text-align: left;
+    color: rgb(255, 255, 255);
+    width: 180px;
+    margin-left: 20px;
   }
 
-        .Label {
-          font - family: NotoSansKR, Apple SD Gothic Neo;
-        font-size: 12px;
-        letter-spacing: -0.6px;
-        text-align: left;
-        color: rgb(255, 255, 255);
-        margin: 0 0px 0 11.4px;
-        /* padding-right: 29.6px; */
-        width: 350px;
+  .Label {
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 12px;
+    letter-spacing: -0.6px;
+    text-align: left;
+    color: rgb(255, 255, 255);
+    margin: 0 0px 0 11.4px;
+    /* padding-right: 29.6px; */
+    width: 350px;
   }
 
-        .ArrowIcon {
-          /* position: fixed; */
-          /* margin-left: 390px; */
-        }
-
-        .ChampIconImg {
-          /* position: fixed; */
-          margin - left: 13.1px;
+  .ArrowIcon {
+    /* position: fixed; */
+    /* margin-left: 390px; */
   }
 
-        .menu {
-          background: rgb(35, 33, 42);
-        position: absolute;
-        top: 40px;
-        right: 0;
-        width: 421px;
-        box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-20px);
-        transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+  .ChampIconImg {
+    /* position: fixed; */
+    margin-left: 13.1px;
   }
 
-        .menu.active {
-          opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
+  .menu {
+    background: rgb(35, 33, 42);
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: 421px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
   }
 
-        .menu ul {
-          list - style: none;
-        padding: 0;
-        margin: 0;
+  .menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
   }
 
-        .menu li {
-          text - decoration: none;
-        padding: 15px 20px;
-        display: block;
-        font-family: NotoSansKR, Apple SD Gothic Neo;
-        font-size: 11px;
-        letter-spacing: -0.55px;
-        text-align: left;
-        color: rgb(255, 255, 255);
-        cursor: pointer;
-        :hover {
-          background - color: rgb(60, 58, 72);
+  .menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .menu li {
+    text-decoration: none;
+    padding: 15px 20px;
+    display: block;
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 11px;
+    letter-spacing: -0.55px;
+    text-align: left;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    :hover {
+      background-color: rgb(60, 58, 72);
     }
   }
-        `;
+`;

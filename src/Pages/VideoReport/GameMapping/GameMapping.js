@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
 import Tippy from "@tippy.js/react";
 import ObjectTooltip from "../ObjectMapping/ObjectTooltip";
+import axiosRequest from "../../../lib/axiosRequest";
 
 
 //fast 버튼 setinterval 메모리 최적화 함수
@@ -77,67 +78,59 @@ function GameMapping() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [side, filters.team, filters.patch]);
 
-  const getGameLists = async () => {
+  const getGameLists = () => {
     try {
-      const response = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingFilter`,
-        params: {
-          league: filters.league,
-          year: filters.year,
-          season: filters.season,
-          patch: filters.patch,
-          team: filters.team,
-          object: "off",
-          side: side,
-          token: user.token,
-          id: user.id,
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        },
-      });
-      setGameListData(Object.values(response.data["match"]));
-      console.log(response.data.match);
+      const url = `${API2}/api/mappingFilter`;
+      const params = {
+        league: filters.league,
+        year: filters.year,
+        season: filters.season,
+        patch: filters.patch,
+        team: filters.team,
+        object: "off",
+        side: side,
+        token: user.token,
+        id: user.id,
+      };
+      axiosRequest(url, params, function (e) {
+        setGameListData(Object.values(e.data["match"]));
+        console.log(e.data.match);
+      })
     } catch (e) {
       console.log(e);
     }
   };
 
   //맵핑 데이터 fetch 함수
-  const fetchingMapData = async () => {
+  const fetchingMapData = () => {
     const gameid = filters?.gameid ?? '';
     if (gameid.length > 0) {
       setLoading(true);
       try {
-        const result = await axios.request({
-          method: "GET",
-          url: `${API2}/api/mappingPosition`,
-          params: {
-            gameid: filters.gameid,
-            token: user.token,
-            id: user.id,
-          },
-          paramsSerializer: (params) => {
-            return qs.stringify(params, { arrayFormat: "repeat" });
-          },
-        });
-
-        // 맵핑 포지션
-        const dto = result.data;
-
-        for (let i = 0; i < dto.position.length; i++) {
-          if (dto.position[i].player) {
-            setMinTime(dto.position[i]);
-            setRange(dto.position[i].realCount);
-            break;
-          }
+        const url = `${API2}/api/mappingPosition`;
+        const params = {
+          gameid: filters.gameid,
+          token: user.token,
+          id: user.id,
         }
-        setVod(dto.vod);
-        setMaxTime(dto?.position[dto.position.length - 1]?.realCount);
-        setCurrentPos(dto.position);
-        setInfo(dto.info);
-        setTimeLineData(dto.timeline);
+
+        axiosRequest(url, params, function (e) {
+          // 맵핑 포지션
+          const dto = e.data;
+
+          for (let i = 0; i < dto.position.length; i++) {
+            if (dto.position[i].player) {
+              setMinTime(dto.position[i]);
+              setRange(dto.position[i].realCount);
+              break;
+            }
+          }
+          setVod(dto.vod);
+          setMaxTime(dto?.position[dto.position.length - 1]?.realCount);
+          setCurrentPos(dto.position);
+          setInfo(dto.info);
+          setTimeLineData(dto.timeline);
+        })
       } catch (e) {
         console.log(e);
       } finally {

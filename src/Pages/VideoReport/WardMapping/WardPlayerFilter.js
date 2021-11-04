@@ -10,6 +10,7 @@ import qs from "qs";
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import timeFormat from "../../../lib/timeFormat";
+import axiosRequest from "../../../lib/axiosRequest";
 
 const WardSlider = withStyles({
   root: {
@@ -66,161 +67,137 @@ function WardPlayerFilter({
     setMinFrom(newValue);
   };
 
-  const getTeam = async () => {
+  const getTeam = () => {
     try {
-      const response = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingFilter`,
-        params: {
-          league: filters.league,
-          year: filters.year,
-          season: filters.season,
-          patch: filters.patch,
-          token: user.token,
-          id: user.id
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        }
-      });
-      const data = response.data.team;
-      setFilterData({ ...filterData, team: data });
+      const url = `${API2}/api/mappingFilter`;
+      const params = {
+        league: filters.league,
+        year: filters.year,
+        season: filters.season,
+        patch: filters.patch,
+        token: user.token,
+        id: user.id
+      };
+      axiosRequest(url, params, function (e) {
+        const data = e.data.team;
+        setFilterData({ ...filterData, team: data });
+      })
     } catch (e) {
       console.log(e);
     }
   };
   console.log(filterData);
 
-  const getPlayer = async () => {
+  const getPlayer = () => {
     try {
-      const response = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingFilter`,
-        params: {
-          league: filters.league,
-          year: filters.year,
-          season: filters.season,
-          patch: filters.patch,
-          team: filters.team,
-          token: user.token,
-          id: user.id
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        }
-      });
-      const data = response.data.player;
-      setFilterData({ ...filterData, player: data });
+      const url = `${API2}/api/mappingFilter`;
+      const params = {
+        league: filters.league,
+        year: filters.year,
+        season: filters.season,
+        patch: filters.patch,
+        team: filters.team,
+        token: user.token,
+        id: user.id
+      };
+      axiosRequest(url, params, function (e) {
+        const data = e.data.player;
+        setFilterData({ ...filterData, player: data });
+      })
     } catch (e) {
       console.log(e);
     }
   };
 
-  const getChampion = async () => {
+  const getChampion = () => {
     try {
-      const response = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingFilter`,
-        params: {
-          league: filters.league,
-          year: filters.year,
-          season: filters.season,
-          patch: filters.patch,
-          team: filters.team,
-          player: filters.player,
-          token: user.token,
-          id: user.id
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        }
-      });
-      const data = response.data.champion;
-      setFilterData({ ...filterData, champion: data });
+      const url = `${API2}/api/mappingFilter`;
+      const params = {
+        league: filters.league,
+        year: filters.year,
+        season: filters.season,
+        patch: filters.patch,
+        team: filters.team,
+        player: filters.player,
+        token: user.token,
+        id: user.id
+      };
+      axiosRequest(url, params, function (e) {
+        const data = e.data.champion;
+        setFilterData({ ...filterData, champion: data });
+      })
     } catch (e) {
       console.log(e);
     }
   };
 
-  const getOppTeam = async () => {
+  const getOppTeam = () => {
     try {
-      const response = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingFilter`,
-        params: {
-          league: filters.league,
-          year: filters.year,
-          season: filters.season,
-          patch: filters.patch,
-          team: filters.team,
-          player: filters.player,
-          champion: filters.champion_eng,
-          token: user.token,
-          id: user.id
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        }
-      });
-      const data = response.data.opp_team;
-      setFilterData({ ...filterData, oppteam: data });
+      const url = `${API2}/api/mappingFilter`;
+      const params = {
+        league: filters.league,
+        year: filters.year,
+        season: filters.season,
+        patch: filters.patch,
+        team: filters.team,
+        player: filters.player,
+        champion: filters.champion_eng,
+        token: user.token,
+        id: user.id
+      };
+      axiosRequest(url, params, function (e) {
+        const data = e.data.opp_team;
+        setFilterData({ ...filterData, oppteam: data });
+      })
     } catch (e) {
       console.log(e);
     }
   };
 
-  const getOppPlayer = async () => {
+  const getOppPlayer = () => {
     try {
-      const response = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingFilter`,
-        params: {
-          league: filters.league,
-          year: filters.year,
-          season: filters.season,
-          patch: filters.patch,
-          team: filters.team,
-          player: filters.player,
-          champion: filters.champion_eng,
-          opp_team: filters.oppteam,
-          token: user.token,
-          id: user.id
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        }
-      });
-      const data = response.data.opp_player;
-      setFilterData({ ...filterData, oppplayer: data });
+      const url = `${API2}/api/mappingFilter`;
+      const params = {
+        league: filters.league,
+        year: filters.year,
+        season: filters.season,
+        patch: filters.patch,
+        team: filters.team,
+        player: filters.player,
+        champion: filters.champion_eng,
+        opp_team: filters.oppteam,
+        token: user.token,
+        id: user.id
+      };
+      axiosRequest(url, params, function (e) {
+        const data = e.data.opp_player;
+        setFilterData({ ...filterData, oppplayer: data });
+      })
     } catch (e) {
       console.log(e);
     }
   };
 
-  const getOppChampion = async () => {
+  const getOppChampion = () => {
     try {
-      const response = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingFilter`,
-        params: {
-          league: filters.league,
-          year: filters.year,
-          season: filters.season,
-          patch: filters.patch,
-          team: filters.team,
-          player: filters.player,
-          champion: filters.champion_eng,
-          opp_team: filters.oppteam,
-          opp_player: filters.oppplayer,
-          token: user.token,
-          id: user.id
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        }
-      });
-      const data = response.data.opp_champion;
-      setFilterData({ ...filterData, oppchampion: data });
+      const url = `${API2}/api/mappingFilter`;
+      const params = {
+        league: filters.league,
+        year: filters.year,
+        season: filters.season,
+        patch: filters.patch,
+        team: filters.team,
+        player: filters.player,
+        champion: filters.champion_eng,
+        opp_team: filters.oppteam,
+        opp_player: filters.oppplayer,
+        token: user.token,
+        id: user.id
+      };
+      axiosRequest(url, params, function (e) {
+        const data = e.data.opp_champion;
+        setFilterData({ ...filterData, oppchampion: data });
+      })
     } catch (e) {
       console.log(e);
     }
