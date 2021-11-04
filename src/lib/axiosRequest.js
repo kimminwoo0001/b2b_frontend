@@ -1,13 +1,11 @@
 import axios from "axios";
 import qs from "qs";
 
-const B2B_Request = async (url, paramData, callback) => {
+const axiosRequest = async (url, paramData, callback, method="GET") => {
   await axios.request({
-    method: "GET",
+    method: method,
     url: url,
-    params: {
-      paramData
-    },
+    params: paramData,
     paramsSerializer: (params) => {
       return qs.stringify(params, { arrayFormat: "repeat" });
     }
@@ -20,4 +18,4 @@ const B2B_Request = async (url, paramData, callback) => {
   })
 }
 
-export default B2B_Request;
+export default axiosRequest;

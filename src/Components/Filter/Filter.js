@@ -35,6 +35,7 @@ import { gsap } from "gsap"; // 애니메이션 추가
 import FilterItem from "./FilterItem";
 import TeamFilterModal from "./TeamFilterModal";
 import PlayerFilterModal from "./PlayerFilterModal";
+import axiosRequest from "../../lib/axiosRequest";
 
 const Filter = memo(() => {
   const filters = useSelector((state) => state.FilterReducer);
@@ -65,7 +66,7 @@ const Filter = memo(() => {
   const [isActiveLeague, setIsActiveLeague] = useDetectOutsideClick(
     dropdownRef,
     false
-  );  
+  );
   const [isActiveTeam, setIsActiveTeam] = useDetectOutsideClick(
     dropdownRef,
     false
@@ -93,7 +94,7 @@ const Filter = memo(() => {
       setLeague(filters.league);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.league]); 
+  }, [filters.league]);
 
   useEffect(() => {
     if (JSON.stringify(year) !== JSON.stringify(filters.year)) {
@@ -309,23 +310,20 @@ const Filter = memo(() => {
 
   // 패치 필터 fetch 함수
   const fetchingPatchFilter = async () => {
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/patch`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      },
-    });
-    const patchResponse = result.data.patch ?? [];
-    dispatch(setPatchFilter(patchResponse));
-    dispatch(SetPatch(patchResponse));
+    const url = `${API}/api/filter/patch`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      token: user.token,
+      id: user.id,
+    };
+
+    axiosRequest(url, params, function (e) {
+      const patchResponse = e.data.patch ?? [];
+      dispatch(setPatchFilter(patchResponse));
+      dispatch(SetPatch(patchResponse));
+    })
   };
 
   //팀 필터 fetch 함수

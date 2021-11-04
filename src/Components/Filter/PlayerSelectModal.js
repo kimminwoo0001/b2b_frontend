@@ -12,6 +12,7 @@ import {
   ResetChampion,
   HandleTab
 } from "../../redux/modules/filtervalue";
+import axiosRequest from "../../lib/axiosRequest";
 
 
 function PlayerSelectModal({ openModal, setOpenModal }) {
@@ -28,44 +29,36 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
   }, [openModal]);
 
   const fetchingTeamFilter = async () => {
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/oppteam`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        team: filters.team,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    });
-    setOppTeam(result.data.oppteam);
+    const url = `${API}/api/filter/oppteam`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      team: filters.team,
+      token: user.token,
+      id: user.id,
+    }
+    axiosRequest(url, params, function (e) {
+      setOppTeam(e.data.oppteam);
+    })
   };
 
   const fetchingPlayerFilter = async (team) => {
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/oppplayer`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        team: team,
-        position: filters.position,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    });
-    setOppPlayer(result.data);
+    const url = `${API}/api/filter/oppplayer`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      team: team,
+      position: filters.position,
+      token: user.token,
+      id: user.id,
+    }
+    axiosRequest(url, params, function (e) {
+      setOppPlayer(e.data);
+    })
   };
 
   const HandleSelect = () => {

@@ -7,6 +7,7 @@ import TabTop from "./Components/TabTop";
 
 
 import { useSelector } from "react-redux";
+import axiosRequest from "../../../lib/axiosRequest";
 
 function LeaguePlayer() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -32,24 +33,20 @@ function LeaguePlayer() {
   // player 데이터 featch 함수
   const fetchingPlayerData = async () => {
     setIsLoading(true);
-    const result = await axios.request({
-      method: "GET",
-      url: ` ${API}/api/league/playerinfo`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        position: positionClicked,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    });
-    setPlayerData(result.data);
-    setIsLoading(false);
+    const url = `${API}/api/league/playerinfo`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      position: positionClicked,
+      token: user.token,
+      id: user.id,
+    }
+    axiosRequest(url, params, function (e) {
+      setPlayerData(e.data);
+      setIsLoading(false);
+    })
   };
 
   return (

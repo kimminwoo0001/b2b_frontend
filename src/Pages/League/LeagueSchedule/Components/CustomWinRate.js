@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { API } from "../../../config";
 import qs from "qs";
 import { useDetectOutsideClick } from "../../Components/useDetectOustsideClick";
+import axiosRequest from "../../../../lib/axiosRequest";
 
 function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
   const filters = useSelector((state) => state.FilterReducer);
@@ -29,49 +30,41 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
   const [isActive10, setIsActive10] = useDetectOutsideClick(dropdownRef, false);
 
   const GetRoster = async () => {
-    const response = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/roster`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        team1: el.Team1,
-        team2: el.Team2,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+    const url = `${API}/api/filter/roster`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      team1: el.Team1,
+      team2: el.Team2,
+      token: user.token,
+      id: user.id,
+    }
+    axiosRequest(url, params, function (e) {
+      setTeam1(e.data[el.Team1]);
+      setTeam2(e.data[el.Team2]);
     });
-    setTeam1(response.data[el.Team1]);
-    setTeam2(response.data[el.Team2]);
   };
 
   const GetWinRate = async () => {
     const player1 = Object.values(roster1)?.map((name) => name.name);
     const player2 = Object.values(roster2)?.map((name) => name.name);
 
-    const response = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/roster2`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        team1: player1.join(),
-        team2: player2.join(),
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+    const url = `${API}/api/filter/roster2`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      team1: player1.join(),
+      team2: player2.join(),
+      token: user.token,
+      id: user.id,
+    }
+    axiosRequest(url, params, function (e) {
+      setWinRate(e.data);
     });
-    setWinRate(response.data);
   };
 
   const handleApiCall = () => {

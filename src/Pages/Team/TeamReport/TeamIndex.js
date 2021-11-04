@@ -12,7 +12,7 @@ import axios from "axios";
 import { API } from "../../config";
 import { useSelector } from "react-redux";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
-import B2B_Request from "../../../lib/B2B_Request";
+import axiosRequest from "../../../lib/axiosRequest";
 import { Alert } from "bootstrap";
 
 
@@ -62,7 +62,7 @@ function TeamIndex() {
         id: user.id
       }
 
-      B2B_Request(url, params, function (e) {
+      axiosRequest(url, params, function (e) {
         //팀 평균 데이터 fetch
         setTeamStats(e.data.teamStats);
 

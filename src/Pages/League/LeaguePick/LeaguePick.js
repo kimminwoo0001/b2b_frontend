@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import qs from "qs";
 import TabforTop from "./TabforTop";
-import B2B_Request from "../../../lib/B2B_Request";
+import axiosRequest from "../../../lib/axiosRequest";
 
 
 function LeaguePick() {
@@ -104,7 +104,7 @@ function LeaguePick() {
       id: user.id
     };
 
-    B2B_Request(url, params, function (e) {
+    axiosRequest(url, params, function (e) {
       //주요픽 데이터 저장
       setImportantPicks(e.data.importantPick);
       //주요픽간의전적 저장

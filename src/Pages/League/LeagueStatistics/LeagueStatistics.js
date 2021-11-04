@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import qs from "qs";
 import checkRequestBase from "../../../lib/checkRequestBase";
+import axiosRequest from "../../../lib/axiosRequest";
 
 function LeagueStatistics() {
   //리그 통합 지수 텝
@@ -50,66 +51,64 @@ function LeagueStatistics() {
   // 리그통합지수 데이터 featch 함수
   const fetchingStatisticData = async () => {
     setLoading(true);
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/league/totalinfo`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    });
+    const url = `${API}/api/league/totalinfo`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      token: user.token,
+      id: user.id,
+    }
 
-    // 그래프 min, max, row 설정하기 위한 상태값
-    setGameLengthData(result.data.avgGamelength);
-    setSupportTimeData(result.data.avgSupportingTime);
-    setFirstGankData(result.data.avgFirstGang);
-    setTotalMatchData(result.data.avgMatchTotal);
+    axiosRequest(url, params, function (e) {
+      // 그래프 min, max, row 설정하기 위한 상태값
+      setGameLengthData(e.data.avgGamelength);
+      setSupportTimeData(e.data.avgSupportingTime);
+      setFirstGankData(e.data.avgFirstGang);
+      setTotalMatchData(e.data.avgMatchTotal);
 
-    // 그래프에 들어갈 데이터 변환
-    const gameX = [];
-    const gameY = [];
+      // 그래프에 들어갈 데이터 변환
+      const gameX = [];
+      const gameY = [];
 
-    const supportX = [];
-    const supportY = [];
+      const supportX = [];
+      const supportY = [];
 
-    const GankX = [];
-    const GankY = [];
+      const GankX = [];
+      const GankY = [];
 
-    const TotalX = [];
-    const TotalY = [];
-    result.data.avgGamelength.data.forEach((game) => {
-      gameX.push(game.patch);
-      gameY.push(game.gamelength.toFixed(1));
-    });
-    result.data.avgSupportedTime.data.forEach((support) => {
-      supportX.push(support.position);
-      supportY.push(support.supported_time.toFixed(1));
-    });
-    result.data.avgFirstGang.data.forEach((gank) => {
-      GankX.push(gank.patch);
-      GankY.push(gank.first_gang_time.toFixed(1));
-    });
-    result.data.avgMatchTotal.data.forEach((match) => {
-      TotalX.push(match.patch);
-      TotalY.push(match.match_total.toFixed(1));
-    });
-    setGameLengthX(gameX);
-    setGameLengthY(gameY);
-    setSupportTimeX(supportX);
-    setSupportTimeY(supportY);
-    setFirstGankX(GankX);
-    setFirstGankY(GankY);
-    setTotalMatchX(TotalX);
-    setTotalMatchY(TotalY);
+      const TotalX = [];
+      const TotalY = [];
+      e.data.avgGamelength.data.forEach((game) => {
+        gameX.push(game.patch);
+        gameY.push(game.gamelength.toFixed(1));
+      });
+      e.data.avgSupportedTime.data.forEach((support) => {
+        supportX.push(support.position);
+        supportY.push(support.supported_time.toFixed(1));
+      });
+      e.data.avgFirstGang.data.forEach((gank) => {
+        GankX.push(gank.patch);
+        GankY.push(gank.first_gang_time.toFixed(1));
+      });
+      e.data.avgMatchTotal.data.forEach((match) => {
+        TotalX.push(match.patch);
+        TotalY.push(match.match_total.toFixed(1));
+      });
+      setGameLengthX(gameX);
+      setGameLengthY(gameY);
+      setSupportTimeX(supportX);
+      setSupportTimeY(supportY);
+      setFirstGankX(GankX);
+      setFirstGankY(GankY);
+      setTotalMatchX(TotalX);
+      setTotalMatchY(TotalY);
 
-    setLoading(false);
+      setLoading(false);
+    })
+
+
   };
   //현재 패치버전 색 교체
   // const colorChange = () => {
