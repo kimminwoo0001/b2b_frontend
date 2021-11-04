@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import qs from "qs";
 import TabforTop from "./TabforTop";
+import B2B_Request from "../../../lib/B2B_Request";
 
 
 function LeaguePick() {
@@ -92,6 +93,8 @@ function LeaguePick() {
   const fetchingPickData = async () => {
     setLoading(true);
 
+    //B2B_Request
+
     const result = await axios.request({
       method: "GET",
       url: `${API}/api/league/pick`,
@@ -107,7 +110,7 @@ function LeaguePick() {
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
       }
-    });
+    }).then()
 
     //주요픽 데이터 저장
     setImportantPicks(result.data.importantPick);
