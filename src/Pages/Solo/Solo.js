@@ -17,10 +17,14 @@ function Solo() {
       <Nav />
       <SoloWrapper>
         <SideBar />
-        <div className={filters.filterMenuState ? "filter-open" : "filter-close"}>
+        <div
+          className={filters.filterMenuState ? "filter-open" : "filter-close"}
+        >
           <Filter />
         </div>
-        <div className={filters.filterMenuState ? "filter-close" : "filter-open"}>
+        <div
+          className={filters.filterMenuState ? "filter-close" : "filter-open"}
+        >
           <CloseFilter />
         </div>
         <ContentWrapper>
@@ -49,8 +53,7 @@ const SoloWrapper = styled.div`
     display: none;
   }
 
-  .filter-open{
-
+  .filter-open {
   }
 `;
 

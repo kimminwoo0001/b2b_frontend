@@ -17,10 +17,14 @@ function PlayerCompare() {
       <Nav />
       <SoloWrapper>
         <SideBar />
-        <div className={filters.filterMenuState ? "filter-open" : "filter-close"}>
+        <div
+          className={filters.filterMenuState ? "filter-open" : "filter-close"}
+        >
           <Filter />
         </div>
-        <div className={filters.filterMenuState ? "filter-close" : "filter-open"}>
+        <div
+          className={filters.filterMenuState ? "filter-close" : "filter-open"}
+        >
           <CloseFilter />
         </div>
         <ContentWrapper>
@@ -39,14 +43,13 @@ const SoloWrapper = styled.div`
   height: 100%;
   overflow: auto;
   display: flex;
-  background-color: #23212a;
+  background-color: #16151a;
 
   .filter-close {
     display: none;
   }
 
-  .filter-open{
-
+  .filter-open {
   }
 `;
 

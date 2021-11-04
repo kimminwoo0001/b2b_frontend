@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import {
   HandleTab,
   ResetChampion,
-  ResetFilter2
+  ResetFilter2,
 } from "../../redux/modules/filtervalue";
 import ErrorBoundary from "../../Components/ErrorBoundary";
 import HitMap from "../VideoReport/HitMap/HitMap";
@@ -173,7 +173,6 @@ const TabContent = styled.li`
   }
 `;
 
-
 // const SoloReport = styled.li`
 //   cursor: pointer;
 //   display: flex;
@@ -211,7 +210,6 @@ const Comparison = styled.li`
   font-weight: bold;
   font-size: 18px;
 
-
   ${(props) =>
     props.changeColor &&
     css`
@@ -234,4 +232,3 @@ const Comparison = styled.li`
     margin: 0 2.5px;
   }
 `;
-
