@@ -50,7 +50,6 @@ function ChampionSetting({
           if (!ref?.current.contains(event.target)) {
             //setIsActive2(false);
             isActive2.current = false;
-            console.log("filterData, champArray", filters, champArray)
             clickChampionConfirm();
           }
         }
@@ -75,7 +74,6 @@ function ChampionSetting({
           if (!ref?.current.contains(event.target)) {
             //setIsActive5(false);
             isActive5.current = false;
-            console.log("filterData, champArray", filters, champArray)
             clickCompareConfirm();
           }
         }

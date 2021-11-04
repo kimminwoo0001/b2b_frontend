@@ -69,7 +69,6 @@ function SetByPlayer({ minFrom, setMinFrom }) {
           if (!ref?.current.contains(event.target)) {
             //setIsActive2(false);
             isActive2.current = false;
-            console.log("filterData, champArray", filters, champArray)
             clickChampionConfirm();
           }
         }

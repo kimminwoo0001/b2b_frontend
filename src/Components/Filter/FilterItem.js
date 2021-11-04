@@ -15,7 +15,6 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
     <>
       <Item>
         <Header>
-          {console.log(title, viewSwitch, isHaveFilter)}
           {viewSwitch && isHaveFilter ?
             <img src="Images/btn_view_detail.png"
               srcset="Images/btn_view_detail@2x.png 2x,

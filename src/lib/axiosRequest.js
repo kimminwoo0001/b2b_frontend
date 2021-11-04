@@ -1,7 +1,7 @@
 import axios from "axios";
 import qs from "qs";
 
-const axiosRequest = async (url, paramData, callback, method="GET") => {
+const axiosRequest = async (url, paramData, callback, method = "GET") => {
   await axios.request({
     method: method,
     url: url,
@@ -10,6 +10,7 @@ const axiosRequest = async (url, paramData, callback, method="GET") => {
       return qs.stringify(params, { arrayFormat: "repeat" });
     }
   }).then(e => {
+    console.log("response: ", e);
     if (callback) {
       callback(e);
     }
