@@ -7,6 +7,7 @@ import { Reset_Map } from "../../../redux/modules/filtervalue";
 import { API2 } from "../../config";
 import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
 import qs from "qs";
+import axiosRequest from "../../../lib/axiosRequest";
 
 
 function ChampionSetting({
@@ -144,25 +145,6 @@ function ChampionSetting({
         }
       }
       teamList = teamList.filter((item, pos) => teamList.indexOf(item) === pos).sort();
-
-      /*
-      const response = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingFilter`,
-        params: {
-          league: filters.league,
-          year: filters.year,
-          season: filters.season,
-          patch: filters.patch,
-          token: user.token,
-          id: user.id,
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        },
-      });
-      const data = response.data.team;
-      */
       setFilterData({ ...filterData, team: teamList });
     } catch (e) {
       console.log(e);
@@ -171,24 +153,6 @@ function ChampionSetting({
 
   const getPlayer = () => {
     try {
-      /*const response = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingFilter`,
-        params: {
-          league: filters.league,
-          year: filters.year,
-          season: filters.season,
-          patch: filters.patch,
-          team: filters.team,
-          token: user.token,
-          id: user.id,
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        },
-      });
-      const data = response.data.player;
-      */
       let players = [];
       let playerList = []
       for (let league of filters.league) {
@@ -242,25 +206,21 @@ function ChampionSetting({
 
   const getChampion = async () => {
     try {
-      const response = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingFilter`,
-        params: {
-          league: filters.league,
-          year: filters.year,
-          season: filters.season,
-          patch: filters.patch,
-          team: filters.team,
-          player: filters.player,
-          token: user.token,
-          id: user.id,
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        },
-      });
-      const data = response.data.champion;
-      setFilterData({ ...filterData, champion: data });
+      const url = `${API2}/api/mappingFilter`;
+      const params = {
+        league: filters.league,
+        year: filters.year,
+        season: filters.season,
+        patch: filters.patch,
+        team: filters.team,
+        player: filters.player,
+        token: user.token,
+        id: user.id,
+      }
+      axiosRequest(url, params, function (e) {
+        const data = e.data.champion;
+        setFilterData({ ...filterData, champion: data });
+      })
     } catch (e) {
       console.log(e);
     }
@@ -268,26 +228,22 @@ function ChampionSetting({
 
   const getOppTeam = async () => {
     try {
-      const response = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingFilter`,
-        params: {
-          league: filters.league,
-          year: filters.year,
-          season: filters.season,
-          patch: filters.patch,
-          team: filters.team,
-          player: filters.player,
-          champion: filters.champion_eng,
-          token: user.token,
-          id: user.id,
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        },
-      });
-      const data = response.data.opp_team;
-      setFilterData({ ...filterData, oppteam: data });
+      const url = `${API2}/api/mappingFilter`;
+      const params = {
+        league: filters.league,
+        year: filters.year,
+        season: filters.season,
+        patch: filters.patch,
+        team: filters.team,
+        player: filters.player,
+        champion: filters.champion_eng,
+        token: user.token,
+        id: user.id,
+      };
+      axiosRequest(url, params, function (e) {
+        const data = e.data.opp_team;
+        setFilterData({ ...filterData, oppteam: data });
+      })
     } catch (e) {
       console.log(e);
     }
@@ -295,27 +251,23 @@ function ChampionSetting({
 
   const getOppPlayer = async () => {
     try {
-      const response = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingFilter`,
-        params: {
-          league: filters.league,
-          year: filters.year,
-          season: filters.season,
-          patch: filters.patch,
-          team: filters.team,
-          player: filters.player,
-          champion: filters.champion_eng,
-          opp_team: filters.oppteam,
-          token: user.token,
-          id: user.id,
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        },
-      });
-      const data = response.data.opp_player;
-      setFilterData({ ...filterData, oppplayer: data });
+      const url = `${API2}/api/mappingFilter`;
+      const params = {
+        league: filters.league,
+        year: filters.year,
+        season: filters.season,
+        patch: filters.patch,
+        team: filters.team,
+        player: filters.player,
+        champion: filters.champion_eng,
+        opp_team: filters.oppteam,
+        token: user.token,
+        id: user.id,
+      };
+      axiosRequest(url, params, function (e) {
+        const data = e.data.opp_player;
+        setFilterData({ ...filterData, oppplayer: data });
+      })
     } catch (e) {
       console.log(e);
     }
@@ -323,28 +275,25 @@ function ChampionSetting({
 
   const getOppChampion = async () => {
     try {
-      const response = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingFilter`,
-        params: {
-          league: filters.league,
-          year: filters.year,
-          season: filters.season,
-          patch: filters.patch,
-          team: filters.team,
-          player: filters.player,
-          champion: filters.champion_eng,
-          opp_team: filters.oppteam,
-          opp_player: filters.oppplayer,
-          token: user.token,
-          id: user.id,
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        },
-      });
-      const data = response.data.opp_champion;
-      setFilterData({ ...filterData, oppchampion: data });
+      const url = `${API2}/api/mappingFilter`;
+      const params = {
+        league: filters.league,
+        year: filters.year,
+        season: filters.season,
+        patch: filters.patch,
+        team: filters.team,
+        player: filters.player,
+        champion: filters.champion_eng,
+        opp_team: filters.oppteam,
+        opp_player: filters.oppplayer,
+        token: user.token,
+        id: user.id,
+      };
+      axiosRequest(url, params, function (e) {
+        const data = e.data.opp_champion;
+        setFilterData({ ...filterData, oppchampion: data });
+      })
+
     } catch (e) {
       console.log(e);
     }
@@ -352,28 +301,23 @@ function ChampionSetting({
 
   const getGame = async () => {
     try {
-      const response = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingFilter`,
-        params: {
-          league: filters.league,
-          year: filters.year,
-          season: filters.season,
-          patch: filters.patch,
-          team: filters.team,
-          player: filters.player,
-          champion: champArray,
-          compare: "off",
-          side: side,
-          token: user.token,
-          id: user.id,
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        },
-      });
-
-      setGameData(Object.values(response.data["match"]));
+      const url = `${API2}/api/mappingFilter`;
+      const params = {
+        league: filters.league,
+        year: filters.year,
+        season: filters.season,
+        patch: filters.patch,
+        team: filters.team,
+        player: filters.player,
+        champion: champArray,
+        compare: "off",
+        side: side,
+        token: user.token,
+        id: user.id,
+      };
+      axiosRequest(url, params, function (e) {
+        setGameData(Object.values(e.data["match"]));
+      })
     } catch (e) {
       console.log(e);
     }
@@ -382,30 +326,25 @@ function ChampionSetting({
   const getGameAll = async () => {
     try {
       if (filters.oppchampion_eng) {
-        const response = await axios.request({
-          method: "GET",
-          url: `${API2}/api/mappingFilter`,
-          params: {
-            league: filters.league,
-            year: filters.year,
-            season: filters.season,
-            patch: filters.patch,
-            team: filters.team,
-            player: filters.player,
-            champion: champArray,
-            opp_team: filters.oppteam,
-            opp_player: filters.oppplayer,
-            opp_champion: filters.oppchampion_eng,
-            side: side,
-            token: user.token,
-            id: user.id,
-          },
-          paramsSerializer: (params) => {
-            return qs.stringify(params, { arrayFormat: "repeat" });
-          },
-        });
-
-        setGameData(Object.values(response.data["match"]));
+        const url = `${API2}/api/mappingFilter`;
+        const params = {
+          league: filters.league,
+          year: filters.year,
+          season: filters.season,
+          patch: filters.patch,
+          team: filters.team,
+          player: filters.player,
+          champion: champArray,
+          opp_team: filters.oppteam,
+          opp_player: filters.oppplayer,
+          opp_champion: filters.oppchampion_eng,
+          side: side,
+          token: user.token,
+          id: user.id,
+        };
+        axiosRequest(url, params, function (e) {
+          setGameData(Object.values(e.data["match"]));
+        })
       }
     } catch (e) {
       console.log(e);

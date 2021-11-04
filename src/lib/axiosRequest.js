@@ -1,7 +1,7 @@
 import axios from "axios";
 import qs from "qs";
 
-const axiosRequest = async (url, paramData, callback, method="GET") => {
+const axiosRequest = async (url, paramData, callback, method = "GET") => {
   await axios.request({
     method: method,
     url: url,
@@ -10,6 +10,8 @@ const axiosRequest = async (url, paramData, callback, method="GET") => {
       return qs.stringify(params, { arrayFormat: "repeat" });
     }
   }).then(e => {
+    // 여기서도 에러를 던지면 아래의 catch로 이동된다.
+    // throw Error("에러 테스트")
     if (callback) {
       callback(e);
     }

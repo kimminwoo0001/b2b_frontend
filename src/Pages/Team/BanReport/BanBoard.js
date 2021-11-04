@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { API } from "../../config";
 import qs from "qs";
+import axiosRequest from "../../../lib/axiosRequest";
 
 
 function BanBoard() {
@@ -21,23 +22,19 @@ function BanBoard() {
 
   const fetchingBanReport = async () => {
     try {
-      const result = await axios.request({
-        method: "GET",
-        url: `${API}/api/report/team/banpick`,
-        params: {
-          league: filters.league,
-          year: filters.year,
-          season: filters.season,
-          patch: filters.patch,
-          team: filters.team,
-          token: user.token,
-          id: user.id
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        }
-      });
-      setAll(result.data);
+      const url = `${API}/api/report/team/banpick`;
+      const params = {
+        league: filters.league,
+        year: filters.year,
+        season: filters.season,
+        patch: filters.patch,
+        team: filters.team,
+        token: user.token,
+        id: user.id
+      };
+      axiosRequest(url, params, function (e) {
+        setAll(e.data);
+      })
     } catch (e) {
       console.log(e);
     } finally {

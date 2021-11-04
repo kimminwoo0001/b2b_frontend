@@ -6,6 +6,7 @@ import styled, { css } from "styled-components";
 import { useDetectOutsideClick } from "../../Components/SelectFilter/useDetectOustsideClick";
 import PickCombineModal from "./PickCombineModal";
 import { API } from "../config";
+import axiosRequest from "../../lib/axiosRequest";
 
 
 const PositionImage = [
@@ -55,16 +56,15 @@ function PickCombine() {
 
   //팀 필터 fetch 함수
   const fetchingTeamFilter = async () => {
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/team`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-      }
-    });
-    setTeamFilter(result.data.team);
+    const url = `${API}/api/filter/team`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+    };
+    axiosRequest(url, params, function (e) {
+      setTeamFilter(e.data.team);
+    })
   };
 
   const handleButton = () => {

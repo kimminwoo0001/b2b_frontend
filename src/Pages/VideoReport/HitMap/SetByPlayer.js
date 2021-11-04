@@ -10,6 +10,7 @@ import qs from "qs";
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import timeFormat from "../../../lib/timeFormat";
+import axiosRequest from "../../../lib/axiosRequest";
 
 const WardSlider = withStyles({
   root: {
@@ -118,23 +119,19 @@ function SetByPlayer({ minFrom, setMinFrom }) {
       if (isPageSolo) {
         setIsActive(!isActive);
       } else {
-        const response = await axios.request({
-          method: "GET",
-          url: `${API2}/api/mappingFilter`,
-          params: {
-            league: filters.league,
-            year: filters.year,
-            season: filters.season,
-            patch: filters.patch,
-            token: user.token,
-            id: user.id,
-          },
-          paramsSerializer: (params) => {
-            return qs.stringify(params, { arrayFormat: "repeat" });
-          },
+        const url = `${API2}/api/mappingFilter`;
+        const params = {
+          league: filters.league,
+          year: filters.year,
+          season: filters.season,
+          patch: filters.patch,
+          token: user.token,
+          id: user.id,
+        };
+        axiosRequest(url, params, function (e) {
+          const data = e.data.team;
+          setFilterData({ ...filterData, team: data });
         });
-        const data = response.data.team;
-        setFilterData({ ...filterData, team: data });
       }
     } catch (e) {
       console.log(e);
@@ -146,27 +143,21 @@ function SetByPlayer({ minFrom, setMinFrom }) {
       if (isPageSolo) {
         setIsActive(!isActive);
       } else {
-        const response = await axios.request({
-          method: "GET",
-          url: `${API2}/api/mappingFilter`,
-          params: {
-            league: filters.league,
-            year: filters.year,
-            season: filters.season,
-            patch: filters.patch,
-            team: filters.team,
-            token: user.token,
-            id: user.id,
-          },
-          paramsSerializer: (params) => {
-            return qs.stringify(params, { arrayFormat: "repeat" });
-          },
-        });
-        const data = response.data.player;
-        setFilterData({ ...filterData, player: data });
-
+        const url = `${API2}/api/mappingFilter`;
+        const params = {
+          league: filters.league,
+          year: filters.year,
+          season: filters.season,
+          patch: filters.patch,
+          team: filters.team,
+          token: user.token,
+          id: user.id,
+        };
+        axiosRequest(url, params, function (e) {
+          const data = e.data.player;
+          setFilterData({ ...filterData, player: data });
+        })
       }
-
     } catch (e) {
       console.log(e);
     }
@@ -174,29 +165,25 @@ function SetByPlayer({ minFrom, setMinFrom }) {
 
   const getChampion = async () => {
     try {
-      const response = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingFilter`,
-        params: {
-          league: filters.league,
-          year: filters.year,
-          season: filters.season,
-          patch: filters.patch,
-          team: filters.team,
-          player: filters.player,
-          token: user.token,
-          id: user.id,
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        },
-      });
-      const data = response.data.champion;
-      setFilterData({ ...filterData, champion: data });
-      if (isPageSolo && champArray.length === 0 && !filterData) {
-        setChampArray(data);
-        clickChampionConfirm(data);
+      const url = `${API2}/api/mappingFilter`;
+      const params = {
+        league: filters.league,
+        year: filters.year,
+        season: filters.season,
+        patch: filters.patch,
+        team: filters.team,
+        player: filters.player,
+        token: user.token,
+        id: user.id,
       }
+      axiosRequest(url, params, function (e) {
+        const data = e.data.champion;
+        setFilterData({ ...filterData, champion: data });
+        if (isPageSolo && champArray.length === 0 && !filterData) {
+          setChampArray(data);
+          clickChampionConfirm(data);
+        }
+      })
     } catch (e) {
       console.log(e);
     }

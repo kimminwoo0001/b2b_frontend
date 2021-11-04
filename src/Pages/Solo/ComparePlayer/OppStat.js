@@ -16,6 +16,7 @@ import {
   ResetChampion,
   ResetChampion2,
 } from "../../../redux/modules/filtervalue";
+import axiosRequest from "../../../lib/axiosRequest";
 
 function OppStat() {
   //상대 전적 기록 탭
@@ -48,82 +49,73 @@ function OppStat() {
   //팀 필터 fetch 함수
   const GetComparisonStat = async () => {
     setLoading(true);
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/player/comparisonRecord`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        team: filters.team,
-        player: filters.player,
-        oppteam: filters.oppteam,
-        oppplayer: filters.oppplayer,
-        champion: filters.champion_eng,
-        oppchampion: filters.oppchampion_eng,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      },
-    });
-    setPlayer(result.data[filters.player]);
-    setOppPlayer(result.data[filters.oppplayer]);
-    setLoading(false);
+    const url = `${API}/api/player/comparisonRecord`
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      team: filters.team,
+      player: filters.player,
+      oppteam: filters.oppteam,
+      oppplayer: filters.oppplayer,
+      champion: filters.champion_eng,
+      oppchampion: filters.oppchampion_eng,
+      token: user.token,
+      id: user.id,
+    }
+    axiosRequest(url, params, function (e) {
+      setPlayer(e.data[filters.player]);
+      setOppPlayer(e.data[filters.oppplayer]);
+
+    }).finally(e => {
+      setLoading(false);
+    })
   };
 
   const GetChampionFilter = async () => {
-    const response = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/vschampion`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        position: filters.position,
-        team: filters.team,
-        oppteam: filters.oppteam,
-        oppplayer: filters.oppplayer,
-        player: filters.player,
-        oppchampion: filters.oppchampion_eng,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      },
-    });
-    setChampFilter(response.data.champion);
-    setChampEng(response.data.championEng);
+    const url = `${API}/api/filter/vschampion`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      position: filters.position,
+      team: filters.team,
+      oppteam: filters.oppteam,
+      oppplayer: filters.oppplayer,
+      player: filters.player,
+      oppchampion: filters.oppchampion_eng,
+      token: user.token,
+      id: user.id,
+    };
+    axiosRequest(url, params, function (e) {
+      setChampFilter(e.data.champion);
+      setChampEng(e.data.championEng);
+    })
   };
 
   const GetOppFilter = async () => {
-    const response = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/vschampion`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        position: filters.position,
-        team: filters.oppteam,
-        oppteam: filters.team,
-        oppplayer: filters.player,
-        player: filters.oppplayer,
-        champion: filters.champion_eng,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      },
-    });
-    setOppFilter(response.data.champion);
-    setOppEng(response.data.championEng);
+    const url = `${API}/api/filter/vschampion`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      position: filters.position,
+      team: filters.oppteam,
+      oppteam: filters.team,
+      oppplayer: filters.player,
+      player: filters.oppplayer,
+      champion: filters.champion_eng,
+      token: user.token,
+      id: user.id,
+    };
+
+    axiosRequest(url, params, function (e) {
+      setOppFilter(e.data.champion);
+      setOppEng(e.data.championEng);
+    })
   };
 
   if (loading) return <LoadingImg />;

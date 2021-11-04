@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
 import qs from "qs";
 import WardTooltip from "./WardTooltip";
+import axiosRequest from "../../../lib/axiosRequest";
 
 
 const sectorName = {
@@ -76,80 +77,74 @@ function WardMapping() {
   //맵핑 데이터 fetch 함수
   const fetchingWardData = async (wardside) => {
     try {
-      const response = await axios.request({
-        method: "GET",
-        url: `${API2}/api/waddingFilter`,
-        params: {
-          league: filters.league,
-          year: filters.year,
-          season: filters.season,
-          patch: filters.patch,
-          team: filters.team,
-          player: filters.player,
-          champion: filters.champion_eng,
-          compare: compareOpen ? "on" : "off",
-          opp_team: filters.oppteam,
-          opp_player: filters.oppplayer,
-          opp_champion: filters.oppchampion_eng,
-          side: wardside,
-          firstTime: firstTime,
-          secondTime: secondTime,
-          token: user.token,
-          id: user.id,
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        },
-      });
-      const dto = response.data.warding;
-      setWard(response.data.warding);
-      console.log(response);
-      console.log(filters.oppteam, filters.oppplayer, filters.oppchampion_eng);
+      const url = `${API2}/api/waddingFilter`;
+      const params = {
+        league: filters.league,
+        year: filters.year,
+        season: filters.season,
+        patch: filters.patch,
+        team: filters.team,
+        player: filters.player,
+        champion: filters.champion_eng,
+        compare: compareOpen ? "on" : "off",
+        opp_team: filters.oppteam,
+        opp_player: filters.oppplayer,
+        opp_champion: filters.oppchampion_eng,
+        side: wardside,
+        firstTime: firstTime,
+        secondTime: secondTime,
+        token: user.token,
+        id: user.id,
+      };
+      axiosRequest(url, params, function (e) {
+        const dto = e.data.warding;
+        setWard(e.data.warding);
 
-      // sector 구분해서 섹터값 더하기
-      if (dto.length > 0) {
-        var total = 0;
-        for (let i = 0; i < dto.length; i++) {
-          if (dto[i].firstward) {
-            total += 1;
+        // sector 구분해서 섹터값 더하기
+        if (dto.length > 0) {
+          var total = 0;
+          for (let i = 0; i < dto.length; i++) {
+            if (dto[i].firstward) {
+              total += 1;
+            }
+            if (dto[i].secondward) {
+              total += 1;
+            }
           }
-          if (dto[i].secondward) {
-            total += 1;
-          }
-        }
-        setTotalWard(total);
+          setTotalWard(total);
 
-        var arrNumber = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        var arrNumber2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        for (var i = 0; i < dto.length; i++) {
-          if (dto[i].firstwardPlaced === 200) {
-            var placed = 15;
-          } else if (dto[i].firstwardPlaced === 100) {
-            placed = 14;
-          } else {
-            placed = Number(dto[i].firstwardPlaced);
+          var arrNumber = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+          var arrNumber2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+          for (var i = 0; i < dto.length; i++) {
+            if (dto[i].firstwardPlaced === 200) {
+              var placed = 15;
+            } else if (dto[i].firstwardPlaced === 100) {
+              placed = 14;
+            } else {
+              placed = Number(dto[i].firstwardPlaced);
+            }
+            arrNumber[placed] = arrNumber[placed] + 1;
           }
-          arrNumber[placed] = arrNumber[placed] + 1;
-        }
-        for (let i = 0; i < dto.length; i++) {
-          if (dto[i].secondwardPlaced === 200) {
-            placed = 15;
-          } else if (dto[i].secondwardPlaced === 100) {
-            placed = 14;
-          } else {
-            placed = Number(dto[i].secondwardPlaced);
+          for (let i = 0; i < dto.length; i++) {
+            if (dto[i].secondwardPlaced === 200) {
+              placed = 15;
+            } else if (dto[i].secondwardPlaced === 100) {
+              placed = 14;
+            } else {
+              placed = Number(dto[i].secondwardPlaced);
+            }
+            arrNumber2[placed] = arrNumber2[placed] + 1;
           }
-          arrNumber2[placed] = arrNumber2[placed] + 1;
+          const arrSum = arrNumber.map((first, idx) => {
+            return first + arrNumber2[idx];
+          });
+          setSector(arrSum);
+        } else {
+          alert(t("video.vision.noData"));
+          setTotalWard(0);
+          setSector([]);
         }
-        const arrSum = arrNumber.map((first, idx) => {
-          return first + arrNumber2[idx];
-        });
-        setSector(arrSum);
-      } else {
-        alert(t("video.vision.noData"));
-        setTotalWard(0);
-        setSector([]);
-      }
+      })
     } catch (e) {
       console.log(e);
     } finally {

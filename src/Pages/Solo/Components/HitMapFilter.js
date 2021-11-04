@@ -12,6 +12,7 @@ import {
   ResetChampion,
   ResetChampion2
 } from "../../../redux/modules/filtervalue";
+import axiosRequest from "../../../lib/axiosRequest";
 
 
 function HitMapFilter() {
@@ -29,43 +30,42 @@ function HitMapFilter() {
     false
   );
   const GetChampionFilter = async () => {
-    const response = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/champion`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        player: filters.player,
-        token: user.token,
-        id: user.id,
-      }
-    });
-    setChampFilter(response.data.champion);
-    setChampEng(response.data.championEng);
+    const url = `${API}/api/filter/champion`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      player: filters.player,
+      token: user.token,
+      id: user.id,
+    };
+    axiosRequest(url, params, function (e) {
+      setChampFilter(e.data.champion);
+      setChampEng(e.data.championEng);
+    })
   };
 
   const GetOppFilter = async () => {
-    const response = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/oppplayerchamp?`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        position: filters.position,
-        champion: filters.champion_eng,
-        player: filters.player,
-        oppplayer: filters.oppplayer,
-        token: user.token,
-        id: user.id,
-      }
-    });
-    setOppFilter(response.data.champion);
-    setOppEng(response.data.championEng);
+    const url = `${API}/api/filter/oppplayerchamp?`
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      position: filters.position,
+      champion: filters.champion_eng,
+      player: filters.player,
+      oppplayer: filters.oppplayer,
+      token: user.token,
+      id: user.id,
+    };
+    axiosRequest(url, params, function (e) {
+      setOppFilter(e.data.champion);
+      setOppEng(e.data.championEng);
+    })
   };
+
   return (
     <HitMapFilterContainer>
       <ChampionSettingNav>

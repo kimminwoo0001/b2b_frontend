@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 import SideBar from "../../Components/SideBar/SideBar";
-import TeamFilter from "../Team/TeamFilter";
 import Nav from "../../Components/Nav/Nav";
 import TeamTabs from "../Team/TeamTabs";
 import { useSelector } from "react-redux";

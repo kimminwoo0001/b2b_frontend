@@ -9,6 +9,7 @@ import { Reset_MapTab, ResetChampion } from "../../../redux/modules/filtervalue"
 import h337 from "heatmap.js";
 import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
+import axiosRequest from "../../../lib/axiosRequest";
 
 
 function HitMap() {
@@ -58,34 +59,30 @@ function HitMap() {
     }
 
     try {
-      const result = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingPosition`,
-        params: {
-          league: filters.league,
-          year: filters.year,
-          season: filters.season,
-          patch: filters.patch,
-          team: filters.team,
-          player: filters.player,
-          champion: filters.champion_eng,
-          compare: "off",
-          opp_team: filters.oppteam,
-          opp_player: filters.oppplayer,
-          opp_champion: filters.oppchampion_eng,
-          side: "all",
-          token: user.token,
-          id: user.id,
-          firstTime: firstTime,
-          secondTime: secondTime
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        }
-      });
-      const heatData = result.data.position;
-      getThreeMinBlue(heatData);
-      getEightMinBlue(heatData);
+      const url = `${API2}/api/mappingPosition`;
+      const params = {
+        league: filters.league,
+        year: filters.year,
+        season: filters.season,
+        patch: filters.patch,
+        team: filters.team,
+        player: filters.player,
+        champion: filters.champion_eng,
+        compare: "off",
+        opp_team: filters.oppteam,
+        opp_player: filters.oppplayer,
+        opp_champion: filters.oppchampion_eng,
+        side: "all",
+        token: user.token,
+        id: user.id,
+        firstTime: firstTime,
+        secondTime: secondTime
+      };
+      axiosRequest(url, params, function (e) {
+        const heatData = e.data.position;
+        getThreeMinBlue(heatData);
+        getEightMinBlue(heatData);
+      })
     } catch (e) {
       console.log(e);
     } finally {

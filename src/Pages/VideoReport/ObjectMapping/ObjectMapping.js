@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
 import ObjectTooltip from "./ObjectTooltip";
 import addZero from "../../../lib/addZero";
+import axiosRequest from "../../../lib/axiosRequest";
 
 
 function useInterval(callback) {
@@ -81,40 +82,33 @@ function ObjectMapping() {
   const fetchingMapData = async () => {
     try {
       setLoading(true);
-      const result = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingPosition`,
-        params: {
-          league: filters.league,
-          year: filters.year,
-          season: filters.season,
-          patch: filters.patch,
-          team: filters.team,
-          player: filters.player,
-          champion: filters.champion_eng,
-          compare: compareOpen ? "" : "off",
-          opp_team: filters.oppteam,
-          opp_player: filters.oppplayer,
-          opp_champion: filters.oppchampion_eng,
-          side: side,
-          time: period,
-          position: position,
-          gameid: gameSelect,
-          token: user.token,
-          id: user.id,
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        },
-      });
-      const dto = result.data;
-
-      setMinTime(dto?.position[0].realCount ? dto?.position[0].realCount : 0);
-      setMaxTime(dto.position.length - 1);
-      setCurrentPos(dto.position);
-      setchampInfo(dto.info);
-
-      // setLoading(false);
+      const url = `${API2}/api/mappingPosition`;
+      const params = {
+        league: filters.league,
+        year: filters.year,
+        season: filters.season,
+        patch: filters.patch,
+        team: filters.team,
+        player: filters.player,
+        champion: filters.champion_eng,
+        compare: compareOpen ? "" : "off",
+        opp_team: filters.oppteam,
+        opp_player: filters.oppplayer,
+        opp_champion: filters.oppchampion_eng,
+        side: side,
+        time: period,
+        position: position,
+        gameid: gameSelect,
+        token: user.token,
+        id: user.id,
+      };
+      axiosRequest(url, params, function (e) {
+        const dto = e.data;
+        setMinTime(dto?.position[0].realCount ? dto?.position[0].realCount : 0);
+        setMaxTime(dto.position.length - 1);
+        setCurrentPos(dto.position);
+        setchampInfo(dto.info);
+      })
     } catch (e) {
       console.log(e);
     } finally {
