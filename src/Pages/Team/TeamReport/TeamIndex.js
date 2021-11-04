@@ -50,52 +50,55 @@ function TeamIndex() {
   const fetchingStatisticData = async () => {
     setLoading(true);
     try {
-      const result = await B2B_Request({
-        url: `${API}/api/team/analysis`,
-        params: {
-          league: filters.league,
-          year: filters.year,
-          season: filters.season,
-          patch: filters.patch,
-          team: filters.team,
-          token: user.token,
-          id: user.id
-        }
+
+      let url = `${API}/api/team/analysis`;
+      let params = {
+        league: filters.league,
+        year: filters.year,
+        season: filters.season,
+        patch: filters.patch,
+        team: filters.team,
+        token: user.token,
+        id: user.id
+      }
+
+      B2B_Request(url, params, function (e) {
+        //팀 평균 데이터 fetch
+        setTeamStats(e.data.teamStats);
+
+        //리그 평균 데이터 fetch
+        setLeagueStat(e.data.leagueStat);
+
+        //SRB 데이터 fetch
+        setSbrAnalysis(e.data.sbrAnalysis);
+
+        //첫 갱 라인 데이터 fetch
+        const gameX = [];
+        const gameY = [];
+        setGankCount(e.data.firstGank);
+        e.data.firstGank.firstGankList.forEach((game) => {
+          gameX.push(game.position);
+          gameY.push(game.gankCount);
+        });
+        setGankCountX(gameX);
+        setGankCountY(gameY);
+
+        //라인별 서포팅 횟수 데이터 fetch
+
+        const supportX = [];
+        const supportY = [];
+        setSupportTimeData(e.data.supportedTime);
+        e.data.supportedTime.supportedTimeList.forEach((support) => {
+          supportX.push(support.position);
+          supportY.push(support.value);
+        });
+
+        setSupportTimeX(supportX);
+        setSupportTimeY(supportY);
+        setLoading(false);
       })
 
-      //팀 평균 데이터 fetch
-      setTeamStats(result.data.teamStats);
 
-      //리그 평균 데이터 fetch
-      setLeagueStat(result.data.leagueStat);
-
-      //SRB 데이터 fetch
-      setSbrAnalysis(result.data.sbrAnalysis);
-
-      //첫 갱 라인 데이터 fetch
-      const gameX = [];
-      const gameY = [];
-      setGankCount(result.data.firstGank);
-      result.data.firstGank.firstGankList.forEach((game) => {
-        gameX.push(game.position);
-        gameY.push(game.gankCount);
-      });
-      setGankCountX(gameX);
-      setGankCountY(gameY);
-
-      //라인별 서포팅 횟수 데이터 fetch
-
-      const supportX = [];
-      const supportY = [];
-      setSupportTimeData(result.data.supportedTime);
-      result.data.supportedTime.supportedTimeList.forEach((support) => {
-        supportX.push(support.position);
-        supportY.push(support.value);
-      });
-
-      setSupportTimeX(supportX);
-      setSupportTimeY(supportY);
-      setLoading(false);
     } catch (e) {
       alert(e);
     }

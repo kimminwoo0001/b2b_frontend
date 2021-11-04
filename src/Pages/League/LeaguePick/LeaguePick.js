@@ -93,35 +93,48 @@ function LeaguePick() {
   const fetchingPickData = async () => {
     setLoading(true);
 
-    //B2B_Request
+    let url = `${API}/api/league/pick`;
+    let params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      position: queryPosition,
+      token: user.token,
+      id: user.id
+    };
 
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/league/pick`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        position: queryPosition,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    }).then()
+    B2B_Request(url, params, function (e) {
+      //주요픽 데이터 저장
+      setImportantPicks(e.data.importantPick);
+      //주요픽간의전적 저장
+      setPickDifference(e.data.pickDiff);
+      //챔피언 티어 저장
+      setTier(e.data.championTier);
+      //유니크픽 데이터 저장
+      setUniquePick(e.data.uniquePick);
 
-    //주요픽 데이터 저장
-    setImportantPicks(result.data.importantPick);
-    //주요픽간의전적 저장
-    setPickDifference(result.data.pickDiff);
-    //챔피언 티어 저장
-    setTier(result.data.championTier);
-    //유니크픽 데이터 저장
-    setUniquePick(result.data.uniquePick);
+      setLoading(false);
+    });
 
-    setLoading(false);
+    // const result = await axios.request({
+    //   method: "GET",
+    //   url: `${API}/api/league/pick`,
+    //   params: {
+    //     league: filters.league,
+    //     year: filters.year,
+    //     season: filters.season,
+    //     patch: filters.patch,
+    //     position: queryPosition,
+    //     token: user.token,
+    //     id: user.id,
+    //   },
+    //   paramsSerializer: (params) => {
+    //     return qs.stringify(params, { arrayFormat: "repeat" });
+    //   }
+    // })
+
+
   };
 
   if (loading) return <LoadingImg />;

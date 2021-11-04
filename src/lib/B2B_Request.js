@@ -1,8 +1,8 @@
 import axios from "axios";
 import qs from "qs";
 
-const B2B_Request = async ({ url, paramData }) => {
-  const result = await axios.request({
+const B2B_Request = async (url, paramData, callback) => {
+  await axios.request({
     method: "GET",
     url: url,
     params: {
@@ -11,12 +11,13 @@ const B2B_Request = async ({ url, paramData }) => {
     paramsSerializer: (params) => {
       return qs.stringify(params, { arrayFormat: "repeat" });
     }
-  });
-
-  if (result.data === "") {
-    throw new Error("No Have Data.");
-  }
-  return result;
+  }).then(e => {
+    if (callback) {
+      callback(e);
+    }
+  }).catch(error => {
+    console.log("error test : ", error)
+  })
 }
 
 export default B2B_Request;
