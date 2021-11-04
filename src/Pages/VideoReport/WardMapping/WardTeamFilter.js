@@ -10,6 +10,7 @@ import Slider from "@material-ui/core/Slider";
 import { API2 } from "../../config";
 import qs from "qs";
 import timeFormat from "../../../lib/timeFormat";
+import axiosRequest from "../../../lib/axiosRequest";
 
 const WardSlider = withStyles({
   root: {
@@ -57,25 +58,21 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
     setMinFrom(newValue);
   };
 
-  const getTeam = async () => {
+  const getTeam = () => {
     try {
-      const response = await axios.request({
-        method: "GET",
-        url: `${API2}/api/mappingFilter`,
-        params: {
-          league: filters.league,
-          year: filters.year,
-          season: filters.season,
-          patch: filters.patch,
-          token: user.token,
-          id: user.id
-        },
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        }
+      const url = `${API2}/api/mappingFilter`;
+      const params = {
+        league: filters.league,
+        year: filters.year,
+        season: filters.season,
+        patch: filters.patch,
+        token: user.token,
+        id: user.id
+      };
+      axiosRequest(url, params, function (e) {
+        const data = e.data.team;
+        setFilterData({ ...filterData, team: data });
       });
-      const data = response.data.team;
-      setFilterData({ ...filterData, team: data });
     } catch (e) {
       console.log(e);
     }

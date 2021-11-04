@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import qs from "qs";
-import axios from "axios";
+
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { createBrowserHistory } from "history";
@@ -68,7 +68,7 @@ const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
   };
 
   // opp 팀 필터 fetch 함수
-  const fetchingOppTeamFilter = async (team) => {
+  const fetchingOppTeamFilter = (team) => {
     const url = `${API}/api/filter/oppteam`;
     const params = {
       league: filters.league,

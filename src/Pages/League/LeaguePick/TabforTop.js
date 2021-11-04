@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
 import { useSelector } from "react-redux";
-import ExportUtil from "../Components/ExportUtil";
+import ExcelExport from '../../../Components/UtilityComponent/ExcelExport'
 
 
 // 주요픽 데이터 sorting Hooks
@@ -119,7 +119,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
         <MainPicks>
           <Header>
             <span>{t("league.draft.mostPick")}</span>
-            <ExportUtil filename={t("league.draft.mostPick")} tableid="mostPick-table" />
+            <ExcelExport filename={t("league.draft.mostPick")} tableid="mostPick-table" />
           </Header>
           <PickTable id="mostPick-table">
             <thead>
@@ -199,7 +199,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
         <ChampionTier>
           <Header>
             <span>{t("league.draft.champtier")}</span>
-            <ExportUtil filename={t("league.draft.champtier")} tableid="champtier-table" />
+            <ExcelExport filename={t("league.draft.champtier")} tableid="champtier-table" />
           </Header>
           <TierTable id="champtier-table">
             <thead>
@@ -442,7 +442,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
         <UniquePicks>
           <Header>
             <span>{t("league.draft.unique")}</span>
-            <ExportUtil filename={t("league.draft.unique")} tableid="unique-table" />
+            <ExcelExport filename={t("league.draft.unique")} tableid="unique-table" />
           </Header>
           <UniqueTable id="unique-table">
             <thead>

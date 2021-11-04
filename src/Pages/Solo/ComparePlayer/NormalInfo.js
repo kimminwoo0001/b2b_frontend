@@ -17,6 +17,8 @@ import {
   ResetOppChampion,
 } from "../../../redux/modules/filtervalue";
 import qs from "qs";
+import axiosRequest from "../../../lib/axiosRequest";
+
 
 function NormalInfo() {
   //기본정보 탭
@@ -52,97 +54,85 @@ function NormalInfo() {
   //   GetComparisonStat();
   // }, [dispatch]);
 
-  const GetComparisonStat = async () => {
+  const GetComparisonStat = () => {
     setLoading(true);
-    const response = await axios.request({
-      method: "GET",
-      url: `${API}/api/player/comparison`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        team: filters.team,
-        player: filters.player,
-        oppteam: filters.oppteam,
-        oppplayer: filters.oppplayer,
-        champion: filters.champion_eng,
-        oppchampion: filters.oppchampion_eng,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      },
-    });
-
-    const copy = response.data[filters.player];
-    const copyoppData = response.data[filters.oppplayer];
-    setData(copy);
-    setOppData(copyoppData);
-    //선수 데이터
-    setPlayer({
-      line: copy.line.toFixed(1),
-      investment: copy.investment.toFixed(1),
-      loss: copy.loss.toFixed(1),
-      match: copy.match.toFixed(1),
-      gold: copy.gold.toFixed(1),
-    });
-    //상대 선수 데이터
-    setOppPlayer({
-      line: copyoppData.line.toFixed(1),
-      investment: copyoppData.investment.toFixed(1),
-      loss: copyoppData.loss.toFixed(1),
-      match: copyoppData.match.toFixed(1),
-      gold: copyoppData.gold.toFixed(1),
-    });
-    setLoading(false);
+    const url = `${API}/api/player/comparison`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      team: filters.team,
+      player: filters.player,
+      oppteam: filters.oppteam,
+      oppplayer: filters.oppplayer,
+      champion: filters.champion_eng,
+      oppchampion: filters.oppchampion_eng,
+      token: user.token,
+      id: user.id,
+    }
+    axiosRequest(url, params, function (e) {
+      const copy = e.data[filters.player];
+      const copyoppData = e.data[filters.oppplayer];
+      setData(copy);
+      setOppData(copyoppData);
+      //선수 데이터
+      setPlayer({
+        line: copy.line.toFixed(1),
+        investment: copy.investment.toFixed(1),
+        loss: copy.loss.toFixed(1),
+        match: copy.match.toFixed(1),
+        gold: copy.gold.toFixed(1),
+      });
+      //상대 선수 데이터
+      setOppPlayer({
+        line: copyoppData.line.toFixed(1),
+        investment: copyoppData.investment.toFixed(1),
+        loss: copyoppData.loss.toFixed(1),
+        match: copyoppData.match.toFixed(1),
+        gold: copyoppData.gold.toFixed(1),
+      });
+      setLoading(false);
+    })
   };
 
   //챔피언 필터
-  const GetChampionFilter = async () => {
-    const response = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/champion2`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        player: filters.player,
-        oppplayer: filters.oppplayer,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      },
-    });
-    setChampFilter(response.data.champion);
-    setChampEng(response.data.championEng);
+  const GetChampionFilter = () => {
+
+    const url = `${API}/api/filter/champion2`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      player: filters.player,
+      oppplayer: filters.oppplayer,
+      token: user.token,
+      id: user.id,
+    }
+    axiosRequest(url, params, function (e) {
+      setChampFilter(e.data.champion);
+      setChampEng(e.data.championEng);
+    })
   };
   //상대 챔피언 필터
-  const GetOppFilter = async () => {
-    const response = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/oppchampion2?`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        champion: filters.champion_eng,
-        player: filters.player,
-        oppplayer: filters.oppplayer,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      },
-    });
-    setOppFilter(response.data.champion);
-    setOppEng(response.data.championEng);
+  const GetOppFilter = () => {
+    const url = `${API}/api/filter/oppchampion2?`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      champion: filters.champion_eng,
+      player: filters.player,
+      oppplayer: filters.oppplayer,
+      token: user.token,
+      id: user.id,
+    }
+    axiosRequest(url, params, function (e) {
+      setOppFilter(e.data.champion);
+      setOppEng(e.data.championEng);
+    })
   };
 
   // 오각형 그래프 세팅

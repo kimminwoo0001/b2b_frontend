@@ -10,6 +10,7 @@ import {
   HandleTab
 } from "../../../redux/modules/filtervalue";
 import { API } from "../../config";
+import axiosRequest from "../../../lib/axiosRequest";
 
 
 function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
@@ -29,25 +30,20 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openModal]);
 
-  const fetchingTeamFilter = async () => {
-    const result = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/oppteam`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        team: filters.team,
-        token: user.token,
-        id: user.id
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      }
-    });
-
-    setOppTeam(result.data.oppteam);
+  const fetchingTeamFilter = () => {
+    const url = `${API}/api/filter/oppteam`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      team: filters.team,
+      token: user.token,
+      id: user.id
+    };
+    axiosRequest(url, params, function (e) {
+      setOppTeam(e.data.oppteam);
+    })
   };
 
   return (

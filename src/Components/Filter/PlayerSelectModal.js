@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import qs from "qs";
-import axios from "axios";
+
 import { API } from "../../Pages/config";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
@@ -28,7 +28,7 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openModal]);
 
-  const fetchingTeamFilter = async () => {
+  const fetchingTeamFilter = () => {
     const url = `${API}/api/filter/oppteam`;
     const params = {
       league: filters.league,
@@ -44,7 +44,7 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
     })
   };
 
-  const fetchingPlayerFilter = async (team) => {
+  const fetchingPlayerFilter = (team) => {
     const url = `${API}/api/filter/oppplayer`;
     const params = {
       league: filters.league,

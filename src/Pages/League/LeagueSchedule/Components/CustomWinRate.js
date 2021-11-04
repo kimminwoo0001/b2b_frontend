@@ -29,7 +29,7 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
   const [isActive9, setIsActive9] = useDetectOutsideClick(dropdownRef, false);
   const [isActive10, setIsActive10] = useDetectOutsideClick(dropdownRef, false);
 
-  const GetRoster = async () => {
+  const GetRoster = () => {
     const url = `${API}/api/filter/roster`;
     const params = {
       league: filters.league,
@@ -47,7 +47,7 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
     });
   };
 
-  const GetWinRate = async () => {
+  const GetWinRate = () => {
     const player1 = Object.values(roster1)?.map((name) => name.name);
     const player2 = Object.values(roster2)?.map((name) => name.name);
 

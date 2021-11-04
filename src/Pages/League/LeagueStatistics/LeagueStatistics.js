@@ -49,7 +49,7 @@ function LeagueStatistics() {
   }, [filters, lang]);
 
   // 리그통합지수 데이터 featch 함수
-  const fetchingStatisticData = async () => {
+  const fetchingStatisticData = () => {
     setLoading(true);
     const url = `${API}/api/league/totalinfo`;
     const params = {

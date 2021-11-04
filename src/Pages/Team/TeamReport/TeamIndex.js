@@ -13,7 +13,7 @@ import { API } from "../../config";
 import { useSelector } from "react-redux";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import axiosRequest from "../../../lib/axiosRequest";
-import { Alert } from "bootstrap";
+
 
 
 function TeamIndex() {
@@ -47,7 +47,7 @@ function TeamIndex() {
   }, [filters]);
 
   // 팀 전력 보고서 데이터 featch 함수
-  const fetchingStatisticData = async () => {
+  const fetchingStatisticData = () => {
     setLoading(true);
     try {
 

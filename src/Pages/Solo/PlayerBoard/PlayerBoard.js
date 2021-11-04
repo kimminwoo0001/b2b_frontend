@@ -19,6 +19,7 @@ import {
   ResetChampion2,
   ResetOppChampion,
 } from "../../../redux/modules/filtervalue";
+import axiosRequest from "../../../lib/axiosRequest";
 
 
 function PlayerBoard() {
@@ -62,137 +63,100 @@ function PlayerBoard() {
   }, [filters.player, filters.resetchamp, filters.patch, lang]);
 
   //팀 필터 fetch 함수
-  const GetPlayerBoardData = async () => {
+  const GetPlayerBoardData = () => {
     setLoading(true);
-    const response = await axios.request({
-      method: "GET",
-      url: `${API}/api/player/playerboard`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        team: filters.team,
-        player: filters.player,
-        champion: filters.champion_eng,
-        oppchampion: filters.oppchampion_eng,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      },
-    });
+    const url = `${API}/api/player/playerboard`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      team: filters.team,
+      player: filters.player,
+      champion: filters.champion_eng,
+      oppchampion: filters.oppchampion_eng,
+      token: user.token,
+      id: user.id,
+    };
 
-    const data = response.data;
-    // var arrNumber = [0, 0, 0, 0, 0, 0, 0];
+    axiosRequest(url, params, function (e) {
+      const data = e.data;
+      // var arrNumber = [0, 0, 0, 0, 0, 0, 0];
 
-    // for (var i = 0; i < 7; i++) {
-    //   arrNumber[i] = data.stats.lineStats[`val${i}`];
-    // }
+      // for (var i = 0; i < 7; i++) {
+      //   arrNumber[i] = data.stats.lineStats[`val${i}`];
+      // }
 
-    setInfo(data.info);
-    setCarrer(data.records.careerrecords);
-    setChampRecord(Object.values(data.records.championrecords));
-    // setLeaguePlayerInfo(Object.values(data.soloInfo.leaguePlayerInfo));
-    // setLeaguePlayerTotal(Object.values(data.soloInfo.leaguePlayerTotal));
-    // setUserPlayerTotal(Object.values(data.soloInfo.userPlayerTotal));
-    setSbr(data.stats.sbrStats);
-    setLine(Object.values(data.stats.lineStats));
-    setEngage(Object.values(data.stats.engagementStats));
-    setPersonality(Object.values(data.stats.personalityStats));
-    setGraphDomain(data.trends);
-    setMatchInfo(data.stats.matchStats);
-    //match graph data conversion
-    const matchX = [];
-    const matchY = [];
-    data.trends.matchtrends.forEach((match) => {
-      matchX.push(match.sum);
-      matchY.push(match.sbr.toFixed(1));
-    });
-    setMatch({ x: matchX, y: matchY });
+      setInfo(data.info);
+      setCarrer(data.records.careerrecords);
+      setChampRecord(Object.values(data.records.championrecords));
+      // setLeaguePlayerInfo(Object.values(data.soloInfo.leaguePlayerInfo));
+      // setLeaguePlayerTotal(Object.values(data.soloInfo.leaguePlayerTotal));
+      // setUserPlayerTotal(Object.values(data.soloInfo.userPlayerTotal));
+      setSbr(data.stats.sbrStats);
+      setLine(Object.values(data.stats.lineStats));
+      setEngage(Object.values(data.stats.engagementStats));
+      setPersonality(Object.values(data.stats.personalityStats));
+      setGraphDomain(data.trends);
+      setMatchInfo(data.stats.matchStats);
+      //match graph data conversion
+      const matchX = [];
+      const matchY = [];
+      data.trends.matchtrends.forEach((match) => {
+        matchX.push(match.sum);
+        matchY.push(match.sbr.toFixed(1));
+      });
+      setMatch({ x: matchX, y: matchY });
 
-    //SeasonTrends graph data
-    const seasonX = [];
-    const seasonY = [];
-    data.trends.seasontrends.forEach((season) => {
-      seasonX.push(season.season);
-      seasonY.push(season.sbr.toFixed(1));
-    });
-    setSeason({ x: seasonX, y: seasonY });
-    setLoading(false);
-    console.log(data.info);
+      //SeasonTrends graph data
+      const seasonX = [];
+      const seasonY = [];
+      data.trends.seasontrends.forEach((season) => {
+        seasonX.push(season.season);
+        seasonY.push(season.sbr.toFixed(1));
+      });
+      setSeason({ x: seasonX, y: seasonY });
+      setLoading(false);
+    })
   };
 
   //챔피언 필터
-  const GetChampionFilter = async () => {
-    const response = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/champion`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        player: filters.player,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      },
-    });
-    setChampFilter(response.data.champion);
-    setChampEng(response.data.championEng);
-    console.log(response.data);
+  const GetChampionFilter = () => {
+    const url = `${API}/api/filter/champion`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      player: filters.player,
+      token: user.token,
+      id: user.id,
+    };
+    axiosRequest(url, params, function (e) {
+      setChampFilter(e.data.champion);
+      setChampEng(e.data.championEng);
+    })
   };
 
   //상대 챔피언 필터
-  const GetOppFilter = async () => {
-    const response = await axios.request({
-      method: "GET",
-      url: `${API}/api/filter/oppchampion`,
-      params: {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        position: filters.position,
-        champion: filters.champion_eng,
-        player: filters.player,
-        token: user.token,
-        id: user.id,
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" });
-      },
-    });
-
-    setOppFilter(response.data.champion);
-    setOppEng(response.data.championEng);
+  const GetOppFilter = () => {
+    const url = `${API}/api/filter/oppchampion`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      position: filters.position,
+      champion: filters.champion_eng,
+      player: filters.player,
+      token: user.token,
+      id: user.id,
+    }
+    axiosRequest(url, params, function (e) {
+      setOppFilter(e.data.champion);
+      setOppEng(e.data.championEng);
+    })
   };
-
-  //선수 키워드 fetch 함수
-  // const GetPlayerSummary = async () => {
-  //   const response = await axios.request({
-  //     method: "GET",
-  //     url: `${API}/api/report/player/select`,
-  //     params: {
-  //       league: filters.league,
-  //       year: filters.year,
-  //       season: filters.season,
-  //       patch: filters.patch,
-  //       player: filters.player,
-  //       team: filters.team,
-  //       token: user.token,
-  //       id: user.id,
-  //     },
-  //     paramsSerializer: (params) => {
-  //       return qs.stringify(params, { arrayFormat: "repeat" });
-  //     },
-  //   });
-  //   setSummary(response.data.summary);
-  // };
 
   // 그래프 세팅 값
   const MatchChart = {

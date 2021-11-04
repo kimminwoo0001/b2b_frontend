@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import qs from "qs";
-import axios from "axios";
+
 import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
@@ -76,7 +76,7 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
 
 
   // opp 팀 필터 fetch 함수
-  const fetchingOppTeamFilter = async (team) => {
+  const fetchingOppTeamFilter = (team) => {
     let url = `${API}/api/filter/oppteam`;
     let params = {
       league: filters.league,
@@ -94,7 +94,7 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
   };
 
   //플레이어 필터 fetch 함수
-  const fetchingPlayerFilter = async (team) => {
+  const fetchingPlayerFilter = (team) => {
     let url = `${API}/api/filter/player`;
     let params = {
       league: filters.league,
@@ -112,7 +112,7 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
   };
 
   //상대 선수 필터 fetch 함수
-  const fetchingOppPlayerFilter = async (team) => {
+  const fetchingOppPlayerFilter = (team) => {
     let url = `${API}/api/filter/oppplayer`;
     let params = {
       league: filters.league,

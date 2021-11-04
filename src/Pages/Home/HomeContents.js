@@ -37,7 +37,7 @@ const HomeContents = memo(() => {
 
   // 홈 데이터 fetch 해오는 함수
 
-  const fetchHomeData = async () => {
+  const fetchHomeData = () => {
     dispatch(Loading(true));
     console.log(user)
     try {
@@ -65,7 +65,7 @@ const HomeContents = memo(() => {
     }
   };
 
-  const fetchFilterData = async () => {
+  const fetchFilterData = () => {
     dispatch(Loading(true));
     try {
       const url = `${API}/api/test/test`;

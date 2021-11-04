@@ -7,7 +7,6 @@ import Filter from "../../Components/Filter/Filter";
 import TeamTabs from "./TeamTabs";
 import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 import ErrorBoundary from "../../Components/ErrorBoundary";
-// import TeamFilter from "./TeamFilter";
 import Nav from "../../Components/Nav/Nav";
 import CloseFilter from "../../Components/Filter/CloseFilter";
 

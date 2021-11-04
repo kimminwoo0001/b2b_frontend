@@ -2,11 +2,11 @@ import React, { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { setTableHeaders, TableHeaders } from "../../../redux/modules/tablevalue";
-import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
+import { setTableHeaders, TableHeaders } from "../../redux/modules/tablevalue";
+import { useDetectOutsideClick } from "../SelectFilter/useDetectOustsideClick";
 import * as clipboard from 'clipboard-polyfill/text';
 import XLSX from "xlsx";
-import timeFormat from "../../../lib/timeFormat";
+import timeFormat from "../../lib/timeFormat";
 
 const ExportUtil = ({ filename = "none", tableid }) => {
   const { t } = useTranslation();

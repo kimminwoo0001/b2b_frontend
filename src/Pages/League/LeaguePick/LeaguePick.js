@@ -90,7 +90,7 @@ function LeaguePick() {
   };
 
   // week 데이터 fetch 함수
-  const fetchingPickData = async () => {
+  const fetchingPickData = () => {
     setLoading(true);
 
     let url = `${API}/api/league/pick`;
@@ -113,28 +113,9 @@ function LeaguePick() {
       setTier(e.data.championTier);
       //유니크픽 데이터 저장
       setUniquePick(e.data.uniquePick);
-
-      setLoading(false);
-    });
-
-    // const result = await axios.request({
-    //   method: "GET",
-    //   url: `${API}/api/league/pick`,
-    //   params: {
-    //     league: filters.league,
-    //     year: filters.year,
-    //     season: filters.season,
-    //     patch: filters.patch,
-    //     position: queryPosition,
-    //     token: user.token,
-    //     id: user.id,
-    //   },
-    //   paramsSerializer: (params) => {
-    //     return qs.stringify(params, { arrayFormat: "repeat" });
-    //   }
-    // })
-
-
+    }).finally(
+      setLoading(false)
+    );
   };
 
   if (loading) return <LoadingImg />;

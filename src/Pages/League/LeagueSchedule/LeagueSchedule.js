@@ -73,7 +73,7 @@ function LeagueSchedule() {
   }, [convertYear(startDate), convertMonth(startDate)]);
 
   // week 데이터 featch 함수
-  const fetchingWeekData = async () => {
+  const fetchingWeekData = () => {
     const url = `${API}/api/league/schedule`;
     const params = {
       league: filters.league,

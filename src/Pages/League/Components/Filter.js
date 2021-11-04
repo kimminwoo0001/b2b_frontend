@@ -38,7 +38,7 @@ function Filter() {
   );
 
   // 리그 필터 fetch 해오는 함수
-  const fetchLeagueFilter = async () => {
+  const fetchLeagueFilter = () => {
     const parsedMatchData = await axios.get(`${API}/api/filter/league`, {
       params: {
         token: user.token,
@@ -131,7 +131,7 @@ function Filter() {
   }, [filters.league]);
 
   // 패치 필터 fetch 함수
-  const fetchingPatchFilter = async (league) => {
+  const fetchingPatchFilter = (league) => {
     const result = await axios.get(`${API}/api/filter/patch`, {
       params: {
         league:

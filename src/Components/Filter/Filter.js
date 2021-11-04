@@ -21,7 +21,7 @@ import {
   SetPatch,
 } from "../../redux/modules/filtervalue";
 import { setLeagueFilter, setPatchFilter, setPlayerFilter, setSeasonFilter, setTeamFilter, setYearFilter } from '../../redux/modules/selectorvalue'
-import axios from "axios";
+
 import styled, { css } from "styled-components";
 import { API } from "../../Pages/config";
 import { useTranslation } from "react-i18next";
@@ -240,8 +240,9 @@ const Filter = memo(() => {
       for (let league of filters.league) {
         for (let year of filters.year) {
           for (let season of filters.season) {
-            if (staticvalue.filterObjects[league][year][season]) {
-              const ObjectKeys = Object.keys(staticvalue.filterObjects[league][year][season]);
+            const seasonData = staticvalue.filterObjects[league][year][season]
+            if (seasonData) {
+              const ObjectKeys = Object.keys(seasonData);
               teamList = teamList.concat(ObjectKeys);
             }
           }
@@ -255,17 +256,20 @@ const Filter = memo(() => {
   };
 
   //플레이어 필터 fetch 함수
-  const fetchingPlayerFilter = async () => {
+  const fetchingPlayerFilter = () => {
     let players = [];
     if (filters.team.length !== 0 && isNeedTeam) {
       let playerList = []
       for (let league of filters.league) {
         for (let year of filters.year) {
           for (let season of filters.season) {
-            if (staticvalue.filterObjects[league][year][season][filters.team]) {
-              const ObjectKeys = Object.values(staticvalue.filterObjects[league][year][season][filters.team]);
-              console.log("ObjectKeys", ObjectKeys);
-              playerList = playerList.concat(ObjectKeys);
+            const seasonData = staticvalue.filterObjects[league][year][season];
+            if (seasonData) {
+              if (seasonData.[filters.team]) {
+                const ObjectKeys = Object.values(seasonData[filters.team]);
+                console.log("ObjectKeys", ObjectKeys);
+                playerList = playerList.concat(ObjectKeys);
+              }
             }
           }
         }
@@ -309,7 +313,7 @@ const Filter = memo(() => {
   };
 
   // 패치 필터 fetch 함수
-  const fetchingPatchFilter = async () => {
+  const fetchingPatchFilter = () => {
     const url = `${API}/api/filter/patch`;
     const params = {
       league: filters.league,
