@@ -91,6 +91,12 @@ const Filter = memo(() => {
   }, []);
 
   useEffect(() => {
+    if (isComparePage === false && selector.leagueFilter.length === 0) {
+      fetchLeagueFilter();
+    }
+  }, [selector.leagueFilter])
+
+  useEffect(() => {
     if (JSON.stringify(league) !== JSON.stringify(filters.league)) {
       if (isComparePage) {
         fetchSeasonFilter();
@@ -178,7 +184,7 @@ const Filter = memo(() => {
       leagueList = Object.keys(staticvalue.filterObjects).map(
         (key) =>
           Number(Object.keys(staticvalue.filterObjects[key])) ===
-            Number(filters.year) && key
+          Number(filters.year) && key
       );
     } else {
       leagueList = Object.keys(staticvalue.filterObjects);
