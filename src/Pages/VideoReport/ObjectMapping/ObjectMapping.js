@@ -103,7 +103,6 @@ function ObjectMapping() {
         id: user.id,
       };
       axiosRequest(url, params, function (e) {
-        debugger;
         const dto = e.data;
         setMinTime(dto?.position[0].realCount ? dto?.position[0].realCount : 0);
         setMaxTime(dto.position.length - 1);
@@ -299,6 +298,7 @@ function ObjectMapping() {
           // 실제로 오브젝트 별 동선 Mapping이 작동되는 부분.
           <ObjectMap>
             {champInfo?.map((info, idx) => {
+              console.log("currentPos[range]?.player:", currentPos[range]?.player);
               if (range === 0) {
                 if (info.side === "red") {
                   var x = 630;

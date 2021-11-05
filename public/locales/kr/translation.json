@@ -12,7 +12,7 @@
     "part9": "선수 비교",
     "part10": "아이템 시뮬레이터",
     "part11": "픽 조합 계산기",
-    "part12" : "게임 보고서"
+    "part12": "게임 보고서"
   },
   "home": {
     "rank": "순위",
@@ -187,7 +187,7 @@
       "total": "전",
       "win": "승",
       "lose": "패",
-      "times" : "회"
+      "times": "회"
     }
   },
   "solo": {
@@ -234,6 +234,7 @@
       "gamePlayed": "출전횟수",
       "kda": "KDA",
       "seasonStat": "시즌 별 성적",
+      "season": "시즌",
       "games": "경기",
       "win": "승",
       "lose": "패",

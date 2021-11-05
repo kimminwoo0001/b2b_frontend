@@ -879,7 +879,7 @@ function PlayerBoard() {
                 </span>
               </div>
               <div className="Legend">
-                <p className="X">X {t("solo.playerboard.recentGame")}</p>
+                <p className="X">X {t("solo.playerboard.season")}</p>
                 <p className="Y">Y {t("solo.playerboard.sbr")}</p>
               </div>
             </NavBar>
