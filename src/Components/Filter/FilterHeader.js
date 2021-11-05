@@ -81,7 +81,7 @@ const FilterHeader = memo(() => {
             {/*<img src="Images/ico-filter.png" alt="filterIcon"></img>*/}
             <img src="Images/btn_view_off.png" alt="filterIcon" onClick={() => filterSwitch()} />
             {lang === 'kr' ? <label>{menus[filters.menu_num].name}</label>
-              : <label style={{ fontSize: '33px' }}>{menus[filters.menu_num].name}</label>}
+              : <label style={{ fontSize: '27px' }}>{menus[filters.menu_num].name}</label>}
           </div>
         </Header> :
         <NoHeader>
@@ -96,7 +96,7 @@ const FilterHeader = memo(() => {
 export default FilterHeader;
 
 const Header = styled.div`
-  width: 250px;
+  
   font-family: NotoSansKR;
   color: #fff;
   .header {
