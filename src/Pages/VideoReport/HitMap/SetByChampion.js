@@ -959,6 +959,10 @@ const DropDownToggle = styled.div`
     font-family: Arial, Helvetica, sans-serif;
   }
   .menu-container {
+    position: relative;
+  }
+  .menu-container2 {
+    position: relative;
   }
   .menu-trigger {
     display: flex;

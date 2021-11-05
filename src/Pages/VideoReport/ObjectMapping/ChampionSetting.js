@@ -846,6 +846,7 @@ const DropDownBox = styled.div`
   display: flex;
   justify-content: space-evenly;
   margin-bottom: 4px;
+  overflow-y: visible;
 `;
 
 const DropDownBox2 = styled.div`
@@ -854,7 +855,7 @@ const DropDownBox2 = styled.div`
   margin-bottom: 4px;
   opacity: 0;
   max-height: 0px;
-  overflow-y: hidden;
+  overflow-y: visible;
   width: 100%;
   transition: all 0.2s ease;
   ${(props) =>
@@ -885,6 +886,7 @@ const CompareButton = styled.button`
 
 const DropDownToggle = styled.div`
   margin-right: 4px;
+  
   :nth-child(3) {
     margin-right: 0px;
   }
@@ -898,9 +900,12 @@ const DropDownToggle = styled.div`
     font-family: Arial, Helvetica, sans-serif;
   }
 
+  .menu-container2 {
+    position: relative;
+  }
   .menu-container {
-    /* position: relative;
-    display: flex;
+    position: relative;
+    /* display: flex;
     justify-content: center;
     align-items: center; */
   }

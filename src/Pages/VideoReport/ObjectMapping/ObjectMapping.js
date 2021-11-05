@@ -541,7 +541,7 @@ const StepTitle = styled.nav`
 const StepContents = styled.div`
   opacity: 0;
   max-height: 0px;
-  overflow-y: hidden;
+  overflow-y: visible;
   width: 100%;
   transition: all 0.2s ease;
   ${(props) =>

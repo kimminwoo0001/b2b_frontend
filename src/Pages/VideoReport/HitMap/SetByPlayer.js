@@ -562,7 +562,12 @@ const DropDownToggle = styled.div`
   body {
     font-family: Arial, Helvetica, sans-serif;
   }
+  .menu-container {
+    position: relative;
+  }
+
   .menu-container2 {
+    position: relative;
     margin-top: 8px;
   }
   .menu-trigger {
