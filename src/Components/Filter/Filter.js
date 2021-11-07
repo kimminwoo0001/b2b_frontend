@@ -541,24 +541,3 @@ const FilterGroup = styled.div`
   margin: 30px 1px 0 20px;
 `;
 
-const Filters = styled.div`
-  width: 250px;
-  margin: 0 0 10px;
-  padding: 20px;
-  border-radius: 35px;
-  background-color: #2f2d38;
-`;
-
-const PatchLabels = styled.div`
-  display: flex;
-  align-items: center;
-  color: #84818e;
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
-  letter-spacing: -0.55px;
-  text-align: left;
-  width: 100%;
-  > img {
-    margin: 0 8px 0 10px;
-  }
-`;

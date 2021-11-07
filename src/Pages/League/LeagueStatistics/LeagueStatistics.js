@@ -310,6 +310,8 @@ function LeagueStatistics() {
             </div>
           </NavBar>
           <GameTimeCharts>
+            {console.log("firstFight:", firstFight)}
+            {console.log("totalMatchData:", totalMatchData)}
             <Line
               data={firstFight}
               options={{

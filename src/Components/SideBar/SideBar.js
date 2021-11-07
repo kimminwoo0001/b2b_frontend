@@ -312,7 +312,7 @@ export default Sidebar;
 const SideBarWrapper = styled.div`
   width: 200px;
   margin: 0 0;
-  padding: 26px 7px 103px 12px;
+  padding: 26px 18px 103px 12px;
   background-color: #16151c;
   font-family: NotoSansKR, Apple SD Gothic Neo;
   font-size: 11px;
