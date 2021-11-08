@@ -18,9 +18,16 @@ import {
   PatchFull,
   SetSeason,
   SetYear,
-  SetPatch,
+  SetPatch
 } from "../../redux/modules/filtervalue";
-import { setLeagueFilter, setPatchFilter, setPlayerFilter, setSeasonFilter, setTeamFilter, setYearFilter } from '../../redux/modules/selectorvalue'
+import {
+  setLeagueFilter,
+  setPatchFilter,
+  setPlayerFilter,
+  setSeasonFilter,
+  setTeamFilter,
+  setYearFilter
+} from "../../redux/modules/selectorvalue";
 
 import styled, { css } from "styled-components";
 import { API } from "../../Pages/config";
@@ -53,12 +60,12 @@ const Filter = memo(() => {
   const [patch, setPatch] = useState(filters.patch);
   const { t } = useTranslation();
 
-  const nameLeague = '/league';
-  const nameTeam = '/team';
-  const nameSolo = '/solo';
-  const nameVideo = '/video';
-  const nameTeamCompare = '/teamCompare';
-  const namePlayerCompare = '/playerCompare';
+  const nameLeague = "/league";
+  const nameTeam = "/team";
+  const nameSolo = "/solo";
+  const nameVideo = "/video";
+  const nameTeamCompare = "/teamCompare";
+  const namePlayerCompare = "/playerCompare";
   const pagePath = document.location.pathname;
   const isComparePage = [nameTeamCompare, namePlayerCompare].includes(pagePath);
   const isNeedTeam = [nameSolo, nameTeam, nameVideo].includes(pagePath);
@@ -86,7 +93,7 @@ const Filter = memo(() => {
   useEffect(() => {
     if (JSON.stringify(league) !== JSON.stringify(filters.league)) {
       if (isComparePage) {
-        fetchSeasonFilter()
+        fetchSeasonFilter();
       } else {
         fetchYearFilter();
         fetchActiveFilter();
@@ -107,19 +114,18 @@ const Filter = memo(() => {
     }
   }, [filters.year]);
 
-
   useEffect(() => {
     if (JSON.stringify(season) !== JSON.stringify(filters.season)) {
       if (filters.year.length > 0) {
         if ([nameLeague].includes(pagePath)) {
-          dispatch(HandleTab(1))
+          dispatch(HandleTab(1));
         } else {
           fetchingTeamFilter();
         }
         fetchingPatchFilter();
       }
-      dispatch(ResetTeam())
-      setSeason(filters.season)
+      dispatch(ResetTeam());
+      setSeason(filters.season);
     }
   }, [filters.season]);
 
@@ -140,7 +146,6 @@ const Filter = memo(() => {
     console.log(filters.player);
   }, [filters.player]);
 
-
   useEffect(() => {
     if (JSON.stringify(patch) !== JSON.stringify(filters.patch)) {
       if (isComparePage === false) {
@@ -148,7 +153,7 @@ const Filter = memo(() => {
       }
       setPatch(filters.patch);
     }
-  }, [filters.patch])
+  }, [filters.patch]);
 
   useEffect(() => {
     if (isComparePage) {
@@ -158,27 +163,22 @@ const Filter = memo(() => {
   }, [filters.compareModal]);
 
   const fetchActiveFilter = () => {
-    if (selector.leagueFilter?.length > 0)
-      fetchLeagueFilter();
-    if (selector.yearFilter?.length > 0)
-      fetchYearFilter();
-    if (selector.seasonFilter?.length > 0)
-      fetchSeasonFilter();
-    if (selector.teamFilter?.length > 0)
-      fetchingTeamFilter();
-    if (selector.playerFilter?.length > 0)
-      fetchingPlayerFilter();
-    if (filters?.patchFilter > 0)
-      fetchingPatchFilter();
-  }
+    if (selector.leagueFilter?.length > 0) fetchLeagueFilter();
+    if (selector.yearFilter?.length > 0) fetchYearFilter();
+    if (selector.seasonFilter?.length > 0) fetchSeasonFilter();
+    if (selector.teamFilter?.length > 0) fetchingTeamFilter();
+    if (selector.playerFilter?.length > 0) fetchingPlayerFilter();
+    if (filters?.patchFilter > 0) fetchingPatchFilter();
+  };
 
   // 리그 필터 fetch 해오는 함수
   const fetchLeagueFilter = () => {
     let leagueList = [];
     if (isComparePage) {
       leagueList = Object.keys(staticvalue.filterObjects).map(
-        key => Number(Object.keys(staticvalue.filterObjects[key]))
-          === Number(filters.year) && key
+        (key) =>
+          Number(Object.keys(staticvalue.filterObjects[key])) ===
+            Number(filters.year) && key
       );
     } else {
       leagueList = Object.keys(staticvalue.filterObjects);
@@ -187,45 +187,61 @@ const Filter = memo(() => {
   };
 
   const fetchYearFilter = () => {
-    let yearList = []
+    let yearList = [];
     if (isComparePage) {
       let yearList = [];
-      for (let i = 0; i < Object.values(staticvalue.filterObjects).length; i++) {
-        yearList.push(Object.keys(Object.values(staticvalue.filterObjects)[i])[0]);
+      for (
+        let i = 0;
+        i < Object.values(staticvalue.filterObjects).length;
+        i++
+      ) {
+        yearList.push(
+          Object.keys(Object.values(staticvalue.filterObjects)[i])[0]
+        );
       }
-      const recentYear = yearList.filter((item, pos) => yearList.indexOf(item) === pos).sort().reverse();
+      const recentYear = yearList
+        .filter((item, pos) => yearList.indexOf(item) === pos)
+        .sort()
+        .reverse();
       dispatch(SetYear([recentYear[0]]));
       dispatch(setYearFilter(recentYear));
     } else {
       if (filters.league.length === 0) {
-        dispatch(ResetYear())
+        dispatch(ResetYear());
       } else if (filters.league.length > 0) {
         for (let league of filters.league) {
           const ObjectKeys = Object.keys(staticvalue.filterObjects[league]);
           yearList = yearList.concat(ObjectKeys);
         }
-        yearList = yearList.filter((item, pos) => yearList.indexOf(item) === pos).sort().reverse();
-        dispatch(Year(yearList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택 
+        yearList = yearList
+          .filter((item, pos) => yearList.indexOf(item) === pos)
+          .sort()
+          .reverse();
+        dispatch(Year(yearList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
       }
       dispatch(setYearFilter(yearList));
     }
   };
 
   const fetchSeasonFilter = () => {
-    let seasonList = []
+    let seasonList = [];
     if (filters.year.length !== 0) {
       for (let league of filters.league) {
         for (let year of filters.year) {
-          const ObjectKeys = Object.keys(staticvalue.filterObjects[league][year]);
+          const ObjectKeys = Object.keys(
+            staticvalue.filterObjects[league][year]
+          );
           seasonList = seasonList.concat(ObjectKeys);
         }
       }
-      seasonList = seasonList.filter((item, pos) => seasonList.indexOf(item) === pos);
+      seasonList = seasonList.filter(
+        (item, pos) => seasonList.indexOf(item) === pos
+      );
       if (filters.season.length === 0) {
-        dispatch(Season(seasonList[0]));  // 리그 선택 시, 가장 최근 Year, Season을 자동 선택 
-      };
+        dispatch(Season(seasonList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
+      }
     } else {
-      dispatch(ResetSeason())
+      dispatch(ResetSeason());
     }
     dispatch(setSeasonFilter(seasonList));
     if (isComparePage) {
@@ -235,12 +251,12 @@ const Filter = memo(() => {
   };
 
   const fetchingTeamFilter = () => {
-    let teamList = []
+    let teamList = [];
     if (filters.season.length !== 0 && (isNeedTeam || isComparePage)) {
       for (let league of filters.league) {
         for (let year of filters.year) {
           for (let season of filters.season) {
-            const seasonData = staticvalue.filterObjects[league][year][season]
+            const seasonData = staticvalue.filterObjects[league][year][season];
             if (seasonData) {
               const ObjectKeys = Object.keys(seasonData);
               teamList = teamList.concat(ObjectKeys);
@@ -250,7 +266,7 @@ const Filter = memo(() => {
       }
       teamList = teamList.filter((item, pos) => teamList.indexOf(item) === pos);
     } else {
-      dispatch(ResetTeam())
+      dispatch(ResetTeam());
     }
     dispatch(setTeamFilter(teamList));
   };
@@ -259,13 +275,13 @@ const Filter = memo(() => {
   const fetchingPlayerFilter = () => {
     let players = [];
     if (filters.team.length !== 0 && isNeedTeam) {
-      let playerList = []
+      let playerList = [];
       for (let league of filters.league) {
         for (let year of filters.year) {
           for (let season of filters.season) {
             const seasonData = staticvalue.filterObjects[league][year][season];
             if (seasonData) {
-              if (seasonData.[filters.team]) {
+              if (seasonData[filters.team]) {
                 const ObjectKeys = Object.values(seasonData[filters.team]);
                 console.log("ObjectKeys", ObjectKeys);
                 playerList = playerList.concat(ObjectKeys);
@@ -274,40 +290,42 @@ const Filter = memo(() => {
           }
         }
       }
-      playerList = playerList.filter((item, pos) => playerList.indexOf(item) === pos).sort();
+      playerList = playerList
+        .filter((item, pos) => playerList.indexOf(item) === pos)
+        .sort();
 
       for (let i = 0; i < playerList.length; i++) {
-        const name = playerList[i].split('#')[1];
-        const position = playerList[i].split('#')[0];
+        const name = playerList[i].split("#")[1];
+        const position = playerList[i].split("#")[0];
         if (position === "1") {
           players[i] = {
-            position: 'top',
+            position: "top",
             name: name
           };
         } else if (position === "2") {
           players[i] = {
-            position: 'jng',
+            position: "jng",
             name: name
           };
         } else if (position === "3") {
           players[i] = {
-            position: 'mid',
+            position: "mid",
             name: name
           };
         } else if (position === "4") {
           players[i] = {
-            position: 'bot',
+            position: "bot",
             name: name
           };
         } else if (position === "5") {
           players[i] = {
-            position: 'sup',
+            position: "sup",
             name: name
           };
         }
       }
     } else {
-      dispatch(ResetPlayer())
+      dispatch(ResetPlayer());
     }
     dispatch(setPlayerFilter(players));
   };
@@ -320,165 +338,179 @@ const Filter = memo(() => {
       year: filters.year,
       season: filters.season,
       token: user.token,
-      id: user.id,
+      id: user.id
     };
 
     axiosRequest(url, params, function (e) {
       const patchResponse = e.data.patch ?? [];
       dispatch(setPatchFilter(patchResponse));
       dispatch(SetPatch(patchResponse));
-    })
+    });
   };
 
   //팀 필터 fetch 함수
   return (
     <>
-      {pagePath === nameTeamCompare
-        && <TeamFilterModal
+      {pagePath === nameTeamCompare && (
+        <TeamFilterModal
           teamModal={filters.compareModal}
           fetchLeagueFilter={fetchLeagueFilter}
           leagueFilter={selector.leagueFilter}
           seasonFilter={selector.seasonFilter}
-          teamFilter={selector.teamFilter} setTeamFilter={setTeamFilter}
-        />}
-      {pagePath === namePlayerCompare
-        && <PlayerFilterModal
+          teamFilter={selector.teamFilter}
+          setTeamFilter={setTeamFilter}
+        />
+      )}
+      {pagePath === namePlayerCompare && (
+        <PlayerFilterModal
           playerModal={filters.compareModal}
           fetchLeagueFilter={fetchLeagueFilter}
           leagueFilter={selector.leagueFilter}
           seasonFilter={selector.seasonFilter}
-          teamFilter={selector.teamFilter} setTeamFilter={setTeamFilter}
-          playerFilter={selector.playerFilter} setPlayerFilter={setPlayerFilter}
-        />}
+          teamFilter={selector.teamFilter}
+          setTeamFilter={setTeamFilter}
+          playerFilter={selector.playerFilter}
+          setPlayerFilter={setPlayerFilter}
+        />
+      )}
       <FilterWrapper>
         <FilterHeader />
-        {filters.filterMenuState && <>
-          {Number(filters.tab) >= 0 && <SelectedFilter
-            pagePath={pagePath} nameSolo={nameSolo}
-            nameTeam={nameTeam} nameVideo={nameVideo}
-          />}
-          <FilterGroup>
-            <FilterItem
-              title={t("label.league")}
-              isHaveFilter={selector.leagueFilter.length > 0 ? true : false}
-              multiFilter={selector.leagueFilter?.map((league, idx) => {
-                return (
-                  <MultiSelectCb
-                    idx={idx}
-                    filterData={filters.league}
-                    mapData={league}
-                    pngPath={`ico-league-${league.toLowerCase()}`}
-                    clickEvent={() => {
-                      dispatch(League(league));
-                    }}
-                  />
-                );
-              })}
-            />
-            <FilterItem title={t("label.year")}
-              isHaveFilter={selector.yearFilter.length > 0 ? true : false}
-              multiFilter={selector.yearFilter?.map((year, idx) => {
-                return (
-                  <MultiSelectCb
-                    idx={idx}
-                    filterData={filters.year}
-                    mapData={year}
-                    clickEvent={() => {
-                      dispatch(Year(year))
-                    }}
-                  />
-                );
-              })}
-            />
-
-            <FilterItem title={t("label.season")}
-              isHaveFilter={selector.seasonFilter.length > 0 ? true : false}
-              multiFilter={selector.seasonFilter?.map((season, idx) => {
-                return (
-                  <MultiSelectCb
-                    idx={idx}
-                    filterData={filters.season}
-                    mapData={season}
-                    clickEvent={() => {
-                      dispatch(Season(season));
-                    }}
-                  />
-                );
-              })}
-            />
-
-            {isNeedTeam && <FilterItem title={t("label.team")}
-              isHaveFilter={selector.teamFilter.length > 0 ? true : false}
-              multiFilter={selector.teamFilter?.map((team, idx) => {
-                return (
-                  <MultiSelectCb
-                    idx={idx}
-                    filterData={filters.team}
-                    mapData={team}
-                    pngPath={`TeamLogo/${team}`}
-                    clickEvent={() => {
-                      dispatch(Team(team))
-                    }}
-                  />
-                );
-              })}
-            />}
-            {
-              pagePath === nameSolo &&
-              <FilterItem title={t("label.player")}
-                isHaveFilter={selector.playerFilter.length > 0 ? true : false}
-                multiFilter={selector.playerFilter?.map((player, idx) => {
+        {filters.filterMenuState && (
+          <>
+            {Number(filters.tab) >= 0 && (
+              <SelectedFilter
+                pagePath={pagePath}
+                nameSolo={nameSolo}
+                nameTeam={nameTeam}
+                nameVideo={nameVideo}
+              />
+            )}
+            <FilterGroup>
+              <FilterItem
+                title={t("label.league")}
+                isHaveFilter={selector.leagueFilter.length > 0 ? true : false}
+                multiFilter={selector.leagueFilter?.map((league, idx) => {
                   return (
                     <MultiSelectCb
                       idx={idx}
-                      filterData={filters.player}
-                      mapData={player.name}
-                      pngPath={`ico-position-${player.position}`}
+                      filterData={filters.league}
+                      mapData={league}
+                      pngPath={`ico-league-${league.toLowerCase()}`}
                       clickEvent={() => {
-                        dispatch(Player(player.name));
-                        dispatch(Position(player.position));
-                        dispatch(ResetChampion());
-                        dispatch(ResetFilter2());
-                        setIsActivePlayer(!isActivePlayer);
-                        dispatch(HandleTab(0));
+                        dispatch(League(league));
                       }}
                     />
                   );
                 })}
               />
-            }
-            <FilterItem title={t("label.patchVersion")}
-              isHaveFilter={selector.patchFilter.length > 0 ? true : false}
-              multiFilter={selector.patchFilter?.map((patch, idx) => {
-                return (
-                  <MultiSelectCb
-                    idx={idx}
-                    filterData={filters.patch}
-                    mapData={patch}
-                    clickEvent={() => {
-                      dispatch(Patch(patch))
-                    }}
-                  />
-                );
-              })}
-            />
-          </FilterGroup>
-        </>}
-      </FilterWrapper >
+              <FilterItem
+                title={t("label.year")}
+                isHaveFilter={selector.yearFilter.length > 0 ? true : false}
+                multiFilter={selector.yearFilter?.map((year, idx) => {
+                  return (
+                    <MultiSelectCb
+                      idx={idx}
+                      filterData={filters.year}
+                      mapData={year}
+                      clickEvent={() => {
+                        dispatch(Year(year));
+                      }}
+                    />
+                  );
+                })}
+              />
+
+              <FilterItem
+                title={t("label.season")}
+                isHaveFilter={selector.seasonFilter.length > 0 ? true : false}
+                multiFilter={selector.seasonFilter?.map((season, idx) => {
+                  return (
+                    <MultiSelectCb
+                      idx={idx}
+                      filterData={filters.season}
+                      mapData={season}
+                      clickEvent={() => {
+                        dispatch(Season(season));
+                      }}
+                    />
+                  );
+                })}
+              />
+
+              {isNeedTeam && (
+                <FilterItem
+                  title={t("label.team")}
+                  isHaveFilter={selector.teamFilter.length > 0 ? true : false}
+                  multiFilter={selector.teamFilter?.map((team, idx) => {
+                    return (
+                      <MultiSelectCb
+                        idx={idx}
+                        filterData={filters.team}
+                        mapData={team}
+                        pngPath={`TeamLogo/${team}`}
+                        clickEvent={() => {
+                          dispatch(Team(team));
+                        }}
+                      />
+                    );
+                  })}
+                />
+              )}
+              {pagePath === nameSolo && (
+                <FilterItem
+                  title={t("label.player")}
+                  isHaveFilter={selector.playerFilter.length > 0 ? true : false}
+                  multiFilter={selector.playerFilter?.map((player, idx) => {
+                    return (
+                      <MultiSelectCb
+                        idx={idx}
+                        filterData={filters.player}
+                        mapData={player.name}
+                        pngPath={`ico-position-${player.position}`}
+                        clickEvent={() => {
+                          dispatch(Player(player.name));
+                          dispatch(Position(player.position));
+                          dispatch(ResetChampion());
+                          dispatch(ResetFilter2());
+                          setIsActivePlayer(!isActivePlayer);
+                          dispatch(HandleTab(0));
+                        }}
+                      />
+                    );
+                  })}
+                />
+              )}
+              <FilterItem
+                title={t("label.patchVersion")}
+                isHaveFilter={selector.patchFilter.length > 0 ? true : false}
+                multiFilter={selector.patchFilter?.map((patch, idx) => {
+                  return (
+                    <MultiSelectCb
+                      idx={idx}
+                      filterData={filters.patch}
+                      mapData={patch}
+                      clickEvent={() => {
+                        dispatch(Patch(patch));
+                      }}
+                    />
+                  );
+                })}
+              />
+            </FilterGroup>
+          </>
+        )}
+      </FilterWrapper>
     </>
   );
-})
+});
 
 export default Filter;
 
-
 const FilterWrapper = styled.div`
-  
   padding: 29px 24px 0px 6px;
   box-shadow: 5px 5px 30px 0 rgba(0, 0, 0, 0.15);
   background-color: #23212a;
   height: 100%;
-  
 
   .Selected {
     width: 250px;
