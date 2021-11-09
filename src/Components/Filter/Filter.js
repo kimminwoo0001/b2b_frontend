@@ -94,7 +94,7 @@ const Filter = memo(() => {
     if (isComparePage === false && selector.leagueFilter.length === 0) {
       fetchLeagueFilter();
     }
-  }, [selector.leagueFilter])
+  }, [selector.leagueFilter]);
 
   useEffect(() => {
     if (JSON.stringify(league) !== JSON.stringify(filters.league)) {
@@ -184,7 +184,7 @@ const Filter = memo(() => {
       leagueList = Object.keys(staticvalue.filterObjects).map(
         (key) =>
           Number(Object.keys(staticvalue.filterObjects[key])) ===
-          Number(filters.year) && key
+            Number(filters.year) && key
       );
     } else {
       leagueList = Object.keys(staticvalue.filterObjects);
@@ -540,4 +540,3 @@ const FilterGroup = styled.div`
   width: 250px;
   margin: 30px 1px 0 20px;
 `;
-

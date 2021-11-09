@@ -15,7 +15,6 @@ import ObjectTooltip from "./ObjectTooltip";
 import addZero from "../../../lib/addZero";
 import axiosRequest from "../../../lib/axiosRequest";
 
-
 function useInterval(callback) {
   const savedCallback = useRef();
 
@@ -109,7 +108,8 @@ function ObjectMapping() {
         setCurrentPos(dto.position);
         setchampInfo(dto.info);
         setPlay(true);
-      })
+        console.log(dto);
+      });
     } catch (e) {
       console.log(e);
     } finally {
@@ -137,23 +137,41 @@ function ObjectMapping() {
 
   const handleConfirm = () => {
     let unselectedItem = [];
-    const { team, champion_eng, player, oppteam, oppplayer, oppchampion_eng } = filters;
+    const { team, champion_eng, player, oppteam, oppplayer, oppchampion_eng } =
+      filters;
 
     if (compareOpen) {
-      if (side && period && position.length > 0 && champion_eng.length > 0 && oppchampion_eng.length > 0 && gameSelect.length > 0) {
+      if (
+        side &&
+        period &&
+        position.length > 0 &&
+        champion_eng.length > 0 &&
+        oppchampion_eng.length > 0 &&
+        gameSelect.length > 0
+      ) {
         fetchingMapData();
         setRange(0);
       } else {
         if (team.length === 0) unselectedItem.push(t("video.vision.team"));
         if (player.length === 0) unselectedItem.push(t("video.vision.player"));
-        if (champion_eng.length === 0) unselectedItem.push(t("video.vision.champ"));
+        if (champion_eng.length === 0)
+          unselectedItem.push(t("video.vision.champ"));
         if (oppteam.length === 0) unselectedItem.push(t("video.vision.team2"));
-        if (oppplayer.length === 0) unselectedItem.push(t("video.vision.player2"));
-        if (oppchampion_eng.length === 0) unselectedItem.push(t("video.vision.champ2"));
-        if (gameSelect.length === 0) unselectedItem.push(t("video.vision.game"))
+        if (oppplayer.length === 0)
+          unselectedItem.push(t("video.vision.player2"));
+        if (oppchampion_eng.length === 0)
+          unselectedItem.push(t("video.vision.champ2"));
+        if (gameSelect.length === 0)
+          unselectedItem.push(t("video.vision.game"));
       }
     } else {
-      if (side && period && position.length > 0 && champion_eng.length > 0 && gameSelect.length > 0) {
+      if (
+        side &&
+        period &&
+        position.length > 0 &&
+        champion_eng.length > 0 &&
+        gameSelect.length > 0
+      ) {
         setchampInfo([]);
         fetchingMapData();
         setRange(0);
@@ -162,8 +180,10 @@ function ObjectMapping() {
       } else {
         if (team.length === 0) unselectedItem.push(t("video.vision.team"));
         if (player.length === 0) unselectedItem.push(t("video.vision.player"));
-        if (champion_eng.length === 0) unselectedItem.push(t("video.vision.champ"));
-        if (gameSelect.length === 0) unselectedItem.push(t("video.vision.game"))
+        if (champion_eng.length === 0)
+          unselectedItem.push(t("video.vision.champ"));
+        if (gameSelect.length === 0)
+          unselectedItem.push(t("video.vision.game"));
       }
     }
 
@@ -175,7 +195,10 @@ function ObjectMapping() {
           unselectedSentence += ", ";
         }
       }
-      let alertMessage = t("video.vision.selectAlert").replace('###', unselectedSentence);
+      let alertMessage = t("video.vision.selectAlert").replace(
+        "###",
+        unselectedSentence
+      );
       alert(alertMessage);
     }
   };
@@ -284,7 +307,11 @@ function ObjectMapping() {
           <ConfirmButton
             onClick={() => handleConfirm()}
             isActive={
-              filters.champion_eng && side && period && position.length > 0 && gameSelect.length > 0
+              filters.champion_eng &&
+              side &&
+              period &&
+              position.length > 0 &&
+              gameSelect.length > 0
             }
           >
             {t("video.object.apply")}
@@ -298,7 +325,10 @@ function ObjectMapping() {
           // 실제로 오브젝트 별 동선 Mapping이 작동되는 부분.
           <ObjectMap>
             {champInfo?.map((info, idx) => {
-              console.log("currentPos[range]?.player:", currentPos[range]?.player);
+              console.log(
+                "currentPos[range]?.player:",
+                currentPos[range]?.player
+              );
               if (range === 0) {
                 if (info.side === "red") {
                   var x = 630;
@@ -315,11 +345,11 @@ function ObjectMapping() {
                   ) {
                     if (
                       Number(currentPos[range]?.player[i].x1) -
-                      Number(currentPos[range]?.player[i].x2) !==
-                      0 &&
+                        Number(currentPos[range]?.player[i].x2) !==
+                        0 &&
                       Number(currentPos[range]?.player[i].y1) -
-                      Number(currentPos[range]?.player[i].y2) !==
-                      0
+                        Number(currentPos[range]?.player[i].y2) !==
+                        0
                     ) {
                       x =
                         ((Number(currentPos[range]?.player[i].x1) +
@@ -400,14 +430,16 @@ function ObjectMapping() {
           <TimeStamp>
             <span className="current">
               {range
-                ? `${addZero(Math.floor((range + minTime) / 2 / 60))} : ${addZero(Math.floor((range + minTime) / 2 % 60))}`
+                ? `${addZero(
+                    Math.floor((range + minTime) / 2 / 60)
+                  )} : ${addZero(Math.floor(((range + minTime) / 2) % 60))}`
                 : "00 : 00"}
             </span>
             <p>/</p>
             {maxTime ? (
-              <span className="max">{`${addZero(Math.floor(
-                (maxTime + minTime) / 2 / 60
-              ))} : ${addZero(((maxTime + minTime) / 2) % 60)}`}</span>
+              <span className="max">{`${addZero(
+                Math.floor((maxTime + minTime) / 2 / 60)
+              )} : ${addZero(((maxTime + minTime) / 2) % 60)}`}</span>
             ) : (
               <span className="max">{`00 : 00`}</span>
             )}

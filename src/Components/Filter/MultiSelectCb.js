@@ -1,30 +1,32 @@
-import React, { memo } from 'react';
+import React, { memo } from "react";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
+const MultiSelectCb = memo(
+  ({ idx, filterData, mapData, pngPath, clickEvent, title }) => {
+    const { t } = useTranslation();
 
-const MultiSelectCb = memo(({ idx, filterData, mapData, pngPath, clickEvent }) => {
-  return (
-    <Selecter
-      key={idx}
-      isChecked={
-        filterData?.includes(mapData) ? true : false
-      }
-      onClick={() => {
-        clickEvent()
-      }}
-    >
-      <input
-        type="checkbox"
-        checked={
-          filterData?.includes(mapData) ? true : false
-        }
-        readOnly
-      />
-      <span>{mapData === "11.6" ? "11.6 (P.O)" : mapData}</span>
-    </Selecter>
-  );
-});
+    return (
+      <>
+        <Selecter
+          key={idx}
+          isChecked={filterData?.includes(mapData) ? true : false}
+          onClick={() => {
+            clickEvent();
+          }}
+        >
+          <input
+            type="checkbox"
+            checked={filterData?.includes(mapData) ? true : false}
+            readOnly
+          />
+          <span>{mapData === "11.6" ? "11.6 (P.O)" : mapData}</span>
+        </Selecter>
+      </>
+    );
+  }
+);
 
 export default MultiSelectCb;
 

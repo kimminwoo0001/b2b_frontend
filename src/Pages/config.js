@@ -12,6 +12,3 @@ export const API2 = "http://nunu.gg:8787";
 export const API3 = "https://nunu.gg:8443/LeagueCollectionPi";
 // export const API4 = "https://nunu.gg:8443/LeagueCollectionPi2";
 export const API4 = "http://192.168.0.36:8081/LeagueCollectionPi2";
-
-
-
