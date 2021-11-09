@@ -90,5 +90,4 @@ const SelectedArea = styled.div`
   .not-selected {
     opacity: 0.3;
   }
-
 `;

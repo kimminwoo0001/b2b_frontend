@@ -7,7 +7,6 @@ import { signIn } from "./signIn";
 import { UserID, UserToken, UserIP, UserDevice } from "../../redux/modules/user";
 import { useHistory } from "react-router-dom";
 import { Language } from "../../redux/modules/locale";
-// import LocaleDropdown from "./LocaleDropdown";
 
 function Login() {
   const { handleSubmit, register } = useForm();
@@ -75,7 +74,6 @@ function Login() {
           <button type="submit" className="LoginBtn">
             LOGIN
           </button>
-          {/* <LocaleDropdown /> */}
         </ViewContainer>
       </LoginContainer>
       <CopyRight>Copyright Team Snowball All Rights Reserved.</CopyRight>

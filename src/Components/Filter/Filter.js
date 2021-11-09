@@ -513,10 +513,10 @@ const Filter = memo(() => {
 export default Filter;
 
 const FilterWrapper = styled.div`
-  padding: 29px 24px 0px 6px;
-  box-shadow: 5px 5px 30px 0 rgba(0, 0, 0, 0.15);
   background-color: #23212a;
+  width: 294px;
   height: 100%;
+  padding: 28px 0 0;
 
   .Selected {
     width: 250px;

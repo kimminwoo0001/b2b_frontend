@@ -78,14 +78,17 @@ const FilterHeader = memo(() => {
       {filters.filterMenuState ?
         <Header>
           <div className="header">
-            {/*<img src="Images/ico-filter.png" alt="filterIcon"></img>*/}
-            <img src="Images/btn_view_off.png" alt="filterIcon" onClick={() => filterSwitch()} />
-            {lang === 'kr' ? <label>{menus[filters.menu_num].name}</label>
-              : <label style={{ fontSize: '27px' }}>{menus[filters.menu_num].name}</label>}
+            <div className="header-label">
+              {lang === 'kr' ? <label>{menus[filters.menu_num].name}</label>
+                : <label style={{ fontSize: '25px' }}>{menus[filters.menu_num].name}</label>}
+            </div>
+            <div className="header-img">
+              <img src="Images/btn_unfold.png" alt="filterIcon" onClick={() => filterSwitch()} />
+            </div>
           </div>
         </Header> :
         <NoHeader>
-          <img src="Images/btn_view_off.png" alt="filterIcon" onClick={() => filterSwitch()} />
+          <img src="Images/btn_fold.png" alt="filterIcon" onClick={() => filterSwitch()} />
         </NoHeader>
       }
     </>
@@ -96,38 +99,46 @@ const FilterHeader = memo(() => {
 export default FilterHeader;
 
 const Header = styled.div`
-  
-  font-family: NotoSansKR;
-  color: #fff;
-  .header {
-    height: 70px;
-    font-size: 35px;
-    font-weight: bold;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 0.88;
-    letter-spacing: normal;
-    text-align: left;
+  display: table;
+  width: 294px;
+  height: 37px;
+  margin: 0 0 20px;
+  padding: 0 15px 0 24px;
+
+  .header-label {
+    display: table-cell;
+    float: left;
+    label {
+      height: 37px;
+      font-family: SpoqaHanSansNeo;
+      font-size: 30px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.4;
+      letter-spacing: normal;
+      text-align: left;
+      color: #fff; 
+    }
+  }
+  .header-img {
+    display: table-cell;
+    float: right;
     img {
-      width: 60px;
-      height: 60px;
+      width: 37px;
+      height: 37px;
       object-fit: contain;
-      vertical-align: middle;
+      vertical-align: -50%;
       cursor: pointer;
     }
-    margin: 0 0 20px;
   }
 `;
 
 const NoHeader = styled.div`
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
   img {
-    width: 60px;
-    height: 60px;
+    width: 37px;
+    height: 37px;
     object-fit: contain;
-    vertical-align: middle;
     cursor: pointer;
   }
 `;

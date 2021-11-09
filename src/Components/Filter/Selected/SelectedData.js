@@ -26,7 +26,7 @@ export default SelectedData;
 
 const Selected = styled.div`
 display: inline-block;
-margin: 5px 0px 5px 0px;
+margin: 5px 5px 0 0;
 padding: 6px 10px 6px 5px;
 border-radius: 10px;
 background-color: #5942ba;
