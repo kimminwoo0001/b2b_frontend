@@ -314,15 +314,15 @@ const SideBarWrapper = styled.div`
   margin: 0 0;
   padding: 26px 18px 103px 12px;
   background-color: #16151c;
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 11px;
-  letter-spacing: -0.55px;
-  text-align: center;
-  color: #ffffff;
-  a:hover {
-    color: #cecfd3;
-    text-decoration: none;
-  }
+  // font-family: NotoSansKR, Apple SD Gothic Neo;
+  // font-size: 11px;
+  // letter-spacing: -0.55px;
+  // text-align: center;
+  // color: #ffffff;
+  // a:hover {
+  //   color: #cecfd3;
+  //   text-decoration: none;
+  // }
 `;
 
 // const TSBLogo = styled.div`
@@ -388,9 +388,8 @@ const SideBarWrapper = styled.div`
 // `;
 
 const MenuList = styled.div`
-  width: 161px;
-  height: 416px;
-  margin: 0 20px 636px 0;
+  width: 170px;
+  //margin: 0 20px 636px 0;
 `;
 
 const MenuWrapper = styled.div`
@@ -398,41 +397,38 @@ const MenuWrapper = styled.div`
   // flex-direction: column;
   // align-items: center;
   // justify-content: center;
-  width: 150px;
+  width: 147px;
   height: 24px;
-  margin: 16px 28.7px 25px 15.3px;
+  margin: 31px 9px 30px 14px;
+  padding: 0 12px 0 0;
   cursor: pointer;
   .Name {
-    // max-width: 60px;
-    // width: auto;
-    // line-height: 1.27;
-    width: 100px;
-    height: 17px;
-    margin: 4px 0 3px 12px;
-    font-family: NotoSansKR;
-    font-size: 12px;
+    width: 101px;
+    height: 19px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
     font-weight: bold;
     font-stretch: normal;
     font-style: normal;
-    line-height: normal;
+    line-height: 24px;
     letter-spacing: normal;
     text-align: left;
     color: #fff;
   }
   img {
-    // margin-bottom: 6.1px;
     width: 24px;
     height: 24px;
-    margin: 0 12px 0 0;
+    margin-right: 12px;
     object-fit: contain;
+    vertical-align: middle;
   }
   ${(props) =>
     props.changeColor &&
     css`
-      width: 160px;
+      width: 170px;
       height: 42px;
-      margin: 16px 0 16px;
-      padding: 9px 0px 9px 15px;
+      margin: 21px 0 21px;
+      padding: 9px 9px 9px 14px;
       border-radius: 16px;
       background-color: #5942ba;
     `}

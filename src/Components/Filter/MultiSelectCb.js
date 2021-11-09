@@ -21,16 +21,6 @@ const MultiSelectCb = memo(({ idx, filterData, mapData, pngPath, clickEvent }) =
         }
         readOnly
       />
-      {/*
-        pngPath &&
-        <img
-          className="IconImg"
-          width="14px"
-          height="14px"
-          src={`Images/${pngPath.toLowerCase()}.png`}
-          alt="Icon"
-        />
-      */}
       <span>{mapData === "11.6" ? "11.6 (P.O)" : mapData}</span>
     </Selecter>
   );
@@ -41,16 +31,16 @@ export default MultiSelectCb;
 const Selecter = styled.div`
   display: flex;
   align-items: center;
-  padding: 4.5px 12px;
+  margin: 10px 0;
   width: 100%;
-  height: 25px;
+  height: 24px;
   color: #84818e;
   cursor: pointer;
   ${(props) =>
     props.isChecked &&
     css`
       color: rgb(255, 255, 255);
-      background-color: rgb(35, 34, 43);
+      // background-color: rgb(35, 34, 43);
     `}
   > .Version {
     font-family: NotoSansKR, Apple SD Gothic Neo;
@@ -90,7 +80,7 @@ const Selecter = styled.div`
 
   span {
     height: 19px;
-    margin: 3px 0 2px 5px;
+    margin: 0px 0 2px 0px;
     font-family: SpoqaHanSansNeo;
     font-size: 15px;
     font-weight: 500;

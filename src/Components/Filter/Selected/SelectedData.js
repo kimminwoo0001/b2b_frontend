@@ -26,14 +26,29 @@ export default SelectedData;
 
 const Selected = styled.div`
 display: inline-block;
-height: 42px;
-margin: 5px 10px 0 0;
-padding: 11px 20px;
-border-radius: 16px;
+height: 30px;
+margin: 5px 0px 5px 0px;
+padding: 6px 10px 6px 5px;
+border-radius: 10px;
 background-color: #5942ba;
-color: #fff;
+color: #fff;  
 img {
-  cursor: pointer;
+  width: 18px;
+  height: 18px;
   object-fit: contain;
+  vertical-align: top;
+  cursor: pointer;
+}
+span {
+  height: 18px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 14.5px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 18px;
+  letter-spacing: normal;
+  text-align: left;
+  color: #fff;
 }
 `;
