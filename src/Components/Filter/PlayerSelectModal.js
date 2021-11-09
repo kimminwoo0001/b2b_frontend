@@ -10,10 +10,9 @@ import {
   OppPlayer,
   GetOppPlayer,
   ResetChampion,
-  HandleTab
+  HandleTab,
 } from "../../redux/modules/filtervalue";
 import axiosRequest from "../../lib/axiosRequest";
-
 
 function PlayerSelectModal({ openModal, setOpenModal }) {
   const filters = useSelector((state) => state.FilterReducer);
@@ -38,10 +37,10 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
       team: filters.team,
       token: user.token,
       id: user.id,
-    }
+    };
     axiosRequest(url, params, function (e) {
       setOppTeam(e.data.oppteam);
-    })
+    });
   };
 
   const fetchingPlayerFilter = (team) => {
@@ -55,10 +54,10 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
       position: filters.position,
       token: user.token,
       id: user.id,
-    }
+    };
     axiosRequest(url, params, function (e) {
       setOppPlayer(e.data);
-    })
+    });
   };
 
   const HandleSelect = () => {
@@ -76,7 +75,7 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
     <>
       <BackScreen
         openModal={openModal}
-      // onClick={() => setOpenModal(false)}
+        // onClick={() => setOpenModal(false)}
       ></BackScreen>
       <Wrapper openModal={openModal}>
         <ModalNav>
@@ -243,6 +242,15 @@ const MapTeamContent = styled.div`
   height: 351px;
   width: 203px;
   border-bottom: 1px solid rgb(72, 70, 85);
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 8px;
+    background-color: #434050;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #23212a;
+    border-radius: 10px;
+  }
 `;
 
 const ButtonBox = styled.div`
