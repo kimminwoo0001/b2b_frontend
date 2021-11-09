@@ -26,7 +26,6 @@ export default SelectedData;
 
 const Selected = styled.div`
 display: inline-block;
-height: 30px;
 margin: 5px 0px 5px 0px;
 padding: 6px 10px 6px 5px;
 border-radius: 10px;
