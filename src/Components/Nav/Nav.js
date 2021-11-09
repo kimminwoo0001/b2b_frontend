@@ -74,8 +74,9 @@ const NavWrapper = styled.div`
 
   width: 100%;
   height: 66px;
-  padding: 12px 35px 0 0;
+  padding: 12px 25px 0 0;
   background-color: #16151c;
+  border-bottom: 1px solid #484655;
   display: table;
   .nav-left {
     display: table-cell;
@@ -136,6 +137,7 @@ const ContentsWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  margin-top: 5px;
   > select {
     background-color: #23212a;
     color: #84818e;

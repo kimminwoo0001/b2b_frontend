@@ -3,8 +3,6 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-// import { UserLogout } from "../../redux/modules";
-//import LocaleDropdown from "../Nav/LocaleDropdown";
 import SideBarItem from "./SideBarItem";
 
 function Sidebar() {
@@ -199,9 +197,6 @@ function Sidebar() {
         <MenuList>
           {usingValue.length > 0 && usingValue.map((menu, idx) => <SideBarItem menu={menu} idx={idx} />)}
         </MenuList>
-        {/* 
-          <LocaleDropdown />
-        */}
       </SideBarWrapper>
     </>
   );

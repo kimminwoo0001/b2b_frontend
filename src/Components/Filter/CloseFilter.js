@@ -15,10 +15,10 @@ const CloseFilter = memo(() => {
 export default CloseFilter;
 
 const FilterWrapper = styled.div`
-  width: 70px;
+  width: 65px;
   height: 100%;
-  margin: 0 0 85px;
-  padding: 32px 5px 0;
+  margin: 0 0 77px;
+  padding: 28px 14px;
   background-color: #23212A;
   box-shadow: 5px 5px 30px 0 rgba(0, 0, 0, 0.15);
 `;
