@@ -25,94 +25,114 @@ function Sidebar() {
 
   //onClick 이벤트가 발생할때마다 해당 path로 이동
   const menus = [
-    { // menus[0] Home
+    {
+      // menus[0] Home
       idx: 0,
       name: t("sidebar.part1"),
       path: "/",
       image: "/Images/sidebar_newLogo/ico-home.png",
-      changeColor: pathName === "/"
+      changeColor: pathName === "/",
     },
-    { // menus[1] 리그 보고서
+    {
+      // menus[1] 리그 보고서
       idx: 1,
       name: t("sidebar.part2"),
       path: "/league",
       image: "/Images/sidebar_newLogo/ico-league.png",
-      changeColor: pathName === "/league"
+      changeColor: pathName === "/league",
     },
-    { // menus[2] 팀 보고서
+    {
+      // menus[2] 팀 보고서
       idx: 2,
       name: t("sidebar.part3"),
       path: "/team",
       image: "/Images/sidebar_newLogo/ico-team.png",
-      changeColor: pathName === "/team"
+      changeColor: pathName === "/team",
     },
-    { // menus[3] 메타 분석
+    {
+      // menus[3] 메타 분석
       idx: 3,
       name: t("sidebar.part4"),
       path: "/metaAnalysis",
       image: "/Images/sidebar_newLogo/ico-meta.png",
-      changeColor: pathName === "/metaAnalysis"
+      changeColor: pathName === "/metaAnalysis",
     },
-    { // menus[4] 선수 보고서
+    {
+      // menus[4] 선수 보고서
       idx: 4,
       name: t("sidebar.part5"),
       path: "/solo",
       image: "/Images/sidebar_newLogo/ico-player.png",
-      changeColor: pathName === "/solo"
+      changeColor: pathName === "/solo",
     },
-    { // menus[5] 영상 보고서
+    {
+      // menus[5] 영상 보고서
       idx: 5,
       name: t("sidebar.part6"),
       path: "/video",
       image: "/Images/sidebar_newLogo/ico-movie.png",
-      changeColor: pathName === "/video"
+      changeColor: pathName === "/video",
     },
-    { // menus[6] 매치 분석
+    {
+      // menus[6] 매치 분석
       idx: 6,
       name: t("sidebar.part7"),
       path: "/matchAnalysis",
       image: "/Images/sidebar_newLogo/ico-match.png",
-      changeColor: pathName === "/matchAnalysis"
+      changeColor: pathName === "/matchAnalysis",
     },
-    { // menus[7] 팀 비교
+    {
+      // menus[7] 팀 비교
       idx: 7,
       name: t("sidebar.part8"),
       path: "/teamCompare",
       image: "/Images/sidebar_newLogo/ico-teamcom.png",
-      changeColor: pathName === "/teamCompare"
+      changeColor: pathName === "/teamCompare",
     },
-    { // menus[8] 선수 비교
+    {
+      // menus[8] 선수 비교
       idx: 8,
       name: t("sidebar.part9"),
       path: "/playerCompare",
       image: "/Images/sidebar_newLogo/ico-playercom.png",
-      changeColor: pathName === "/playerCompare"
+      changeColor: pathName === "/playerCompare",
     },
-    { // menus[9] 아이템 시뮬레이터
+    {
+      // menus[9] 아이템 시뮬레이터
       idx: 9,
       name: t("sidebar.part10"),
       path: "/simulator",
       image: "/Images/ico-itemsimulator.png",
-      changeColor: pathName === "/simulator"
+      changeColor: pathName === "/simulator",
     },
-    { // menus[10] 픽 계산기
+    {
+      // menus[10] 픽 계산기
       idx: 10,
       name: t("sidebar.part11"),
       path: "/calculator",
       image: "/Images/ico-pick-calculator.png",
-      changeColor: pathName === "/calculator"
+      changeColor: pathName === "/calculator",
     },
-    { // menus[11] 게임 보고서
+    {
+      // menus[11] 게임 보고서
       idx: 11,
       name: t("sidebar.part12"),
       path: "/gameReport",
       image: "/Images/sidebar_newLogo/ico_game.png",
-      changeColor: pathName === "/gameReport"
+      changeColor: pathName === "/gameReport",
     },
   ];
 
   const usingMenus = () => {
-    const using = [menus[0], menus[1], menus[2], menus[4], menus[5], menus[7], menus[8]];
+    const using = [
+      menus[0],
+      menus[1],
+      menus[2],
+      menus[4],
+      menus[5],
+      menus[7],
+      menus[8],
+    ];
     let result = [];
 
     for (let i = 0; i < using.length; i++) {
@@ -132,12 +152,12 @@ function Sidebar() {
       result.push({
         ...using[i],
         marginTop: marginTop,
-        marginBottom: marginBottom
-      })
+        marginBottom: marginBottom,
+      });
     }
 
     return result;
-  }
+  };
 
   const usingValue = usingMenus();
 
@@ -147,7 +167,6 @@ function Sidebar() {
   //   dispatch(UserLogout());
   //   history.push("/login");
   // };
-
 
   return (
     <>
@@ -195,7 +214,10 @@ function Sidebar() {
         </Info>
       */}
         <MenuList>
-          {usingValue.length > 0 && usingValue.map((menu, idx) => <SideBarItem menu={menu} idx={idx} />)}
+          {usingValue.length > 0 &&
+            usingValue.map((menu, idx) => (
+              <SideBarItem menu={menu} idx={idx} />
+            ))}
         </MenuList>
       </SideBarWrapper>
     </>
@@ -207,9 +229,8 @@ export default Sidebar;
 const SideBarWrapper = styled.div`
   width: 200px;
   margin: 0 0;
-  padding: 26px 18px 103px 12px;
+  padding: 5px 18px 103px 12px;
   background-color: #16151c;
-
 `;
 
 // const TSBLogo = styled.div`
@@ -278,5 +299,3 @@ const MenuList = styled.div`
   width: 170px;
   //margin: 0 20px 636px 0;
 `;
-
-
