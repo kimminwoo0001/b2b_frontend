@@ -44,8 +44,8 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
   };
 
   return (
-    <>
-      <Item>
+    <Item>
+      <InnerWrapper>
         <Header>
           {viewSwitch && isHaveFilter ? (
             <img
@@ -85,8 +85,8 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
           )}
           {multiFilter}
         </div>
-      </Item>
-    </>
+      </InnerWrapper>
+    </Item>
   );
 });
 
@@ -136,6 +136,8 @@ const Header = styled.div`
 
 const Item = styled.div`
   width: 250px;
+  /* filter item scoll */
+
   margin: 0 0 10px;
   padding: 20px;
   border-radius: 35px;
@@ -182,5 +184,24 @@ const Item = styled.div`
         outline: none !important;
       }
     }
+  }
+`;
+
+const InnerWrapper = styled.div`
+  padding-right: 10px;
+  height: 100%;
+  max-height: 360px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #434050;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin: 5px 0;
   }
 `;

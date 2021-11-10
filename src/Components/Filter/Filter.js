@@ -516,7 +516,17 @@ const FilterWrapper = styled.div`
   background-color: #23212a;
   width: 294px;
   height: 100%;
+  max-height: 2000px;
   padding: 28px 0 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #434050;
+    border-radius: 10px;
+  }
 
   .Selected {
     width: 250px;

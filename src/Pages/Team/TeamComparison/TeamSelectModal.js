@@ -7,11 +7,10 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   OppTeam,
   GetOppTeam,
-  HandleTab
+  HandleTab,
 } from "../../../redux/modules/filtervalue";
 import { API } from "../../config";
 import axiosRequest from "../../../lib/axiosRequest";
-
 
 function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
   //팀 비교 텝 누를 떄 뜨는 모달창
@@ -39,18 +38,18 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
       patch: filters.patch,
       team: filters.team,
       token: user.token,
-      id: user.id
+      id: user.id,
     };
     axiosRequest(url, params, function (e) {
       setOppTeam(e.data.oppteam);
-    })
+    });
   };
 
   return (
     <>
       <BackScreen
         openModal={openModal}
-      // onClick={() => setOpenModal(false)}
+        // onClick={() => setOpenModal(false)}
       ></BackScreen>
       <TeamModalWrapper openModal={openModal}>
         <ModalNav>
@@ -156,6 +155,15 @@ const ContentTitle = styled.div`
 const MapTeamContent = styled.div`
   height: 351px;
   border-bottom: 1px solid rgb(72, 70, 85);
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 8px;
+    background-color: #434050;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #23212a;
+    border-radius: 10px;
+  }
 `;
 
 const ButtonBox = styled.div`
