@@ -40,7 +40,8 @@ function Nav() {
     <NavWrapper>
       <div className="nav-left">
         <div className="nav-flex">
-          <img className="logo"
+          <img
+            className="logo"
             src="/Images/logo.png"
             alt="profile"
             onClick={() => history.push("/")}
@@ -53,7 +54,11 @@ function Nav() {
       </div>
       <div className="nav-right">
         <ContentsWrapper>
-          <img className="Alert" src="Images/ico-alarm.png" alt="alertIcon"></img>
+          <img
+            className="Alert"
+            src="Images/ico-alarm.png"
+            alt="alertIcon"
+          ></img>
           <img
             className="LogOut"
             src="Images/ico-logout.png"
@@ -61,7 +66,9 @@ function Nav() {
             onClick={() => handleLogOut()}
           ></img>
           <LocaleDropdown />
-          <lable>{lang === "en" ? `Hello, ${user.id}` : `${user.id} 님 안녕하세요!`}</lable>
+          <lable>
+            {lang === "en" ? `Hello, ${user.id}` : `${user.id} 님 안녕하세요!`}
+          </lable>
         </ContentsWrapper>
       </div>
     </NavWrapper>
@@ -71,7 +78,6 @@ function Nav() {
 export default Nav;
 
 const NavWrapper = styled.div`
-
   width: 100%;
   height: 66px;
   padding: 12px 25px 0 0;
@@ -88,11 +94,11 @@ const NavWrapper = styled.div`
       object-fit: contain;
     }
   }
-  
+
   .nav-flex {
     display: flex;
   }
-  
+
   .nav-mid {
     display: table-cell;
   }
@@ -108,8 +114,6 @@ const NavWrapper = styled.div`
       color: #ffffff;
     }
   }
-
-  
 `;
 
 const Greet = styled.div`
@@ -119,8 +123,6 @@ const Greet = styled.div`
 
   div {
     /* width: 160px; */
-
-    
   }
   .LastUpdate {
     width: 180px;
