@@ -424,6 +424,7 @@ const GameTime = styled.div`
   height: 270px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
+  border-radius: 20px;
   margin-right: 22px;
   padding: 200;
 `;
@@ -433,6 +434,7 @@ const SupportCounts = styled.div`
   height: 270px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
+  border-radius: 20px;
 `;
 
 const BottomBox = styled.div`
@@ -446,6 +448,7 @@ const FirstEncounter = styled.div`
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
   margin-right: 22px;
+  border-radius: 20px;
 `;
 
 const FirstGank = styled.div`
@@ -453,6 +456,7 @@ const FirstGank = styled.div`
   height: 270px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
+  border-radius: 20px;
 `;
 
 const NavBar = styled.div`
@@ -460,39 +464,54 @@ const NavBar = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 42.5px;
+  height: 51px;
   border-bottom: 1px solid rgb(35, 33, 42);
   .AverageTime {
     width: 61px;
 
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    line-height: 2.08;
-    color: rgb(132, 129, 142);
-    margin-left: 15px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+    margin-left: 20px;
   }
   .X {
     width: auto;
 
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.67;
+    letter-spacing: normal;
     text-align: left;
-    color: rgb(132, 129, 142);
+    color: #84818e;
     margin-right: 15px;
     ::first-letter {
-      color: #dbdbdb;
+      color: #f14444;
     }
   }
   .Y {
     width: auto;
 
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.67;
+    letter-spacing: normal;
     text-align: left;
-    color: rgb(132, 129, 142);
+    color: #84818e;
     margin-right: 16px;
     ::first-letter {
-      color: #dbdbdb;
+      color: #f14444;
     }
   }
   .Legend {

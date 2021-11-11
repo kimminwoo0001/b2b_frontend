@@ -8,8 +8,7 @@ function SelectFilter() {
     <SelectFilterWrapper>
       <div className="FirstLabel">{t("filters.selectOption")}</div>
       <div className="SecondLabel">
-        {t("filters.selectOption2")}
-        <br /> {t("filters.selectOption3")}
+        {t("filters.selectOption2")} {t("filters.selectOption3")}
       </div>
     </SelectFilterWrapper>
   );
@@ -22,27 +21,40 @@ const SelectFilterWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: calc(100vh - 50px);
+  border-radius: 30px;
+  background-color: #23212a;
+  width: 90%;
+  min-width: 800px;
+  height: 16%;
+  min-height: 100px;
+  margin: 60px;
 
   .FirstLabel {
-    width: 270px;
-    height: 21px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 15px;
-    font-weight: bold;
-    letter-spacing: -0.75px;
+    width: auto;
+    height: 22px;
+    margin: 0 203px 20px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.11;
+    letter-spacing: normal;
     text-align: center;
-    color: #ffffff;
+    color: #fff;
   }
   .SecondLabel {
-    width: 280px;
-    height: 34px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
+    width: auto;
+    height: 18px;
+    margin: 20px 0 0;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.73;
+    letter-spacing: normal;
     text-align: center;
-    color: #827f8c;
-    line-height: 1.25;
+    color: #fff;
   }
 `;

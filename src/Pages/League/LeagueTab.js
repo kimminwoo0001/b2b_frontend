@@ -34,14 +34,6 @@ function LeagueTab() {
         </Schedule> */}
         <Pick onClick={() => setActiveTab(1)} changeColor={activeTab === 1}>
           <div>{t("league.tab.draft")}</div>
-          <img
-            src={
-              activeTab === 1
-                ? "Images/ico-1depth-arrow-on.png"
-                : "Images/ico-1depth-arrow-off.png"
-            }
-            alt="arrowIcon"
-          ></img>
         </Pick>
         {filters.league.indexOf("lpl") === -1 ? (
           <Statistics
@@ -49,14 +41,6 @@ function LeagueTab() {
             changeColor={activeTab === 2}
           >
             <div>{t("league.tab.leagueStat")}</div>
-            <img
-              src={
-                activeTab === 2
-                  ? "Images/ico-1depth-arrow-on.png"
-                  : "Images/ico-1depth-arrow-off.png"
-              }
-              alt="arrowIcon"
-            ></img>
           </Statistics>
         ) : (
           <div></div>
@@ -67,14 +51,6 @@ function LeagueTab() {
           changeColor={activeTab === 3}
         >
           <div>{t("league.tab.playerStat")}</div>
-          <img
-            src={
-              activeTab === 3
-                ? "Images/ico-1depth-arrow-on.png"
-                : "Images/ico-1depth-arrow-off.png"
-            }
-            alt="arrowIcon"
-          ></img>
         </Information>
       </TabContainer>
       <div>{BoardTab[activeTab]}</div>
@@ -85,14 +61,17 @@ function LeagueTab() {
 export default LeagueTab;
 
 const LeagueTabWrapper = styled.div`
-  margin: 21px 0 25px 22px;
-  width: 1097px;
-  height: 100%;
+  width: 1170px;
+  height: 1080px;
+  margin: 15px 0 0;
+  padding: 0 30px;
 `;
 
 const TabContainer = styled.ul`
+  width: auto;
+  height: 60px;
   display: flex;
-  border-bottom: 1px solid #433f4e;
+  // border-bottom: 1px solid #433f4e;
   /* padding-bottom: 15px; */
 `;
 
@@ -127,24 +106,25 @@ const Pick = styled.li`
   cursor: pointer;
   display: flex;
   align-items: center;
-  padding-bottom: 15px;
   color: #84818e;
   margin-right: 30px;
   ${(props) =>
     props.changeColor &&
     css`
-      color: #f04545;
-      border-bottom: 2px solid #f04545;
+      color: #fff;
     `}
   div {
     width: auto;
-    height: 17px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
-    line-height: 1.31;
-    letter-spacing: -0.65px;
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
-    margin-right: 4px;
+    color: ##84818e;
   }
   img {
   }
@@ -154,24 +134,25 @@ const Statistics = styled.li`
   cursor: pointer;
   display: flex;
   align-items: center;
-  padding-bottom: 15px;
   color: #84818e;
   margin-right: 30px;
   ${(props) =>
     props.changeColor &&
     css`
-      color: #f04545;
-      border-bottom: 2px solid #f04545;
+      color: #fff;
     `}
   div {
     width: auto;
-    height: 17px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
-    line-height: 1.31;
-    letter-spacing: -0.65px;
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
-    margin-right: 4px;
+    color: ##84818e;
   }
   img {
   }
@@ -181,24 +162,25 @@ const Information = styled.li`
   cursor: pointer;
   display: flex;
   align-items: center;
-  padding-bottom: 15px;
   color: #84818e;
   margin-right: 30px;
   ${(props) =>
     props.changeColor &&
     css`
-      color: #f04545;
-      border-bottom: 2px solid #f04545;
+      color: #fff;
     `}
   div {
     width: auto;
-    height: 17px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
-    line-height: 1.31;
-    letter-spacing: -0.65px;
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
-    margin-right: 4px;
+    color: ##84818e;
   }
   img {
   }

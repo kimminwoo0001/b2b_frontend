@@ -134,7 +134,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                     </Sortingimage>
                   </div>
                 </th>
-                <th className="PickCount" onClick={() => requestSort("ban")}>
+                {/* <th className="PickCount" onClick={() => requestSort("ban")}>
                   <div className="sorting">
                     {t("league.draft.ban")}
                     <Sortingimage>
@@ -142,7 +142,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                       <img src="Images/ico-sorting-down.png" alt="down" />
                     </Sortingimage>
                   </div>
-                </th>
+                </th> */}
                 <th className="BanRate" onClick={() => requestSort("pickRate")}>
                   <div className="sorting">
                     {t("league.draft.banRate")}
@@ -161,7 +161,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                     </Sortingimage>
                   </div>
                 </th>
-                <th className="ProbRate" onClick={() => requestSort("probRate")}>
+                {/* <th className="ProbRate" onClick={() => requestSort("probRate")}>
                   <div className="sorting">
                     {t("league.draft.probRate")}
                     <Sortingimage>
@@ -169,7 +169,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                       <img src="Images/ico-sorting-down.png" alt="down" />
                     </Sortingimage>
                   </div>
-                </th>
+                </th> */}
                 <th className="none"></th>
               </tr>
             </thead>
@@ -186,10 +186,10 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                       </div>
                     </td>
                     <td className="Picks">{data.pick}</td>
-                    <td className="Picks">{data.ban}</td>
+                    {/* <td className="Picks">{data.ban}</td> */}
                     <td className="PickBan">{data.pickRate.toFixed(0)}%</td>
                     <td className="Win">{data.winrate.toFixed(0)}%</td>
-                    <td className="Prob">{data.probRate.toFixed(0)}%</td>
+                    {/* <td className="Prob">{data.probRate.toFixed(0)}%</td> */}
                   </tr>
                 );
               })}
@@ -541,38 +541,24 @@ const BottomRow = styled.div`
 `;
 
 const MainPicks = styled.div`
-  width: 538px;
+  width: 537.5px;
   min-height: 211px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
   margin-right: 22px;
   margin-bottom: 22px;
+  border-radius: 20px;
 `;
 
 const Header = styled.div`
   width: 100%;
-  height: 42.5px;
-  padding: 15px 0 0 13px;
+  height: 51px;
+  padding: 20.5px 0 0 13px;
   border-bottom: 1px solid rgb(35, 33, 42);
   font-family: Poppins;
   color: #84818e;
   font-size: 13px;
   font-weight: bold;
-`;
-
-const ExportButton = styled.div`
-  display: inline-block;
-  font-weight: normal;
-  float: right;
-  color: #fff;
-  cursor: pointer;
-  height: 30px;
-  line-height: 30px;  
-  margin-top: -10px;
-  margin-right: 5px;
-  padding: 0 10px;
-  background-color: #5942ba;
-  border-radius: 3px;
 `;
 
 
@@ -606,8 +592,9 @@ const UniqueTable = styled.table`
   }
   > tbody {
     display: block;
-    height: 140px;
+    height: 185px;
     overflow: auto;
+    border-radius: 20px;
     &::-webkit-scrollbar {
       width: 5px;
       height: 10px;
@@ -623,6 +610,7 @@ const UniqueTable = styled.table`
       :last-child {
         border: none;
       }
+      font-size: 15px;
       display: table;
       table-layout: fixed;
       width: 100%;
@@ -669,7 +657,7 @@ const PickTable = styled.table`
     .Champion {
       text-align: left;
       padding-left: 10px;
-      width: 155px;
+      width: 255px;
     }
     > .none {
       width: 3px;
@@ -677,7 +665,7 @@ const PickTable = styled.table`
     > th {
       vertical-align: middle;
       font-family: NotoSansKR, Apple SD Gothic Neo;
-      font-size: 12px;
+      font-size: 15px;
       font-weight: bold;
       color: #817e90;
       text-align: center;
@@ -691,12 +679,12 @@ const PickTable = styled.table`
   }
   > tbody {
     display: block;
-    height: 350.5px;
+    border-radius: 20px;
+    height: 470px;
     overflow: auto;
     &::-webkit-scrollbar {
       width: 5px;
       height: 10px;
-
       border-radius: 3px;
       background: transparent;
     }
@@ -711,27 +699,27 @@ const PickTable = styled.table`
       display: table;
       table-layout: fixed;
       width: 100%;
-      height: 28px;
+      height: 31px;
       border: 1px solid rgb(58, 55, 69);
       .ChampWrapper {
         display: flex;
         align-items: center;
         img {
-          width: 19px;
-          height: 19px;
+          width: 26px;
+          height: 26px;
           border-radius: 20px;
           margin: 0 13px 0 10px;
         }
       }
       > .ChampName {
-        width: 150px;
+        width: 240px;
       }
       > .Win {
         color: #f04545;
       }
       td {
         font-family: NotoSansKR, Apple SD Gothic Neo;
-        font-size: 12px;
+        font-size: 15px;
         text-align: left;
         color: #ffffff;
         vertical-align: middle;
@@ -744,7 +732,8 @@ const PickTable = styled.table`
 
 const MatchWrapper = styled.div`
   overflow: auto;
-  height: 378.5px;
+  height: 495.5px;
+  border-radius: 20px;
   &::-webkit-scrollbar {
     width: 5px;
     height: 10px;
@@ -760,10 +749,12 @@ const MatchWrapper = styled.div`
 
 const MatchHistory = styled.div`
   width: 538px;
-  height: 422px;
+  height: 551px;
   margin-right: 22px;
+  margin-bottom: 22px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
+  border-radius: 20px;
 `;
 
 const MatchContents = styled.div`
@@ -976,22 +967,22 @@ const DPM = styled.div`
 
 const UniquePicks = styled.div`
   width: 538px;
-  height: 211px;
+  height: 264px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
-  margin-top: 22px;
+  border-radius: 20px;
 `;
 
 const ChampionTier = styled.div`
   width: 538px;
-  max-height: 211px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
+  border-radius: 20px;
 `;
 
 const UniqueNavBar = styled.tr`
   font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: bold;
   color: #817e90;
   width: 100%;
@@ -1029,11 +1020,11 @@ const TierTable = styled.table`
     > th {
       vertical-align: middle;
       font-family: NotoSansKR, Apple SD Gothic Neo;
-      font-size: 12px;
+      font-size: 15px;
       font-weight: bold;
       color: #817e90;
       text-align: center;
-      width: 30px;
+      width: 50px;
       > .sorting {
         display: flex;
         justify-content: center;
@@ -1044,8 +1035,9 @@ const TierTable = styled.table`
 
   > tbody {
     display: block;
-    height: 140px;
+    height: 185px;
     overflow: auto;
+    border-radius: 20px;
     &::-webkit-scrollbar {
       width: 5px;
       height: 10px;
@@ -1071,8 +1063,8 @@ const TierTable = styled.table`
         display: flex;
         align-items: center;
         img {
-          width: 19px;
-          height: 19px;
+          width: 26px;
+          height: 26px;
           border-radius: 20px;
           margin: 0 13px 0 10px;
         }
@@ -1082,14 +1074,19 @@ const TierTable = styled.table`
       }
       > .ChampName {
         width: 100px;
+        div {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
       td {
         vertical-align: middle;
         text-align: center;
         font-family: NotoSansKR, Apple SD Gothic Neo;
-        font-size: 12px;
+        font-size: 15px;
         color: #ffffff;
-        width: 30px;
+        width: 50px;
       }
     }
   }
