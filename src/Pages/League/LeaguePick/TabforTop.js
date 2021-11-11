@@ -118,7 +118,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
       <TopRow>
         <MainPicks>
           <Header>
-            <span>{t("league.draft.mostPick")}</span>
+            <span id="header-name">{t("league.draft.mostPick")}</span>
             <ExcelExport filename={t("league.draft.mostPick")} tableid="mostPick-table" />
           </Header>
           <PickTable id="mostPick-table">
@@ -198,7 +198,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
         </MainPicks>
         <ChampionTier>
           <Header>
-            <span>{t("league.draft.champtier")}</span>
+            <span id="header-name">{t("league.draft.champtier")}</span>
             <ExcelExport filename={t("league.draft.champtier")} tableid="champtier-table" />
           </Header>
           <TierTable id="champtier-table">
@@ -316,7 +316,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
       <BottomRow>
         <MatchHistory>
           <Header>
-            <span>{t("league.draft.against")}</span>
+            <span id="header-name">{t("league.draft.against")}</span>
           </Header>
           <MatchWrapper id="against-table">
             {pickDifference?.map((pick, idx) => {
@@ -441,7 +441,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
         </MatchHistory>
         <UniquePicks>
           <Header>
-            <span>{t("league.draft.unique")}</span>
+            <span id="header-name">{t("league.draft.unique")}</span>
             <ExcelExport filename={t("league.draft.unique")} tableid="unique-table" />
           </Header>
           <UniqueTable id="unique-table">
@@ -527,7 +527,7 @@ const Result = styled.div`
 
 const PickTabWrapper = styled.div`
   display: flex;
-  margin-top: 22px;
+  margin-top: 30px;
 `;
 
 const TopRow = styled.div`
@@ -553,12 +553,23 @@ const MainPicks = styled.div`
 const Header = styled.div`
   width: 100%;
   height: 51px;
+<<<<<<< HEAD
   padding: 20.5px 0 0 13px;
+=======
+  padding: 19.5px 0 0 21px;
+>>>>>>> b4688c9f8968ccbe0bf67e47e3de687de531b597
   border-bottom: 1px solid rgb(35, 33, 42);
   font-family: Poppins;
   color: #84818e;
   font-size: 13px;
   font-weight: bold;
+<<<<<<< HEAD
+=======
+  #header-name {
+    font-size: 16px;
+    color: #fff;
+  }
+>>>>>>> b4688c9f8968ccbe0bf67e47e3de687de531b597
 `;
 
 
@@ -782,8 +793,9 @@ const BlueSide = styled.div`
   font-size: 13px;
   font-weight: bold;
   width: 258px;
-  height: 141px;
+  height: 147px;
   padding: 16.5px 0 26px 13.5px;
+  margin-top: 19.5px;
   /* background-image: url("Images/img-op-score-leftred.png"); */
 `;
 
@@ -797,8 +809,9 @@ const RedSide = styled.div`
   font-size: 13px;
   font-weight: bold;
   width: 258px;
-  height: 141px;
-  padding: 16.5px 26px 13.5px 0px;
+  height: 147px;
+  padding: 16.5px 13.5px 26px 0px;
+  margin-top: 19.5px;
   /* background-image: url("Images/img-op-score-rightred.png"); */
 `;
 
@@ -811,28 +824,34 @@ const ChampInfo = styled.div`
   .MatchChamp {
     text-align: left;
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
     text-align: left;
     color: #ffffff;
     margin-bottom: 5px;
   }
   .WinLose {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
     text-align: left;
     color: #ffffff;
   }
   .WinLose2 {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
     text-align: right;
     color: #ffffff;
   }
   .MatchChampTwo {
     text-align: right;
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
     color: #ffffff;
     margin-bottom: 5px;
@@ -852,7 +871,18 @@ const ChampInfo = styled.div`
 const KDA = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 9px;
+  margin-bottom: 5px;
+  span {
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.87;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+  }
   .Slash {
     color: #817e90;
     margin: 0 4px 0 4px;
@@ -861,35 +891,45 @@ const KDA = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 34px;
-    height: 16px;
+    width: 45px;
+    height: 17px;
     border-radius: 3px;
-    background-color: rgb(240, 69, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
-    font-weight: bold;
-    text-align: center;
-    color: rgb(255, 255, 255);
-    margin-right: 4px;
+    background-color: #23212a;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.15;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+    padding: 0 5px;
+    margin: 6px 8px 6px 0;
   }
   .KdaTwo {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 34px;
-    height: 16px;
+    width: 45px;
+    height: 17px;
     border-radius: 3px;
-    background-color: rgb(240, 69, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
-    font-weight: bold;
-    text-align: center;
-    color: rgb(255, 255, 255);
-    margin-left: 4px;
+    background-color: #23212a;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.15;
+    letter-spacing: normal;
+    text-align: right;
+    color: #fff;
+    padding: 0 5px;
+    margin: 6px 0px 6px 8px;
   }
   .Rate {
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-size: 15px;
     text-align: center;
     color: rgb(240, 69, 69);
     margin: 0 0px 0 8px;
@@ -898,70 +938,100 @@ const KDA = styled.div`
 
 const Kills = styled.div`
   display: flex;
-  margin-bottom: 9px;
+  margin-bottom: 5px;
+  .RateNumber {
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+  }
   .KillRate {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 34px;
-    height: 16px;
+    width: 45px;
+    height: 17px;
     border-radius: 3px;
-    background-color: rgb(240, 69, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
-    font-weight: bold;
-    text-align: center;
-    color: rgb(255, 255, 255);
-    margin-right: 4px;
+    background-color: #23212a;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.15;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+    margin: 0px 8px 6px 0;
   }
   .KillRateTwo {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 34px;
-    height: 16px;
+    width: 45px;
+    height: 17px;
     border-radius: 3px;
-    background-color: rgb(240, 69, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
-    font-weight: bold;
-    text-align: center;
-    color: rgb(255, 255, 255);
-    margin-left: 4px;
+    background-color: #23212a;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.15;
+    letter-spacing: normal;
+    text-align: right;
+    color: #fff;
+    margin: 0px 0px 6px 8px;
   }
 `;
 
 const DPM = styled.div`
   display: flex;
+  .DPMNumber {
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+  }
   .DPM {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 34px;
-    height: 16px;
+    width: 45px;
+    height: 17px;
     border-radius: 3px;
-    background-color: rgb(240, 69, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
-    font-weight: bold;
-    text-align: center;
-    color: rgb(255, 255, 255);
-    margin-right: 4px;
+    background-color: #23212a;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.15;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+    margin: 0px 8px 6px 0;
   }
   .DPMTwo {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 34px;
-    height: 16px;
+    width: 45px;
+    height: 17px;
     border-radius: 3px;
-    background-color: rgb(240, 69, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
-    font-weight: bold;
-    text-align: center;
-    color: rgb(255, 255, 255);
-    margin-left: 4px;
+    background-color: #23212a;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.15;
+    letter-spacing: normal;
+    text-align: right;
+    color: #fff;
+    margin: 0px 0px 6px 8px;
   }
 `;
 

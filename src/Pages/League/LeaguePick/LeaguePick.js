@@ -186,7 +186,11 @@ const LineMargin = styled.div`
 `;
 
 const LastMargin = styled.div`
+<<<<<<< HEAD
   width: 73%;
+=======
+  width:73%;
+>>>>>>> b4688c9f8968ccbe0bf67e47e3de687de531b597
   border-bottom: solid 1px #433f4e;
 `;
 
