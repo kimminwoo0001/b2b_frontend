@@ -527,7 +527,7 @@ const Result = styled.div`
 
 const PickTabWrapper = styled.div`
   display: flex;
-  margin-top: 22px;
+  margin-top: 30px;
 `;
 
 const TopRow = styled.div`
