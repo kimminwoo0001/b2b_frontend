@@ -108,7 +108,7 @@ function ObjectMapping() {
         setCurrentPos(dto.position);
         setchampInfo(dto.info);
         setPlay(true);
-        console.log(dto);
+        console.log(dto.position);
       });
     } catch (e) {
       console.log(e);
@@ -117,6 +117,7 @@ function ObjectMapping() {
     }
   };
 
+  // normal
   useIntervalNormal(() => {
     if (play === true && range < maxTime) {
       setRange(parseInt(range) + 1);
@@ -126,6 +127,7 @@ function ObjectMapping() {
     // }
   }, 300);
 
+  // fast
   useInterval(() => {
     if (fast === true && range < maxTime) {
       setRange(parseInt(range) + 1);

@@ -36,8 +36,6 @@ const InnerWrapper = styled.div`
   margin: 0 auto;
 
   .FirstLabel {
-    /* width: 270px;
-    height: 21px; */
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 18px;
     font-weight: bold;
@@ -47,8 +45,6 @@ const InnerWrapper = styled.div`
     margin-bottom: 20px;
   }
   .SecondLabel {
-    /* width: 280px;
-    height: 34px; */
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 15px;
     letter-spacing: -0.6px;

@@ -288,23 +288,25 @@ function ComparePosition() {
   return (
     <ComparePositionWrapper>
       <DisplayTeams>
-        <div className="RedSide"></div>
-        <div className="TeamOne">{teamName?.team}</div>
-        <img
-          src={`Images/TeamLogo/${filters.team}.png`}
-          width="54px"
-          height="54px"
-          alt="teamIcon"
-        />
+
+        <div className="TeamOne">
+          {teamName?.team}
+          <img
+            src={`Images/TeamLogo/${filters.team}.png`}
+            width="54px"
+            height="54px"
+            alt="teamIcon"
+          />
+        </div>
+
         <div className="Vs">VS</div>
-        <img
+
+        <div className="TeamTwo"> <img
           src={`Images/TeamLogo/${filters.oppteam}.png`}
           width="54px"
           height="54px"
           alt="teamIcon"
-        />
-        <div className="TeamTwo">{teamName?.oppteam}</div>
-        <div className="BlueSide"></div>
+        />{teamName?.oppteam}</div>
       </DisplayTeams>
       <TopGraph>
         <NavBar>
@@ -621,50 +623,43 @@ export default ComparePosition;
 const ComparePositionWrapper = styled.div``;
 
 const DisplayTeams = styled.div`
+background-color: #16151a;
+position: relative;
+color: #fff;
+display: flex;
+justify-content: space-around;
+padding : 60px 20px;
+margin-bottom: 20px;
+
+.RedSide {
   display: flex;
+  flex-direction: column;
+  width: 475px;
   align-items: center;
-  margin-top: 28px;
-  width: 100%;
-  height: 79px;
-  border: solid 1px rgb(58, 55, 69);
-  background-color: rgb(47, 45, 56);
-  .RedSide {
-    width: 145px;
-    height: 77px;
-    background-image: url("Images/left-red-gradient.png");
-  }
-  .BlueSide {
-    width: 145px;
-    height: 77px;
-    background-image: url("Images/right-blue-gradient.png");
-  }
-  .TeamOne {
-    font-family: Poppins;
-    width: 244px;
-    font-size: 15px;
-    font-weight: 500;
-    text-align: right;
-    color: rgb(132, 129, 142);
-    margin: 0 23px 0 0px;
-  }
-  .TeamTwo {
-    font-family: Poppins;
-    width: 244px;
-    font-size: 15px;
-    font-weight: 500;
-    text-align: left;
-    color: rgb(132, 129, 142);
-    margin: 0 0px 0 23px;
-  }
-  .Vs {
-    width: 40px;
-    /* height: 43px; */
-    font-family: Poppins;
-    font-size: 30px;
-    font-weight: bold;
-    color: rgb(107, 105, 121);
-    margin: 0 62px;
-  }
+  font-family: Poppins;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.BlueSide {
+  display: flex;
+  flex-direction: column;
+  width: 475px;
+  align-items: center;
+  font-family: Poppins;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: right;
+}
+
+.Vs {
+  position: absolute;
+  top: 50%;
+  font-family: Poppins;
+  font-size: 30px;
+  font-weight: bold;
+  color :#6b6979 ;  
+}
 `;
 
 const LegendWrapper = styled.div`

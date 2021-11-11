@@ -2,7 +2,7 @@ import React, { memo, useState } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
-import { SetLeague, SetSeason, SetYear } from "../../redux/modules/filtervalue";
+import { SetLeague, SetSeason } from "../../redux/modules/filtervalue";
 
 const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
   const { t } = useTranslation();
@@ -17,7 +17,10 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
   };
 
   const handleCheckboxClick = () => {
-    if (title === t("label.league") && filters.league.length === 0) {
+    if (
+      (title === t("label.league") && filters.league.length === 0) ||
+      filters.league.length < selector.leagueFilter.length
+    ) {
       setChecked(true);
       dispatch(SetLeague(selector.leagueFilter));
     } else if (
@@ -30,7 +33,8 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
 
     if (
       title === t("label.season") &&
-      (filters.season.length === 1 || filters.season.length === 0)
+      (filters.season.length === 0 ||
+        filters.season.length < selector.seasonFilter.length)
     ) {
       setChecked(true);
       dispatch(SetSeason(selector.seasonFilter));
@@ -136,8 +140,6 @@ const Header = styled.div`
 
 const Item = styled.div`
   width: 250px;
-  /* filter item scoll */
-
   margin: 0 0 10px;
   padding: 20px;
   border-radius: 35px;
