@@ -21,10 +21,6 @@ import {
 } from "../../../redux/modules/filtervalue";
 import axiosRequest from "../../../lib/axiosRequest";
 import ExcelExport from "../../../Components/UtilityComponent/ExcelExport"
-<<<<<<< HEAD
-
-=======
->>>>>>> b4688c9f8968ccbe0bf67e47e3de687de531b597
 
 function PlayerBoard() {
   //선수 보고서 => 선수 상황판
@@ -236,9 +232,8 @@ function PlayerBoard() {
             <div className="AttendValue">
               <span className="Wins">{`${matchInfo?.match}${t(
                 "solo.playerboard.games"
-              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${
-                matchInfo?.loss
-              }${t("solo.playerboard.lose")}`}</span>
+              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${matchInfo?.loss
+                }${t("solo.playerboard.lose")}`}</span>
               <span className="WinRate">{`${matchInfo?.winrate.toFixed(
                 1
               )}%`}</span>
