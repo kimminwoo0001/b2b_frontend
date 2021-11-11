@@ -20,6 +20,7 @@ import {
   ResetOppChampion,
 } from "../../../redux/modules/filtervalue";
 import axiosRequest from "../../../lib/axiosRequest";
+import ExcelExport from "../../../Components/UtilityComponent/ExcelExport"
 
 
 function PlayerBoard() {
@@ -735,9 +736,10 @@ function PlayerBoard() {
         <RecordSection>
           <CompetitionRecord>
             <TableNav>
-              <div className="StatTitle">{t("solo.playerboard.champStat")}</div>
+              <span className="StatTitle">{t("solo.playerboard.champStat")}</span>
+              <ExcelExport filename={t("solo.playerboard.champStat")} tableid="competition-table" />
             </TableNav>
-            <CompetitionTable>
+            <CompetitionTable id="competition-table">
               <TableTitle>
                 <tr>
                   <th className="Champion">{t("solo.playerboard.champion")}</th>
@@ -830,9 +832,10 @@ function PlayerBoard() {
         <GraphSection>
           <TotalRecord>
             <TableNav>
-              <div className="StatTitle">{t("solo.playerboard.carrer")}</div>
+              <span className="StatTitle">{t("solo.playerboard.carrer")}</span>
+              <ExcelExport filename={t("solo.playerboard.carrer")} tableid="record-table" />
             </TableNav>
-            <RecordTable>
+            <RecordTable id="record-table">
               <thead>
                 <tr>
                   <th className="Team">{t("solo.playerboard.team")}</th>
@@ -859,7 +862,7 @@ function PlayerBoard() {
                           <span className="Deaths">{career.death}</span>
                           <p className="Slash">/</p>
                           <span className="Support">{career.assists}</span>
-                          <span className="Rate">{`${career.kda.toFixed(
+                          <span className="Rate">&nbsp;{`${career.kda.toFixed(
                             2
                           )}:1`}</span>
                         </div>
@@ -1360,17 +1363,40 @@ const CompetitionRecord = styled.div`
   background-color: rgb(47, 45, 56);
 `;
 const TableNav = styled.div`
-  display: flex;
-  align-items: center;
-  height: 42.5px;
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: -0.6px;
-  text-align: left;
-  color: #84818e;
+  // display: flex;
+  // align-items: center;
+  // height: 42.5px;
+  // font-family: NotoSansKR, Apple SD Gothic Neo;
+  // font-size: 12px;
+  // font-weight: 500;
+  // letter-spacing: -0.6px;
+  // text-align: left;
+  // color: #84818e;
+  // width: 100%;
+  // margin-left: 15px;
   width: 100%;
-  margin-left: 15px;
+  height: 42.5px;
+  padding: 15px 0 0 13px;
+  border-bottom: 1px solid rgb(35, 33, 42);
+  font-family: Poppins;
+  color: #84818e;
+  font-size: 13px;
+  font-weight: bold;
+`;
+
+const ExportButton = styled.div`
+  display: inline-block;
+  font-weight: normal;
+  float: right;
+  color: #fff;
+  cursor: pointer;
+  height: 30px;
+  line-height: 30px;  
+  margin-top: -10px;
+  margin-right: 5px;
+  padding: 0 10px;
+  background-color: #5942ba;
+  border-radius: 3px;
 `;
 
 const TotalRecord = styled.div`
@@ -1542,7 +1568,6 @@ const RecordTable = styled.table`
           font-size: 12px;
           text-align: center;
           color: rgb(240, 69, 69);
-          margin-left: 4px;
         }
       }
     }

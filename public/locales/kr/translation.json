@@ -51,7 +51,7 @@
       "pm": "오후"
     },
     "draft": {
-      "mostPick": "주요 픽",
+      "mostPick": "대회 주요 픽",
       "against": "주요 픽 간의 전적",
       "unique": "유니크 픽",
       "champtier": "챔피언 티어",
@@ -419,5 +419,12 @@
     "team": "팀",
     "player": "선수",
     "patchVersion": "패치 버전"
+  },
+  "position": {
+    "top": "탑",
+    "jg": "정글",
+    "mid": "미드",
+    "ad": "바텀",
+    "sup": "서포터"
   }
 }
