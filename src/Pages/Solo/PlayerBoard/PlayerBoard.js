@@ -22,7 +22,6 @@ import {
 import axiosRequest from "../../../lib/axiosRequest";
 import ExcelExport from "../../../Components/UtilityComponent/ExcelExport"
 
-
 function PlayerBoard() {
   //선수 보고서 => 선수 상황판
   const filters = useSelector((state) => state.FilterReducer);
@@ -118,7 +117,7 @@ function PlayerBoard() {
       });
       setSeason({ x: seasonX, y: seasonY });
       setLoading(false);
-    })
+    });
   };
 
   //챔피언 필터
@@ -136,7 +135,7 @@ function PlayerBoard() {
     axiosRequest(url, params, function (e) {
       setChampFilter(e.data.champion);
       setChampEng(e.data.championEng);
-    })
+    });
   };
 
   //상대 챔피언 필터
@@ -152,11 +151,11 @@ function PlayerBoard() {
       player: filters.player,
       token: user.token,
       id: user.id,
-    }
+    };
     axiosRequest(url, params, function (e) {
       setOppFilter(e.data.champion);
       setOppEng(e.data.championEng);
-    })
+    });
   };
 
   // 그래프 세팅 값
@@ -245,7 +244,10 @@ function PlayerBoard() {
               {t("solo.playerboard.avgScore")}
             </div>
 
-            <div className="PerformanceValue">{sbr?.sbrAvg.toFixed(1)} / {sbr?.price > 0 ? sbr?.price + "위" : "출전 경기 부족"}</div>
+            <div className="PerformanceValue">
+              {sbr?.sbrAvg.toFixed(1)} /{" "}
+              {sbr?.price > 0 ? sbr?.price + "위" : "출전 경기 부족"}
+            </div>
           </div>
           <div className="AverageBoxTwo">
             <div className="PerformanceTitle">
@@ -355,7 +357,6 @@ function PlayerBoard() {
             <button
               className="Select"
               onClick={() => {
-
                 dispatch(ResetChampion2(""));
                 GetPlayerBoardData();
               }}
@@ -958,6 +959,7 @@ const LeftInfo = styled.div`
 const FilterBox = styled.div`
   display: flex;
   align-items: center;
+  border-radius: 20px;
   .Vs {
     font-family: Poppins;
     font-size: 15px;
@@ -1044,6 +1046,7 @@ const AbilitySection = styled.div`
   min-height: 300px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
+  border-radius: 20px;
 `;
 
 const RecordSection = styled.div`
@@ -1066,10 +1069,12 @@ const PlayerOverView = styled.div`
   width: 100%;
   height: 79px;
   margin: 22.5px 0px 0 0;
+  border-radius: 20px;
   border: solid 1px #3a3745;
   background-color: #2f2d38;
   background-image: url("Images/left-red-gradient.png");
   background-repeat: no-repeat;
+
   .DetailInfo {
     display: flex;
     flex-direction: column;
@@ -1229,6 +1234,8 @@ const AbilityContents = styled.div`
   min-height: 260px;
   border: solid 1px rgb(67, 63, 78);
   background-color: rgb(58, 55, 69);
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
   padding: 20px;
 `;
 
@@ -1254,7 +1261,8 @@ const StatBox = styled.table`
   height: 100%;
   background-color: rgb(47, 45, 56);
   margin-right: 22px;
-  border: 1px solid rgb(35, 33, 42);
+  border: 1px solid #2f2d38;
+  /* border-radius: 20px; */
   :nth-child(3) {
     margin-right: 0px;
   }
@@ -1669,6 +1677,7 @@ const DropDownContainer = styled.div`
     letter-spacing: -0.6px;
     text-align: left;
     color: rgb(175, 173, 190);
+    border-radius: 10px;
   }
 
   .menu-trigger:hover {

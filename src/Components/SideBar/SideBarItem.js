@@ -26,26 +26,23 @@ const SideBarItem = ({ menu, idx }) => {
       <img src={menu.image} alt="menu"></img>
       <div className="Name">{menu.name}</div>
     </MenuWrapper>
-  )
-}
+  );
+};
 
 export default SideBarItem;
 
 const MenuWrapper = styled.div`
   display: flex;
-  width: 147px;
+  width: 170px;
   height: 24px;
-  margin: ${props => 31 - props.marginTop}px 9px ${props => 30 - props.marginBottom}px 14px;
+  margin: ${(props) => 31 - props.marginTop}px 9px
+    ${(props) => 30 - props.marginBottom}px 14px;
   padding: 0 12px 0 0;
   cursor: pointer;
   .Name {
-    width: 101px;
-    height: 19px;
     font-family: SpoqaHanSansNeo;
     font-size: 15px;
     font-weight: bold;
-    font-stretch: normal;
-    font-style: normal;
     line-height: 24px;
     letter-spacing: normal;
     text-align: left;
@@ -54,7 +51,7 @@ const MenuWrapper = styled.div`
   img {
     width: 24px;
     height: 24px;
-    margin-right: 12px;
+    margin-right: 10px;
     object-fit: contain;
     vertical-align: middle;
   }
@@ -67,6 +64,5 @@ const MenuWrapper = styled.div`
       padding: 9px 9px 9px 14px;
       border-radius: 16px;
       background-color: #5942ba;
-    `
-  }
+    `}
 `;

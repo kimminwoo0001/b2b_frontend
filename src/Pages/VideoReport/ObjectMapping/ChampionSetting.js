@@ -9,7 +9,6 @@ import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetec
 import qs from "qs";
 import axiosRequest from "../../../lib/axiosRequest";
 
-
 function ChampionSetting({
   setGameData,
   side,
@@ -129,70 +128,80 @@ function ChampionSetting({
     }
   };
 
+  //
   const getTeam = () => {
     try {
-      let teamList = []
+      let teamList = [];
       for (let league of filters.league) {
         for (let year of filters.year) {
           for (let season of filters.season) {
-            if (staticvalue.filterObjects[league][year][season]) {
-              const ObjectKeys = Object.keys(staticvalue.filterObjects[league][year][season]);
+            const seasonData = staticvalue.filterObjects[league][year][season];
+            if (seasonData) {
+              const ObjectKeys = Object.keys(seasonData);
               teamList = teamList.concat(ObjectKeys);
             }
           }
         }
       }
-      teamList = teamList.filter((item, pos) => teamList.indexOf(item) === pos).sort();
+      teamList = teamList
+        .filter((item, pos) => teamList.indexOf(item) === pos)
+        .sort();
       setFilterData({ ...filterData, team: teamList });
     } catch (e) {
       console.log(e);
     }
   };
 
+  //
   const getPlayer = () => {
     try {
       let players = [];
-      let playerList = []
+      let playerList = [];
       for (let league of filters.league) {
         for (let year of filters.year) {
           for (let season of filters.season) {
-            if (staticvalue.filterObjects[league][year][season][filters.team]) {
-              const ObjectKeys = Object.values(staticvalue.filterObjects[league][year][season][filters.team]);
-              console.log("ObjectKeys", ObjectKeys);
-              playerList = playerList.concat(ObjectKeys);
+            const seasonData = staticvalue.filterObjects[league][year][season];
+            if (seasonData) {
+              if (seasonData[filters.team]) {
+                const ObjectKeys = Object.values(seasonData[filters.team]);
+                console.log("ObjectKeys", ObjectKeys);
+                playerList = playerList.concat(ObjectKeys);
+              }
             }
           }
         }
       }
-      playerList = playerList.filter((item, pos) => playerList.indexOf(item) === pos).sort();
+      playerList = playerList
+        .filter((item, pos) => playerList.indexOf(item) === pos)
+        .sort();
 
       for (let i = 0; i < playerList.length; i++) {
-        const name = playerList[i].split('#')[1];
-        const position = playerList[i].split('#')[0];
+        const name = playerList[i].split("#")[1];
+        const position = playerList[i].split("#")[0];
         if (position === "1") {
           players[i] = {
-            position: 'top',
-            name: name
+            position: "top",
+            name: name,
           };
         } else if (position === "2") {
           players[i] = {
-            position: 'jng',
-            name: name
+            position: "jng",
+            name: name,
           };
         } else if (position === "3") {
           players[i] = {
-            position: 'mid',
-            name: name
+            position: "mid",
+            name: name,
           };
         } else if (position === "4") {
           players[i] = {
-            position: 'bot',
-            name: name
+            position: "bot",
+            name: name,
           };
         } else if (position === "5") {
           players[i] = {
-            position: 'sup',
-            name: name
+            position: "sup",
+            name: name,
           };
         }
       }
@@ -214,11 +223,11 @@ function ChampionSetting({
         player: filters.player,
         token: user.token,
         id: user.id,
-      }
+      };
       axiosRequest(url, params, function (e) {
         const data = e.data.champion;
         setFilterData({ ...filterData, champion: data });
-      })
+      });
     } catch (e) {
       console.log(e);
     }
@@ -241,7 +250,7 @@ function ChampionSetting({
       axiosRequest(url, params, function (e) {
         const data = e.data.opp_team;
         setFilterData({ ...filterData, oppteam: data });
-      })
+      });
     } catch (e) {
       console.log(e);
     }
@@ -265,7 +274,7 @@ function ChampionSetting({
       axiosRequest(url, params, function (e) {
         const data = e.data.opp_player;
         setFilterData({ ...filterData, oppplayer: data });
-      })
+      });
     } catch (e) {
       console.log(e);
     }
@@ -290,8 +299,7 @@ function ChampionSetting({
       axiosRequest(url, params, function (e) {
         const data = e.data.opp_champion;
         setFilterData({ ...filterData, oppchampion: data });
-      })
-
+      });
     } catch (e) {
       console.log(e);
     }
@@ -315,7 +323,7 @@ function ChampionSetting({
       };
       axiosRequest(url, params, function (e) {
         setGameData(Object.values(e.data["match"]));
-      })
+      });
     } catch (e) {
       console.log(e);
     }
@@ -342,7 +350,7 @@ function ChampionSetting({
         };
         axiosRequest(url, params, function (e) {
           setGameData(Object.values(e.data["match"]));
-        })
+        });
       }
     } catch (e) {
       console.log(e);
@@ -385,7 +393,7 @@ function ChampionSetting({
         oppchampion_eng: "",
       })
     );
-  }
+  };
 
   const clickCompareConfirm = () => {
     //setIsActive5(false);
@@ -412,8 +420,7 @@ function ChampionSetting({
         oppchampion_eng: champArray2,
       })
     );
-  }
-
+  };
 
   return (
     <ChampionSettingContainer>
@@ -562,7 +569,9 @@ function ChampionSetting({
               {filterData?.champion ? (
                 <nav
                   ref={wrapperRef}
-                  className={`menu3 ${isActive2.current ? "active" : "inactive"}`}
+                  className={`menu3 ${
+                    isActive2.current ? "active" : "inactive"
+                  }`}
                 >
                   <ul>
                     <li
@@ -759,7 +768,9 @@ function ChampionSetting({
               {filterData?.oppchampion ? (
                 <nav
                   ref={wrapperRef2}
-                  className={`menu3 ${isActive5.current ? "active" : "inactive"}`}
+                  className={`menu3 ${
+                    isActive5.current ? "active" : "inactive"
+                  }`}
                 >
                   <ul>
                     <li
@@ -827,7 +838,7 @@ function ChampionSetting({
           />
         </CompareButton>
       </FilterBox>
-    </ChampionSettingContainer >
+    </ChampionSettingContainer>
   );
 }
 
@@ -886,7 +897,7 @@ const CompareButton = styled.button`
 
 const DropDownToggle = styled.div`
   margin-right: 4px;
-  
+
   :nth-child(3) {
     margin-right: 0px;
   }

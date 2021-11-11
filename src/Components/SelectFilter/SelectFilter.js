@@ -6,10 +6,12 @@ function SelectFilter() {
   // 필터 미선택시 띄어주는 화면
   return (
     <SelectFilterWrapper>
-      <div className="FirstLabel">{t("filters.selectOption")}</div>
-      <div className="SecondLabel">
-        {t("filters.selectOption2")} {t("filters.selectOption3")}
-      </div>
+      <InnerWrapper>
+        <div className="FirstLabel">{t("filters.selectOption")}</div>
+        <div className="SecondLabel">
+          {t("filters.selectOption2")} {t("filters.selectOption3")}
+        </div>
+      </InnerWrapper>
     </SelectFilterWrapper>
   );
 }
@@ -17,44 +19,41 @@ function SelectFilter() {
 export default SelectFilter;
 
 const SelectFilterWrapper = styled.div`
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  border-radius: 30px;
+  align-items: center; */
+  /* width: 100%;
+  height: calc(100vh - 50px); */
+  padding-top: 60px;
+`;
+
+const InnerWrapper = styled.div`
   background-color: #23212a;
-  width: 90%;
-  min-width: 800px;
-  height: 16%;
-  min-height: 100px;
-  margin: 60px;
+  padding: 50px 100px;
+  border-radius: 30px;
+  width: 1050px;
+  margin: 0 auto;
 
   .FirstLabel {
-    width: auto;
-    height: 22px;
-    margin: 0 203px 20px;
-    font-family: SpoqaHanSansNeo;
+    /* width: 270px;
+    height: 21px; */
+    font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 18px;
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.11;
-    letter-spacing: normal;
+    font-weight: bold;
+    letter-spacing: -0.75px;
     text-align: center;
     color: #fff;
+    margin-bottom: 20px;
   }
   .SecondLabel {
-    width: auto;
-    height: 18px;
-    margin: 20px 0 0;
-    font-family: SpoqaHanSansNeo;
+    /* width: 280px;
+    height: 34px; */
+    font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 15px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.73;
-    letter-spacing: normal;
+    letter-spacing: -0.6px;
     text-align: center;
     color: #fff;
+    line-height: 1.25;
   }
 `;

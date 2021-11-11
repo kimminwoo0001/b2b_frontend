@@ -186,7 +186,7 @@ const LineMargin = styled.div`
 `;
 
 const LastMargin = styled.div`
-  width: 73%;
+  width:73%;
   border-bottom: solid 1px #433f4e;
 `;
 
