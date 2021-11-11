@@ -553,23 +553,16 @@ const MainPicks = styled.div`
 const Header = styled.div`
   width: 100%;
   height: 51px;
-<<<<<<< HEAD
-  padding: 20.5px 0 0 13px;
-=======
   padding: 19.5px 0 0 21px;
->>>>>>> b4688c9f8968ccbe0bf67e47e3de687de531b597
   border-bottom: 1px solid rgb(35, 33, 42);
   font-family: Poppins;
   color: #84818e;
   font-size: 13px;
   font-weight: bold;
-<<<<<<< HEAD
-=======
   #header-name {
     font-size: 16px;
     color: #fff;
   }
->>>>>>> b4688c9f8968ccbe0bf67e47e3de687de531b597
 `;
 
 
