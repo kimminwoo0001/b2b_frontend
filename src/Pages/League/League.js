@@ -18,10 +18,14 @@ function League() {
       <Nav />
       <LeagueWrapper>
         <SideBar />
-        <div className={filters.filterMenuState ? "filter-open" : "filter-close"}>
+        <div
+          className={filters.filterMenuState ? "filter-open" : "filter-close"}
+        >
           <Filter />
         </div>
-        <div className={filters.filterMenuState ? "filter-close" : "filter-open"}>
+        <div
+          className={filters.filterMenuState ? "filter-close" : "filter-open"}
+        >
           <CloseFilter />
         </div>
         <ContentWrapper>
@@ -47,8 +51,7 @@ const LeagueWrapper = styled.div`
     display: none;
   }
 
-  .filter-open{
-
+  .filter-open {
   }
 `;
 
@@ -56,5 +59,6 @@ const ContentWrapper = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
+  padding: 15px 0;
   /* overflow-y: auto; */
 `;

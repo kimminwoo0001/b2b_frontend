@@ -224,10 +224,10 @@ const ExportButton = styled.div`
   margin-right: 5px;
   padding: 0 10px;
   background-color: #5942ba;
-  border-radius: 3px;
-  border: solid 1px #000;
+  border-radius: 10px;
   align-items: center;
   text-align: center;
+  font-size: 14px;
 `;
 
 const Selected = styled.div`
@@ -309,9 +309,9 @@ const DropDown = styled.div`
     height: 33px;
     margin: 0px;
     padding: 5px 11px 4px;
-    border-radius: 3px;
-    border: solid 1px;
+    border-radius: 10px;
     background-color: #5942ba;
+    font-size: 14px;
   }
 
   .menu-trigger:hover {

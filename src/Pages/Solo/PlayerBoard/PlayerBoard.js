@@ -232,8 +232,9 @@ function PlayerBoard() {
             <div className="AttendValue">
               <span className="Wins">{`${matchInfo?.match}${t(
                 "solo.playerboard.games"
-              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${matchInfo?.loss
-                }${t("solo.playerboard.lose")}`}</span>
+              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${
+                matchInfo?.loss
+              }${t("solo.playerboard.lose")}`}</span>
               <span className="WinRate">{`${matchInfo?.winrate.toFixed(
                 1
               )}%`}</span>
@@ -370,7 +371,7 @@ function PlayerBoard() {
               }}
             >
               <img
-                src="Images/ico-team-video-return-off.png"
+                src="Images/ico_reset.png"
                 width="10px"
                 height="10px"
                 alt="resetICon"
@@ -978,13 +979,13 @@ const FilterBox = styled.div`
   .Select {
     width: 48px;
     height: 34px;
-    border-radius: 3px;
-    background-color: rgb(240, 69, 69);
+    border-radius: 10px;
+    background-color: #5942ba;
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 12px;
     font-weight: bold;
     letter-spacing: -0.6px;
-    color: rgb(255, 255, 255);
+    color: #fff;
     margin: 0 5px;
   }
   .Reset {
@@ -992,15 +993,16 @@ const FilterBox = styled.div`
     align-items: center;
     width: 64px;
     height: 34px;
-    border-radius: 3px;
+    border-radius: 10px;
     border: solid 1px #474554;
-    background-color: #3a3745;
+    color: #fff;
+    background-color: #484655;
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: -0.55px;
-    color: rgb(175, 173, 190);
     p {
       margin-left: 5px;
+      margin-top: 3px;
     }
   }
 `;
@@ -1269,8 +1271,8 @@ const StatBox = styled.table`
   height: 100%;
   background-color: rgb(47, 45, 56);
   margin-right: 22px;
-  border: 1px solid #2f2d38;
-  /* border-radius: 20px; */
+
+  border-radius: 10px;
   :nth-child(3) {
     margin-right: 0px;
   }
@@ -1280,6 +1282,7 @@ const StatNav = styled.tr`
   width: 100%;
   height: 42.5px;
   border-bottom: 1px solid rgb(35, 33, 42);
+
   > .StatTitle {
     text-align: left;
     padding-left: 10px;
@@ -1307,6 +1310,7 @@ const MapStat = styled.tr`
   :nth-child(2n) {
     background-color: rgb(47, 45, 56);
   }
+
   > .Icon {
     width: 17px;
   }
@@ -1377,6 +1381,7 @@ const CompetitionRecord = styled.div`
   margin-top: 22px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
+  border-radius: 20px;
 `;
 const TableNav = styled.div`
   // display: flex;
@@ -1395,9 +1400,9 @@ const TableNav = styled.div`
   padding: 15px 0 0 13px;
   border-bottom: 1px solid rgb(35, 33, 42);
   font-family: Poppins;
-  color: #84818e;
-  font-size: 13px;
-  font-weight: bold;
+  color: #fff;
+  font-size: 15px;
+  font-weight: medium;
 `;
 
 const ExportButton = styled.div`
@@ -1421,6 +1426,7 @@ const TotalRecord = styled.div`
   min-height: 211px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
+  border-radius: 20px;
 `;
 
 const NoData = styled.div`
@@ -1605,13 +1611,14 @@ const NavBar = styled.div`
   width: 100%;
   height: 42.5px;
   border-bottom: 1px solid rgb(35, 33, 42);
+
   .AverageTime {
     width: 61px;
     height: 17px;
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-size: 15px;
     line-height: 2.08;
-    color: rgb(132, 129, 142);
+    color: #fff;
     margin-left: 15px;
   }
   .X {
@@ -1654,6 +1661,7 @@ const Player = styled.div`
   height: 270px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
+  border-radius: 20px;
 `;
 
 const DropDownContainer = styled.div`
