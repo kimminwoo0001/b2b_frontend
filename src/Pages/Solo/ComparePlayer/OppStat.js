@@ -762,7 +762,8 @@ const OppStatContents = styled.div`
   margin-top: 22px;
   width: 100%;
   /* border: solid 1px rgb(58, 55, 69); */
-  background-color: #16151a;
+  background-color: #2f2d38;
+  border-radius: 20px;
 `;
 
 const ChampionSettingNav = styled.div`
@@ -849,7 +850,7 @@ const DisplayValue = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 0;
+  padding: 30px 0;
   :last-child {
     border-bottom: none;
   }
@@ -896,7 +897,7 @@ const DisplayValue = styled.div`
     width: 220px;
     height: 22px;
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 23px;
+    font-size: 16px;
     font-weight: bold;
     letter-spacing: -0.6px;
     text-align: center;

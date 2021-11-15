@@ -991,7 +991,7 @@ const FilterBox = styled.div`
   .Reset {
     display: flex;
     align-items: center;
-    width: 64px;
+    /* width: 70px; */
     height: 34px;
     border-radius: 10px;
     border: solid 1px #474554;

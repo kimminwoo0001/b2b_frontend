@@ -19,7 +19,6 @@ import {
 import qs from "qs";
 import axiosRequest from "../../../lib/axiosRequest";
 
-
 function NormalInfo() {
   //기본정보 탭
   const filters = useSelector((state) => state.FilterReducer);
@@ -70,7 +69,7 @@ function NormalInfo() {
       oppchampion: filters.oppchampion_eng,
       token: user.token,
       id: user.id,
-    }
+    };
     axiosRequest(url, params, function (e) {
       const copy = e.data[filters.player];
       const copyoppData = e.data[filters.oppplayer];
@@ -93,12 +92,11 @@ function NormalInfo() {
         gold: copyoppData.gold.toFixed(1),
       });
       setLoading(false);
-    })
+    });
   };
 
   //챔피언 필터
   const GetChampionFilter = () => {
-
     const url = `${API}/api/filter/champion2`;
     const params = {
       league: filters.league,
@@ -109,11 +107,11 @@ function NormalInfo() {
       oppplayer: filters.oppplayer,
       token: user.token,
       id: user.id,
-    }
+    };
     axiosRequest(url, params, function (e) {
       setChampFilter(e.data.champion);
       setChampEng(e.data.championEng);
-    })
+    });
   };
   //상대 챔피언 필터
   const GetOppFilter = () => {
@@ -128,11 +126,11 @@ function NormalInfo() {
       oppplayer: filters.oppplayer,
       token: user.token,
       id: user.id,
-    }
+    };
     axiosRequest(url, params, function (e) {
       setOppFilter(e.data.champion);
       setOppEng(e.data.championEng);
-    })
+    });
   };
 
   // 오각형 그래프 세팅
@@ -583,6 +581,7 @@ const PlayerCompareWrapper = styled.div`
   margin-top: 28px;
   width: 100%;
   border: solid 1px rgb(58, 55, 69);
+  border-radius: 20px;
   background-color: rgb(47, 45, 56);
   background-image: url("Images/full-gradient.png");
   background-repeat: no-repeat;
@@ -664,6 +663,7 @@ const NormalCompare = styled.div`
   margin-top: 22px;
   width: 100%;
   border: solid 1px rgb(58, 55, 69);
+  border-radius: 20px;
   background-color: rgb(47, 45, 56);
 `;
 
