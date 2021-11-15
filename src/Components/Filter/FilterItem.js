@@ -18,7 +18,8 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
 
   const handleCheckboxClick = () => {
     if (
-      (title === t("label.league") && filters.league.length === 0) ||
+      title === t("label.league") &&
+      filters.league.length >= 0 &&
       filters.league.length < selector.leagueFilter.length
     ) {
       setChecked(true);
@@ -33,8 +34,8 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
 
     if (
       title === t("label.season") &&
-      (filters.season.length === 0 ||
-        filters.season.length < selector.seasonFilter.length)
+      filters.season.length >= 0 &&
+      filters.season.length < selector.seasonFilter.length
     ) {
       setChecked(true);
       dispatch(SetSeason(selector.seasonFilter));

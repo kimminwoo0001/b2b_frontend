@@ -605,6 +605,7 @@ const ButtonBox = styled.div`
     text-align: center;
     color: #ffffff;
     margin: 0 10px;
+    // 상대팀까지 선택했을 때 자동으로 선택완료버튼 color 변환
   }
   .Close {
     width: 122px;
