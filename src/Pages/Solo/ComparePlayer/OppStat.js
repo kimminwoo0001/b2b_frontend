@@ -778,7 +778,7 @@ const SettingTitle = styled.div`
   display: flex;
   align-items: center;
   .Title {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 13px;
     font-weight: bold;
     letter-spacing: -0.65px;
@@ -786,7 +786,7 @@ const SettingTitle = styled.div`
     margin: 0 15px 0 23px;
   }
   .Alert {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     letter-spacing: -0.6px;
     color: rgb(132, 129, 142);
@@ -800,7 +800,7 @@ const ComapreValue = styled.div`
 
 const PlayerValue = styled.div`
   display: flex;
-  font-family: Poppins;
+  font-family: "Spoqa Han Sans";
   font-size: 16px;
   text-align: center;
   margin-right: 5px;
@@ -823,7 +823,7 @@ const PlayerValue = styled.div`
 
 const OppValue = styled.div`
   display: flex;
-  font-family: Poppins;
+  font-family: "Spoqa Han Sans";
   font-size: 16px;
   text-align: center;
   margin: 5px 0;
@@ -861,7 +861,7 @@ const DisplayValue = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: Poppins;
+    font-family: "Spoqa Han Sans";
 
     text-align: center;
     color: #f04545;
@@ -873,7 +873,7 @@ const DisplayValue = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: Poppins;
+    font-family: "Spoqa Han Sans";
     text-align: center;
     color: #817e90;
     img {
@@ -896,7 +896,7 @@ const DisplayValue = styled.div`
     justify-content: center;
     width: 220px;
     height: 22px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 16px;
     font-weight: bold;
     letter-spacing: -0.6px;
@@ -908,7 +908,7 @@ const DisplayValue = styled.div`
 const ComparedValue = styled.div`
   display: flex;
   align-items: center;
-  font-family: Poppins;
+  font-family: "Spoqa Han Sans";
   font-size: 23px;
 
   text-align: center;
@@ -926,7 +926,7 @@ const ComparedValue = styled.div`
 const OppComparedValue = styled.div`
   display: flex;
   align-items: center;
-  font-family: Poppins;
+  font-family: "spoqa hans sans";
   font-size: 23px;
 
   text-align: center;
@@ -947,7 +947,7 @@ const DropDownContainer = styled.div`
   margin: 13px 0 0 23px;
 
   .Vs {
-    font-family: Poppins;
+    font-family: "Spoqa Han Sans";
     font-size: 15px;
     font-weight: bold;
     color: rgb(132, 129, 142);
@@ -958,7 +958,7 @@ const DropDownContainer = styled.div`
     height: 40px;
     border-radius: 3px;
     background-color: rgb(240, 69, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     font-weight: bold;
     letter-spacing: -0.6px;
@@ -973,7 +973,7 @@ const DropDownContainer = styled.div`
     border-radius: 3px;
     border: solid 1px #474554;
     background-color: #3a3745;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 11px;
     letter-spacing: -0.55px;
     color: rgb(175, 173, 190);
@@ -991,7 +991,8 @@ const DropDown = styled.div`
   }
 
   body {
-    font-family: Arial, Helvetica, sans-serif;
+    /* font-family: "Spoqa Han Sans", Arial, Helvetica, sans-serif; */
+    font-family: "Spoqa Han Sans";
   }
 
   .menu-container {
@@ -1014,7 +1015,7 @@ const DropDown = styled.div`
   }
 
   .SelectedLabel {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
@@ -1024,7 +1025,7 @@ const DropDown = styled.div`
   }
 
   .Label {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
@@ -1073,7 +1074,7 @@ const DropDown = styled.div`
     text-decoration: none;
     padding: 15px 20px;
     display: block;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 11px;
     letter-spacing: -0.55px;
     text-align: left;

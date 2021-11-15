@@ -23,6 +23,9 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
   const [oppPlayer, setOppPlayer] = useState();
 
   useEffect(() => {
+    if (!openModal) {
+      return;
+    }
     fetchingTeamFilter();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openModal]);

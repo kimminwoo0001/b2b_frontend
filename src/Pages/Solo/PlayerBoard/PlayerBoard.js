@@ -949,7 +949,7 @@ const LeftInfo = styled.div`
   display: flex;
   align-items: center;
   .InfoTitle {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     font-weight: bold;
     letter-spacing: -0.6px;
@@ -957,7 +957,7 @@ const LeftInfo = styled.div`
     margin-right: 15px;
   }
   .NavContents {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     letter-spacing: -0.6px;
     color: rgb(132, 129, 142);
@@ -970,7 +970,7 @@ const FilterBox = styled.div`
   align-items: center;
   border-radius: 20px;
   .Vs {
-    font-family: Poppins;
+    font-family: "Spoqa Han Sans";
     font-size: 15px;
     font-weight: bold;
     color: rgb(132, 129, 142);
@@ -981,7 +981,7 @@ const FilterBox = styled.div`
     height: 34px;
     border-radius: 10px;
     background-color: #5942ba;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     font-weight: bold;
     letter-spacing: -0.6px;
@@ -997,7 +997,7 @@ const FilterBox = styled.div`
     border: solid 1px #474554;
     color: #fff;
     background-color: #484655;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     letter-spacing: -0.55px;
     p {
@@ -1039,7 +1039,7 @@ const KeywordContent = styled.div`
   align-items: center;
   border-radius: 3px;
   background-color: rgb(240, 69, 69);
-  font-family: NotoSansKR, Apple SD Gothic Neo;
+  font-family: "Spoqa Han Sans";
   font-size: 12px;
   letter-spacing: -0.6px;
   text-align: center;
@@ -1123,13 +1123,13 @@ const PlayerOverView = styled.div`
     flex-direction: column;
   }
   .NickName {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 11px;
     color: rgb(132, 129, 142);
     margin-bottom: 6px;
   }
   .RealName {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 15px;
     font-weight: bold;
     letter-spacing: -0.75px;
@@ -1138,7 +1138,7 @@ const PlayerOverView = styled.div`
   .Title {
     /* min-width: 50px; */
     margin-right: 11px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     font-weight: bold;
     letter-spacing: -0.6px;
@@ -1147,7 +1147,7 @@ const PlayerOverView = styled.div`
   }
   .Title2 {
     min-width: 50px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     font-weight: bold;
     letter-spacing: -0.6px;
@@ -1157,35 +1157,35 @@ const PlayerOverView = styled.div`
   }
   .Country {
     /* width: 245px; */
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 13px;
     letter-spacing: -0.65px;
     text-align: left;
     color: rgb(255, 255, 255);
   }
   .Num {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 13px;
     font-weight: bold;
     text-align: left;
     color: rgb(255, 255, 255);
   }
   .FullNum {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 11px;
     text-align: left;
     color: rgb(255, 255, 255);
   }
   .Wins {
     width: 119px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 16px;
     text-align: left;
     color: rgb(255, 255, 255);
     margin-right: 10px;
   }
   .WinRate {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 16px;
     font-weight: bold;
     letter-spacing: -0.65px;
@@ -1198,7 +1198,7 @@ const PlayerOverView = styled.div`
     /* width: 235px; */
   }
   .AttendValue {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 16px;
     font-weight: bold;
     text-align: center;
@@ -1206,7 +1206,7 @@ const PlayerOverView = styled.div`
   }
   .PerformanceTitle {
     /* width: 80px; */
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     font-weight: bold;
     letter-spacing: -0.6px;
@@ -1215,7 +1215,7 @@ const PlayerOverView = styled.div`
     margin-bottom: 10px;
   }
   .PerformanceValue {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 16px;
     font-weight: bold;
     text-align: center;
@@ -1258,7 +1258,7 @@ const BottomBox = styled.div`
   height: 211px;
   padding: 9px 15px;
   background-color: rgb(47, 45, 56);
-  font-family: NotoSansKR, Apple SD Gothic Neo;
+  font-family: "Spoqa Han Sans";
   font-size: 12px;
   font-weight: bold;
   line-height: 2.08;
@@ -1271,8 +1271,8 @@ const StatBox = styled.table`
   height: 100%;
   background-color: rgb(47, 45, 56);
   margin-right: 22px;
-
   border-radius: 10px;
+
   :nth-child(3) {
     margin-right: 0px;
   }
@@ -1292,7 +1292,7 @@ const StatNav = styled.tr`
     width: 17px;
   }
   > th {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     font-weight: bold;
     letter-spacing: -0.6px;
@@ -1318,7 +1318,7 @@ const MapStat = styled.tr`
     text-align: left;
     padding-left: 10px;
     width: 178px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     letter-spacing: -0.6px;
     color: rgb(255, 255, 255);
@@ -1332,14 +1332,14 @@ const MapStat = styled.tr`
 `;
 
 const LeagueValue = styled.td`
-  font-family: NotoSansKR, Apple SD Gothic Neo;
+  font-family: "Spoqa Han Sans";
   font-size: 12px;
   text-align: center;
   color: rgb(255, 255, 255);
 `;
 
 const PlayerValue = styled.td`
-  font-family: NotoSansKR, Apple SD Gothic Neo;
+  font-family: "Spoqa Han Sans";
   font-size: 12px;
   text-align: center;
   color: rgb(240, 69, 69);
@@ -1384,22 +1384,11 @@ const CompetitionRecord = styled.div`
   border-radius: 20px;
 `;
 const TableNav = styled.div`
-  // display: flex;
-  // align-items: center;
-  // height: 42.5px;
-  // font-family: NotoSansKR, Apple SD Gothic Neo;
-  // font-size: 12px;
-  // font-weight: 500;
-  // letter-spacing: -0.6px;
-  // text-align: left;
-  // color: #84818e;
-  // width: 100%;
-  // margin-left: 15px;
   width: 100%;
   height: 42.5px;
   padding: 15px 0 0 13px;
   border-bottom: 1px solid rgb(35, 33, 42);
-  font-family: Poppins;
+  font-family: "Spoqa Han Sans";
   color: #fff;
   font-size: 15px;
   font-weight: medium;
@@ -1457,7 +1446,7 @@ const TableTitle = styled.thead`
       padding-left: 15px;
     }
     > th {
-      font-family: NotoSansKR, Apple SD Gothic Neo;
+      font-family: "Spoqa Han Sans";
       font-size: 12px;
       font-weight: bold;
       letter-spacing: -0.6px;
@@ -1478,7 +1467,7 @@ const SoloTableTitle = styled.thead`
       padding-left: 15px;
     }
     > th {
-      font-family: NotoSansKR, Apple SD Gothic Neo;
+      font-family: "Spoqa Han Sans";
       font-size: 12px;
       font-weight: bold;
       letter-spacing: -0.6px;
@@ -1494,7 +1483,7 @@ const MapCompetition = styled.tr`
   border-bottom: 1px solid rgb(58, 55, 69);
 
   > td {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     letter-spacing: -0.6px;
     color: rgb(255, 255, 255);
@@ -1526,7 +1515,7 @@ const MapCompetition = styled.tr`
 `;
 
 const WinRateValue = styled.div`
-  font-family: NotoSansKR, Apple SD Gothic Neo;
+  font-family: "Spoqa Han Sans";
   font-size: 12px;
   text-align: center;
   color: #0075bf;
@@ -1556,7 +1545,7 @@ const RecordTable = styled.table`
     }
 
     > th {
-      font-family: NotoSansKR, Apple SD Gothic Neo;
+      font-family: "Spoqa Han Sans";
       font-size: 12px;
       font-weight: bold;
       letter-spacing: -0.6px;
@@ -1586,7 +1575,7 @@ const RecordTable = styled.table`
           margin: 0 4px 0 4px;
         }
         .Rate {
-          font-family: NotoSansKR, Apple SD Gothic Neo;
+          font-family: "Spoqa Han Sans";
           font-size: 12px;
           text-align: center;
           color: rgb(240, 69, 69);
@@ -1595,7 +1584,7 @@ const RecordTable = styled.table`
     }
     > td {
       width: 76px;
-      font-family: NotoSansKR, Apple SD Gothic Neo;
+      font-family: "Spoqa Han Sans";
       font-size: 12px;
       color: rgb(255, 255, 255);
       vertical-align: middle;
@@ -1615,7 +1604,7 @@ const NavBar = styled.div`
   .AverageTime {
     width: 61px;
     height: 17px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 15px;
     line-height: 2.08;
     color: #fff;
@@ -1624,7 +1613,7 @@ const NavBar = styled.div`
   .X {
     width: auto;
     height: 17px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     text-align: left;
     color: rgb(132, 129, 142);
@@ -1636,7 +1625,7 @@ const NavBar = styled.div`
   .Y {
     width: auto;
     height: 17px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     text-align: left;
     color: rgb(132, 129, 142);
@@ -1688,7 +1677,7 @@ const DropDownContainer = styled.div`
     width: 180px;
     height: 34px;
     background-color: #23212a;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
@@ -1740,7 +1729,7 @@ const DropDownContainer = styled.div`
     text-decoration: none;
     padding: 15px 20px;
     display: block;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 11px;
     letter-spacing: -0.55px;
     text-align: left;
