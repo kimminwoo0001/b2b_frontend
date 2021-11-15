@@ -143,7 +143,7 @@
       "sbr": "PR",
       "firstGank": "첫 갱 라인별 횟수",
       "lane": "라인",
-      "gankCount": "갱 횟수",
+      "gankCount": "갱 카운트",
       "supportTime": "라인 별 평균 서포팅 시간",
       "ySupportTime": "서포팅 시간(초)",
       "positionSBR": "포지션 별 PR",

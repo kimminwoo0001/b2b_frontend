@@ -152,29 +152,32 @@ function BanIndex() {
 
   return (
     <BanIndexWrapper>
-      <SideButtons>
+      <BanIndexTabs>
         <AllBtn
           className="All"
           onClick={() => setSide("all")}
           changeColor={side === "all"}
         >
-          ALL
+          <span>ALL</span>
         </AllBtn>
+        <LineMargin></LineMargin>
         <BlueBtn
           className="Blue"
           onClick={() => setSide("blue")}
           changeColor={side === "blue"}
         >
-          BLUE
+          <span>BLUE</span>
         </BlueBtn>
+        <LineMargin></LineMargin>
         <RedBtn
           className="Red"
           onClick={() => setSide("red")}
           changeColor={side === "red"}
         >
-          RED
+          <span>RED</span>
         </RedBtn>
-      </SideButtons>
+        <LastMargin></LastMargin>
+      </BanIndexTabs>
       <div>{selectSide[side]}</div>
     </BanIndexWrapper>
   );
@@ -182,65 +185,96 @@ function BanIndex() {
 
 export default BanIndex;
 
-const BanIndexWrapper = styled.div``;
+const BanIndexWrapper = styled.div`
+`;
 
-const SideButtons = styled.div`
+const BanIndexTabs = styled.div`
   display: flex;
-  padding: 25px 0 19px 0;
-  width: 100%;
+  height: 62px;
+  // margin-top: 21.5px;
+`;
+
+const LineMargin = styled.div`
+  width: 30px;
+  border-bottom: solid 1px #433f4e;
+`;
+
+const LastMargin = styled.div`
+  width:90%;
+  border-bottom: solid 1px #433f4e;
 `;
 
 const AllBtn = styled.button`
-  width: 65px;
-  height: 27px;
-  border-radius: 2px;
-  background-color: #3a3745;
-  font-family: Poppins;
-  font-size: 13px;
-  text-align: center;
-  color: #6b6979;
-  ${(props) =>
+display: flex;
+padding: 20px 0 20px 0;
+align-items: center;
+width: auto;
+border-bottom: solid 1px #433f4e;
+span {
+  height: 22px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+}
+${(props) =>
     props.changeColor &&
     css`
-      background-color: #23212a;
-      color: #f04545;
-      border: solid 1px #f04545;
-    `}
+  border-bottom: solid 1px #fff;
+  `}
 `;
 
 const BlueBtn = styled.button`
-  width: 65px;
-  height: 27px;
-  border-radius: 2px;
-  background-color: #3a3745;
-  font-family: Poppins;
-  font-size: 13px;
-  text-align: center;
-  color: #6b6979;
-  margin: 0 10px 0 10px;
-  ${(props) =>
+display: flex;
+padding: 20px 0 20px 0;
+align-items: center;
+width: auto;
+border-bottom: solid 1px #433f4e;
+span {
+  height: 22px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+}
+${(props) =>
     props.changeColor &&
     css`
-      background-color: #23212a;
-      color: #f04545;
-      border: solid 1px #f04545;
-    `}
+  border-bottom: solid 1px #fff;
+  `}
 `;
 
 const RedBtn = styled.button`
-  width: 65px;
-  height: 27px;
-  border-radius: 2px;
-  background-color: #3a3745;
-  font-family: Poppins;
-  font-size: 13px;
-  text-align: center;
-  color: #6b6979;
-  ${(props) =>
+display: flex;
+padding: 20px 0 20px 0;
+align-items: center;
+width: auto;
+border-bottom: solid 1px #433f4e;
+span {
+  height: 22px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+}
+${(props) =>
     props.changeColor &&
     css`
-      background-color: #23212a;
-      color: #f04545;
-      border: solid 1px #f04545;
-    `}
+  border-bottom: solid 1px #fff;
+  `}
 `;

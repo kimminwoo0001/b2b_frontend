@@ -9,6 +9,8 @@ import TeamComparison from "./TeamComparison/TeamComparison";
 
 import TeamSelectModal from "./TeamComparison/TeamSelectModal";
 import { HandleTab, ResetFilter2 } from "../../redux/modules/filtervalue";
+import BanIndex from "./BanReport/BanIndex";
+import TeamIndex from "./TeamReport/TeamIndex";
 
 function TeamTabs() {
   //팀 보고서 탭
@@ -21,8 +23,8 @@ function TeamTabs() {
   const [whichTeam, setWhichTeam] = useState();
 
   const TeamTab = {
-    0: <BanReport />,
-    1: <TeamReport />,
+    0: <BanIndex />,
+    1: <TeamIndex />,
     2: <TeamComparison />
   };
 
@@ -154,6 +156,8 @@ const TeamTabsWrapper = styled.div`
 `;
 
 const TabContainer = styled.ul`
+  width: auto;
+  height: 60px;
   display: flex;
   /* border-bottom: 1px solid #433f4e; */
   /* padding-bottom: 15px; */
@@ -201,14 +205,16 @@ const Pick = styled.li`
     `}
   div {
     width: auto;
-    height: 17px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
     font-weight: bold;
-  font-size: 18px;
-    line-height: 1.31;
-    letter-spacing: -0.65px;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
-    margin-right: 4px;
+    color: ##84818e;
   }
   img {
   }
@@ -229,14 +235,16 @@ const Statistics = styled.li`
     `}
   div {
     width: auto;
-    height: 17px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
     font-weight: bold;
-  font-size: 18px;
-    line-height: 1.31;
-    letter-spacing: -0.65px;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
-    margin-right: 4px;
+    color: ##84818e;
   }
   img {
   }
@@ -257,14 +265,16 @@ const TeamCompare = styled.li`
     `}
   div {
     width: auto;
-    height: 17px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
     font-weight: bold;
-  font-size: 18px;
-    line-height: 1.31;
-    letter-spacing: -0.65px;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
-    margin-right: 4px;
+    color: ##84818e;
   }
   .GetOpp {
     display: flex;

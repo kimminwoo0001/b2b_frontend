@@ -49,16 +49,18 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
     <>
       <BackScreen
         openModal={openModal}
-        // onClick={() => setOpenModal(false)}
+      // onClick={() => setOpenModal(false)}
       ></BackScreen>
       <TeamModalWrapper openModal={openModal}>
         <ModalNav>
           <label>{t("filters.teamCompareLabel")}</label>
-          <img
-            src="Images/btn-popup-close.png"
-            alt="closeBtn"
-            onClick={() => setOpenModal(false)}
-          />
+          <span>
+            <img
+              src="Images/ic_close_bk_30.svg"
+              alt="closeBtn"
+              onClick={() => setOpenModal(false)}
+            />
+          </span>
         </ModalNav>
         <ContentTitle>Team</ContentTitle>
         <MapTeamContent>
@@ -69,8 +71,7 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
                 onClick={() => dispatch(OppTeam(team))}
                 currentTeam={filters.oppteam === team}
               >
-                <img src={`Images/TeamLogo/${team}.png`} alt="teamLogo" />
-                <div>{team}</div>
+                <div><img src={`Images/TeamLogo/${team}.png`} alt="teamLogo" /> {team}</div>
               </MapTeam>
             );
           })}
@@ -108,34 +109,42 @@ const BackScreen = styled.div`
 
 const TeamModalWrapper = styled.div`
   display: ${(props) => (props.openModal ? "block" : "none")};
-  width: 310px;
-  height: 517px;
-  border: solid 1px rgb(58, 55, 69);
-  background-color: rgb(47, 45, 56);
+  width: 500px;
+  height: auto;
+  border: solid 1px #23212a;
+  background-color: #23212a;
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   opacity: 1;
   position: fixed;
   z-index: 3;
+  border-radius: 20px;
 `;
 
 const ModalNav = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
-  height: 48px;
-  justify-content: space-between;
+  height: 50px;
+  justify-content: center;
   padding: 0 11px;
+  border-bottom: solid 1px #433f4e;
   label {
-    width: auto;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
     font-weight: bold;
-    color: rgb(129, 126, 144);
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    color: #fff;
   }
   img {
-    width: 24px;
-    height: 24px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
   }
 `;
@@ -144,17 +153,22 @@ const ContentTitle = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  height: 34px;
-  background-color: rgb(35, 33, 42);
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
+  height: 18px;
+  // background-color: rgb(35, 33, 42);
+  font-family: SpoqaHanSansNeo;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.63;
   padding: 0px 0 0px 14px;
+  margin: 25px 41px;
   color: rgb(255, 255, 255);
 `;
 
 const MapTeamContent = styled.div`
-  height: 351px;
-  border-bottom: 1px solid rgb(72, 70, 85);
+  height: 190px;
+  //border-bottom: 1px solid rgb(72, 70, 85);
   overflow-y: scroll;
   &::-webkit-scrollbar {
     width: 8px;
@@ -167,15 +181,16 @@ const MapTeamContent = styled.div`
 `;
 
 const ButtonBox = styled.div`
-  padding: 21px 94px 26px 94px;
+  padding: 10px 16px 26px 16px;
+  margin: 0 0 0px 0;
   height: 83px;
   button {
     outline: none;
     text-decoration: none;
-    width: 122px;
-    height: 36px;
-    border-radius: 3px;
-    background-color: rgb(240, 69, 69);
+    width: 100%;
+    height: 60px;
+    border-radius: 20px;
+    background-color: #5942ba;
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 13px;
     font-weight: 500;
@@ -187,22 +202,31 @@ const MapTeam = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  height: 34px;
+  height: 60px;
   cursor: pointer;
   color: rgb(132, 129, 142);
   ${(props) =>
     props.currentTeam &&
     css`
       color: rgb(255, 255, 255);
-      background-color: rgb(58, 55, 69);
+      background-color: #16151c;
+      border-radius: 20px;
     `}
   img {
-    width: 20px;
-    height: 20px;
-    margin: 0 10px 0 15px;
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    vertical-align: middle;
+    margin: 0 10px 1px 15px;
   }
   div {
-    font-family: Poppins;
-    font-size: 12px;
+    margin-left: 50px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 16px;
+    font-weight: 300;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
   }
 `;
