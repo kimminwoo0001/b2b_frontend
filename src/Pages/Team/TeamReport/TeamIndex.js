@@ -142,16 +142,16 @@ function TeamIndex() {
     <TeamIndexWrapper>
       <IndexNav>
         <div className="UnderAvg">
-          <img src="Images/ico-teamreport-num-up.png" alt="avgIcon"></img>
-          {t("team.analysis.above")}
+          <img src="Images/ico-teamreport-num-up.svg" alt="avgIcon"></img>
+          <span>{t("team.analysis.above")}</span>
         </div>
         <div className="AboveAvg">
-          <img src="Images/ico-teamreport-num-down.png" alt="avgIcon"></img>
-          {t("team.analysis.below")}
+          <img src="Images/ico-teamreport-num-down.svg" alt="avgIcon"></img>
+          <span>{t("team.analysis.below")}</span>
         </div>
         <div className="LeagueAvg">
-          <img src="Images/ico-teamreport-num-equal.png" alt="avgIcon"></img>
-          {t("team.analysis.equal")}
+          <img src="Images/ico-teamreport-num-equal.svg" alt="avgIcon"></img>
+          <span>{t("team.analysis.equal")}</span>
         </div>
       </IndexNav>
       <DisplayWithIcon>
@@ -169,8 +169,8 @@ function TeamIndex() {
                   <img
                     src={
                       teamStats?.kill.result === true
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down.png"
+                        ? "Images/ico-teamreport-num-up.svg"
+                        : "Images/ico-teamreport-num-down.svg"
                     }
                     alt="arrowIcon"
                     width="13px"
@@ -197,8 +197,8 @@ function TeamIndex() {
                   <img
                     src={
                       teamStats?.playTime.result === true
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down.png"
+                        ? "Images/ico-teamreport-num-up.svg"
+                        : "Images/ico-teamreport-num-down.svg"
                     }
                     alt="arrowIcon"
                     width="13px"
@@ -229,8 +229,8 @@ function TeamIndex() {
                   <img
                     src={
                       teamStats?.km.result === true
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down.png"
+                        ? "Images/ico-teamreport-num-up.svg"
+                        : "Images/ico-teamreport-num-down.svg"
                     }
                     alt="arrowIcon"
                     width="13px"
@@ -257,8 +257,8 @@ function TeamIndex() {
                   <img
                     src={
                       teamStats?.firstDragon.result === true
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down.png"
+                        ? "Images/ico-teamreport-num-up.svg"
+                        : "Images/ico-teamreport-num-down.svg"
                     }
                     alt="arrowIcon"
                     width="13px"
@@ -357,8 +357,8 @@ function TeamIndex() {
                   <img
                     src={
                       teamStats?.firstHerald.result === true
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down.png"
+                        ? "Images/ico-teamreport-num-up.svg"
+                        : "Images/ico-teamreport-num-down.svg"
                     }
                     alt="arrowIcon"
                     width="13px"
@@ -392,8 +392,8 @@ function TeamIndex() {
                   <img
                     src={
                       teamStats?.timeOfFirstGank.result === true
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down.png"
+                        ? "Images/ico-teamreport-num-up.svg"
+                        : "Images/ico-teamreport-num-down.svg"
                     }
                     alt="arrowIcon"
                     width="13px"
@@ -428,8 +428,8 @@ function TeamIndex() {
                   <img
                     src={
                       teamStats?.firstBaron.result === true
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down.png"
+                        ? "Images/ico-teamreport-num-up.svg"
+                        : "Images/ico-teamreport-num-down.svg"
                     }
                     alt="arrowIcon"
                     width="13px"
@@ -463,8 +463,8 @@ function TeamIndex() {
                   <img
                     src={
                       teamStats?.numberOfTeamFight.result === true
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down.png"
+                        ? "Images/ico-teamreport-num-up.svg"
+                        : "Images/ico-teamreport-num-down.svg"
                     }
                     alt="arrowIcon"
                     width="13px"
@@ -487,6 +487,7 @@ function TeamIndex() {
       <TeamSBRTable>
         <TableTitle>
           <span>{t("team.analysis.sbrLabel")}</span>
+          <img src={`Images/ico-question-mark.svg`} alt="posIcon" />
         </TableTitle>
         <SBRTable>
           <thead>
@@ -656,7 +657,7 @@ const TeamTotalStats = styled.div`
   align-items: center;
   justify-content: center;
   font-family: NotoSansKR;
-  font-size: 12px;
+  font-size: 15px;
   line-height: 21px;
   letter-spacing: -0.6px;
   text-align: left;
@@ -673,11 +674,22 @@ const TeamIndexWrapper = styled.div``;
 const IndexNav = styled.div`
   margin-top: 27px;
   display: flex;
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
-  color: #84818e;
   img {
-    margin: 0 4px 0 14px;
+    width: 19px;
+    height: 19px;
+    margin: 0 4px 4px 14px;
+    object-fit: contain;
+    vertical-align: middle;
+  }
+  span {
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.87;
+    letter-spacing: normal;
+    color: #84818e;
   }
 `;
 
@@ -688,10 +700,11 @@ const DisplayWithIcon = styled.div`
 
 const TeamSBRTable = styled.div`
   width: auto;
-  height: 351px;
+  height: auto;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
   margin-top: 22px;
+  border-radius: 20px;
 `;
 
 const GraphContainer = styled.div`
@@ -722,6 +735,7 @@ const ContentsBox = styled.div`
     border: solid 1px #3a3745;
     background-color: #2f2d38;
     margin-right: 22px;
+    border-radius: 20px;
     .MainIcon {
       margin-right: 18px;
     }
@@ -735,6 +749,7 @@ const ContentsBox = styled.div`
     border: solid 1px #3a3745;
     background-color: #2f2d38;
     margin-right: 59px;
+    border-radius: 20px;
     .MainIcon {
       margin-right: 18px;
     }
@@ -748,6 +763,7 @@ const ContentsBox = styled.div`
     border: solid 1px #3a3745;
     background-color: #2f2d38;
     margin-right: 22px;
+    border-radius: 20px;
     .MainIcon {
       margin-right: 18px;
     }
@@ -761,6 +777,7 @@ const ContentsBox = styled.div`
     border: solid 1px #3a3745;
     background-color: #2f2d38;
     margin-right: 59px;
+    border-radius: 20px;
     .MainIcon {
       margin-right: 18px;
     }
@@ -770,24 +787,28 @@ const ContentsBox = styled.div`
 const DisplayInfo = styled.div`
   .SubTitle {
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-size: 13px;
     color: #84818e;
     margin-bottom: 6px;
   }
   .CalcData {
     display: flex;
     font-family: Poppins;
-    font-size: 14px;
+    font-size: 20px;
     font-weight: bold;
     color: #f04545;
     margin-bottom: 6px;
     img {
+      width: 13px;
+      height: 13px;
+      object-fit: contain;
       margin-right: 8px;
+      margin-top: 3px;
     }
   }
   .AvgData {
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
+    font-size: 13px;
     color: #ffffff;
   }
 `;
@@ -820,6 +841,7 @@ const ContentsBoxTwo = styled.div`
     background-color: #2f2d38;
     margin-right: 22px;
     margin-left: 59px;
+    border-radius: 20px;
     .MainIcon {
       margin-right: 18px;
     }
@@ -832,6 +854,7 @@ const ContentsBoxTwo = styled.div`
     height: 88px;
     border: solid 1px #3a3745;
     background-color: #2f2d38;
+    border-radius: 20px;
     .MainIcon {
       margin-right: 18px;
     }
@@ -846,6 +869,7 @@ const ContentsBoxTwo = styled.div`
     background-color: #2f2d38;
     margin-right: 22px;
     margin-left: 59px;
+    border-radius: 20px;
     .MainIcon {
       margin-right: 18px;
     }
@@ -858,7 +882,7 @@ const ContentsBoxTwo = styled.div`
     height: 88px;
     border: solid 1px #3a3745;
     background-color: #2f2d38;
-
+    border-radius: 20px;
     .MainIcon {
       margin-right: 18px;
     }
@@ -868,28 +892,42 @@ const ContentsBoxTwo = styled.div`
 const TableTitle = styled.div`
   display: flex;
   align-items: center;
-  height: 42.5px;
+  height: 48.5px;
   border-bottom: 1px solid rgb(35, 33, 42);
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 16px;
   font-weight: 500;
-  color: rgb(132, 129, 142);
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.56;
+  letter-spacing: normal;
+  text-align: left;
+  color: #fff;
   padding: 13px 0 12.5px 15px;
   span {
-    margin-right: 10px;
+    margin-right: 11px;
+  }
+  img {
+    width: 15px;
+    height: 15px;
+    margin: 3px 0 3.3px 3px;
+    object-fit: contain;
   }
 `;
 
 const SBRTable = styled.table`
   width: 100%;
+  border-collapse: collapse;
+  border-style: hidden;
   thead > tr {
     width: 100%;
     height: 28px;
     background-color: rgb(58, 55, 69);
     > th {
-      font-family: NotoSansKR, Apple SD Gothic Neo;
-      font-size: 12px;
-      font-weight: bold;
+      font-family: SpoqaHanSansNeo;
+      font-size: 15px;
+      font-weight: 500;
+      font-stretch: normal;
       color: rgb(129, 126, 144);
       vertical-align: middle;
       text-align: center;
@@ -911,15 +949,16 @@ const TableContents = styled.tr`
     width: 85px;
   }
   > td {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
     text-align: center;
     color: rgb(255, 255, 255);
     vertical-align: middle;
     text-align: center;
     img {
-      width: 10.8px;
-      height: 10.8px;
+      width: 13px;
+      height: 13px;
     }
     .Kill {
       color: #ffffff;
@@ -955,6 +994,7 @@ const FirstGankLine = styled.div`
   height: 270px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
+  border-radius: 20px;
 `;
 
 const AvgSupportTime = styled.div`
@@ -962,6 +1002,7 @@ const AvgSupportTime = styled.div`
   height: 270px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
+  border-radius: 20px;
 `;
 
 const NavBar = styled.div`
@@ -969,39 +1010,47 @@ const NavBar = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 42.5px;
+  height: 48.5px;
   border-bottom: 1px solid rgb(35, 33, 42);
   .AverageTime {
     width: 61px;
-    height: 17px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    line-height: 2.08;
-    color: rgb(132, 129, 142);
+    font-family: SpoqaHanSansNeo;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    color: #fff;
     margin-left: 15px;
   }
   .X {
     width: auto;
     /* height: 17px; */
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    text-align: left;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.67;
     color: rgb(132, 129, 142);
     margin-right: 15px;
     ::first-letter {
-      color: #dbdbdb;
+      color: #f14444;
     }
   }
   .Y {
     width: auto;
     /* height: 17px; */
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    text-align: left;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.67;
     color: rgb(132, 129, 142);
     margin-right: 16px;
     ::first-letter {
-      color: #dbdbdb;
+      color: #f14444;
     }
   }
   .Legend {

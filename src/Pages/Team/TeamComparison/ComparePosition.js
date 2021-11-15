@@ -288,9 +288,9 @@ function ComparePosition() {
   return (
     <ComparePositionWrapper>
       <DisplayTeams>
-
+        <div className="RedSide"></div>
         <div className="TeamOne">
-          {teamName?.team}
+          <div>{teamName?.team}</div>
           <img
             src={`Images/TeamLogo/${filters.team}.png`}
             width="54px"
@@ -301,12 +301,18 @@ function ComparePosition() {
 
         <div className="Vs">VS</div>
 
-        <div className="TeamTwo"> <img
-          src={`Images/TeamLogo/${filters.oppteam}.png`}
-          width="54px"
-          height="54px"
-          alt="teamIcon"
-        />{teamName?.oppteam}</div>
+        <div className="TeamTwo">
+          <img
+            src={`Images/TeamLogo/${filters.oppteam}.png`}
+            width="54px"
+            height="54px"
+            alt="teamIcon"
+          />
+          <div>
+            {teamName?.oppteam}
+          </div>
+        </div>
+        <div className="BlueSide"></div>
       </DisplayTeams>
       <TopGraph>
         <NavBar>
@@ -623,43 +629,102 @@ export default ComparePosition;
 const ComparePositionWrapper = styled.div``;
 
 const DisplayTeams = styled.div`
-background-color: #16151a;
-position: relative;
-color: #fff;
-display: flex;
-justify-content: space-around;
-padding : 60px 20px;
-margin-bottom: 20px;
-
-.RedSide {
+  width: 100%;
+  background-color: #16151a;
+  position: relative;
+  color: #fff;
   display: flex;
-  flex-direction: column;
-  width: 475px;
-  align-items: center;
-  font-family: Poppins;
-  font-size: 30px;
-  font-weight: bold;
-}
+  //justify-content: space-around;
+  margin: 20px 0;
+  border-radius: 20px;
+  background-color: #2f2d38;
 
-.BlueSide {
-  display: flex;
-  flex-direction: column;
-  width: 475px;
-  align-items: center;
-  font-family: Poppins;
-  font-size: 30px;
-  font-weight: bold;
-  text-align: right;
-}
+  .RedSide {
+    width: 150px;
+    height: 77px;
+    margin: 0 115px 0 0;
+    object-fit: contain;
+    border-radius: 20px;
+    background-image: linear-gradient(306deg, rgba(47, 45, 56, 0) 43%, #f04545 105%);
+  }
 
-.Vs {
-  position: absolute;
-  top: 50%;
-  font-family: Poppins;
-  font-size: 30px;
-  font-weight: bold;
-  color :#6b6979 ;  
-}
+  .BlueSide {
+    width: 150px;
+    height: 77px;
+    margin: 0 0 0 87px;
+    object-fit: contain;
+    border-radius: 20px;
+    background-image: linear-gradient(54deg, rgba(56, 53, 45, 0) 37%, #0084d8 115%);
+  }
+
+  .TeamOne {
+    display: flex;
+    font-family: SpoqaHanSansNeo;
+    width: 215px;
+    margin: 0 0px 0 0px;
+    div {
+      width: 215px;
+      height: 19px;
+      margin: 30px 0px 28px 0;
+      font-family: SpoqaHanSansNeo;
+      font-size: 15px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.0;
+      letter-spacing: normal;
+      text-align: right;
+      color: #84818e;
+    }
+    img {
+      width: 54px;
+      height: 54px;
+      margin: 12px 0px 11px 15px;
+      object-fit: contain;
+    }
+  }
+
+  .TeamTwo {
+    display: flex;
+    font-family: SpoqaHanSansNeo;
+    width: 215px;
+    margin: 0 0px 0 0px;
+    div {
+      width:215px;
+      height: 19px;
+      margin: 30px 0px 28px 0;
+      font-family: SpoqaHanSansNeo;
+      font-size: 15px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.0;
+      letter-spacing: normal;
+      text-align: left;
+      color: #84818e;
+    }
+    img {
+      width: 54px;
+      height: 54px;
+      margin: 12px 15px 11px 0;
+      object-fit: contain;
+    }
+  }
+
+  .Vs {
+    width: 37px;
+    height: 37px;
+    margin: 20px 63px 20px 64px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 30px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #6b6979;
+  }
 `;
 
 const LegendWrapper = styled.div`
@@ -692,6 +757,7 @@ const TopGraph = styled.div`
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
   margin-top: 22px;
+  border-radius: 20px;
 `;
 
 const JngGraph = styled(TopGraph)``;
@@ -707,39 +773,54 @@ const NavBar = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 42.5px;
+  height: 50.5px;
   border-bottom: 1px solid rgb(35, 33, 42);
   .AverageTime {
     width: 61px;
 
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    line-height: 2.08;
-    color: rgb(132, 129, 142);
-    margin-left: 15px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+    margin-left: 25px;
   }
   .X {
     width: auto;
 
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.67;
+    letter-spacing: normal;
     text-align: left;
-    color: rgb(132, 129, 142);
+    color: #84818e;
     margin-right: 15px;
     ::first-letter {
-      color: #dbdbdb;
+      color: #f14444;
     }
   }
   .Y {
     width: auto;
 
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.67;
+    letter-spacing: normal;
     text-align: left;
-    color: rgb(132, 129, 142);
+    color: #84818e;
     margin-right: 16px;
     ::first-letter {
-      color: #dbdbdb;
+      color: #f14444;
     }
   }
   .Legend {

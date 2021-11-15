@@ -21,6 +21,7 @@ const SearchBoxWrapper = styled.div`
   padding: 9px 146px 9px 23px;
   border-radius: 26px;
   background-color: #23212a;
+  visibility: hidden; // 숨김
   img {
     width: 24px;
     height: 24px;

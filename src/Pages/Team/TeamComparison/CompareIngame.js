@@ -67,8 +67,8 @@ function CompareIngame() {
     }
     axiosRequest(url, params, function (e) {
       setTeamName({
-        team: e.data[filters.team].teamName,
-        oppteam: e.data[filters.oppteam].teamName
+        team: filters.team,
+        oppteam: filters.oppteam
       });
       let gankTicks = "";
       //첫 갱크 데이터 min,max,stepsize 값
@@ -149,7 +149,10 @@ function CompareIngame() {
   };
 
   const renderColorfulLegendText = (value: string, entry: any) => {
-    return <span style={{ color: "white", fontSize: "12px" }}>{value}</span>;
+    return <span style={{
+      color: "white", fontSize: "15px", objectFit: "contain", verticalAlign: "middle"
+    }
+    }> {value}</span >;
   };
 
   //그래프 툴팁 커스텀
@@ -175,183 +178,6 @@ function CompareIngame() {
   if (loading) return <LoadingImg />;
   return (
     <CompareIngameWrapper>
-      <DisplayTeams>
-        <div className="RedSide">
-          <img
-            src={`Images/TeamLogo/${filters.team}.png`}
-            width="54px"
-            height="54px"
-            alt="teamIcon"
-          />
-          <div className="TeamOne">{teamName?.team}</div>
-        </div>
-        <div className="Vs">VS</div>
-        <div className="BlueSide">
-          <img
-            src={`Images/TeamLogo/${filters.oppteam}.png`}
-            width="54px"
-            height="54px"
-            alt="teamIcon"
-          />
-          <div className="TeamTwo">{teamName?.oppteam}</div>
-
-        </div>
-
-      </DisplayTeams>
-      <CompareStats>
-        {/* <GameDataBox>
-          <RedTeamData
-          changeColor={redData?.IngameStats["gameTime"].result === true}
-          >{`${redData?.IngameStats["match"]}${t("team.comparison.total")} ${redData?.IngameStats["win"]
-            }${t("team.comparison.win")} ${redData?.IngameStats["lose"]}${t(
-              "team.comparison.lose"
-            )}`}</RedTeamData>
-          <AverageLabel>{t("team.comparison.record")}</AverageLabel>
-          <BlueTeamData
-          changeColor={blueData?.IngameStats["gameTime"].result === true}
-          >{`${blueData?.IngameStats["match"]}${t("team.comparison.total")} ${blueData?.IngameStats["win"]
-            }${t("team.comparison.win")} ${blueData?.IngameStats["lose"]}${t(
-              "team.comparison.lose"
-            )}`}</BlueTeamData>
-        </GameDataBox> */}
-        <GameDataBox>
-          <RedTeamData
-            changeColor={redData?.IngameStats["gameTime"].result === true}
-          >{`${redData?.IngameStats["gameTime"]?.minute.toFixed(0)}${t(
-            "team.comparison.min"
-          )} ${redData?.IngameStats["gameTime"]?.second.toFixed(0)}${t(
-            "team.comparison.sec"
-          )}`}</RedTeamData>
-          <AverageLabel>{t("team.comparison.playTime")}</AverageLabel>
-          <BlueTeamData
-            changeColor={blueData?.IngameStats["gameTime"].result === true}
-          >{`${blueData?.IngameStats["gameTime"]?.minute.toFixed(0)}${t(
-            "team.comparison.min"
-          )} ${blueData?.IngameStats["gameTime"]?.second.toFixed(0)}${t(
-            "team.comparison.sec"
-          )}`}</BlueTeamData>
-        </GameDataBox>
-        <GameDataBox>
-          <RedTeamData
-            changeColor={redData?.IngameStats["firstDragon"].result === true}
-          >{`${redData?.IngameStats["firstDragon"].minute.toFixed(0)}${t(
-            "team.comparison.min"
-          )} ${redData?.IngameStats["firstDragon"].second.toFixed(0)}${t(
-            "team.comparison.sec"
-          )}`}</RedTeamData>
-          <AverageLabel>{t("team.comparison.firstdragon")}</AverageLabel>
-          <BlueTeamData
-            changeColor={blueData?.IngameStats["firstDragon"].result === true}
-          >{`${blueData?.IngameStats["firstDragon"].minute.toFixed(0)}${t(
-            "team.comparison.min"
-          )} ${blueData?.IngameStats["firstDragon"].second.toFixed(0)}${t(
-            "team.comparison.sec"
-          )}`}</BlueTeamData>
-        </GameDataBox>
-        <GameDataBox>
-          <RedTeamData
-            changeColor={redData?.IngameStats["dragons"].result === true}
-          >{`${redData?.IngameStats["dragons"].value.toFixed(1)}${t(
-            "team.comparison.times"
-          )}`}</RedTeamData>
-          <AverageLabel>{t("team.comparison.slayedDragon")}</AverageLabel>
-          <BlueTeamData
-            changeColor={blueData?.IngameStats["dragons"].result === true}
-          >{`${blueData?.IngameStats["dragons"].value.toFixed(
-            1)}${t(
-              "team.comparison.times"
-            )}`}</BlueTeamData>
-        </GameDataBox>
-        <GameDataBox>
-          <RedTeamData
-            changeColor={redData?.IngameStats["firstHerald"].result === true}
-          >{`${redData?.IngameStats["firstHerald"].minute.toFixed(0)}${t(
-            "team.comparison.min"
-          )} ${redData?.IngameStats["firstHerald"].second.toFixed(0)}${t(
-            "team.comparison.sec"
-          )}`}</RedTeamData>
-          <AverageLabel>{t("team.comparison.firstHerald")}</AverageLabel>
-          <BlueTeamData
-            changeColor={blueData?.IngameStats["firstHerald"].result === true}
-          >{`${blueData?.IngameStats["firstHerald"].minute.toFixed(0)}${t(
-            "team.comparison.min"
-          )} ${blueData?.IngameStats["firstHerald"].second.toFixed(0)}${t(
-            "team.comparison.sec"
-          )}`}</BlueTeamData>
-        </GameDataBox>
-        <GameDataBox>
-          <RedTeamData
-            changeColor={redData?.IngameStats["heralds"].result === true}
-          >{`${redData?.IngameStats["heralds"].value.toFixed(1)}${t(
-            "team.comparison.times"
-          )}`}</RedTeamData>
-          <AverageLabel>{t("team.comparison.avgHerald")}</AverageLabel>
-          <BlueTeamData
-            changeColor={blueData?.IngameStats["heralds"].result === true}
-          >{`${blueData?.IngameStats["heralds"].value.toFixed(
-            1
-          )}${t(
-            "team.comparison.times"
-          )}`}</BlueTeamData>
-        </GameDataBox>
-        <GameDataBox>
-          <RedTeamData
-            changeColor={redData?.IngameStats["barons"].result === true}
-          >{`${redData?.IngameStats["barons"].value.toFixed(1)}${t(
-            "team.comparison.times"
-          )}`}</RedTeamData>
-          <AverageLabel>{t("team.comparison.baron")}</AverageLabel>
-          <BlueTeamData
-            changeColor={blueData?.IngameStats["barons"].result === true}
-          >{`${blueData?.IngameStats["barons"].value.toFixed(
-            1
-          )}${t(
-            "team.comparison.times"
-          )}`}</BlueTeamData>
-        </GameDataBox>
-        <GameDataBox>
-          <RedTeamData
-            changeColor={
-              redData?.IngameStats["timeOfFirstGank"].result === true
-            }
-          >{`${redData?.IngameStats["timeOfFirstGank"].minute.toFixed(0)}${t(
-            "team.comparison.min"
-          )} ${redData?.IngameStats["timeOfFirstGank"].second.toFixed(0)}${t(
-            "team.comparison.sec"
-          )}`}</RedTeamData>
-          <AverageLabel>{t("team.comparison.firstGank")}</AverageLabel>
-          <BlueTeamData
-            changeColor={
-              blueData?.IngameStats["timeOfFirstGank"].result === true
-            }
-          >{`${blueData?.IngameStats["timeOfFirstGank"].minute.toFixed(0)}${t(
-            "team.comparison.min"
-          )} ${blueData?.IngameStats["timeOfFirstGank"].second.toFixed(0)}${t(
-            "team.comparison.sec"
-          )}`}</BlueTeamData>
-        </GameDataBox>
-        <GameDataBox>
-          <RedTeamData
-            changeColor={
-              redData?.IngameStats["numberOfTeamFight"].result === true
-            }
-          >{`${redData?.IngameStats["numberOfTeamFight"].winRate.toFixed(
-            1
-          )}${t(
-            "team.comparison.times"
-          )}`}</RedTeamData>
-          <AverageLabel>{t("team.comparison.avgTeamFight")}</AverageLabel>
-          <BlueTeamData
-            changeColor={
-              blueData?.IngameStats["numberOfTeamFight"].result === true
-            }
-          >{`${blueData?.IngameStats["numberOfTeamFight"].winRate.toFixed(
-            1
-          )}${t(
-            "team.comparison.times"
-          )}`}</BlueTeamData>
-        </GameDataBox>
-      </CompareStats>
       <ChartBox>
         <FirstGankChart>
           <NavBar>
@@ -369,7 +195,7 @@ function CompareIngame() {
             <BarChart
               width={520}
               height={250}
-              margin={{ top: 20, right: 20, bottom: 5, left: -20 }}
+              margin={{ top: 20, right: 10, bottom: 5, left: 0 }}
               data={gank ? Object.values(gank) : 0}
             >
               <Tooltip
@@ -380,7 +206,7 @@ function CompareIngame() {
               <XAxis
                 dataKey="x"
                 stroke="#3a3745 "
-                tick={{ fill: "#84818e", fontSize: 12 }}
+                tick={{ fill: "#84818e", fontSize: 15 }}
               />
               <YAxis
                 type="number"
@@ -388,17 +214,18 @@ function CompareIngame() {
                 stroke="#3a3745 "
                 tick={{
                   fill: "#84818e",
-                  fontSize: 12
+                  fontSize: 15
                 }}
                 ticks={gankTicks}
               />
               <Legend
-                verticalAlign="top"
+                verticalAlign="bottom"
                 align="left"
-                wrapperStyle={{ top: 10, left: 20 }}
+                wrapperStyle={{ top: 220, left: 230 }}
                 height={36}
                 iconType="plainline"
                 formatter={renderColorfulLegendText}
+                iconSize={20}
               />
               <Bar dataKey="y1" name={Team} fill="#f04545" barSize={28} />
               <Bar dataKey="y2" name={OppTeam} fill="#005489" barSize={28} />
@@ -420,8 +247,8 @@ function CompareIngame() {
           <CompareTeamStat>
             <BarChart
               width={520}
-              height={250}
-              margin={{ top: 20, right: 20, bottom: 5, left: -20 }}
+              height={220}
+              margin={{ top: 0, right: 10, bottom: 5, left: 0 }}
               data={support ? Object.values(support) : 0}
             >
               <Tooltip
@@ -432,7 +259,7 @@ function CompareIngame() {
               <XAxis
                 dataKey="x"
                 stroke="#3a3745 "
-                tick={{ fill: "#84818e", fontSize: 12 }}
+                tick={{ fill: "#84818e", fontSize: 15 }}
               />
               <YAxis
                 domain={[
@@ -442,17 +269,18 @@ function CompareIngame() {
                 stroke="#3a3745 "
                 tick={{
                   fill: "#84818e",
-                  fontSize: 12
+                  fontSize: 15
                 }}
                 ticks={supportTicks}
               />
               <Legend
                 verticalAlign="top"
                 align="left"
-                wrapperStyle={{ top: 10, left: 20 }}
+                wrapperStyle={{ top: 220, left: 230 }}
                 height={36}
                 iconType="plainline"
                 formatter={renderColorfulLegendText}
+                iconSize={20}
               />
               <Bar dataKey="y1" name={Team} fill="#f04545" barSize={28} />
               <Bar dataKey="y2" name={OppTeam} fill="#005489" barSize={28} />
@@ -460,6 +288,192 @@ function CompareIngame() {
           </CompareTeamStat>
         </LineSupportChart>
       </ChartBox>
+      <CompareDisplay>
+        <DisplayTeams>
+          <div className="RedSide">
+            <img
+              src={`Images/TeamLogo/${filters.team}.png`}
+              width="100px"
+              height="100px"
+              alt="teamIcon"
+            />
+            <div className="TeamOne">{teamName?.team}</div>
+          </div>
+          <div className="Vs">VS</div>
+          <div className="BlueSide">
+            <img
+              src={`Images/TeamLogo/${filters.oppteam}.png`}
+              width="100px"
+              height="100px"
+              alt="teamIcon"
+            />
+            <div className="TeamTwo">{teamName?.oppteam}</div>
+
+          </div>
+
+        </DisplayTeams>
+        <CompareStats>
+          {/* <GameDataBox>
+          <RedTeamData
+          changeColor={redData?.IngameStats["gameTime"].result === true}
+          >{`${redData?.IngameStats["match"]}${t("team.comparison.total")} ${redData?.IngameStats["win"]
+            }${t("team.comparison.win")} ${redData?.IngameStats["lose"]}${t(
+              "team.comparison.lose"
+            )}`}</RedTeamData>
+          <AverageLabel>{t("team.comparison.record")}</AverageLabel>
+          <BlueTeamData
+          changeColor={blueData?.IngameStats["gameTime"].result === true}
+          >{`${blueData?.IngameStats["match"]}${t("team.comparison.total")} ${blueData?.IngameStats["win"]
+            }${t("team.comparison.win")} ${blueData?.IngameStats["lose"]}${t(
+              "team.comparison.lose"
+            )}`}</BlueTeamData>
+        </GameDataBox> */}
+          <GameDataBox>
+            <RedTeamData
+              changeColor={redData?.IngameStats["gameTime"].result === true}
+            >{`${redData?.IngameStats["gameTime"]?.minute.toFixed(0)}${t(
+              "team.comparison.min"
+            )} ${redData?.IngameStats["gameTime"]?.second.toFixed(0)}${t(
+              "team.comparison.sec"
+            )}`}</RedTeamData>
+            <AverageLabel>{t("team.comparison.playTime")}</AverageLabel>
+            <BlueTeamData
+              changeColor={blueData?.IngameStats["gameTime"].result === true}
+            >{`${blueData?.IngameStats["gameTime"]?.minute.toFixed(0)}${t(
+              "team.comparison.min"
+            )} ${blueData?.IngameStats["gameTime"]?.second.toFixed(0)}${t(
+              "team.comparison.sec"
+            )}`}</BlueTeamData>
+          </GameDataBox>
+          <div className="under-line"></div>
+          <GameDataBox >
+            <RedTeamData
+              changeColor={redData?.IngameStats["firstDragon"].result === true}
+            >{`${redData?.IngameStats["firstDragon"].minute.toFixed(0)}${t(
+              "team.comparison.min"
+            )} ${redData?.IngameStats["firstDragon"].second.toFixed(0)}${t(
+              "team.comparison.sec"
+            )}`}</RedTeamData>
+            <AverageLabel>{t("team.comparison.firstdragon")}</AverageLabel>
+            <BlueTeamData
+              changeColor={blueData?.IngameStats["firstDragon"].result === true}
+            >{`${blueData?.IngameStats["firstDragon"].minute.toFixed(0)}${t(
+              "team.comparison.min"
+            )} ${blueData?.IngameStats["firstDragon"].second.toFixed(0)}${t(
+              "team.comparison.sec"
+            )}`}</BlueTeamData>
+          </GameDataBox>
+          <div className="under-line"></div>
+          <GameDataBox>
+            <RedTeamData
+              changeColor={redData?.IngameStats["dragons"].result === true}
+            >{`${redData?.IngameStats["dragons"].value.toFixed(1)}${t(
+              "team.comparison.times"
+            )}`}</RedTeamData>
+            <AverageLabel>{t("team.comparison.slayedDragon")}</AverageLabel>
+            <BlueTeamData
+              changeColor={blueData?.IngameStats["dragons"].result === true}
+            >{`${blueData?.IngameStats["dragons"].value.toFixed(
+              1)}${t(
+                "team.comparison.times"
+              )}`}</BlueTeamData>
+          </GameDataBox>
+          <div className="under-line"></div>
+          <GameDataBox>
+            <RedTeamData
+              changeColor={redData?.IngameStats["firstHerald"].result === true}
+            >{`${redData?.IngameStats["firstHerald"].minute.toFixed(0)}${t(
+              "team.comparison.min"
+            )} ${redData?.IngameStats["firstHerald"].second.toFixed(0)}${t(
+              "team.comparison.sec"
+            )}`}</RedTeamData>
+            <AverageLabel>{t("team.comparison.firstHerald")}</AverageLabel>
+            <BlueTeamData
+              changeColor={blueData?.IngameStats["firstHerald"].result === true}
+            >{`${blueData?.IngameStats["firstHerald"].minute.toFixed(0)}${t(
+              "team.comparison.min"
+            )} ${blueData?.IngameStats["firstHerald"].second.toFixed(0)}${t(
+              "team.comparison.sec"
+            )}`}</BlueTeamData>
+          </GameDataBox>
+          <div className="under-line"></div>
+          <GameDataBox>
+            <RedTeamData
+              changeColor={redData?.IngameStats["heralds"].result === true}
+            >{`${redData?.IngameStats["heralds"].value.toFixed(1)}${t(
+              "team.comparison.times"
+            )}`}</RedTeamData>
+            <AverageLabel>{t("team.comparison.avgHerald")}</AverageLabel>
+            <BlueTeamData
+              changeColor={blueData?.IngameStats["heralds"].result === true}
+            >{`${blueData?.IngameStats["heralds"].value.toFixed(
+              1
+            )}${t(
+              "team.comparison.times"
+            )}`}</BlueTeamData>
+          </GameDataBox>
+          <div className="under-line"></div>
+          <GameDataBox>
+            <RedTeamData
+              changeColor={redData?.IngameStats["barons"].result === true}
+            >{`${redData?.IngameStats["barons"].value.toFixed(1)}${t(
+              "team.comparison.times"
+            )}`}</RedTeamData>
+            <AverageLabel>{t("team.comparison.baron")}</AverageLabel>
+            <BlueTeamData
+              changeColor={blueData?.IngameStats["barons"].result === true}
+            >{`${blueData?.IngameStats["barons"].value.toFixed(
+              1
+            )}${t(
+              "team.comparison.times"
+            )}`}</BlueTeamData>
+          </GameDataBox>
+          <div className="under-line"></div>
+          <GameDataBox>
+            <RedTeamData
+              changeColor={
+                redData?.IngameStats["timeOfFirstGank"].result === true
+              }
+            >{`${redData?.IngameStats["timeOfFirstGank"].minute.toFixed(0)}${t(
+              "team.comparison.min"
+            )} ${redData?.IngameStats["timeOfFirstGank"].second.toFixed(0)}${t(
+              "team.comparison.sec"
+            )}`}</RedTeamData>
+            <AverageLabel>{t("team.comparison.firstGank")}</AverageLabel>
+            <BlueTeamData
+              changeColor={
+                blueData?.IngameStats["timeOfFirstGank"].result === true
+              }
+            >{`${blueData?.IngameStats["timeOfFirstGank"].minute.toFixed(0)}${t(
+              "team.comparison.min"
+            )} ${blueData?.IngameStats["timeOfFirstGank"].second.toFixed(0)}${t(
+              "team.comparison.sec"
+            )}`}</BlueTeamData>
+          </GameDataBox>
+          <div className="under-line"></div>
+          <GameDataBox>
+            <RedTeamData
+              changeColor={
+                redData?.IngameStats["numberOfTeamFight"].result === true
+              }
+            >{`${redData?.IngameStats["numberOfTeamFight"].winRate.toFixed(
+              1
+            )}${t(
+              "team.comparison.times"
+            )}`}</RedTeamData>
+            <AverageLabel>{t("team.comparison.avgTeamFight")}</AverageLabel>
+            <BlueTeamData
+              changeColor={
+                blueData?.IngameStats["numberOfTeamFight"].result === true
+              }
+            >{`${blueData?.IngameStats["numberOfTeamFight"].winRate.toFixed(
+              1
+            )}${t(
+              "team.comparison.times"
+            )}`}</BlueTeamData>
+          </GameDataBox>
+        </CompareStats>
+      </CompareDisplay>
     </CompareIngameWrapper>
   );
 }
@@ -504,55 +518,86 @@ const CustomTool = styled.div`
 `;
 
 const CompareIngameWrapper = styled.div`
+  display: flex;
+`;
+
+const CompareDisplay = styled.div`
+  width: 550px;
+  margin-top: 30px;
+  border-radius : 20px;
+  background-color: #2f2d38;
 `;
 
 const DisplayTeams = styled.div`
-  background-color: #16151a;
   position: relative;
   color: #fff;
   display: flex;
   justify-content: space-around;
-  padding : 60px 20px;
-  margin-bottom: 20px;
-
+  padding : 10px 10px;
+  margin-bottom: 0px;
   .RedSide, .BlueSide {
     display: flex;
     flex-direction: column;
-    width: 475px;
+    width: 275px;
     align-items: center;
-    font-family: Poppins;
-    font-size: 30px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 20px;
     font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.25;
   }
+
+  .RedSide {
+    padding-right: 40px; 
+  }
+
+  .BlueSide {
+    padding-left: 40px; 
+  }
+
 
   .Vs {
     position: absolute;
     top: 50%;
     font-family: Poppins;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: bold;
     color :#6b6979 ;  
   }
 `;
 
-const CompareStats = styled.div``;
+const CompareStats = styled.div`
+  .under-line {
+    width: 85%;
+    display: table; 
+    margin-left: auto; 
+    margin-right: auto;
+    border-top: 1px solid  #433f4e;
+  }
+`;
 
 
 const GameDataBox = styled.div`
   display: flex;
+  width: 100%;
   justify-content: center;
   align-items: center;
-  padding: 10px 140px;
-  border-top: 1px solid  #433f4e;
+  padding: 1px 0px;
   color: #fff;
+  
 `;
 
 const RedTeamData = styled.div`
   width:30%;
   text-align: center;
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 23px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 18px;
   font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.39;
+  letter-spacing: normal;
   ${(props) =>
     props.changeColor ?
       css`
@@ -570,22 +615,31 @@ const AverageLabel = styled.div`
   align-items: center;
   justify-content: center;
   width:30%;
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 23px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 18px;
   font-weight: 300;
-  letter-spacing: -0.95px;
-  margin: 0 30px;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.39;
+  letter-spacing: normal;
+  text-align: left;
+  color: #fff;
+  margin: 0 0px;
 `;
 
 
 const BlueTeamData = styled.div`
   display: flex;
   justify-content: space-around;
-  padding : 20px;
+  padding : 15px;
   width:30%;
-  font-size: 23px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 18px;
   font-weight: bold;
-  font-family: NotoSansKR, Apple SD Gothic Neo;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.39;
+  letter-spacing: normal;
   ${(props) =>
     props.changeColor ?
       css`
@@ -600,23 +654,26 @@ const BlueTeamData = styled.div`
 // chart styling
 
 const ChartBox = styled.div`
-  display: flex;
   justify-content: space-between;
   margin-top: 31px;
+  margin-right: 22px;
 `;
 
 const FirstGankChart = styled.div`
   width: 538px;
-  height: 293px;
+  height: 317px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
+  border-radius: 20px;
+  margin-bottom: 15px;
 `;
 
 const LineSupportChart = styled.div`
   width: 538px;
-  height: 293px;
+  height: 317px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
+  border-radius: 20px;
 `;
 
 const NavBar = styled.div`
@@ -624,39 +681,51 @@ const NavBar = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 42.5px;
+  height: 50.5px;
   border-bottom: 1px solid rgb(35, 33, 42);
   .AverageTime {
     width: 61px;
-
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    line-height: 2.08;
-    color: rgb(132, 129, 142);
-    margin-left: 15px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+    margin-left: 20px;
   }
   .X {
     width: auto;
-
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.67;
+    letter-spacing: normal;
     text-align: left;
-    color: rgb(132, 129, 142);
+    color: #84818e;
     margin-right: 15px;
     ::first-letter {
-      color: #dbdbdb;
+      color: #f14444;
     }
   }
   .Y {
     width: auto;
-
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.67;
+    letter-spacing: normal;
     text-align: left;
-    color: rgb(132, 129, 142);
+    color: #84818e;
     margin-right: 16px;
     ::first-letter {
-      color: #dbdbdb;
+      color: #f14444;
     }
   }
   .Legend {
@@ -666,5 +735,5 @@ const NavBar = styled.div`
 
 const CompareTeamStat = styled.div`
   /* padding: 20px; */
-  height: 250px;
+  height: 317px;
 `;
