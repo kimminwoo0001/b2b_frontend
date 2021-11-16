@@ -845,7 +845,7 @@ const OppValue = styled.div`
 `;
 
 const DisplayValue = styled.div`
-  height: 58px;
+  height: 32px;
   border-bottom: 1px solid #433f4e;
   display: flex;
   align-items: center;
@@ -886,7 +886,7 @@ const DisplayValue = styled.div`
     align-items: center;
     width: 489px;
     div {
-      font-size: 23px;
+      font-size: 16px;
     }
   }
 

@@ -80,12 +80,12 @@ const NormalInfoTab = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100px;
+  width: 96px;
   height: 36px;
   color: rgb(132, 129, 142);
   border-bottom: 1px solid #433f4e;
   font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 18px;
+  font-size: 16px;
   padding-bottom: 20px;
 
   ${(props) =>
@@ -103,13 +103,13 @@ const StatTab = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100px;
+  width: 96px;
   height: 36px;
   color: rgb(132, 129, 142);
   border-bottom: 1px solid #433f4e;
 
   font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 18px;
+  font-size: 16px;
   padding-bottom: 20px;
 
   ${(props) =>
@@ -127,13 +127,13 @@ const OppStatTab = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 150px;
+  width: 130px;
   height: 36px;
   color: rgb(132, 129, 142);
   border-bottom: 1px solid #433f4e;
 
   font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 18px;
+  font-size: 16px;
   padding-bottom: 20px;
 
   ${(props) =>

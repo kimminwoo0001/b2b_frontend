@@ -644,17 +644,23 @@ function Stats() {
           </SimpleCompare>
           <ComplexCompare>
             <ComplexBox>
-              <div className="ComplexTitle">
+              <ComplexTitle>
                 <div>{t("solo.comparison.laneGraph")}</div>
-                <Tippy // options
+                <div className="legends">
+                  <div className="redColorBox"></div>
+                  <div className="playerName">{filters.player}</div>
+                  <div className="blueColorBox"></div>
+                  <div className="playerName">{filters.oppplayer}</div>
+                </div>
+                {/* <Tippy // options
                   duration={0}
                   delay={[300, 0]}
                   content={<StatsTooltip lineStat={lineStat} />}
                   placement="top"
                 >
                   <img src="Images/ico-question-mark.png" alt="icon" />
-                </Tippy>
-              </div>
+                </Tippy> */}
+              </ComplexTitle>
               <CompareByProgressBar>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
@@ -702,7 +708,7 @@ function Stats() {
                       cursor={{ fill: "#23212a" }}
                       content={<CustomTooltip dataKey="value" />}
                     />
-                    <Legend formatter={renderColorfulLegendText} />
+                    {/* <Legend formatter={renderColorfulLegendText} /> */}
                     <ReferenceLine x={0} stroke="#4e4c5c" />
                     <Bar
                       dataKey="x1"
@@ -723,17 +729,23 @@ function Stats() {
               </CompareByProgressBar>
             </ComplexBox>
             <ComplexBox>
-              <div className="ComplexTitle">
+              <ComplexTitle>
                 <div>{t("solo.comparison.teamGraph")}</div>
-                <Tippy // options
+                <div className="legends">
+                  <div className="redColorBox"></div>
+                  <div className="playerName">{filters.player}</div>
+                  <div className="blueColorBox"></div>
+                  <div className="playerName">{filters.oppplayer}</div>
+                </div>
+                {/* <Tippy // options
                   duration={0}
                   delay={[300, 0]}
                   content={<StatsTooltip match={match} />}
                   placement="top"
                 >
                   <img src="Images/ico-question-mark.png" alt="icon" />
-                </Tippy>
-              </div>
+                </Tippy> */}
+              </ComplexTitle>
 
               <CompareByProgressBar>
                 <ResponsiveContainer width="100%" height="100%">
@@ -782,7 +794,7 @@ function Stats() {
                       cursor={{ fill: "#23212a" }}
                       content={<CustomTooltip />}
                     />
-                    <Legend formatter={renderColorfulLegendText} />
+                    {/* <Legend formatter={renderColorfulLegendText} /> */}
                     <ReferenceLine x={0} stroke="#4e4c5c" />
                     <Bar
                       dataKey="x1"
@@ -1146,25 +1158,7 @@ const SimpleBox6 = styled(SimpleBox)`
 const ComplexBox = styled.div`
   width: 516px;
   margin-right: 22px;
-  .ComplexTitle {
-    display: flex;
-    align-items: center;
-    background-color: rgb(47, 45, 56);
-    height: 42.5px;
-    border-bottom: 1px solid rgb(58, 55, 69);
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: -0.6px;
-    text-align: left;
-    color: #fff;
-    padding: 0px 0 0 15px;
-    img {
-      margin-left: 15px;
-    }
-  }
+
   .ComplexHeader {
     height: 28px;
     display: flex;
@@ -1201,6 +1195,48 @@ const ComplexBox = styled.div`
   }
 `;
 
+const ComplexTitle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(47, 45, 56);
+  height: 42.5px;
+  border-bottom: 1px solid rgb(58, 55, 69);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  font-family: NotoSansKR, Apple SD Gothic Neo;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: -0.6px;
+  text-align: left;
+  color: #fff;
+  padding: 0px 0 0 15px;
+
+  .legends {
+    display: flex;
+    width: 120px;
+
+    .redColorBox {
+      width: 12px;
+      height: 12px;
+      background-color: #f04545;
+      margin-right: 5px;
+    }
+
+    .playerName {
+      margin-right: 5px;
+      color: #817e90;
+      font-size: 13px;
+    }
+
+    .blueColorBox {
+      width: 12px;
+      height: 12px;
+      background-color: #0075bf;
+      margin-right: 5px;
+    }
+  }
+`;
 const CompareByProgressBar = styled.div`
   width: 516px;
   height: 338px;
