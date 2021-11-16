@@ -9,7 +9,6 @@ import XLSX from "xlsx";
 import timeFormat from "../../lib/timeFormat";
 import Modal from "react-modal";
 
-
 const customStyles = {
   overlay: {
     position: "fixed",
@@ -17,7 +16,7 @@ const customStyles = {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.75)"
+    backgroundColor: "rgba(0, 0, 0, 0.75)",
   },
   content: {
     top: "50%",
@@ -31,8 +30,8 @@ const customStyles = {
     WebkitOverflowScrolling: "touch",
     borderRadius: "4px",
     outline: "none",
-    padding: "0px"
-  }
+    padding: "0px",
+  },
 };
 
 const ExportUtil = ({ filename = "none", tableid }) => {
@@ -154,7 +153,7 @@ const ExportUtil = ({ filename = "none", tableid }) => {
         setIsOpen(true);
       },
       function () {
-        setIsCopy(false)
+        setIsCopy(false);
         setIsOpen(true);
       }
     );
@@ -173,7 +172,9 @@ const ExportUtil = ({ filename = "none", tableid }) => {
             {isCopy ? `${t("alert.desc.copy_y")}` : `${t("alert.desc.copy_n")}`}
           </ModalDetail>
           <ModalClose>
-            <button onClick={() => setIsOpen(false)}>{t("alert.label.confirm")}</button>
+            <button onClick={() => setIsOpen(false)}>
+              {t("alert.label.confirm")}
+            </button>
           </ModalClose>
         </ModalWrapper>
       </Modal>
@@ -266,23 +267,20 @@ const ExportUtil = ({ filename = "none", tableid }) => {
 export default React.memo(ExportUtil);
 
 const ExportButton = styled.div`
-  display: inline-block;
-  
   float: right;
   color: #fff;
   cursor: pointer;
   height: 30px;
   width: 74px;
   line-height: 30px;
-  margin-top: -9.5px;
+  margin-top: -8.9px;
   margin-right: 0px;
   padding: 4.5px 10px 0px 10px;
   background-color: #5942ba;
   border-radius: 10px;
   align-items: center;
   text-align: center;
-
-  font-family: SpoqaHanSansNeo;
+  font-family: "Spoqa Han Sans";
   font-size: 14px;
   font-weight: normal;
   font-stretch: normal;
@@ -290,7 +288,6 @@ const ExportButton = styled.div`
   line-height: normal;
   letter-spacing: normal;
   text-align: center;
-  
 `;
 
 const Selected = styled.div`
@@ -421,7 +418,6 @@ const DropDown = styled.div`
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
-    
   }
 
   .menu ul {
@@ -488,7 +484,6 @@ const ModalWrapper = styled.div`
   background-color: #2f2d38;
   overflow-y: hidden;
 `;
-
 
 const ModalDetail = styled.div`
   width: 420px;

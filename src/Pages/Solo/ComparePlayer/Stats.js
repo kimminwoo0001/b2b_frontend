@@ -1210,7 +1210,7 @@ const ComplexTitle = styled.div`
   letter-spacing: -0.6px;
   text-align: left;
   color: #fff;
-  padding: 0px 0 0 15px;
+  padding: 0px 15px;
 
   .legends {
     display: flex;
