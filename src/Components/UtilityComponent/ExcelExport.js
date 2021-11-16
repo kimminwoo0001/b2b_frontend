@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { setTableHeaders, TableHeaders } from "../../redux/modules/tablevalue";
 import { useDetectOutsideClick } from "../SelectFilter/useDetectOustsideClick";
-import * as clipboard from 'clipboard-polyfill/text';
+import * as clipboard from "clipboard-polyfill/text";
 import XLSX from "xlsx";
 import timeFormat from "../../lib/timeFormat";
 
@@ -44,12 +44,14 @@ const ExportUtil = ({ filename = "none", tableid }) => {
         let columnData = rowData[colCnt].innerText;
         if (columnData == null || columnData.length === 0) {
           columnData = "".replace(/"/g, '""');
-        }
-        else {
+        } else {
           columnData = columnData.toString().replace(/"/g, '""'); // escape double quotes
         }
         console.log(result);
-        result = type === 'csv' ? result + '"' + columnData + '",' : result + columnData + '\t';
+        result =
+          type === "csv"
+            ? result + '"' + columnData + '",'
+            : result + columnData + "\t";
       }
       result = result.substring(0, result.length - 1);
       result = result + "\r\n";
@@ -60,8 +62,11 @@ const ExportUtil = ({ filename = "none", tableid }) => {
   }
 
   function tableData2(tableName) {
-    let ws = XLSX.utils.table_to_sheet(document.getElementById(tableid), { sheet: tableName, raw: true });
-    let range = XLSX.utils.decode_range(ws['!ref']);
+    let ws = XLSX.utils.table_to_sheet(document.getElementById(tableid), {
+      sheet: tableName,
+      raw: true,
+    });
+    let range = XLSX.utils.decode_range(ws["!ref"]);
     let result = [];
     let row;
     let rowNum;
@@ -84,7 +89,7 @@ const ExportUtil = ({ filename = "none", tableid }) => {
           continue;
         }
         let nextCell = ws[XLSX.utils.encode_cell({ r: rowNum, c: colNum })];
-        if (typeof nextCell === 'undefined') {
+        if (typeof nextCell === "undefined") {
           row.push(void 0);
         } else {
           //row.push(nextCell.w);
@@ -94,28 +99,27 @@ const ExportUtil = ({ filename = "none", tableid }) => {
       result.push(row);
     }
 
-    return result
+    return result;
   }
 
   const exportCSV = (tableName, selectedCol) => {
-
     let resultArray = tableData2(filename, selectedCol);
     let wa = XLSX.utils.aoa_to_sheet(resultArray);
     let wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, wa, tableName);
-    XLSX.writeFile(wb, (timeFormat.nowTime() + tableName + '.csv'));
-  }
+    XLSX.writeFile(wb, timeFormat.nowTime() + tableName + ".csv");
+  };
 
   const exportXlsx = (tableName, selectedCol) => {
     let resultArray = tableData2(filename, selectedCol);
     let wa = XLSX.utils.aoa_to_sheet(resultArray);
     let wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, wa, tableName);
-    XLSX.writeFile(wb, (timeFormat.nowTime() + tableName + '.xlsx'));
-  }
+    XLSX.writeFile(wb, timeFormat.nowTime() + tableName + ".xlsx");
+  };
 
   const copyClipboard = () => {
-    clipboard.writeText(tabledata('clipboard')).then(
+    clipboard.writeText(tabledata("clipboard")).then(
       function () {
         console.log("success!");
       },
@@ -123,9 +127,7 @@ const ExportUtil = ({ filename = "none", tableid }) => {
         console.log("error!");
       }
     );
-  }
-
-
+  };
 
   return (
     <>
@@ -172,38 +174,42 @@ const ExportUtil = ({ filename = "none", tableid }) => {
                     />
                     &nbsp;{header}
                   </Selected>
-                )
+                );
               })}
             </ul>
             <div className="export-file">
-              <button onClick={() => {
-                exportCSV(filename, tblvalue.headers);
-                setIsActive(false);
-              }}>
+              <button
+                onClick={() => {
+                  exportCSV(filename, tblvalue.headers);
+                  setIsActive(false);
+                }}
+              >
                 CSV
               </button>
-              <button onClick={() => {
-                exportXlsx(filename, tblvalue.headers);
-                setIsActive(false);
-              }}>
+              <button
+                onClick={() => {
+                  exportXlsx(filename, tblvalue.headers);
+                  setIsActive(false);
+                }}
+              >
                 XLSX
               </button>
             </div>
           </nav>
         </div>
-      </DropDown >
-      <ExportButton onClick={() => {
-        copyClipboard();
-      }}>
+      </DropDown>
+      <ExportButton
+        onClick={() => {
+          copyClipboard();
+        }}
+      >
         Copy
       </ExportButton>
     </>
-  )
-}
+  );
+};
 
-export default React.memo(
-  ExportUtil
-);
+export default React.memo(ExportUtil);
 
 const ExportButton = styled.div`
   display: inline-block;
@@ -213,15 +219,15 @@ const ExportButton = styled.div`
   cursor: pointer;
   height: 33px;
   width: 70px;
-  line-height: 30px;  
+  line-height: 30px;
   margin-top: -11.5px;
   margin-right: 5px;
   padding: 0 10px;
   background-color: #5942ba;
-  border-radius: 3px;
-  border: solid 1px #000;
+  border-radius: 10px;
   align-items: center;
   text-align: center;
+  font-size: 14px;
 `;
 
 const Selected = styled.div`
@@ -278,7 +284,7 @@ const Selected = styled.div`
 const DropDown = styled.div`
   width: 100px;
   float: right;
-  line-height: 30px;  
+  line-height: 30px;
   margin-top: -11.5px;
   margin-right: 20px;
   padding: 0 10px;
@@ -286,7 +292,7 @@ const DropDown = styled.div`
 
   img {
     margin-left: 10px;
-    transform:rotate(90deg);
+    transform: rotate(90deg);
   }
 
   .menu-container {
@@ -303,16 +309,14 @@ const DropDown = styled.div`
     height: 33px;
     margin: 0px;
     padding: 5px 11px 4px;
-    border-radius: 3px;
-    border: solid 1px;
+    border-radius: 10px;
     background-color: #5942ba;
+    font-size: 14px;
   }
 
   .menu-trigger:hover {
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
   }
-
-
 
   header {
     padding: 0px 10px;
@@ -333,7 +337,6 @@ const DropDown = styled.div`
     width: 140px;
   }
 
-
   .menu {
     background: rgb(35, 33, 42);
     position: absolute;
@@ -345,7 +348,6 @@ const DropDown = styled.div`
     visibility: hidden;
     transform: translateX(-20px);
     transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
-   
   }
 
   .menu.active {
@@ -379,7 +381,7 @@ const DropDown = styled.div`
 
   .export-file {
     border: solid 1px;
-    color: #fff; 
+    color: #fff;
     button {
       color: #fff;
       padding: 10px;

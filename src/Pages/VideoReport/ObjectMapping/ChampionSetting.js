@@ -226,6 +226,7 @@ function ChampionSetting({
       };
       axiosRequest(url, params, function (e) {
         const data = e.data.champion;
+        console.log(data);
         setFilterData({ ...filterData, champion: data });
       });
     } catch (e) {

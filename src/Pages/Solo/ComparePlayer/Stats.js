@@ -93,16 +93,14 @@ function Stats() {
         setData(e?.data.player);
         setOppData(e?.data.oppPlayer);
         //라인전 능력치 비교 그래프 데이터 가공
-        const lineData = Object.values(e?.data.player.LineStat)?.map(
-          (line) => {
-            return {
-              x1: line.percent.toFixed(1),
-              y: lang === "kr" ? line.name : line.eng,
-              value1: line.value.toFixed(1),
-              league: line.avg.toFixed(1),
-            };
-          }
-        );
+        const lineData = Object.values(e?.data.player.LineStat)?.map((line) => {
+          return {
+            x1: line.percent.toFixed(1),
+            y: lang === "kr" ? line.name : line.eng,
+            value1: line.value.toFixed(1),
+            league: line.avg.toFixed(1),
+          };
+        });
 
         const lineData2 = Object.values(e?.data.oppPlayer.LineStat)?.map(
           (line) => {
@@ -155,7 +153,7 @@ function Stats() {
           // setOppMatch(Object.values(response?.data.oppPlayer.MatchStat));
           setStatData(Object.values(e?.data.tendencyStat));
         }
-      })
+      });
     } catch (e) {
       console.log(e.response);
     }
@@ -178,8 +176,7 @@ function Stats() {
     axiosRequest(url, params, function (e) {
       setChampFilter(e.data.champion);
       setChampEng(e.data.championEng);
-    })
-
+    });
   };
 
   //상대 챔피언 필터
@@ -200,7 +197,7 @@ function Stats() {
     axiosRequest(url, params, function (e) {
       setOppFilter(e.data.champion);
       setOppEng(e.data.championEng);
-    })
+    });
   };
 
   const renderColorfulLegendText = (value: string, entry: any) => {
@@ -677,7 +674,7 @@ function Stats() {
                       // strokeDasharray="4 4"
                       horizontal={false}
                       vertical={false}
-                    // horizontalPoints={[40, 80, 120, 160, 200, 240]}
+                      // horizontalPoints={[40, 80, 120, 160, 200, 240]}
                     />
                     <XAxis
                       type={"number"}
@@ -757,7 +754,7 @@ function Stats() {
                       // strokeDasharray="4 4"
                       horizontal={false}
                       vertical={false}
-                    // horizontalPoints={[25, 75, 125, 175, 225]}
+                      // horizontalPoints={[25, 75, 125, 175, 225]}
                     />
                     <XAxis
                       domain={[0, 100]}
@@ -938,6 +935,7 @@ const PlayerCompareWrapper = styled.div`
   margin-top: 28px;
   width: 100%;
   border: solid 1px rgb(58, 55, 69);
+  border-radius: 20px;
   background-color: rgb(47, 45, 56);
   background-image: url("Images/full-gradient.png");
   background-repeat: no-repeat;
@@ -1022,6 +1020,7 @@ const StatCompare = styled.div`
   margin-top: 22px;
   width: 100%;
   border: solid 1px rgb(58, 55, 69);
+  border-radius: 20px;
   background-color: rgb(47, 45, 56);
 `;
 
@@ -1036,6 +1035,7 @@ const ChampionSettingNav = styled.div`
 const CompareByStat = styled.div`
   height: 100%;
   border: solid 1px rgb(58, 55, 69);
+  border-radius: 20px;
   background-color: rgb(58, 55, 69);
 `;
 
@@ -1075,7 +1075,8 @@ const SimpleBox = styled.div`
   width: 336px;
   height: 96px;
   margin: 22px 0 0 22px;
-  background-color: rgb(47, 45, 56);
+  background-color: #2f2d38;
+  border-radius: 20px;
   img {
     /* margin: 0 27.4px 0 27.4px; */
   }
@@ -1089,7 +1090,8 @@ const SimpleBox = styled.div`
     font-weight: bold;
     letter-spacing: -0.6px;
     text-align: left;
-    color: rgb(132, 129, 142);
+    color: #fff;
+
     border-bottom: 1px solid rgb(58, 55, 69);
   }
   .SimpleValues {
@@ -1150,12 +1152,14 @@ const ComplexBox = styled.div`
     background-color: rgb(47, 45, 56);
     height: 42.5px;
     border-bottom: 1px solid rgb(58, 55, 69);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 12px;
     font-weight: bold;
     letter-spacing: -0.6px;
     text-align: left;
-    color: rgb(132, 129, 142);
+    color: #fff;
     padding: 0px 0 0 15px;
     img {
       margin-left: 15px;
@@ -1201,6 +1205,8 @@ const CompareByProgressBar = styled.div`
   width: 516px;
   height: 338px;
   background-color: #35323e;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 `;
 
 // const PlayerData = styled.div`

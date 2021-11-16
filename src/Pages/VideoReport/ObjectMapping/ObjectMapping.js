@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
-import qs from "qs";
 import styled, { css } from "styled-components";
 import { useSelector } from "react-redux";
 import ChampionSetting from "./ChampionSetting";
@@ -108,7 +106,7 @@ function ObjectMapping() {
         setCurrentPos(dto.position);
         setchampInfo(dto.info);
         setPlay(true);
-        console.log(dto);
+        console.log(dto.position);
       });
     } catch (e) {
       console.log(e);
@@ -117,6 +115,7 @@ function ObjectMapping() {
     }
   };
 
+  // normal
   useIntervalNormal(() => {
     if (play === true && range < maxTime) {
       setRange(parseInt(range) + 1);
@@ -126,6 +125,7 @@ function ObjectMapping() {
     // }
   }, 300);
 
+  // fast
   useInterval(() => {
     if (fast === true && range < maxTime) {
       setRange(parseInt(range) + 1);
@@ -135,6 +135,7 @@ function ObjectMapping() {
     // }
   }, 100);
 
+  // 동선 확인
   const handleConfirm = () => {
     let unselectedItem = [];
     const { team, champion_eng, player, oppteam, oppplayer, oppchampion_eng } =
@@ -374,7 +375,7 @@ function ObjectMapping() {
                 }
               }
               return (
-                // 동선 툴팁
+                // player 아이콘 클릭 시 툴팁
                 <StyledTippy
                   // options
                   arrow={true}

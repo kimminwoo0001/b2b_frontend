@@ -295,8 +295,8 @@
     "allChampLabel": "모든 챔피언",
     "allChampLabel2": "이(가) 플레이 한 모든 챔피언",
     "teamCompareLabel": "팀을 선택해주세요.",
-    "teamCompareLabel1": "나의 팀을 선택해주세요.",
-    "teamCompareLabel2": "비교하고 싶은 팀을 선택해주세요.",
+    "teamCompareLabel1": "나의 팀 선택",
+    "teamCompareLabel2": "비교하고 싶은 팀 선택",
     "playerCompareLabel": "선수를 선택해주세요.",
     "playerCompareLabel1": "나의 선수를 선택해주세요.",
     "playerCompareLabel2": "비교하고 싶은 선수를 선택해주세요.",
@@ -312,7 +312,12 @@
     "onePatch": "패치는 최소 한개 이상 선택되어야 합니다.",
     "dataProcess": "현재 데이터를 수집중입니다. 수집하는 동안 사이트가 느려질 수 있습니다.",
     "description": "보고싶은 데이터를 한눈에 볼 수 있습니다. 옵션을 선택해주세요",
-    "selectAll": "전체 선택"
+    "selectAll": "전체 선택",
+    "chooseOptionLabel": "옵션을 선택해주세요.",
+    "setFilter": "필터 설정",
+    "setLeague": "리그",
+    "setSeason": "시즌",
+    "setPatchVersion": "패치버전"
   },
   "video": {
     "tab": {
