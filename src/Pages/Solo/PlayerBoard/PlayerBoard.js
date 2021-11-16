@@ -232,9 +232,8 @@ function PlayerBoard() {
             <div className="AttendValue">
               <span className="Wins">{`${matchInfo?.match}${t(
                 "solo.playerboard.games"
-              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${
-                matchInfo?.loss
-              }${t("solo.playerboard.lose")}`}</span>
+              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${matchInfo?.loss
+                }${t("solo.playerboard.lose")}`}</span>
               <span className="WinRate">{`${matchInfo?.winrate.toFixed(
                 1
               )}%`}</span>
@@ -549,7 +548,7 @@ function PlayerBoard() {
           </TopBox>
         </AbilityContents>
       </AbilitySection>
-      {/* // 솔로랭크 당분간 주석 처리.
+      // 솔로랭크 당분간 주석 처리.
       <AbilitySection>
         <InfoNavBar>
           <LeftInfo>
@@ -733,7 +732,7 @@ function PlayerBoard() {
           </TopBox>
         </AbilityContents>
       </AbilitySection>
-      */}
+
       <RecordWrapper>
         <RecordSection>
           <CompetitionRecord>

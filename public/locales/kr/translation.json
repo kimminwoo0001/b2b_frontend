@@ -14,6 +14,10 @@
     "part11": "픽 조합 계산기",
     "part12": "게임 보고서"
   },
+  "nav": {
+    "login": "로그인",
+    "logout": "로그아웃"
+  },
   "home": {
     "rank": "순위",
     "teamName": "팀명",
@@ -416,6 +420,14 @@
   "alert": {
     "logout": {
       "sessionExpires": "세션이 만료되어 로그인 페이지로 이동합니다."
+    },
+    "label": {
+      "confirm": "확인",
+      "cancel": "취소"
+    },
+    "desc": {
+      "copy_y": "복사되었습니다.",
+      "copy_n": "복사되지 않았습니다."
     }
   },
   "label": {

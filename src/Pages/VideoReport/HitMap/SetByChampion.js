@@ -14,7 +14,7 @@ import axiosRequest from "../../../lib/axiosRequest";
 
 const WardSlider = withStyles({
   root: {
-    color: "#f04545",
+    color: "#5942ba",
     height: 2,
   },
   thumb: {
@@ -367,12 +367,13 @@ function SetByChampion({ minFrom, setMinFrom }) {
             </LabelVs>
             <FilterContainer>
               <FilterBox>
-                <DropDownToggle className="container">
+                <DropDownToggle className="container" changeColor={filters.team.length > 0}>
                   <div className="menu-container">
                     <button
                       onClick={() => {
-                        setIsActive(!isActive);
-                        getTeam();
+                        // 팀 설정 비활성화
+                        // setIsActive(!isActive);
+                        // getTeam();
                       }}
                       className="menu-trigger"
                     >
@@ -427,7 +428,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                     </nav>
                   </div>
                 </DropDownToggle>
-                <DropDownToggle className="container">
+                <DropDownToggle className="container" changeColor={filters.player.length > 0}>
                   <div className="menu-container">
                     <button
                       onClick={() => {
@@ -488,7 +489,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                     </nav>
                   </div>
                 </DropDownToggle>
-                <DropDownToggle className="container">
+                <DropDownToggle className="container" changeColor={champArray.length > 0}>
                   <div className="menu-container2">
                     <button
                       onClick={() => {
@@ -498,10 +499,18 @@ function SetByChampion({ minFrom, setMinFrom }) {
                       }}
                       className="menu-trigger2"
                     >
-                      <span className="Label3">
-                        <span className="champLength">{`${champArray.length}`}</span>
-                        {` ${t("video.object.champ")}`}
-                      </span>
+                      {
+                        champArray.length > 0 ?
+                          <span className="Label3">
+                            <span className="champLength">
+                              {`${champArray.length} `}
+                            </span>
+                            {` ${t("video.object.champ")}`}
+                          </span>
+                          : <span className="Label3">
+                            {t("video.object.selectChamp")}
+                          </span>
+                      }
                       <img
                         className="ArrowIcon"
                         src="Images/select-arrow.png"
@@ -569,7 +578,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                 </DropDownToggle>
               </FilterBox>
               <FilterBox>
-                <DropDownToggle className="container">
+                <DropDownToggle className="container" changeColor={filters.oppteam.length > 0}>
                   <div className="menu-container">
                     <button
                       onClick={() => {
@@ -630,7 +639,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                     </nav>
                   </div>
                 </DropDownToggle>
-                <DropDownToggle className="container">
+                <DropDownToggle className="container" changeColor={filters.oppplayer.length > 0}>
                   <div className="menu-container">
                     <button
                       onClick={() => {
@@ -692,7 +701,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                     </nav>
                   </div>
                 </DropDownToggle>
-                <DropDownToggle className="container">
+                <DropDownToggle className="container" changeColor={champArray2.length > 0}>
                   <div className="menu-container2">
                     <button
                       onClick={() => {
@@ -702,10 +711,18 @@ function SetByChampion({ minFrom, setMinFrom }) {
                       }}
                       className="menu-trigger2"
                     >
-                      <span className="Label3">
-                        <span className="champLength">{`${champArray2.length}`}</span>
-                        {` ${t("video.object.champ")}`}
-                      </span>
+                      {
+                        champArray2.length > 0 ?
+                          <span className="Label3">
+                            <span className="champLength">
+                              {`${champArray2.length} `}
+                            </span>
+                            {` ${t("video.object.champ")}`}
+                          </span>
+                          : <span className="Label3">
+                            {t("video.object.selectChamp")}
+                          </span>
+                      }
                       <img
                         className="ArrowIcon"
                         src="Images/select-arrow.png"
@@ -824,7 +841,7 @@ const SliderContainer = styled.div`
       bottom: 10;
       border: 15px solid transparent;
       border-bottom: 0;
-      border-top: 7px solid #f04545;
+      border-top: 7px solid #5942ba;
       transform: translate(-50%, calc(100% + 5px));
     }
   }
@@ -864,15 +881,19 @@ const Steps = styled.div`
 
   > .title {
     display: flex;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
     margin-bottom: 12px;
 
     > .step {
       font-weight: normal;
-      color: rgb(240, 69, 69);
+      color: #84818e;
       margin-right: 5px;
     }
     > .subtitle {
@@ -882,15 +903,19 @@ const Steps = styled.div`
 
   > .title2 {
     display: flex;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
     margin-bottom: 47px;
 
     > .step {
       font-weight: normal;
-      color: rgb(240, 69, 69);
+      color: #84818e;
       margin-right: 5px;
     }
     > .subtitle {
@@ -901,8 +926,8 @@ const Steps = styled.div`
 
 const LeftSection = styled.section`
   width: 549px;
-  border-right: 1px solid rgb(67, 63, 78);
-  margin: 23px 30px 23px 25px;
+  // border-right: 1px solid rgb(67, 63, 78);
+  margin: 23px 30px 40px 25px;
 `;
 
 const RightSection = styled.section`
@@ -927,7 +952,7 @@ const LabelVs = styled.div`
   font-size: 12px;
   font-weight: bold;
   color: rgb(107, 105, 121);
-  margin: 0 10px 0 0;
+  margin: 0 0 0 0;
   > .top {
     position: absolute;
     top: 235px;
@@ -951,7 +976,7 @@ const LabelVs = styled.div`
 const DropDownToggle = styled.div`
   width: 140px;
   padding: 0;
-  margin: 0 0px 0 0;
+  margin: 0 10px 0 10px;
   * {
     box-sizing: border-box;
   }
@@ -960,20 +985,24 @@ const DropDownToggle = styled.div`
   }
   .menu-container {
     position: relative;
+    margin-right: 10px;
   }
   .menu-container2 {
     position: relative;
+    margin-right: 10px;
   }
   .menu-trigger {
     display: flex;
     align-items: center;
-    width: 140px;
+    width: 153px;
     height: 34px;
-    background-color: rgb(35, 33, 42);
+    background-color: #23212a;
     font-size: 12px;
     color: rgb(175, 173, 190);
     outline: none;
     border: none;
+    border-radius: 10px;
+    margin-right: 10px;
   }
   .menu-trigger:hover {
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
@@ -983,12 +1012,14 @@ const DropDownToggle = styled.div`
     display: flex;
     align-items: center;
     height: 34px;
-    background-color: rgb(35, 33, 42);
+    background-color: #23212a;
     font-size: 12px;
     color: rgb(175, 173, 190);
-    width: 124px;
+    width: 153px;
     outline: none;
     border: none;
+    border-radius: 10px;
+    margin-right: 10px;
   }
 
   .SelectedLabel {
@@ -997,7 +1028,7 @@ const DropDownToggle = styled.div`
     letter-spacing: -0.6px;
     text-align: left;
     color: rgb(255, 255, 255);
-    width: 140px;
+    width: 153px;
     margin-left: 20px;
   }
 
@@ -1015,7 +1046,7 @@ const DropDownToggle = styled.div`
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
-    color: rgb(255, 255, 255);
+    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `#84818e`)};
     width: 140px;
   }
 
@@ -1024,7 +1055,7 @@ const DropDownToggle = styled.div`
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
-    color: rgb(255, 255, 255);
+    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `#84818e`)};
     width: 124px;
     /* ::first-letter {
       color: #f04545;
@@ -1055,7 +1086,7 @@ const DropDownToggle = styled.div`
     position: absolute;
     top: 10;
     right: 1;
-    width: 140px;
+    width: 153px;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
     opacity: 0;
     visibility: hidden;
@@ -1069,7 +1100,7 @@ const DropDownToggle = styled.div`
     position: absolute;
     top: 10;
     right: 1;
-    width: 124px;
+    width: 153px;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
     opacity: 0;
     visibility: hidden;
