@@ -383,7 +383,7 @@ function PlayerBoard() {
 
         {loading ? (
           <LoadingImage>
-            <img src="Images/Loading.gif" alt="Loading" />
+            <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
           </LoadingImage>
         ) : (
           <AbilityContents>
