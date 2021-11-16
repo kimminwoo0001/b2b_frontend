@@ -186,7 +186,7 @@ function PlayerBoard() {
       },
     ],
   };
-  if (loading) return <LoadingImg />;
+  // if (loading) return <LoadingImg />;
 
   return (
     <PlayerBoardWrapper>
@@ -380,174 +380,187 @@ function PlayerBoard() {
             </button>
           </FilterBox>
         </InfoNavBar>
-        <AbilityContents>
-          <TopBox>
-            <StatBox>
-              <thead>
-                <StatNav>
-                  <th className="StatTitle">
-                    {t("solo.playerboard.laneStat")}
-                  </th>
-                  <th className="LeagueAvg">
-                    {t("solo.playerboard.avgLeague")}
-                  </th>
-                  <th className="Icon"></th>
-                  <th className="PlayerScore">
-                    {t("solo.playerboard.playerStat")}
-                  </th>
-                </StatNav>
-              </thead>
-              <tbody>
-                {line?.map((title, idx) => {
-                  return (
-                    <MapStat key={idx}>
-                      <Tippy // options
-                        duration={0}
-                        delay={[300, 0]}
-                        content={
-                          <BoardToolTip
-                            title={lang === "kr" ? title.name : title.eng}
-                          />
-                        }
-                        placement="top"
-                      >
-                        <td className="StatNum">
-                          {lang === "kr" ? title.name : title.eng}
-                        </td>
-                      </Tippy>
 
-                      <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
-                      <td className="Icon">
-                        <img
-                          src={
-                            title.leaguedata <= title.data
-                              ? "Images/ico-point-high.png"
-                              : "Images/ico-point-low-blue.png"
+        {loading ? (
+          <LoadingImage>
+            <img src="Images/Loading.gif" alt="Loading" />
+          </LoadingImage>
+        ) : (
+          <AbilityContents>
+            <TopBox>
+              <StatBox>
+                <thead>
+                  <StatNav>
+                    <th className="StatTitle">
+                      {t("solo.playerboard.laneStat")}
+                    </th>
+                    <th className="LeagueAvg">
+                      {t("solo.playerboard.avgLeague")}
+                    </th>
+                    <th className="Icon"></th>
+                    <th className="PlayerScore">
+                      {t("solo.playerboard.playerStat")}
+                    </th>
+                  </StatNav>
+                </thead>
+                <tbody>
+                  {line?.map((title, idx) => {
+                    return (
+                      <MapStat key={idx}>
+                        <Tippy // options
+                          duration={0}
+                          delay={[300, 0]}
+                          content={
+                            <BoardToolTip
+                              title={lang === "kr" ? title.name : title.eng}
+                            />
                           }
-                          width="17px"
-                          height="11px"
-                          alt="pointIcon"
-                        ></img>
-                      </td>
-                      <PlayerValue changeColor={title.leaguedata > title.data}>
-                        {title.data.toFixed(1)}
-                      </PlayerValue>
-                    </MapStat>
-                  );
-                })}
-              </tbody>
-            </StatBox>
-            <StatBox>
-              <thead>
-                <StatNav>
-                  <th className="StatTitle">
-                    {t("solo.playerboard.teamFight")}
-                  </th>
-                  <th className="LeagueAvg">
-                    {t("solo.playerboard.avgLeague")}
-                  </th>
-                  <th className="Icon"></th>
-                  <th className="PlayerScore">
-                    {t("solo.playerboard.playerStat")}
-                  </th>
-                </StatNav>
-              </thead>
-              <tbody>
-                {engage?.map((title, idx) => {
-                  return (
-                    <MapStat key={idx}>
-                      <Tippy // options
-                        duration={0}
-                        delay={[300, 0]}
-                        content={
-                          <BoardToolTip
-                            title={lang === "kr" ? title.name : title.eng}
-                          />
-                        }
-                        placement="top"
-                      >
-                        <td className="StatNum">
-                          {lang === "kr" ? title.name : title.eng}
-                        </td>
-                      </Tippy>
-                      <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
-                      <td className="Icon">
-                        <img
-                          src={
-                            title.leaguedata <= title.data
-                              ? "Images/ico-point-high.png"
-                              : "Images/ico-point-low-blue.png"
-                          }
-                          width="17px"
-                          height="11px"
-                          alt="pointIcon"
-                        ></img>
-                      </td>
-                      <PlayerValue changeColor={title.leaguedata > title.data}>
-                        {title.data.toFixed(1)}
-                      </PlayerValue>
-                    </MapStat>
-                  );
-                })}
-              </tbody>
-            </StatBox>
-            <StatBox>
-              <thead>
-                <StatNav>
-                  <th className="StatTitle">
-                    {t("solo.playerboard.tendency")}
-                  </th>
-                  <th className="LeagueAvg">
-                    {t("solo.playerboard.avgLeague")}
-                  </th>
-                  <th className="Icon"></th>
-                  <th className="PlayerScore">
-                    {t("solo.playerboard.playerStat")}
-                  </th>
-                </StatNav>
-              </thead>
-              <tbody>
-                {personality?.map((title, idx) => {
-                  return (
-                    <MapStat key={idx}>
-                      <Tippy // options
-                        duration={0}
-                        delay={[300, 0]}
-                        content={
-                          <BoardToolTip
-                            title={lang === "kr" ? title.name : title.eng}
-                          />
-                        }
-                        placement="top"
-                      >
-                        <td className="StatNum">
-                          {lang === "kr" ? title.name : title.eng}
-                        </td>
-                      </Tippy>
+                          placement="top"
+                        >
+                          <td className="StatNum">
+                            {lang === "kr" ? title.name : title.eng}
+                          </td>
+                        </Tippy>
 
-                      <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
-                      <td className="Icon">
-                        <img
-                          src={
-                            title.leaguedata <= title.data
-                              ? "Images/ico-point-high.png"
-                              : "Images/ico-point-low-blue.png"
+                        <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
+                        <td className="Icon">
+                          <img
+                            src={
+                              title.leaguedata <= title.data
+                                ? "Images/ico-point-high.png"
+                                : "Images/ico-point-low-blue.png"
+                            }
+                            width="17px"
+                            height="11px"
+                            alt="pointIcon"
+                          ></img>
+                        </td>
+                        <PlayerValue
+                          changeColor={title.leaguedata > title.data}
+                        >
+                          {title.data.toFixed(1)}
+                        </PlayerValue>
+                      </MapStat>
+                    );
+                  })}
+                </tbody>
+              </StatBox>
+              <StatBox>
+                <thead>
+                  <StatNav>
+                    <th className="StatTitle">
+                      {t("solo.playerboard.teamFight")}
+                    </th>
+                    <th className="LeagueAvg">
+                      {t("solo.playerboard.avgLeague")}
+                    </th>
+                    <th className="Icon"></th>
+                    <th className="PlayerScore">
+                      {t("solo.playerboard.playerStat")}
+                    </th>
+                  </StatNav>
+                </thead>
+                <tbody>
+                  {engage?.map((title, idx) => {
+                    return (
+                      <MapStat key={idx}>
+                        <Tippy // options
+                          duration={0}
+                          delay={[300, 0]}
+                          content={
+                            <BoardToolTip
+                              title={lang === "kr" ? title.name : title.eng}
+                            />
                           }
-                          width="17px"
-                          height="11px"
-                          alt="pointIcon"
-                        ></img>
-                      </td>
-                      <PlayerValue changeColor={title.leaguedata > title.data}>
-                        {title.data.toFixed(1)}
-                      </PlayerValue>
-                    </MapStat>
-                  );
-                })}
-              </tbody>
-            </StatBox>
-          </TopBox>
-        </AbilityContents>
+                          placement="top"
+                        >
+                          <td className="StatNum">
+                            {lang === "kr" ? title.name : title.eng}
+                          </td>
+                        </Tippy>
+                        <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
+                        <td className="Icon">
+                          <img
+                            src={
+                              title.leaguedata <= title.data
+                                ? "Images/ico-point-high.png"
+                                : "Images/ico-point-low-blue.png"
+                            }
+                            width="17px"
+                            height="11px"
+                            alt="pointIcon"
+                          ></img>
+                        </td>
+                        <PlayerValue
+                          changeColor={title.leaguedata > title.data}
+                        >
+                          {title.data.toFixed(1)}
+                        </PlayerValue>
+                      </MapStat>
+                    );
+                  })}
+                </tbody>
+              </StatBox>
+              <StatBox>
+                <thead>
+                  <StatNav>
+                    <th className="StatTitle">
+                      {t("solo.playerboard.tendency")}
+                    </th>
+                    <th className="LeagueAvg">
+                      {t("solo.playerboard.avgLeague")}
+                    </th>
+                    <th className="Icon"></th>
+                    <th className="PlayerScore">
+                      {t("solo.playerboard.playerStat")}
+                    </th>
+                  </StatNav>
+                </thead>
+                <tbody>
+                  {personality?.map((title, idx) => {
+                    return (
+                      <MapStat key={idx}>
+                        <Tippy // options
+                          duration={0}
+                          delay={[300, 0]}
+                          content={
+                            <BoardToolTip
+                              title={lang === "kr" ? title.name : title.eng}
+                            />
+                          }
+                          placement="top"
+                        >
+                          <td className="StatNum">
+                            {lang === "kr" ? title.name : title.eng}
+                          </td>
+                        </Tippy>
+
+                        <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
+                        <td className="Icon">
+                          <img
+                            src={
+                              title.leaguedata <= title.data
+                                ? "Images/ico-point-high.png"
+                                : "Images/ico-point-low-blue.png"
+                            }
+                            width="17px"
+                            height="11px"
+                            alt="pointIcon"
+                          ></img>
+                        </td>
+                        <PlayerValue
+                          changeColor={title.leaguedata > title.data}
+                        >
+                          {title.data.toFixed(1)}
+                        </PlayerValue>
+                      </MapStat>
+                    );
+                  })}
+                </tbody>
+              </StatBox>
+            </TopBox>
+          </AbilityContents>
+        )}
       </AbilitySection>
       {/* // 솔로랭크 당분간 주석 처리.
       <AbilitySection>
@@ -1738,5 +1751,17 @@ const DropDownContainer = styled.div`
     :hover {
       background-color: rgb(60, 58, 72);
     }
+  }
+`;
+
+const LoadingImage = styled.div`
+  display: flex;
+  width: 100%;
+  height: 280px;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 50px;
+    height: 50px;
   }
 `;
