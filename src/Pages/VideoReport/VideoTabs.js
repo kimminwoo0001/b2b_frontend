@@ -32,14 +32,6 @@ function VideoTabs() {
             changeColor={filters.tab === 0}
           >
             <div>{t("video.tab.ward")}</div>
-            <img
-              src={
-                filters.tab === 0
-                  ? "Images/ico-1depth-arrow-on.png"
-                  : "Images/ico-1depth-arrow-off.png"
-              }
-              alt="arrowIcon"
-            ></img>
           </TabContent>
           <TabContent
             onClick={() => {
@@ -49,14 +41,6 @@ function VideoTabs() {
             changeColor={filters.tab === 1}
           >
             <div>{t("video.tab.object")}</div>
-            <img
-              src={
-                filters.tab === 1
-                  ? "Images/ico-1depth-arrow-on.png"
-                  : "Images/ico-1depth-arrow-off.png"
-              }
-              alt="arrowIcon"
-            ></img>
           </TabContent>
           {/* <TabContent
             onClick={() => {
@@ -83,14 +67,6 @@ function VideoTabs() {
             changeColor={filters.tab === 3}
           >
             <div>{t("video.tab.heatmap")}</div>
-            <img
-              src={
-                filters.tab === 3
-                  ? "Images/ico-1depth-arrow-on.png"
-                  : "Images/ico-1depth-arrow-off.png"
-              }
-              alt="arrowIcon"
-            ></img>
           </TabContent>
         </TabContainer>
         <div>{VideoTab[filters.tab]}</div>
@@ -107,8 +83,11 @@ const VideoTabsWrapper = styled.div`
 `;
 
 const TabContainer = styled.ul`
+  width: auto;
+  height: 60px;
   display: flex;
-  border-bottom: 1px solid #433f4e;
+  cursor: pointer;
+  //border-bottom: 1px solid #433f4e;
   /* padding-bottom: 15px; */
 `;
 
@@ -116,24 +95,26 @@ const TabContent = styled.li`
   cursor: pointer;
   display: flex;
   align-items: center;
-  padding-bottom: 15px;
+  //padding-bottom: 15px;
   color: #84818e;
   margin-right: 30px;
   ${(props) =>
     props.changeColor &&
     css`
-      color: #f04545;
-      border-bottom: 2px solid #f04545;
+      color: #fff;
     `}
   div {
     width: auto;
-    height: 17px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
-    line-height: 1.31;
-    letter-spacing: -0.65px;
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
-    margin-right: 4px;
+    color: ##84818e;
   }
   img {
   }

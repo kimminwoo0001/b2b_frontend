@@ -7,6 +7,33 @@ import { useDetectOutsideClick } from "../SelectFilter/useDetectOustsideClick";
 import * as clipboard from "clipboard-polyfill/text";
 import XLSX from "xlsx";
 import timeFormat from "../../lib/timeFormat";
+import Modal from "react-modal";
+
+
+const customStyles = {
+  overlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.75)"
+  },
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    transform: "translate(-50%, -50%)",
+    background: "rgba(0, 0, 0, 0.75)",
+    border: "1px solid rgba(0, 0, 0, 0.75)",
+    overflow: "auto",
+    WebkitOverflowScrolling: "touch",
+    borderRadius: "4px",
+    outline: "none",
+    padding: "0px"
+  }
+};
 
 const ExportUtil = ({ filename = "none", tableid }) => {
   const { t } = useTranslation();
@@ -15,6 +42,8 @@ const ExportUtil = ({ filename = "none", tableid }) => {
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const dispatch = useDispatch();
   const tblvalue = useSelector((state) => state.TableReducer);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isCopy, setIsCopy] = useState(false);
 
   const getTableHeaders = () => {
     const table = document.getElementById(tableid);
@@ -121,16 +150,33 @@ const ExportUtil = ({ filename = "none", tableid }) => {
   const copyClipboard = () => {
     clipboard.writeText(tabledata("clipboard")).then(
       function () {
-        console.log("success!");
+        setIsCopy(true);
+        setIsOpen(true);
       },
       function () {
-        console.log("error!");
+        setIsCopy(false)
+        setIsOpen(true);
       }
     );
   };
 
   return (
     <>
+      <Modal
+        isOpen={isOpen}
+        onRequestClose={() => setIsOpen(false)}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <ModalWrapper>
+          <ModalDetail>
+            {isCopy ? `${t("alert.desc.copy_y")}` : `${t("alert.desc.copy_n")}`}
+          </ModalDetail>
+          <ModalClose>
+            <button onClick={() => setIsOpen(false)}>{t("alert.label.confirm")}</button>
+          </ModalClose>
+        </ModalWrapper>
+      </Modal>
       <DropDown>
         <div className="menu-container">
           <button
@@ -151,8 +197,6 @@ const ExportUtil = ({ filename = "none", tableid }) => {
             ref={dropdownRef}
             className={`menu ${isActive ? "active" : "inactive"}`}
           >
-            <header>Choose Columns</header>
-            {console.log(tblvalue)}
             <ul>
               {tblHeaders.current.map((header, idx) => {
                 return (
@@ -213,27 +257,37 @@ export default React.memo(ExportUtil);
 
 const ExportButton = styled.div`
   display: inline-block;
-  font-weight: normal;
+  
   float: right;
   color: #fff;
   cursor: pointer;
-  height: 33px;
-  width: 70px;
+  height: 30px;
+  width: 74px;
   line-height: 30px;
-  margin-top: -11.5px;
-  margin-right: 5px;
-  padding: 0 10px;
+  margin-top: -9.5px;
+  margin-right: 0px;
+  padding: 4.5px 10px 0px 10px;
   background-color: #5942ba;
   border-radius: 10px;
   align-items: center;
   text-align: center;
+
+  font-family: SpoqaHanSansNeo;
   font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  
 `;
 
 const Selected = styled.div`
   display: flex;
   align-items: center;
-  padding: 4.5px 12px;
+  padding: 10px 0px;
+  margin: 5px 0;
   width: 100%;
   height: 25px;
   color: #84818e;
@@ -256,22 +310,18 @@ const Selected = styled.div`
     appearance: none;
 
     display: inline-block;
-    width: 12px;
-    height: 12px;
+    width: 24px;
+    height: 24px;
 
     background-clip: content-box;
-    border: 1.5px solid rgb(72, 70, 85);
-    border-radius: 2px;
-    background-color: transparent;
-
+    background: url("/Images/btn_check_off.svg") no-repeat;
     margin-right: 8px;
 
     &:checked {
-      background-color: #f04545;
-      border: #f04545;
+      background-color: #5942ba;
+      border: #5942ba;
       border-radius: 2px;
-      background: url("/Images/check.svg") #f04545 no-repeat 2.5px 4px/5.5px
-        4.5px;
+      background: url("/Images/btn_check_on.svg") no-repeat;
       float: right;
     }
 
@@ -282,10 +332,11 @@ const Selected = styled.div`
 `;
 
 const DropDown = styled.div`
-  width: 100px;
+  width: 78px;
+  height: 30px;
   float: right;
   line-height: 30px;
-  margin-top: -11.5px;
+  margin-top: -9.5px;
   margin-right: 20px;
   padding: 0 10px;
   display: inline-block;
@@ -305,13 +356,23 @@ const DropDown = styled.div`
   .menu-trigger {
     display: flex;
     align-items: center;
-    width: 100px;
-    height: 33px;
+    width: 78px;
+    height: 30px;
     margin: 0px;
-    padding: 5px 11px 4px;
+    padding: 0px 0px 2px 5px;
     border-radius: 10px;
     background-color: #5942ba;
+    font-family: SpoqaHanSansNeo;
     font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    img {
+      margin-left: -10px;
+    }
   }
 
   .menu-trigger:hover {
@@ -340,27 +401,28 @@ const DropDown = styled.div`
   .menu {
     background: rgb(35, 33, 42);
     position: absolute;
-    top: 0px;
-    left: 110px;
-    width: 144px;
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
-    opacity: 0;
+    top: 20px;
+    left: 70px;
+    border-radius: 10px;
+    box-shadow: 3px 9px 6px 0 rgba(0, 0, 0, 0.16);
     visibility: hidden;
     transform: translateX(-20px);
     transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+    width: 210px;
   }
+  
 
   .menu.active {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
+    
   }
 
   .menu ul {
     list-style: none;
     padding: 0;
-    margin: 0;
-    border: solid 1px;
+    margin: 25px 0 10px 20px;
     color: #fff;
   }
 
@@ -380,15 +442,69 @@ const DropDown = styled.div`
   }
 
   .export-file {
-    border: solid 1px;
     color: #fff;
     button {
-      color: #fff;
-      padding: 10px;
+      width: 76px;
+      height: 30px;
+      // margin: 20px 94px 0 0;
+      padding: 6px 16px;
+      border-radius: 10px;
       width: 50%;
+      background-color: #5942ba;
       :hover {
         background-color: rgb(60, 58, 72);
       }
     }
+  }
+`;
+
+const ModalWrapper = styled.div`
+  width: 500px;
+  height: 207px;
+  margin: 10px 0 0;
+  padding: 30px 0 20px;
+  border-radius: 20px;
+  box-shadow: 0px 8px 16px 0 rgba(4, 0, 0, 0.4);
+  background-color: #2f2d38;
+  overflow-y: hidden;
+`;
+
+
+const ModalDetail = styled.div`
+  width: 420px;
+  height: 75px;
+  margin: 0 40px 20px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.44;
+  letter-spacing: normal;
+  text-align: center;
+  color: #fff;
+`;
+
+const ModalClose = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 79px;
+  button {
+    width: 180px;
+    height: 42px;
+    margin: 0 0px 0 0;
+    padding: 0px 0px;
+    border-radius: 16px;
+    background-color: #5942ba;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
+    text-align: center;
+    color: #fff;
   }
 `;

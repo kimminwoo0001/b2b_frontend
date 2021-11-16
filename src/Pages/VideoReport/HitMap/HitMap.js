@@ -206,6 +206,7 @@ function HitMap() {
       <TopSection>
         <TabBox>
           <FilterTab
+            className="player"
             onClick={() => {
               if (tab !== "player") {
                 setTab("player");
@@ -223,6 +224,7 @@ function HitMap() {
             {t("video.heatmap.all")}
           </FilterTab>
           <FilterTab
+            className="opp-champ"
             onClick={() => {
               setTab("champion");
               if (isPageSolo) {
@@ -239,18 +241,19 @@ function HitMap() {
           </FilterTab>
         </TabBox>
         <FilterContents>{contents[tab]}</FilterContents>
+        <ButtonSection>
+          <ConfirmButton
+            onClick={() => fetchingHeatMapData()}
+            isActive={
+              tab === 'player' ? (filters.champion_eng.length > 0 ? true : false)
+                : (tab === 'champion' ? filters.champion_eng && filters.oppchampion_eng : false)
+            }
+          >
+            {t("video.heatmap.apply")}
+          </ConfirmButton>
+        </ButtonSection>
       </TopSection>
-      <ButtonSection>
-        <ConfirmButton
-          onClick={() => fetchingHeatMapData()}
-          isActive={
-            tab === 'player' ? (filters.champion_eng.length > 0 ? true : false)
-              : (tab === 'champion' ? filters.champion_eng && filters.oppchampion_eng : false)
-          }
-        >
-          {t("video.heatmap.apply")}
-        </ConfirmButton>
-      </ButtonSection>
+
       <BottomSection>
         <HitMapSide>
           <SideNav>BLUE {t("video.heatmap.side")}</SideNav>
@@ -285,30 +288,36 @@ const TopSection = styled.section`
   min-height: 123px;
   border: solid 1px rgb(67, 63, 78);
   background-color: rgb(47, 45, 56);
+  border-radius: 20px;
 `;
 
 const BottomSection = styled.section`
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
 `;
 
 const ButtonSection = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  margin: 14px 0 41px 0;
+  border-top: 1px solid  #433f4e;
 `;
 
 const ConfirmButton = styled.button`
-  width: 126px;
-  height: 36px;
-  border-radius: 3px;
-  background-color: rgb(105, 103, 119);
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 13px;
-  font-weight: bold;
-  letter-spacing: -0.65px;
+  width: 97%;
+  height: 60px;
+  border-radius: 20px;
+  background-color: #484655;
+  font-family: SpoqaHanSansNeo;
+  font-size: 15px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
   text-align: center;
+  margin: 20px 0;
   color: rgb(255, 255, 255);
   :hover {
     opacity: 0.8;
@@ -316,33 +325,48 @@ const ConfirmButton = styled.button`
   ${(props) =>
     props.isActive &&
     css`
-      background-color: rgb(240, 69, 69);
+      background-color: #5942ba;
     `}
 `;
 
 const TabBox = styled.div`
+  padding-top: 30px;
+  margin-left: 30px;
+  margin-right: 30px;
   display: flex;
+
+  .player {
+    border-radius: 20px 0 0 20px;
+  }
+
+  .opp-champ {
+    border-radius: 0 20px 20px 0;
+  }
 `;
 
 const FilterTab = styled.button`
-  width: 549px;
-  height: 40px;
-  border-bottom: solid 1px rgb(67, 63, 78);
-  border-right: solid 1px rgb(67, 63, 78);
-  background-color: rgb(35, 33, 42);
+  width: 519px;
+  height: 60px;
+  border-radius: 20px;
+  background-color: #3a3745;
   font-family: NotoSansKR, Apple SD Gothic Neo;
   font-size: 12px;
   letter-spacing: -0.6px;
-  color: rgb(123, 121, 139);
-  :nth-child(2) {
-    border-right: none;
-  }
+  color: rgb(255, 255, 255);
+  opacity: 0.3;
+  font-family: SpoqaHanSansNeo;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.0;
+  letter-spacing: normal;
+  text-align: center;
   ${(props) =>
     props.isActive &&
     css`
-      border-bottom: none;
-      background-color: rgb(47, 45, 56);
-      color: rgb(255, 255, 255);
+      background-color: #23212a;
+      opacity: 1.0;
     `}
 `;
 
@@ -355,14 +379,19 @@ const SideNav = styled.div`
   align-items: center;
   padding-left: 22px;
   width: 538px;
-  height: 42px;
+  height: 52px;
   border: solid 1px #3a3745;
   background-color: #2f2d38;
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
-  font-weight: bold;
-  letter-spacing: -0.6px;
-  color: #84818e;
+  font-family: SpoqaHanSansNeo;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.56;
+  letter-spacing: normal;
+  text-align: left;
+  color: #fff;
+  border-radius: 20px 20px 0px 0px;
 
   background-image: url("Images/right-blue-gradient.png");
   background-repeat: no-repeat;

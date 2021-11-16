@@ -427,12 +427,13 @@ function ChampionSetting({
     <ChampionSettingContainer>
       <FilterBox>
         <DropDownBox>
-          <DropDownToggle className="container">
+          <DropDownToggle className="container" changeColor={filters.team.length > 0} >
             <div className="menu-container">
               <button
                 onClick={() => {
-                  setIsActive(!isActive);
-                  getTeam();
+                  // 팀 선택 비활성화
+                  // setIsActive(!isActive);
+                  // getTeam();
                 }}
                 className="menu-trigger"
               >
@@ -486,7 +487,7 @@ function ChampionSetting({
               </nav>
             </div>
           </DropDownToggle>
-          <DropDownToggle className="container">
+          <DropDownToggle className="container" changeColor={filters.player.length > 0}>
             <div className="menu-container2">
               <button
                 onClick={() => {
@@ -547,7 +548,7 @@ function ChampionSetting({
               </nav>
             </div>
           </DropDownToggle>
-          <DropDownToggle className="container">
+          <DropDownToggle className="container" changeColor={champArray.length > 0}>
             <div className="menu-container2">
               <button
                 onClick={() => {
@@ -557,10 +558,19 @@ function ChampionSetting({
                 }}
                 className="menu-trigger2"
               >
-                <span className="Label3">
-                  <span className="champLength">{`${champArray.length} `}</span>
-                  {` ${t("video.object.champ")}`}
-                </span>
+
+                {
+                  champArray.length > 0 ?
+                    <span className="Label3">
+                      <span className="champLength">
+                        {`${champArray.length} `}
+                      </span>
+                      {` ${t("video.object.champ")}`}
+                    </span>
+                    : <span className="Label3">
+                      {t("video.object.selectChamp")}
+                    </span>
+                }
                 <img
                   className="ArrowIcon"
                   src="Images/select-arrow.png"
@@ -570,9 +580,8 @@ function ChampionSetting({
               {filterData?.champion ? (
                 <nav
                   ref={wrapperRef}
-                  className={`menu3 ${
-                    isActive2.current ? "active" : "inactive"
-                  }`}
+                  className={`menu3 ${isActive2.current ? "active" : "inactive"
+                    }`}
                 >
                   <ul>
                     <li
@@ -769,9 +778,8 @@ function ChampionSetting({
               {filterData?.oppchampion ? (
                 <nav
                   ref={wrapperRef2}
-                  className={`menu3 ${
-                    isActive5.current ? "active" : "inactive"
-                  }`}
+                  className={`menu3 ${isActive5.current ? "active" : "inactive"
+                    }`}
                 >
                   <ul>
                     <li
@@ -839,14 +847,14 @@ function ChampionSetting({
           />
         </CompareButton>
       </FilterBox>
-    </ChampionSettingContainer>
+    </ChampionSettingContainer >
   );
 }
 
 export default ChampionSetting;
 
 const ChampionSettingContainer = styled.div`
-  margin: 14px 0 24px 0;
+  margin: 0px 0 0px 0;
   display: flex;
   /* justify-content: space-between; */
   align-items: center;
@@ -862,7 +870,8 @@ const DropDownBox = styled.div`
 `;
 
 const DropDownBox2 = styled.div`
-  display: flex;
+  display: ${(props) =>
+    props.isActive ? 'flex' : 'none'};
   justify-content: space-evenly;
   margin-bottom: 4px;
   opacity: 0;
@@ -883,9 +892,10 @@ const CompareButton = styled.button`
   align-items: center;
   justify-content: center;
   width: 330px;
-  height: 27px;
+  height: 34px;
   border: solid 1px rgb(67, 63, 78);
   background-color: rgb(67, 63, 78);
+  border-radius: 10px;
   > span {
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 12px;
@@ -932,6 +942,7 @@ const DropDownToggle = styled.div`
     width: 74px;
     outline: none;
     border: none;
+    border-radius: 10px;
   }
 
   .menu-trigger2 {
@@ -944,6 +955,7 @@ const DropDownToggle = styled.div`
     width: 124px;
     outline: none;
     border: none;
+    border-radius: 10px;
   }
 
   .menu-trigger:hover {
@@ -965,7 +977,7 @@ const DropDownToggle = styled.div`
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
-    color: rgb(255, 255, 255);
+    color: r ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `#84818e`)};
     width: 124px;
     margin-left: 20px;
   }
@@ -975,7 +987,7 @@ const DropDownToggle = styled.div`
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
-    color: rgb(255, 255, 255);
+    color:  ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `#84818e`)};
     width: 74px;
   }
 
@@ -984,7 +996,7 @@ const DropDownToggle = styled.div`
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
-    color: rgb(255, 255, 255);
+    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `#84818e`)};
     width: 124px;
   }
 
@@ -993,7 +1005,7 @@ const DropDownToggle = styled.div`
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
-    color: rgb(255, 255, 255);
+    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `#84818e`)};
     width: 124px;
     /* ::first-letter {
       color: #f04545;

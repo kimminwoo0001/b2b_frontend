@@ -117,7 +117,8 @@ function SelectGame({
 export default SelectGame;
 
 const SelectGameContainer = styled.div`
-  margin-top: 20px;
+  margin-top: 0px;
+  background-color: #2f2d38;
 `;
 
 const SideButtonWrapper = styled.div`
@@ -125,31 +126,31 @@ const SideButtonWrapper = styled.div`
 `;
 
 const SideButton = styled.button`
-  width: 65px;
-  height: 27px;
-  border-radius: 2px;
-  border: solid 1px rgb(67, 63, 78);
-  background-color: rgb(47, 45, 56);
-  font-family: Poppins;
+  width: 62px;
+  height: 34px;
+  border-radius: 10px;
+  background-color:  ${(props) => props.isActive ? '#23212a' : '#3a3745'};
+  font-family: SpoqaHanSansNeo;
   font-size: 13px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
   text-align: center;
-  color: rgb(129, 126, 144);
+  color:  #fff;
+  opacity: ${(props) => props.isActive ? 1.0 : 0.3};
   margin-right: 5px;
-  ${(props) =>
-    props.isActive &&
-    css`
-      border-radius: 2px;
-      border: solid 1px rgb(124, 119, 139);
-      background-color: rgb(35, 33, 42);
-      color: rgb(255, 255, 255);
-    `}
 `;
 
 const GameLists = styled.div`
   /* height: 79px; */
-  max-height: 270px;
+  height: 330px;
   overflow-y: auto;
-  margin-bottom: 21px;
+  border-radius: 20px;
+  margin: 5px 0;
+  padding-top: 5px;
+  background-color: #23212a;
   &::-webkit-scrollbar {
     width: 4px;
     height: 10px;
@@ -164,14 +165,15 @@ const GameLists = styled.div`
 `;
 
 const Game = styled.div`
-  width: 330px;
+  width: 315px;
   height: 79px;
-  border: solid 1px rgb(58, 55, 69);
-  background-color: rgb(35, 33, 42);
+  background-color: #23212a;
+  border-radius: 20px;
+  margin: 5px 10px;
   ${(props) =>
     props.isActive &&
     css`
-      border: 1px solid white;
+    background-color: #16151c;
     `}
 `;
 
@@ -179,9 +181,8 @@ const GameNav = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 11px;
+  padding: 10px 15px 0;
   height: 38px;
-  border-bottom: solid 1px rgb(58, 55, 69);
 `;
 
 const ShowChampion = styled.div`
@@ -219,10 +220,28 @@ const TimeStamp = styled.div`
 `;
 
 const LabelWin = styled.span`
+  font-family: SpoqaHanSansNeo;
+  font-size: 15px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.67;
+  letter-spacing: normal;
+  text-align: right;
+  color: #fff;
   color: rgb(255, 255, 255);
 `;
 
 const LabelDate = styled.span`
+  font-family: SpoqaHanSansNeo;
+  font-size: 15px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.67;
+  letter-spacing: normal;
+  text-align: center;
+  color: #817e90;
   color: rgb(129, 126, 144);
 `;
 
@@ -230,9 +249,9 @@ const RedSide = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("Images/left-red-gradient.png");
-  background-repeat: no-repeat;
-  background-position: left;
+  // background-image: url("Images/left-red-gradient.png");
+  // background-repeat: no-repeat;
+  // background-position: left;
   width: 150px;
   height: 100%;
   > img {
@@ -244,7 +263,7 @@ const RedSide = styled.div`
   ${(props) =>
     props.isActive &&
     css`
-      background-image: url("Images/left-blue-gradient.png");
+      // background-image: url("Images/left-blue-gradient.png");
     `}
 `;
 
@@ -260,9 +279,9 @@ const BlueSide = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("Images/right-win-gradient.png");
-  background-repeat: no-repeat;
-  background-position: right;
+  // background-image: url("Images/right-win-gradient.png");
+  // background-repeat: no-repeat;
+  // background-position: right;
   width: 150px;
   height: 100%;
   > img {
@@ -274,6 +293,6 @@ const BlueSide = styled.div`
   ${(props) =>
     props.isActive &&
     css`
-      background-image: url("Images/right-blue-gradient.png");
+      // background-image: url("Images/right-blue-gradient.png");
     `}
 `;

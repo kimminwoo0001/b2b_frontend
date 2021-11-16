@@ -139,7 +139,7 @@ function Sidebar() {
       let marginTop = false;
       let marginBottom = false;
       if (i === 0) {
-        marginTop = false;
+        marginTop = true;
       } else if (i - 1 >= 0 && using[i - 1].changeColor === true) {
         marginTop = true;
       }

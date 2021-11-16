@@ -17,6 +17,7 @@ function Nav() {
   const { i18n } = useTranslation();
   const dispatch = useDispatch();
   let history = useHistory();
+  const { t } = useTranslation();
 
   useEffect(() => {
     changeLanguage();
@@ -35,6 +36,10 @@ function Nav() {
     dispatch(UserLogout());
     history.push("/login");
   };
+
+  const dummyAlarm = () => {
+    alert("새로운 알림이 없습니다.")
+  }
 
   return (
     <NavWrapper>
@@ -55,19 +60,19 @@ function Nav() {
       <div className="nav-right">
         <ContentsWrapper>
           <img
+            className="setting"
+            src="Images/ico_setting.svg"
+            alt="settingIcon"
+          ></img>
+          <img
             className="Alert"
             src="Images/ico-alarm.png"
             alt="alertIcon"
-          ></img>
-          <img
-            className="LogOut"
-            src="Images/ico-logout.png"
-            alt="LogoutIcon"
-            onClick={() => handleLogOut()}
+            onClick={() => dummyAlarm()}
           ></img>
           <LocaleDropdown />
-          <lable>
-            {lang === "en" ? `Hello, ${user.id}` : `${user.id} 님 안녕하세요!`}
+          <lable onClick={() => handleLogOut()}>
+            {user.id.length > 0 ? `${t("nav.logout")}` : `${t("nav.login")}`}
           </lable>
         </ContentsWrapper>
       </div>
@@ -106,12 +111,18 @@ const NavWrapper = styled.div`
   .nav-right {
     display: table-cell;
     lable {
-      padding-left: 20px;
-      font-family: NotoSansKR, Apple SD Gothic Neo;
-      font-size: 12px;
-      letter-spacing: -0.6px;
+      padding-left: 0px;
+      margin: 4px 0 4px 20px;
+      font-family: NotoSansKR;
+      font-size: 16px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
       text-align: left;
-      color: #ffffff;
+      color: #fff;
+      cursor: pointer;
     }
   }
 `;
@@ -145,12 +156,11 @@ const ContentsWrapper = styled.div`
     color: #84818e;
   }
 
-  .Alert {
-    margin-left: 20px;
-    margin-right: 24.5px;
+  .setting {
     cursor: pointer;
   }
-  .LogOut {
+  .Alert {
+    margin-left: 20px;
     margin-right: 20px;
     cursor: pointer;
   }
