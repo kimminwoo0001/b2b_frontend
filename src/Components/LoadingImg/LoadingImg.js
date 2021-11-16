@@ -5,7 +5,7 @@ function Loading() {
   return (
     // 전체화면 로딩 이미지
     <LoadingImage>
-      <img src="Images/Loading.gif" alt="Loading" />
+      <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
     </LoadingImage>
   );
 }

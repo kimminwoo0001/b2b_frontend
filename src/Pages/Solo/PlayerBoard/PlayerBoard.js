@@ -1632,7 +1632,7 @@ const NavBar = styled.div`
     color: rgb(132, 129, 142);
     margin-right: 15px;
     ::first-letter {
-      color: #dbdbdb;
+      color: #f14444;
     }
   }
   .Y {
@@ -1644,7 +1644,7 @@ const NavBar = styled.div`
     color: rgb(132, 129, 142);
     margin-right: 16px;
     ::first-letter {
-      color: #dbdbdb;
+      color: #f14444;
     }
   }
   .Legend {
