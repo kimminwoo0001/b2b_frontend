@@ -206,6 +206,7 @@ function HitMap() {
       <TopSection>
         <TabBox>
           <FilterTab
+            className="player"
             onClick={() => {
               if (tab !== "player") {
                 setTab("player");
@@ -223,6 +224,7 @@ function HitMap() {
             {t("video.heatmap.all")}
           </FilterTab>
           <FilterTab
+            className="opp-champ"
             onClick={() => {
               setTab("champion");
               if (isPageSolo) {
@@ -285,6 +287,7 @@ const TopSection = styled.section`
   min-height: 123px;
   border: solid 1px rgb(67, 63, 78);
   background-color: rgb(47, 45, 56);
+  border-radius: 20px;
 `;
 
 const BottomSection = styled.section`
@@ -321,28 +324,43 @@ const ConfirmButton = styled.button`
 `;
 
 const TabBox = styled.div`
+  padding-top: 30px;
+  margin-left: 30px;
+  margin-right: 30px;
   display: flex;
+
+  .player {
+    border-radius: 20px 0 0 20px;
+  }
+
+  .opp-champ {
+    border-radius: 0 20px 20px 0;
+  }
 `;
 
 const FilterTab = styled.button`
-  width: 549px;
-  height: 40px;
-  border-bottom: solid 1px rgb(67, 63, 78);
-  border-right: solid 1px rgb(67, 63, 78);
-  background-color: rgb(35, 33, 42);
+  width: 519px;
+  height: 60px;
+  border-radius: 20px;
+  background-color: #3a3745;
   font-family: NotoSansKR, Apple SD Gothic Neo;
   font-size: 12px;
   letter-spacing: -0.6px;
-  color: rgb(123, 121, 139);
-  :nth-child(2) {
-    border-right: none;
-  }
+  color: rgb(255, 255, 255);
+  opacity: 0.3;
+  font-family: SpoqaHanSansNeo;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.0;
+  letter-spacing: normal;
+  text-align: center;
   ${(props) =>
     props.isActive &&
     css`
-      border-bottom: none;
-      background-color: rgb(47, 45, 56);
-      color: rgb(255, 255, 255);
+      background-color: #23212a;
+      opacity: 1.0;
     `}
 `;
 

@@ -14,7 +14,7 @@ import axiosRequest from "../../../lib/axiosRequest";
 
 const WardSlider = withStyles({
   root: {
-    color: "#f04545",
+    color: "#5942ba",
     height: 2
   },
   thumb: {
@@ -211,12 +211,13 @@ function WardPlayerFilter({
         </div>
         <FilterBox>
           <DropDownBox>
-            <DropDownToggle className="container">
+            <DropDownToggle className="container" changeColor={filters.team.length > 0}>
               <div className="menu-container">
                 <button
                   onClick={() => {
-                    setIsActive(!isActive);
-                    getTeam();
+                    // 팀 설정 비활성화
+                    // setIsActive(!isActive);
+                    // getTeam();
                   }}
                   className="menu-trigger"
                 >
@@ -270,7 +271,7 @@ function WardPlayerFilter({
                 </nav>
               </div>
             </DropDownToggle>
-            <DropDownToggle className="container">
+            <DropDownToggle className="container" changeColor={filters.player.length > 0}>
               <div className="menu-container2">
                 <button
                   onClick={() => {
@@ -329,7 +330,7 @@ function WardPlayerFilter({
                 </nav>
               </div>
             </DropDownToggle>
-            <DropDownToggle className="container">
+            <DropDownToggle className="container" changeColor={filters.champion_eng.length > 0}>
               <div className="menu-container2">
                 <button
                   onClick={() => {
@@ -390,7 +391,7 @@ function WardPlayerFilter({
             </DropDownToggle>
           </DropDownBox>
           <DropDownBox2 isActive={compareOpen === true}>
-            <DropDownToggle className="container">
+            <DropDownToggle className="container" changeColor={filters.oppteam.length > 0}>
               <div className="menu-container">
                 <button
                   onClick={() => {
@@ -449,7 +450,7 @@ function WardPlayerFilter({
                 </nav>
               </div>
             </DropDownToggle>
-            <DropDownToggle className="container">
+            <DropDownToggle className="container" changeColor={filters.oppplayer.length > 0}>
               <div className="menu-container2">
                 <button
                   onClick={() => {
@@ -508,7 +509,7 @@ function WardPlayerFilter({
                 </nav>
               </div>
             </DropDownToggle>
-            <DropDownToggle className="container">
+            <DropDownToggle className="container" changeColor={filters.oppchampion_eng.length > 0}>
               <div className="menu-container2">
                 <button
                   onClick={() => {
@@ -630,7 +631,7 @@ const SliderContainer = styled.div`
       bottom: 10;
       border: 15px solid transparent;
       border-bottom: 0;
-      border-top: 7px solid #f04545;
+      border-top: 7px solid #5942ba;
       transform: translate(-50%, calc(100% + 5px));
     }
   }
@@ -660,23 +661,26 @@ const DisplayTime = styled.div`
 
 const Steps = styled.div`
   min-height: 111px;
-  border-bottom: 1px solid rgb(67, 63, 78);
-  padding: 23px;
+  padding: 10px 23px;
   :nth-child(2) {
     border-bottom: none;
   }
 
   > .title {
     display: flex;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
     margin-bottom: 12px;
 
     > .step {
       font-weight: normal;
-      color: rgb(240, 69, 69);
+      color: #84818e;
       margin-right: 5px;
     }
     > .subtitle {
@@ -687,14 +691,19 @@ const Steps = styled.div`
   > .title2 {
     display: flex;
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
     margin-bottom: 47px;
 
     > .step {
       font-weight: normal;
-      color: rgb(240, 69, 69);
+      color: #84818e;
       margin-right: 5px;
     }
     > .subtitle {
@@ -717,7 +726,7 @@ const DropDownBox2 = styled.div`
   margin-bottom: 4px;
   opacity: 0;
   max-height: 0px;
-  overflow-y: hidden;
+  overflow: hidden;
   width: 100%;
   transition: all 0.2s ease;
   ${(props) =>
@@ -733,16 +742,23 @@ const CompareButton = styled.button`
   align-items: center;
   justify-content: center;
   width: 517px;
-  height: 27px;
+  height: 34px;
   border: solid 1px rgb(67, 63, 78);
   background-color: rgb(67, 63, 78);
+  border-radius: 10px;
   > span {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: center;
-    color: rgb(175, 173, 190);
-    margin-right: 10px;
+    color: #fff;
+  }
+  img {
+    margin-left: 10px;
   }
 `;
 
@@ -772,7 +788,7 @@ const DropDownToggle = styled.div`
     background-color: rgb(35, 33, 42);
     font-size: 12px;
     color: rgb(175, 173, 190);
-
+    border-radius: 10px;
     outline: none;
     border: none;
   }
@@ -787,6 +803,7 @@ const DropDownToggle = styled.div`
     color: rgb(175, 173, 190);
     outline: none;
     border: none;
+    border-radius: 10px;
   }
 
   .menu-trigger:hover {
@@ -814,20 +831,28 @@ const DropDownToggle = styled.div`
   }
 
   .Label {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
-    color: rgb(255, 255, 255);
+    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `#84818e`)};
     width: 142px;
   }
 
   .Label2 {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
-    color: rgb(255, 255, 255);
+    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `#84818e`)};
     width: 183px;
   }
 

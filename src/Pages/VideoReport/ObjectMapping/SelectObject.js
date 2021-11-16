@@ -120,7 +120,7 @@ function SelectObject({ setPeriod, period, setPositionOpen }) {
 export default SelectObject;
 
 const SelectObjectContainer = styled.div`
-  margin: 14px 0 21px 0;
+  margin: 0 0 0px 0;
 `;
 
 const SelectTerm = styled.div`
@@ -132,11 +132,11 @@ const SelectTerm = styled.div`
 const WhichTerm = styled.button`
   display: flex;
   align-items: center;
+  border-radius: 20px;
   padding: 16.5px 0 16.5px 24px;
   width: 161px;
   height: 60px;
-  border: solid 1px #3a3745;
-  background-color: transparent;
+  background-color: #3a3745;
   margin-bottom: 10px;
   :nth-child(5) {
     margin-bottom: 0px;
@@ -147,13 +147,13 @@ const WhichTerm = styled.button`
   > img {
     width: 22px;
     height: 22px;
+    margin: 8px 0px 7px -10px;
+    object-fit: contain;
   }
   ${(props) =>
     props.changeColor &&
     css`
-      border: solid 1px #2f2d38;
-      background-color: rgb(35, 33, 42);
-      border: solid 1px rgb(124, 119, 139);
+      background-color: #23212a;
     `}
 `;
 
@@ -162,13 +162,16 @@ const Labels = styled.div`
 `;
 
 const Term = styled.div`
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
-  font-weight: bold;
-  letter-spacing: -0.6px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 15px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.87;
+  letter-spacing: normal;
   text-align: left;
   color: #817e90;
-  margin-bottom: 5px;
+  margin-bottom: 1px;
   ${(props) =>
     props.changeColor &&
     css`
@@ -177,14 +180,18 @@ const Term = styled.div`
 `;
 
 const Period = styled.div`
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
-  letter-spacing: -0.6px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 13px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.87;
+  letter-spacing: normal;
   text-align: left;
   color: #6b6979;
   ${(props) =>
     props.changeColor &&
     css`
-      color: #6b6979;
+      color: #ffffff;
     `}
 `;
