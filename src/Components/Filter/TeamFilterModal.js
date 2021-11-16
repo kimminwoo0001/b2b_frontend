@@ -119,7 +119,7 @@ const TeamFilterModal = ({
             </FilterHeader>
             <LeagueFilter>
               <label>{t("filters.setLeague")}</label>
-              <DropDownToggle className="container">
+              <DropDownToggle>
                 <div className="menu-container">
                   <button
                     onClick={() => {
@@ -191,7 +191,7 @@ const TeamFilterModal = ({
             </LeagueFilter>
             <PatchFilter>
               <label>{t("filters.setSeason")}</label>
-              {seasonFilter.length === 0 ? (
+              {/* {seasonFilter.length === 0 ? (
                 <PatchLabels>
                   <img
                     className="ChampIconImg"
@@ -206,34 +206,33 @@ const TeamFilterModal = ({
                   />
                   <span className="Label">{t("filters.patchLabel")}</span>
                 </PatchLabels>
-              ) : (
-                seasonFilter?.map((season, idx) => {
-                  return (
-                    <SelectedPatch
-                      key={idx}
-                      // draggable="true"
-                      // onDragStart={(event) => {
-                      //   handleMouseEvent(event);
-                      // }}
-                      // onMouseUp={(event) => {
-                      //   handleMouseEvent(event);
-                      // }}
-                      isChecked={filters.season.includes(season) ? true : false}
-                      onClick={() => {
-                        dispatch(Season(season));
-                      }}
-                    >
-                      <input
-                        id={idx}
-                        checked={filters.season.includes(season) ? true : false}
-                        type="checkbox"
-                        readOnly
-                      ></input>
-                      <div className="Version">{season}</div>
-                    </SelectedPatch>
-                  );
-                })
-              )}
+              ) :  */}
+              {seasonFilter?.map((season, idx) => {
+                return (
+                  <SelectedPatch
+                    key={idx}
+                    // draggable="true"
+                    // onDragStart={(event) => {
+                    //   handleMouseEvent(event);
+                    // }}
+                    // onMouseUp={(event) => {
+                    //   handleMouseEvent(event);
+                    // }}
+                    isChecked={filters.season.includes(season) ? true : false}
+                    onClick={() => {
+                      dispatch(Season(season));
+                    }}
+                  >
+                    <input
+                      id={idx}
+                      checked={filters.season.includes(season) ? true : false}
+                      type="checkbox"
+                      readOnly
+                    ></input>
+                    <div className="Version">{season}</div>
+                  </SelectedPatch>
+                );
+              })}
             </PatchFilter>
             <PatchFilter>
               <label>{t("filters.setPatchVersion")}</label>
@@ -289,7 +288,7 @@ const TeamFilterModal = ({
           <TeamBox>
             <TeamFilterBox>
               <TeamWrapper>
-                <SelectTitle isTeamSelected={filters.team !== ""}>
+                <SelectTitle isTeamSelected={filters.team.length >= 0}>
                   {t("filters.teamCompareLabel1")}
                 </SelectTitle>
                 <SelectTeam>
@@ -315,7 +314,7 @@ const TeamFilterModal = ({
                 </SelectTeam>
               </TeamWrapper>
               <TeamWrapper>
-                <SelectTitle isTeamSelected={filters.team !== ""}>
+                <SelectTitle isTeamSelected={filters.team.length !== 0}>
                   {t("filters.teamCompareLabel2")}
                 </SelectTitle>
                 <SelectOppTeam>
@@ -339,7 +338,9 @@ const TeamFilterModal = ({
             </TeamFilterBox>
           </TeamBox>
         </FilterContainer>
-        <ButtonBox>
+        <ButtonBox
+          isAllTeamSelected={filters.oppteam !== "" && filters.team.length > 0}
+        >
           <button
             className="Selected"
             onClick={() => {
@@ -359,6 +360,8 @@ export default TeamFilterModal;
 const FilterContainer = styled.div`
   display: flex;
   border-radius: 20px;
+  padding-top: 20px;
+  padding-left: 15px;
 `;
 
 const BackScreen = styled.div`
@@ -376,8 +379,8 @@ const BackScreen = styled.div`
 const TeamModalWrapper = styled.div`
   border-radius: 20px;
   display: ${(props) => (props.teamModal ? "block" : "none")};
-  width: 590px;
-  min-height: 517px;
+  width: 616px;
+  min-height: 636px;
   background-color: #23212a;
   top: 50%;
   left: 50%;
@@ -390,9 +393,8 @@ const TeamModalWrapper = styled.div`
 const ModalNav = styled.div`
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
   height: 48px;
-  padding: 0 11px;
+  padding: 0 5px 0 10px;
   border-bottom: 1px solid #433f4e;
   label {
     text-align: center;
@@ -417,6 +419,7 @@ const TeamBox = styled.div`
 const PatchLabels = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   color: #84818e;
   font-family: NotoSansKR, Apple SD Gothic Neo;
   font-size: 12px;
@@ -499,10 +502,12 @@ const SelectedPatch = styled.div`
   }
 `;
 const LeagueFilter = styled.div`
+  width: 150px;
   height: 61px;
-  background-color: #2f2d38;
   margin: 15px 10px 10px 10px;
+  padding: 5px;
   border-radius: 10px;
+  background-color: #2f2d38;
   label {
     height: 15px;
     font-family: NotoSansKR, Apple SD Gothic Neo;
@@ -521,8 +526,10 @@ const PatchFilter = styled.div`
   background-color: #2f2d38;
   border-radius: 10px;
   margin: 10px;
+  padding: 5px;
   min-height: 60px;
-  max-height: 150px;
+  width: 150px;
+  max-height: 180px;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     width: 4px;
@@ -559,16 +566,16 @@ const TeamWrapper = styled.div`
 
 const SelectTeam = styled.div`
   width: 193px;
-  height: 100%;
+  height: 420px;
   background-color: #2f2d38;
-  margin-right: 10px;
+  margin-right: 15px;
   border-radius: 20px;
   padding: 10px;
 `;
 
 const SelectOppTeam = styled.div`
   width: 193px;
-  height: 100%;
+  height: 420px;
   background-color: #2f2d38;
   border-radius: 20px;
   padding: 10px;
@@ -584,8 +591,8 @@ const SelectTitle = styled.div`
   font-weight: bold;
   letter-spacing: -0.6px;
   text-align: left;
-  /* color: #817e90; */
-  color: ${(props) => (props.isTeamSelected ? "#fff" : "#817e90")};
+  color: #fff;
+  opacity: ${(props) => (props.isTeamSelected ? "1" : "0.3")};
 `;
 
 const ButtonBox = styled.div`
@@ -597,7 +604,9 @@ const ButtonBox = styled.div`
     width: 100%;
     height: 60px;
     border-radius: 20px;
-    background-color: #484655;
+    background-color: ${(props) =>
+      props.isAllTeamSelected ? "#5942ba" : "#484655"};
+    cursor: ${(props) => (props.isAllTeamSelected ? "pointer" : "not-allowed")};
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 15px;
     font-weight: 500;
@@ -605,7 +614,6 @@ const ButtonBox = styled.div`
     text-align: center;
     color: #ffffff;
     margin: 0 10px;
-    // 상대팀까지 선택했을 때 자동으로 선택완료버튼 color 변환
   }
   .Close {
     width: 122px;
@@ -642,9 +650,9 @@ const MapTeams = styled.div`
   ${(props) =>
     props.currentTeam &&
     css`
-      color: #ffffff;
+      color: #fff;
       background-color: #16151c;
-      border-radius: 20px;
+      border-radius: 10px;
     `}
 `;
 
@@ -669,17 +677,19 @@ const DropDownToggle = styled.div`
   .menu-trigger {
     display: flex;
     align-items: center;
+    justify-content: space-around;
+    margin: 5px 0;
     height: 25px;
     background-color: #2f2d38;
     font-size: 13px;
-    width: 128px;
+    width: 160px;
     color: white;
     outline: none;
     border: none;
   }
 
   .menu-trigger:hover {
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+    /* box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3); */
   }
 
   .SelectedLabel {
@@ -722,8 +732,7 @@ const DropDownToggle = styled.div`
     background: rgb(47, 45, 56);
     position: absolute;
     top: 28px;
-    right: 0;
-    width: 128px;
+    width: 145px;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
     opacity: 0;
     visibility: hidden;

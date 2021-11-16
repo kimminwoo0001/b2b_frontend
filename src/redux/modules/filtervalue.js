@@ -40,6 +40,7 @@ export const SET_YEAR = "filtervalue/SET_YEAR";
 export const SET_SEASON = "filtervalue/SET_SEASON";
 export const COMPARE_MODAL = "filtervalue/COMPARE_MODAL";
 export const SET_PATCH = "filtervalue/SET_PATCH";
+export const SELECT_ALL_BTN = "filtervalue/SELECT_ALL_BTN";
 
 export const Reset_MapTab = (payload) => {
   return {
