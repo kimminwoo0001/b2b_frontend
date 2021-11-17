@@ -184,7 +184,7 @@ const Filter = memo(() => {
       leagueList = Object.keys(staticvalue.filterObjects).map(
         (key) =>
           Number(Object.keys(staticvalue.filterObjects[key])) ===
-            Number(filters.year) && key
+          Number(filters.year) && key
       );
     } else {
       leagueList = Object.keys(staticvalue.filterObjects);
@@ -454,6 +454,7 @@ const Filter = memo(() => {
                         filterData={filters.team}
                         mapData={team}
                         pngPath={`TeamLogo/${team}`}
+                        radioBtn={true}
                         clickEvent={() => {
                           dispatch(Team(team));
                         }}
@@ -473,6 +474,7 @@ const Filter = memo(() => {
                         filterData={filters.player}
                         mapData={player.name}
                         pngPath={`ico-position-${player.position}`}
+                        radioBtn={true}
                         clickEvent={() => {
                           dispatch(Player(player.name));
                           dispatch(Position(player.position));
