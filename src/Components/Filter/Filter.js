@@ -64,11 +64,12 @@ const Filter = memo(() => {
   const nameTeam = "/team";
   const nameSolo = "/solo";
   const nameVideo = "/video";
+  const nameGameReport = "/gameReport";
   const nameTeamCompare = "/teamCompare";
   const namePlayerCompare = "/playerCompare";
   const pagePath = document.location.pathname;
   const isComparePage = [nameTeamCompare, namePlayerCompare].includes(pagePath);
-  const isNeedTeam = [nameSolo, nameTeam, nameVideo].includes(pagePath);
+  const isNeedTeam = [nameSolo, nameTeam, nameVideo, nameGameReport].includes(pagePath);
   const dropdownRef = useRef(null);
   const [isActiveLeague, setIsActiveLeague] = useDetectOutsideClick(
     dropdownRef,
