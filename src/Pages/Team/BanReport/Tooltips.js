@@ -55,12 +55,20 @@ export default ToolTips;
 
 const TooltipTable = styled.table`
   width: 316px;
+  border-collapse: separate;
+  border-collapse: collapse;
 `;
 
 const ArrowWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  td:first-child, th:first-child {
+    border-radius: 10px 0 0 10px; 
+  }
+  td:last-child, th:last-child {
+    border-radius: 0 10px 10px 0;
+  }
 `;
 
 const Arrow = styled.div`
@@ -78,12 +86,13 @@ const ToolTipWrapper = styled.div`
 `;
 
 const TooltipNav = styled.tr`
+ 
   text-align: center;
   vertical-align: middle;
   width: 316px;
   height: 28px;
   border-radius: 10px;
-  // border: solid 1px #474453;
+  //border: solid 1px #474453;
   background-color: #2f2d38;
   font-family: SpoqaHanSansNeo;
   font-size: 15px;
@@ -92,18 +101,18 @@ const TooltipNav = styled.tr`
   font-style: normal;
   letter-spacing: -0.6px;
   text-align: left;
-  padding: 5px 0 6px 13px;
+  //padding: 5px 0 6px 13px;
   color: #817e90;
-  > .Champion {
+  .Champion {
     padding-left: 10px;
     text-align: left;
     vertical-align: middle;
   }
-  > .Player {
+  .Player {
     text-align: center;
     vertical-align: middle;
   }
-  > .Pick {
+  .Pick {
     text-align: center;
     vertical-align: middle;
   }

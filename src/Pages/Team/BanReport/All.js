@@ -543,7 +543,7 @@ const SelectedWinRate = styled.div`
 
 const TableTitle = styled.div`
   width: 100%;
-  height: 51px;
+  height: 50.5px;
   padding: 19.5px 0 0 21px;
   border-bottom: 1px solid rgb(35, 33, 42);
   font-family: Poppins;
@@ -608,7 +608,6 @@ const TableContents2 = styled.div`
 const TableContents = styled.div`
   display: flex;
   width: 219px;
-  min-height: 84px;
   max-height: 290px;
   flex-direction: column;
 `;
@@ -616,26 +615,37 @@ const TableContents = styled.div`
 const MapPickData = styled.div`
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #3a3745;
+  border-top: 1px solid #3a3745;
   padding: 7.5px 0 7.5px 15px;
   cursor: pointer;
+  height:30px;
 
   .Position {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    margin-left: 15px;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.87;
+    letter-spacing: normal;
     text-align: left;
-    color: #ffffff;
+    color: #fff;
+    margin-left: 15px;
     width: 105px;
   }
   .Total {
-    font-family: Poppins;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.87;
+    letter-spacing: normal;
     width: 80px;
     color: #f04545;
     /* width: 20px; */
     text-align: center;
+    margin-right: 10px;
   }
 `;
 
@@ -643,20 +653,30 @@ const MapBanData = styled.div`
   display: flex;
   align-items: center;
   padding: 4.5px 0 4.5px 15px;
-  border-bottom: 1px solid #3a3745;
+  border-top: 1px solid #3a3745;
+  height:30px;
   .Champion {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.87;
+    letter-spacing: normal;
     text-align: left;
-    color: #ffffff;
+    color: #fff;
     width: 105px;
     margin-left: 8px;
   }
   .Rate {
-    font-family: Poppins;
-    font-size: 12px;
-    text-align: center;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.87;
+    letter-spacing: normal;
+    text-align: right;
     color: #f04545;
     width: 50px;
   }

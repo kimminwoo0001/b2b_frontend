@@ -789,7 +789,7 @@ const DisplayInfo = styled.div`
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 13px;
     color: #84818e;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
   .CalcData {
     display: flex;
@@ -807,6 +807,7 @@ const DisplayInfo = styled.div`
     }
   }
   .AvgData {
+    margin-top: 4px;
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 13px;
     color: #ffffff;
