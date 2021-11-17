@@ -376,9 +376,8 @@ const PlayerCompareWrapper = styled.div`
   align-items: center;
   margin-top: 28px;
   width: 100%;
-  border: solid 1px rgb(58, 55, 69);
   border-radius: 20px;
-  background-color: rgb(47, 45, 56);
+  background-color: #23212a;
   background-image: url("Images/full-gradient.png");
   background-repeat: no-repeat;
   .RedSidePlayer {

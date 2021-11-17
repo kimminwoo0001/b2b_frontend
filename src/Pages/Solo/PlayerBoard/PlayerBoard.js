@@ -380,7 +380,6 @@ function PlayerBoard() {
             </button>
           </FilterBox>
         </InfoNavBar>
-
         {loading ? (
           <LoadingImage>
             <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
@@ -421,7 +420,6 @@ function PlayerBoard() {
                             {lang === "kr" ? title.name : title.eng}
                           </td>
                         </Tippy>
-
                         <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
                         <td className="Icon">
                           <img
@@ -1487,6 +1485,9 @@ const MapCompetition = styled.tr`
   width: 100%;
   height: 28px;
   border-bottom: 1px solid rgb(58, 55, 69);
+  :last-child {
+    border-bottom: none;
+  }
 
   > td {
     font-family: "Spoqa Han Sans";

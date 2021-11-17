@@ -121,19 +121,32 @@ function OppStat() {
   return (
     <OppStatWrapper>
       <PlayerCompare />
+      <PlayerStatWrapper>
+        <div className="records red">{`${player?.total.value}${t(
+          "solo.comparison.total"
+        )} ${player?.win}${t("solo.comparison.win")} ${player?.lose}${t(
+          "solo.comparison.lose"
+        )}`}</div>
+        <span className="leftGradient"></span>
+        <div className="soloRecord">{t("solo.comparison.statLabel")}</div>
+        <span className="rightGradient"></span>
+        <div className="records blue">{`${oppPlayer?.total.value}${t(
+          "solo.comparison.total"
+        )} ${oppPlayer?.win}${t("solo.comparison.win")} ${oppPlayer?.lose}${t(
+          "solo.comparison.lose"
+        )}`}</div>
+      </PlayerStatWrapper>
       <OppStatContents>
-        {/*
-        <ChampionSettingNav>
+        {/* <ChampionSettingNav>
           <SettingTitle>
             <span className="Title">{t("solo.comparison.champSetting")}</span>
-            {/* <img
+            <img
               src="Images/ico-notice-gy.png"
               width="14px"
               height="14px"
               alt="noticeIcon"
             />
-            <span className="Alert">{t("solo.comparison.settingLabel")}</span> */}
-        {/*
+            <span className="Alert">{t("solo.comparison.settingLabel")}</span>
           </SettingTitle>
           <DropDownContainer>
             <div className="DropDown">
@@ -156,8 +169,8 @@ function OppStat() {
                       {filters.champion
                         ? filters.champion
                         : lang === "kr"
-                          ? `${filters.player} ${t("filters.allChampLabel2")}`
-                          : `${t("filters.allChampLabel2")} ${filters.player} `}
+                        ? `${filters.player} ${t("filters.allChampLabel2")}`
+                        : `${t("filters.allChampLabel2")} ${filters.player} `}
                     </span>
                     <img
                       className="ArrowIcon"
@@ -210,8 +223,9 @@ function OppStat() {
                       {filters.oppchampion
                         ? filters.oppchampion
                         : lang === "kr"
-                          ? `${filters.oppplayer} ${t("filters.allChampLabel2")}`
-                          : `${t("filters.allChampLabel2")} ${filters.oppplayer
+                        ? `${filters.oppplayer} ${t("filters.allChampLabel2")}`
+                        : `${t("filters.allChampLabel2")} ${
+                            filters.oppplayer
                           } `}
                     </span>
                     <img
@@ -270,8 +284,7 @@ function OppStat() {
               <p>{t("solo.comparison.reset")}</p>
             </button>
           </DropDownContainer>
-        </ChampionSettingNav>
-        */}
+        </ChampionSettingNav> */}
         <ComapreValue>
           <DisplayValue>
             <div className="Wrapper">
@@ -753,16 +766,76 @@ function OppStat() {
 
 export default OppStat;
 
+const PlayerStatWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 38px;
+  background-color: #23212a;
+  /* background-image: linear-gradient(
+    282deg,
+    rgba(47, 45, 56, 0) 48%,
+    #f04545 -18%
+  ); */
+  margin: 20px 0;
+  border-radius: 16px;
+  > .leftGradient {
+    width: 49px;
+    height: 26px;
+    margin-left: 170px;
+    /* background-image: linear-gradient(
+      to left,
+      rgb(38, 35, 45),
+      rgb(22, 21, 26)
+    ); */
+  }
+  > .rightGradient {
+    width: 49px;
+    height: 26px;
+    margin-right: 170px;
+    /* background-image: linear-gradient(
+      to right,
+      rgb(38, 35, 45),
+      rgb(22, 21, 26)
+    ); */
+  }
+  > .soloRecord {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    height: 26px;
+    background-color: rgb(38, 35, 45);
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: -0.65px;
+    color: #fff;
+  }
+  > .records {
+    font-family: "Spoqa Han Sans";
+    font-size: 14px;
+    line-height: 32px;
+    background-color: #23212a;
+    font-weight: bold;
+  }
+
+  > .red {
+    color: #f04545;
+  }
+
+  > .blue {
+    color: #0075bf;
+  }
+`;
+
 const OppStatWrapper = styled.div`
   /* height: calc(100vh - 215px); */
   height: 100%;
 `;
 
 const OppStatContents = styled.div`
-  margin-top: 22px;
   width: 100%;
-  /* border: solid 1px rgb(58, 55, 69); */
-  background-color: #2f2d38;
   border-radius: 20px;
 `;
 
@@ -796,6 +869,8 @@ const SettingTitle = styled.div`
 
 const ComapreValue = styled.div`
   min-height: 571px;
+  /* background-color: #23212a; */
+  /* border-radius: 20px; */
 `;
 
 const PlayerValue = styled.div`
