@@ -215,7 +215,7 @@ const TableContents = styled.div`
   }
   .SBRNumber {
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 15px;
+    font-size: 17px;
     font-weight: bold;
     text-align: center;
     color: rgb(240, 69, 69);

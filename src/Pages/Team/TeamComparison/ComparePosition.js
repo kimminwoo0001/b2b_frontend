@@ -96,7 +96,7 @@ function ComparePosition() {
       for (let i = 0; i < topData.length; i++) {
         topArray.push({
           player: Object.keys(e.data["top"])[i],
-          data: topData[i]
+          data: topData[i].map(data => data?.toFixed(2))
         });
       }
       setTop(topArray);
@@ -123,7 +123,7 @@ function ComparePosition() {
       for (let i = 0; i < jngData.length; i++) {
         jngArray.push({
           player: Object.keys(e.data["jng"])[i],
-          data: jngData[i]
+          data: jngData[i].map(data => data?.toFixed(2))
         });
       }
       setJng(jngArray);
@@ -150,7 +150,7 @@ function ComparePosition() {
       for (let i = 0; i < midData.length; i++) {
         midArray.push({
           player: Object.keys(e.data["mid"])[i],
-          data: midData[i]
+          data: midData[i].map(data => data?.toFixed(2))
         });
       }
       setMid(midArray);
@@ -177,7 +177,7 @@ function ComparePosition() {
       for (let i = 0; i < botData.length; i++) {
         botArray.push({
           player: Object.keys(e.data["bot"])[i],
-          data: botData[i]
+          data: botData[i].map(data => data?.toFixed(2))
         });
       }
       setBot(botArray);
@@ -204,7 +204,7 @@ function ComparePosition() {
       for (let i = 0; i < supData.length; i++) {
         supArray.push({
           player: Object.keys(e.data["sup"])[i],
-          data: supData[i]
+          data: supData[i].map(data => data?.toFixed(2))
         });
       }
       setSup(supArray);
@@ -223,7 +223,8 @@ function ComparePosition() {
         backgroundColor: color[idx],
         borderColor: color[idx],
         borderWidth: 1,
-        data: data.data
+        data: data.data,
+        pointHitRadius: 10 // hover 범위 넓혀 줌
       };
     })
   };
@@ -237,7 +238,8 @@ function ComparePosition() {
         backgroundColor: color[idx],
         borderColor: color[idx],
         borderWidth: 1,
-        data: data.data
+        data: data.data,
+        pointHitRadius: 10 // hover 범위 넓혀 줌
       };
     })
   };
@@ -251,7 +253,8 @@ function ComparePosition() {
         backgroundColor: color[idx],
         borderColor: color[idx],
         borderWidth: 1,
-        data: data.data
+        data: data.data,
+        pointHitRadius: 10 // hover 범위 넓혀 줌
       };
     })
   };
@@ -265,7 +268,8 @@ function ComparePosition() {
         backgroundColor: color[idx],
         borderColor: color[idx],
         borderWidth: 1,
-        data: data.data
+        data: data.data,
+        pointHitRadius: 10 // hover 범위 넓혀 줌
       };
     })
   };
@@ -279,7 +283,8 @@ function ComparePosition() {
         backgroundColor: color[idx],
         borderColor: color[idx],
         borderWidth: 1,
-        data: data.data
+        data: data.data,
+        pointHitRadius: 10 // hover 범위 넓혀 줌
       };
     })
   };
@@ -344,6 +349,9 @@ function ComparePosition() {
               legend: {
                 display: false
               },
+              tooltips: {
+                mode: 'x'
+              },
               // responsive: false,
               maintainAspectRatio: false,
               scales: {
@@ -406,6 +414,9 @@ function ComparePosition() {
               legend: {
                 display: false
               },
+              tooltips: {
+                mode: 'x'
+              },
               maintainAspectRatio: false,
               scales: {
                 xAxes: [
@@ -466,6 +477,9 @@ function ComparePosition() {
             options={{
               legend: {
                 display: false
+              },
+              tooltips: {
+                mode: 'x'
               },
               maintainAspectRatio: false,
               scales: {
@@ -528,6 +542,9 @@ function ComparePosition() {
               legend: {
                 display: false
               },
+              tooltips: {
+                mode: 'x'
+              },
               maintainAspectRatio: false,
               scales: {
                 xAxes: [
@@ -588,6 +605,10 @@ function ComparePosition() {
             options={{
               legend: {
                 display: false
+              },
+              tooltips: {
+                mode: 'x',
+                padding: 100
               },
               maintainAspectRatio: false,
               scales: {
