@@ -91,9 +91,7 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
         </ModalNav>
         <ComponentBox>
           <ContentBox>
-            <ContentTitle isOppTeamSelected={filters.oppteam !== ""}>
-              Team
-            </ContentTitle>
+            <ContentTitle isOppTeamSelected={filters.player}>Team</ContentTitle>
             <MapTeamContent>
               {oppTeam?.map((team, idx) => {
                 return (

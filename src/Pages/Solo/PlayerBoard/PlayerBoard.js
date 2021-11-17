@@ -232,8 +232,9 @@ function PlayerBoard() {
             <div className="AttendValue">
               <span className="Wins">{`${matchInfo?.match}${t(
                 "solo.playerboard.games"
-              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${matchInfo?.loss
-                }${t("solo.playerboard.lose")}`}</span>
+              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${
+                matchInfo?.loss
+              }${t("solo.playerboard.lose")}`}</span>
               <span className="WinRate">{`${matchInfo?.winrate.toFixed(
                 1
               )}%`}</span>
@@ -745,7 +746,6 @@ function PlayerBoard() {
           </TopBox>
         </AbilityContents>
       </AbilitySection>
-
       <RecordWrapper>
         <RecordSection>
           <CompetitionRecord>
@@ -1066,23 +1066,18 @@ const AbilitySection = styled.div`
   margin-top: 22px;
   width: 100%;
   min-height: 300px;
-  border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
   border-radius: 20px;
 `;
 
 const RecordSection = styled.div`
-  /* margin: 22px 0px; */
   display: flex;
-  /* justify-content: space-between; */
   flex-direction: column;
-  /* flex-wrap: wrap; */
 `;
 
 const GraphSection = styled.div`
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
 `;
 
 const PlayerOverView = styled.div`
@@ -1092,7 +1087,7 @@ const PlayerOverView = styled.div`
   height: 79px;
   margin: 22.5px 0px 0 0;
   border-radius: 20px;
-  border: solid 1px #3a3745;
+  /* border: solid 1px #3a3745; */
   background-color: #2f2d38;
   background-image: url("Images/left-red-gradient.png");
   background-repeat: no-repeat;
@@ -1254,8 +1249,7 @@ const InfoNavBar = styled.div`
 const AbilityContents = styled.div`
   width: 100%;
   min-height: 260px;
-  border: solid 1px rgb(67, 63, 78);
-  background-color: rgb(58, 55, 69);
+  background-color: #23212a;
   border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px;
   padding: 20px;
@@ -1391,8 +1385,8 @@ const CompetitionRecord = styled.div`
   width: 538px;
   min-height: 211px;
   margin-top: 22px;
-  border: solid 1px rgb(58, 55, 69);
-  background-color: rgb(47, 45, 56);
+  /* border: solid 1px rgb(58, 55, 69); */
+  background-color: #23212a;
   border-radius: 20px;
 `;
 const TableNav = styled.div`
@@ -1425,8 +1419,8 @@ const TotalRecord = styled.div`
   margin-top: 22px;
   width: 538px;
   min-height: 211px;
-  border: solid 1px rgb(58, 55, 69);
-  background-color: rgb(47, 45, 56);
+  /* border: solid 1px rgb(58, 55, 69); */
+  background-color: #23212a;
   border-radius: 20px;
 `;
 
@@ -1612,6 +1606,9 @@ const NavBar = styled.div`
   width: 100%;
   height: 42.5px;
   border-bottom: 1px solid rgb(35, 33, 42);
+  background-color: #23212a;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 
   .AverageTime {
     width: 61px;
@@ -1654,14 +1651,15 @@ const NavBar = styled.div`
 const PlayerCharts = styled.div`
   padding: 23px;
   height: 226.5px;
+  background-color: #23212a;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 `;
 
 const Player = styled.div`
   margin-top: 22px;
   width: 538px;
   height: 270px;
-  border: solid 1px rgb(58, 55, 69);
-  background-color: rgb(47, 45, 56);
   border-radius: 20px;
 `;
 
@@ -1759,6 +1757,7 @@ const LoadingImage = styled.div`
   height: 280px;
   justify-content: center;
   align-items: center;
+  background-color: #23212a;
   img {
     width: 50px;
     height: 50px;
