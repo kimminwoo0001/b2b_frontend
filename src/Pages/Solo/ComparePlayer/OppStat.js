@@ -773,13 +773,10 @@ const PlayerStatWrapper = styled.div`
   width: 100%;
   height: 38px;
   background-color: #23212a;
-  /* background-image: linear-gradient(
-    282deg,
-    rgba(47, 45, 56, 0) 48%,
-    #f04545 -18%
-  ); */
   margin: 20px 0;
   border-radius: 16px;
+  background-image: url("/Images/red-blue-gradient.png");
+
   > .leftGradient {
     width: 49px;
     height: 26px;
@@ -806,7 +803,7 @@ const PlayerStatWrapper = styled.div`
     padding: 0 20px;
     height: 26px;
     background-color: rgb(38, 35, 45);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: NotoSansKR;
     font-size: 16px;
     font-weight: bold;
     letter-spacing: -0.65px;
@@ -818,14 +815,7 @@ const PlayerStatWrapper = styled.div`
     line-height: 32px;
     background-color: #23212a;
     font-weight: bold;
-  }
-
-  > .red {
-    color: #f04545;
-  }
-
-  > .blue {
-    color: #0075bf;
+    color: #fff;
   }
 `;
 

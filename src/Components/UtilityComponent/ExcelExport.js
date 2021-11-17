@@ -8,6 +8,7 @@ import * as clipboard from "clipboard-polyfill/text";
 import XLSX from "xlsx";
 import timeFormat from "../../lib/timeFormat";
 import Modal from "react-modal";
+import AlertModal from "./AlertModal";
 
 const customStyles = {
   overlay: {
@@ -42,7 +43,7 @@ const ExportUtil = ({ filename = "none", tableid }) => {
   const dispatch = useDispatch();
   const tblvalue = useSelector((state) => state.TableReducer);
   const [isOpen, setIsOpen] = useState(false);
-  const [isCopy, setIsCopy] = useState(false);
+  const [alertDesc, setAlertDesc] = useState("");
 
   const getTableHeaders = () => {
     const table = document.getElementById(tableid);
@@ -149,11 +150,11 @@ const ExportUtil = ({ filename = "none", tableid }) => {
   const copyClipboard = () => {
     clipboard.writeText(tabledata("clipboard")).then(
       function () {
-        setIsCopy(true);
+        setAlertDesc(t("alert.desc.copy_y"))
         setIsOpen(true);
       },
       function () {
-        setIsCopy(false);
+        setAlertDesc(t("alert.desc.copy_n"))
         setIsOpen(true);
       }
     );
@@ -161,23 +162,11 @@ const ExportUtil = ({ filename = "none", tableid }) => {
 
   return (
     <>
-      <Modal
+      <AlertModal
+        desc={alertDesc}
         isOpen={isOpen}
-        onRequestClose={() => setIsOpen(false)}
-        style={customStyles}
-        contentLabel="Example Modal"
-      >
-        <ModalWrapper>
-          <ModalDetail>
-            {isCopy ? `${t("alert.desc.copy_y")}` : `${t("alert.desc.copy_n")}`}
-          </ModalDetail>
-          <ModalClose>
-            <button onClick={() => setIsOpen(false)}>
-              {t("alert.label.confirm")}
-            </button>
-          </ModalClose>
-        </ModalWrapper>
-      </Modal>
+        setIsOpen={setIsOpen}
+      />
       <DropDown >
         <div className="menu-container">
           <button
@@ -471,54 +460,5 @@ const ExportFile = styled.div`
     :hover {
       background-color: ${(props) => props.changeColor ? `#5942ba` : `#484655`};
     }  
-  }
-`
-
-const ModalWrapper = styled.div`
-  width: 500px;
-  height: 151px;
-  margin: 10px 0 0;
-  padding: 30px 0 20px;
-  border-radius: 20px;
-  box-shadow: 0px 8px 16px 0 rgba(4, 0, 0, 0.4);
-  background-color: #2f2d38;
-  overflow-y: hidden;
-`;
-
-const ModalDetail = styled.div`
-  width: 420px;
-  margin: 0 40px 20px;
-  font-family: SpoqaHanSansNeo;
-  font-size: 18px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.44;
-  letter-spacing: normal;
-  text-align: center;
-  color: #fff;
-`;
-
-const ModalClose = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 62px;
-  button {
-    width: 180px;
-    height: 42px;
-    margin: 0 0px 0 0;
-    padding: 0px 0px;
-    border-radius: 16px;
-    background-color: #5942ba;
-    font-family: SpoqaHanSansNeo;
-    font-size: 18px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.56;
-    letter-spacing: normal;
-    text-align: center;
-    color: #fff;
   }
 `;

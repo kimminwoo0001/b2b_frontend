@@ -634,7 +634,7 @@ function ChampionSetting({
           </DropDownToggle>
         </DropDownBox>
         <DropDownBox2 isActive={compareOpen === true}>
-          <DropDownToggle className="container">
+          <DropDownToggle className="container" changeColor={filters.oppteam.length > 0}>
             <div className="menu-container">
               <button
                 onClick={() => {
@@ -694,7 +694,7 @@ function ChampionSetting({
               </nav>
             </div>
           </DropDownToggle>
-          <DropDownToggle className="container">
+          <DropDownToggle className="container" changeColor={filters.oppplayer.length > 0}>
             <div className="menu-container2">
               <button
                 onClick={() => {
@@ -755,7 +755,7 @@ function ChampionSetting({
               </nav>
             </div>
           </DropDownToggle>
-          <DropDownToggle className="container">
+          <DropDownToggle className="container" changeColor={champArray2.length > 0}>
             <div className="menu-container2">
               <button
                 onClick={() => {
@@ -765,10 +765,18 @@ function ChampionSetting({
                 }}
                 className="menu-trigger2"
               >
-                <span className="Label3">
-                  <span className="champLength">{`${champArray2.length}`}</span>
-                  {` ${t("video.object.champ")}`}
-                </span>
+                {
+                  champArray2.length > 0 ?
+                    <span className="Label3">
+                      <span className="champLength">
+                        {`${champArray2.length} `}
+                      </span>
+                      {` ${t("video.object.champ")}`}
+                    </span>
+                    : <span className="Label3">
+                      {t("video.object.selectChamp")}
+                    </span>
+                }
                 <img
                   className="ArrowIcon"
                   src="Images/select-arrow.png"

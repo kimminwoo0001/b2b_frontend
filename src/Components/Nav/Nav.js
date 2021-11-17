@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 import LocaleDropdown from "./LocaleDropdown";
 import DataProcess from "../DataProcessing/DataProcess";
 import SearchBox from "./SearchBox";
+import AlertModal from "../UtilityComponent/AlertModal";
 
 function Nav() {
   // locale 값을 store에 저장된 값을 가져옴
@@ -18,6 +19,8 @@ function Nav() {
   const dispatch = useDispatch();
   let history = useHistory();
   const { t } = useTranslation();
+  const [alertDesc, setAlertDesc] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     changeLanguage();
@@ -38,45 +41,53 @@ function Nav() {
   };
 
   const dummyAlarm = () => {
-    alert("새로운 알림이 없습니다.")
+    setAlertDesc("새로운 알림이 없습니다.");
+    setIsOpen(true);
   }
 
   return (
-    <NavWrapper>
-      <div className="nav-left">
-        <div className="nav-flex">
-          <img
-            className="logo"
-            src="/Images/logo.png"
-            alt="profile"
-            onClick={() => history.push("/")}
-          />
-          <SearchBox />
+    <>
+      <AlertModal
+        desc={alertDesc}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
+      <NavWrapper>
+        <div className="nav-left">
+          <div className="nav-flex">
+            <img
+              className="logo"
+              src="/Images/logo.png"
+              alt="profile"
+              onClick={() => history.push("/")}
+            />
+            <SearchBox />
+          </div>
         </div>
-      </div>
-      <div className="nav-mid">
-        <DataProcess />
-      </div>
-      <div className="nav-right">
-        <ContentsWrapper>
-          <img
-            className="setting"
-            src="Images/ico_setting.svg"
-            alt="settingIcon"
-          ></img>
-          <img
-            className="Alert"
-            src="Images/ico-alarm.png"
-            alt="alertIcon"
-            onClick={() => dummyAlarm()}
-          ></img>
-          <LocaleDropdown />
-          <lable onClick={() => handleLogOut()}>
-            {user.id.length > 0 ? `${t("nav.logout")}` : `${t("nav.login")}`}
-          </lable>
-        </ContentsWrapper>
-      </div>
-    </NavWrapper>
+        <div className="nav-mid">
+          <DataProcess />
+        </div>
+        <div className="nav-right">
+          <ContentsWrapper>
+            <img
+              className="setting"
+              src="Images/ico_setting.svg"
+              alt="settingIcon"
+            ></img>
+            <img
+              className="Alert"
+              src="Images/ico-alarm.png"
+              alt="alertIcon"
+              onClick={() => dummyAlarm()}
+            ></img>
+            <LocaleDropdown />
+            <lable onClick={() => handleLogOut()}>
+              {user.id.length > 0 ? `${t("nav.logout")}` : `${t("nav.login")}`}
+            </lable>
+          </ContentsWrapper>
+        </div>
+      </NavWrapper>
+    </>
   );
 }
 

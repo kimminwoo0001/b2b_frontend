@@ -97,11 +97,19 @@ const HomeContents = memo(() => {
               <div className="LeagueName">LCK</div>
             </LeagueNav>
             <HomeTable>
+              <colgroup>
+                <col width="11%" />
+                <col width="45%" />
+                <col width="8.5%" />
+                <col width="8.5%" />
+                <col width="13.5%" />
+                <col width="13.5%" />
+              </colgroup>
               <thead>
                 <tr>
                   <th className="Rank">{t("home.rank")}</th>
                   <th className="TeamName">{t("home.teamName")}</th>
-                  <th className="playoff"></th>
+                  {/* <th className="playoff"></th> */}
                   <th className="Win">{t("home.win")}</th>
                   <th className="Lose">{t("home.lose")}</th>
                   <th className="WinRate">{t("home.winrate")}</th>
@@ -122,10 +130,10 @@ const HomeContents = memo(() => {
                           <div>{leagueData.Team}</div>
                         </div>
                       </td>
-                      <td>
+                      {/* <td>
                         {leagueData.PO === true ? <PlayOff>P.O</PlayOff> : ""}
                         {leagueData.PL === true ? <PL>P.L</PL> : ""}
-                      </td>
+                      </td> */}
                       <td className="Win">{leagueData.WinSeries}</td>
                       <td className="Lose">{leagueData.LossSeries}</td>
                       <td className="WinRate">{`${leagueData.WinRate.toFixed(
@@ -145,11 +153,19 @@ const HomeContents = memo(() => {
               <div className="LeagueName">LEC</div>
             </LeagueNav>
             <HomeTable>
+              <colgroup>
+                <col width="11%" />
+                <col width="45%" />
+                <col width="8.5%" />
+                <col width="8.5%" />
+                <col width="13.5%" />
+                <col width="13.5%" />
+              </colgroup>
               <thead>
                 <tr>
                   <th className="Rank">{t("home.rank")}</th>
                   <th className="TeamName">{t("home.teamName")}</th>
-                  <th className="playoff"></th>
+                  {/* <th className="playoff"></th> */}
                   <th className="Win">{t("home.win")}</th>
                   <th className="Lose">{t("home.lose")}</th>
                   <th className="WinRate">{t("home.winrate")}</th>
@@ -170,10 +186,10 @@ const HomeContents = memo(() => {
                           <div>{leagueData.Team}</div>
                         </div>
                       </td>
-                      <td>
+                      {/* <td>
                         {leagueData.PO === true ? <PlayOff>P.O</PlayOff> : ""}
                         {leagueData.PL === true ? <PL>P.L</PL> : ""}
-                      </td>
+                      </td> */}
                       <td className="Win">{leagueData.WinSeries}</td>
                       <td className="Lose">{leagueData.LossSeries}</td>
                       <td className="WinRate">{`${leagueData.WinRate.toFixed(
@@ -195,11 +211,19 @@ const HomeContents = memo(() => {
               <div className="LeagueName">LCS</div>
             </LeagueNav>
             <HomeTable>
+              <colgroup>
+                <col width="11%" />
+                <col width="45%" />
+                <col width="8.5%" />
+                <col width="8.5%" />
+                <col width="13.5%" />
+                <col width="13.5%" />
+              </colgroup>
               <thead>
                 <tr>
                   <th className="Rank">{t("home.rank")}</th>
                   <th className="TeamName">{t("home.teamName")}</th>
-                  <th className="playoff"></th>
+                  {/* <th className="playoff"></th> */}
                   <th className="Win">{t("home.win")}</th>
                   <th className="Lose">{t("home.lose")}</th>
                   <th className="WinRate">{t("home.winrate")}</th>
@@ -220,11 +244,11 @@ const HomeContents = memo(() => {
                           <div>{leagueData.Team}</div>
                         </div>
                       </td>
-                      <td>
+                      {/* <td>
                         {leagueData.PO === true ? <PlayOff>P.O</PlayOff> : ""}
-                        {leagueData.PL === true ? <PL>P.L</PL> : ""} {/* 사용안 할 예정*/}
-                      </td>
-                      <td className="Win">{leagueData.WinSeries}</td>
+                        {leagueData.PL === true ? <PL>P.L</PL> : ""}
+                      </td> */}
+                      <td className="Win" > {leagueData.WinSeries}</td>
                       <td className="Lose">{leagueData.LossSeries}</td>
                       <td className="WinRate">{`${leagueData.WinRate.toFixed(
                         1
@@ -243,11 +267,19 @@ const HomeContents = memo(() => {
               <div className="LeagueName">LPL</div>
             </LeagueNav>
             <HomeTable>
+              <colgroup>
+                <col width="11%" />
+                <col width="45%" />
+                <col width="8.5%" />
+                <col width="8.5%" />
+                <col width="13.5%" />
+                <col width="13.5%" />
+              </colgroup>
               <thead>
                 <tr>
                   <th className="Rank">{t("home.rank")}</th>
                   <th className="TeamName">{t("home.teamName")}</th>
-                  <th className="playoff"></th>
+                  {/* <th className="playoff"></th> */}
                   <th className="Win">{t("home.win")}</th>
                   <th className="Lose">{t("home.lose")}</th>
                   <th className="WinRate">{t("home.winrate")}</th>
@@ -268,10 +300,10 @@ const HomeContents = memo(() => {
                           <div>{leagueData.Team}</div>
                         </div>
                       </td>
-                      <td>
+                      {/* <td>
                         {leagueData.PO === true ? <PlayOff>P.O</PlayOff> : ""}
                         {leagueData.PL === true ? <PL>P.L</PL> : ""}
-                      </td>
+                      </td> */}
                       <td className="Win">{leagueData.WinSeries}</td>
                       <td className="Lose">{leagueData.LossSeries}</td>
                       <td className="WinRate">{`${leagueData.WinRate.toFixed(
@@ -332,8 +364,8 @@ const HomeContents = memo(() => {
             </HomeTable>
           </LeagueList> */}
         </BottomBox>
-      </BoxWrapper>
-    </LeagueListWrapper>
+      </BoxWrapper >
+    </LeagueListWrapper >
   );
 });
 
@@ -343,7 +375,7 @@ const LeagueListWrapper = styled.div`
   display: flex;
   width: 1210px;
   flex-wrap: wrap;
-  margin: 21.3px 0 26.3px 40px;
+  margin: 30px 0 26.3px 40px;
 `;
 
 const BoxWrapper = styled.div``;
@@ -362,21 +394,23 @@ const LeagueList = styled.div`
   // height: 432px; 
   border: solid 1px #3a3745;
   background-color: #2f2d38;
+  border-radius: 20px;
 `;
 
 const LeagueListSmall = styled.div`
   margin: 0 20px 24.5px 0;
   width: 594px;
-  height: 432px; 
+  height: 442px; 
   border: solid 1px #3a3745;
   background-color: #2f2d38;
+  border-radius: 20px;
 `;
 
 const LeagueNav = styled.div`
   display: flex;
   align-items: center;
   border-bottom: 1px solid #23212a;
-  height: 42.5px;
+  height: 54px;
   img {
     width: 24px;
     height: 24px;
@@ -385,13 +419,15 @@ const LeagueNav = styled.div`
   div {
     width: 29px;
     height: 19px;
-    font-family: Poppins !important;
-    font-size: 13px;
-    font-weight: bold;
-    line-height: 1.92;
+    font-family: SpoqaHanSansNeo;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.1;
     letter-spacing: normal;
     text-align: left;
-    color: #ffffff;
+    color: #fff;
   }
 `;
 
@@ -437,27 +473,33 @@ const HomeTable = styled.table`
 
     height: 36px;
     width: 100%;
-    border-bottom: 1px solid #3a3745;
+    border-top: 1px solid #3a3745;
     > .WinRate {
       color: #f04545;
     }
     > .TeamName {
       text-align: left;
-      width: 343px;
     }
     .TeamWrapper {
       display: flex;
       flex-direction: row;
       align-items: center;
     }
+
     img {
-      width: 17px;
+      width: 20px;
       height: 20px;
       margin-right: 13.2px;
     }
     td {
-      font-family: Poppins;
-      font-size: 12px;
+      font-family: SpoqaHanSansNeo;
+      font-size: 15px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 2.4;
+      letter-spacing: normal;
+      color: #fff;
       text-align: center;
       color: #ffffff;
       vertical-align: middle;

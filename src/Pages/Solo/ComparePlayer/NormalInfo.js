@@ -251,46 +251,32 @@ function NormalInfo() {
           <div className="PerformanceTitle">
             {t("solo.comparison.avgScore")}
           </div>
-          <PerformanceValue
-            color={data?.sbrAvg < oppData?.sbrAvg}
-            className="PerformanceValue"
-          >
+          <PerformanceValueAvg color={data?.sbrAvg < oppData?.sbrAvg}>
             {data?.sbrAvg.toFixed(1)}
-          </PerformanceValue>
+          </PerformanceValueAvg>
         </div>
         <div className="AverageBoxTwo">
           <div className="PerformanceTitle">
             {t("solo.comparison.bestScore")}
           </div>
-          <PerformanceValue
-            color={data?.sbrMax < oppData?.sbrMax}
-            className="PerformanceValue"
-          >
-            {data?.sbrMax.toFixed(1)}
-          </PerformanceValue>
+          <PerformanceValueMax>{data?.sbrMax.toFixed(1)}</PerformanceValueMax>
         </div>
         <div className="Vs">VS</div>
         <div className="AverageBox">
           <div className="PerformanceTitle">
             {t("solo.comparison.avgScore")}
           </div>
-          <PerformanceValue2
-            color={data?.sbrAvg > oppData?.sbrAvg}
-            className="PerformanceValueBlue"
-          >
+          <PerformanceValueAvg color={data?.sbrAvg > oppData?.sbrAvg}>
             {oppData?.sbrAvg.toFixed(1)}
-          </PerformanceValue2>
+          </PerformanceValueAvg>
         </div>
         <div className="AverageBoxTwo">
           <div className="PerformanceTitle">
             {t("solo.comparison.bestScore")}
           </div>
-          <PerformanceValue2
-            color={data?.sbrMax > oppData?.sbrMax}
-            className="PerformanceValueBlue"
-          >
+          <PerformanceValueMax>
             {oppData?.sbrMax.toFixed(1)}
-          </PerformanceValue2>
+          </PerformanceValueMax>
         </div>
         <div className="NameContainerBlue">
           <span className="NickName">
@@ -541,49 +527,27 @@ const PlayerStatWrapper = styled.div`
     line-height: 32px;
     background-color: #23212a;
     font-weight: bold;
-  }
-
-  > .red {
-    color: #f04545;
-  }
-
-  > .blue {
-    color: #0075bf;
+    color: #fff;
   }
 `;
 
-const PerformanceValue = styled.div`
+const PerformanceValueAvg = styled.div`
   font-family: NotoSansKR, Apple SD Gothic Neo;
   font-size: 20px;
   font-weight: bold;
   text-align: center;
-  color: rgb(240, 69, 69);
-
-  .PerformanceValueBlue {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    color: #0075bf;
-  }
-  ${(props) =>
-    props.color &&
-    css`
-      color: #6b6979;
-    `}
+  margin-top: 10px;
+  color: ${(props) => (props.color ? "#fff" : "#f04545")};
 `;
 
-const PerformanceValue2 = styled.div`
+const PerformanceValueMax = styled.div`
   font-family: NotoSansKR, Apple SD Gothic Neo;
   font-size: 20px;
   font-weight: bold;
   text-align: center;
-  color: #0075bf;
-  ${(props) =>
-    props.color &&
-    css`
-      color: #6b6979;
-    `}
+  color: #fff;
+  text-align: center;
+  margin-top: 10px;
 `;
 
 const PlayerCompareWrapper = styled.div`

@@ -65,28 +65,35 @@ const ComparePlayerWrapper = styled.div``;
 const ComparePlayerTabs = styled.div`
   display: flex;
   margin-top: 21.5px;
+  border-bottom: 1px solid #433f4e;
 `;
 const LineMargin = styled.div`
   width: 6px;
-  border-bottom: 1px solid #433f4e;
+  /* border-bottom: 1px solid #433f4e; */
 `;
 
 const LastMargin = styled.div`
   width: 721px;
-  border-bottom: 1px solid #433f4e;
+  /* border-bottom: 1px solid #433f4e; */
 `;
 
 const NormalInfoTab = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 96px;
+  width: auto;
   height: 36px;
   color: rgb(132, 129, 142);
-  border-bottom: 1px solid #433f4e;
   font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 16px;
-  padding-bottom: 20px;
+  font-size: 18px;
+  padding: 10px 0;
+  margin-right: 10px;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  div {
+  }
 
   ${(props) =>
     props.changeColor &&
@@ -103,14 +110,17 @@ const StatTab = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 96px;
+  width: auto;
   height: 36px;
   color: rgb(132, 129, 142);
-  border-bottom: 1px solid #433f4e;
-
   font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 16px;
-  padding-bottom: 20px;
+  font-size: 18px;
+  padding: 10px 0;
+  margin-right: 10px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 
   ${(props) =>
     props.changeColor &&
@@ -127,14 +137,17 @@ const OppStatTab = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 130px;
+  width: auto;
   height: 36px;
   color: rgb(132, 129, 142);
-  border-bottom: 1px solid #433f4e;
-
   font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 16px;
-  padding-bottom: 20px;
+  font-size: 18px;
+  padding: 10px 0;
+  margin-right: 10px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 
   ${(props) =>
     props.changeColor &&

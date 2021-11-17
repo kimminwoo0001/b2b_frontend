@@ -560,7 +560,6 @@ function PlayerBoard() {
           </AbilityContents>
         )}
       </AbilitySection>
-      // 솔로랭크 당분간 주석 처리.
       <AbilitySection>
         <InfoNavBar>
           <LeftInfo>
@@ -1327,7 +1326,6 @@ const MapStat = styled.tr`
     letter-spacing: -0.6px;
     color: rgb(255, 255, 255);
     margin: 0 0px 0 14px;
-    cursor: pointer;
   }
   > td {
     vertical-align: middle;
@@ -1726,7 +1724,6 @@ const DropDownContainer = styled.div`
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
-    // 솔로랭크 현황판 앞으로 나오게 함
     z-index: 1;
   }
 
@@ -1755,10 +1752,13 @@ const DropDownContainer = styled.div`
 const LoadingImage = styled.div`
   display: flex;
   width: 100%;
-  height: 280px;
+  height: 260px;
   justify-content: center;
   align-items: center;
   background-color: #23212a;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+
   img {
     width: 50px;
     height: 50px;

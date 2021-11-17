@@ -12,59 +12,99 @@ const FilterHeader = memo(() => {
 
   const menus = [
     {
+      // menus[0] Home
+      idx: 0,
       name: t("sidebar.part1"),
       path: "/",
       image: "/Images/sidebar_newLogo/ico-home.png",
+
     },
     {
+      // menus[1] 리그 보고서
+      idx: 1,
       name: t("sidebar.part2"),
       path: "/league",
       image: "/Images/sidebar_newLogo/ico-league.png",
+
     },
     {
+      // menus[2] 팀 보고서
+      idx: 2,
       name: t("sidebar.part3"),
       path: "/team",
       image: "/Images/sidebar_newLogo/ico-team.png",
+
     },
     {
+      // menus[3] 메타 분석
+      idx: 3,
       name: t("sidebar.part4"),
       path: "/metaAnalysis",
       image: "/Images/sidebar_newLogo/ico-meta.png",
+
     },
     {
+      // menus[4] 선수 보고서
+      idx: 4,
       name: t("sidebar.part5"),
       path: "/solo",
       image: "/Images/sidebar_newLogo/ico-player.png",
+
     },
     {
+      // menus[5] 영상 보고서
+      idx: 5,
       name: t("sidebar.part6"),
       path: "/video",
       image: "/Images/sidebar_newLogo/ico-movie.png",
+
     },
     {
+      // menus[6] 매치 분석
+      idx: 6,
       name: t("sidebar.part7"),
       path: "/matchAnalysis",
       image: "/Images/sidebar_newLogo/ico-match.png",
+
     },
     {
+      // menus[7] 팀 비교
+      idx: 7,
       name: t("sidebar.part8"),
       path: "/teamCompare",
       image: "/Images/sidebar_newLogo/ico-teamcom.png",
+
     },
     {
+      // menus[8] 선수 비교
+      idx: 8,
       name: t("sidebar.part9"),
       path: "/playerCompare",
       image: "/Images/sidebar_newLogo/ico-playercom.png",
+
     },
     {
+      // menus[9] 아이템 시뮬레이터
+      idx: 9,
       name: t("sidebar.part10"),
       path: "/simulator",
       image: "/Images/ico-itemsimulator.png",
+
     },
     {
+      // menus[10] 픽 계산기
+      idx: 10,
       name: t("sidebar.part11"),
       path: "/calculator",
       image: "/Images/ico-pick-calculator.png",
+    },
+    {
+      // menus[11] 게임 보고서
+      idx: 11,
+      name: t("sidebar.part12"),
+      path: "/gameReport",
+      image: "/Images/sidebar_newLogo/ico_game.png",
+
     },
   ];
 

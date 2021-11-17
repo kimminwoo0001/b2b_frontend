@@ -187,30 +187,34 @@ function WardMapping() {
 
   return (
     <WardMappingContainer>
+
+
       <LeftSection>
+        <WardMappingTabs>
+          <BasedOnTeam
+            onClick={() => {
+              setTab("team");
+              handleTimeReset();
+              setCompareOpen(false);
+            }}
+            isActive={tab === "team"}
+          >
+            <span>{t("video.vision.teamview")}</span>
+          </BasedOnTeam>
+          <LineMargin></LineMargin>
+          <BasedOnPlayer
+            onClick={() => {
+              setTab("player");
+              handleTimeReset();
+              setCompareOpen(false);
+            }}
+            isActive={tab === "player"}
+          >
+            <span>{t("video.vision.playerview")}</span>
+          </BasedOnPlayer>
+          <LastMargin></LastMargin>
+        </WardMappingTabs>
         <FilterContainer>
-          <TabContainer>
-            <BasedOnTeam
-              onClick={() => {
-                setTab("team");
-                handleTimeReset();
-                setCompareOpen(false);
-              }}
-              isActive={tab === "team"}
-            >
-              {t("video.vision.teamview")}
-            </BasedOnTeam>
-            <BasedOnPlayer
-              onClick={() => {
-                setTab("player");
-                handleTimeReset();
-                setCompareOpen(false);
-              }}
-              isActive={tab === "player"}
-            >
-              {t("video.vision.playerview")}
-            </BasedOnPlayer>
-          </TabContainer>
           <FilterContents>{contents[tab]}</FilterContents>
           <div className="ward-btn-area">
             <WardButton
@@ -491,7 +495,7 @@ const WardMappingContainer = styled.div`
 const LeftSection = styled.section`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  //align-items: center;
   margin-right: 22px;
 `;
 
@@ -518,57 +522,56 @@ const TabContainer = styled.div`
 `;
 
 const BasedOnTeam = styled.button`
-  opacity: 0.3;
-  font-family: SpoqaHanSansNeo;
-  font-size: 16px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.0;
-  letter-spacing: normal;
-  text-align: center;
-  color: #fff;
-  width: 252px;
-  height: 60px;
-  padding: 20px 20px 19px;
-  border-radius: 20px 0 0 20px;
-  background-color: #3a3745;
-  // border-bottom: solid 1px rgb(67, 63, 78);
-  // border-right: solid 1px rgb(67, 63, 78);
-
+  width: auto;  
+  display: flex;
+  padding: 20px 0 20px 0;
+  align-items: center;
+  border-bottom: solid 1px #433f4e;
+  white-space: nowrap;
+  span {
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: ${(props) => (props.isActive ? `#fff` : `#84818e`)};
+  }
   ${(props) =>
     props.isActive &&
     css`
-      opacity: 1;
-      border-bottom: none;
-      background-color:  #23212a;
-      color: rgb(255, 255, 255);
+    border-bottom: solid 1px #fff;
     `}
 `;
 
 const BasedOnPlayer = styled.button`
-  opacity: 0.3;
-  font-family: SpoqaHanSansNeo;
-  font-size: 16px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.0;
-  letter-spacing: normal;
-  text-align: center;
-  color: #fff;
-  width: 252px;
-  height: 60px;
-  padding: 20px 30px 19px;
-  border-radius: 0 20px 20px 0;
-  background-color: #3a3745;
+  padding: 20px 0 20px 0;
+  align-items: center;
+  width: auto;
+  border-bottom: solid 1px #433f4e;
+  white-space: nowrap;
+  span {
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: ${(props) => (props.isActive ? `#fff` : `#84818e`)};
+  }
+  :hover {
+    opacity: 0.8;
+  }
   ${(props) =>
     props.isActive &&
     css`
-      opacity: 1;
-      border-bottom: none;
-      background-color:  #23212a;
-      color: rgb(255, 255, 255);
+    border-bottom: solid 1px #fff;
     `}
 `;
 
@@ -720,4 +723,10 @@ const LineMargin = styled.div`
 const LastMargin = styled.div`
   width:73%;
   border-bottom: solid 1px #433f4e;
+`;
+
+const WardMappingTabs = styled.div`
+  display: flex;
+  height: 62px;
+  margin-bottom: 20px;
 `;

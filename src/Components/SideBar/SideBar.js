@@ -130,6 +130,7 @@ function Sidebar() {
       menus[2],
       menus[4],
       menus[5],
+      menus[11],
       menus[7],
       menus[8],
     ];

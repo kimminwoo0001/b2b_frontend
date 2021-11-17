@@ -661,7 +661,7 @@ const DisplayTime = styled.div`
 
 const Steps = styled.div`
   min-height: 111px;
-  padding: 10px 23px;
+  padding: 0px 23px 20px;
   :nth-child(2) {
     border-bottom: none;
   }
@@ -699,7 +699,7 @@ const Steps = styled.div`
     line-height: normal;
     letter-spacing: normal;
     text-align: left;
-    margin-bottom: 47px;
+    margin-bottom: 40px;
 
     > .step {
       font-weight: normal;
