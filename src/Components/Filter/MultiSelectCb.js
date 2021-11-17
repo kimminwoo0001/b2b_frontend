@@ -34,9 +34,10 @@ export default MultiSelectCb;
 const Selecter = styled.div`
   display: flex;
   align-items: center;
-  margin: 10px 0;
+  margin: 5px 0;
+  padding-left: 5px;
   width: 100%;
-  height: 24px;
+  height: 30px;
   color: #84818e;
   cursor: pointer;
   ${(props) =>
@@ -93,5 +94,11 @@ const Selecter = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: #fff;
+  }
+
+  :hover {
+    border-radius: 10px;
+    background-color: #3a3745;
+    padding-right: 50px;
   }
 `;

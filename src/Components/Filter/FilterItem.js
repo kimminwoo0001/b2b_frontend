@@ -79,15 +79,17 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
           {/* 전체선택 */}
           {(title === t("label.league") ||
             (title === t("label.season") && filters.year.length > 0)) && (
-            <div className="select_all">
-              <input
-                type="checkbox"
-                onClick={handleCheckboxClick}
-                checked={checked}
-              />
-              <div>{t("filters.selectAll")}</div>
-            </div>
-          )}
+              <div className="div-select-all">
+                <div className="select_all" onClick={handleCheckboxClick}>
+                  <input
+                    type="checkbox"
+
+                    checked={checked}
+                  />
+                  <span>{t("filters.selectAll")}</span>
+                </div>
+              </div>
+            )}
           {multiFilter}
         </div>
       </InnerWrapper>
@@ -142,9 +144,15 @@ const Header = styled.div`
 const Item = styled.div`
   width: 250px;
   margin: 0 0 10px;
-  padding: 20px;
+  padding: 20px 10px;
   border-radius: 35px;
   background-color: #2f2d38;
+
+
+  .div-select-all {
+    height: 35px;
+    border-bottom: 1px solid #433f4e;
+  }
 
   .open-filter-item {
     display: block;
@@ -155,12 +163,16 @@ const Item = styled.div`
   }
 
   .select_all {
-    border-bottom: 1px solid #433f4e;
-    color: #fff;
-    font-size: 15px;
+   
+
     display: flex;
     align-items: center;
-    padding: 10px 0;
+    margin: 5px 0;
+    padding-left: 5px;
+    width: 100%;
+    height: 30px;
+    cursor: pointer;
+
 
     input[type="checkbox"] {
       -webkit-appearance: none;
@@ -186,12 +198,32 @@ const Item = styled.div`
       &:focus {
         outline: none !important;
       }
+
+      
+    }
+    :hover {
+      border-radius: 10px;
+      background-color: #3a3745;
+    }
+
+    span {
+      height: 19px;
+      margin: 0px 0 2px 0px;
+      font-family: SpoqaHanSansNeo;
+      font-size: 15px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.46;
+      letter-spacing: normal;
+      text-align: left;
+      color: #fff;
     }
   }
 `;
 
 const InnerWrapper = styled.div`
-  padding-right: 10px;
+  padding-right: 0px;
   height: 100%;
   max-height: 360px;
   overflow-y: scroll;
