@@ -490,15 +490,21 @@ const SliderContainer = styled.div`
 `;
 
 const DefaultTime = styled.div`
+  margin-top: -3px;
   display: flex;
   justify-content: space-between;
 `;
 
 const DisplayTime = styled.div`
-  font-family: Poppins;
-  font-size: 12px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 15px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.87;
+  letter-spacing: normal;
   text-align: center;
-  color: rgb(107, 105, 121);
+  color: #6b6979;
 `;
 
 const Steps = styled.div`
@@ -536,7 +542,7 @@ const Steps = styled.div`
     line-height: normal;
     letter-spacing: normal;
     text-align: left;
-    margin-bottom: 47px;
+    margin-bottom: 40px;
 
     > .step {
       font-weight: normal;

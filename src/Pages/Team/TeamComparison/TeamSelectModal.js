@@ -162,7 +162,7 @@ const ContentTitle = styled.div`
   font-style: normal;
   line-height: 1.63;
   padding: 0px 0 0px 14px;
-  margin: 25px 41px;
+  margin: 25px 41px 10px;
   color: rgb(255, 255, 255);
 `;
 

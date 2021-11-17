@@ -203,30 +203,12 @@ function HitMap() {
 
   return (
     <HitMapContainer>
-      <TopSection>
-        <TabBox>
-          <FilterTab
-            className="player"
-            onClick={() => {
-              if (tab !== "player") {
-                setTab("player");
-                if (isPageSolo) {
-                  dispatch(ResetChampion());
-                } else {
-                  dispatch(Reset_MapTab());
-                }
-                resetHeatMap1.current.innerHTML = "";
-                resetHeatMap2.current.innerHTML = "";
-              }
-            }}
-            isActive={tab === "player"}
-          >
-            {t("video.heatmap.all")}
-          </FilterTab>
-          <FilterTab
-            className="opp-champ"
-            onClick={() => {
-              setTab("champion");
+      <TabBox>
+        <FilterTab
+          className="player"
+          onClick={() => {
+            if (tab !== "player") {
+              setTab("player");
               if (isPageSolo) {
                 dispatch(ResetChampion());
               } else {
@@ -234,12 +216,32 @@ function HitMap() {
               }
               resetHeatMap1.current.innerHTML = "";
               resetHeatMap2.current.innerHTML = "";
-            }}
-            isActive={tab === "champion"}
-          >
-            {t("video.heatmap.opp")}
-          </FilterTab>
-        </TabBox>
+            }
+          }}
+          isActive={tab === "player"}
+        >
+          <span>{t("video.heatmap.all")}</span>
+        </FilterTab>
+        <LineMargin></LineMargin>
+        <FilterTab
+          className="opp-champ"
+          onClick={() => {
+            setTab("champion");
+            if (isPageSolo) {
+              dispatch(ResetChampion());
+            } else {
+              dispatch(Reset_MapTab());
+            }
+            resetHeatMap1.current.innerHTML = "";
+            resetHeatMap2.current.innerHTML = "";
+          }}
+          isActive={tab === "champion"}
+        >
+          <span>{t("video.heatmap.opp")}</span>
+        </FilterTab>
+        <LastMargin></LastMargin>
+      </TabBox>
+      <TopSection>
         <FilterContents>{contents[tab]}</FilterContents>
         <ButtonSection>
           <ConfirmButton
@@ -330,43 +332,34 @@ const ConfirmButton = styled.button`
 `;
 
 const TabBox = styled.div`
-  padding-top: 30px;
-  margin-left: 30px;
-  margin-right: 30px;
   display: flex;
-
-  .player {
-    border-radius: 20px 0 0 20px;
-  }
-
-  .opp-champ {
-    border-radius: 0 20px 20px 0;
-  }
+  height: 62px;
+  margin-bottom: 20px;
 `;
 
 const FilterTab = styled.button`
-  width: 519px;
-  height: 60px;
-  border-radius: 20px;
-  background-color: #3a3745;
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
-  letter-spacing: -0.6px;
-  color: rgb(255, 255, 255);
-  opacity: 0.3;
-  font-family: SpoqaHanSansNeo;
-  font-size: 16px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.0;
-  letter-spacing: normal;
-  text-align: center;
+  display: flex;
+  padding: 20px 0 20px 0;
+  align-items: center;
+  width: auto;
+  border-bottom: solid 1px #433f4e;
+  white-space: nowrap;
+  span {
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: ${(props) => (props.isActive ? `#fff` : `#84818e`)};
+  }
   ${(props) =>
     props.isActive &&
     css`
-      background-color: #23212a;
-      opacity: 1.0;
+    border-bottom: solid 1px #fff;
     `}
 `;
 
@@ -414,4 +407,14 @@ const Map = styled.div`
   height: 538px;
   background-image: url("Images/obj_map_summer.png");
   background-size: 538px 538px;
+`;
+
+const LineMargin = styled.div`
+  width: 30px;
+  border-bottom: solid 1px #433f4e;
+`;
+
+const LastMargin = styled.div`
+  width:73%;
+  border-bottom: solid 1px #433f4e;
 `;

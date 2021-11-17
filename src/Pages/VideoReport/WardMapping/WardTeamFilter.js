@@ -201,7 +201,7 @@ const WardTeamFilterContainer = styled.div``;
 
 const Steps = styled.div`
   min-height: 111px;
-  padding: 5px 23px;
+  padding: 0px 23px;
   :nth-child(2) {
     border-bottom: none;
   }
