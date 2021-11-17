@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 const MultiSelectCb = memo(
-  ({ idx, filterData, mapData, pngPath, clickEvent, title }) => {
+  ({ idx, filterData, mapData, pngPath, clickEvent, title, radioBtn = false }) => {
     const { t } = useTranslation();
 
     return (
@@ -12,6 +12,7 @@ const MultiSelectCb = memo(
         <Selecter
           key={idx}
           isChecked={filterData?.includes(mapData) ? true : false}
+          radioBtn={radioBtn}
           onClick={() => {
             clickEvent();
           }}
@@ -60,14 +61,14 @@ const Selecter = styled.div`
     height: 24px;
 
     background-clip: content-box;
-    background: url("/Images/btn_check_off.svg") no-repeat;
+    background: ${(props) => props.radioBtn ? `url("/Images/btn_radio_off.svg")` : `url("/Images/btn_check_off.svg")`} no-repeat;
     margin-right: 8px;
 
     &:checked {
       background-color: #5942ba;
       border: #5942ba;
       border-radius: 2px;
-      background: url("/Images/btn_check_on.svg") no-repeat;
+      background: ${(props) => props.radioBtn ? `url("/Images/btn_radio_on.svg")` : `url("/Images/btn_check_on.svg")`} no-repeat;
       float: right;
     }
 
@@ -88,7 +89,7 @@ const Selecter = styled.div`
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
-    line-height: 1.47;
+    line-height: 1.42;
     letter-spacing: normal;
     text-align: left;
     color: #fff;

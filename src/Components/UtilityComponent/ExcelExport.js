@@ -178,7 +178,7 @@ const ExportUtil = ({ filename = "none", tableid }) => {
           </ModalClose>
         </ModalWrapper>
       </Modal>
-      <DropDown>
+      <DropDown >
         <div className="menu-container">
           <button
             onClick={() => {
@@ -189,7 +189,7 @@ const ExportUtil = ({ filename = "none", tableid }) => {
           >
             <span className="Label">Export</span>
             <img
-              className="ArrowIcon"
+              className="arrow-icon"
               src="Images/btn_view_detail.png"
               alt="arrowIcon"
             />
@@ -222,24 +222,34 @@ const ExportUtil = ({ filename = "none", tableid }) => {
                 );
               })}
             </ul>
-            <div className="export-file">
+            <ExportFile changeColor={tblvalue.headers.length > 0}>
               <button
                 onClick={() => {
-                  exportCSV(filename, tblvalue.headers);
-                  setIsActive(false);
+                  tblvalue.headers.length > 0 && exportCSV(filename, tblvalue.headers);
+                  tblvalue.headers.length > 0 && setIsActive(false);
                 }}
               >
+                <img
+                  className="download-icon"
+                  src="Images/ic_download.png"
+                  alt="DownloadIcon"
+                />
                 CSV
               </button>
               <button
                 onClick={() => {
-                  exportXlsx(filename, tblvalue.headers);
-                  setIsActive(false);
+                  tblvalue.headers.length > 0 && exportXlsx(filename, tblvalue.headers);
+                  tblvalue.headers.length > 0 && setIsActive(false);
                 }}
               >
+                <img
+                  className="download-icon"
+                  src="Images/ic_download.png"
+                  alt="DownloadIcon"
+                />
                 XLSX
               </button>
-            </div>
+            </ExportFile>
           </nav>
         </div>
       </DropDown>
@@ -326,6 +336,12 @@ const Selected = styled.div`
       outline: none !important;
     }
   }
+
+  :hover {
+    width: 185px;
+    border-radius: 10px;
+    background-color: #3a3745;
+  }
 `;
 
 const DropDown = styled.div`
@@ -338,16 +354,15 @@ const DropDown = styled.div`
   padding: 0 10px;
   display: inline-block;
 
-  img {
-    margin-left: 10px;
-    transform: rotate(90deg);
-  }
-
   .menu-container {
     position: relative;
     display: inline-block;
     justify-content: center;
     align-items: center;
+
+    .arrow-icon {
+      transform: rotate(90deg);
+    }
   }
 
   .menu-trigger {
@@ -374,15 +389,6 @@ const DropDown = styled.div`
 
   .menu-trigger:hover {
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
-  }
-
-  header {
-    padding: 0px 10px;
-    border: solid 1px;
-    color: #fff;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 14px;
-    text-align: center;
   }
 
   .Label {
@@ -436,26 +442,41 @@ const DropDown = styled.div`
     }
   }
 
-  .export-file {
-    color: #fff;
-    button {
-      width: 76px;
-      height: 30px;
-      // margin: 20px 94px 0 0;
-      padding: 6px 16px;
-      border-radius: 10px;
-      width: 50%;
-      background-color: #5942ba;
-      :hover {
-        background-color: rgb(60, 58, 72);
-      }
-    }
-  }
+
 `;
+
+const ExportFile = styled.div`
+  margin: 15px 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button {     
+    display:flex;
+    justify-content: center;
+    width: 76px;
+    height: 30px;
+    margin: 0 5px;
+    padding: 1px 2px;
+    border-radius: 10px;
+    background-color: ${(props) => props.changeColor ? `#5942ba` : `#484655`};
+    color: #fff;
+    padding-right: 7px;
+    .download-icon {
+      width: 18px;
+      height: 18px;
+      transform: rotate(180 deg);
+      object-fit: contain;
+      margin-top: 5px;
+    }
+    :hover {
+      background-color: ${(props) => props.changeColor ? `#5942ba` : `#484655`};
+    }  
+  }
+`
 
 const ModalWrapper = styled.div`
   width: 500px;
-  height: 207px;
+  height: 151px;
   margin: 10px 0 0;
   padding: 30px 0 20px;
   border-radius: 20px;
@@ -466,7 +487,6 @@ const ModalWrapper = styled.div`
 
 const ModalDetail = styled.div`
   width: 420px;
-  height: 75px;
   margin: 0 40px 20px;
   font-family: SpoqaHanSansNeo;
   font-size: 18px;
@@ -483,7 +503,7 @@ const ModalClose = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 79px;
+  height: 62px;
   button {
     width: 180px;
     height: 42px;
