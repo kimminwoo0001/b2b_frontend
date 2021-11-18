@@ -69,21 +69,29 @@ function Nav() {
         </div>
         <div className="nav-right">
           <ContentsWrapper>
-            <img
-              className="setting"
-              src="Images/ico_setting.svg"
-              alt="settingIcon"
-            ></img>
-            <img
-              className="Alert"
-              src="Images/ico-alarm.png"
-              alt="alertIcon"
-              onClick={() => dummyAlarm()}
-            ></img>
-            <LocaleDropdown />
-            <lable onClick={() => handleLogOut()}>
-              {user.id.length > 0 ? `${t("nav.logout")}` : `${t("nav.login")}`}
-            </lable>
+            <div className="icon">
+              <img
+                className="setting"
+                src="Images/ico_setting.svg"
+                alt="settingIcon"
+              ></img>
+            </div>
+            <div className="icon">
+              <img
+                className="Alert"
+                src="Images/ico-alarm.png"
+                alt="alertIcon"
+                onClick={() => dummyAlarm()}
+              ></img>
+            </div>
+            <div className="icon">
+              <LocaleDropdown />
+            </div>
+            <div className="text">
+              <lable onClick={() => handleLogOut()}>
+                {user.id.length > 0 ? `${t("nav.logout")}` : `${t("nav.login")}`}
+              </lable>
+            </div>
           </ContentsWrapper>
         </div>
       </NavWrapper>
@@ -121,9 +129,38 @@ const NavWrapper = styled.div`
 
   .nav-right {
     display: table-cell;
+    
+  }
+`;
+const ContentsWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  div {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    white-space: nowrap;
+    cursor: pointer;
+    border-radius: 50px;
+    justify-content: center;
+    margin: 0 1px;
+  }
+
+  .icon:hover {
+    background-color: rgba(255,255,255,0.1);
+  }
+
+  .text {
+    width: auto;
+    height: 40px;
+    border-radius: 16px;
+    margin-left: 17px;
     lable {
       padding-left: 0px;
-      margin: 4px 0 4px 20px;
+      margin: 4px 13px;
       font-family: NotoSansKR;
       font-size: 16px;
       font-weight: bold;
@@ -135,46 +172,22 @@ const NavWrapper = styled.div`
       color: #fff;
       cursor: pointer;
     }
+    :hover {
+      background-color: rgba(255,255,255,0.1);
+    }
   }
-`;
 
-const Greet = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: f;
-
-  div {
-    /* width: 160px; */
-  }
-  .LastUpdate {
-    width: 180px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
-    text-align: left;
-    color: #827f8c;
-    margin-left: 10px;
-  }
-`;
-
-const ContentsWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-top: 5px;
+  
+ 
   > select {
-    background-color: #23212a;
+    // background-color: #23212a;
     color: #84818e;
   }
 
   .setting {
     cursor: pointer;
   }
-  .Alert {
-    margin-left: 20px;
-    margin-right: 20px;
-    cursor: pointer;
-  }
+
   > button {
     width: 50px;
     height: 20px;
