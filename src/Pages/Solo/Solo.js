@@ -61,5 +61,5 @@ const ContentWrapper = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
-  padding: 15px 0;
+  padding: 0px 0;
 `;
