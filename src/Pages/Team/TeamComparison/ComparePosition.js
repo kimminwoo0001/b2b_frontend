@@ -688,14 +688,15 @@ const DisplayTeams = styled.div`
       height: 19px;
       margin: 30px 0px 28px 0;
       font-family: SpoqaHanSansNeo;
-      font-size: 15px;
-      font-weight: 500;
+      font-size: 20px;
+      font-weight: bold;
       font-stretch: normal;
       font-style: normal;
-      line-height: 1.0;
+      line-height: 1.25;
       letter-spacing: normal;
       text-align: right;
-      color: #84818e;
+      color: #fff;
+      white-space: nowrap;
     }
     img {
       width: 54px;
@@ -715,14 +716,15 @@ const DisplayTeams = styled.div`
       height: 19px;
       margin: 30px 0px 28px 0;
       font-family: SpoqaHanSansNeo;
-      font-size: 15px;
-      font-weight: 500;
+      font-size: 20px;
+      font-weight: bold;
       font-stretch: normal;
       font-style: normal;
-      line-height: 1.0;
+      line-height: 1.25;
       letter-spacing: normal;
       text-align: left;
-      color: #84818e;
+      color: #fff;
+      white-space: nowrap;
     }
     img {
       width: 54px;
@@ -735,16 +737,16 @@ const DisplayTeams = styled.div`
   .Vs {
     width: 37px;
     height: 37px;
-    margin: 20px 63px 20px 64px;
+    margin: 30px 100px 20px 100px;
     font-family: SpoqaHanSansNeo;
-    font-size: 30px;
+    font-size: 18px;
     font-weight: bold;
     font-stretch: normal;
     font-style: normal;
     line-height: normal;
     letter-spacing: normal;
-    text-align: left;
-    color: #6b6979;
+    text-align: center;
+    color: #fff;
   }
 `;
 
