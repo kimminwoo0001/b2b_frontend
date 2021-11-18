@@ -123,44 +123,17 @@ function Sidebar() {
     },
   ];
 
-  const usingMenus = () => {
-    const using = [
-      menus[0],
-      menus[1],
-      menus[2],
-      menus[4],
-      menus[5],
-      menus[11],
-      menus[7],
-      menus[8],
-    ];
-    let result = [];
-
-    for (let i = 0; i < using.length; i++) {
-      let marginTop = false;
-      let marginBottom = false;
-      if (i === 0) {
-        marginTop = true;
-      } else if (i - 1 >= 0 && using[i - 1].changeColor === true) {
-        marginTop = true;
-      }
-
-      if (i === using.length - 1) {
-        marginBottom = false;
-      } else if (i + 1 < using.length && using[i + 1].changeColor === true) {
-        marginBottom = true;
-      }
-      result.push({
-        ...using[i],
-        marginTop: marginTop,
-        marginBottom: marginBottom,
-      });
-    }
-
-    return result;
-  };
-
-  const usingValue = usingMenus();
+  // sidebar 에서 사용되는 menus를 순차적으로 추가.
+  const usingValue = [
+    menus[0],
+    menus[1],
+    menus[2],
+    menus[4],
+    menus[5],
+    menus[11],
+    menus[7],
+    menus[8],
+  ];
 
   // // 로그아웃 함수, 로그아웃 이벤트가 발생되면 session 값을 clear하고 로그인 페이지로 이동시킴
   // const handleLogOut = () => {

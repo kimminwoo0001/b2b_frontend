@@ -20,8 +20,6 @@ const SideBarItem = ({ menu, idx }) => {
         dispatch(MenuNum(menu.idx));
       }}
       changeColor={menu.changeColor}
-      marginTop={marginTop}
-      marginBottom={marginBottom}
     >
       <img src={menu.image} alt="menu"></img>
       <div className="Name">{menu.name}</div>
@@ -34,10 +32,10 @@ export default SideBarItem;
 const MenuWrapper = styled.div`
   display: flex;
   width: 170px;
-  height: 24px;
-  margin: ${(props) => 31 - props.marginTop}px 9px
-    ${(props) => 30 - props.marginBottom}px 14px;
-  padding: 0 12px 0 0;
+  height: 42px;
+  text-align: center;
+  margin: 13px 0 12px;
+    padding: 9px 9px 9px 14px;
   cursor: pointer;
   .Name {
     font-family: SpoqaHanSansNeo;
@@ -55,6 +53,14 @@ const MenuWrapper = styled.div`
     object-fit: contain;
     vertical-align: middle;
   }
+
+  :hover {
+    background-color: rgba(255,255,255, 0.1);
+    margin: 13px 0 12px;
+    padding: 9px 9px 9px 14px;
+    border-radius: 16px;
+  }
+
   ${(props) =>
     props.changeColor &&
     css`
