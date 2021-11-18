@@ -125,43 +125,50 @@ function LeaguePick() {
   return (
     <LeaguePickWrapper>
       <LeaguePickTabs changeColor={positionTab}>
-        <TopTab
+        <TabItem
           onClick={() => setPositionTab(0)}
           changeColor={positionTab === 0}
         >
-          {/* <img src="Images/ico-position-top.png" alt="positionIcon"></img> */}
-          <span>{t("position.top")}</span>
-        </TopTab>
+          <div>
+            <span>{t("position.top")}</span>
+          </div>
+        </TabItem>
         <LineMargin></LineMargin>
-        <JngTab
+        <TabItem
           onClick={() => setPositionTab(1)}
           changeColor={positionTab === 1}
         >
-
-          <span>{t("position.jg")}</span>
-        </JngTab>
+          <div>
+            <span>{t("position.jg")}</span>
+          </div>
+        </TabItem>
         <LineMargin></LineMargin>
-        <MidTab
+        <TabItem
           onClick={() => setPositionTab(2)}
           changeColor={positionTab === 2}
         >
-
-          <span>{t("position.mid")}</span>
-        </MidTab>
+          <div>
+            <span>{t("position.mid")}</span>
+          </div>
+        </TabItem>
         <LineMargin></LineMargin>
-        <BotTab
+        <TabItem
           onClick={() => setPositionTab(3)}
           changeColor={positionTab === 3}
         >
-          <span>{t("position.ad")}</span>
-        </BotTab>
+          <div>
+            <span>{t("position.ad")}</span>
+          </div>
+        </TabItem>
         <LineMargin></LineMargin>
-        <SupTab
+        <TabItem
           onClick={() => setPositionTab(4)}
           changeColor={positionTab === 4}
         >
-          <span>{t("position.sup")}</span>
-        </SupTab>
+          <div>
+            <span>{t("position.sup")}</span>
+          </div>
+        </TabItem>
         <LastMargin></LastMargin>
       </LeaguePickTabs>
       <TabContents>{positionTabs[positionTab]}</TabContents>
@@ -181,7 +188,7 @@ const LeaguePickTabs = styled.div`
   // margin-top: 21.5px;
 `;
 const LineMargin = styled.div`
-  width: 30px;
+  width: 10px;
   border-bottom: solid 1px #433f4e;
 `;
 
@@ -190,12 +197,25 @@ const LastMargin = styled.div`
   border-bottom: solid 1px #433f4e;
 `;
 
-const TopTab = styled.button`
+const TabItem = styled.button`
   display: flex;
-  padding: 20px 0 20px 0;
   align-items: center;
   width: auto;
   border-bottom: solid 1px #433f4e;
+  white-space: nowrap;
+
+  div {
+    padding: 10px 15px;
+  }
+
+  :hover {
+    div {
+      padding: 10px 15px;
+      border-radius: 10px;
+      background-color : #26262C;
+    }
+  }
+  
   span {
     height: 22px;
     font-family: SpoqaHanSansNeo;
@@ -206,113 +226,13 @@ const TopTab = styled.button`
     line-height: normal;
     letter-spacing: normal;
     text-align: left;
+    padding-bottom: 19px;
+    border-bottom: solid 1px ${(props) => props.changeColor ? `#fff` : `#433f4e;`};
     color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
   }
-  ${(props) =>
-    props.changeColor &&
-    css`
-    border-bottom: solid 1px #fff;
-    `}
+  
 `;
 
-const JngTab = styled.button`
-display: flex;
-padding: 20px 0 20px 0;
-align-items: center;
-width: auto;
-border-bottom: solid 1px #433f4e;
-span {
-  height: 22px;
-  font-family: SpoqaHanSansNeo;
-  font-size: 18px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: left;
-  color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
-}
-${(props) =>
-    props.changeColor &&
-    css`
-  border-bottom: solid 1px #fff;
-  `}
-`;
 
-const MidTab = styled.button`
-display: flex;
-padding: 20px 0 20px 0;
-align-items: center;
-width: auto;
-border-bottom: solid 1px #433f4e;
-span {
-  height: 22px;
-  font-family: SpoqaHanSansNeo;
-  font-size: 18px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: left;
-  color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
-}
-${(props) =>
-    props.changeColor &&
-    css`
-  border-bottom: solid 1px #fff;
-  `}
-`;
-
-const BotTab = styled.button`
-  display: flex;
-  padding: 20px 0 20px 0;
-  align-items: center;
-  width: auto;
-  border-bottom: solid 1px #433f4e;
-  span {
-    height: 22px;
-    font-family: SpoqaHanSansNeo;
-    font-size: 18px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: left;
-    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
-  }
-  ${(props) =>
-    props.changeColor &&
-    css`
-    border-bottom: solid 1px #fff;
-  `}
-`;
-
-const SupTab = styled.button`
-  display: flex;
-  padding: 20px 0 20px 0;
-  align-items: center;
-  width: auto;
-  border-bottom: solid 1px #433f4e;
-  span {
-    height: 22px;
-    font-family: SpoqaHanSansNeo;
-    font-size: 18px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: left;
-    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
-  }
-  ${(props) =>
-    props.changeColor &&
-    css`
-    border-bottom: solid 1px #fff;
-  `}
-`;
 
 const TabContents = styled.div``;

@@ -153,29 +153,35 @@ function BanIndex() {
   return (
     <BanIndexWrapper>
       <BanIndexTabs>
-        <AllBtn
+        <BtnItem
           className="All"
           onClick={() => setSide("all")}
           changeColor={side === "all"}
         >
-          <span>ALL</span>
-        </AllBtn>
+          <div>
+            <span>ALL</span>
+          </div>
+        </BtnItem>
         <LineMargin></LineMargin>
-        <BlueBtn
+        <BtnItem
           className="Blue"
           onClick={() => setSide("blue")}
           changeColor={side === "blue"}
         >
-          <span>BLUE</span>
-        </BlueBtn>
+          <div>
+            <span>BLUE</span>
+          </div>
+        </BtnItem>
         <LineMargin></LineMargin>
-        <RedBtn
+        <BtnItem
           className="Red"
           onClick={() => setSide("red")}
           changeColor={side === "red"}
         >
-          <span>RED</span>
-        </RedBtn>
+          <div>
+            <span>RED</span>
+          </div>
+        </BtnItem>
         <LastMargin></LastMargin>
       </BanIndexTabs>
       <div>{selectSide[side]}</div>
@@ -195,7 +201,7 @@ const BanIndexTabs = styled.div`
 `;
 
 const LineMargin = styled.div`
-  width: 30px;
+  width: 10px;
   border-bottom: solid 1px #433f4e;
 `;
 
@@ -204,29 +210,39 @@ const LastMargin = styled.div`
   border-bottom: solid 1px #433f4e;
 `;
 
-const AllBtn = styled.button`
-display: flex;
-padding: 20px 0 20px 0;
-align-items: center;
-width: auto;
-border-bottom: solid 1px #433f4e;
-span {
-  height: 22px;
-  font-family: SpoqaHanSansNeo;
-  font-size: 18px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: left;
-  color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
-}
-${(props) =>
-    props.changeColor &&
-    css`
-  border-bottom: solid 1px #fff;
-  `}
+const BtnItem = styled.button`
+  display: flex;
+  align-items: center;
+  width: auto;
+  border-bottom: solid 1px #433f4e;
+  white-space: nowrap;
+
+  div {
+    padding: 10px 15px;
+  }
+
+  :hover {
+    div {
+      padding: 10px 15px;
+      border-radius: 10px;
+      background-color : #26262C;
+    }
+  }
+  
+  span {
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    padding-bottom: 18px;
+    border-bottom: solid 1px ${(props) => props.changeColor ? `#fff` : `#433f4e;`};
+    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+  }
 `;
 
 const BlueBtn = styled.button`

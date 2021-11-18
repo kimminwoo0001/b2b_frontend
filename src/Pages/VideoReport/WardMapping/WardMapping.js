@@ -191,27 +191,31 @@ function WardMapping() {
 
       <LeftSection>
         <WardMappingTabs>
-          <BasedOnTeam
+          <TabItem
             onClick={() => {
               setTab("team");
               handleTimeReset();
               setCompareOpen(false);
             }}
-            isActive={tab === "team"}
+            changeColor={tab === "team"}
           >
-            <span>{t("video.vision.teamview")}</span>
-          </BasedOnTeam>
+            <div>
+              <span>{t("video.vision.teamview")}</span>
+            </div>
+          </TabItem>
           <LineMargin></LineMargin>
-          <BasedOnPlayer
+          <TabItem
             onClick={() => {
               setTab("player");
               handleTimeReset();
               setCompareOpen(false);
             }}
-            isActive={tab === "player"}
+            changeColor={tab === "player"}
           >
-            <span>{t("video.vision.playerview")}</span>
-          </BasedOnPlayer>
+            <div>
+              <span>{t("video.vision.playerview")}</span>
+            </div>
+          </TabItem>
           <LastMargin></LastMargin>
         </WardMappingTabs>
         <FilterContainer>
@@ -489,7 +493,7 @@ const WardMappingContainer = styled.div`
   display: flex;
   min-height: 100vh;
   height: 100%;
-  margin-top: 22.5px;
+  margin-top: 0px;
 `;
 
 const LeftSection = styled.section`
@@ -521,38 +525,24 @@ const TabContainer = styled.div`
   margin: 0 30px 30px;
 `;
 
-const BasedOnTeam = styled.button`
-  width: auto;  
+const TabItem = styled.button`
   display: flex;
-  padding: 20px 0 20px 0;
-  align-items: center;
-  border-bottom: solid 1px #433f4e;
-  white-space: nowrap;
-  span {
-    height: 22px;
-    font-family: SpoqaHanSansNeo;
-    font-size: 18px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: left;
-    color: ${(props) => (props.isActive ? `#fff` : `#84818e`)};
-  }
-  ${(props) =>
-    props.isActive &&
-    css`
-    border-bottom: solid 1px #fff;
-    `}
-`;
-
-const BasedOnPlayer = styled.button`
-  padding: 20px 0 20px 0;
   align-items: center;
   width: auto;
   border-bottom: solid 1px #433f4e;
   white-space: nowrap;
+
+  div {
+    padding: 10px 15px;
+  }
+
+  :hover {
+    div {
+      padding: 10px 15px;
+      border-radius: 10px;
+      background-color : #26262C;
+    }
+  }
   span {
     height: 22px;
     font-family: SpoqaHanSansNeo;
@@ -563,16 +553,11 @@ const BasedOnPlayer = styled.button`
     line-height: normal;
     letter-spacing: normal;
     text-align: left;
-    color: ${(props) => (props.isActive ? `#fff` : `#84818e`)};
+    padding-bottom: 18px;
+    border-bottom: solid 1px ${(props) => props.changeColor ? `#fff` : `#433f4e;`};
+    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
   }
-  :hover {
-    opacity: 0.8;
-  }
-  ${(props) =>
-    props.isActive &&
-    css`
-    border-bottom: solid 1px #fff;
-    `}
+
 `;
 
 const FilterContents = styled.div``;

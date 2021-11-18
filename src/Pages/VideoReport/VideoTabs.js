@@ -31,7 +31,9 @@ function VideoTabs() {
             }}
             changeColor={filters.tab === 0}
           >
-            <div>{t("video.tab.ward")}</div>
+            <div>
+              <span>{t("video.tab.ward")}</span>
+            </div>
           </TabContent>
           <TabContent
             onClick={() => {
@@ -40,7 +42,9 @@ function VideoTabs() {
             }}
             changeColor={filters.tab === 1}
           >
-            <div>{t("video.tab.object")}</div>
+            <div>
+              <span>{t("video.tab.object")}</span>
+            </div>
           </TabContent>
           {/* <TabContent
             onClick={() => {
@@ -66,7 +70,9 @@ function VideoTabs() {
             }}
             changeColor={filters.tab === 3}
           >
-            <div>{t("video.tab.heatmap")}</div>
+            <div>
+              <span>{t("video.tab.heatmap")}</span>
+            </div>
           </TabContent>
         </TabContainer>
         <div>{VideoTab[filters.tab]}</div>
@@ -95,16 +101,22 @@ const TabContent = styled.li`
   cursor: pointer;
   display: flex;
   align-items: center;
-  //padding-bottom: 15px;
-  color: #84818e;
-  margin-right: 30px;
-  ${(props) =>
-    props.changeColor &&
-    css`
-      color: #fff;
-    `}
+  width: auto;
+  white-space: nowrap;
+
   div {
-    width: auto;
+    padding: 10px 15px;
+  }
+
+  :hover {
+    div {
+      padding: 10px 15px;
+      border-radius: 10px;
+      background-color : #26262C;
+    }
+  }
+
+  span {
     height: 22px;
     font-family: SpoqaHanSansNeo;
     font-size: 18px;
@@ -114,8 +126,7 @@ const TabContent = styled.li`
     line-height: normal;
     letter-spacing: normal;
     text-align: left;
-    color: ##84818e;
-  }
-  img {
+    padding-bottom: 19px;
+    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
   }
 `;

@@ -32,26 +32,32 @@ function LeagueTab() {
             alt="arrowIcon"
           ></img>
         </Schedule> */}
-        <Pick onClick={() => setActiveTab(1)} changeColor={activeTab === 1}>
-          <div>{t("league.tab.draft")}</div>
-        </Pick>
+        <TabItem onClick={() => setActiveTab(1)} changeColor={activeTab === 1}>
+          <div>
+            <span>{t("league.tab.draft")}</span>
+          </div>
+        </TabItem>
         {filters.league.indexOf("lpl") === -1 ? (
-          <Statistics
+          <TabItem
             onClick={() => setActiveTab(2)}
             changeColor={activeTab === 2}
           >
-            <div>{t("league.tab.leagueStat")}</div>
-          </Statistics>
+            <div>
+              <span>{t("league.tab.leagueStat")}</span>
+            </div>
+          </TabItem>
         ) : (
           <div></div>
         )}
 
-        <Information
+        <TabItem
           onClick={() => setActiveTab(3)}
           changeColor={activeTab === 3}
         >
-          <div>{t("league.tab.playerStat")}</div>
-        </Information>
+          <div>
+            <span>{t("league.tab.playerStat")}</span>
+          </div>
+        </TabItem>
       </TabContainer>
       <div>{BoardTab[activeTab]}</div>
     </LeagueTabWrapper>
@@ -63,7 +69,7 @@ export default LeagueTab;
 const LeagueTabWrapper = styled.div`
   width: 1170px;
   height: 1080px;
-  margin: 15px 0 0;
+  margin: 0px 0 0;
   padding: 0 30px;
 `;
 
@@ -103,75 +109,26 @@ const TabContainer = styled.ul`
 //   }
 // `;
 
-const Pick = styled.li`
+const TabItem = styled.li`
   cursor: pointer;
   display: flex;
   align-items: center;
-  color: #84818e;
-  margin-right: 30px;
-  ${(props) =>
-    props.changeColor &&
-    css`
-      color: #fff;
-    `}
-  div {
-    width: auto;
-    height: 22px;
-    font-family: SpoqaHanSansNeo;
-    font-size: 18px;
-    font-weight: bold;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: left;
-    color: ##84818e;
-  }
-  img {
-  }
-`;
+  width: auto;
+  white-space: nowrap;
 
-const Statistics = styled.li`
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  color: #84818e;
-  margin-right: 30px;
-  ${(props) =>
-    props.changeColor &&
-    css`
-      color: #fff;
-    `}
   div {
-    width: auto;
-    height: 22px;
-    font-family: SpoqaHanSansNeo;
-    font-size: 18px;
-    font-weight: bold;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: left;
-    color: ##84818e;
+    padding: 10px 15px;
   }
-  img {
-  }
-`;
 
-const Information = styled.li`
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  color: #84818e;
-  margin-right: 30px;
-  ${(props) =>
-    props.changeColor &&
-    css`
-      color: #fff;
-    `}
-  div {
-    width: auto;
+  :hover {
+    div {
+      padding: 10px 15px;
+      border-radius: 10px;
+      background-color : #26262C;
+    }
+  }
+  
+  span {
     height: 22px;
     font-family: SpoqaHanSansNeo;
     font-size: 18px;
@@ -181,8 +138,7 @@ const Information = styled.li`
     line-height: normal;
     letter-spacing: normal;
     text-align: left;
-    color: ##84818e;
-  }
-  img {
+    padding-bottom: 19px;
+    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
   }
 `;

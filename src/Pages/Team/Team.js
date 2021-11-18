@@ -29,7 +29,7 @@ function Team() {
           <CloseFilter />
         </div>
         <ContentWrapper>
-          {filters.team !== "" && filters.season.length > 0 ? (
+          {filters.team !== "" && filters.team.length > 0 ? (
             <TeamTabs />
           ) : (
             <SelectFilter />
@@ -63,5 +63,5 @@ const ContentWrapper = styled.div`
   width: 100%;
   flex-direction: column;
   background-color: #16151a;
-  padding: 15px 0;
+  padding: 0px 0;
 `;

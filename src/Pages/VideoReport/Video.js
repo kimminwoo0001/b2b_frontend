@@ -29,7 +29,7 @@ function Video() {
           <CloseFilter />
         </div>
         <ContentWrapper>
-          {filters.team !== "" && filters.season.length > 0 ? (
+          {filters.team !== "" && filters.team.length > 0 ? (
             <VideoTabs />
           ) : (
             <SelectFilter />
@@ -62,5 +62,5 @@ const ContentWrapper = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
-  padding: 15px 0;
+  padding: 0px 0;
 `;

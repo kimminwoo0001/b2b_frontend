@@ -218,9 +218,11 @@ function HitMap() {
               resetHeatMap2.current.innerHTML = "";
             }
           }}
-          isActive={tab === "player"}
+          changeColor={tab === "player"}
         >
-          <span>{t("video.heatmap.all")}</span>
+          <div>
+            <span>{t("video.heatmap.all")}</span>
+          </div>
         </FilterTab>
         <LineMargin></LineMargin>
         <FilterTab
@@ -235,9 +237,11 @@ function HitMap() {
             resetHeatMap1.current.innerHTML = "";
             resetHeatMap2.current.innerHTML = "";
           }}
-          isActive={tab === "champion"}
+          changeColor={tab === "champion"}
         >
-          <span>{t("video.heatmap.opp")}</span>
+          <div>
+            <span>{t("video.heatmap.opp")}</span>
+          </div>
         </FilterTab>
         <LastMargin></LastMargin>
       </TabBox>
@@ -281,7 +285,7 @@ function HitMap() {
 export default HitMap;
 
 const HitMapContainer = styled.div`
-  margin-top: 23px;
+  margin-top: 0px;
   width: 1098px;
   height: calc(100vh);
 `;
@@ -339,11 +343,22 @@ const TabBox = styled.div`
 
 const FilterTab = styled.button`
   display: flex;
-  padding: 20px 0 20px 0;
   align-items: center;
   width: auto;
   border-bottom: solid 1px #433f4e;
   white-space: nowrap;
+
+  div {
+    padding: 10px 15px;
+  }
+
+  :hover {
+    div {
+      padding: 10px 15px;
+      border-radius: 10px;
+      background-color : #26262C;
+    }
+  }
   span {
     height: 22px;
     font-family: SpoqaHanSansNeo;
@@ -354,13 +369,10 @@ const FilterTab = styled.button`
     line-height: normal;
     letter-spacing: normal;
     text-align: left;
-    color: ${(props) => (props.isActive ? `#fff` : `#84818e`)};
+    padding-bottom: 18px;
+    border-bottom: solid 1px ${(props) => props.changeColor ? `#fff` : `#433f4e;`};
+    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
   }
-  ${(props) =>
-    props.isActive &&
-    css`
-    border-bottom: solid 1px #fff;
-    `}
 `;
 
 const FilterContents = styled.div``;
@@ -410,7 +422,7 @@ const Map = styled.div`
 `;
 
 const LineMargin = styled.div`
-  width: 30px;
+  width: 10px;
   border-bottom: solid 1px #433f4e;
 `;
 

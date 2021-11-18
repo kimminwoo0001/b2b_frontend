@@ -618,7 +618,7 @@ const UniqueTable = styled.table`
       display: table;
       table-layout: fixed;
       width: 100%;
-      height: 28px;
+      height: 31px;
       border: 1px solid rgb(58, 55, 69);
       img {
         width: 19px;
@@ -1120,7 +1120,7 @@ const TierTable = styled.table`
       display: table;
       table-layout: fixed;
       width: 100%;
-      height: 28px;
+      height: 31px;
       border: 1px solid rgb(58, 55, 69);
       .NameWrapper {
         display: flex;

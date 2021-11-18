@@ -57,14 +57,16 @@ function TeamTabs() {
               alt="arrowIcon"
             ></img>
           </Schedule> */}
-              <Pick
+              <TabItem
                 onClick={() => {
                   dispatch(HandleTab(0));
                   dispatch(ResetFilter2());
                 }}
                 changeColor={filters.tab === 0}
               >
-                <div>{t("team.tab.draft")}</div>
+                <div>
+                  <span>{t("team.tab.draft")}</span>
+                </div>
                 {/* <img
                   src={
                     filters.tab === 0
@@ -73,17 +75,19 @@ function TeamTabs() {
                   }
                   alt="arrowIcon"
                 ></img> */}
-              </Pick>
+              </TabItem>
 
               {filters.league.indexOf("lpl") === -1 ? (
-                <Statistics
+                <TabItem
                   onClick={() => {
                     dispatch(HandleTab(1));
                     dispatch(ResetFilter2());
                   }}
                   changeColor={filters.tab === 1}
                 >
-                  <div>{t("team.tab.analysis")}</div>
+                  <div>
+                    <span>{t("team.tab.analysis")}</span>
+                  </div>
                   {/* <img
                     src={
                       filters.tab === 1
@@ -92,13 +96,13 @@ function TeamTabs() {
                     }
                     alt="arrowIcon"
                   ></img> */}
-                </Statistics>
+                </TabItem>
               ) : (
                 <div></div>
               )}
 
               {filters.league.indexOf("lpl") === -1 ? (
-                <TeamCompare
+                <TabItem
                   onClick={() => {
                     dispatch(HandleTab(2));
                     setOpenModal(true);
@@ -121,7 +125,8 @@ function TeamTabs() {
                     ) : (
                       t("team.tab.comparison")
                     )} */}
-                    {t("team.tab.comparison")}
+
+                    <span>{t("team.tab.comparison")}</span>
                   </div>
                   {/* <img
                     src={
@@ -131,7 +136,7 @@ function TeamTabs() {
                     }
                     alt="arrowIcon"
                   ></img> */}
-                </TeamCompare>
+                </TabItem>
               ) : (
                 <div></div>
               )}
@@ -190,21 +195,26 @@ const TabContainer = styled.ul`
 //   }
 // `;
 
-const Pick = styled.li`
+const TabItem = styled.li`
   cursor: pointer;
   display: flex;
   align-items: center;
-  padding-bottom: 15px;
-  color: #84818e;
-  margin-right: 30px;
-  ${(props) =>
-    props.changeColor &&
-    css`
-      color: #fff;
-      /* border-bottom: 2px solid #f04545; */
-    `}
+  width: auto;
+  white-space: nowrap;
+
   div {
-    width: auto;
+    padding: 10px 15px;
+  }
+
+  :hover {
+    div {
+      padding: 10px 15px;
+      border-radius: 10px;
+      background-color : #26262C;
+    }
+  }
+
+  span {
     height: 22px;
     font-family: SpoqaHanSansNeo;
     font-size: 18px;
@@ -214,10 +224,9 @@ const Pick = styled.li`
     line-height: normal;
     letter-spacing: normal;
     text-align: left;
-    color: ##84818e;
-  }
-  img {
-  }
+    padding-bottom: 19px;
+    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+}
 `;
 
 const Statistics = styled.li`

@@ -9,7 +9,8 @@ import CloseFilter from '../../Components/Filter/CloseFilter';
 import ErrorBoundary from "../../Components/ErrorBoundary";
 import Nav from "../../Components/Nav/Nav";
 import { useSelector } from "react-redux";
-
+import SelectFilter from '../../Components/SelectFilter/SelectFilter';
+import VideoTabs from '../VideoReport/VideoTabs';
 
 function GameReport() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -29,6 +30,13 @@ function GameReport() {
         >
           <CloseFilter />
         </div>
+        <ContentWrapper>
+          {filters.team !== "" && filters.team.length > 0 ? (
+            <VideoTabs />
+          ) : (
+            <SelectFilter />
+          )}
+        </ContentWrapper>
       </GameWrapper>
     </ErrorBoundary>
 
@@ -54,3 +62,10 @@ background-color: #16151c;
 
 }
 `
+
+const ContentWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: 0px 0;
+`;
