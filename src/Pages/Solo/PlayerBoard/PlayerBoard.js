@@ -160,10 +160,9 @@ function PlayerBoard() {
     axiosRequest(url, params, function (e) {
       const champArray = e.data.map(data => `${data.kor}(${data.total}경기)`);
       const champArrayEng = e.data.map(data => data.eng);
-      // setChampFilter(e.data.champion);
-      // setChampEng(e.data.championEng);
-      setChampFilter(champArray);
-      setChampEng(champArrayEng);
+
+      setOppFilter(champArray);
+      setOppEng(champArrayEng);
     });
   };
 

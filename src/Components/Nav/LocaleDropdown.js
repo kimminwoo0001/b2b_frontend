@@ -38,6 +38,16 @@ function LocaleDropdown() {
             <ul>
               <li
                 onClick={() => {
+                  setRegion("English");
+                  setIsActive(false);
+                  dispatch(Language("en"));
+                  sessionStorage.setItem("i18nextLng", "en");
+                }}
+              >
+                ENG
+              </li>
+              <li
+                onClick={() => {
                   setRegion("한국어");
                   setIsActive(false);
                   dispatch(Language("kr"));
@@ -45,16 +55,6 @@ function LocaleDropdown() {
                 }}
               >
                 한국어
-              </li>
-              <li
-                onClick={() => {
-                  setRegion("English");
-                  setIsActive(false);
-                  dispatch(Language("en"));
-                  sessionStorage.setItem("i18nextLng", "en");
-                }}
-              >
-                English
               </li>
             </ul>
           </nav>
@@ -164,6 +164,7 @@ const DropDown = styled.div`
   .menu li {
     height: 31px;
     text-decoration: none;
+    margin: 2px 0;
     padding: 6px 0px;
     display: block;
     color: rgb(255, 255, 255);
