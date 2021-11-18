@@ -321,7 +321,9 @@
     "setFilter": "Filter",
     "setLeague": "League",
     "setSeason": "Season",
-    "setPatchVersion": "Patch Version"
+    "setPatchVersion": "Patch Version",
+    "team": "Team",
+    "player": "Player"
   },
   "video": {
     "tab": {
