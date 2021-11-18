@@ -2,8 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
 import { useSelector } from "react-redux";
-import ExcelExport from '../../../Components/UtilityComponent/ExcelExport'
-
+import ExcelExport from "../../../Components/UtilityComponent/ExcelExport";
 
 // 주요픽 데이터 sorting Hooks
 const useSortableData = (items, config = null) => {
@@ -86,12 +85,14 @@ function tabledata(tableid, type) {
       let columnData = rowData[colCnt].innerText;
       if (columnData == null || columnData.length === 0) {
         columnData = "".replace(/"/g, '""');
-      }
-      else {
+      } else {
         columnData = columnData.toString().replace(/"/g, '""'); // escape double quotes
       }
       console.log(result);
-      result = type === 'csv' ? result + '"' + columnData + '",' : result + columnData + '\t';
+      result =
+        type === "csv"
+          ? result + '"' + columnData + '",'
+          : result + columnData + "\t";
     }
     result = result.substring(0, result.length - 1);
     result = result + "\r\n";
@@ -112,14 +113,16 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
   const { t } = useTranslation();
   const filters = useSelector((state) => state.FilterReducer);
 
-
   return (
     <PickTabWrapper>
       <TopRow>
         <MainPicks>
           <Header>
             <span id="header-name">{t("league.draft.mostPick")}</span>
-            <ExcelExport filename={t("league.draft.mostPick")} tableid="mostPick-table" />
+            <ExcelExport
+              filename={t("league.draft.mostPick")}
+              tableid="mostPick-table"
+            />
           </Header>
           <PickTable id="mostPick-table">
             <thead>
@@ -199,7 +202,10 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
         <ChampionTier>
           <Header>
             <span id="header-name">{t("league.draft.champtier")}</span>
-            <ExcelExport filename={t("league.draft.champtier")} tableid="champtier-table" />
+            <ExcelExport
+              filename={t("league.draft.champtier")}
+              tableid="champtier-table"
+            />
           </Header>
           <TierTable id="champtier-table">
             <thead>
@@ -386,10 +392,11 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                             ? pick?.opp_champion.championKor
                             : pick?.opp_champion.champion}
                         </div>
-                        <div className="WinLose2">{`${pick?.opp_champion.win
-                          }${t("league.draft.w")} ${pick?.opp_champion.lose}${t(
-                            "league.draft.l"
-                          )}`}</div>
+                        <div className="WinLose2">{`${
+                          pick?.opp_champion.win
+                        }${t("league.draft.w")} ${pick?.opp_champion.lose}${t(
+                          "league.draft.l"
+                        )}`}</div>
                       </div>
                       <img
                         src={pick?.opp_champion.championImage}
@@ -442,7 +449,10 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
         <UniquePicks>
           <Header>
             <span id="header-name">{t("league.draft.unique")}</span>
-            <ExcelExport filename={t("league.draft.unique")} tableid="unique-table" />
+            <ExcelExport
+              filename={t("league.draft.unique")}
+              tableid="unique-table"
+            />
           </Header>
           <UniqueTable id="unique-table">
             <thead>
@@ -564,7 +574,6 @@ const Header = styled.div`
     color: #fff;
   }
 `;
-
 
 const UniqueTable = styled.table`
   width: 100%;

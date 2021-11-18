@@ -49,7 +49,7 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
     <>
       <BackScreen
         openModal={openModal}
-      // onClick={() => setOpenModal(false)}
+        // onClick={() => setOpenModal(false)}
       ></BackScreen>
       <TeamModalWrapper openModal={openModal}>
         <ModalNav>
@@ -71,7 +71,10 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
                 onClick={() => dispatch(OppTeam(team))}
                 currentTeam={filters.oppteam === team}
               >
-                <div><img src={`Images/TeamLogo/${team}.png`} alt="teamLogo" /> {team}</div>
+                <div>
+                  <img src={`Images/TeamLogo/${team}.png`} alt="teamLogo" />{" "}
+                  {team}
+                </div>
               </MapTeam>
             );
           })}
@@ -110,7 +113,7 @@ const BackScreen = styled.div`
 const TeamModalWrapper = styled.div`
   display: ${(props) => (props.openModal ? "block" : "none")};
   width: 500px;
-  height: auto;
+  height: 383px;
   border: solid 1px #23212a;
   background-color: #23212a;
   top: 50%;
@@ -162,7 +165,11 @@ const ContentTitle = styled.div`
   font-style: normal;
   line-height: 1.63;
   padding: 0px 0 0px 14px;
+<<<<<<< HEAD
+  margin: 25px;
+=======
   margin: 25px 41px 10px;
+>>>>>>> bc324976cec1e1f8228df9f8236637cb0e1ddab0
   color: rgb(255, 255, 255);
 `;
 
@@ -181,14 +188,13 @@ const MapTeamContent = styled.div`
 `;
 
 const ButtonBox = styled.div`
-  padding: 10px 16px 26px 16px;
-  margin: 0 0 0px 0;
+  padding: 5px;
   height: 83px;
   button {
     outline: none;
     text-decoration: none;
     width: 100%;
-    height: 60px;
+    height: 54px;
     border-radius: 20px;
     background-color: #5942ba;
     font-family: NotoSansKR, Apple SD Gothic Neo;

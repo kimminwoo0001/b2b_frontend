@@ -91,7 +91,7 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
         </ModalNav>
         <ComponentBox>
           <ContentBox>
-            <ContentTitle>Team</ContentTitle>
+            <ContentTitle isOppTeamSelected={filters.player}>Team</ContentTitle>
             <MapTeamContent>
               {oppTeam?.map((team, idx) => {
                 return (
@@ -112,13 +112,14 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
             </MapTeamContent>
           </ContentBox>
           <ContentBox>
-            <ContentTitle>Player</ContentTitle>
+            <ContentTitle isOppTeamSelected={filters.oppteam !== ""}>
+              Player
+            </ContentTitle>
             <MapTeamContent>
               {!oppPlayer ? (
                 <PickTeamFirst>
                   <div className="LabelContainer">
                     {t("solo.comparison.findLabel")}
-                    <br /> {t("solo.comparison.findLabel2")}
                   </div>
                 </PickTeamFirst>
               ) : (
@@ -166,8 +167,8 @@ const BackScreen = styled.div`
 
 const Wrapper = styled.div`
   display: ${(props) => (props.openModal ? "block" : "none")};
-  width: 408px;
-  height: 517px;
+  width: 500px;
+  height: 516px;
   border: solid 1px #3a3745;
   background-color: #23212a;
   top: 50%;
@@ -190,7 +191,7 @@ const ModalNav = styled.div`
     text-align: center;
     width: 100%;
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-size: 17px;
     font-weight: bold;
     color: #fff;
   }
@@ -207,34 +208,31 @@ const ContentBox = styled.div`
   display: flex;
   flex-direction: column;
   border-right: 1px solid #484655;
-  /* padding:  */
-  :nth-child(2) {
-    border-right: none;
-  }
 `;
 
 const ContentTitle = styled.div`
   display: flex;
   align-items: center;
   height: 34px;
-  /* background-color: rgb(35, 33, 42); */
   font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
+  font-size: 18px;
   /* padding: 0px 0 0px 14px; */
   padding: 10px 14px;
   color: rgb(255, 255, 255);
+  opacity: ${(props) => (props.isOppTeamSelected ? "1" : "0.3")};
 `;
 
 const PickTeamFirst = styled.div`
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
-  margin-top: 50px;
+  padding: 0 10px;
+  margin-top: 25px;
   .LabelContainer {
-    font-family: Poppins;
-    font-size: 12px;
+    font-family: "Spoqa Han Sans";
+    font-size: 18px;
     letter-spacing: -0.6px;
-    text-align: center;
+    text-align: left;
     color: #84818e;
     line-height: 1.5;
   }
@@ -263,8 +261,9 @@ const ButtonBox = styled.div`
   button {
     outline: none;
     text-decoration: none;
-    width: 380px;
-    height: 42px;
+    width: 100%;
+    height: 60px;
+    margin: 0 5px;
     border-radius: 10px;
     background-color: #5942ba;
     font-family: NotoSansKR, Apple SD Gothic Neo;
@@ -278,23 +277,23 @@ const MapTeam = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  height: 34px;
+  height: 45px;
   cursor: pointer;
   color: rgb(132, 129, 142);
   ${(props) =>
     props.currentTeam &&
     css`
-      /* color: rgb(255, 255, 255); */
+      color: rgb(255, 255, 255);
       background-color: #16151c;
       border-radius: 10px;
     `}
   img {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     margin: 0 10px 0 15px;
   }
   div {
     font-family: Poppins;
-    font-size: 12px;
+    font-size: 18px;
   }
 `;

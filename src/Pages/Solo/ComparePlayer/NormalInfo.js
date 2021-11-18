@@ -251,46 +251,32 @@ function NormalInfo() {
           <div className="PerformanceTitle">
             {t("solo.comparison.avgScore")}
           </div>
-          <PerformanceValue
-            color={data?.sbrAvg < oppData?.sbrAvg}
-            className="PerformanceValue"
-          >
+          <PerformanceValueAvg color={data?.sbrAvg < oppData?.sbrAvg}>
             {data?.sbrAvg.toFixed(1)}
-          </PerformanceValue>
+          </PerformanceValueAvg>
         </div>
         <div className="AverageBoxTwo">
           <div className="PerformanceTitle">
             {t("solo.comparison.bestScore")}
           </div>
-          <PerformanceValue
-            color={data?.sbrMax < oppData?.sbrMax}
-            className="PerformanceValue"
-          >
-            {data?.sbrMax.toFixed(1)}
-          </PerformanceValue>
+          <PerformanceValueMax>{data?.sbrMax.toFixed(1)}</PerformanceValueMax>
         </div>
         <div className="Vs">VS</div>
         <div className="AverageBox">
           <div className="PerformanceTitle">
             {t("solo.comparison.avgScore")}
           </div>
-          <PerformanceValue2
-            color={data?.sbrAvg > oppData?.sbrAvg}
-            className="PerformanceValueBlue"
-          >
+          <PerformanceValueAvg color={data?.sbrAvg > oppData?.sbrAvg}>
             {oppData?.sbrAvg.toFixed(1)}
-          </PerformanceValue2>
+          </PerformanceValueAvg>
         </div>
         <div className="AverageBoxTwo">
           <div className="PerformanceTitle">
             {t("solo.comparison.bestScore")}
           </div>
-          <PerformanceValue2
-            color={data?.sbrMax > oppData?.sbrMax}
-            className="PerformanceValueBlue"
-          >
+          <PerformanceValueMax>
             {oppData?.sbrMax.toFixed(1)}
-          </PerformanceValue2>
+          </PerformanceValueMax>
         </div>
         <div className="NameContainerBlue">
           <span className="NickName">
@@ -320,7 +306,7 @@ function NormalInfo() {
         </div>
       </PlayerCompareWrapper>
       <PlayerStatWrapper>
-        <div className="records">{`${data?.total}${t(
+        <div className="records red">{`${data?.total}${t(
           "solo.comparison.total"
         )} ${data?.win}${t("solo.comparison.win")} ${data?.lose}${t(
           "solo.comparison.lose"
@@ -328,7 +314,7 @@ function NormalInfo() {
         <span className="leftGradient"></span>
         <div className="soloRecord">{t("solo.comparison.statLabel")}</div>
         <span className="rightGradient"></span>
-        <div className="records">{`${oppData?.total}${t(
+        <div className="records blue">{`${oppData?.total}${t(
           "solo.comparison.total"
         )} ${oppData?.win}${t("solo.comparison.win")} ${oppData?.lose}${t(
           "solo.comparison.lose"
@@ -500,26 +486,28 @@ const PlayerStatWrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 38px;
-  background-color: rgb(22, 21, 26);
+  background-color: #23212a;
+  margin: 20px 0;
+  border-radius: 16px;
   > .leftGradient {
     width: 49px;
     height: 26px;
     margin-left: 170px;
-    background-image: linear-gradient(
+    /* background-image: linear-gradient(
       to left,
       rgb(38, 35, 45),
       rgb(22, 21, 26)
-    );
+    ); */
   }
   > .rightGradient {
     width: 49px;
     height: 26px;
     margin-right: 170px;
-    background-image: linear-gradient(
+    /* background-image: linear-gradient(
       to right,
       rgb(38, 35, 45),
       rgb(22, 21, 26)
-    );
+    ); */
   }
   > .soloRecord {
     display: flex;
@@ -528,51 +516,38 @@ const PlayerStatWrapper = styled.div`
     height: 26px;
     background-color: rgb(38, 35, 45);
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: bold;
     letter-spacing: -0.65px;
-    color: rgb(129, 126, 144);
+    color: #fff;
   }
   > .records {
-    font-family: Poppins, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 14px;
     line-height: 32px;
-    color: rgb(132, 129, 142);
-  }
-`;
-
-const PerformanceValue = styled.div`
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-  color: rgb(240, 69, 69);
-
-  .PerformanceValueBlue {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 20px;
+    background-color: #23212a;
     font-weight: bold;
-    text-align: center;
-    color: #0075bf;
+    color: #fff;
   }
-  ${(props) =>
-    props.color &&
-    css`
-      color: #6b6979;
-    `}
 `;
 
-const PerformanceValue2 = styled.div`
+const PerformanceValueAvg = styled.div`
   font-family: NotoSansKR, Apple SD Gothic Neo;
   font-size: 20px;
   font-weight: bold;
   text-align: center;
-  color: #0075bf;
-  ${(props) =>
-    props.color &&
-    css`
-      color: #6b6979;
-    `}
+  margin-top: 10px;
+  color: ${(props) => (props.color ? "#fff" : "#f04545")};
+`;
+
+const PerformanceValueMax = styled.div`
+  font-family: NotoSansKR, Apple SD Gothic Neo;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+  text-align: center;
+  margin-top: 10px;
 `;
 
 const PlayerCompareWrapper = styled.div`
@@ -580,9 +555,8 @@ const PlayerCompareWrapper = styled.div`
   align-items: center;
   margin-top: 28px;
   width: 100%;
-  border: solid 1px rgb(58, 55, 69);
   border-radius: 20px;
-  background-color: rgb(47, 45, 56);
+  background-color: #23212a;
   background-image: url("Images/full-gradient.png");
   background-repeat: no-repeat;
   .RedSidePlayer {
@@ -662,7 +636,6 @@ const NormalInfoWrapper = styled.div``;
 const NormalCompare = styled.div`
   margin-top: 22px;
   width: 100%;
-  border: solid 1px rgb(58, 55, 69);
   border-radius: 20px;
   background-color: rgb(47, 45, 56);
 `;
@@ -678,6 +651,8 @@ const ChampionSettingNav = styled.div`
 const CompareChart = styled.div`
   height: 579px;
   padding: 22px;
+  background-color: #23212a;
+  border-radius: 20px;
 `;
 
 const SettingTitle = styled.div`

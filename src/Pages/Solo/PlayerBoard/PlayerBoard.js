@@ -232,8 +232,9 @@ function PlayerBoard() {
             <div className="AttendValue">
               <span className="Wins">{`${matchInfo?.match}${t(
                 "solo.playerboard.games"
-              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${matchInfo?.loss
-                }${t("solo.playerboard.lose")}`}</span>
+              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${
+                matchInfo?.loss
+              }${t("solo.playerboard.lose")}`}</span>
               <span className="WinRate">{`${matchInfo?.winrate.toFixed(
                 1
               )}%`}</span>
@@ -379,7 +380,6 @@ function PlayerBoard() {
             </button>
           </FilterBox>
         </InfoNavBar>
-
         {loading ? (
           <LoadingImage>
             <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
@@ -420,7 +420,6 @@ function PlayerBoard() {
                             {lang === "kr" ? title.name : title.eng}
                           </td>
                         </Tippy>
-
                         <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
                         <td className="Icon">
                           <img
@@ -561,7 +560,6 @@ function PlayerBoard() {
           </AbilityContents>
         )}
       </AbilitySection>
-      // 솔로랭크 당분간 주석 처리.
       <AbilitySection>
         <InfoNavBar>
           <LeftInfo>
@@ -745,7 +743,6 @@ function PlayerBoard() {
           </TopBox>
         </AbilityContents>
       </AbilitySection>
-
       <RecordWrapper>
         <RecordSection>
           <CompetitionRecord>
@@ -1066,23 +1063,18 @@ const AbilitySection = styled.div`
   margin-top: 22px;
   width: 100%;
   min-height: 300px;
-  border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
   border-radius: 20px;
 `;
 
 const RecordSection = styled.div`
-  /* margin: 22px 0px; */
   display: flex;
-  /* justify-content: space-between; */
   flex-direction: column;
-  /* flex-wrap: wrap; */
 `;
 
 const GraphSection = styled.div`
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
 `;
 
 const PlayerOverView = styled.div`
@@ -1092,7 +1084,7 @@ const PlayerOverView = styled.div`
   height: 79px;
   margin: 22.5px 0px 0 0;
   border-radius: 20px;
-  border: solid 1px #3a3745;
+  /* border: solid 1px #3a3745; */
   background-color: #2f2d38;
   background-image: url("Images/left-red-gradient.png");
   background-repeat: no-repeat;
@@ -1254,8 +1246,7 @@ const InfoNavBar = styled.div`
 const AbilityContents = styled.div`
   width: 100%;
   min-height: 260px;
-  border: solid 1px rgb(67, 63, 78);
-  background-color: rgb(58, 55, 69);
+  background-color: #23212a;
   border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px;
   padding: 20px;
@@ -1335,7 +1326,6 @@ const MapStat = styled.tr`
     letter-spacing: -0.6px;
     color: rgb(255, 255, 255);
     margin: 0 0px 0 14px;
-    cursor: pointer;
   }
   > td {
     vertical-align: middle;
@@ -1391,8 +1381,8 @@ const CompetitionRecord = styled.div`
   width: 538px;
   min-height: 211px;
   margin-top: 22px;
-  border: solid 1px rgb(58, 55, 69);
-  background-color: rgb(47, 45, 56);
+  /* border: solid 1px rgb(58, 55, 69); */
+  background-color: #23212a;
   border-radius: 20px;
 `;
 const TableNav = styled.div`
@@ -1425,8 +1415,8 @@ const TotalRecord = styled.div`
   margin-top: 22px;
   width: 538px;
   min-height: 211px;
-  border: solid 1px rgb(58, 55, 69);
-  background-color: rgb(47, 45, 56);
+  /* border: solid 1px rgb(58, 55, 69); */
+  background-color: #23212a;
   border-radius: 20px;
 `;
 
@@ -1493,6 +1483,9 @@ const MapCompetition = styled.tr`
   width: 100%;
   height: 28px;
   border-bottom: 1px solid rgb(58, 55, 69);
+  :last-child {
+    border-bottom: none;
+  }
 
   > td {
     font-family: "Spoqa Han Sans";
@@ -1612,6 +1605,9 @@ const NavBar = styled.div`
   width: 100%;
   height: 42.5px;
   border-bottom: 1px solid rgb(35, 33, 42);
+  background-color: #23212a;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 
   .AverageTime {
     width: 61px;
@@ -1654,14 +1650,15 @@ const NavBar = styled.div`
 const PlayerCharts = styled.div`
   padding: 23px;
   height: 226.5px;
+  background-color: #23212a;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 `;
 
 const Player = styled.div`
   margin-top: 22px;
   width: 538px;
   height: 270px;
-  border: solid 1px rgb(58, 55, 69);
-  background-color: rgb(47, 45, 56);
   border-radius: 20px;
 `;
 
@@ -1727,7 +1724,6 @@ const DropDownContainer = styled.div`
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
-    // 솔로랭크 현황판 앞으로 나오게 함
     z-index: 1;
   }
 
@@ -1756,9 +1752,13 @@ const DropDownContainer = styled.div`
 const LoadingImage = styled.div`
   display: flex;
   width: 100%;
-  height: 280px;
+  height: 260px;
   justify-content: center;
   align-items: center;
+  background-color: #23212a;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+
   img {
     width: 50px;
     height: 50px;
