@@ -54,40 +54,46 @@ function LeaguePlayer() {
   return (
     <LeaguePlayerWrapper>
       <LeaguePlayerTabs>
-        <TopTab
+        <TabItem
           onClick={() => setPositionClicked("top")}
           changeColor={positionClicked === "top"}
         >
-          <span>{t("position.top")}</span>
-        </TopTab>
-        <LineMargin></LineMargin>
-        <JngTab
+          <div>
+            <span>{t("position.top")}</span>
+          </div>
+        </TabItem>
+        <TabItem
           onClick={() => setPositionClicked("jng")}
           changeColor={positionClicked === "jng"}
         >
-          <span>{t("position.jg")}</span>
-        </JngTab>
-        <LineMargin></LineMargin>
-        <MidTab
+          <div>
+            <span>{t("position.jg")}</span>
+          </div>
+        </TabItem>
+        <TabItem
           onClick={() => setPositionClicked("mid")}
           changeColor={positionClicked === "mid"}
         >
-          <span>{t("position.mid")}</span>
-        </MidTab>
-        <LineMargin></LineMargin>
-        <BotTab
+          <div>
+            <span>{t("position.mid")}</span>
+          </div>
+        </TabItem>
+        <TabItem
           onClick={() => setPositionClicked("bot")}
           changeColor={positionClicked === "bot"}
         >
-          <span>{t("position.ad")}</span>
-        </BotTab>
-        <LineMargin></LineMargin>
-        <SupTab
+          <div>
+            <span>{t("position.ad")}</span>
+          </div>
+        </TabItem>
+        <TabItem
           onClick={() => setPositionClicked("sup")}
           changeColor={positionClicked === "sup"}
         >
-          <span>{t("position.sup")}</span>
-        </SupTab>
+          <div>
+            <span>{t("position.sup")}</span>
+          </div>
+        </TabItem>
         <LastMargin></LastMargin>
       </LeaguePlayerTabs>
       <TabContents>{currentPosition[positionClicked]}</TabContents>
@@ -115,29 +121,39 @@ const LineMargin = styled.div`
   width: 30px;
   border-bottom: solid 1px #433f4e;
 `;
-const TopTab = styled.button`
-display: flex;
-padding: 20px 0 20px 0;
-align-items: center;
-width: auto;
-border-bottom: solid 1px #433f4e;
-span {
-  height: 22px;
-  font-family: SpoqaHanSansNeo;
-  font-size: 18px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: left;
-  color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
-}
-${(props) =>
-    props.changeColor &&
-    css`
-  border-bottom: solid 1px #fff;
-  `}
+const TabItem = styled.button`
+  display: flex;
+    align-items: center;
+    width: auto;
+    border-bottom: solid 1px #433f4e;
+    white-space: nowrap;
+
+    div {
+      padding: 10px 15px;
+    }
+
+    :hover {
+      div {
+        padding: 10px 15px;
+        border-radius: 10px;
+        background-color : #26262C;
+      }
+    }
+    
+    span {
+      height: 22px;
+      font-family: SpoqaHanSansNeo;
+      font-size: 18px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      text-align: left;
+      padding-bottom: 19px;
+      border-bottom: solid 1px ${(props) => props.changeColor ? `#fff` : `#433f4e;`};
+      color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+    }
 `;
 
 

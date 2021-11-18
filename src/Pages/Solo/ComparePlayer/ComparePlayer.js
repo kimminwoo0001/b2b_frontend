@@ -33,7 +33,7 @@ function ComparePlayer() {
             <span>{t("solo.comparison.overview")}</span>
           </div>
         </TabItem>
-        <LineMargin></LineMargin>
+
         <TabItem
           onClick={() => {
             setCurrentCompare(1);
@@ -45,7 +45,7 @@ function ComparePlayer() {
             <span>{t("solo.comparison.stats")}</span>
           </div>
         </TabItem>
-        <LineMargin></LineMargin>
+
         <TabItem
           onClick={() => {
             setCurrentCompare(2);

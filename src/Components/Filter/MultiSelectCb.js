@@ -44,7 +44,8 @@ const Selecter = styled.div`
     props.isChecked &&
     css`
       color: rgb(255, 255, 255);
-      // background-color: rgb(35, 34, 43);
+      background-color: rgba(22, 21, 28, 0.5);
+      border-radius: 10px;
     `}
   > .Version {
     font-family: NotoSansKR, Apple SD Gothic Neo;

@@ -28,8 +28,15 @@ const customStyles = {
   }
 };
 
-const AlertModal = ({ desc, isOpen, setIsOpen }) => {
+const AlertModal = ({ desc, isOpen, setIsOpen, isSelector = false, func }) => {
   const { t } = useTranslation();
+  const activeFunc = () => {
+    setIsOpen(false);
+    if (func) {
+      func();
+    }
+  }
+
   return (
     <Modal
       isOpen={isOpen}
@@ -42,9 +49,23 @@ const AlertModal = ({ desc, isOpen, setIsOpen }) => {
           {desc}
         </ModalDetail>
         <ModalClose>
-          <button onClick={() => setIsOpen(false)}>
+          {isSelector ? <>
+            <button className="cancel" onClick={() => setIsOpen(false)}>
+              {t("alert.label.cancel")}
+            </button>
+            <button className="confirm"
+              onClick={() => {
+                activeFunc();
+              }}>
+              {t("alert.label.confirm")}
+            </button>
+          </> : <button className="confirm"
+            onClick={() => {
+              activeFunc();
+            }}>
             {t("alert.label.confirm")}
           </button>
+          }
         </ModalClose>
       </ModalWrapper>
     </Modal>
@@ -83,13 +104,13 @@ const ModalClose = styled.div`
   justify-content: center;
   align-items: center;
   height: 62px;
+
   button {
     width: 180px;
     height: 42px;
     margin: 0 0px 0 0;
     padding: 0px 0px;
-    border-radius: 16px;
-    background-color: #5942ba;
+    border-radius: 16px; 
     font-family: SpoqaHanSansNeo;
     font-size: 18px;
     font-weight: normal;
@@ -99,5 +120,13 @@ const ModalClose = styled.div`
     letter-spacing: normal;
     text-align: center;
     color: #fff;
+  }
+  .confirm {
+    background-color: #5942ba;
+    margin: 0 5px;
+  }
+  .cancel {
+    background-color: #484655;
+    margin: 0 5px;
   }
 `;

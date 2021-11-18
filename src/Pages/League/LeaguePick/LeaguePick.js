@@ -133,7 +133,6 @@ function LeaguePick() {
             <span>{t("position.top")}</span>
           </div>
         </TabItem>
-        <LineMargin></LineMargin>
         <TabItem
           onClick={() => setPositionTab(1)}
           changeColor={positionTab === 1}
@@ -142,7 +141,7 @@ function LeaguePick() {
             <span>{t("position.jg")}</span>
           </div>
         </TabItem>
-        <LineMargin></LineMargin>
+
         <TabItem
           onClick={() => setPositionTab(2)}
           changeColor={positionTab === 2}
@@ -151,7 +150,7 @@ function LeaguePick() {
             <span>{t("position.mid")}</span>
           </div>
         </TabItem>
-        <LineMargin></LineMargin>
+
         <TabItem
           onClick={() => setPositionTab(3)}
           changeColor={positionTab === 3}
@@ -160,7 +159,6 @@ function LeaguePick() {
             <span>{t("position.ad")}</span>
           </div>
         </TabItem>
-        <LineMargin></LineMargin>
         <TabItem
           onClick={() => setPositionTab(4)}
           changeColor={positionTab === 4}
