@@ -13,22 +13,16 @@ function TeamComparison({ filteredData }) {
   const currentTab = {
     0: <CompareIngame filteredData={filteredData} />,
     1: <ComparePosition />,
-    2: <CompareReport />
+    2: <CompareReport />,
   };
   return (
     <TeamCompareTabWrapper>
       <TeamCompareTab>
-        <Tab
-          onClick={() => setIsClicked(0)}
-          changeColor={isClicked === 0}
-        >
+        <Tab onClick={() => setIsClicked(0)} changeColor={isClicked === 0}>
           <div>{t("team.comparison.ingamesStat")}</div>
         </Tab>
         <LineMargin></LineMargin>
-        <Tab
-          onClick={() => setIsClicked(1)}
-          changeColor={isClicked === 1}
-        >
+        <Tab onClick={() => setIsClicked(1)} changeColor={isClicked === 1}>
           <div>{t("team.comparison.lanes")}</div>
         </Tab>
 
@@ -69,7 +63,7 @@ const Tab = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 157px;
+  width: 170px;
   height: 36px;
   padding-bottom: 20px;
   color: rgb(132, 129, 142);
@@ -83,17 +77,24 @@ const Tab = styled.button`
       border-top: none;
       border-right: none;
       border-left: none;
-      border-bottom: 1px solid  #fff;
+      border-bottom: 1px solid #fff;
     `}
 
   div {
     width: auto;
     font-family: Poppins;
     text-align: center;
+    padding: 10px 5px;
+  }
+
+  :hover {
+    div {
+      padding: 10px 5px;
+      border-radius: 10px;
+      background-color: #26262c;
+    }
   }
 `;
-;
-
 // const ReportTab = styled.div`
 //   display: flex;
 //   justify-content: center;
@@ -122,6 +123,4 @@ const Tab = styled.button`
 //   }
 // `;
 
-const TabContents = styled.div`
-
-`;
+const TabContents = styled.div``;

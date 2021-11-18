@@ -25,13 +25,13 @@ function TeamTabs() {
   const TeamTab = {
     0: <BanIndex />,
     1: <TeamIndex />,
-    2: <TeamComparison />
+    2: <TeamComparison />,
   };
 
   return (
     <>
-      {
-        true && <>
+      {true && (
+        <>
           <TeamSelectModal
             openModal={openModal}
             setOpenModal={setOpenModal}
@@ -144,8 +144,7 @@ function TeamTabs() {
             <div>{TeamTab[filters.tab]}</div>
           </TeamTabsWrapper>
         </>
-      }
-
+      )}
     </>
   );
 }
@@ -157,7 +156,6 @@ const TeamTabsWrapper = styled.div`
   width: 1097px;
   /* height: calc(100vh - 95px); */
   background-color: #16151a;
-  
 `;
 
 const TabContainer = styled.ul`
@@ -210,7 +208,7 @@ const TabItem = styled.li`
     div {
       padding: 10px 15px;
       border-radius: 10px;
-      background-color : #26262C;
+      background-color: #26262c;
     }
   }
 
@@ -226,7 +224,7 @@ const TabItem = styled.li`
     text-align: left;
     padding-bottom: 19px;
     color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
-}
+  }
 `;
 
 const Statistics = styled.li`
@@ -283,7 +281,7 @@ const TeamCompare = styled.li`
     line-height: normal;
     letter-spacing: normal;
     text-align: left;
-    color: ##84818e;
+    color: #84818e;
   }
   .GetOpp {
     display: flex;

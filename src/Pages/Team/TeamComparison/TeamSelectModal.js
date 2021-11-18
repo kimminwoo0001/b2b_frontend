@@ -165,17 +165,12 @@ const ContentTitle = styled.div`
   font-style: normal;
   line-height: 1.63;
   padding: 0px 0 0px 14px;
-<<<<<<< HEAD
   margin: 25px;
-=======
-  margin: 25px 41px 10px;
->>>>>>> bc324976cec1e1f8228df9f8236637cb0e1ddab0
   color: rgb(255, 255, 255);
 `;
 
 const MapTeamContent = styled.div`
   height: 190px;
-  //border-bottom: 1px solid rgb(72, 70, 85);
   overflow-y: scroll;
   &::-webkit-scrollbar {
     width: 8px;
