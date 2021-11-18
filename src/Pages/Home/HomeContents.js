@@ -66,20 +66,22 @@ const HomeContents = memo(() => {
   };
 
   const fetchFilterData = () => {
-    dispatch(Loading(true));
-    try {
-      const url = `${API}/api/test/test`;
-      const params = {
-        token: user.token,
-        id: user.id
-      }
-      axiosRequest(url, params, function (e) {
-        dispatch(GetFilterAllItems(e.data));
+    if (staticvalue.filterObjects === null) {
+      dispatch(Loading(true));
+      try {
+        const url = `${API}/api/test/test`;
+        const params = {
+          token: user.token,
+          id: user.id
+        }
+        axiosRequest(url, params, function (e) {
+          dispatch(GetFilterAllItems(e.data));
+          dispatch(Loading(false));
+        })
+      } catch (e) {
+        console.log(e);
         dispatch(Loading(false));
-      })
-    } catch (e) {
-      console.log(e);
-      dispatch(Loading(false));
+      }
     }
   };
 

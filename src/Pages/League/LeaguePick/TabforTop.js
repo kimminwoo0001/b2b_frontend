@@ -131,10 +131,6 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                 <th className="PickCount" onClick={() => requestSort("pick")}>
                   <div className="sorting">
                     {t("league.draft.picks")}
-                    <Sortingimage>
-                      <img src="Images/ico-sorting-up.png" alt="up" />
-                      <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
                   </div>
                 </th>
                 {/* <th className="PickCount" onClick={() => requestSort("ban")}>
@@ -149,30 +145,18 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                 <th className="BanRate" onClick={() => requestSort("pickRate")}>
                   <div className="sorting">
                     {t("league.draft.banRate")}
-                    <Sortingimage>
-                      <img src="Images/ico-sorting-up.png" alt="up" />
-                      <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
                   </div>
                 </th>
                 <th className="WinRate" onClick={() => requestSort("winrate")}>
                   <div className="sorting">
                     {t("league.draft.winRate")}
-                    <Sortingimage>
-                      <img src="Images/ico-sorting-up.png" alt="up" />
-                      <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
                   </div>
                 </th>
-                {/* <th className="ProbRate" onClick={() => requestSort("probRate")}>
+                <th className="ProbRate" onClick={() => requestSort("probRate")}>
                   <div className="sorting">
                     {t("league.draft.probRate")}
-                    <Sortingimage>
-                      <img src="Images/ico-sorting-up.png" alt="up" />
-                      <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
                   </div>
-                </th> */}
+                </th>
                 <th className="none"></th>
               </tr>
             </thead>
@@ -192,7 +176,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                     {/* <td className="Picks">{data.ban}</td> */}
                     <td className="PickBan">{data.pickRate.toFixed(0)}%</td>
                     <td className="Win">{data.winrate.toFixed(0)}%</td>
-                    {/* <td className="Prob">{data.probRate.toFixed(0)}%</td> */}
+                    <td className="Prob">{data.probRate.toFixed(0)}%</td>
                   </tr>
                 );
               })}
@@ -214,28 +198,16 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                 <th className="PickCount" onClick={() => requestSorts("pick")}>
                   <div className="sorting">
                     {t("league.draft.pick")}
-                    <Sortingimage>
-                      <img src="Images/ico-sorting-up.png" alt="up" />
-                      <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
                   </div>
                 </th>
                 <th className="BanRate" onClick={() => requestSorts("ban")}>
                   <div className="sorting">
                     {t("league.draft.ban")}
-                    <Sortingimage>
-                      <img src="Images/ico-sorting-up.png" alt="up" />
-                      <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
                   </div>
                 </th>
                 <th className="WinRate" onClick={() => requestSorts("win")}>
                   <div className="sorting">
                     {t("league.draft.win")}
-                    <Sortingimage>
-                      <img src="Images/ico-sorting-up.png" alt="up" />
-                      <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
                   </div>
                 </th>
                 <th
@@ -244,37 +216,21 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                 >
                   <div className="sorting">
                     {t("league.draft.banRate")}
-                    <Sortingimage>
-                      <img src="Images/ico-sorting-up.png" alt="up" />
-                      <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
                   </div>
                 </th>
                 <th className="WinRate" onClick={() => requestSorts("winRate")}>
                   <div className="sorting">
                     {t("league.draft.winRate")}
-                    <Sortingimage>
-                      <img src="Images/ico-sorting-up.png" alt="up" />
-                      <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
                   </div>
                 </th>
                 <th className="WinRate" onClick={() => requestSorts("score")}>
                   <div className="sorting">
                     {t("league.draft.score")}
-                    <Sortingimage>
-                      <img src="Images/ico-sorting-up.png" alt="up" />
-                      <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
                   </div>
                 </th>
                 <th className="Score" onClick={() => requestSorts("score")}>
                   <div className="sorting">
                     {t("league.draft.tier")}
-                    <Sortingimage>
-                      <img src="Images/ico-sorting-up.png" alt="up" />
-                      <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
                   </div>
                 </th>
                 <th className="none"></th>
@@ -392,11 +348,10 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                             ? pick?.opp_champion.championKor
                             : pick?.opp_champion.champion}
                         </div>
-                        <div className="WinLose2">{`${
-                          pick?.opp_champion.win
-                        }${t("league.draft.w")} ${pick?.opp_champion.lose}${t(
-                          "league.draft.l"
-                        )}`}</div>
+                        <div className="WinLose2">{`${pick?.opp_champion.win
+                          }${t("league.draft.w")} ${pick?.opp_champion.lose}${t(
+                            "league.draft.l"
+                          )}`}</div>
                       </div>
                       <img
                         src={pick?.opp_champion.championImage}
@@ -670,7 +625,7 @@ const PickTable = styled.table`
     .Champion {
       text-align: left;
       padding-left: 10px;
-      width: 255px;
+      width: 200px;
     }
     > .none {
       width: 3px;
@@ -725,7 +680,7 @@ const PickTable = styled.table`
         }
       }
       > .ChampName {
-        width: 240px;
+        width: 190px;
       }
       > .Win {
         color: #f04545;
