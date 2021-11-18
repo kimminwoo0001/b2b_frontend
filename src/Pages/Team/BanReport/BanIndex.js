@@ -162,7 +162,7 @@ function BanIndex() {
             <span>ALL</span>
           </div>
         </BtnItem>
-        <LineMargin></LineMargin>
+
         <BtnItem
           className="Blue"
           onClick={() => setSide("blue")}
@@ -172,7 +172,7 @@ function BanIndex() {
             <span>BLUE</span>
           </div>
         </BtnItem>
-        <LineMargin></LineMargin>
+
         <BtnItem
           className="Red"
           onClick={() => setSide("red")}

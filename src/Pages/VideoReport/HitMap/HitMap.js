@@ -224,7 +224,7 @@ function HitMap() {
             <span>{t("video.heatmap.all")}</span>
           </div>
         </FilterTab>
-        <LineMargin></LineMargin>
+
         <FilterTab
           className="opp-champ"
           onClick={() => {

@@ -22,7 +22,7 @@ function BanReport() {
         >
           <div>{t("team.draft.stats")}</div>
         </BanIndexTab>
-        <LineMargin></LineMargin>
+
         {/* <BanBoardTab
           onClick={() => setIsClicked(1)}
           changeColor={isClicked === 1}

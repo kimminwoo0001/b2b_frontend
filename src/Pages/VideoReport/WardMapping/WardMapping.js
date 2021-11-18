@@ -203,7 +203,7 @@ function WardMapping() {
               <span>{t("video.vision.teamview")}</span>
             </div>
           </TabItem>
-          <LineMargin></LineMargin>
+
           <TabItem
             onClick={() => {
               setTab("player");
@@ -232,35 +232,41 @@ function WardMapping() {
 
         <ViewContainer>
           <ButtonContainer>
-            <SideButton
+            <TabItem
               onClick={() => {
                 setSide("all");
                 fetchingWardData("all");
               }}
               changeColor={side === "all"}
             >
-              <span>ALL</span>
-            </SideButton>
-            <LineMargin></LineMargin>
-            <SideButton
+              <div>
+                <span>ALL</span>
+              </div>
+            </TabItem>
+
+            <TabItem
               onClick={() => {
                 setSide("blue");
                 fetchingWardData("blue");
               }}
               changeColor={side === "blue"}
             >
-              <span>BLUE</span>
-            </SideButton>
-            <LineMargin></LineMargin>
-            <SideButton
+              <div>
+                <span>BLUE</span>
+              </div>
+            </TabItem>
+
+            <TabItem
               onClick={() => {
                 setSide("red");
                 fetchingWardData("red");
               }}
               changeColor={side === "red"}
             >
-              <span>RED</span>
-            </SideButton>
+              <div>
+                <span>RED</span>
+              </div>
+            </TabItem>
             <LastMargin></LastMargin>
           </ButtonContainer>
           <WardTable>
@@ -591,35 +597,7 @@ const WardMap = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
-  height: 62px;
-`;
-
-const SideButton = styled.button`
-  width: 65px;
-  padding: 20px 0 20px 0;
-  align-items: center;
-  width: auto;
-  border-bottom: solid 1px #433f4e;
-  span {
-    height: 22px;
-    font-family: SpoqaHanSansNeo;
-    font-size: 18px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: left;
-    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
-  }
-  :hover {
-    opacity: 0.8;
-  }
-  ${(props) =>
-    props.changeColor &&
-    css`
-    border-bottom: solid 1px #fff;
-    `}
+  height: 61px;
 `;
 
 const WardTable = styled.div`

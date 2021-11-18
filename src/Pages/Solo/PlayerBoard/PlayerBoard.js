@@ -133,8 +133,13 @@ function PlayerBoard() {
       id: user.id,
     };
     axiosRequest(url, params, function (e) {
-      setChampFilter(e.data.champion);
-      setChampEng(e.data.championEng);
+      const champArray = e.data.map(data => `${data.kor}(${data.total}경기)`);
+      const champArrayEng = e.data.map(data => data.eng);
+
+      // setChampFilter(e.data.champion);
+      // setChampEng(e.data.championEng);
+      setChampFilter(champArray);
+      setChampEng(champArrayEng);
     });
   };
 
@@ -153,8 +158,11 @@ function PlayerBoard() {
       id: user.id,
     };
     axiosRequest(url, params, function (e) {
-      setOppFilter(e.data.champion);
-      setOppEng(e.data.championEng);
+      const champArray = e.data.map(data => `${data.kor}(${data.total}경기)`);
+      const champArrayEng = e.data.map(data => data.eng);
+
+      setOppFilter(champArray);
+      setOppEng(champArrayEng);
     });
   };
 
@@ -232,9 +240,8 @@ function PlayerBoard() {
             <div className="AttendValue">
               <span className="Wins">{`${matchInfo?.match}${t(
                 "solo.playerboard.games"
-              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${
-                matchInfo?.loss
-              }${t("solo.playerboard.lose")}`}</span>
+              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${matchInfo?.loss
+                }${t("solo.playerboard.lose")}`}</span>
               <span className="WinRate">{`${matchInfo?.winrate.toFixed(
                 1
               )}%`}</span>
