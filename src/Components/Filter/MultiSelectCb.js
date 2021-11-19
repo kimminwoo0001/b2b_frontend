@@ -4,7 +4,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 const MultiSelectCb = memo(
-  ({ idx, filterData, mapData, pngPath, clickEvent, title, radioBtn = false }) => {
+  ({
+    idx,
+    filterData,
+    mapData,
+    pngPath,
+    clickEvent,
+    title,
+    radioBtn = false,
+  }) => {
     const { t } = useTranslation();
 
     return (
@@ -63,14 +71,22 @@ const Selecter = styled.div`
     height: 24px;
 
     background-clip: content-box;
-    background: ${(props) => props.radioBtn ? `url("/Images/btn_radio_off.svg")` : `url("/Images/btn_check_off.svg")`} no-repeat;
+    background: ${(props) =>
+        props.radioBtn
+          ? `url("/Images/btn_radio_off.svg")`
+          : `url("/Images/btn_check_off.svg")`}
+      no-repeat;
     margin-right: 8px;
 
     &:checked {
       background-color: #5942ba;
       border: #5942ba;
       border-radius: 2px;
-      background: ${(props) => props.radioBtn ? `url("/Images/btn_radio_on.svg")` : `url("/Images/btn_check_on.svg")`} no-repeat;
+      background: ${(props) =>
+          props.radioBtn
+            ? `url("/Images/btn_radio_on.svg")`
+            : `url("/Images/btn_check_on.svg")`}
+        no-repeat;
       float: right;
     }
 

@@ -322,14 +322,14 @@ function PlayerFilterModal({
               )}
             </PatchFilter>
           </FilterWrapper>
-          <TeamBox>
+          <TeamBox isFilterSelected={filters.league.length > 0}>
             <TeamFilterBox>
               <SelectTeam>
                 <div className="SelectTitle">
                   {t("filters.playerCompareLabel1")}
                 </div>
                 <GetFilterData>
-                  <ContentBox>
+                  <MyTeamBox>
                     <div className="Nav">{t("filters.team")}</div>
                     {teamFilter?.map((team, index) => {
                       return (
@@ -352,8 +352,8 @@ function PlayerFilterModal({
                         </MapTeams>
                       );
                     })}
-                  </ContentBox>
-                  <ContentBox2>
+                  </MyTeamBox>
+                  <MyPlayerBox isMyTeamSelected={filters.team}>
                     <div className="Nav2">{t("filters.player")}</div>
                     {playerFilter?.map((player, index) => {
                       return (
@@ -377,7 +377,7 @@ function PlayerFilterModal({
                         </MapTeams>
                       );
                     })}
-                  </ContentBox2>
+                  </MyPlayerBox>
                 </GetFilterData>
               </SelectTeam>
               <SelectTeam>
@@ -385,7 +385,7 @@ function PlayerFilterModal({
                   {t("filters.playerCompareLabel2")}
                 </div>
                 <GetFilterData>
-                  <ContentBox>
+                  <OppTeamBox isMyPlayerSelected={filters.player !== ""}>
                     <div className="Nav">{t("filters.team")}</div>
                     {oppTeamFilter?.map((team, index) => {
                       return (
@@ -406,8 +406,8 @@ function PlayerFilterModal({
                         </MapTeams>
                       );
                     })}
-                  </ContentBox>
-                  <ContentBox2>
+                  </OppTeamBox>
+                  <OppPlayerBox isOppTeamSelected={filters.oppteam !== ""}>
                     <div className="Nav2">{t("filters.player")}</div>
                     {oppPlayerFilter?.map((player, index) => {
                       return (
@@ -424,13 +424,13 @@ function PlayerFilterModal({
                         </MapTeams>
                       );
                     })}
-                  </ContentBox2>
+                  </OppPlayerBox>
                 </GetFilterData>
               </SelectTeam>
             </TeamFilterBox>
           </TeamBox>
         </FilterContainer>
-        <ButtonBox>
+        <ButtonBox isOppPlayerSelected={filters.oppplayer !== ""}>
           <button
             className="Selected"
             onClick={() => {
@@ -504,6 +504,7 @@ const ModalNav = styled.div`
 const TeamBox = styled.div`
   display: flex;
   flex-direction: column;
+  opacity: ${(props) => (props.isFilterSelected ? "1" : "0.3")};
 `;
 
 const PatchLabels = styled.div`
@@ -679,39 +680,6 @@ const SelectTeam = styled.div`
   }
 `;
 
-const ButtonBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 83px;
-  .Selected {
-    width: 100%;
-    height: 60px;
-    border-radius: 20px;
-    /* background-color: #f04545; */
-    background-color: #484655;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: -0.65px;
-    text-align: center;
-    color: #ffffff;
-    margin: 0 20px;
-  }
-  .Close {
-    width: 122px;
-    height: 36px;
-    border-radius: 3px;
-    background-color: #6b6979;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: -0.65px;
-    text-align: center;
-    color: #ffffff;
-  }
-`;
-
 const MapTeams = styled.div`
   display: flex;
   align-items: center;
@@ -747,7 +715,7 @@ const GetFilterData = styled.div`
   /* display: flex; */
 `;
 
-const ContentBox = styled.div`
+const MyTeamBox = styled.div`
   width: 193px;
   height: 218px;
 
@@ -772,7 +740,7 @@ const ContentBox = styled.div`
   }
 `;
 
-const ContentBox2 = styled.div`
+const MyPlayerBox = styled.div`
   width: 193px;
   height: 218px;
   /* max-height: 218px; */
@@ -782,6 +750,60 @@ const ContentBox2 = styled.div`
   border-radius: 20px;
   padding: 10px;
   font-size: 14px;
+  opacity: ${(props) => (props.isMyTeamSelected ? "1" : "0.3")};
+
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #434050;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin: 5px;
+  }
+`;
+
+const OppTeamBox = styled.div`
+  width: 193px;
+  height: 218px;
+
+  /* border-right: 1px solid #3a3745; */
+  background-color: #2f2d38;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 14px;
+  /* opacity: ${(props) => (props.isMyPlayerSelected ? "1" : "0.3")}; */
+
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #434050;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin: 5px;
+  }
+`;
+
+const OppPlayerBox = styled.div`
+  width: 193px;
+  height: 218px;
+  /* max-height: 218px; */
+  /* border-right: 1px solid #3a3745; */
+  background-color: #2f2d38;
+  margin-right: 15px;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 14px;
+  /* opacity: ${(props) => (props.isOppTeamSelected ? "1" : "0.3")}; */
 
   overflow-y: scroll;
   &::-webkit-scrollbar {
@@ -924,5 +946,38 @@ const DropDownToggle = styled.div`
     :hover {
       background-color: rgb(60, 58, 72);
     }
+  }
+`;
+
+const ButtonBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 83px;
+  .Selected {
+    width: 100%;
+    height: 60px;
+    border-radius: 20px;
+    background-color: ${(props) =>
+      props.isOppPlayerSelected ? "#5942ba" : "#484655"};
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.65px;
+    text-align: center;
+    color: #ffffff;
+    margin: 0 20px;
+  }
+  .Close {
+    width: 122px;
+    height: 36px;
+    border-radius: 3px;
+    background-color: #6b6979;
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.65px;
+    text-align: center;
+    color: #ffffff;
   }
 `;
