@@ -353,7 +353,10 @@ function PlayerFilterModal({
                       );
                     })}
                   </MyTeamBox>
-                  <MyPlayerBox isMyTeamSelected={filters.team}>
+                  <MyPlayerBox
+                    isMyTeamSelected={filters.team !== ""}
+                    isFilterSelected={filters.league.length > 0}
+                  >
                     <div className="Nav2">{t("filters.player")}</div>
                     {playerFilter?.map((player, index) => {
                       return (
@@ -380,12 +383,15 @@ function PlayerFilterModal({
                   </MyPlayerBox>
                 </GetFilterData>
               </SelectTeam>
-              <SelectTeam>
+              <SelectOppTeam>
                 <div className="SelectTitle">
                   {t("filters.playerCompareLabel2")}
                 </div>
                 <GetFilterData>
-                  <OppTeamBox isMyPlayerSelected={filters.player !== ""}>
+                  <OppTeamBox
+                    isMyPlayerSelected={filters.player !== ""}
+                    isFilterSelected={filters.league.length > 0}
+                  >
                     <div className="Nav">{t("filters.team")}</div>
                     {oppTeamFilter?.map((team, index) => {
                       return (
@@ -407,7 +413,10 @@ function PlayerFilterModal({
                       );
                     })}
                   </OppTeamBox>
-                  <OppPlayerBox isOppTeamSelected={filters.oppteam !== ""}>
+                  <OppPlayerBox
+                    isOppTeamSelected={filters.oppteam !== ""}
+                    isFilterSelected={filters.league.length > 0}
+                  >
                     <div className="Nav2">{t("filters.player")}</div>
                     {oppPlayerFilter?.map((player, index) => {
                       return (
@@ -426,7 +435,7 @@ function PlayerFilterModal({
                     })}
                   </OppPlayerBox>
                 </GetFilterData>
-              </SelectTeam>
+              </SelectOppTeam>
             </TeamFilterBox>
           </TeamBox>
         </FilterContainer>
@@ -504,7 +513,6 @@ const ModalNav = styled.div`
 const TeamBox = styled.div`
   display: flex;
   flex-direction: column;
-  opacity: ${(props) => (props.isFilterSelected ? "1" : "0.3")};
 `;
 
 const PatchLabels = styled.div`
@@ -650,7 +658,6 @@ const PatchFilter = styled.div`
 
 const TeamFilterBox = styled.div`
   display: flex;
-  /* min-height: 433px; */
 `;
 
 const SelectTeam = styled.div`
@@ -677,6 +684,67 @@ const SelectTeam = styled.div`
   .Nav2 {
     color: #ffffff;
     margin-bottom: 5px;
+  }
+`;
+
+const SelectOppTeam = styled.div`
+  width: 203px;
+  height: 100%;
+  margin: 0 5px;
+
+  .SelectTitle {
+    display: flex;
+    align-items: center;
+    height: 48px;
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 15px;
+    font-weight: bold;
+    width: 100%;
+    letter-spacing: -0.6px;
+    text-align: left;
+    color: #fff;
+    opacity: ${(props) => (props.isFilterSelected ? "1" : "0.3")};
+  }
+  .Nav {
+    color: #ffffff;
+    margin-bottom: 5px;
+  }
+  .Nav2 {
+    color: #ffffff;
+    margin-bottom: 5px;
+  }
+`;
+
+const ButtonBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 83px;
+  .Selected {
+    width: 100%;
+    height: 60px;
+    border-radius: 20px;
+    background-color: ${(props) =>
+      props.isOppPlayerSelected ? "#5942ba" : "#484655"};
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.65px;
+    text-align: center;
+    color: #ffffff;
+    margin: 0 20px;
+  }
+  .Close {
+    width: 122px;
+    height: 36px;
+    border-radius: 3px;
+    background-color: #6b6979;
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.65px;
+    text-align: center;
+    color: #ffffff;
   }
 `;
 
@@ -718,14 +786,13 @@ const GetFilterData = styled.div`
 const MyTeamBox = styled.div`
   width: 193px;
   height: 218px;
-
-  /* border-right: 1px solid #3a3745; */
   background-color: #2f2d38;
   margin-right: 15px;
   margin-bottom: 15px;
   border-radius: 20px;
   padding: 10px;
   font-size: 14px;
+
   overflow-y: scroll;
   &::-webkit-scrollbar {
     width: 4px;
@@ -750,7 +817,8 @@ const MyPlayerBox = styled.div`
   border-radius: 20px;
   padding: 10px;
   font-size: 14px;
-  opacity: ${(props) => (props.isMyTeamSelected ? "1" : "0.3")};
+  opacity: ${(props) =>
+    props.isFilterSelected && props.isMyTeamSelected ? "1" : "0.3"};
 
   overflow-y: scroll;
   &::-webkit-scrollbar {
@@ -769,15 +837,14 @@ const MyPlayerBox = styled.div`
 const OppTeamBox = styled.div`
   width: 193px;
   height: 218px;
-
-  /* border-right: 1px solid #3a3745; */
   background-color: #2f2d38;
   margin-right: 15px;
   margin-bottom: 15px;
   border-radius: 20px;
   padding: 10px;
   font-size: 14px;
-  /* opacity: ${(props) => (props.isMyPlayerSelected ? "1" : "0.3")}; */
+  opacity: ${(props) =>
+    props.isFilterSelected && props.isMyPlayerSelected ? "1" : "0.3"};
 
   overflow-y: scroll;
   &::-webkit-scrollbar {
@@ -796,14 +863,13 @@ const OppTeamBox = styled.div`
 const OppPlayerBox = styled.div`
   width: 193px;
   height: 218px;
-  /* max-height: 218px; */
-  /* border-right: 1px solid #3a3745; */
   background-color: #2f2d38;
   margin-right: 15px;
   border-radius: 20px;
   padding: 10px;
   font-size: 14px;
-  /* opacity: ${(props) => (props.isOppTeamSelected ? "1" : "0.3")}; */
+  opacity: ${(props) =>
+    props.isFilterSelected && props.isOppTeamSelected ? "1" : "0.3"};
 
   overflow-y: scroll;
   &::-webkit-scrollbar {
@@ -946,38 +1012,5 @@ const DropDownToggle = styled.div`
     :hover {
       background-color: rgb(60, 58, 72);
     }
-  }
-`;
-
-const ButtonBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 83px;
-  .Selected {
-    width: 100%;
-    height: 60px;
-    border-radius: 20px;
-    background-color: ${(props) =>
-      props.isOppPlayerSelected ? "#5942ba" : "#484655"};
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: -0.65px;
-    text-align: center;
-    color: #ffffff;
-    margin: 0 20px;
-  }
-  .Close {
-    width: 122px;
-    height: 36px;
-    border-radius: 3px;
-    background-color: #6b6979;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: -0.65px;
-    text-align: center;
-    color: #ffffff;
   }
 `;
