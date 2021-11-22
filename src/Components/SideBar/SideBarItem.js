@@ -35,11 +35,11 @@ const MenuWrapper = styled.div`
   height: 42px;
   text-align: center;
   margin: 13px 0 12px;
-    padding: 9px 9px 9px 14px;
+  padding: 9px 9px 9px 14px;
   cursor: pointer;
   .Name {
     font-family: SpoqaHanSansNeo;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: bold;
     line-height: 24px;
     letter-spacing: normal;
@@ -55,7 +55,7 @@ const MenuWrapper = styled.div`
   }
 
   :hover {
-    background-color: rgba(255,255,255, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
     margin: 13px 0 12px;
     padding: 9px 9px 9px 14px;
     border-radius: 16px;
