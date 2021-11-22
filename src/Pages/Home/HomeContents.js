@@ -12,6 +12,7 @@ import { GetFilterAllItems } from "../../redux/modules/staticvalue";
 
 import checkRequest from "../../lib/checkRequest";
 import axiosRequest from "../../lib/axiosRequest";
+import LeagueRank from "./LeagueRank";
 
 const HomeContents = memo(() => {
   const filters = useSelector((state) => state.FilterReducer);
@@ -23,10 +24,11 @@ const HomeContents = memo(() => {
   const dispatch = useDispatch();
 
   //리그마다 데이터 저장하는 상태값
-  const [lckData, setLckData] = useState([]);
-  const [lecData, setLecData] = useState([]);
-  const [lcsData, setLcsData] = useState([]);
-  const [lplData, setLplData] = useState([]);
+  const [leagueDataset, setLeagueDataset] = useState([]);
+  // const [lckData, setLckData] = useState([]);
+  // const [lecData, setLecData] = useState([]);
+  // const [lcsData, setLcsData] = useState([]);
+  // const [lplData, setLplData] = useState([]);
   // const [vcsData, setVcsData] = useState([]);
 
   useEffect(() => {
@@ -51,10 +53,11 @@ const HomeContents = memo(() => {
           sessionStorage.clear();
           history.push("/login");
         }
-        setLckData(e.data["LCK"]);
-        setLecData(e.data["LEC"]);
-        setLcsData(e.data["LCS"]);
-        setLplData(e.data["LPL"]);
+        setLeagueDataset(e.data);
+        // setLckData(e.data["LCK"]);
+        // setLecData(e.data["LEC"]);
+        // setLcsData(e.data["LCS"]);
+        // setLplData(e.data["LPL"]);
         // setVcsData(jsonData.data["VCS"]);
         dispatch(Loading(false));
       })
@@ -92,122 +95,22 @@ const HomeContents = memo(() => {
     <LeagueListWrapper>
       <BoxWrapper>
         <TopBox>
-          <LeagueList>
-            {/* LCK 테이블  */}
-            <LeagueNav>
-              <img src="Images/ico-league-lck.png" alt="lckIcon"></img>
-              <div className="LeagueName">LCK</div>
-            </LeagueNav>
-            <HomeTable>
-              <colgroup>
-                <col width="11%" />
-                <col width="45%" />
-                <col width="8.5%" />
-                <col width="8.5%" />
-                <col width="13.5%" />
-                <col width="13.5%" />
-              </colgroup>
-              <thead>
-                <tr>
-                  <th className="Rank">{t("home.rank")}</th>
-                  <th className="TeamName">{t("home.teamName")}</th>
-                  {/* <th className="playoff"></th> */}
-                  <th className="Win">{t("home.win")}</th>
-                  <th className="Lose">{t("home.lose")}</th>
-                  <th className="WinRate">{t("home.winrate")}</th>
-                  <th className="Points">{t("home.points")}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {lckData?.map((leagueData, index) => {
-                  return (
-                    <tr key={index}>
-                      <td className="Rank">{leagueData.Place}</td>
-                      <td className="TeamName">
-                        <div className="TeamWrapper">
-                          <img
-                            src={`Images/HomeLogo/${leagueData.Team}.png`}
-                            alt="teamlogo"
-                          ></img>
-                          <div>{leagueData.Team}</div>
-                        </div>
-                      </td>
-                      {/* <td>
-                        {leagueData.PO === true ? <PlayOff>P.O</PlayOff> : ""}
-                        {leagueData.PL === true ? <PL>P.L</PL> : ""}
-                      </td> */}
-                      <td className="Win">{leagueData.WinSeries}</td>
-                      <td className="Lose">{leagueData.LossSeries}</td>
-                      <td className="WinRate">{`${leagueData.WinRate.toFixed(
-                        1
-                      )}%`}</td>
-                      <td className="Points">{leagueData.PointsTiebreaker}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </HomeTable>
-          </LeagueList>
-          <LeagueList>
-            {/* LEC 테이블 */}
-            <LeagueNav>
-              <img src="Images/ico-league-lec.png" alt="lckIcon"></img>
-              <div className="LeagueName">LEC</div>
-            </LeagueNav>
-            <HomeTable>
-              <colgroup>
-                <col width="11%" />
-                <col width="45%" />
-                <col width="8.5%" />
-                <col width="8.5%" />
-                <col width="13.5%" />
-                <col width="13.5%" />
-              </colgroup>
-              <thead>
-                <tr>
-                  <th className="Rank">{t("home.rank")}</th>
-                  <th className="TeamName">{t("home.teamName")}</th>
-                  {/* <th className="playoff"></th> */}
-                  <th className="Win">{t("home.win")}</th>
-                  <th className="Lose">{t("home.lose")}</th>
-                  <th className="WinRate">{t("home.winrate")}</th>
-                  <th className="Points">{t("home.points")}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {lecData?.map((leagueData, index) => {
-                  return (
-                    <tr key={index}>
-                      <td className="Rank">{leagueData.Place}</td>
-                      <td className="TeamName">
-                        <div className="TeamWrapper">
-                          <img
-                            src={`Images/HomeLogo/${leagueData.Team}.png`}
-                            alt="teamlogo"
-                          ></img>
-                          <div>{leagueData.Team}</div>
-                        </div>
-                      </td>
-                      {/* <td>
-                        {leagueData.PO === true ? <PlayOff>P.O</PlayOff> : ""}
-                        {leagueData.PL === true ? <PL>P.L</PL> : ""}
-                      </td> */}
-                      <td className="Win">{leagueData.WinSeries}</td>
-                      <td className="Lose">{leagueData.LossSeries}</td>
-                      <td className="WinRate">{`${leagueData.WinRate.toFixed(
-                        1
-                      )}%`}</td>
-                      <td className="Points">{leagueData.PointsTiebreaker}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </HomeTable>
-          </LeagueList>
+          <LeagueRank
+            imgSrc="Images/ico-league-lck.png"
+            imgAlt="lckIcon"
+            leagueName="LCK"
+            leagueDataset={leagueDataset['LCK']}
+          />
+          <LeagueRank
+            imgSrc="Images/ico-league-lec.png"
+            imgAlt="lecIcon"
+            leagueName="LEC"
+            leagueDataset={leagueDataset['LEC']}
+          />
+
         </TopBox>
         <BottomBox>
           <LeagueListSmall>
-            {/* LCS 테이블 */}
             <LeagueNav>
               <img src="Images/ico-league-lcs.png" alt="lckIcon"></img>
               <div className="LeagueName">LCS</div>
@@ -233,7 +136,7 @@ const HomeContents = memo(() => {
                 </tr>
               </thead>
               <tbody>
-                {lcsData?.map((leagueData, index) => {
+                {leagueDataset['LCS']?.map((leagueData, index) => {
                   return (
                     <tr key={index}>
                       <td className="Rank">{leagueData.Place}</td>
@@ -262,62 +165,13 @@ const HomeContents = memo(() => {
               </tbody>
             </HomeTable>
           </LeagueListSmall>
-          <LeagueList>
-            {/* LPL 테이블 */}
-            <LeagueNav>
-              <img src="Images/ico-league-lpl.png" alt="lplIcon"></img>
-              <div className="LeagueName">LPL</div>
-            </LeagueNav>
-            <HomeTable>
-              <colgroup>
-                <col width="11%" />
-                <col width="45%" />
-                <col width="8.5%" />
-                <col width="8.5%" />
-                <col width="13.5%" />
-                <col width="13.5%" />
-              </colgroup>
-              <thead>
-                <tr>
-                  <th className="Rank">{t("home.rank")}</th>
-                  <th className="TeamName">{t("home.teamName")}</th>
-                  {/* <th className="playoff"></th> */}
-                  <th className="Win">{t("home.win")}</th>
-                  <th className="Lose">{t("home.lose")}</th>
-                  <th className="WinRate">{t("home.winrate")}</th>
-                  <th className="Points">{t("home.points")}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {lplData?.map((leagueData, index) => {
-                  return (
-                    <tr key={index}>
-                      <td className="Rank">{leagueData.Place}</td>
-                      <td className="TeamName">
-                        <div className="TeamWrapper">
-                          <img
-                            src={`Images/HomeLogo/${leagueData.Team}.png`}
-                            alt="teamlogo"
-                          ></img>
-                          <div>{leagueData.Team}</div>
-                        </div>
-                      </td>
-                      {/* <td>
-                        {leagueData.PO === true ? <PlayOff>P.O</PlayOff> : ""}
-                        {leagueData.PL === true ? <PL>P.L</PL> : ""}
-                      </td> */}
-                      <td className="Win">{leagueData.WinSeries}</td>
-                      <td className="Lose">{leagueData.LossSeries}</td>
-                      <td className="WinRate">{`${leagueData.WinRate.toFixed(
-                        1
-                      )}%`}</td>
-                      <td className="Points">{leagueData.PointsTiebreaker}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </HomeTable>
-          </LeagueList>
+          <LeagueRank
+            imgSrc="Images/ico-league-lpl.png"
+            imgAlt="lplIcon"
+            leagueName="LPL"
+            leagueDataset={leagueDataset['LPL']}
+          />
+
           {/* <LeagueList>
             <LeagueNav>
               <img src="Images/ico-league-vcs.png" alt="lckIcon"></img>
@@ -402,7 +256,7 @@ const LeagueList = styled.div`
 const LeagueListSmall = styled.div`
   margin: 0 20px 24.5px 0;
   width: 594px;
-  height: 442px; 
+  height: 457px; 
   border: solid 1px #3a3745;
   background-color: #2f2d38;
   border-radius: 20px;

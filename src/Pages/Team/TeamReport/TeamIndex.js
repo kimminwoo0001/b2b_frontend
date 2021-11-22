@@ -568,7 +568,7 @@ function TeamIndex() {
                     {
                       ticks: {
                         fontColor: "#84818e",
-                        fontSize: 14
+                        fontSize: 15
                       },
                       gridLines: { color: "rgb(47, 45, 56)" }
                     }
@@ -578,7 +578,7 @@ function TeamIndex() {
                       ticks: {
                         stepSize: gankCount?.firstGankRow,
                         fontColor: "#84818e",
-                        fontSize: 14,
+                        fontSize: 15,
                         min: gankCount?.firstGankMin,
                         max: gankCount?.firstGankMax
                       },
@@ -620,7 +620,7 @@ function TeamIndex() {
                     {
                       ticks: {
                         fontColor: "#84818e",
-                        fontSize: 14
+                        fontSize: 15
                       },
                       gridLines: { color: "rgb(47, 45, 56)" }
                     }
@@ -630,7 +630,7 @@ function TeamIndex() {
                       ticks: {
                         stepSize: supportTimeData?.supportingTimeRow,
                         fontColor: "#84818e",
-                        fontSize: 14,
+                        fontSize: 15,
                         min: supportTimeData?.supportingTimeMin,
                         max: supportTimeData?.supportingTimeMax
                       },

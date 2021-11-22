@@ -737,7 +737,7 @@ const DisplayTeams = styled.div`
   .Vs {
     width: 37px;
     height: 37px;
-    margin: 30px 100px 20px 100px;
+    margin: 25px 100px 0px 100px;
     font-family: SpoqaHanSansNeo;
     font-size: 18px;
     font-weight: bold;

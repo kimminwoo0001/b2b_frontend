@@ -26,10 +26,16 @@ import All from "./All";
 import qs from "qs";
 import axiosRequest from "../../../lib/axiosRequest";
 
+function sortPhase(arr) {
+  return arr.sort(function (a, b) {
+    return b.value - a.value;
+  });
+}
 
 function BanIndex() {
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
+  const lang = useSelector((state) => state.LocaleReducer);
   const dispatch = useDispatch();
   const [phase1, setPhase1] = useState();
   const [phase2, setPhase2] = useState();
@@ -108,42 +114,54 @@ function BanIndex() {
       dispatch(Baned4(e.data.Baneds[3].BanInfos));
       dispatch(Baned5(e.data.Baneds[4].BanInfos));
 
+      const isKor = lang === "kr";
+
       let phaseArray1 = [];
-      Object.keys(e.data.phased.phase1).forEach((key) => {
+      Object.keys(e.data.phased[0]).forEach(key => {
+        const data = e.data.phased[0]
         phaseArray1.push({
-          champion: key,
-          value: e.data.phased.phase1[key]
+          champion: isKor ? data[key].championKor : data[key].championKor,
+          key: key,
+          value: data[key].total
         });
       });
 
       let phaseArray2 = [];
-      Object.keys(e.data.phased.phase2).forEach((key) => {
+      Object.keys(e.data.phased[1]).forEach(key => {
+        const data = e.data.phased[1]
         phaseArray2.push({
-          champion: key,
-          value: e.data.phased.phase2[key]
+          champion: isKor ? data[key].championKor : data[key].championKor,
+          key: key,
+          value: data[key].total
         });
       });
 
       let phaseArray2_1 = [];
-      Object.keys(e.data.phased2.phase1).forEach((key) => {
+      Object.keys(e.data.phased2[0]).forEach(key => {
+        const data = e.data.phased2[0]
         phaseArray2_1.push({
-          champion: key,
-          value: e.data.phased2.phase1[key]
+          champion: isKor ? data[key].championKor : data[key].championKor,
+          key: key,
+          value: data[key].total
         });
       });
 
       let phaseArray2_2 = [];
-      Object.keys(e.data.phased2.phase2).forEach((key) => {
+      Object.keys(e.data.phased2[1]).forEach(key => {
+        const data = e.data.phased2[1]
         phaseArray2_2.push({
-          champion: key,
-          value: e.data.phased2.phase2[key]
+          champion: isKor ? data[key].championKor : data[key].championKor,
+          key: key,
+          value: data[key].total
         });
       });
 
-      setPhase1(phaseArray1);
-      setPhase2(phaseArray2);
-      setPhase2_1(phaseArray2_1);
-      setPhase2_2(phaseArray2_2);
+
+
+      setPhase1(sortPhase(phaseArray1));
+      setPhase2(sortPhase(phaseArray2));
+      setPhase2_1(sortPhase(phaseArray2_1));
+      setPhase2_2(sortPhase(phaseArray2_2));
 
     }).finally(setLoading(false))
   };

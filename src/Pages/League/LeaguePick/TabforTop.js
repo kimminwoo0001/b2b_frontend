@@ -74,34 +74,6 @@ const useSortableData2 = (tiers, config = null) => {
   return { tiers: sortedItems, requestSorts, sortConfig };
 };
 
-function tabledata(tableid, type) {
-  const BOM = "\uFEFF"; //바이트 순서 표식
-  let result = BOM;
-
-  const table = document.getElementById(tableid);
-  for (let rowCnt = 0; rowCnt < table.rows.length; rowCnt++) {
-    let rowData = table.rows[rowCnt].cells;
-    for (let colCnt = 0; colCnt < rowData.length; colCnt++) {
-      let columnData = rowData[colCnt].innerText;
-      if (columnData == null || columnData.length === 0) {
-        columnData = "".replace(/"/g, '""');
-      } else {
-        columnData = columnData.toString().replace(/"/g, '""'); // escape double quotes
-      }
-      console.log(result);
-      result =
-        type === "csv"
-          ? result + '"' + columnData + '",'
-          : result + columnData + "\t";
-    }
-    result = result.substring(0, result.length - 1);
-    result = result + "\r\n";
-  }
-  result = result.substring(0, result.length - 1);
-
-  return result;
-}
-
 function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
   //주요픽 정렬 오름차 내림차 상태 값
   const { items, requestSort } = useSortableData(
@@ -506,8 +478,8 @@ const BottomRow = styled.div`
 `;
 
 const MainPicks = styled.div`
-  width: 537.5px;
-  min-height: 211px;
+  width: 538px;
+  height: 551px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
   margin-right: 22px;
@@ -1002,6 +974,7 @@ const UniquePicks = styled.div`
 
 const ChampionTier = styled.div`
   width: 538px;
+  height: 264px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
   border-radius: 20px;
