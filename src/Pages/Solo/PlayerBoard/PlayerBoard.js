@@ -133,8 +133,8 @@ function PlayerBoard() {
       id: user.id,
     };
     axiosRequest(url, params, function (e) {
-      const champArray = e.data.map(data => `${data.kor}(${data.total}경기)`);
-      const champArrayEng = e.data.map(data => data.eng);
+      const champArray = e.data.map((data) => `${data.kor}(${data.total}경기)`);
+      const champArrayEng = e.data.map((data) => data.eng);
 
       // setChampFilter(e.data.champion);
       // setChampEng(e.data.championEng);
@@ -158,8 +158,8 @@ function PlayerBoard() {
       id: user.id,
     };
     axiosRequest(url, params, function (e) {
-      const champArray = e.data.map(data => `${data.kor}(${data.total}경기)`);
-      const champArrayEng = e.data.map(data => data.eng);
+      const champArray = e.data.map((data) => `${data.kor}(${data.total}경기)`);
+      const champArrayEng = e.data.map((data) => data.eng);
 
       setOppFilter(champArray);
       setOppEng(champArrayEng);
@@ -240,8 +240,9 @@ function PlayerBoard() {
             <div className="AttendValue">
               <span className="Wins">{`${matchInfo?.match}${t(
                 "solo.playerboard.games"
-              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${matchInfo?.loss
-                }${t("solo.playerboard.lose")}`}</span>
+              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${
+                matchInfo?.loss
+              }${t("solo.playerboard.lose")}`}</span>
               <span className="WinRate">{`${matchInfo?.winrate.toFixed(
                 1
               )}%`}</span>
@@ -261,7 +262,7 @@ function PlayerBoard() {
             <div className="PerformanceTitle">
               {t("solo.playerboard.bestScore")}
             </div>
-            <div className="PerformanceValue">{sbr?.maxAvg.toFixed(1)}</div>
+            <div className="PerformanceValueBest">{sbr?.maxAvg.toFixed(1)}</div>
           </div>
         </PlayerOverView>
       </PlayerInfoSection>
@@ -966,7 +967,7 @@ const LeftInfo = styled.div`
   align-items: center;
   .InfoTitle {
     font-family: "Spoqa Han Sans";
-    font-size: 12px;
+    font-size: 16px;
     font-weight: bold;
     letter-spacing: -0.6px;
     color: rgb(255, 255, 255);
@@ -974,10 +975,9 @@ const LeftInfo = styled.div`
   }
   .NavContents {
     font-family: "Spoqa Han Sans";
-    font-size: 12px;
+    font-size: 13px;
     letter-spacing: -0.6px;
     color: rgb(132, 129, 142);
-    margin: 0 110px 0 4px;
   }
 `;
 
@@ -998,7 +998,7 @@ const FilterBox = styled.div`
     border-radius: 10px;
     background-color: #5942ba;
     font-family: "Spoqa Han Sans";
-    font-size: 12px;
+    font-size: 13px;
     font-weight: bold;
     letter-spacing: -0.6px;
     color: #fff;
@@ -1007,18 +1007,17 @@ const FilterBox = styled.div`
   .Reset {
     display: flex;
     align-items: center;
-    /* width: 70px; */
+    width: 64px;
     height: 34px;
     border-radius: 10px;
     border: solid 1px #474554;
     color: #fff;
     background-color: #484655;
     font-family: "Spoqa Han Sans";
-    font-size: 12px;
+    font-size: 13px;
     letter-spacing: -0.55px;
     p {
-      margin-left: 5px;
-      margin-top: 3px;
+      margin-left: 2px;
     }
   }
 `;
@@ -1135,7 +1134,7 @@ const PlayerOverView = styled.div`
   }
   .NickName {
     font-family: "Spoqa Han Sans";
-    font-size: 11px;
+    font-size: 13px;
     color: rgb(132, 129, 142);
     margin-bottom: 6px;
   }
@@ -1150,7 +1149,7 @@ const PlayerOverView = styled.div`
     /* min-width: 50px; */
     margin-right: 11px;
     font-family: "Spoqa Han Sans";
-    font-size: 12px;
+    font-size: 13px;
     font-weight: bold;
     letter-spacing: -0.6px;
     text-align: left;
@@ -1159,7 +1158,7 @@ const PlayerOverView = styled.div`
   .Title2 {
     min-width: 50px;
     font-family: "Spoqa Han Sans";
-    font-size: 12px;
+    font-size: 13px;
     font-weight: bold;
     letter-spacing: -0.6px;
     text-align: left;
@@ -1183,21 +1182,21 @@ const PlayerOverView = styled.div`
   }
   .FullNum {
     font-family: "Spoqa Han Sans";
-    font-size: 11px;
+    font-size: 13px;
     text-align: left;
     color: rgb(255, 255, 255);
   }
   .Wins {
     width: 119px;
     font-family: "Spoqa Han Sans";
-    font-size: 16px;
+    font-size: 18px;
     text-align: left;
     color: rgb(255, 255, 255);
     margin-right: 10px;
   }
   .WinRate {
     font-family: "Spoqa Han Sans";
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     letter-spacing: -0.65px;
     text-align: left;
@@ -1218,7 +1217,7 @@ const PlayerOverView = styled.div`
   .PerformanceTitle {
     /* width: 80px; */
     font-family: "Spoqa Han Sans";
-    font-size: 12px;
+    font-size: 13px;
     font-weight: bold;
     letter-spacing: -0.6px;
     text-align: left;
@@ -1226,8 +1225,12 @@ const PlayerOverView = styled.div`
     margin-bottom: 10px;
   }
   .PerformanceValue {
+    width: 170px;
+  }
+  .PerformanceValue,
+  .PerformanceValueBest {
     font-family: "Spoqa Han Sans";
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     text-align: center;
     color: rgb(240, 69, 69);
@@ -1281,7 +1284,7 @@ const StatBox = styled.table`
   height: 100%;
   background-color: rgb(47, 45, 56);
   margin-right: 22px;
-  border-radius: 10px;
+  border-radius: 20px;
 
   :nth-child(3) {
     margin-right: 0px;
@@ -1303,7 +1306,7 @@ const StatNav = styled.tr`
   }
   > th {
     font-family: "Spoqa Han Sans";
-    font-size: 12px;
+    font-size: 15px;
     font-weight: bold;
     letter-spacing: -0.6px;
     color: rgb(132, 129, 142);
@@ -1329,7 +1332,7 @@ const MapStat = styled.tr`
     padding-left: 10px;
     width: 178px;
     font-family: "Spoqa Han Sans";
-    font-size: 12px;
+    /* font-size: 12px; */
     letter-spacing: -0.6px;
     color: rgb(255, 255, 255);
     margin: 0 0px 0 14px;
@@ -1337,6 +1340,7 @@ const MapStat = styled.tr`
   > td {
     vertical-align: middle;
     text-align: center;
+    font-size: 15px;
   }
 `;
 
@@ -1366,6 +1370,8 @@ const SolorankRecord = styled.div`
   background-color: rgb(47, 45, 56);
   margin-right: 22px;
   border: 1px solid rgb(35, 33, 42);
+  border-radius: 20px;
+
   :nth-child(3) {
     margin-right: 0px;
   }
@@ -1397,10 +1403,14 @@ const TableNav = styled.div`
   height: 42.5px;
   padding: 15px 0 0 13px;
   border-bottom: 1px solid rgb(35, 33, 42);
+
   font-family: "Spoqa Han Sans";
   color: #fff;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: medium;
+  > .StatTitle {
+    font-weight: bold;
+  }
 `;
 
 const ExportButton = styled.div`
@@ -1456,7 +1466,7 @@ const TableTitle = styled.thead`
     }
     > th {
       font-family: "Spoqa Han Sans";
-      font-size: 12px;
+      font-size: 15px;
       font-weight: bold;
       letter-spacing: -0.6px;
       color: rgb(129, 126, 144);
@@ -1477,7 +1487,7 @@ const SoloTableTitle = styled.thead`
     }
     > th {
       font-family: "Spoqa Han Sans";
-      font-size: 12px;
+      font-size: 15px;
       font-weight: bold;
       letter-spacing: -0.6px;
       color: rgb(129, 126, 144);
@@ -1496,7 +1506,7 @@ const MapCompetition = styled.tr`
 
   > td {
     font-family: "Spoqa Han Sans";
-    font-size: 12px;
+    font-size: 15px;
     letter-spacing: -0.6px;
     color: rgb(255, 255, 255);
     text-align: center;
@@ -1558,7 +1568,7 @@ const RecordTable = styled.table`
 
     > th {
       font-family: "Spoqa Han Sans";
-      font-size: 12px;
+      font-size: 15px;
       font-weight: bold;
       letter-spacing: -0.6px;
       color: rgb(129, 126, 144);
@@ -1588,7 +1598,7 @@ const RecordTable = styled.table`
         }
         .Rate {
           font-family: "Spoqa Han Sans";
-          font-size: 12px;
+          font-size: 15px;
           text-align: center;
           color: rgb(240, 69, 69);
         }
@@ -1597,7 +1607,7 @@ const RecordTable = styled.table`
     > td {
       width: 76px;
       font-family: "Spoqa Han Sans";
-      font-size: 12px;
+      font-size: 15px;
       color: rgb(255, 255, 255);
       vertical-align: middle;
       text-align: center;
@@ -1624,12 +1634,13 @@ const NavBar = styled.div`
     line-height: 2.08;
     color: #fff;
     margin-left: 15px;
+    font-weight: bold;
   }
   .X {
     width: auto;
     height: 17px;
     font-family: "Spoqa Han Sans";
-    font-size: 12px;
+    font-size: 15px;
     text-align: left;
     color: rgb(132, 129, 142);
     margin-right: 15px;
@@ -1641,7 +1652,7 @@ const NavBar = styled.div`
     width: auto;
     height: 17px;
     font-family: "Spoqa Han Sans";
-    font-size: 12px;
+    font-size: 15px;
     text-align: left;
     color: rgb(132, 129, 142);
     margin-right: 16px;
