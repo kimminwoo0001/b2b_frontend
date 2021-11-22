@@ -317,7 +317,7 @@ const TeamFilterModal = ({
                 <SelectTitle isTeamSelected={filters.team.length !== 0}>
                   {t("filters.teamCompareLabel2")}
                 </SelectTitle>
-                <SelectOppTeam>
+                <SelectOppTeam isTeamSelected={filters.team.length !== 0}>
                   {oppTeamFilter?.map((team, index) => {
                     return (
                       <MapTeams
@@ -591,7 +591,9 @@ const SelectOppTeam = styled.div`
   background-color: #2f2d38;
   border-radius: 20px;
   padding: 10px;
+  opacity: ${(props) => (props.isTeamSelected ? "1" : "0.3")};
   overflow-y: scroll;
+
   &::-webkit-scrollbar {
     width: 4px;
   }
