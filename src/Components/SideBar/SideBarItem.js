@@ -53,7 +53,6 @@ const MenuWrapper = styled.div`
     object-fit: contain;
     vertical-align: middle;
   }
-
   :hover {
     background-color: rgba(255, 255, 255, 0.1);
     margin: 13px 0 12px;

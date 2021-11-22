@@ -213,7 +213,7 @@ function LeagueStatistics() {
                     {
                       ticks: {
                         fontColor: "#84818e",
-                        fontSize: 14
+                        fontSize: 15
                       },
                       gridLines: {
                         color: "rgb(47, 45, 56)",
@@ -228,7 +228,7 @@ function LeagueStatistics() {
                       ticks: {
                         stepSize: gameLengthData?.row,
                         fontColor: "#84818e",
-                        fontSize: 14,
+                        fontSize: 15,
                         min: gameLengthData?.min,
                         max: gameLengthData?.max
                       },
@@ -270,7 +270,7 @@ function LeagueStatistics() {
                     {
                       ticks: {
                         fontColor: "#84818e",
-                        fontSize: 14
+                        fontSize: 15
                       },
                       gridLines: { color: "rgb(47, 45, 56)" },
                       offset: true
@@ -281,7 +281,7 @@ function LeagueStatistics() {
                       ticks: {
                         stepSize: supportTimeData?.row,
                         fontColor: "#84818e",
-                        fontSize: 14,
+                        fontSize: 15,
                         min: supportTimeData?.min,
                         max: supportTimeData?.max
                       },
@@ -327,7 +327,7 @@ function LeagueStatistics() {
                     {
                       ticks: {
                         fontColor: "#84818e",
-                        fontSize: 14
+                        fontSize: 15
                       },
                       gridLines: { color: "rgb(47, 45, 56)" },
                       offset: true
@@ -338,7 +338,7 @@ function LeagueStatistics() {
                       ticks: {
                         stepSize: totalMatchData?.row,
                         fontColor: "#84818e",
-                        fontSize: 14,
+                        fontSize: 15,
                         min: totalMatchData?.min,
                         max: totalMatchData?.max
                       },
@@ -378,7 +378,7 @@ function LeagueStatistics() {
                     {
                       ticks: {
                         fontColor: "#84818e",
-                        fontSize: 14
+                        fontSize: 15
                       },
                       gridLines: { color: "rgb(47, 45, 56)" },
                       offset: true
@@ -389,7 +389,7 @@ function LeagueStatistics() {
                       ticks: {
                         stepSize: 0.5,
                         fontColor: "#84818e",
-                        fontSize: 14,
+                        fontSize: 15,
                         min: firstGankData?.min,
                         max: firstGankData?.max
                       },

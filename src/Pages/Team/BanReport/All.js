@@ -408,7 +408,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                 return (
                   <MapPhaseData key={idx}>
                     <img
-                      src={`Images/champion/${phase.champion}.png`}
+                      src={`Images/champion/${phase.key}.png`}
                       width="19px"
                       height="19px"
                       style={{ borderRadius: "30px" }}
@@ -437,7 +437,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                 return (
                   <MapPhaseData key={idx}>
                     <img
-                      src={`Images/champion/${phase.champion}.png`}
+                      src={`Images/champion/${phase.key}.png`}
                       width="19px"
                       height="19px"
                       style={{ borderRadius: "30px" }}
@@ -469,7 +469,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                 return (
                   <MapPhaseData key={idx}>
                     <img
-                      src={`Images/champion/${phase.champion}.png`}
+                      src={`Images/champion/${phase.key}.png`}
                       width="19px"
                       height="19px"
                       style={{ borderRadius: "30px" }}
@@ -498,7 +498,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                 return (
                   <MapPhaseData key={idx}>
                     <img
-                      src={`Images/champion/${phase.champion}.png`}
+                      src={`Images/champion/${phase.key}.png`}
                       width="19px"
                       height="19px"
                       style={{ borderRadius: "30px" }}
@@ -667,6 +667,9 @@ const MapBanData = styled.div`
     color: #fff;
     width: 105px;
     margin-left: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .Rate {
     font-family: SpoqaHanSansNeo;
