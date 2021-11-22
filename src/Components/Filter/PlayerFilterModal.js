@@ -194,7 +194,6 @@ function PlayerFilterModal({
                           : t("filters.leagueLabel")}
                       </span>
                     </div>
-
                     <img
                       className="ArrowIcon"
                       src="Images/ico-filter-arrow.png"
@@ -322,14 +321,14 @@ function PlayerFilterModal({
               )}
             </PatchFilter>
           </FilterWrapper>
-          <TeamBox isFilterSelected={filters.league.length > 0}>
+          <TeamBox>
             <TeamFilterBox>
-              <SelectTeam>
+              <SelectTeam isFilterSelected={filters.league.length > 0}>
                 <div className="SelectTitle">
                   {t("filters.playerCompareLabel1")}
                 </div>
                 <GetFilterData>
-                  <MyTeamBox>
+                  <MyTeamBox isFilterSelected={filters.league.length > 0}>
                     <div className="Nav">{t("filters.team")}</div>
                     {teamFilter?.map((team, index) => {
                       return (
@@ -383,7 +382,10 @@ function PlayerFilterModal({
                   </MyPlayerBox>
                 </GetFilterData>
               </SelectTeam>
-              <SelectOppTeam>
+              <SelectOppTeam
+                isFilterSelected={filters.league.length > 0}
+                isMyPlayerSelected={filters.player !== ""}
+              >
                 <div className="SelectTitle">
                   {t("filters.playerCompareLabel2")}
                 </div>
@@ -676,6 +678,7 @@ const SelectTeam = styled.div`
     letter-spacing: -0.6px;
     text-align: left;
     color: #fff;
+    opacity: ${(props) => (props.isFilterSelected ? "1" : "0.3")};
   }
   .Nav {
     color: #ffffff;
@@ -703,7 +706,8 @@ const SelectOppTeam = styled.div`
     letter-spacing: -0.6px;
     text-align: left;
     color: #fff;
-    opacity: ${(props) => (props.isFilterSelected ? "1" : "0.3")};
+    opacity: ${(props) =>
+      props.isFilterSelected && props.isMyPlayerSelected ? "1" : "0.3"};
   }
   .Nav {
     color: #ffffff;
@@ -792,6 +796,7 @@ const MyTeamBox = styled.div`
   border-radius: 20px;
   padding: 10px;
   font-size: 14px;
+  opacity: ${(props) => (props.isFilterSelected ? "1" : "0.3")};
 
   overflow-y: scroll;
   &::-webkit-scrollbar {
