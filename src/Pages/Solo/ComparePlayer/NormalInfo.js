@@ -515,7 +515,7 @@ const PlayerStatWrapper = styled.div`
     padding: 0 20px;
     height: 26px;
     background-color: rgb(38, 35, 45);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 16px;
     font-weight: bold;
     letter-spacing: -0.65px;
@@ -523,7 +523,7 @@ const PlayerStatWrapper = styled.div`
   }
   > .records {
     font-family: "Spoqa Han Sans";
-    font-size: 14px;
+    font-size: 16px;
     line-height: 32px;
     background-color: #23212a;
     font-weight: bold;
@@ -532,8 +532,8 @@ const PlayerStatWrapper = styled.div`
 `;
 
 const PerformanceValueAvg = styled.div`
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 20px;
+  font-family: "Spoqa Han Sans";
+  font-size: 18px;
   font-weight: bold;
   text-align: center;
   margin-top: 10px;
@@ -541,12 +541,11 @@ const PerformanceValueAvg = styled.div`
 `;
 
 const PerformanceValueMax = styled.div`
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 20px;
+  font-family: "Spoqa Han Sans";
+  font-size: 18px;
   font-weight: bold;
   text-align: center;
   color: #fff;
-  text-align: center;
   margin-top: 10px;
 `;
 
@@ -584,28 +583,27 @@ const PlayerCompareWrapper = styled.div`
     text-align: right;
   }
   .NickName {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
+    font-family: "Spoqa Han Sans";
+    font-size: 13px;
     color: rgb(132, 129, 142);
     margin-bottom: 3px;
   }
   .RealName {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 15px;
     font-weight: bold;
     letter-spacing: -0.75px;
     color: rgb(255, 255, 255);
   }
   .PerformanceTitle {
-    /* width: 80px; */
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    width: 150px;
+    font-family: "Spoqa Han Sans";
+    font-size: 16px;
     font-weight: bold;
     letter-spacing: -0.6px;
     text-align: left;
     color: rgb(132, 129, 142);
     margin-bottom: 4.7px;
-    text-align: center;
   }
 
   .AverageBox {
@@ -622,7 +620,7 @@ const PlayerCompareWrapper = styled.div`
     }
   }
   .Vs {
-    font-family: Poppins;
+    font-family: "Spoqa Han Sans";
     font-size: 30px;
     font-weight: bold;
     text-align: left;
@@ -659,7 +657,7 @@ const SettingTitle = styled.div`
   display: flex;
   align-items: center;
   .Title {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 13px;
     font-weight: bold;
     letter-spacing: -0.65px;
@@ -667,7 +665,7 @@ const SettingTitle = styled.div`
     margin: 0 15px 0 23px;
   }
   .Alert {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     letter-spacing: -0.6px;
     color: rgb(132, 129, 142);
@@ -681,7 +679,7 @@ const DropDownContainer = styled.div`
   margin: 13px 0 0 23px;
 
   .Vs {
-    font-family: Poppins;
+    font-family: "Spoqa Han Sans";
     font-size: 15px;
     font-weight: bold;
     color: rgb(132, 129, 142);
@@ -692,7 +690,7 @@ const DropDownContainer = styled.div`
     height: 40px;
     border-radius: 3px;
     background-color: rgb(240, 69, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     font-weight: bold;
     letter-spacing: -0.6px;
@@ -707,7 +705,7 @@ const DropDownContainer = styled.div`
     border-radius: 3px;
     border: solid 1px #474554;
     background-color: #3a3745;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 11px;
     letter-spacing: -0.55px;
     color: rgb(175, 173, 190);
@@ -725,7 +723,7 @@ const DropDown = styled.div`
   }
 
   body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Spoqa Han Sans";
   }
 
   .menu-container {
@@ -748,7 +746,7 @@ const DropDown = styled.div`
   }
 
   .SelectedLabel {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
@@ -758,7 +756,7 @@ const DropDown = styled.div`
   }
 
   .Label {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
@@ -807,7 +805,7 @@ const DropDown = styled.div`
     text-decoration: none;
     padding: 15px 20px;
     display: block;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 11px;
     letter-spacing: -0.55px;
     text-align: left;
