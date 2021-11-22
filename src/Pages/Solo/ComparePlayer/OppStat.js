@@ -121,7 +121,8 @@ function OppStat() {
   return (
     <OppStatWrapper>
       <PlayerCompare />
-      <PlayerStatWrapper>
+      {/* 개인전적을 보여주는 의미가 없어 주석처리 */}
+      {/* <PlayerStatWrapper>
         <div className="records red">{`${player?.total.value}${t(
           "solo.comparison.total"
         )} ${player?.win}${t("solo.comparison.win")} ${player?.lose}${t(
@@ -135,7 +136,7 @@ function OppStat() {
         )} ${oppPlayer?.win}${t("solo.comparison.win")} ${oppPlayer?.lose}${t(
           "solo.comparison.lose"
         )}`}</div>
-      </PlayerStatWrapper>
+      </PlayerStatWrapper> */}
       <OppStatContents>
         {/* <ChampionSettingNav>
           <SettingTitle>
@@ -775,27 +776,17 @@ const PlayerStatWrapper = styled.div`
   background-color: #23212a;
   margin: 20px 0;
   border-radius: 16px;
-  background-image: url("/Images/red-blue-gradient.png");
+  /* background-image: url("/Images/red-blue-gradient.png"); */
 
   > .leftGradient {
     width: 49px;
     height: 26px;
     margin-left: 170px;
-    /* background-image: linear-gradient(
-      to left,
-      rgb(38, 35, 45),
-      rgb(22, 21, 26)
-    ); */
   }
   > .rightGradient {
     width: 49px;
     height: 26px;
     margin-right: 170px;
-    /* background-image: linear-gradient(
-      to right,
-      rgb(38, 35, 45),
-      rgb(22, 21, 26)
-    ); */
   }
   > .soloRecord {
     display: flex;

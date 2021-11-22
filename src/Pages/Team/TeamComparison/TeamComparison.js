@@ -13,29 +13,22 @@ function TeamComparison({ filteredData }) {
   const currentTab = {
     0: <CompareIngame filteredData={filteredData} />,
     1: <ComparePosition />,
-    2: <CompareReport />
+    2: <CompareReport />,
   };
   return (
     <TeamCompareTabWrapper>
       <TeamCompareTab>
-        <Tab
-          onClick={() => setIsClicked(0)}
-          changeColor={isClicked === 0}
-        >
+        <Tab onClick={() => setIsClicked(0)} changeColor={isClicked === 0}>
           <div>
             <span>{t("team.comparison.ingamesStat")}</span>
           </div>
         </Tab>
 
-        <Tab
-          onClick={() => setIsClicked(1)}
-          changeColor={isClicked === 1}
-        >
+        <Tab onClick={() => setIsClicked(1)} changeColor={isClicked === 1}>
           <div>
             <span>{t("team.comparison.lanes")}</span>
           </div>
         </Tab>
-
 
         {/* <Tab
           onClick={() => setIsClicked(2)}
@@ -70,40 +63,47 @@ const LineMargin = styled.div`
 `;
 
 const Tab = styled.button`
-display: flex;
-align-items: center;
-width: auto;
-border-bottom: solid 1px #433f4e;
-white-space: nowrap;
+  display: flex;
+  align-items: center;
+  width: auto;
+  border-bottom: solid 1px #433f4e;
+  white-space: nowrap;
 
-div {
-  padding: 10px 15px;
-}
-
-:hover {
   div {
     padding: 10px 15px;
-    border-radius: 10px;
-    background-color : #26262C;
   }
-}
 
-span {
-  height: 22px;
-  font-family: SpoqaHanSansNeo;
-  font-size: 18px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: left;
-  padding-bottom: 18px;
-  border-bottom: solid 1px ${(props) => props.changeColor ? `#fff` : `#433f4e;`};
-  color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
-}
-;
+  :hover {
+    div {
+      padding: 10px 15px;
+      border-radius: 10px;
+      background-color: #26262c;
+    }
+  }
 
+  span {
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    padding-bottom: 18px;
+    border-bottom: solid 1px
+      ${(props) => (props.changeColor ? `#fff` : `#433f4e;`)};
+    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+  }
+  :hover {
+    div {
+      padding: 10px 15px;
+      border-radius: 10px;
+      background-color: #26262c;
+    }
+  }
+`;
 // const ReportTab = styled.div`
 //   display: flex;
 //   justify-content: center;
@@ -132,6 +132,4 @@ span {
 //   }
 // `;
 
-const TabContents = styled.div`
-
-`;
+const TabContents = styled.div``;

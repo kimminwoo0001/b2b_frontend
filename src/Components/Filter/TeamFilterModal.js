@@ -317,7 +317,7 @@ const TeamFilterModal = ({
                 <SelectTitle isTeamSelected={filters.team.length !== 0}>
                   {t("filters.teamCompareLabel2")}
                 </SelectTitle>
-                <SelectOppTeam>
+                <SelectOppTeam isTeamSelected={filters.team.length !== 0}>
                   {oppTeamFilter?.map((team, index) => {
                     return (
                       <MapTeams
@@ -361,7 +361,7 @@ const FilterContainer = styled.div`
   display: flex;
   border-radius: 20px;
   padding-top: 20px;
-  padding-left: 15px;
+  padding-left: 14px;
 `;
 
 const BackScreen = styled.div`
@@ -380,7 +380,7 @@ const TeamModalWrapper = styled.div`
   border-radius: 20px;
   display: ${(props) => (props.teamModal ? "block" : "none")};
   width: 616px;
-  min-height: 636px;
+  /* min-height: 636px; */
   background-color: #23212a;
   top: 50%;
   left: 50%;
@@ -432,7 +432,7 @@ const PatchLabels = styled.div`
 `;
 
 const FilterWrapper = styled.div`
-  width: 180px;
+  width: 175px;
   background-color: #23212a;
   border-bottom-left-radius: 20px;
 `;
@@ -504,7 +504,7 @@ const SelectedPatch = styled.div`
 const LeagueFilter = styled.div`
   width: 150px;
   height: 61px;
-  margin: 15px 10px 10px 10px;
+  margin: 17px 10px 10px 10px;
   padding: 5px;
   border-radius: 10px;
   background-color: #2f2d38;
@@ -571,6 +571,18 @@ const SelectTeam = styled.div`
   margin-right: 15px;
   border-radius: 20px;
   padding: 10px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #434050;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin: 5px;
+  }
 `;
 
 const SelectOppTeam = styled.div`
@@ -579,6 +591,20 @@ const SelectOppTeam = styled.div`
   background-color: #2f2d38;
   border-radius: 20px;
   padding: 10px;
+  opacity: ${(props) => (props.isTeamSelected ? "1" : "0.3")};
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #434050;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin: 5px;
+  }
 `;
 
 const SelectTitle = styled.div`
@@ -646,11 +672,15 @@ const MapTeams = styled.div`
     font-size: 15px;
     text-align: left;
     color: #84818e;
+    ${(props) =>
+      props.currentTeam &&
+      css`
+        color: #fff;
+      `}
   }
   ${(props) =>
     props.currentTeam &&
     css`
-      color: #fff;
       background-color: #16151c;
       border-radius: 10px;
     `}

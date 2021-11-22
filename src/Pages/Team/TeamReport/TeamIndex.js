@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import {
   CircularProgressbarWithChildren,
-  buildStyles
+  buildStyles,
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useTranslation } from "react-i18next";
@@ -13,8 +13,6 @@ import { API } from "../../config";
 import { useSelector } from "react-redux";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import axiosRequest from "../../../lib/axiosRequest";
-
-
 
 function TeamIndex() {
   //팀 존력 보고서 팀 지표 텝
@@ -50,7 +48,6 @@ function TeamIndex() {
   const fetchingStatisticData = () => {
     setLoading(true);
     try {
-
       let url = `${API}/api/team/analysis`;
       let params = {
         league: filters.league,
@@ -59,8 +56,8 @@ function TeamIndex() {
         patch: filters.patch,
         team: filters.team,
         token: user.token,
-        id: user.id
-      }
+        id: user.id,
+      };
 
       axiosRequest(url, params, function (e) {
         //팀 평균 데이터 fetch
@@ -96,9 +93,7 @@ function TeamIndex() {
         setSupportTimeX(supportX);
         setSupportTimeY(supportY);
         setLoading(false);
-      })
-
-
+      });
     } catch (e) {
       alert(e);
     }
@@ -116,9 +111,9 @@ function TeamIndex() {
         backgroundColor: "#f14444",
         borderColor: "#f14444",
         borderWidth: 2,
-        data: gankCountY
-      }
-    ]
+        data: gankCountY,
+      },
+    ],
   };
 
   // 서포팅 그래프 옵션
@@ -133,9 +128,9 @@ function TeamIndex() {
         backgroundColor: "#f14444",
         borderColor: "#f14444",
         borderWidth: 2,
-        data: supportTimeY
-      }
-    ]
+        data: supportTimeY,
+      },
+    ],
   };
   if (loading) return <LoadingImg />;
   return (
@@ -302,7 +297,7 @@ function TeamIndex() {
               pathColor: `rgb(240, 69, 69)`,
               textColor: "#ffffff",
               trailColor: "#2f2d38",
-              backgroundColor: "#3e98c7"
+              backgroundColor: "#3e98c7",
             })}
             strokeWidth="12"
           >
@@ -310,14 +305,14 @@ function TeamIndex() {
               style={{
                 fontSize: 12,
                 color: "#84818e",
-                fontFamily: "NotoSansKR, Apple SD Gothic Neo;"
+                fontFamily: "NotoSansKR, Apple SD Gothic Neo;",
               }}
             >
               {t("team.analysis.winRate")}
             </div>
             <div
               style={{
-                marginTop: "10px"
+                marginTop: "10px",
               }}
             >
               <strong
@@ -326,7 +321,7 @@ function TeamIndex() {
                   fontFamily: "Poppins",
                   color: "#ffffff",
                   fontWeight: "bold",
-                  marginRight: " 5px"
+                  marginRight: " 5px",
                 }}
               >
                 {teamStats?.winRate.toFixed(1)}
@@ -335,7 +330,7 @@ function TeamIndex() {
                 style={{
                   fontSize: 15,
                   fontFamily: "NotoSansKR, Apple SD Gothic Neo;",
-                  color: "#ffffff"
+                  color: "#ffffff",
                 }}
               >
                 %
@@ -487,7 +482,7 @@ function TeamIndex() {
       <TeamSBRTable>
         <TableTitle>
           <span>{t("team.analysis.sbrLabel")}</span>
-          <img src={`Images/ico-question-mark.svg`} alt="posIcon" />
+          {/* <img src={`Images/ico-question-mark.svg`} alt="posIcon" /> */}
         </TableTitle>
         <SBRTable>
           <thead>
@@ -557,10 +552,10 @@ function TeamIndex() {
               data={firstGankTime}
               options={{
                 tooltips: {
-                  intersect: false
+                  intersect: false,
                 },
                 legend: {
-                  display: false
+                  display: false,
                 },
                 maintainAspectRatio: false,
                 scales: {
@@ -568,10 +563,10 @@ function TeamIndex() {
                     {
                       ticks: {
                         fontColor: "#84818e",
-                        fontSize: 15
+                        fontSize: 15,
                       },
-                      gridLines: { color: "rgb(47, 45, 56)" }
-                    }
+                      gridLines: { color: "rgb(47, 45, 56)" },
+                    },
                   ],
                   yAxes: [
                     {
@@ -580,14 +575,14 @@ function TeamIndex() {
                         fontColor: "#84818e",
                         fontSize: 15,
                         min: gankCount?.firstGankMin,
-                        max: gankCount?.firstGankMax
+                        max: gankCount?.firstGankMax,
                       },
                       gridLines: {
-                        color: "rgb(58, 55, 69)"
-                      }
-                    }
-                  ]
-                }
+                        color: "rgb(58, 55, 69)",
+                      },
+                    },
+                  ],
+                },
               }}
             />
           </GameTimeCharts>
@@ -609,10 +604,10 @@ function TeamIndex() {
               data={averageSupport}
               options={{
                 tooltips: {
-                  intersect: false
+                  intersect: false,
                 },
                 legend: {
-                  display: false
+                  display: false,
                 },
                 maintainAspectRatio: false,
                 scales: {
@@ -620,10 +615,10 @@ function TeamIndex() {
                     {
                       ticks: {
                         fontColor: "#84818e",
-                        fontSize: 15
+                        fontSize: 15,
                       },
-                      gridLines: { color: "rgb(47, 45, 56)" }
-                    }
+                      gridLines: { color: "rgb(47, 45, 56)" },
+                    },
                   ],
                   yAxes: [
                     {
@@ -632,14 +627,14 @@ function TeamIndex() {
                         fontColor: "#84818e",
                         fontSize: 15,
                         min: supportTimeData?.supportingTimeMin,
-                        max: supportTimeData?.supportingTimeMax
+                        max: supportTimeData?.supportingTimeMax,
                       },
                       gridLines: {
-                        color: "rgb(58, 55, 69)"
-                      }
-                    }
-                  ]
-                }
+                        color: "rgb(58, 55, 69)",
+                      },
+                    },
+                  ],
+                },
               }}
             />
           </GameTimeCharts>

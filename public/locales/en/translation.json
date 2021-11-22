@@ -299,11 +299,11 @@
     "allChampLabel": "All Champion",
     "allChampLabel2": "All Champs Played by",
     "teamCompareLabel": "Choose a team",
-    "teamCompareLabel1": "Choose the team of your interest",
-    "teamCompareLabel2": "Choose the opponent team",
+    "teamCompareLabel1": "Team of your interest",
+    "teamCompareLabel2": "Opponent team",
     "playerCompareLabel": "Choose a player",
-    "playerCompareLabel1": "Choose the player of your interest",
-    "playerCompareLabel2": "Choose the opponent player",
+    "playerCompareLabel1": "Player of your interest",
+    "playerCompareLabel2": "Opponent player",
     "confirm": "Confirm",
     "close": "Close",
     "selectOption": "Please choose the data filter.",
@@ -321,7 +321,9 @@
     "setFilter": "Filter",
     "setLeague": "League",
     "setSeason": "Season",
-    "setPatchVersion": "Patch Version"
+    "setPatchVersion": "Patch Version",
+    "team": "Team",
+    "player": "Player"
   },
   "video": {
     "tab": {

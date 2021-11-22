@@ -301,8 +301,8 @@
     "teamCompareLabel1": "나의 팀 선택",
     "teamCompareLabel2": "비교하고 싶은 팀 선택",
     "playerCompareLabel": "선수를 선택해주세요.",
-    "playerCompareLabel1": "나의 선수를 선택해주세요.",
-    "playerCompareLabel2": "비교하고 싶은 선수를 선택해주세요.",
+    "playerCompareLabel1": "나의 선수 선택",
+    "playerCompareLabel2": "비교하고 싶은 선수 선택",
     "confirm": "선택완료",
     "close": "창닫기",
     "selectOption": "보고싶은 데이터의 옵션을 선택해주세요.",
@@ -320,7 +320,9 @@
     "setFilter": "필터 설정",
     "setLeague": "리그",
     "setSeason": "시즌",
-    "setPatchVersion": "패치버전"
+    "setPatchVersion": "패치버전",
+    "team": "팀",
+    "player": "선수"
   },
   "video": {
     "tab": {

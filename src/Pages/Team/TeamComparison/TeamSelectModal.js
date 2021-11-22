@@ -79,7 +79,7 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
             );
           })}
         </MapTeamContent>
-        <ButtonBox>
+        <ButtonBox isOppteamSelected={filters.oppteam !== ""}>
           <button
             onClick={() => {
               setOpenModal(false);
@@ -165,13 +165,12 @@ const ContentTitle = styled.div`
   font-style: normal;
   line-height: 1.63;
   padding: 0px 0 0px 14px;
-  margin: 25px 41px 10px;
+  margin: 25px;
   color: rgb(255, 255, 255);
 `;
 
 const MapTeamContent = styled.div`
   height: 190px;
-  //border-bottom: 1px solid rgb(72, 70, 85);
   overflow-y: scroll;
   &::-webkit-scrollbar {
     width: 8px;
@@ -192,7 +191,9 @@ const ButtonBox = styled.div`
     width: 100%;
     height: 54px;
     border-radius: 20px;
-    background-color: #5942ba;
+    /* background-color: #5942ba; */
+    background-color: ${(props) =>
+      props.isOppteamSelected ? "#5942ba" : "#484655"};
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 13px;
     font-weight: 500;
