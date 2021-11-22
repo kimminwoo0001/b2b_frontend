@@ -79,7 +79,7 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
             );
           })}
         </MapTeamContent>
-        <ButtonBox>
+        <ButtonBox isOppteamSelected={filters.oppteam !== ""}>
           <button
             onClick={() => {
               setOpenModal(false);
@@ -191,7 +191,9 @@ const ButtonBox = styled.div`
     width: 100%;
     height: 54px;
     border-radius: 20px;
-    background-color: #5942ba;
+    /* background-color: #5942ba; */
+    background-color: ${(props) =>
+      props.isOppteamSelected ? "#5942ba" : "#484655"};
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 13px;
     font-weight: 500;
