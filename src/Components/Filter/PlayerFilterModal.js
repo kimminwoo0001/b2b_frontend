@@ -766,7 +766,7 @@ const MapTeams = styled.div`
   .TeamName {
     width: 100%;
     font-family: Poppins;
-    font-size: 12px;
+    font-size: 15px;
     text-align: left;
     color: #84818e;
     ${(props) =>

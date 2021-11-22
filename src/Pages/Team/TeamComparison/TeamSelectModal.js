@@ -191,7 +191,6 @@ const ButtonBox = styled.div`
     width: 100%;
     height: 54px;
     border-radius: 20px;
-    /* background-color: #5942ba; */
     background-color: ${(props) =>
       props.isOppteamSelected ? "#5942ba" : "#484655"};
     font-family: NotoSansKR, Apple SD Gothic Neo;
