@@ -474,7 +474,7 @@ const BackScreen = styled.div`
   position: fixed;
   z-index: 3;
   background-color: rgba(0, 0, 0, 1);
-  opacity: 1;
+  opacity: 0.7;
 `;
 
 const PlayerModalWrapper = styled.div`
