@@ -142,7 +142,11 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
             </MapTeamContent>
           </ContentBox>
         </ComponentBox>
-        <ButtonBox>
+        <ButtonBox
+          isAllFilterSelected={
+            filters.oppteam !== "" && filters.oppplayer !== ""
+          }
+        >
           <button onClick={() => HandleSelect()}>{t("filters.confirm")}</button>
         </ButtonBox>
       </Wrapper>
@@ -265,7 +269,8 @@ const ButtonBox = styled.div`
     height: 60px;
     margin: 0 5px;
     border-radius: 10px;
-    background-color: #5942ba;
+    background-color: ${(props) =>
+      props.isAllFilterSelected ? "#5942ba" : "#484655"};
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 13px;
     font-weight: 500;
