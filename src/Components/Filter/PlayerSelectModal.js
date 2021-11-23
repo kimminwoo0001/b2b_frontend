@@ -185,23 +185,28 @@ const Wrapper = styled.div`
 `;
 
 const ModalNav = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
-  height: 48px;
+  height: 50px;
+  justify-content: center;
   padding: 0 11px;
-  border-bottom: 1px solid #433f4e;
+  border-bottom: solid 1px #433f4e;
   label {
-    text-align: center;
-    width: 100%;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 17px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
     font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
     color: #fff;
   }
   img {
-    width: 24px;
-    height: 24px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
   }
 `;
@@ -232,7 +237,7 @@ const PickTeamFirst = styled.div`
   display: flex;
   /* justify-content: center; */
   align-items: center;
-  padding: 0 10px;
+  padding: 0 0 0 25px;
   margin-top: 25px;
   .LabelContainer {
     font-family: "Spoqa Han Sans";
@@ -248,7 +253,8 @@ const MapTeamContent = styled.div`
   max-height: 190px;
   //border-bottom: 1px solid rgb(72, 70, 85);
   overflow-y: scroll;
-  padding: 10px;
+  padding: 0 16px;
+  padding-top: 10px;
   &::-webkit-scrollbar {
     width: 8px;
     background-color: #434050;
@@ -264,6 +270,7 @@ const ButtonBox = styled.div`
   justify-content: center;
   align-items: center;
   height: 90px;
+  margin: 5px 16px 0;
   button {
     outline: none;
     text-decoration: none;
@@ -271,11 +278,15 @@ const ButtonBox = styled.div`
     height: 60px;
     margin: 0 5px;
     border-radius: 20px;
-    background-color: ${(props) =>
-    props.isAllFilterSelected ? "#5942ba" : "#484655"};
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
-    font-weight: 500;
+    background-color: ${(props) => props.isAllFilterSelected ? "#5942ba" : "#484655"};
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
+    text-align: center;
     color: rgb(255, 255, 255);
   }
 `;
@@ -301,7 +312,12 @@ const MapTeam = styled.div`
     margin: 0 11px 0 0px;
   }
   div {
-    font-family: Poppins;
-    font-size: 18px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 16px;
+    font-weight: 300;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
   }
 `;
