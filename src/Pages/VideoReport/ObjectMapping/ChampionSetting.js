@@ -905,9 +905,14 @@ const CompareButton = styled.button`
   background-color: rgb(67, 63, 78);
   border-radius: 10px;
   > span {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
+    margin: 5px 3px 2px 0;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: center;
     color: rgb(175, 173, 190);
     margin-right: 10px;
@@ -945,7 +950,14 @@ const DropDownToggle = styled.div`
     align-items: center;
     height: 34px;
     background-color: rgb(35, 33, 42);
-    font-size: 12px;
+    margin: 5px 3px 2px 0;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     color: rgb(175, 173, 190);
     width: 74px;
     outline: none;
@@ -958,7 +970,14 @@ const DropDownToggle = styled.div`
     align-items: center;
     height: 34px;
     background-color: rgb(35, 33, 42);
-    font-size: 12px;
+    margin: 5px 3px 2px 0;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     color: rgb(175, 173, 190);
     width: 124px;
     outline: none;
@@ -971,9 +990,14 @@ const DropDownToggle = styled.div`
   }
 
   .SelectedLabel {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
+    margin: 5px 3px 2px 0;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
     color: rgb(255, 255, 255);
     width: 74px;

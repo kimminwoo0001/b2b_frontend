@@ -482,8 +482,13 @@ const SliderContainer = styled.div`
   span [class^="PrivateValueLabel-label"] {
     margin: 0px;
     padding: 0;
-    font-family: Poppins;
+    font-family: SpoqaHanSansNeo;
     font-size: 12px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.33;
+    letter-spacing: normal;
     font-weight: bold;
     transform: rotate(0deg) !important;
   }
@@ -635,37 +640,53 @@ const DropDownToggle = styled.div`
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
   }
   .SelectedLabel {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
     color: rgb(255, 255, 255);
     width: 240px;
     margin-left: 20px;
   }
   .SelectedLabel2 {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
     color: rgb(255, 255, 255);
     width: 488px;
     margin-left: 20px;
   }
   .Label {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
-    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `#84818e`)};
+    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`)};
     width: 240px;
   }
   .Label2 {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
-    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `#84818e`)};
+    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`)};
     width: 488px;
     /* ::first-letter {
       color: #f04545;

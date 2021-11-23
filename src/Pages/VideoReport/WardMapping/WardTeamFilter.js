@@ -82,7 +82,7 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
     <WardTeamFilterContainer>
       <Steps>
         <div className="title">
-          <span className="step">STEP 1.</span>
+          <span className="step">STEP 01</span>
           <span className="subtitle">{t("video.vision.label3")}</span>
         </div>
         <DropDownContainer className="container">
@@ -140,7 +140,7 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
       </Steps>
       <Steps>
         <div className="title2">
-          <span className="step">STEP 2.</span>
+          <span className="step">STEP 02 </span>
           <span className="subtitle">{t("video.vision.label2")}</span>
         </div>
         <SliderContainer className="slider-container">

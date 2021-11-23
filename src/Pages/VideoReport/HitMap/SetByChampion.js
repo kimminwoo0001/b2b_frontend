@@ -848,8 +848,13 @@ const SliderContainer = styled.div`
   span [class^="PrivateValueLabel-label"] {
     margin: 0px;
     padding: 0;
-    font-family: Poppins;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     font-weight: bold;
     transform: rotate(0deg) !important;
   }
@@ -955,10 +960,15 @@ const SetByChampionContainer = styled.div`
 `;
 
 const LabelVs = styled.div`
-  font-family: Poppins;
-  font-size: 12px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 15px;
   font-weight: bold;
-  color: rgb(107, 105, 121);
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #84818e;
   margin: 0 0 0 0;
   > .top {
     position: absolute;
@@ -1004,8 +1014,14 @@ const DropDownToggle = styled.div`
     width: 153px;
     height: 34px;
     background-color: #23212a;
-    font-size: 12px;
-    color: rgb(175, 173, 190);
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
     outline: none;
     border: none;
     border-radius: 10px;
@@ -1020,8 +1036,14 @@ const DropDownToggle = styled.div`
     align-items: center;
     height: 34px;
     background-color: #23212a;
-    font-size: 12px;
-    color: rgb(175, 173, 190);
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
     width: 153px;
     outline: none;
     border: none;
@@ -1030,9 +1052,13 @@ const DropDownToggle = styled.div`
   }
 
   .SelectedLabel {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
     color: rgb(255, 255, 255);
     width: 153px;
@@ -1040,29 +1066,41 @@ const DropDownToggle = styled.div`
   }
 
   .SelectedLabel2 {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
     color: rgb(255, 255, 255);
     width: 124px;
     margin-left: 20px;
   }
   .Label {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
-    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `#84818e`)};
+    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`)};
     width: 140px;
   }
 
   .Label3 {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
-    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `#84818e`)};
+    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`)};
     width: 124px;
     /* ::first-letter {
       color: #f04545;

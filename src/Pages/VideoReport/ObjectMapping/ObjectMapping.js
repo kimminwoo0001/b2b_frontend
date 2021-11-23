@@ -210,7 +210,10 @@ function ObjectMapping() {
         <StepFilterWrapper>
           <Steps>
             {/* 팀/선수 기준 설정   ChampionSetting을 불러와서 사용중*/}
-            <StepTitle onClick={() => setCustomOpen(!customOpen)}>
+            <StepTitle
+              onClick={() => setCustomOpen(!customOpen)}
+              changeColor={customOpen}
+            >
               <img
                 src={
                   customOpen
@@ -220,7 +223,7 @@ function ObjectMapping() {
                 alt=""
               />
               <div className="title">
-                <span className="step">STEP 1.</span>
+                <span className="step">STEP 01</span>
                 <span className="subtitle">{t("video.object.step1")}</span>
               </div>
             </StepTitle>
@@ -237,19 +240,18 @@ function ObjectMapping() {
           </Steps>
           <Steps>
             {/* 경기 선택 부분 SelectGame.js 를 불러와서 사용함 */}
-            <StepTitle onClick={() => {
-              setGameOpen(!gameOpen)
-            }}>
+            <StepTitle
+              onClick={() => {
+                setGameOpen(!gameOpen)
+              }}
+              changeColor={gameOpen}
+            >
               <img
-                src={
-                  gameOpen
-                    ? "Images/ico-arrow-up.png"
-                    : "Images/ico-arrow-down.png"
-                }
+                src={"Images/ico-arrow-down.svg"}
                 alt=""
               />
               <div className="title">
-                <span className="step">STEP 2.</span>
+                <span className="step">STEP 02</span>
                 <span className="subtitle">{t("video.object.step2")}</span>
               </div>
 
@@ -268,7 +270,10 @@ function ObjectMapping() {
           </Steps>
           <Steps>
             {/* 오브젝트 설정 , SelectObject를 불러와서 사용함 */}
-            <StepTitle onClick={() => setObjectOpen(!objectOpen)}>
+            <StepTitle
+              onClick={() => setObjectOpen(!objectOpen)}
+              changeColor={objectOpen}
+            >
               <img
                 src={
                   objectOpen
@@ -278,7 +283,7 @@ function ObjectMapping() {
                 alt=""
               />
               <div className="title">
-                <span className="step">STEP 3.</span>
+                <span className="step">STEP 03</span>
                 <span className="subtitle">{t("video.object.step3")}</span>
               </div>
             </StepTitle>
@@ -288,7 +293,10 @@ function ObjectMapping() {
           </Steps>
           <Steps>
             {/* 포지션 설정 SelectPosition.js 를 불러와서 사용 중 */}
-            <StepTitle onClick={() => setPositionOpen(!positionOpen)}>
+            <StepTitle
+              onClick={() => setPositionOpen(!positionOpen)}
+              changeColor={positionOpen}
+            >
               <img
                 src={
                   positionOpen
@@ -298,7 +306,7 @@ function ObjectMapping() {
                 alt=""
               />
               <div className="title">
-                <span className="step">STEP 4.</span>
+                <span className="step">STEP 04</span>
                 <span className="subtitle">{t("video.object.step4")}</span>
               </div>
             </StepTitle>
@@ -570,14 +578,17 @@ const StepTitle = styled.nav`
     margin-bottom: 12px;
     > .step {
       font-weight: normal;
-      color: #84818e;
+      color:  ${(props) => props.changeColor ? `rgb(132, 129, 142)` : `rgba(132, 129, 142,0.3)`};
       margin-right: 5px;
     }
     > .subtitle {
-      color: rgb(255, 255, 255);
+      color:  ${(props) => props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
     }
   }
   img {
+    content: url("Images/ico-arrow-down.svg");
+    transform: ${(props) => props.changeColor ? `rotate(0deg);` : `rotate(180deg);`};
+    opacity: ${(props) => props.changeColor ? `1` : `0.3`};
     margin-right: 10px;
     margin-bottom: 10px;
     object-fit: contain;
@@ -605,10 +616,13 @@ const ConfirmButton = styled.button`
   height: 60px;
   border-radius: 20px;
   background-color: #484655;
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 13px;
-  font-weight: bold;
-  letter-spacing: -0.65px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
   text-align: center;
   color: rgb(255, 255, 255);
   ${(props) =>
@@ -622,6 +636,7 @@ const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 40px;
   padding: 20px 0;
   border-top : 1px solid #433f4e;
 `;
@@ -674,9 +689,14 @@ const TimeStamp = styled.div`
   align-items: center;
   width: 17%;
   height: 17px;
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
-  color: white;
+  font-family: SpoqaHanSansNeo;
+  font-size: 15px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.87;
+  letter-spacing: normal;
+  color: #6b6979;
   p {
     margin: 0 4px 0 4px;
   }
@@ -686,7 +706,7 @@ const TimeStamp = styled.div`
     text-align: right;
   }
   > .max {
-    color: rgb(107, 105, 121);
+    color: #6b6979;
   }
 `;
 

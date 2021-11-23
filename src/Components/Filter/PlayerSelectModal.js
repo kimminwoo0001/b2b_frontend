@@ -78,7 +78,7 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
     <>
       <BackScreen
         openModal={openModal}
-        // onClick={() => setOpenModal(false)}
+      // onClick={() => setOpenModal(false)}
       ></BackScreen>
       <Wrapper openModal={openModal}>
         <ModalNav>
@@ -172,7 +172,7 @@ const BackScreen = styled.div`
 const Wrapper = styled.div`
   display: ${(props) => (props.openModal ? "block" : "none")};
   width: 500px;
-  height: 516px;
+  // height: 516px;
   border: solid 1px #3a3745;
   background-color: #23212a;
   top: 50%;
@@ -212,16 +212,18 @@ const ContentBox = styled.div`
   display: flex;
   flex-direction: column;
   border-right: 1px solid #484655;
+  margin-top: 30px;
 `;
 
 const ContentTitle = styled.div`
   display: flex;
   align-items: center;
-  height: 34px;
+  height: 18px;
   font-family: NotoSansKR, Apple SD Gothic Neo;
   font-size: 18px;
   /* padding: 0px 0 0px 14px; */
   padding: 10px 14px;
+  margin: 0px 39px 0px 23px;
   color: rgb(255, 255, 255);
   opacity: ${(props) => (props.isOppTeamSelected ? "1" : "0.3")};
 `;
@@ -243,8 +245,8 @@ const PickTeamFirst = styled.div`
 `;
 
 const MapTeamContent = styled.div`
-  height: 160px;
-  border-bottom: 1px solid rgb(72, 70, 85);
+  max-height: 190px;
+  //border-bottom: 1px solid rgb(72, 70, 85);
   overflow-y: scroll;
   padding: 10px;
   &::-webkit-scrollbar {
@@ -261,16 +263,16 @@ const ButtonBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 83px;
+  height: 90px;
   button {
     outline: none;
     text-decoration: none;
     width: 100%;
     height: 60px;
     margin: 0 5px;
-    border-radius: 10px;
+    border-radius: 20px;
     background-color: ${(props) =>
-      props.isAllFilterSelected ? "#5942ba" : "#484655"};
+    props.isAllFilterSelected ? "#5942ba" : "#484655"};
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 13px;
     font-weight: 500;
@@ -282,20 +284,21 @@ const MapTeam = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  height: 45px;
+  height: 60px;
   cursor: pointer;
   color: rgb(132, 129, 142);
+  padding: 15px 0 15px 46px;
   ${(props) =>
     props.currentTeam &&
     css`
       color: rgb(255, 255, 255);
       background-color: #16151c;
-      border-radius: 10px;
+      border-radius: 20px;
     `}
   img {
     width: 30px;
     height: 30px;
-    margin: 0 10px 0 15px;
+    margin: 0 11px 0 0px;
   }
   div {
     font-family: Poppins;

@@ -240,9 +240,8 @@ function PlayerBoard() {
             <div className="AttendValue">
               <span className="Wins">{`${matchInfo?.match}${t(
                 "solo.playerboard.games"
-              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${
-                matchInfo?.loss
-              }${t("solo.playerboard.lose")}`}</span>
+              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${matchInfo?.loss
+                }${t("solo.playerboard.lose")}`}</span>
               <span className="WinRate">{`${matchInfo?.winrate.toFixed(
                 1
               )}%`}</span>
@@ -827,7 +826,7 @@ function PlayerBoard() {
                       {
                         ticks: {
                           fontColor: "#84818e",
-                          fontSize: 14,
+                          fontSize: 15,
                         },
                         gridLines: { color: "rgb(47, 45, 56)" },
                         offset: true,
@@ -838,7 +837,7 @@ function PlayerBoard() {
                         ticks: {
                           stepSize: graphDomain?.matchGraph["row"],
                           fontColor: "#84818e",
-                          fontSize: 14,
+                          fontSize: 15,
                           min: graphDomain?.matchGraph["min"],
                           max: graphDomain?.matchGraph["max"],
                         },
@@ -929,7 +928,7 @@ function PlayerBoard() {
                       {
                         ticks: {
                           fontColor: "#84818e",
-                          fontSize: 14,
+                          fontSize: 15,
                         },
                         gridLines: { color: "rgb(47, 45, 56)" },
                         offset: true,
@@ -940,7 +939,7 @@ function PlayerBoard() {
                         ticks: {
                           stepSize: graphDomain?.seasonGraph["row"],
                           fontColor: "#84818e",
-                          fontSize: 14,
+                          fontSize: 15,
                           min: graphDomain?.seasonGraph["min"],
                           max: graphDomain?.seasonGraph["max"],
                         },
@@ -1251,6 +1250,7 @@ const InfoNavBar = styled.div`
   /* padding: 11px 23px 11px 23px; */
   padding: 20px 23px 20px 23px;
   border-bottom: 1px solid rgb(67, 63, 78);
+  height: 65px;
 `;
 
 const AbilityContents = styled.div`
@@ -1400,8 +1400,8 @@ const CompetitionRecord = styled.div`
 `;
 const TableNav = styled.div`
   width: 100%;
-  height: 42.5px;
-  padding: 15px 0 0 13px;
+  height: 50px;
+  padding: 15px 0 0 15px;
   border-bottom: 1px solid rgb(35, 33, 42);
 
   font-family: "Spoqa Han Sans";
@@ -1411,21 +1411,6 @@ const TableNav = styled.div`
   > .StatTitle {
     font-weight: bold;
   }
-`;
-
-const ExportButton = styled.div`
-  display: inline-block;
-  font-weight: normal;
-  float: right;
-  color: #fff;
-  cursor: pointer;
-  height: 30px;
-  line-height: 30px;
-  margin-top: -10px;
-  margin-right: 5px;
-  padding: 0 10px;
-  background-color: #5942ba;
-  border-radius: 3px;
 `;
 
 const TotalRecord = styled.div`
@@ -1704,11 +1689,15 @@ const DropDownContainer = styled.div`
     width: 180px;
     height: 34px;
     background-color: #23212a;
-    font-family: "Spoqa Han Sans";
-    font-size: 12px;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
-    color: rgb(175, 173, 190);
+    color: #afadbe;
     border-radius: 10px;
   }
 

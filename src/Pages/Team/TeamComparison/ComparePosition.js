@@ -359,7 +359,7 @@ function ComparePosition() {
                   {
                     ticks: {
                       fontColor: "#84818e",
-                      fontSize: 14
+                      fontSize: 15
                     },
                     gridLines: { color: "rgb(47, 45, 56)" },
                     offset: true
@@ -370,7 +370,7 @@ function ComparePosition() {
                     ticks: {
                       stepSize: 3,
                       fontColor: "#84818e",
-                      fontSize: 14,
+                      fontSize: 15,
                       min: 0,
                       max: 15
                     },
@@ -423,7 +423,7 @@ function ComparePosition() {
                   {
                     ticks: {
                       fontColor: "#84818e",
-                      fontSize: 14
+                      fontSize: 15
                     },
                     gridLines: { color: "rgb(47, 45, 56)" },
                     offset: true
@@ -434,7 +434,7 @@ function ComparePosition() {
                     ticks: {
                       stepSize: 3,
                       fontColor: "#84818e",
-                      fontSize: 14,
+                      fontSize: 15,
                       min: 0,
                       max: 15
                     },
@@ -487,7 +487,7 @@ function ComparePosition() {
                   {
                     ticks: {
                       fontColor: "#84818e",
-                      fontSize: 14
+                      fontSize: 15
                     },
                     gridLines: { color: "rgb(47, 45, 56)" },
                     offset: true
@@ -498,7 +498,7 @@ function ComparePosition() {
                     ticks: {
                       stepSize: 3,
                       fontColor: "#84818e",
-                      fontSize: 14,
+                      fontSize: 15,
                       min: 0,
                       max: 15
                     },
@@ -551,7 +551,7 @@ function ComparePosition() {
                   {
                     ticks: {
                       fontColor: "#84818e",
-                      fontSize: 14
+                      fontSize: 15
                     },
                     gridLines: { color: "rgb(47, 45, 56)" },
                     offset: true
@@ -562,7 +562,7 @@ function ComparePosition() {
                     ticks: {
                       stepSize: 3,
                       fontColor: "#84818e",
-                      fontSize: 14,
+                      fontSize: 15,
                       min: 0,
                       max: 15
                     },
@@ -616,7 +616,7 @@ function ComparePosition() {
                   {
                     ticks: {
                       fontColor: "#84818e",
-                      fontSize: 14
+                      fontSize: 15
                     },
                     gridLines: { color: "rgb(47, 45, 56)" },
                     offset: true
@@ -627,7 +627,7 @@ function ComparePosition() {
                     ticks: {
                       stepSize: 3,
                       fontColor: "#84818e",
-                      fontSize: 14,
+                      fontSize: 15,
                       min: 0,
                       max: 15
                     },
@@ -766,9 +766,14 @@ const Legends = styled.ul`
     margin-right: 7px;
   }
   > .Label {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: normal;
+    text-align: left;
     text-align: center;
     color: #ffffff;
   }
