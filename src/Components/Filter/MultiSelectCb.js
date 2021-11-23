@@ -64,22 +64,18 @@ const Selecter = styled.div`
     appearance: none;
 
     display: inline-block;
-    width: 12px;
-    height: 12px;
+    width: 24px;
+    height: 24px;
 
     background-clip: content-box;
-    border: 1.5px solid rgb(72, 70, 85);
-    border-radius: 2px;
-    background-color: transparent;
-
+    background: url("/Images/btn_check_off.svg") no-repeat;
     margin-right: 8px;
 
     &:checked {
-      background-color: #f04545;
-      border: #f04545;
+      background-color: #5942ba;
+      border: #5942ba;
       border-radius: 2px;
-      background: url("/Images/check.svg") #f04545 no-repeat 2.5px 4px/5.5px
-        4.5px;
+      background: url("/Images/btn_check_on.svg") no-repeat;
       float: right;
     }
 

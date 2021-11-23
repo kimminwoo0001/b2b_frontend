@@ -18,7 +18,7 @@ import {
   PatchFull,
   SetSeason,
   SetYear,
-  SetPatch
+  SetPatch,
 } from "../../redux/modules/filtervalue";
 import {
   setLeagueFilter,
@@ -26,7 +26,7 @@ import {
   setPlayerFilter,
   setSeasonFilter,
   setTeamFilter,
-  setYearFilter
+  setYearFilter,
 } from "../../redux/modules/selectorvalue";
 
 import styled, { css } from "styled-components";
@@ -89,6 +89,12 @@ const Filter = memo(() => {
       fetchLeagueFilter();
     }
   }, []);
+
+  useEffect(() => {
+    if (isComparePage === false && selector.leagueFilter.length === 0) {
+      fetchLeagueFilter();
+    }
+  }, [selector.leagueFilter])
 
   useEffect(() => {
     if (JSON.stringify(league) !== JSON.stringify(filters.league)) {
@@ -178,7 +184,7 @@ const Filter = memo(() => {
       leagueList = Object.keys(staticvalue.filterObjects).map(
         (key) =>
           Number(Object.keys(staticvalue.filterObjects[key])) ===
-            Number(filters.year) && key
+          Number(filters.year) && key
       );
     } else {
       leagueList = Object.keys(staticvalue.filterObjects);
@@ -300,27 +306,27 @@ const Filter = memo(() => {
         if (position === "1") {
           players[i] = {
             position: "top",
-            name: name
+            name: name,
           };
         } else if (position === "2") {
           players[i] = {
             position: "jng",
-            name: name
+            name: name,
           };
         } else if (position === "3") {
           players[i] = {
             position: "mid",
-            name: name
+            name: name,
           };
         } else if (position === "4") {
           players[i] = {
             position: "bot",
-            name: name
+            name: name,
           };
         } else if (position === "5") {
           players[i] = {
             position: "sup",
-            name: name
+            name: name,
           };
         }
       }
@@ -338,7 +344,7 @@ const Filter = memo(() => {
       year: filters.year,
       season: filters.season,
       token: user.token,
-      id: user.id
+      id: user.id,
     };
 
     axiosRequest(url, params, function (e) {
@@ -535,24 +541,3 @@ const FilterGroup = styled.div`
   margin: 30px 1px 0 20px;
 `;
 
-const Filters = styled.div`
-  width: 250px;
-  margin: 0 0 10px;
-  padding: 20px;
-  border-radius: 35px;
-  background-color: #2f2d38;
-`;
-
-const PatchLabels = styled.div`
-  display: flex;
-  align-items: center;
-  color: #84818e;
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
-  letter-spacing: -0.55px;
-  text-align: left;
-  width: 100%;
-  > img {
-    margin: 0 8px 0 10px;
-  }
-`;

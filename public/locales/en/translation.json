@@ -4,16 +4,15 @@
     "part1": "Home",
     "part2": "League Report",
     "part3": "Team Report",
-    "part4": "Player Report",
-    "part5": "Visual Report",
-    "part6": "Compare Teams",
-    "part7": "Compare Players",
-    "part8": "Item Simulator",
-    "part9": "Team WR Calculator",
-    "part10": "Meta Analysis",
-    "part11": "Match Analysis",
+    "part4": "Meta Analysis",
+    "part5": "Player Report",
+    "part6": "Visual Report",
+    "part7": "Match Analysis",
+    "part8": "Compare Teams",
+    "part9": "Compare Players",
+    "part10": "Item Simulator",
+    "part11": "Team WR Calculator",
     "part12": "Game Report"
-
   },
   "home": {
     "rank": "Rank",
@@ -188,7 +187,7 @@
       "total": "G",
       "win": "W",
       "lose": "L",
-      "times" : "times"
+      "times": "times"
     }
   },
   "solo": {
@@ -235,6 +234,7 @@
       "gamePlayed": "Games Played",
       "kda": "KDA",
       "seasonStat": "Season-by-season Stats",
+      "season": "Season",
       "games": "G",
       "win": "W",
       "lose": "L",

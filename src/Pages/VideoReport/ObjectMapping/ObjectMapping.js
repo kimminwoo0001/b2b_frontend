@@ -108,12 +108,12 @@ function ObjectMapping() {
         setMaxTime(dto.position.length - 1);
         setCurrentPos(dto.position);
         setchampInfo(dto.info);
+        setPlay(true);
       })
     } catch (e) {
       console.log(e);
     } finally {
       setLoading(false);
-      setPlay(true);
     }
   };
 
@@ -298,6 +298,7 @@ function ObjectMapping() {
           // 실제로 오브젝트 별 동선 Mapping이 작동되는 부분.
           <ObjectMap>
             {champInfo?.map((info, idx) => {
+              console.log("currentPos[range]?.player:", currentPos[range]?.player);
               if (range === 0) {
                 if (info.side === "red") {
                   var x = 630;
@@ -389,10 +390,10 @@ function ObjectMapping() {
             id="rangeSlider"
             type="range"
             onChange={(e) => {
-              setRange(e.target.value);
+              setRange(Number(e.target.value));
             }}
             onKeyPress={(e) => {
-              setRange(e.target.value);
+              setRange(Number(e.target.value));
             }}
             step="1"
           />
@@ -540,7 +541,7 @@ const StepTitle = styled.nav`
 const StepContents = styled.div`
   opacity: 0;
   max-height: 0px;
-  overflow-y: hidden;
+  overflow-y: visible;
   width: 100%;
   transition: all 0.2s ease;
   ${(props) =>

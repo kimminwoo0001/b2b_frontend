@@ -38,7 +38,7 @@ function PlayerCompare() {
     axiosRequest(url, params, function (e) {
       setData(e.data[filters.player]);
       setOppData(e.data[filters.oppplayer]);
-    })
+    });
     // dispatch(Loading(false));
   };
 

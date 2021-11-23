@@ -306,10 +306,12 @@ function LeagueStatistics() {
             </div>
             <div className="Legend">
               <p className="X">X {t("league.leagueStat.patch")}</p>
-              <p className="Y">Y {t("league.leagueStat.yTeamFight")}</p>
+              <p className="Y">Y {t("league.leagueStat.teamFight")}</p>
             </div>
           </NavBar>
           <GameTimeCharts>
+            {console.log("firstFight:", firstFight)}
+            {console.log("totalMatchData:", totalMatchData)}
             <Line
               data={firstFight}
               options={{
