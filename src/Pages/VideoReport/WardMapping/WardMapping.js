@@ -11,7 +11,7 @@ import { API2 } from "../../config";
 import qs from "qs";
 import WardTooltip from "./WardTooltip";
 import axiosRequest from "../../../lib/axiosRequest";
-
+import { duration } from "@material-ui/core";
 
 const sectorName = {
   0: 1,
@@ -99,7 +99,7 @@ function WardMapping() {
       axiosRequest(url, params, function (e) {
         const dto = e.data.warding;
         setWard(e.data.warding);
-
+        console.log(e.data);
         // sector 구분해서 섹터값 더하기
         if (dto.length > 0) {
           var total = 0;
@@ -144,7 +144,7 @@ function WardMapping() {
           setTotalWard(0);
           setSector([]);
         }
-      })
+      });
     } catch (e) {
       console.log(e);
     } finally {
@@ -187,8 +187,6 @@ function WardMapping() {
 
   return (
     <WardMappingContainer>
-
-
       <LeftSection>
         <WardMappingTabs>
           <TabItem
@@ -334,8 +332,9 @@ function WardMapping() {
       <RightSection>
         <WardMap
           style={{
-            backgroundImage: `url(${mapSector ? mapSector : "Images/ward_map.png"
-              })`,
+            backgroundImage: `url(${
+              mapSector ? mapSector : "Images/ward_map.png"
+            })`,
           }}
         >
           {ward?.map((ward, idx) => {
@@ -348,7 +347,7 @@ function WardMapping() {
                   <Tippy // optionsx
                     duration={0}
                     delay={[100, 0]}
-                    // trigger="click"
+                    trigger="click"
                     content={
                       <WardTooltip
                         wardType={ward.firstward}
@@ -358,6 +357,9 @@ function WardMapping() {
                         team={ward.team}
                         side={ward.side}
                         date={ward.date}
+                        position={ward.position}
+                        oppteam={ward.oppteam}
+                        uniqueId={ward.uniqueid}
                       />
                     }
                     placement="top"
@@ -382,7 +384,7 @@ function WardMapping() {
                   <Tippy // options
                     duration={0}
                     delay={[100, 0]}
-                    // trigger="click"
+                    trigger="click"
                     content={
                       <WardTooltip
                         wardType={ward.secondward}
@@ -392,6 +394,9 @@ function WardMapping() {
                         team={ward.team}
                         side={ward.side}
                         date={ward.date}
+                        position={ward.position}
+                        oppteam={ward.oppteam}
+                        uniqueId={ward.uniqueid}
                       />
                     }
                     placement="top"
@@ -465,7 +470,6 @@ const LabelArea = styled.div`
     padding: 3px 5px;
     color: #fff;
     background-color: #484655;
-
   }
 `;
 
@@ -486,7 +490,7 @@ const NoContentTable = styled.div`
     letter-spacing: -0.6px;
     text-align: center;
     color: rgb(107, 105, 121);
-  }-
+  }
 `;
 
 const WardInfoWrapper = styled.div``;
@@ -517,7 +521,7 @@ const FilterContainer = styled.div`
   border: solid 1px rgb(67, 63, 78);
   background-color: #2f2d38;
   border-radius: 20px;
-  padding-top : 30px;
+  padding-top: 30px;
 
   .ward-btn-area {
     border-top: solid 1px #433f4e;
@@ -546,7 +550,7 @@ const TabItem = styled.button`
     div {
       padding: 10px 15px;
       border-radius: 10px;
-      background-color : #26262C;
+      background-color: #26262c;
     }
   }
   span {
@@ -560,10 +564,10 @@ const TabItem = styled.button`
     letter-spacing: normal;
     text-align: left;
     padding-bottom: 18px;
-    border-bottom: solid 1px ${(props) => props.changeColor ? `#fff` : `#433f4e;`};
+    border-bottom: solid 1px
+      ${(props) => (props.changeColor ? `#fff` : `#433f4e;`)};
     color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
   }
-
 `;
 
 const FilterContents = styled.div``;
@@ -618,7 +622,7 @@ const TotalWard = styled.div`
 
 const DisplayTable = styled.table`
   width: 100%;
-  
+
   > thead > tr {
     width: 100%;
     height: 28px;
@@ -684,7 +688,7 @@ const LineMargin = styled.div`
 `;
 
 const LastMargin = styled.div`
-  width:73%;
+  width: 73%;
   border-bottom: solid 1px #433f4e;
 `;
 

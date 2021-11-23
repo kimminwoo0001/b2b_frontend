@@ -1,29 +1,60 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-function WardTooltip({ wardType, champion, player, time, team, side, date }) {
+function WardTooltip({
+  wardType,
+  champion,
+  player,
+  time,
+  team,
+  side,
+  date,
+  position,
+  oppteam,
+  uniqueId,
+}) {
+  const [pos, setPos] = useState("");
+
+  useEffect(() => {
+    if (position === "1") {
+      setPos("TOP");
+    } else if (position === "2") {
+      setPos("JNG");
+    } else if (position === "3") {
+      setPos("MID");
+    } else if (position === "4") {
+      setPos("BOT");
+    } else if (position === "5") {
+      setPos("SUP");
+    }
+  }, []);
+
   return (
     <WardTooltipWrapper>
-      <LeftSection>
+      <TopSection>
         <ChampionImage
           src={`Images/champion/${champion}.png`}
           color={side === "red" ? "#f04545" : "#0075bf"}
         ></ChampionImage>
-      </LeftSection>
-      <RightSection>
-        <PlayerInfo
-          color={side === "red" ? "#f04545" : "#0075bf"}
-        >{`${team} ${player}`}</PlayerInfo>
-        <WardInfo>
-          {date}
-          <br />
+        <ChampionContents>
+          <PlayerInfo>{`${team.toUpperCase()} ${pos} ${player}`}</PlayerInfo>
+          <OtherInfo>
+            <GameInfo>{`${uniqueId}`}</GameInfo>
+            {`${date} VS ${oppteam}`}
+          </OtherInfo>
+        </ChampionContents>
+      </TopSection>
+      <BottomSection>
+        <WardImage
+          src={`Images/${wardType.replace(" ", "").toLowerCase()}-${side}.png`}
+        ></WardImage>
+        <WardDetail>
           {`${Math.floor(time / 1000 / 60)}m ${Math.floor(
             (time / 1000) % 60
           )}s`}
-          <br />
-          {wardType}
-        </WardInfo>
-      </RightSection>
+        </WardDetail>
+        <WardName>{wardType}</WardName>
+      </BottomSection>
     </WardTooltipWrapper>
   );
 }
@@ -33,40 +64,73 @@ export default WardTooltip;
 const WardTooltipWrapper = styled.div`
   display: flex;
   justify-content: center;
+  flex-direction: column;
   padding: 10px 10px;
   align-items: center;
   min-width: 100px;
   min-height: 55px;
-  border: solid 1px rgb(88, 84, 101);
-  background-color: rgb(29, 29, 29);
+  border-radius: 20px;
+  background-color: #23212a;
 `;
 
-const LeftSection = styled.section`
-  margin-right: 12px;
+const TopSection = styled.div`
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
 `;
-
-const RightSection = styled.section``;
 
 const ChampionImage = styled.img`
-  width: 32px;
-  height: 32px;
+  width: 26px;
+  height: 26px;
   border: solid 1px ${(props) => props.color};
   border-radius: 30px;
+  margin-right: 5px;
+`;
+
+const ChampionContents = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-family: NotoSansKR;
+  font-size: 13px;
+  letter-spacing: -0.06px;
+  text-align: left;
+  color: #fff;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #3a3745;
 `;
 
 const PlayerInfo = styled.div`
-  font-family: NotoSansKR;
-  font-size: 15px;
+  width: auto;
   font-weight: bold;
-  letter-spacing: -0.06px;
-  text-align: left;
-  color: ${(props) => props.color};
   margin-bottom: 5px;
 `;
 
-const WardInfo = styled.div`
-  font-family: NotoSansKR;
-  font-size: 14px;
-  text-align: left;
-  color: rgb(255, 255, 255);
+const OtherInfo = styled.div``;
+
+const GameInfo = styled.div`
+  margin-bottom: 5px;
 `;
+
+const WardImage = styled.img`
+  width: 26px;
+  height: 26px;
+  margin-right: 5px;
+`;
+
+const BottomSection = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-family: NotoSansKR;
+  font-size: 13px;
+  text-align: left;
+  color: #fff;
+`;
+
+const WardDetail = styled.div`
+  margin-right: 5px;
+  font-size: 13px;
+`;
+
+const WardName = styled.div``;
