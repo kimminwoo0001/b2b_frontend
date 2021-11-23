@@ -240,8 +240,9 @@ function PlayerBoard() {
             <div className="AttendValue">
               <span className="Wins">{`${matchInfo?.match}${t(
                 "solo.playerboard.games"
-              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${matchInfo?.loss
-                }${t("solo.playerboard.lose")}`}</span>
+              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${
+                matchInfo?.loss
+              }${t("solo.playerboard.lose")}`}</span>
               <span className="WinRate">{`${matchInfo?.winrate.toFixed(
                 1
               )}%`}</span>
@@ -441,6 +442,7 @@ function PlayerBoard() {
                           ></img>
                         </td>
                         <PlayerValue
+                          className="playerValue"
                           changeColor={title.leaguedata > title.data}
                         >
                           {title.data.toFixed(1)}
@@ -497,6 +499,7 @@ function PlayerBoard() {
                           ></img>
                         </td>
                         <PlayerValue
+                          className="playerValue"
                           changeColor={title.leaguedata > title.data}
                         >
                           {title.data.toFixed(1)}
@@ -554,6 +557,7 @@ function PlayerBoard() {
                           ></img>
                         </td>
                         <PlayerValue
+                          className="playerValue"
                           changeColor={title.leaguedata > title.data}
                         >
                           {title.data.toFixed(1)}
@@ -1324,6 +1328,16 @@ const MapStat = styled.tr`
     background-color: rgb(47, 45, 56);
   }
 
+  :last-child {
+    /* 마지막 tr에 rounded border 주기 */
+    > .StatNum {
+      border-bottom-left-radius: 20px;
+    }
+    > .playerValue {
+      border-bottom-right-radius: 20px;
+    }
+  }
+
   > .Icon {
     width: 17px;
   }
@@ -1341,6 +1355,9 @@ const MapStat = styled.tr`
     vertical-align: middle;
     text-align: center;
     font-size: 15px;
+    /* :last-child {
+      border-radius: 0 0 10px 0;
+    } */
   }
 `;
 
@@ -1709,6 +1726,7 @@ const DropDownContainer = styled.div`
     vertical-align: middle;
     width: 130px;
     margin: 0 10px;
+    white-space: nowrap;
   }
 
   .menu-trigger img {
