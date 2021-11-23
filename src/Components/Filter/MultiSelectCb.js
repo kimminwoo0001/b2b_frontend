@@ -116,6 +116,5 @@ const Selecter = styled.div`
   :hover {
     border-radius: 10px;
     background-color: #3a3745;
-    padding-right: 50px;
   }
 `;
