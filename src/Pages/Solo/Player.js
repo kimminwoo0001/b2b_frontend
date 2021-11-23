@@ -43,7 +43,9 @@ function Player() {
               }}
               changeColor={filters.tab === 0}
             >
-              <div>{t("solo.tabs.board")}</div>
+              <div>
+                <span>{t("solo.tabs.board")}</span>
+              </div>
             </TabContent>
             {/* <SoloReport
             onClick={() => {
@@ -62,7 +64,7 @@ function Player() {
               alt="arrowIcon"
             ></img>
           </SoloReport> */}
-            <Comparison
+            <TabContent
               onClick={() => {
                 setOpenModal(true);
               }}
@@ -70,15 +72,14 @@ function Player() {
             >
               <div>
                 {filters.getoppplayer ? (
-                  <div className="GetOpp">
-                    <div>{t("solo.tabs.comparison")} :</div>
-                    <div>{filters.getoppplayer}</div>
-                  </div>
+                  <span>{t("solo.tabs.comparison")} : {filters.getoppplayer}</span>
                 ) : (
-                  t("solo.tabs.comparison")
+                  <span>
+                    {t("solo.tabs.comparison")}
+                  </span>
                 )}
               </div>
-            </Comparison>
+            </TabContent>
             {/* <TabContent
               onClick={() => {
                 dispatch(HandleTab(3));d
@@ -149,27 +150,33 @@ const TabContent = styled.li`
   cursor: pointer;
   display: flex;
   align-items: center;
-  padding-bottom: 15px;
-  color: #84818e;
-  margin-right: 30px;
-  font-weight: bold;
-  font-size: 18px;
+  width: auto;
+  white-space: nowrap;
 
-  ${(props) =>
-    props.changeColor &&
-    css`
-      color: #fff;
-    `}
   div {
-    width: auto;
-    height: 17px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    line-height: 1.31;
-    letter-spacing: -0.65px;
-    text-align: left;
-    margin-right: 4px;
+    padding: 10px 15px;
   }
-  img {
+
+  :hover {
+    div {
+      padding: 10px 15px;
+      border-radius: 10px;
+      background-color : #26262C;
+    }
+  }
+
+  span {
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    padding-bottom: 19px;
+    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
   }
 `;
 

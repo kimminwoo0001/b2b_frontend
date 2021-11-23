@@ -55,12 +55,20 @@ export default ToolTips;
 
 const TooltipTable = styled.table`
   width: 316px;
+  border-collapse: separate;
+  border-collapse: collapse;
 `;
 
 const ArrowWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  td:first-child, th:first-child {
+    border-radius: 10px 0 0 10px; 
+  }
+  td:last-child, th:last-child {
+    border-radius: 0 10px 10px 0;
+  }
 `;
 
 const Arrow = styled.div`
@@ -72,35 +80,39 @@ const Arrow = styled.div`
 `;
 
 const ToolTipWrapper = styled.div`
-  border: solid 1px #7c778b;
-  background-color: #3a3745;
+  background-color: #23212a;
   padding: 23.5px 14px 16.5px 14px;
+  border-radius: 20px;
 `;
 
 const TooltipNav = styled.tr`
+ 
   text-align: center;
   vertical-align: middle;
   width: 316px;
   height: 28px;
-  border: solid 1px #474453;
+  border-radius: 10px;
+  //border: solid 1px #474453;
   background-color: #2f2d38;
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
-  font-weight: 500;
+  font-family: SpoqaHanSansNeo;
+  font-size: 15px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
   letter-spacing: -0.6px;
   text-align: left;
-  padding: 5px 0 6px 13px;
+  //padding: 5px 0 6px 13px;
   color: #817e90;
-  > .Champion {
+  .Champion {
     padding-left: 10px;
     text-align: left;
     vertical-align: middle;
   }
-  > .Player {
+  .Player {
     text-align: center;
     vertical-align: middle;
   }
-  > .Pick {
+  .Pick {
     text-align: center;
     vertical-align: middle;
   }
@@ -112,8 +124,11 @@ const TooltipContent = styled.tr`
   width: 316px;
   height: 28px;
   border-bottom: 1px solid #474453;
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 15px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
   letter-spacing: -0.6px;
   text-align: left;
   color: #ffffff;
@@ -141,7 +156,11 @@ const TooltipContent = styled.tr`
   > .Pick {
     text-align: center;
     vertical-align: middle;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
     color: #f04545;
     font-family: Poppins;
     width: 70px;

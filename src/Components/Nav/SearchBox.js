@@ -15,12 +15,13 @@ export default SearchBox;
 
 const SearchBoxWrapper = styled.div`
   display: flex;
-  width: 315px;
+  width: 301px;
   height: 42px;
   margin: 0 0px 11px 0px;
-  padding: 9px 145px 9px 23px;
+  padding: 9px 146px 9px 23px;
   border-radius: 26px;
   background-color: #23212a;
+  visibility: hidden; // 숨김
   img {
     width: 24px;
     height: 24px;

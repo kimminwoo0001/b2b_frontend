@@ -22,16 +22,21 @@ import {
   ResetSeason,
   Year,
   SetSeason,
-  CompareModal
+  CompareModal,
 } from "../../redux/modules/filtervalue";
 import { API } from "../../Pages/config";
 import { useTranslation } from "react-i18next";
 import { useDetectOutsideClick } from "../../Pages/TeamCompare/useDetectOustsideClick";
 import axiosRequest from "../../lib/axiosRequest";
 
-
-const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
-  leagueFilter, seasonFilter, teamFilter, setTeamFilter }) => {
+const TeamFilterModal = ({
+  teamModal,
+  fetchLeagueFilter,
+  leagueFilter,
+  seasonFilter,
+  teamFilter,
+  setTeamFilter,
+}) => {
   //사이드바에 있는 팀 비교 탭 모달창
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
@@ -47,13 +52,13 @@ const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
 
   useEffect(() => {
     setOppTeamFilter();
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (filters.compareModal === false) {
       setOppTeamFilter();
     }
-  }, [filters.compareModal])
+  }, [filters.compareModal]);
 
   let history = useHistory();
   const handleConfirm = () => {
@@ -77,29 +82,44 @@ const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
       patch: filters.patch,
       team: team,
       token: user.token,
-      id: user.id
-    }
+      id: user.id,
+    };
     axiosRequest(url, params, function (e) {
       setOppTeamFilter(e.data.oppteam);
-    })
+    });
   };
 
   return (
     <>
       <BackScreen
         teamModal={teamModal}
-      // onClick={() => setTeamModal(false)}
+        // onClick={() => setTeamModal(false)}
       ></BackScreen>
       <TeamModalWrapper teamModal={teamModal}>
+        <ModalNav>
+          <label>{t("filters.chooseOptionLabel")}</label>
+          <img
+            src="Images/ic_close_bk_30.png"
+            alt="closeBtn"
+            className="Close"
+            onClick={() => {
+              dispatch(InitailizeState());
+              dispatch(MenuNum(2));
+              dispatch(CompareModal(false));
+              history.push("/team");
+              dispatch(setTeamFilter([]));
+              setOppTeamFilter([]);
+            }}
+          />
+        </ModalNav>
         <FilterContainer>
           <FilterWrapper>
             <FilterHeader>
-              <img src="Images/ico-filter.png" alt="filterIcon"></img>
-              <label>Filter</label>
+              <label>{t("filters.setFilter")}</label>
             </FilterHeader>
             <LeagueFilter>
-              <label>League</label>
-              <DropDownToggle className="container">
+              <label>{t("filters.setLeague")}</label>
+              <DropDownToggle>
                 <div className="menu-container">
                   <button
                     onClick={() => {
@@ -152,8 +172,10 @@ const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
                                 //fetchingPatchFilter(league);
                                 // dispatch(ResetFilter(league));
                                 // dispatch(ConvertedLeague(league));
-                                league !== filters.league[0] && dispatch(setTeamFilter([]));
-                                league !== filters.league[0] && setOppTeamFilter([]);
+                                league !== filters.league[0] &&
+                                  dispatch(setTeamFilter([]));
+                                league !== filters.league[0] &&
+                                  setOppTeamFilter([]);
                               }}
                               key={idx}
                             >
@@ -168,8 +190,8 @@ const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
               </DropDownToggle>
             </LeagueFilter>
             <PatchFilter>
-              <label>Season</label>
-              {seasonFilter.length === 0 ? (
+              <label>{t("filters.setSeason")}</label>
+              {/* {seasonFilter.length === 0 ? (
                 <PatchLabels>
                   <img
                     className="ChampIconImg"
@@ -184,39 +206,36 @@ const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
                   />
                   <span className="Label">{t("filters.patchLabel")}</span>
                 </PatchLabels>
-              ) : (
-                seasonFilter?.map((season, idx) => {
-                  return (
-                    <SelectedPatch
-                      key={idx}
-                      // draggable="true"
-                      // onDragStart={(event) => {
-                      //   handleMouseEvent(event);
-                      // }}
-                      // onMouseUp={(event) => {
-                      //   handleMouseEvent(event);
-                      // }}
-                      isChecked={filters.season.includes(season) ? true : false}
-                      onClick={() => {
-                        dispatch(Season(season));
-                      }}
-                    >
-                      <input
-                        id={idx}
-                        checked={filters.season.includes(season) ? true : false}
-                        type="checkbox"
-                        readOnly
-                      ></input>
-                      <div className="Version">
-                        {season}
-                      </div>
-                    </SelectedPatch>
-                  );
-                })
-              )}
+              ) :  */}
+              {seasonFilter?.map((season, idx) => {
+                return (
+                  <SelectedPatch
+                    key={idx}
+                    // draggable="true"
+                    // onDragStart={(event) => {
+                    //   handleMouseEvent(event);
+                    // }}
+                    // onMouseUp={(event) => {
+                    //   handleMouseEvent(event);
+                    // }}
+                    isChecked={filters.season.includes(season) ? true : false}
+                    onClick={() => {
+                      dispatch(Season(season));
+                    }}
+                  >
+                    <input
+                      id={idx}
+                      checked={filters.season.includes(season) ? true : false}
+                      type="checkbox"
+                      readOnly
+                    ></input>
+                    <div className="Version">{season}</div>
+                  </SelectedPatch>
+                );
+              })}
             </PatchFilter>
             <PatchFilter>
-              <label>Patch Version</label>
+              <label>{t("filters.setPatchVersion")}</label>
               {!selector.patchFilter ? (
                 <PatchLabels>
                   <img
@@ -268,87 +287,81 @@ const TeamFilterModal = ({ teamModal, fetchLeagueFilter,
           </FilterWrapper>
           <TeamBox>
             <TeamFilterBox>
-              <SelectTeam>
-                <div className="SelectTitle">
+              <TeamWrapper>
+                <SelectTeamTitle isFilterSelected={filters.league.length > 0}>
                   {t("filters.teamCompareLabel1")}
-                </div>
-                <div className="Nav">Team</div>
-                {teamFilter?.map((team, index) => {
-                  return (
-                    <MapTeams
-                      key={index}
-                      onClick={() => {
-                        dispatch(Team(team));
-                        fetchingOppTeamFilter(team);
-                        dispatch(OppTeam(""));
-                      }}
-                      currentTeam={filters.team === team}
-                    >
-                      <img
-                        src={`Images/TeamLogo/${team}.png`}
-                        alt="TeamLogo"
-                      ></img>
-                      <div className="TeamName">{team}</div>
-                    </MapTeams>
-                  );
-                })}
-              </SelectTeam>
-              <SelectTeam>
-                <div className="SelectTitle">
+                </SelectTeamTitle>
+                <SelectTeam isFilterSelected={filters.league.length > 0}>
+                  {teamFilter?.map((team, index) => {
+                    return (
+                      <MapTeams
+                        key={index}
+                        onClick={() => {
+                          dispatch(Team(team));
+                          fetchingOppTeamFilter(team);
+                          dispatch(OppTeam(""));
+                        }}
+                        currentTeam={filters.team === team}
+                      >
+                        <img
+                          src={`Images/TeamLogo/${team}.png`}
+                          alt="TeamLogo"
+                        ></img>
+                        <div className="TeamName">{team}</div>
+                      </MapTeams>
+                    );
+                  })}
+                </SelectTeam>
+              </TeamWrapper>
+              <TeamWrapper>
+                <SelectOppTeamTitle isTeamSelected={filters.team.length !== 0}>
                   {t("filters.teamCompareLabel2")}
-                </div>
-                <div className="Nav">Team</div>
-                {oppTeamFilter?.map((team, index) => {
-                  return (
-                    <MapTeams
-                      key={index}
-                      onClick={() => dispatch(OppTeam(team))}
-                      currentTeam={filters.oppteam === team}
-                    >
-                      <img
-                        src={`Images/TeamLogo/${team}.png`}
-                        alt="TeamLogo"
-                      ></img>
-                      <div className="TeamName">{team}</div>
-                    </MapTeams>
-                  );
-                })}
-              </SelectTeam>
+                </SelectOppTeamTitle>
+                <SelectOppTeam isTeamSelected={filters.team.length !== 0}>
+                  {oppTeamFilter?.map((team, index) => {
+                    return (
+                      <MapTeams
+                        key={index}
+                        onClick={() => dispatch(OppTeam(team))}
+                        currentTeam={filters.oppteam === team}
+                      >
+                        <img
+                          src={`Images/TeamLogo/${team}.png`}
+                          alt="TeamLogo"
+                        ></img>
+                        <div className="TeamName">{team}</div>
+                      </MapTeams>
+                    );
+                  })}
+                </SelectOppTeam>
+              </TeamWrapper>
             </TeamFilterBox>
-            <ButtonBox>
-              <button
-                className="Selected"
-                onClick={() => {
-                  handleConfirm();
-                }}
-              >
-                {t("filters.confirm")}
-              </button>
-              <button
-                className="Close"
-                onClick={() => {
-                  dispatch(InitailizeState());
-                  dispatch(MenuNum(2));
-                  dispatch(CompareModal(false));
-                  history.push("/team");
-                  dispatch(setTeamFilter([]));
-                  setOppTeamFilter([]);
-                }}
-              >
-                {t("filters.close")}
-              </button>
-            </ButtonBox>
           </TeamBox>
         </FilterContainer>
+        <ButtonBox
+          isAllTeamSelected={filters.oppteam !== "" && filters.team.length > 0}
+        >
+          <button
+            className="Selected"
+            onClick={() => {
+              handleConfirm();
+            }}
+          >
+            {t("filters.confirm")}
+          </button>
+        </ButtonBox>
       </TeamModalWrapper>
     </>
   );
-}
+};
 
 export default TeamFilterModal;
 
 const FilterContainer = styled.div`
   display: flex;
+  border-radius: 20px;
+  padding-top: 20px;
+  padding-left: 14px;
 `;
 
 const BackScreen = styled.div`
@@ -360,20 +373,42 @@ const BackScreen = styled.div`
   position: fixed;
   z-index: 3;
   background-color: rgba(0, 0, 0, 1);
-  opacity: 1;
+  opacity: 0.7;
 `;
 
 const TeamModalWrapper = styled.div`
+  border-radius: 20px;
   display: ${(props) => (props.teamModal ? "block" : "none")};
-  width: 650px;
-  min-height: 517px;
-  background-color: #2f2d38;
+  width: 616px;
+  /* min-height: 636px; */
+  background-color: #23212a;
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   opacity: 3;
   position: fixed;
   z-index: 3;
+`;
+
+const ModalNav = styled.div`
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 5px 0 10px;
+  border-bottom: 1px solid #433f4e;
+  label {
+    text-align: center;
+    width: 100%;
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+  }
+  img {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
 `;
 
 const TeamBox = styled.div`
@@ -384,6 +419,7 @@ const TeamBox = styled.div`
 const PatchLabels = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   color: #84818e;
   font-family: NotoSansKR, Apple SD Gothic Neo;
   font-size: 12px;
@@ -396,35 +432,31 @@ const PatchLabels = styled.div`
 `;
 
 const FilterWrapper = styled.div`
-  width: 130px;
-
-  background-color: #2f2d38;
-  border-right: 1px solid #484655;
+  width: 175px;
+  background-color: #23212a;
+  border-bottom-left-radius: 20px;
 `;
 
 const FilterHeader = styled.div`
-  height: 49px;
-  border-bottom: 1px solid #484655;
-  img {
-    margin-left: 9px;
-    margin-top: 17px;
-  }
+  margin-top: 13px;
+  margin-left: 10px;
+
   label {
-    width: 24px;
     height: 15px;
     margin: 0 0 0px 6px;
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
+    font-size: 15px;
+    font-weight: bold;
     line-height: 1.36;
     text-align: left;
-    color: #84818e;
+    color: #fff;
   }
 `;
 
 const SelectedPatch = styled.div`
   display: flex;
   align-items: center;
-  padding: 4.5px 12px;
+  padding: 4.5px 6px;
   width: 100%;
   height: 25px;
   color: #84818e;
@@ -433,11 +465,10 @@ const SelectedPatch = styled.div`
     props.isChecked &&
     css`
       color: rgb(255, 255, 255);
-      background-color: rgb(35, 34, 43);
     `}
   > .Version {
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
+    font-size: 13px;
     letter-spacing: -0.55px;
     text-align: left;
   }
@@ -447,22 +478,21 @@ const SelectedPatch = styled.div`
     appearance: none;
 
     display: inline-block;
-    width: 12px;
-    height: 12px;
-
+    width: 15px;
+    height: 15px;
     background-clip: content-box;
     border: 1.5px solid rgb(72, 70, 85);
     border-radius: 2px;
     background-color: transparent;
-
     margin-right: 8px;
 
     &:checked {
-      background-color: #f04545;
-      border: #f04545;
+      background-color: #5942ba;
+      border: #5942ba;
       border-radius: 2px;
-      background: url("/Images/check.svg") #f04545 no-repeat 2.5px 4px/5.5px
-        4.5px;
+      /* background: url("/Images/btn_check_on.svg") #f04545 no-repeat 2.5px 4px/5.5px
+        4.5px; */
+      background: url("/Images/btn_check_on.png") no-repeat;
       float: right;
     }
 
@@ -472,75 +502,138 @@ const SelectedPatch = styled.div`
   }
 `;
 const LeagueFilter = styled.div`
+  width: 150px;
   height: 61px;
-  border-bottom: 1px solid #484655;
+  margin: 17px 10px 10px 10px;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: #2f2d38;
   label {
-    width: 35px;
     height: 15px;
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    margin: 7.6px 0 11px 8px;
-    font-size: 11px;
+    margin: 7px 0 3px 10px;
+    font-size: 14px;
     line-height: 1.36;
     text-align: left;
-    color: #84818e;
+    color: #fff;
   }
 `;
 
 const PatchFilter = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  min-height: 61px;
-  border-bottom: 1px solid #484655;
+  align-items: flex-start;
+  background-color: #2f2d38;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 5px;
+  min-height: 60px;
+  width: 150px;
+  max-height: 180px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #434050;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin: 5px;
+  }
+
   label {
-    width: 120px;
     height: 15px;
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    margin: 7.6px 0 11px 8px;
-    font-size: 11px;
+    margin: 7px 0 3px 10px;
+    font-size: 14px;
     line-height: 1.36;
     text-align: left;
-    color: #84818e;
+    color: #fff;
   }
 `;
 
 const TeamFilterBox = styled.div`
   display: flex;
   min-height: 433px;
-  border-bottom: 1px solid #484655;
+`;
+
+const TeamWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const SelectTeam = styled.div`
-  width: 260px;
-  height: 100%;
-  :nth-child(1) {
-    border-right: 1px solid #484655;
+  width: 193px;
+  height: 420px;
+  background-color: #2f2d38;
+  margin-right: 15px;
+  border-radius: 20px;
+  padding: 10px;
+  opacity: ${(props) => (props.isFilterSelected ? "1" : "0.3")};
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #434050;
+    border-radius: 10px;
   }
 
-  .SelectTitle {
-    display: flex;
-    align-items: center;
-    padding: 0px 0 0 15px;
-    height: 48px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    font-weight: bold;
-    width: 280px;
-    letter-spacing: -0.6px;
-    text-align: left;
-    color: #817e90;
+  &::-webkit-scrollbar-track {
+    margin: 5px;
   }
-  .Nav {
-    display: flex;
-    align-items: center;
-    height: 34px;
-    padding: 0px 0 0px 15px;
-    background-color: #23212a;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    text-align: left;
-    color: #ffffff;
+`;
+
+const SelectOppTeam = styled.div`
+  width: 193px;
+  height: 420px;
+  background-color: #2f2d38;
+  border-radius: 20px;
+  padding: 10px;
+  opacity: ${(props) => (props.isTeamSelected ? "1" : "0.3")};
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 4px;
   }
+  &::-webkit-scrollbar-thumb {
+    background-color: #434050;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin: 5px;
+  }
+`;
+
+const SelectTeamTitle = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0px 0 0 15px;
+  height: 48px;
+  font-family: NotoSansKR, Apple SD Gothic Neo;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: -0.6px;
+  text-align: left;
+  color: #fff;
+  opacity: ${(props) => (props.isFilterSelected ? "1" : "0.3")};
+`;
+
+const SelectOppTeamTitle = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0px 0 0 15px;
+  height: 48px;
+  font-family: NotoSansKR, Apple SD Gothic Neo;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: -0.6px;
+  text-align: left;
+  color: #fff;
+  opacity: ${(props) => (props.isTeamSelected ? "1" : "0.3")};
 `;
 
 const ButtonBox = styled.div`
@@ -549,17 +642,19 @@ const ButtonBox = styled.div`
   align-items: center;
   height: 83px;
   .Selected {
-    width: 122px;
-    height: 36px;
-    border-radius: 3px;
-    background-color: #f04545;
+    width: 100%;
+    height: 60px;
+    border-radius: 20px;
+    background-color: ${(props) =>
+      props.isAllTeamSelected ? "#5942ba" : "#484655"};
+    cursor: ${(props) => (props.isAllTeamSelected ? "pointer" : "not-allowed")};
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 500;
     letter-spacing: -0.65px;
     text-align: center;
     color: #ffffff;
-    margin-right: 20px;
+    margin: 0 10px;
   }
   .Close {
     width: 122px;
@@ -587,17 +682,22 @@ const MapTeams = styled.div`
     margin: 0 10px 0 15px;
   }
   .TeamName {
-    width: 250px;
+    width: 190px;
     font-family: Poppins;
-    font-size: 12px;
+    font-size: 15px;
     text-align: left;
     color: #84818e;
+    ${(props) =>
+      props.currentTeam &&
+      css`
+        color: #fff;
+      `}
   }
   ${(props) =>
     props.currentTeam &&
     css`
-      color: #ffffff;
-      background-color: rgb(58, 55, 69);
+      background-color: #16151c;
+      border-radius: 10px;
     `}
 `;
 
@@ -622,22 +722,24 @@ const DropDownToggle = styled.div`
   .menu-trigger {
     display: flex;
     align-items: center;
+    justify-content: space-around;
+    margin: 5px 0;
     height: 25px;
     background-color: #2f2d38;
-    font-size: 11px;
-    width: 128px;
+    font-size: 13px;
+    width: 160px;
     color: white;
     outline: none;
     border: none;
   }
 
   .menu-trigger:hover {
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+    /* box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3); */
   }
 
   .SelectedLabel {
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-size: 13px;
     letter-spacing: -0.6px;
     text-align: left;
     color: rgb(255, 255, 255);
@@ -675,8 +777,7 @@ const DropDownToggle = styled.div`
     background: rgb(47, 45, 56);
     position: absolute;
     top: 28px;
-    right: 0;
-    width: 128px;
+    width: 145px;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
     opacity: 0;
     visibility: hidden;

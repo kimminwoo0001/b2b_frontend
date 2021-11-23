@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import styled, { css } from "styled-components";
-import { useLocation, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { MenuNum, InitailizeState, CompareModal } from "../../redux/modules/filtervalue";
-import { UserLogout } from "../../redux/modules";
-
-import LocaleDropdown from "../Nav/LocaleDropdown";
-import { SelectorInitailizeState } from "../../redux/modules/selectorvalue";
+import styled from "styled-components";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import SideBarItem from "./SideBarItem";
 
 function Sidebar() {
   //팀 비교 모달창 상태 값
   const lang = useSelector((state) => state.LocaleReducer);
-  const user = useSelector((state) => state.UserReducer);
   const { i18n, t } = useTranslation();
 
   const pathName = useLocation().pathname;
-  const dispatch = useDispatch();
-  let history = useHistory();
 
   useEffect(() => {
     changeLanguage();
@@ -32,74 +25,122 @@ function Sidebar() {
 
   //onClick 이벤트가 발생할때마다 해당 path로 이동
   const menus = [
-    { // menus[0] Home
+    {
+      // menus[0] Home
+      idx: 0,
       name: t("sidebar.part1"),
       path: "/",
       image: "/Images/sidebar_newLogo/ico-home.png",
+      changeColor: pathName === "/",
     },
-    { // menus[1] 리그 보고서
+    {
+      // menus[1] 리그 보고서
+      idx: 1,
       name: t("sidebar.part2"),
       path: "/league",
       image: "/Images/sidebar_newLogo/ico-league.png",
+      changeColor: pathName === "/league",
     },
-    { // menus[2] 팀 보고서
+    {
+      // menus[2] 팀 보고서
+      idx: 2,
       name: t("sidebar.part3"),
       path: "/team",
       image: "/Images/sidebar_newLogo/ico-team.png",
+      changeColor: pathName === "/team",
     },
-    { // menus[3] 메타 분석
+    {
+      // menus[3] 메타 분석
+      idx: 3,
       name: t("sidebar.part4"),
       path: "/metaAnalysis",
       image: "/Images/sidebar_newLogo/ico-meta.png",
+      changeColor: pathName === "/metaAnalysis",
     },
-    { // menus[4] 선수 보고서
+    {
+      // menus[4] 선수 보고서
+      idx: 4,
       name: t("sidebar.part5"),
       path: "/solo",
       image: "/Images/sidebar_newLogo/ico-player.png",
+      changeColor: pathName === "/solo",
     },
-    { // menus[5] 영상 보고서
+    {
+      // menus[5] 영상 보고서
+      idx: 5,
       name: t("sidebar.part6"),
       path: "/video",
       image: "/Images/sidebar_newLogo/ico-movie.png",
+      changeColor: pathName === "/video",
     },
-    { // menus[6] 매치 분석
+    {
+      // menus[6] 매치 분석
+      idx: 6,
       name: t("sidebar.part7"),
       path: "/matchAnalysis",
       image: "/Images/sidebar_newLogo/ico-match.png",
+      changeColor: pathName === "/matchAnalysis",
     },
-    { // menus[7] 팀 비교
+    {
+      // menus[7] 팀 비교
+      idx: 7,
       name: t("sidebar.part8"),
       path: "/teamCompare",
       image: "/Images/sidebar_newLogo/ico-teamcom.png",
+      changeColor: pathName === "/teamCompare",
     },
-    { // menus[8] 선수 비교
+    {
+      // menus[8] 선수 비교
+      idx: 8,
       name: t("sidebar.part9"),
       path: "/playerCompare",
       image: "/Images/sidebar_newLogo/ico-playercom.png",
+      changeColor: pathName === "/playerCompare",
     },
-    { // menus[9] 아이템 시뮬레이터
+    {
+      // menus[9] 아이템 시뮬레이터
+      idx: 9,
       name: t("sidebar.part10"),
       path: "/simulator",
       image: "/Images/ico-itemsimulator.png",
+      changeColor: pathName === "/simulator",
     },
-    { // menus[10] 픽 계산기
+    {
+      // menus[10] 픽 계산기
+      idx: 10,
       name: t("sidebar.part11"),
       path: "/calculator",
       image: "/Images/ico-pick-calculator.png",
+      changeColor: pathName === "/calculator",
     },
-    { // menus[11] 게임 보고서
+    {
+      // menus[11] 게임 보고서
+      idx: 11,
       name: t("sidebar.part12"),
       path: "/gameReport",
       image: "/Images/sidebar_newLogo/ico_game.png",
+      changeColor: pathName === "/gameReport",
     },
   ];
 
-  // 로그아웃 함수, 로그아웃 이벤트가 발생되면 session 값을 clear하고 로그인 페이지로 이동시킴
-  const handleLogOut = () => {
-    sessionStorage.clear();
-    dispatch(UserLogout());
-    history.push("/login");
-  };
+  // sidebar 에서 사용되는 menus를 순차적으로 추가.
+  const usingValue = [
+    menus[0],
+    menus[1],
+    menus[2],
+    menus[4],
+    menus[5],
+    menus[11],
+    menus[7],
+    menus[8],
+  ];
+
+  // // 로그아웃 함수, 로그아웃 이벤트가 발생되면 session 값을 clear하고 로그인 페이지로 이동시킴
+  // const handleLogOut = () => {
+  //   sessionStorage.clear();
+  //   dispatch(UserLogout());
+  //   history.push("/login");
+  // };
 
   return (
     <>
@@ -147,161 +188,11 @@ function Sidebar() {
         </Info>
       */}
         <MenuList>
-          <MenuWrapper // Home
-            onClick={() => {
-              history.push(menus[0].path);
-              dispatch(InitailizeState());
-              dispatch(SelectorInitailizeState());
-              dispatch(MenuNum(0));
-            }}
-            changeColor={pathName === "/"}
-          >
-            <img src={menus[0].image} alt="menu"></img>
-            <div className="Name">{menus[0].name}</div>
-          </MenuWrapper>
-          <MenuWrapper // 리그 보고서
-            onClick={() => {
-              history.push(menus[1].path);
-              dispatch(InitailizeState());
-              dispatch(SelectorInitailizeState());
-              dispatch(MenuNum(1));
-            }}
-            changeColor={pathName === "/league"}
-          >
-            <img src={menus[1].image} alt="menu"></img>
-            <div className="Name">{menus[1].name}</div>
-          </MenuWrapper>
-          <MenuWrapper // 팀 보고서
-            onClick={() => {
-              history.push(menus[2].path);
-              dispatch(InitailizeState());
-              dispatch(SelectorInitailizeState());
-              dispatch(MenuNum(2));
-            }}
-            changeColor={pathName === "/team"}
-          >
-            <img src={menus[2].image} alt="menu"></img>
-            <div className="Name">{menus[2].name}</div>
-          </MenuWrapper>
-          {/* <MenuWrapper // 메타 분석
-            onClick={() => {
-              history.push(menus[3].path);
-              dispatch(InitailizeState());
-              dispatch(MenuNum(3));
-            }}
-            changeColor={pathName === "/metaAnalysis"}
-          >
-            <img src={menus[3].image} alt="menu"></img>
-            <div className="Name">{menus[3].name}</div>
-          </MenuWrapper> */}
-          <MenuWrapper // 선수 보고서
-            onClick={() => {
-              history.push(menus[4].path);
-              dispatch(InitailizeState());
-              dispatch(SelectorInitailizeState());
-              dispatch(MenuNum(4));
-            }}
-            changeColor={pathName === "/solo"}
-          >
-            <img src={menus[4].image} alt="menu"></img>
-            <div className="Name">{menus[4].name}</div>
-          </MenuWrapper>
-          <MenuWrapper // 영상 보고서
-            onClick={() => {
-              history.push(menus[5].path);
-              dispatch(InitailizeState());
-              dispatch(SelectorInitailizeState());
-              dispatch(MenuNum(5));
-            }}
-            changeColor={pathName === "/video"}
-          >
-            <img
-              src={menus[5].image}
-              alt="menu"
-            ></img>
-            <div className="Name">{menus[5].name}</div>
-          </MenuWrapper>
-          {/* <MenuWrapper // 게임 보고서
-            onClick={() => {
-              history.push(menus[11].path);
-              dispatch(InitailizeState());
-              dispatch(MenuNum(11));
-            }}
-            changeColor={pathName === "/gameReport"}
-          >
-            <img
-              src={menus[11].image}
-              alt="menu"
-            ></img>
-            <div className="Name">{menus[11].name}</div>
-          </MenuWrapper> */}
-          {/* <MenuWrapper // 매치 분석
-            onClick={() => {
-              history.push(menus[6].path);
-              dispatch(InitailizeState());
-              dispatch(MenuNum(6));
-            }}
-            changeColor={pathName === "/matchAnalysis"}
-          >
-            <img src={menus[6].image} alt="menu"></img>
-            <div className="Name">{menus[6].name}</div>
-          </MenuWrapper> */}
-          <MenuWrapper // 팀 비교
-            onClick={() => {
-              history.push(menus[7].path);
-              dispatch(InitailizeState());
-              dispatch(SelectorInitailizeState());
-              dispatch(MenuNum(7));
-            }}
-            changeColor={pathName === "/teamCompare"}
-          >
-            <img src={menus[7].image} alt="menu"></img>
-            <div className="Name">{menus[7].name}</div>
-          </MenuWrapper>
-          <MenuWrapper // 선수 비교
-            onClick={() => {
-              history.push(menus[8].path);
-              dispatch(InitailizeState());
-              dispatch(SelectorInitailizeState());
-              dispatch(MenuNum(8));
-            }}
-            changeColor={pathName === "/playerCompare"}
-          >
-            <img src={menus[8].image} alt="menu"></img>
-            <div className="Name">{menus[8].name}</div>
-          </MenuWrapper>
-          {/* <MenuWrapper
-          onClick={() => {
-            history.push(menus[6].path);
-            dispatch(InitailizeState());
-          }}
-          changeColor={pathName === "/simulator"}
-        >
-          <img src={menus[6].image} alt="menu"></img>
-          <div className="Name">
-            아이템
-            <br />
-            시뮬레이터
-          </div>
-        </MenuWrapper>
-        <MenuWrapper
-          onClick={() => {
-            history.push(menus[7].path);
-            dispatch(InitailizeState());
-          }}
-          changeColor={pathName === "/calculator"}
-        >
-          <img src={menus[7].image} alt="menu"></img>
-          <div className="Name">
-            픽-조합
-            <br />
-            계산기
-          </div>
-        </MenuWrapper> */}
+          {usingValue.length > 0 &&
+            usingValue.map((menu, idx) => (
+              <SideBarItem menu={menu} idx={idx} />
+            ))}
         </MenuList>
-        {/* 
-          <LocaleDropdown />
-        */}
       </SideBarWrapper>
     </>
   );
@@ -311,18 +202,9 @@ export default Sidebar;
 
 const SideBarWrapper = styled.div`
   width: 200px;
-  margin: 0 0;
-  padding: 26px 18px 103px 12px;
+  margin: 10px 0;
+  padding: 5px 18px 103px 10px;
   background-color: #16151c;
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 11px;
-  letter-spacing: -0.55px;
-  text-align: center;
-  color: #ffffff;
-  a:hover {
-    color: #cecfd3;
-    text-decoration: none;
-  }
 `;
 
 // const TSBLogo = styled.div`
@@ -388,52 +270,6 @@ const SideBarWrapper = styled.div`
 // `;
 
 const MenuList = styled.div`
-  width: 161px;
-  height: 416px;
-  margin: 0 20px 636px 0;
-`;
-
-const MenuWrapper = styled.div`
-  display: flex;
-  // flex-direction: column;
-  // align-items: center;
-  // justify-content: center;
-  width: 150px;
-  height: 24px;
-  margin: 16px 28.7px 25px 15.3px;
-  cursor: pointer;
-  .Name {
-    // max-width: 60px;
-    // width: auto;
-    // line-height: 1.27;
-    width: 100px;
-    height: 17px;
-    margin: 4px 0 3px 12px;
-    font-family: NotoSansKR;
-    font-size: 12px;
-    font-weight: bold;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: left;
-    color: #fff;
-  }
-  img {
-    // margin-bottom: 6.1px;
-    width: 24px;
-    height: 24px;
-    margin: 0 12px 0 0;
-    object-fit: contain;
-  }
-  ${(props) =>
-    props.changeColor &&
-    css`
-      width: 160px;
-      height: 42px;
-      margin: 16px 0 16px;
-      padding: 9px 0px 9px 15px;
-      border-radius: 16px;
-      background-color: #5942ba;
-    `}
+  width: 170px;
+  //margin: 0 20px 636px 0;
 `;

@@ -14,6 +14,11 @@
     "part11": "Team WR Calculator",
     "part12": "Game Report"
   },
+  "nav": {
+    "login": "Log In",
+    "logout": "Log Out",
+    "confirm": "Confirm"
+  },
   "home": {
     "rank": "Rank",
     "teamName": "Team",
@@ -276,8 +281,7 @@
       "CSD15": "CS difference at 15 minutes. League average difference, by nature, is always 0.",
       "XPD15": "Experience difference at 15 minutes. League average difference, by nature, is always 0.",
       "GD15": "Gold difference at 15 minuites. League average difference, by nature, is always 0.",
-      "findLabel": "Which team",
-      "findLabel2": "he/she plays for?",
+      "findLabel": "Which team he/she plays for?",
       "win": "W",
       "lose": "L",
       "total": "G",
@@ -295,11 +299,11 @@
     "allChampLabel": "All Champion",
     "allChampLabel2": "All Champs Played by",
     "teamCompareLabel": "Choose a team",
-    "teamCompareLabel1": "Choose the team of your interest",
-    "teamCompareLabel2": "Choose the opponent team",
+    "teamCompareLabel1": "Team of your interest",
+    "teamCompareLabel2": "Opponent team",
     "playerCompareLabel": "Choose a player",
-    "playerCompareLabel1": "Choose the player of your interest",
-    "playerCompareLabel2": "Choose the opponent player",
+    "playerCompareLabel1": "Player of your interest",
+    "playerCompareLabel2": "Opponent player",
     "confirm": "Confirm",
     "close": "Close",
     "selectOption": "Please choose the data filter.",
@@ -311,7 +315,15 @@
     "noTeam": "Team has not been selected.",
     "onePatch": "There should be at least one patch version.",
     "dataProcess": "Data collection process is ongoing. It may cause slight delay between loadings.",
-    "description": "You can see the data you want to see at a glance. Please choose an option."
+    "description": "You can see the data you want to see at a glance. Please choose an option.",
+    "selectAll": "Select All",
+    "chooseOptionLabel": "Please choose all options.",
+    "setFilter": "Filter",
+    "setLeague": "League",
+    "setSeason": "Season",
+    "setPatchVersion": "Patch Version",
+    "team": "Team",
+    "player": "Player"
   },
   "video": {
     "tab": {
@@ -381,7 +393,8 @@
       "return": "First Recall",
       "return2": "Up to 1min",
       "position": "All related pathing is shown based on position",
-      "confirm": "Confirm"
+      "confirm": "Confirm",
+      "selectChamp": "Select"
     },
     "game": {
       "select": "Choose Game",

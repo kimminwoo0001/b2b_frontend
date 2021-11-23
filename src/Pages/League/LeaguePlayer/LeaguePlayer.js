@@ -8,6 +8,7 @@ import TabTop from "./Components/TabTop";
 
 import { useSelector } from "react-redux";
 import axiosRequest from "../../../lib/axiosRequest";
+import { useTranslation } from "react-i18next";
 
 function LeaguePlayer() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -15,6 +16,7 @@ function LeaguePlayer() {
   const [positionClicked, setPositionClicked] = useState("top");
   const [loading, setIsLoading] = useState(false);
   const [playerData, setPlayerData] = useState();
+  const { t } = useTranslation();
 
   // 선수정보 탭 변환
   const currentPosition = {
@@ -52,45 +54,46 @@ function LeaguePlayer() {
   return (
     <LeaguePlayerWrapper>
       <LeaguePlayerTabs>
-        <TopTab
+        <TabItem
           onClick={() => setPositionClicked("top")}
           changeColor={positionClicked === "top"}
         >
-          <img src="Images/ico-position-top.png" alt="positionIcon"></img>
-          <div>TOP</div>
-        </TopTab>
-        <LineMargin></LineMargin>
-        <JngTab
+          <div>
+            <span>{t("position.top")}</span>
+          </div>
+        </TabItem>
+        <TabItem
           onClick={() => setPositionClicked("jng")}
           changeColor={positionClicked === "jng"}
         >
-          <img src="Images/ico-position-jng.png" alt="positionIcon"></img>
-          <div>JG</div>
-        </JngTab>
-        <LineMargin></LineMargin>
-        <MidTab
+          <div>
+            <span>{t("position.jg")}</span>
+          </div>
+        </TabItem>
+        <TabItem
           onClick={() => setPositionClicked("mid")}
           changeColor={positionClicked === "mid"}
         >
-          <img src="Images/ico-position-mid.png" alt="positionIcon"></img>
-          <div>MID</div>
-        </MidTab>
-        <LineMargin></LineMargin>
-        <BotTab
+          <div>
+            <span>{t("position.mid")}</span>
+          </div>
+        </TabItem>
+        <TabItem
           onClick={() => setPositionClicked("bot")}
           changeColor={positionClicked === "bot"}
         >
-          <img src="Images/ico-position-bot.png" alt="positionIcon"></img>
-          <div>ADC</div>
-        </BotTab>
-        <LineMargin></LineMargin>
-        <SupTab
+          <div>
+            <span>{t("position.ad")}</span>
+          </div>
+        </TabItem>
+        <TabItem
           onClick={() => setPositionClicked("sup")}
           changeColor={positionClicked === "sup"}
         >
-          <img src="Images/ico-position-sup.png" alt="positionIcon"></img>
-          <div>SUP</div>
-        </SupTab>
+          <div>
+            <span>{t("position.sup")}</span>
+          </div>
+        </TabItem>
         <LastMargin></LastMargin>
       </LeaguePlayerTabs>
       <TabContents>{currentPosition[positionClicked]}</TabContents>
@@ -106,177 +109,153 @@ const LeaguePlayerWrapper = styled.div`
 
 const LeaguePlayerTabs = styled.div`
   display: flex;
-  margin-top: 21.5px;
+  height: 62px;
+  // margin-top: 21.5px;
 `;
 const LastMargin = styled.div`
-  width: 445px;
-  border-bottom: solid 1px rgb(124, 119, 139);
+  width: 73%;
+  border-bottom: solid 1px #433f4e;
 `;
 
 const LineMargin = styled.div`
-  width: 6px;
-  border-bottom: solid 1px rgb(124, 119, 139);
+  width: 30px;
+  border-bottom: solid 1px #433f4e;
 `;
-const TopTab = styled.button`
+const TabItem = styled.button`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 125px;
-  height: 36px;
-  border: solid 1px rgb(67, 63, 78);
-  color: rgb(132, 129, 142);
-  border-bottom: 1px solid rgb(124, 119, 139);
-  ${(props) =>
-    props.changeColor &&
-    css`
-      color: rgb(255, 255, 255);
-      border-top: solid 1px rgb(124, 119, 139);
-      border-right: solid 1px rgb(124, 119, 139);
-      border-left: solid 1px rgb(124, 119, 139);
-      border-bottom: none;
-    `}
+    align-items: center;
+    width: auto;
+    border-bottom: solid 1px #433f4e;
+    white-space: nowrap;
 
-  img {
-    width: 14px;
-    height: 14px;
-  }
-  div {
-    margin-left: 8px;
-    width: 26px;
-    font-family: Poppins;
-    font-size: 13px;
-    text-align: left;
-  }
+    div {
+      padding: 10px 15px;
+    }
+
+    :hover {
+      div {
+        padding: 10px 15px;
+        border-radius: 10px;
+        background-color : #26262C;
+      }
+    }
+    
+    span {
+      height: 22px;
+      font-family: SpoqaHanSansNeo;
+      font-size: 18px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      text-align: left;
+      padding-bottom: 19px;
+      border-bottom: solid 1px ${(props) => props.changeColor ? `#fff` : `#433f4e;`};
+      color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+    }
 `;
+
 
 const JngTab = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 125px;
-
-  height: 36px;
-  border: solid 1px rgb(67, 63, 78);
-  color: rgb(132, 129, 142);
-  border-bottom: 1px solid rgb(124, 119, 139);
-  ${(props) =>
+display: flex;
+padding: 20px 0 20px 0;
+align-items: center;
+width: auto;
+border-bottom: solid 1px #433f4e;
+span {
+  height: 22px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+}
+${(props) =>
     props.changeColor &&
     css`
-      color: rgb(255, 255, 255);
-      border-top: solid 1px rgb(124, 119, 139);
-      border-right: solid 1px rgb(124, 119, 139);
-      border-left: solid 1px rgb(124, 119, 139);
-      border-bottom: none;
-    `}
-
-  img {
-    width: 14px;
-    height: 14px;
-  }
-  div {
-    margin-left: 8px;
-    width: 26px;
-    font-family: Poppins;
-    font-size: 13px;
-    text-align: left;
-  }
+  border-bottom: solid 1px #fff;
+  `}
 `;
 
 const MidTab = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 125px;
-  height: 36px;
-  border: solid 1px rgb(67, 63, 78);
-  color: rgb(132, 129, 142);
-  border-bottom: 1px solid rgb(124, 119, 139);
-  ${(props) =>
+display: flex;
+padding: 20px 0 20px 0;
+align-items: center;
+width: auto;
+border-bottom: solid 1px #433f4e;
+span {
+  height: 22px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+}
+${(props) =>
     props.changeColor &&
     css`
-      color: rgb(255, 255, 255);
-      border-top: solid 1px rgb(124, 119, 139);
-      border-right: solid 1px rgb(124, 119, 139);
-      border-left: solid 1px rgb(124, 119, 139);
-      border-bottom: none;
-    `}
-
-  img {
-    width: 14px;
-    height: 14px;
-  }
-  div {
-    margin-left: 8px;
-    width: 26px;
-    font-family: Poppins;
-    font-size: 13px;
-    text-align: left;
-  }
+  border-bottom: solid 1px #fff;
+`}
 `;
 
-const BotTab = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 125px;
 
-  height: 36px;
-  border: solid 1px rgb(67, 63, 78);
-  color: rgb(132, 129, 142);
-  border-bottom: 1px solid rgb(124, 119, 139);
-  ${(props) =>
+const BotTab = styled.button`
+display: flex;
+padding: 20px 0 20px 0;
+align-items: center;
+width: auto;
+border-bottom: solid 1px #433f4e;
+span {
+  height: 22px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+}
+${(props) =>
     props.changeColor &&
     css`
-      color: rgb(255, 255, 255);
-      border-top: solid 1px rgb(124, 119, 139);
-      border-right: solid 1px rgb(124, 119, 139);
-      border-left: solid 1px rgb(124, 119, 139);
-      border-bottom: none;
-    `}
-
-  img {
-    width: 14px;
-    height: 14px;
-  }
-  div {
-    margin-left: 8px;
-    width: 26px;
-    font-family: Poppins;
-    font-size: 13px;
-    text-align: left;
-  }
+  border-bottom: solid 1px #fff;
+`}
 `;
 
 const SupTab = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 125px;
-  height: 36px;
-  border: solid 1px rgb(67, 63, 78);
-  color: rgb(132, 129, 142);
-  border-bottom: 1px solid rgb(124, 119, 139);
-  ${(props) =>
+display: flex;
+padding: 20px 0 20px 0;
+align-items: center;
+width: auto;
+border-bottom: solid 1px #433f4e;
+span {
+  height: 22px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+}
+${(props) =>
     props.changeColor &&
     css`
-      color: rgb(255, 255, 255);
-      border-top: solid 1px rgb(124, 119, 139);
-      border-right: solid 1px rgb(124, 119, 139);
-      border-left: solid 1px rgb(124, 119, 139);
-      border-bottom: none;
-    `}
-
-  img {
-    width: 14px;
-    height: 14px;
-  }
-  div {
-    margin-left: 8px;
-    width: 26px;
-    font-family: Poppins;
-    font-size: 13px;
-    text-align: left;
-  }
+  border-bottom: solid 1px #fff;
+`}
 `;
 
 const TabContents = styled.div``;

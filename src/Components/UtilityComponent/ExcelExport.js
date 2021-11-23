@@ -4,9 +4,36 @@ import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { setTableHeaders, TableHeaders } from "../../redux/modules/tablevalue";
 import { useDetectOutsideClick } from "../SelectFilter/useDetectOustsideClick";
-import * as clipboard from 'clipboard-polyfill/text';
+import * as clipboard from "clipboard-polyfill/text";
 import XLSX from "xlsx";
 import timeFormat from "../../lib/timeFormat";
+import Modal from "react-modal";
+import AlertModal from "./AlertModal";
+
+const customStyles = {
+  overlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.75)",
+  },
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    transform: "translate(-50%, -50%)",
+    background: "rgba(0, 0, 0, 0.75)",
+    border: "1px solid rgba(0, 0, 0, 0.75)",
+    overflow: "auto",
+    WebkitOverflowScrolling: "touch",
+    borderRadius: "4px",
+    outline: "none",
+    padding: "0px",
+  },
+};
 
 const ExportUtil = ({ filename = "none", tableid }) => {
   const { t } = useTranslation();
@@ -15,6 +42,8 @@ const ExportUtil = ({ filename = "none", tableid }) => {
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const dispatch = useDispatch();
   const tblvalue = useSelector((state) => state.TableReducer);
+  const [isOpen, setIsOpen] = useState(false);
+  const [alertDesc, setAlertDesc] = useState("");
 
   const getTableHeaders = () => {
     const table = document.getElementById(tableid);
@@ -44,12 +73,14 @@ const ExportUtil = ({ filename = "none", tableid }) => {
         let columnData = rowData[colCnt].innerText;
         if (columnData == null || columnData.length === 0) {
           columnData = "".replace(/"/g, '""');
-        }
-        else {
+        } else {
           columnData = columnData.toString().replace(/"/g, '""'); // escape double quotes
         }
         console.log(result);
-        result = type === 'csv' ? result + '"' + columnData + '",' : result + columnData + '\t';
+        result =
+          type === "csv"
+            ? result + '"' + columnData + '",'
+            : result + columnData + "\t";
       }
       result = result.substring(0, result.length - 1);
       result = result + "\r\n";
@@ -60,8 +91,11 @@ const ExportUtil = ({ filename = "none", tableid }) => {
   }
 
   function tableData2(tableName) {
-    let ws = XLSX.utils.table_to_sheet(document.getElementById(tableid), { sheet: tableName, raw: true });
-    let range = XLSX.utils.decode_range(ws['!ref']);
+    let ws = XLSX.utils.table_to_sheet(document.getElementById(tableid), {
+      sheet: tableName,
+      raw: true,
+    });
+    let range = XLSX.utils.decode_range(ws["!ref"]);
     let result = [];
     let row;
     let rowNum;
@@ -84,7 +118,7 @@ const ExportUtil = ({ filename = "none", tableid }) => {
           continue;
         }
         let nextCell = ws[XLSX.utils.encode_cell({ r: rowNum, c: colNum })];
-        if (typeof nextCell === 'undefined') {
+        if (typeof nextCell === "undefined") {
           row.push(void 0);
         } else {
           //row.push(nextCell.w);
@@ -94,42 +128,46 @@ const ExportUtil = ({ filename = "none", tableid }) => {
       result.push(row);
     }
 
-    return result
+    return result;
   }
 
   const exportCSV = (tableName, selectedCol) => {
-
     let resultArray = tableData2(filename, selectedCol);
     let wa = XLSX.utils.aoa_to_sheet(resultArray);
     let wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, wa, tableName);
-    XLSX.writeFile(wb, (timeFormat.nowTime() + tableName + '.csv'));
-  }
+    XLSX.writeFile(wb, timeFormat.nowTime() + tableName + ".csv");
+  };
 
   const exportXlsx = (tableName, selectedCol) => {
     let resultArray = tableData2(filename, selectedCol);
     let wa = XLSX.utils.aoa_to_sheet(resultArray);
     let wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, wa, tableName);
-    XLSX.writeFile(wb, (timeFormat.nowTime() + tableName + '.xlsx'));
-  }
+    XLSX.writeFile(wb, timeFormat.nowTime() + tableName + ".xlsx");
+  };
 
   const copyClipboard = () => {
-    clipboard.writeText(tabledata('clipboard')).then(
+    clipboard.writeText(tabledata("clipboard")).then(
       function () {
-        console.log("success!");
+        setAlertDesc(t("alert.desc.copy_y"))
+        setIsOpen(true);
       },
       function () {
-        console.log("error!");
+        setAlertDesc(t("alert.desc.copy_n"))
+        setIsOpen(true);
       }
     );
-  }
-
-
+  };
 
   return (
     <>
-      <DropDown>
+      <AlertModal
+        desc={alertDesc}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
+      <DropDown >
         <div className="menu-container">
           <button
             onClick={() => {
@@ -140,7 +178,7 @@ const ExportUtil = ({ filename = "none", tableid }) => {
           >
             <span className="Label">Export</span>
             <img
-              className="ArrowIcon"
+              className="arrow-icon"
               src="Images/btn_view_detail.png"
               alt="arrowIcon"
             />
@@ -149,8 +187,6 @@ const ExportUtil = ({ filename = "none", tableid }) => {
             ref={dropdownRef}
             className={`menu ${isActive ? "active" : "inactive"}`}
           >
-            <header>Choose Columns</header>
-            {console.log(tblvalue)}
             <ul>
               {tblHeaders.current.map((header, idx) => {
                 return (
@@ -172,62 +208,82 @@ const ExportUtil = ({ filename = "none", tableid }) => {
                     />
                     &nbsp;{header}
                   </Selected>
-                )
+                );
               })}
             </ul>
-            <div className="export-file">
-              <button onClick={() => {
-                exportCSV(filename, tblvalue.headers);
-                setIsActive(false);
-              }}>
+            <ExportFile changeColor={tblvalue.headers.length > 0}>
+              <button
+                onClick={() => {
+                  tblvalue.headers.length > 0 && exportCSV(filename, tblvalue.headers);
+                  tblvalue.headers.length > 0 && setIsActive(false);
+                }}
+              >
+                <img
+                  className="download-icon"
+                  src="Images/ic_download.png"
+                  alt="DownloadIcon"
+                />
                 CSV
               </button>
-              <button onClick={() => {
-                exportXlsx(filename, tblvalue.headers);
-                setIsActive(false);
-              }}>
+              <button
+                onClick={() => {
+                  tblvalue.headers.length > 0 && exportXlsx(filename, tblvalue.headers);
+                  tblvalue.headers.length > 0 && setIsActive(false);
+                }}
+              >
+                <img
+                  className="download-icon"
+                  src="Images/ic_download.png"
+                  alt="DownloadIcon"
+                />
                 XLSX
               </button>
-            </div>
+            </ExportFile>
           </nav>
         </div>
-      </DropDown >
-      <ExportButton onClick={() => {
-        copyClipboard();
-      }}>
+      </DropDown>
+      <ExportButton
+        onClick={() => {
+          copyClipboard();
+        }}
+      >
         Copy
       </ExportButton>
     </>
-  )
-}
+  );
+};
 
-export default React.memo(
-  ExportUtil
-);
+export default React.memo(ExportUtil);
 
 const ExportButton = styled.div`
-  display: inline-block;
-  font-weight: normal;
   float: right;
   color: #fff;
   cursor: pointer;
-  height: 33px;
-  width: 70px;
-  line-height: 30px;  
-  margin-top: -11.5px;
-  margin-right: 5px;
-  padding: 0 10px;
+  height: 30px;
+  width: 74px;
+  line-height: 30px;
+  margin-top: -8.9px;
+  margin-right: 0px;
+  padding: 4.5px 10px 0px 10px;
   background-color: #5942ba;
-  border-radius: 3px;
-  border: solid 1px #000;
+  border-radius: 10px;
   align-items: center;
+  text-align: center;
+  font-family: "Spoqa Han Sans";
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
   text-align: center;
 `;
 
 const Selected = styled.div`
   display: flex;
   align-items: center;
-  padding: 4.5px 12px;
+  padding: 10px 0px;
+  margin: 5px 0;
   width: 100%;
   height: 25px;
   color: #84818e;
@@ -250,22 +306,18 @@ const Selected = styled.div`
     appearance: none;
 
     display: inline-block;
-    width: 12px;
-    height: 12px;
+    width: 24px;
+    height: 24px;
 
     background-clip: content-box;
-    border: 1.5px solid rgb(72, 70, 85);
-    border-radius: 2px;
-    background-color: transparent;
-
+    background: url("/Images/btn_check_off.svg") no-repeat;
     margin-right: 8px;
 
     &:checked {
-      background-color: #f04545;
-      border: #f04545;
+      background-color: #5942ba;
+      border: #5942ba;
       border-radius: 2px;
-      background: url("/Images/check.svg") #f04545 no-repeat 2.5px 4px/5.5px
-        4.5px;
+      background: url("/Images/btn_check_on.svg") no-repeat;
       float: right;
     }
 
@@ -273,54 +325,59 @@ const Selected = styled.div`
       outline: none !important;
     }
   }
+
+  :hover {
+    width: 185px;
+    border-radius: 10px;
+    background-color: #3a3745;
+  }
 `;
 
 const DropDown = styled.div`
-  width: 100px;
+  width: 78px;
+  height: 30px;
   float: right;
-  line-height: 30px;  
-  margin-top: -11.5px;
+  line-height: 30px;
+  margin-top: -9.5px;
   margin-right: 20px;
   padding: 0 10px;
   display: inline-block;
-
-  img {
-    margin-left: 10px;
-    transform:rotate(90deg);
-  }
 
   .menu-container {
     position: relative;
     display: inline-block;
     justify-content: center;
     align-items: center;
+
+    .arrow-icon {
+      transform: rotate(90deg);
+    }
   }
 
   .menu-trigger {
     display: flex;
     align-items: center;
-    width: 100px;
-    height: 33px;
+    width: 78px;
+    height: 30px;
     margin: 0px;
-    padding: 5px 11px 4px;
-    border-radius: 3px;
-    border: solid 1px;
+    padding: 0px 0px 2px 5px;
+    border-radius: 10px;
     background-color: #5942ba;
+    font-family: SpoqaHanSansNeo;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    img {
+      margin-left: -10px;
+    }
   }
 
   .menu-trigger:hover {
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
-  }
-
-
-
-  header {
-    padding: 0px 10px;
-    border: solid 1px;
-    color: #fff;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 14px;
-    text-align: center;
   }
 
   .Label {
@@ -333,19 +390,17 @@ const DropDown = styled.div`
     width: 140px;
   }
 
-
   .menu {
     background: rgb(35, 33, 42);
     position: absolute;
-    top: 0px;
-    left: 110px;
-    width: 144px;
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
-    opacity: 0;
+    top: 20px;
+    left: 70px;
+    border-radius: 10px;
+    box-shadow: 3px 9px 6px 0 rgba(0, 0, 0, 0.16);
     visibility: hidden;
     transform: translateX(-20px);
     transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
-   
+    width: 210px;
   }
 
   .menu.active {
@@ -357,8 +412,7 @@ const DropDown = styled.div`
   .menu ul {
     list-style: none;
     padding: 0;
-    margin: 0;
-    border: solid 1px;
+    margin: 25px 0 10px 20px;
     color: #fff;
   }
 
@@ -377,16 +431,34 @@ const DropDown = styled.div`
     }
   }
 
-  .export-file {
-    border: solid 1px;
-    color: #fff; 
-    button {
-      color: #fff;
-      padding: 10px;
-      width: 50%;
-      :hover {
-        background-color: rgb(60, 58, 72);
-      }
+
+`;
+
+const ExportFile = styled.div`
+  margin: 15px 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button {     
+    display:flex;
+    justify-content: center;
+    width: 76px;
+    height: 30px;
+    margin: 0 5px;
+    padding: 1px 2px;
+    border-radius: 10px;
+    background-color: ${(props) => props.changeColor ? `#5942ba` : `#484655`};
+    color: #fff;
+    padding-right: 7px;
+    .download-icon {
+      width: 18px;
+      height: 18px;
+      transform: rotate(180 deg);
+      object-fit: contain;
+      margin-top: 5px;
     }
+    :hover {
+      background-color: ${(props) => props.changeColor ? `#5942ba` : `#484655`};
+    }  
   }
 `;

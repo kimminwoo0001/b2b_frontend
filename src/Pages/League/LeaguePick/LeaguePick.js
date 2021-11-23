@@ -7,6 +7,7 @@ import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import qs from "qs";
 import TabforTop from "./TabforTop";
 import axiosRequest from "../../../lib/axiosRequest";
+import { useTranslation } from "react-i18next";
 
 
 function LeaguePick() {
@@ -19,6 +20,7 @@ function LeaguePick() {
   const [pickDifference, setPickDifference] = useState();
   const [uniquePick, setUniquePick] = useState();
   const [tier, setTier] = useState();
+  const { t } = useTranslation();
 
   // 리그 보고서 => 픽에 있는 Top, JG ,Mid, Adc, Sup 텝
   const positionTabs = {
@@ -123,45 +125,48 @@ function LeaguePick() {
   return (
     <LeaguePickWrapper>
       <LeaguePickTabs changeColor={positionTab}>
-        <TopTab
+        <TabItem
           onClick={() => setPositionTab(0)}
           changeColor={positionTab === 0}
         >
-          <img src="Images/ico-position-top.png" alt="positionIcon"></img>
-          <div>TOP</div>
-        </TopTab>
-        <LineMargin></LineMargin>
-        <JngTab
+          <div>
+            <span>{t("position.top")}</span>
+          </div>
+        </TabItem>
+        <TabItem
           onClick={() => setPositionTab(1)}
           changeColor={positionTab === 1}
         >
-          <img src="Images/ico-position-jng.png" alt="positionIcon"></img>
-          <div>JG</div>
-        </JngTab>
-        <LineMargin></LineMargin>
-        <MidTab
+          <div>
+            <span>{t("position.jg")}</span>
+          </div>
+        </TabItem>
+
+        <TabItem
           onClick={() => setPositionTab(2)}
           changeColor={positionTab === 2}
         >
-          <img src="Images/ico-position-mid.png" alt="positionIcon"></img>
-          <div>MID</div>
-        </MidTab>
-        <LineMargin></LineMargin>
-        <BotTab
+          <div>
+            <span>{t("position.mid")}</span>
+          </div>
+        </TabItem>
+
+        <TabItem
           onClick={() => setPositionTab(3)}
           changeColor={positionTab === 3}
         >
-          <img src="Images/ico-position-bot.png" alt="positionIcon"></img>
-          <div>ADC</div>
-        </BotTab>
-        <LineMargin></LineMargin>
-        <SupTab
+          <div>
+            <span>{t("position.ad")}</span>
+          </div>
+        </TabItem>
+        <TabItem
           onClick={() => setPositionTab(4)}
           changeColor={positionTab === 4}
         >
-          <img src="Images/ico-position-sup.png" alt="positionIcon"></img>
-          <div>SUP</div>
-        </SupTab>
+          <div>
+            <span>{t("position.sup")}</span>
+          </div>
+        </TabItem>
         <LastMargin></LastMargin>
       </LeaguePickTabs>
       <TabContents>{positionTabs[positionTab]}</TabContents>
@@ -177,176 +182,55 @@ const LeaguePickWrapper = styled.div`
 
 const LeaguePickTabs = styled.div`
   display: flex;
-  margin-top: 21.5px;
+  height: 62px;
+  // margin-top: 21.5px;
 `;
 const LineMargin = styled.div`
-  width: 6px;
-  border-bottom: solid 1px rgb(124, 119, 139);
+  width: 10px;
+  border-bottom: solid 1px #433f4e;
 `;
 
 const LastMargin = styled.div`
-  width: 445px;
-  border-bottom: solid 1px rgb(124, 119, 139);
+  width:73%;
+  border-bottom: solid 1px #433f4e;
 `;
 
-const TopTab = styled.button`
+const TabItem = styled.button`
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 125px;
-  height: 36px;
-  border: solid 1px rgb(67, 63, 78);
-  color: rgb(132, 129, 142);
-  border-bottom: 1px solid rgb(124, 119, 139);
-  ${(props) =>
-    props.changeColor &&
-    css`
-      color: rgb(255, 255, 255);
-      border-top: solid 1px rgb(124, 119, 139);
-      border-right: solid 1px rgb(124, 119, 139);
-      border-left: solid 1px rgb(124, 119, 139);
-      border-bottom: none;
-    `}
+  width: auto;
+  border-bottom: solid 1px #433f4e;
+  white-space: nowrap;
 
-  img {
-    width: 14px;
-    height: 14px;
-  }
   div {
-    margin-left: 8px;
-    width: 26px;
-    font-family: Poppins;
-    font-size: 13px;
-    text-align: left;
+    padding: 10px 15px;
   }
+
+  :hover {
+    div {
+      padding: 10px 15px;
+      border-radius: 10px;
+      background-color : #26262C;
+    }
+  }
+  
+  span {
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    padding-bottom: 19px;
+    border-bottom: solid 1px ${(props) => props.changeColor ? `#fff` : `#433f4e;`};
+    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+  }
+  
 `;
 
-const JngTab = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 125px;
-  height: 36px;
-  border: solid 1px rgb(67, 63, 78);
-  color: rgb(132, 129, 142);
-  border-bottom: 1px solid rgb(124, 119, 139);
-  ${(props) =>
-    props.changeColor &&
-    css`
-      color: rgb(255, 255, 255);
-      border-top: solid 1px rgb(124, 119, 139);
-      border-right: solid 1px rgb(124, 119, 139);
-      border-left: solid 1px rgb(124, 119, 139);
-      border-bottom: none;
-    `}
 
-  img {
-    width: 14px;
-    height: 14px;
-  }
-  div {
-    margin-left: 8px;
-    width: 26px;
-    font-family: Poppins;
-    font-size: 13px;
-    text-align: left;
-  }
-`;
-
-const MidTab = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 125px;
-  height: 36px;
-  border: solid 1px rgb(67, 63, 78);
-  color: rgb(132, 129, 142);
-  border-bottom: 1px solid rgb(124, 119, 139);
-  ${(props) =>
-    props.changeColor &&
-    css`
-      color: rgb(255, 255, 255);
-      border-top: solid 1px rgb(124, 119, 139);
-      border-right: solid 1px rgb(124, 119, 139);
-      border-left: solid 1px rgb(124, 119, 139);
-      border-bottom: none;
-    `}
-
-  img {
-    width: 14px;
-    height: 14px;
-  }
-  div {
-    margin-left: 8px;
-    width: 26px;
-    font-family: Poppins;
-    font-size: 13px;
-    text-align: left;
-  }
-`;
-
-const BotTab = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 125px;
-  height: 36px;
-  border: solid 1px rgb(67, 63, 78);
-  color: rgb(132, 129, 142);
-  border-bottom: 1px solid rgb(124, 119, 139);
-  ${(props) =>
-    props.changeColor &&
-    css`
-      color: rgb(255, 255, 255);
-      border-top: solid 1px rgb(124, 119, 139);
-      border-right: solid 1px rgb(124, 119, 139);
-      border-left: solid 1px rgb(124, 119, 139);
-      border-bottom: none;
-    `}
-
-  img {
-    width: 14px;
-    height: 14px;
-  }
-  div {
-    margin-left: 8px;
-    width: 26px;
-    font-family: Poppins;
-    font-size: 13px;
-    text-align: left;
-  }
-`;
-
-const SupTab = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 125px;
-  height: 36px;
-  border: solid 1px rgb(67, 63, 78);
-  color: rgb(132, 129, 142);
-  border-bottom: 1px solid rgb(124, 119, 139);
-  ${(props) =>
-    props.changeColor &&
-    css`
-      color: rgb(255, 255, 255);
-      border-top: solid 1px rgb(124, 119, 139);
-      border-right: solid 1px rgb(124, 119, 139);
-      border-left: solid 1px rgb(124, 119, 139);
-      border-bottom: none;
-    `}
-
-  img {
-    width: 14px;
-    height: 14px;
-  }
-  div {
-    margin-left: 8px;
-    width: 26px;
-    font-family: Poppins;
-    font-size: 13px;
-    text-align: left;
-  }
-`;
 
 const TabContents = styled.div``;

@@ -1,56 +1,59 @@
-import React, { memo } from 'react';
+import React, { memo } from "react";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
+const MultiSelectCb = memo(
+  ({
+    idx,
+    filterData,
+    mapData,
+    pngPath,
+    clickEvent,
+    title,
+    radioBtn = false,
+  }) => {
+    const { t } = useTranslation();
 
-const MultiSelectCb = memo(({ idx, filterData, mapData, pngPath, clickEvent }) => {
-  return (
-    <Selecter
-      key={idx}
-      isChecked={
-        filterData?.includes(mapData) ? true : false
-      }
-      onClick={() => {
-        clickEvent()
-      }}
-    >
-      <input
-        type="checkbox"
-        checked={
-          filterData?.includes(mapData) ? true : false
-        }
-        readOnly
-      />
-      {/*
-        pngPath &&
-        <img
-          className="IconImg"
-          width="14px"
-          height="14px"
-          src={`Images/${pngPath.toLowerCase()}.png`}
-          alt="Icon"
-        />
-      */}
-      <span>{mapData === "11.6" ? "11.6 (P.O)" : mapData}</span>
-    </Selecter>
-  );
-});
+    return (
+      <>
+        <Selecter
+          key={idx}
+          isChecked={filterData?.includes(mapData) ? true : false}
+          radioBtn={radioBtn}
+          onClick={() => {
+            clickEvent();
+          }}
+        >
+          <input
+            type="checkbox"
+            checked={filterData?.includes(mapData) ? true : false}
+            readOnly
+          />
+          <span>{mapData === "11.6" ? "11.6 (P.O)" : mapData}</span>
+        </Selecter>
+      </>
+    );
+  }
+);
 
 export default MultiSelectCb;
 
 const Selecter = styled.div`
   display: flex;
   align-items: center;
-  padding: 4.5px 12px;
+  margin: 5px 0;
+  padding-left: 5px;
   width: 100%;
-  height: 25px;
+  height: 30px;
   color: #84818e;
   cursor: pointer;
   ${(props) =>
     props.isChecked &&
     css`
       color: rgb(255, 255, 255);
-      background-color: rgb(35, 34, 43);
+      background-color: rgba(22, 21, 28, 0.5);
+      border-radius: 10px;
     `}
   > .Version {
     font-family: NotoSansKR, Apple SD Gothic Neo;
@@ -68,14 +71,22 @@ const Selecter = styled.div`
     height: 24px;
 
     background-clip: content-box;
-    background: url("/Images/btn_check_off.svg") no-repeat;
+    background: ${(props) =>
+        props.radioBtn
+          ? `url("/Images/btn_radio_off.svg")`
+          : `url("/Images/btn_check_off.svg")`}
+      no-repeat;
     margin-right: 8px;
 
     &:checked {
       background-color: #5942ba;
       border: #5942ba;
       border-radius: 2px;
-      background: url("/Images/btn_check_on.svg") no-repeat;
+      background: ${(props) =>
+          props.radioBtn
+            ? `url("/Images/btn_radio_on.svg")`
+            : `url("/Images/btn_check_on.svg")`}
+        no-repeat;
       float: right;
     }
 
@@ -90,15 +101,21 @@ const Selecter = styled.div`
 
   span {
     height: 19px;
-    margin: 3px 0 2px 5px;
+    margin: 0px 0 2px 0px;
     font-family: SpoqaHanSansNeo;
     font-size: 15px;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
-    line-height: 1.47;
+    line-height: 1.42;
     letter-spacing: normal;
     text-align: left;
     color: #fff;
+  }
+
+  :hover {
+    border-radius: 10px;
+    background-color: #3a3745;
+    padding-right: 50px;
   }
 `;

@@ -64,11 +64,12 @@ const Filter = memo(() => {
   const nameTeam = "/team";
   const nameSolo = "/solo";
   const nameVideo = "/video";
+  const nameGameReport = "/gameReport";
   const nameTeamCompare = "/teamCompare";
   const namePlayerCompare = "/playerCompare";
   const pagePath = document.location.pathname;
   const isComparePage = [nameTeamCompare, namePlayerCompare].includes(pagePath);
-  const isNeedTeam = [nameSolo, nameTeam, nameVideo].includes(pagePath);
+  const isNeedTeam = [nameSolo, nameTeam, nameVideo, nameGameReport].includes(pagePath);
   const dropdownRef = useRef(null);
   const [isActiveLeague, setIsActiveLeague] = useDetectOutsideClick(
     dropdownRef,
@@ -94,7 +95,7 @@ const Filter = memo(() => {
     if (isComparePage === false && selector.leagueFilter.length === 0) {
       fetchLeagueFilter();
     }
-  }, [selector.leagueFilter])
+  }, [selector.leagueFilter]);
 
   useEffect(() => {
     if (JSON.stringify(league) !== JSON.stringify(filters.league)) {
@@ -454,6 +455,7 @@ const Filter = memo(() => {
                         filterData={filters.team}
                         mapData={team}
                         pngPath={`TeamLogo/${team}`}
+                        radioBtn={true}
                         clickEvent={() => {
                           dispatch(Team(team));
                         }}
@@ -473,6 +475,7 @@ const Filter = memo(() => {
                         filterData={filters.player}
                         mapData={player.name}
                         pngPath={`ico-position-${player.position}`}
+                        radioBtn={true}
                         clickEvent={() => {
                           dispatch(Player(player.name));
                           dispatch(Position(player.position));
@@ -513,10 +516,20 @@ const Filter = memo(() => {
 export default Filter;
 
 const FilterWrapper = styled.div`
-  padding: 29px 24px 0px 6px;
-  box-shadow: 5px 5px 30px 0 rgba(0, 0, 0, 0.15);
   background-color: #23212a;
+  width: 294px;
   height: 100%;
+  max-height: 2000px;
+  padding: 28px 0 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #434050;
+    border-radius: 10px;
+  }
 
   .Selected {
     width: 250px;
@@ -540,4 +553,3 @@ const FilterGroup = styled.div`
   width: 250px;
   margin: 30px 1px 0 20px;
 `;
-

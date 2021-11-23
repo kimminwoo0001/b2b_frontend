@@ -187,67 +187,87 @@ function WardMapping() {
 
   return (
     <WardMappingContainer>
+
+
       <LeftSection>
+        <WardMappingTabs>
+          <TabItem
+            onClick={() => {
+              setTab("team");
+              handleTimeReset();
+              setCompareOpen(false);
+            }}
+            changeColor={tab === "team"}
+          >
+            <div>
+              <span>{t("video.vision.teamview")}</span>
+            </div>
+          </TabItem>
+
+          <TabItem
+            onClick={() => {
+              setTab("player");
+              handleTimeReset();
+              setCompareOpen(false);
+            }}
+            changeColor={tab === "player"}
+          >
+            <div>
+              <span>{t("video.vision.playerview")}</span>
+            </div>
+          </TabItem>
+          <LastMargin></LastMargin>
+        </WardMappingTabs>
         <FilterContainer>
-          <TabContainer>
-            <BasedOnTeam
-              onClick={() => {
-                setTab("team");
-                handleTimeReset();
-                setCompareOpen(false);
-              }}
-              isActive={tab === "team"}
-            >
-              {t("video.vision.teamview")}
-            </BasedOnTeam>
-            <BasedOnPlayer
-              onClick={() => {
-                setTab("player");
-                handleTimeReset();
-                setCompareOpen(false);
-              }}
-              isActive={tab === "player"}
-            >
-              {t("video.vision.playerview")}
-            </BasedOnPlayer>
-          </TabContainer>
           <FilterContents>{contents[tab]}</FilterContents>
+          <div className="ward-btn-area">
+            <WardButton
+              onClick={() => handleWardClick()}
+              isActive={tab === "player" ? filters.champion_eng : filters.team}
+            >
+              {t("video.vision.checkWard")}
+            </WardButton>
+          </div>
         </FilterContainer>
-        <WardButton
-          onClick={() => handleWardClick()}
-          isActive={tab === "player" ? filters.champion_eng : filters.team}
-        >
-          {t("video.vision.checkWard")}
-        </WardButton>
+
         <ViewContainer>
           <ButtonContainer>
-            <SideButton
+            <TabItem
               onClick={() => {
                 setSide("all");
                 fetchingWardData("all");
               }}
               changeColor={side === "all"}
             >
-              ALL
-            </SideButton>
-            <SideButton
+              <div>
+                <span>ALL</span>
+              </div>
+            </TabItem>
+
+            <TabItem
               onClick={() => {
                 setSide("blue");
                 fetchingWardData("blue");
               }}
               changeColor={side === "blue"}
             >
-              BLUE
-            </SideButton>
-            <SideButton
+              <div>
+                <span>BLUE</span>
+              </div>
+            </TabItem>
+
+            <TabItem
               onClick={() => {
                 setSide("red");
                 fetchingWardData("red");
               }}
               changeColor={side === "red"}
             >
-              RED
-            </SideButton>
+              <div>
+                <span>RED</span>
+              </div>
+            </TabItem>
+            <LastMargin></LastMargin>
           </ButtonContainer>
           <WardTable>
             <TotalWard>
@@ -407,30 +427,45 @@ const LabelArea = styled.div`
   display: flex;
   align-items: center;
   padding: 13px 15px;
-  height: 42.5px;
+  height: 50.5px;
   > span {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    color: #ffffff;
+    font-family: SpoqaHanSansNeo;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.75;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
     margin-right: 5px;
   }
   > p {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.75;
+    letter-spacing: normal;
+    text-align: left;
     color: #f04545;
   }
   > button {
-    width: 75px;
-    margin-right: 30px;
-    height: 20px;
+    width: 87px;
+    height: 34px;
+    padding: 9px 18px 8px;
+    border-radius: 10px;
+    margin-right: 10px;
+
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-size: 13px;
     letter-spacing: -0.6px;
     text-align: center;
     padding: 3px 5px;
-    color: rgb(175, 173, 190);
-    border: solid 1px rgb(175, 173, 190);
-    border-radius: 3px;
+    color: #fff;
+    background-color: #484655;
+
   }
 `;
 
@@ -451,7 +486,7 @@ const NoContentTable = styled.div`
     letter-spacing: -0.6px;
     text-align: center;
     color: rgb(107, 105, 121);
-  }
+  }-
 `;
 
 const WardInfoWrapper = styled.div``;
@@ -464,13 +499,13 @@ const WardMappingContainer = styled.div`
   display: flex;
   min-height: 100vh;
   height: 100%;
-  margin-top: 22.5px;
+  margin-top: 0px;
 `;
 
 const LeftSection = styled.section`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  //align-items: center;
   margin-right: 22px;
 `;
 
@@ -480,73 +515,74 @@ const FilterContainer = styled.div`
   width: 564px;
   min-height: 264px;
   border: solid 1px rgb(67, 63, 78);
-  background-color: rgb(47, 45, 56);
+  background-color: #2f2d38;
+  border-radius: 20px;
+  padding-top : 30px;
+
+  .ward-btn-area {
+    border-top: solid 1px #433f4e;
+  }
 `;
 
 const TabContainer = styled.div`
   display: flex;
+  width: 504px;
+  height: 60px;
+  margin: 0 30px 30px;
 `;
 
-const BasedOnTeam = styled.button`
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
-  letter-spacing: -0.6px;
-  text-align: center;
-  color: rgb(123, 121, 139);
-  width: 282px;
-  height: 40px;
-  border-bottom: solid 1px rgb(67, 63, 78);
-  border-right: solid 1px rgb(67, 63, 78);
-  background-color: rgb(35, 33, 42);
-  ${(props) =>
-    props.isActive &&
-    css`
-      border-bottom: none;
-      background-color: rgb(47, 45, 56);
-      color: rgb(255, 255, 255);
-    `}
-`;
+const TabItem = styled.button`
+  display: flex;
+  align-items: center;
+  width: auto;
+  border-bottom: solid 1px #433f4e;
+  white-space: nowrap;
 
-const BasedOnPlayer = styled.button`
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
-  letter-spacing: -0.6px;
-  text-align: center;
-  color: rgb(123, 121, 139);
-  width: 282px;
-  height: 40px;
-  border-bottom: solid 1px rgb(67, 63, 78);
-  background-color: rgb(35, 33, 42);
-  ${(props) =>
-    props.isActive &&
-    css`
-      border-bottom: none;
-      background-color: rgb(47, 45, 56);
-      color: rgb(255, 255, 255);
-    `}
+  div {
+    padding: 10px 15px;
+  }
+
+  :hover {
+    div {
+      padding: 10px 15px;
+      border-radius: 10px;
+      background-color : #26262C;
+    }
+  }
+  span {
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    padding-bottom: 18px;
+    border-bottom: solid 1px ${(props) => props.changeColor ? `#fff` : `#433f4e;`};
+    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+  }
+
 `;
 
 const FilterContents = styled.div``;
 
 const WardButton = styled.button`
-  margin: 16px 0 40px 0;
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 13px;
-  font-weight: bold;
-  letter-spacing: -0.65px;
-  text-align: center;
-  color: rgb(255, 255, 255);
-  width: 126px;
-  height: 36px;
-  border-radius: 3px;
+  width: 524px;
+  height: 60px;
+  margin: 20px 20px;
+  padding: 21px 20px 20px;
+  border-radius: 20px;
   background-color: rgb(105, 103, 119);
+  color: #fff;
   :hover {
     opacity: 0.8;
   }
   ${(props) =>
     props.isActive &&
     css`
-      background-color: #f04545;
+      background-color: #5942ba;
     `}
 `;
 
@@ -559,39 +595,18 @@ const WardMap = styled.div`
   background-image: url("Images/ward_map.png");
 `;
 
-const ButtonContainer = styled.div``;
-
-const SideButton = styled.button`
-  width: 65px;
-  height: 27px;
-  border-radius: 2px;
-  border: solid 1px #3a3745;
-  background-color: #3a3745;
-  font-family: Poppins;
-  font-size: 13px;
-  text-align: center;
-  color: #817e90;
-  margin-right: 10px;
-  :hover {
-    opacity: 0.8;
-  }
-  ${(props) =>
-    props.changeColor &&
-    css`
-      border-radius: 2px;
-      border: solid 1px #f04545;
-      background-color: #23212a;
-      color: #f04545;
-      font-weight: bold;
-    `}
+const ButtonContainer = styled.div`
+  display: flex;
+  height: 61px;
 `;
 
 const WardTable = styled.div`
-  margin-top: 10px;
+  margin-top: 20px;
   width: 564px;
   min-height: 240px;
   border: solid 1px #3a3745;
   background-color: #2f2d38;
+  border-radius: 20px;
 `;
 
 const TotalWard = styled.div`
@@ -603,6 +618,7 @@ const TotalWard = styled.div`
 
 const DisplayTable = styled.table`
   width: 100%;
+  
   > thead > tr {
     width: 100%;
     height: 28px;
@@ -610,7 +626,7 @@ const DisplayTable = styled.table`
     th {
       padding: 10px;
       font-family: NotoSansKR, Apple SD Gothic Neo;
-      font-size: 12px;
+      font-size: 15px;
       font-weight: bold;
       letter-spacing: -0.6px;
       text-align: center;
@@ -618,11 +634,11 @@ const DisplayTable = styled.table`
     }
   }
   > tbody > tr {
-    border-bottom: 1px solid #3a3745;
+    border-top: 1px solid #3a3745;
     width: 100%;
-    height: 27px;
+    height: 39.5px;
     color: #ffffff;
-    font-size: 12px;
+    font-size: 15px;
     font-family: Poppins;
     :hover {
       background-color: #817e90;
@@ -647,15 +663,33 @@ const DisplayTable = styled.table`
       text-align: center;
       width: 30%;
       > button {
-        width: 75px;
-        height: 18px;
-        background-color: #3a3745;
+        width: 87px;
+        height: 34px;
+        border-radius: 10px;
+        border: solid 1px #474554;
+        //background-color: #3a3745;
         font-family: NotoSansKR, Apple SD Gothic Neo;
-        font-size: 12px;
+        font-size: 13px;
         letter-spacing: -0.6px;
         text-align: center;
         color: #6b6979;
       }
     }
   }
+`;
+
+const LineMargin = styled.div`
+  width: 30px;
+  border-bottom: solid 1px #433f4e;
+`;
+
+const LastMargin = styled.div`
+  width:73%;
+  border-bottom: solid 1px #433f4e;
+`;
+
+const WardMappingTabs = styled.div`
+  display: flex;
+  height: 62px;
+  margin-bottom: 20px;
 `;

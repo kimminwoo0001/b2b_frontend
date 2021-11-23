@@ -40,284 +40,285 @@ export const SET_YEAR = "filtervalue/SET_YEAR";
 export const SET_SEASON = "filtervalue/SET_SEASON";
 export const COMPARE_MODAL = "filtervalue/COMPARE_MODAL";
 export const SET_PATCH = "filtervalue/SET_PATCH";
+export const SELECT_ALL_BTN = "filtervalue/SELECT_ALL_BTN";
 
 export const Reset_MapTab = (payload) => {
   return {
     type: RESET_MAPPINGTAB,
-    payload
+    payload,
   };
 };
 export const Reset_Map = (payload) => {
   return {
     type: RESET_MAPPING,
-    payload
+    payload,
   };
 };
 
 export const Champion = (champion) => {
   return {
     type: CHAMPION,
-    payload: champion
+    payload: champion,
   };
 };
 export const Opp_Champion = (champion) => {
   return {
     type: OPP_CHAMPION,
-    payload: champion
+    payload: champion,
   };
 };
 
 export const Champion_Eng = (champion) => {
   return {
     type: CHAMPION_ENG,
-    payload: champion
+    payload: champion,
   };
 };
 export const Opp_Champion_Eng = (champion) => {
   return {
     type: OPP_CHAMPION_ENG,
-    payload: champion
+    payload: champion,
   };
 };
 
 export const Loading = (payload) => {
   return {
     type: LOADING,
-    payload
+    payload,
   };
 };
 
 export const ConvertedLeague = (league) => {
   return {
     type: CONVERTED_LEAGUE,
-    payload: league
+    payload: league,
   };
 };
 
 export const League = (payload) => {
   return {
     type: LEAGUE,
-    payload
+    payload,
   };
 };
 
 export const Patch = (patch) => {
   return {
     type: PATCH,
-    payload: patch
+    payload: patch,
   };
 };
 
 export const PatchFull = (patch) => {
   return {
     type: PATCH_FULL,
-    payload: patch
+    payload: patch,
   };
 };
 export const Team = (team) => {
   return {
     type: TEAM,
-    payload: team
+    payload: team,
   };
 };
 
 export const OppTeam = (team) => {
   return {
     type: OPP_TEAM,
-    payload: team
+    payload: team,
   };
 };
 
 export const Player = (player) => {
   return {
     type: PLAYER,
-    payload: player
+    payload: player,
   };
 };
 
 export const Position = (position) => {
   return {
     type: POSITION,
-    payload: position
+    payload: position,
   };
 };
 
 export const OppPosition = (position) => {
   return {
     type: OPP_POSITION,
-    payload: position
+    payload: position,
   };
 };
 export const OppPlayer = (player) => {
   return {
     type: OPP_PLAYER,
-    payload: player
+    payload: player,
   };
 };
 
 export const InitailizeState = () => {
   return {
-    type: INITIAL_STATE
+    type: INITIAL_STATE,
   };
 };
 
 export const ResetFilter = () => {
   return {
-    type: RESET_FILTER
+    type: RESET_FILTER,
   };
 };
 export const ResetFilter2 = () => {
   return {
-    type: RESET_FILTER2
+    type: RESET_FILTER2,
   };
 };
 export const GetOppTeam = (payload) => {
   return {
     type: GET_OPPTEAM,
-    payload
+    payload,
   };
 };
 
 export const GetOppPlayer = (payload) => {
   return {
     type: GET_OPP_PLAYER,
-    payload
+    payload,
   };
 };
 
 export const HandleTab = (payload) => {
   return {
     type: HANDLE_TAB,
-    payload
+    payload,
   };
 };
 
 export const HandleClick = (payload) => {
   return {
     type: HANDLE_CLICK,
-    payload
+    payload,
   };
 };
 
 export const ResetPlayer = () => {
   return {
-    type: RESET_PLAYER
+    type: RESET_PLAYER,
   };
 };
 
 export const ResetChampion = (payload) => {
   return {
     type: RESET_CHAMPION,
-    payload
+    payload,
   };
 };
 
 export const ResetChampion2 = (payload) => {
   return {
     type: RESET_CHAMPION2,
-    payload
+    payload,
   };
 };
 export const ResetOppChampion = (payload) => {
   return {
     type: RESET_OPP_CHAMPION,
-    payload
+    payload,
   };
 };
 
 export const GetGameId = (payload) => {
   return {
     type: GET_GAME_ID,
-    payload
+    payload,
   };
 };
 
 export const MenuNum = (payload) => {
   return {
     type: MENU_NUM,
-    payload
+    payload,
   };
 };
 
 export const Year = (payload) => {
   return {
     type: YEAR,
-    payload
+    payload,
   };
 };
 
 export const Season = (payload) => {
   return {
     type: SEASON,
-    payload
+    payload,
   };
 };
 
 export const ResetLeague = () => {
   return {
-    type: RESET_LEAGUE
-  }
-}
+    type: RESET_LEAGUE,
+  };
+};
 
 export const ResetYear = () => {
   return {
-    type: RESET_YEAR
-  }
-}
+    type: RESET_YEAR,
+  };
+};
 
 export const ResetSeason = () => {
   return {
-    type: RESET_SEASON
-  }
-}
+    type: RESET_SEASON,
+  };
+};
 
 export const ResetTeam = () => {
   return {
-    type: RESET_TEAM
-  }
-}
+    type: RESET_TEAM,
+  };
+};
 
 export const FilterMenuSwitch = (payload) => {
   return {
     type: FILTER_MENU_SWITCH,
-    payload
-  }
-}
+    payload,
+  };
+};
 
 export const SetLeague = (payload) => {
   return {
     type: SET_LEAGUE,
-    payload
-  }
-}
+    payload,
+  };
+};
 
 export const SetYear = (payload) => {
   return {
     type: SET_YEAR,
-    payload
-  }
-}
+    payload,
+  };
+};
 
 export const SetSeason = (payload) => {
   return {
     type: SET_SEASON,
-    payload
-  }
-}
+    payload,
+  };
+};
 
 export const SetPatch = (payload) => {
   return {
     type: SET_PATCH,
-    payload
-  }
-}
+    payload,
+  };
+};
 
 export const CompareModal = (payload) => {
   return {
     type: COMPARE_MODAL,
-    payload
-  }
-}
+    payload,
+  };
+};
 
 const initialState = {
   league: [],
@@ -344,7 +345,7 @@ const initialState = {
   gameid: "",
   menu_num: "",
   filterMenuState: true,
-  compareModal: true
+  compareModal: true,
 };
 
 export default function FilterReducer(state = initialState, action) {
@@ -352,19 +353,19 @@ export default function FilterReducer(state = initialState, action) {
     case INITIAL_STATE:
       return initialState;
     case LEAGUE:
-      console.log(state)
+      console.log(state);
       if (state.league.length === 0) {
         return { ...state, league: [action.payload] };
       }
       if (state.league.find((e) => e === action.payload)) {
         return {
           ...state,
-          league: state.league.filter((e) => e !== action.payload)
+          league: state.league.filter((e) => e !== action.payload),
         };
       }
       return {
         ...state,
-        league: [...state.league.filter((e) => e !== ""), action.payload]
+        league: [...state.league.filter((e) => e !== ""), action.payload],
       };
     case PATCH:
       if (state.patch.length === 0) {
@@ -373,18 +374,18 @@ export default function FilterReducer(state = initialState, action) {
       if (state.patch.find((e) => e === action.payload)) {
         return {
           ...state,
-          patch: state.patch.filter((e) => e !== action.payload)
+          patch: state.patch.filter((e) => e !== action.payload),
         };
       }
       return {
         ...state,
-        patch: [...state.patch.filter((e) => e !== ""), action.payload]
+        patch: [...state.patch.filter((e) => e !== ""), action.payload],
       };
     case PATCH_FULL:
       return {
         ...state,
         patchfilter: action.payload,
-        patch: action.payload
+        patch: action.payload,
       };
     case TEAM:
       if (state.team.length === 0) {
@@ -395,7 +396,6 @@ export default function FilterReducer(state = initialState, action) {
         } else {
           return { ...state, team: action.payload };
         }
-
       }
     case OPP_TEAM:
       return { ...state, oppteam: action.payload };
@@ -414,12 +414,12 @@ export default function FilterReducer(state = initialState, action) {
     case CHAMPION_ENG:
       return {
         ...state,
-        champion_eng: action.payload
+        champion_eng: action.payload,
       };
     case OPP_CHAMPION_ENG:
       return {
         ...state,
-        oppchampion_eng: action.payload
+        oppchampion_eng: action.payload,
       };
     case CONVERTED_LEAGUE:
       return { ...state, convertleague: action.payload };
@@ -448,7 +448,7 @@ export default function FilterReducer(state = initialState, action) {
         oppplayer: "",
         oppteam: "",
         getoppteam: "",
-        getoppplayer: ""
+        getoppplayer: "",
       };
     case RESET_FILTER2:
       return {
@@ -456,13 +456,13 @@ export default function FilterReducer(state = initialState, action) {
         oppplayer: "",
         oppteam: "",
         getoppteam: "",
-        getoppplayer: ""
+        getoppplayer: "",
       };
     case RESET_PLAYER:
       return {
         ...state,
         player: "",
-        oppplayer: ""
+        oppplayer: "",
       };
     case RESET_CHAMPION:
       return {
@@ -471,18 +471,18 @@ export default function FilterReducer(state = initialState, action) {
         oppchampion: "",
         champion_eng: "",
         oppchampion_eng: "",
-        resetchamp: action.payload
+        resetchamp: action.payload,
       };
     case RESET_CHAMPION2:
       return {
         ...state,
-        resetchamp: action.payload
+        resetchamp: action.payload,
       };
     case RESET_OPP_CHAMPION:
       return {
         ...state,
         oppchampion: "",
-        oppchampion_eng: ""
+        oppchampion_eng: "",
       };
     case RESET_MAPPING:
       return action.payload;
@@ -495,13 +495,12 @@ export default function FilterReducer(state = initialState, action) {
         champion: "",
         oppchampion: "",
         champion_eng: "",
-        oppchampion_eng: ""
+        oppchampion_eng: "",
       };
     case MENU_NUM:
-      console.log("redux : ", state);
       return {
         ...state,
-        menu_num: action.payload
+        menu_num: action.payload,
       };
     case YEAR:
       if (state.year.length === 0) {
@@ -510,12 +509,12 @@ export default function FilterReducer(state = initialState, action) {
       if (state.year.find((e) => e === action.payload)) {
         return {
           ...state,
-          year: state.year.filter((e) => e !== action.payload)
+          year: state.year.filter((e) => e !== action.payload),
         };
       }
       return {
         ...state,
-        year: [...state.year.filter((e) => e !== ""), action.payload]
+        year: [...state.year.filter((e) => e !== ""), action.payload],
       };
     case SEASON:
       if (state.season.length === 0) {
@@ -524,12 +523,12 @@ export default function FilterReducer(state = initialState, action) {
       if (state.season.find((e) => e === action.payload)) {
         return {
           ...state,
-          season: state.season.filter((e) => e !== action.payload)
+          season: state.season.filter((e) => e !== action.payload),
         };
       }
       return {
         ...state,
-        season: [...state.season.filter((e) => e !== ""), action.payload]
+        season: [...state.season.filter((e) => e !== ""), action.payload],
       };
     case RESET_LEAGUE:
       return {
@@ -540,7 +539,7 @@ export default function FilterReducer(state = initialState, action) {
         team: [],
         patch: [],
         player: "",
-        patchfilter: []
+        patchfilter: [],
       };
     case RESET_YEAR:
       return {
@@ -550,7 +549,7 @@ export default function FilterReducer(state = initialState, action) {
         team: [],
         patch: [],
         player: "",
-        patchfilter: []
+        patchfilter: [],
       };
     case RESET_SEASON:
       return {
@@ -559,7 +558,7 @@ export default function FilterReducer(state = initialState, action) {
         team: [],
         patch: [],
         player: "",
-        patchfilter: []
+        patchfilter: [],
       };
     case RESET_TEAM:
       return {
@@ -570,33 +569,33 @@ export default function FilterReducer(state = initialState, action) {
     case FILTER_MENU_SWITCH:
       return {
         ...state,
-        filterMenuState: action.payload
-      }
+        filterMenuState: action.payload,
+      };
     case SET_LEAGUE:
       return {
         ...state,
-        league: action.payload
-      }
+        league: action.payload,
+      };
     case SET_YEAR:
       return {
         ...state,
-        year: action.payload
-      }
+        year: action.payload,
+      };
     case SET_SEASON:
       return {
         ...state,
-        season: action.payload
-      }
+        season: action.payload,
+      };
     case SET_PATCH:
       return {
         ...state,
-        patch: action.payload
-      }
+        patch: action.payload,
+      };
     case COMPARE_MODAL:
       return {
         ...state,
-        compareModal: action.payload
-      }
+        compareModal: action.payload,
+      };
     default:
       return state;
   }

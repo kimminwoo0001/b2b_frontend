@@ -22,35 +22,41 @@ function ComparePlayer() {
   return (
     <ComparePlayerWrapper>
       <ComparePlayerTabs changeColor={currentCompare}>
-        <NormalInfoTab
+        <TabItem
           onClick={() => {
             setCurrentCompare(0);
             dispatch(ResetChampion());
           }}
           changeColor={currentCompare === 0}
         >
-          <div>{t("solo.comparison.overview")}</div>
-        </NormalInfoTab>
-        <LineMargin></LineMargin>
-        <StatTab
+          <div>
+            <span>{t("solo.comparison.overview")}</span>
+          </div>
+        </TabItem>
+
+        <TabItem
           onClick={() => {
             setCurrentCompare(1);
             dispatch(ResetChampion());
           }}
           changeColor={currentCompare === 1}
         >
-          <div>{t("solo.comparison.stats")}</div>
-        </StatTab>
-        <LineMargin></LineMargin>
-        <OppStatTab
+          <div>
+            <span>{t("solo.comparison.stats")}</span>
+          </div>
+        </TabItem>
+
+        <TabItem
           onClick={() => {
             setCurrentCompare(2);
             dispatch(ResetChampion());
           }}
           changeColor={currentCompare === 2}
         >
-          <div>{t("solo.comparison.records")}</div>
-        </OppStatTab>
+          <div>
+            <span>{t("solo.comparison.records")}</span>
+          </div>
+        </TabItem>
         <LastMargin></LastMargin>
       </ComparePlayerTabs>
       <TabContents>{currentTab[currentCompare]}</TabContents>
@@ -64,53 +70,69 @@ const ComparePlayerWrapper = styled.div``;
 
 const ComparePlayerTabs = styled.div`
   display: flex;
-  margin-top: 21.5px;
+  height: 64px;
+  //border-bottom: 1px solid #433f4e;
 `;
 const LineMargin = styled.div`
-  width: 6px;
-  border-bottom: 1px solid #433f4e;
+  width: 10px;
+  border-bottom: solid 1px #433f4e;
 `;
 
 const LastMargin = styled.div`
-  width: 721px;
-  border-bottom: 1px solid #433f4e;
+  width:73%;
+  border-bottom: solid 1px #433f4e;
 `;
 
-const NormalInfoTab = styled.button`
+const TabItem = styled.button`
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 100px;
-  height: 36px;
-  color: rgb(132, 129, 142);
-  border-bottom: 1px solid #433f4e;
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 18px;
-  padding-bottom: 20px;
+  width: auto;
+  border-bottom: solid 1px #433f4e;
+  white-space: nowrap;
 
-  ${(props) =>
-    props.changeColor &&
-    css`
-      color: rgb(255, 255, 255);
-      border-top: none;
-      border-right: none;
-      border-left: none;
-      border-bottom: solid 1px #fff;
-    `}
+  div {
+    padding: 10px 15px;
+  }
+
+  :hover {
+    div {
+      padding: 10px 15px;
+      border-radius: 10px;
+      background-color : #26262C;
+    }
+  }
+
+  span {
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    padding-bottom: 20px;
+    border-bottom: solid 1px ${(props) => props.changeColor ? `#fff` : `#433f4e;`};
+    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+  }
 `;
 
 const StatTab = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100px;
+  width: auto;
   height: 36px;
   color: rgb(132, 129, 142);
-  border-bottom: 1px solid #433f4e;
-
   font-family: NotoSansKR, Apple SD Gothic Neo;
   font-size: 18px;
-  padding-bottom: 20px;
+  padding: 10px 0;
+  margin-right: 10px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 
   ${(props) =>
     props.changeColor &&
@@ -127,14 +149,17 @@ const OppStatTab = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 150px;
+  width: auto;
   height: 36px;
   color: rgb(132, 129, 142);
-  border-bottom: 1px solid #433f4e;
-
   font-family: NotoSansKR, Apple SD Gothic Neo;
   font-size: 18px;
-  padding-bottom: 20px;
+  padding: 10px 0;
+  margin-right: 10px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 
   ${(props) =>
     props.changeColor &&

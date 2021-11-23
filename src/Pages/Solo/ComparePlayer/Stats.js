@@ -93,16 +93,14 @@ function Stats() {
         setData(e?.data.player);
         setOppData(e?.data.oppPlayer);
         //라인전 능력치 비교 그래프 데이터 가공
-        const lineData = Object.values(e?.data.player.LineStat)?.map(
-          (line) => {
-            return {
-              x1: line.percent.toFixed(1),
-              y: lang === "kr" ? line.name : line.eng,
-              value1: line.value.toFixed(1),
-              league: line.avg.toFixed(1),
-            };
-          }
-        );
+        const lineData = Object.values(e?.data.player.LineStat)?.map((line) => {
+          return {
+            x1: line.percent.toFixed(1),
+            y: lang === "kr" ? line.name : line.eng,
+            value1: line.value.toFixed(1),
+            league: line.avg.toFixed(1),
+          };
+        });
 
         const lineData2 = Object.values(e?.data.oppPlayer.LineStat)?.map(
           (line) => {
@@ -155,7 +153,7 @@ function Stats() {
           // setOppMatch(Object.values(response?.data.oppPlayer.MatchStat));
           setStatData(Object.values(e?.data.tendencyStat));
         }
-      })
+      });
     } catch (e) {
       console.log(e.response);
     }
@@ -178,8 +176,7 @@ function Stats() {
     axiosRequest(url, params, function (e) {
       setChampFilter(e.data.champion);
       setChampEng(e.data.championEng);
-    })
-
+    });
   };
 
   //상대 챔피언 필터
@@ -200,7 +197,7 @@ function Stats() {
     axiosRequest(url, params, function (e) {
       setOppFilter(e.data.champion);
       setOppEng(e.data.championEng);
-    })
+    });
   };
 
   const renderColorfulLegendText = (value: string, entry: any) => {
@@ -310,46 +307,32 @@ function Stats() {
           <div className="PerformanceTitle">
             {t("solo.comparison.avgScore")}
           </div>
-          <PerformanceValue
-            color={data?.sbrAvg < oppData?.sbrAvg}
-            className="PerformanceValue"
-          >
+          <PerformanceValueAvg color={data?.sbrAvg < oppData?.sbrAvg}>
             {data?.sbrAvg.toFixed(1)}
-          </PerformanceValue>
+          </PerformanceValueAvg>
         </div>
         <div className="AverageBoxTwo">
           <div className="PerformanceTitle">
             {t("solo.comparison.bestScore")}
           </div>
-          <PerformanceValue
-            color={data?.sbrMax < oppData?.sbrMax}
-            className="PerformanceValue"
-          >
-            {data?.sbrMax.toFixed(1)}
-          </PerformanceValue>
+          <PerformanceValueMax>{data?.sbrMax.toFixed(1)}</PerformanceValueMax>
         </div>
         <div className="Vs">VS</div>
         <div className="AverageBox">
           <div className="PerformanceTitle">
             {t("solo.comparison.avgScore")}
           </div>
-          <PerformanceValue2
-            color={data?.sbrAvg > oppData?.sbrAvg}
-            className="PerformanceValueBlue"
-          >
+          <PerformanceValueAvg color={data?.sbrAvg > oppData?.sbrAvg}>
             {oppData?.sbrAvg.toFixed(1)}
-          </PerformanceValue2>
+          </PerformanceValueAvg>
         </div>
         <div className="AverageBoxTwo">
           <div className="PerformanceTitle">
             {t("solo.comparison.bestScore")}
           </div>
-          <PerformanceValue2
-            color={data?.sbrMax > oppData?.sbrMax}
-            className="PerformanceValueBlue"
-          >
+          <PerformanceValueMax>
             {oppData?.sbrMax.toFixed(1)}
-          </PerformanceValue2>
+          </PerformanceValueMax>
         </div>
         <div className="NameContainerBlue">
           <span className="NickName">
@@ -379,7 +362,7 @@ function Stats() {
         </div>
       </PlayerCompareWrapper>
       <PlayerStatWrapper>
-        <div className="records">{`${data?.total}${t(
+        <div className="records red">{`${data?.total}${t(
           "solo.comparison.total"
         )} ${data?.win}${t("solo.comparison.win")} ${data?.lose}${t(
           "solo.comparison.lose"
@@ -387,7 +370,7 @@ function Stats() {
         <span className="leftGradient"></span>
         <div className="soloRecord">{t("solo.comparison.statLabel")}</div>
         <span className="rightGradient"></span>
-        <div className="records">{`${oppData?.total}${t(
+        <div className="records blue">{`${oppData?.total}${t(
           "solo.comparison.total"
         )} ${oppData?.win}${t("solo.comparison.win")} ${oppData?.lose}${t(
           "solo.comparison.lose"
@@ -647,17 +630,23 @@ function Stats() {
           </SimpleCompare>
           <ComplexCompare>
             <ComplexBox>
-              <div className="ComplexTitle">
-                <div>{t("solo.comparison.laneGraph")}</div>
-                <Tippy // options
+              <ComplexTitle>
+                <div className="title">{t("solo.comparison.laneGraph")}</div>
+                <div className="legends">
+                  <div className="redColorBox"></div>
+                  <div className="playerName">{filters.player}</div>
+                  <div className="blueColorBox"></div>
+                  <div className="playerName">{filters.oppplayer}</div>
+                </div>
+                {/* <Tippy // options
                   duration={0}
                   delay={[300, 0]}
                   content={<StatsTooltip lineStat={lineStat} />}
                   placement="top"
                 >
                   <img src="Images/ico-question-mark.png" alt="icon" />
-                </Tippy>
-              </div>
+                </Tippy> */}
+              </ComplexTitle>
               <CompareByProgressBar>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
@@ -677,7 +666,7 @@ function Stats() {
                       // strokeDasharray="4 4"
                       horizontal={false}
                       vertical={false}
-                    // horizontalPoints={[40, 80, 120, 160, 200, 240]}
+                      // horizontalPoints={[40, 80, 120, 160, 200, 240]}
                     />
                     <XAxis
                       type={"number"}
@@ -686,7 +675,7 @@ function Stats() {
                       domain={[-100, 100]}
                       tick={{ fill: "#84818e" }}
                       style={{
-                        fontSize: "12px",
+                        fontSize: "15px",
                       }}
                       unit={"%"}
                     />
@@ -697,7 +686,7 @@ function Stats() {
                       stroke="#4e4c5c"
                       tick={{
                         fill: "#84818e",
-                        fontSize: 12,
+                        fontSize: 15,
                         width: 105,
                       }}
                     />
@@ -705,7 +694,7 @@ function Stats() {
                       cursor={{ fill: "#23212a" }}
                       content={<CustomTooltip dataKey="value" />}
                     />
-                    <Legend formatter={renderColorfulLegendText} />
+                    {/* <Legend formatter={renderColorfulLegendText} /> */}
                     <ReferenceLine x={0} stroke="#4e4c5c" />
                     <Bar
                       dataKey="x1"
@@ -726,17 +715,23 @@ function Stats() {
               </CompareByProgressBar>
             </ComplexBox>
             <ComplexBox>
-              <div className="ComplexTitle">
-                <div>{t("solo.comparison.teamGraph")}</div>
-                <Tippy // options
+              <ComplexTitle>
+                <div className="title">{t("solo.comparison.teamGraph")}</div>
+                <div className="legends">
+                  <div className="redColorBox"></div>
+                  <div className="playerName">{filters.player}</div>
+                  <div className="blueColorBox"></div>
+                  <div className="playerName">{filters.oppplayer}</div>
+                </div>
+                {/* <Tippy // options
                   duration={0}
                   delay={[300, 0]}
                   content={<StatsTooltip match={match} />}
                   placement="top"
                 >
                   <img src="Images/ico-question-mark.png" alt="icon" />
-                </Tippy>
-              </div>
+                </Tippy> */}
+              </ComplexTitle>
 
               <CompareByProgressBar>
                 <ResponsiveContainer width="100%" height="100%">
@@ -757,7 +752,7 @@ function Stats() {
                       // strokeDasharray="4 4"
                       horizontal={false}
                       vertical={false}
-                    // horizontalPoints={[25, 75, 125, 175, 225]}
+                      // horizontalPoints={[25, 75, 125, 175, 225]}
                     />
                     <XAxis
                       domain={[0, 100]}
@@ -766,7 +761,7 @@ function Stats() {
                       stroke="#4e4c5c"
                       tick={{ fill: "#84818e" }}
                       style={{
-                        fontSize: "12px",
+                        fontSize: "15px",
                       }}
                       unit={"%"}
                     />
@@ -777,7 +772,7 @@ function Stats() {
                       stroke="#4e4c5c"
                       tick={{
                         fill: "#84818e",
-                        fontSize: 12,
+                        fontSize: 15,
                         width: 105,
                       }}
                     />
@@ -785,7 +780,7 @@ function Stats() {
                       cursor={{ fill: "#23212a" }}
                       content={<CustomTooltip />}
                     />
-                    <Legend formatter={renderColorfulLegendText} />
+                    {/* <Legend formatter={renderColorfulLegendText} /> */}
                     <ReferenceLine x={0} stroke="#4e4c5c" />
                     <Bar
                       dataKey="x1"
@@ -857,26 +852,28 @@ const PlayerStatWrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 38px;
-  background-color: rgb(22, 21, 26);
+  background-color: #23212a;
+  margin: 20px 0;
+  border-radius: 16px;
   > .leftGradient {
     width: 49px;
     height: 26px;
     margin-left: 170px;
-    background-image: linear-gradient(
+    /* background-image: linear-gradient(
       to left,
       rgb(38, 35, 45),
       rgb(22, 21, 26)
-    );
+    ); */
   }
   > .rightGradient {
     width: 49px;
     height: 26px;
     margin-right: 170px;
-    background-image: linear-gradient(
+    /* background-image: linear-gradient(
       to right,
       rgb(38, 35, 45),
       rgb(22, 21, 26)
-    );
+    ); */
   }
   > .soloRecord {
     display: flex;
@@ -885,51 +882,45 @@ const PlayerStatWrapper = styled.div`
     height: 26px;
     background-color: rgb(38, 35, 45);
     font-family: NotoSansKR;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: bold;
     letter-spacing: -0.65px;
-    color: rgb(129, 126, 144);
+    color: #fff;
   }
   > .records {
-    font-family: Poppins;
-    font-size: 14px;
+    font-family: "Spoqa Han Sans";
+    font-size: 16px;
     line-height: 32px;
-    color: rgb(132, 129, 142);
-  }
-`;
-
-const PerformanceValue = styled.div`
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-  color: rgb(240, 69, 69);
-
-  .PerformanceValueBlue {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 20px;
+    background-color: #23212a;
     font-weight: bold;
-    text-align: center;
-    color: #0075bf;
+    color: #fff;
   }
-  ${(props) =>
-    props.color &&
-    css`
-      color: #6b6979;
-    `}
+
+  /* > .red {
+    color: #f04545;
+  }
+
+  > .blue {
+    color: #0075bf;
+  } */
 `;
 
-const PerformanceValue2 = styled.div`
+const PerformanceValueAvg = styled.div`
   font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   text-align: center;
-  color: #0075bf;
-  ${(props) =>
-    props.color &&
-    css`
-      color: #6b6979;
-    `}
+  margin-top: 10px;
+  color: ${(props) => (props.color ? "#fff" : "#f04545")};
+`;
+
+const PerformanceValueMax = styled.div`
+  font-family: NotoSansKR, Apple SD Gothic Neo;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+  margin-top: 10px;
 `;
 
 const PlayerCompareWrapper = styled.div`
@@ -937,8 +928,8 @@ const PlayerCompareWrapper = styled.div`
   align-items: center;
   margin-top: 28px;
   width: 100%;
-  border: solid 1px rgb(58, 55, 69);
-  background-color: rgb(47, 45, 56);
+  border-radius: 20px;
+  background-color: #23212a;
   background-image: url("Images/full-gradient.png");
   background-repeat: no-repeat;
   .RedSidePlayer {
@@ -966,28 +957,27 @@ const PlayerCompareWrapper = styled.div`
     text-align: right;
   }
   .NickName {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
+    font-family: "Spoqa Han Sans";
+    font-size: 13px;
     color: rgb(132, 129, 142);
     margin-bottom: 3px;
   }
   .RealName {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 15px;
     font-weight: bold;
     letter-spacing: -0.75px;
     color: rgb(255, 255, 255);
   }
   .PerformanceTitle {
-    /* width: 80px; */
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    width: 150px;
+    font-family: "Spoqa Han Sans";
+    font-size: 16px;
     font-weight: bold;
     letter-spacing: -0.6px;
     text-align: left;
     color: rgb(132, 129, 142);
     margin-bottom: 4.7px;
-    text-align: center;
   }
 
   .AverageBox {
@@ -1004,7 +994,7 @@ const PlayerCompareWrapper = styled.div`
     }
   }
   .Vs {
-    font-family: Poppins;
+    font-family: "Spoqa Han Sans";
     font-size: 30px;
     font-weight: bold;
     text-align: left;
@@ -1019,9 +1009,8 @@ const StatWrapper = styled.div`
 `;
 
 const StatCompare = styled.div`
-  margin-top: 22px;
   width: 100%;
-  border: solid 1px rgb(58, 55, 69);
+  border-radius: 20px;
   background-color: rgb(47, 45, 56);
 `;
 
@@ -1035,15 +1024,17 @@ const ChampionSettingNav = styled.div`
 
 const CompareByStat = styled.div`
   height: 100%;
-  border: solid 1px rgb(58, 55, 69);
-  background-color: rgb(58, 55, 69);
+  /* border: solid 1px rgb(58, 55, 69); */
+  border-radius: 20px;
+  background-color: #23212a;
+  padding-bottom: 10px;
 `;
 
 const SettingTitle = styled.div`
   display: flex;
   align-items: center;
   .Title {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 13px;
     font-weight: bold;
     letter-spacing: -0.65px;
@@ -1051,7 +1042,7 @@ const SettingTitle = styled.div`
     margin: 0 15px 0 23px;
   }
   .Alert {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     letter-spacing: -0.6px;
     color: rgb(132, 129, 142);
@@ -1075,7 +1066,8 @@ const SimpleBox = styled.div`
   width: 336px;
   height: 96px;
   margin: 22px 0 0 22px;
-  background-color: rgb(47, 45, 56);
+  background-color: #2f2d38;
+  border-radius: 20px;
   img {
     /* margin: 0 27.4px 0 27.4px; */
   }
@@ -1084,12 +1076,13 @@ const SimpleBox = styled.div`
     justify-content: center;
     align-items: center;
     height: 43.5px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: "Spoqa Han Sans";
+    font-size: 15px;
     font-weight: bold;
     letter-spacing: -0.6px;
     text-align: left;
-    color: rgb(132, 129, 142);
+    color: #fff;
+
     border-bottom: 1px solid rgb(58, 55, 69);
   }
   .SimpleValues {
@@ -1101,7 +1094,7 @@ const SimpleBox = styled.div`
   }
 `;
 const RedPlayer = styled.div`
-  font-family: Poppins;
+  font-family: "Spoqa Han Sans";
   font-size: 18px;
   font-weight: bold;
   color: rgb(132, 129, 142);
@@ -1115,7 +1108,7 @@ const RedPlayer = styled.div`
 `;
 
 const BluePlayer = styled.div`
-  font-family: Poppins;
+  font-family: "Spoqa Han Sans";
   font-size: 18px;
   font-weight: bold;
   color: rgb(132, 129, 142);
@@ -1144,23 +1137,7 @@ const SimpleBox6 = styled(SimpleBox)`
 const ComplexBox = styled.div`
   width: 516px;
   margin-right: 22px;
-  .ComplexTitle {
-    display: flex;
-    align-items: center;
-    background-color: rgb(47, 45, 56);
-    height: 42.5px;
-    border-bottom: 1px solid rgb(58, 55, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: -0.6px;
-    text-align: left;
-    color: rgb(132, 129, 142);
-    padding: 0px 0 0 15px;
-    img {
-      margin-left: 15px;
-    }
-  }
+
   .ComplexHeader {
     height: 28px;
     display: flex;
@@ -1169,7 +1146,7 @@ const ComplexBox = styled.div`
   }
   .RedPlayer {
     width: 249px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     font-weight: bold;
     letter-spacing: -0.6px;
@@ -1178,7 +1155,7 @@ const ComplexBox = styled.div`
     /* margin-left: 68px; */
   }
   .Vs {
-    font-family: Poppins;
+    font-family: "Spoqa Han Sans";
     font-size: 13px;
     font-weight: bold;
     text-align: center;
@@ -1187,7 +1164,7 @@ const ComplexBox = styled.div`
   }
   .BluePlayer {
     width: 249px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     font-weight: bold;
     letter-spacing: -0.6px;
@@ -1197,10 +1174,56 @@ const ComplexBox = styled.div`
   }
 `;
 
+const ComplexTitle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(47, 45, 56);
+  height: 42.5px;
+  border-bottom: 1px solid rgb(58, 55, 69);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  font-family: "Spoqa Han Sans";
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: -0.6px;
+  text-align: left;
+  color: #fff;
+  padding: 0px 15px;
+
+  .legends {
+    display: flex;
+    align-items: center;
+    width: 170px;
+
+    .redColorBox {
+      width: 12px;
+      height: 12px;
+      background-color: #f04545;
+      margin-right: 5px;
+    }
+
+    .playerName {
+      margin-right: 5px;
+      color: #817e90;
+      font-size: 15px;
+    }
+
+    .blueColorBox {
+      width: 12px;
+      height: 12px;
+      background-color: #0075bf;
+      margin-right: 5px;
+    }
+  }
+`;
 const CompareByProgressBar = styled.div`
   width: 516px;
   height: 338px;
   background-color: #35323e;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  padding: 10px;
 `;
 
 // const PlayerData = styled.div`
@@ -1242,7 +1265,7 @@ const DropDownContainer = styled.div`
   margin: 13px 0 0 23px;
 
   .Vs {
-    font-family: Poppins;
+    font-family: "Spoqa Han Sans";
     font-size: 15px;
     font-weight: bold;
     color: rgb(132, 129, 142);
@@ -1253,7 +1276,7 @@ const DropDownContainer = styled.div`
     height: 40px;
     border-radius: 3px;
     background-color: rgb(240, 69, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     font-weight: bold;
     letter-spacing: -0.6px;
@@ -1268,7 +1291,7 @@ const DropDownContainer = styled.div`
     border-radius: 3px;
     border: solid 1px #474554;
     background-color: #3a3745;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 11px;
     letter-spacing: -0.55px;
     color: rgb(175, 173, 190);
@@ -1286,7 +1309,7 @@ const DropDown = styled.div`
   }
 
   body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Spoqa Han Sans";
   }
 
   .menu-container {
@@ -1309,7 +1332,7 @@ const DropDown = styled.div`
   }
 
   .SelectedLabel {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
@@ -1319,7 +1342,7 @@ const DropDown = styled.div`
   }
 
   .Label {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
@@ -1368,7 +1391,7 @@ const DropDown = styled.div`
     text-decoration: none;
     padding: 15px 20px;
     display: block;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 11px;
     letter-spacing: -0.55px;
     text-align: left;

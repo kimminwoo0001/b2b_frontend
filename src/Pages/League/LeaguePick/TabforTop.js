@@ -2,8 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
 import { useSelector } from "react-redux";
-import ExcelExport from '../../../Components/UtilityComponent/ExcelExport'
-
+import ExcelExport from "../../../Components/UtilityComponent/ExcelExport";
 
 // 주요픽 데이터 sorting Hooks
 const useSortableData = (items, config = null) => {
@@ -75,32 +74,6 @@ const useSortableData2 = (tiers, config = null) => {
   return { tiers: sortedItems, requestSorts, sortConfig };
 };
 
-function tabledata(tableid, type) {
-  const BOM = "\uFEFF"; //바이트 순서 표식
-  let result = BOM;
-
-  const table = document.getElementById(tableid);
-  for (let rowCnt = 0; rowCnt < table.rows.length; rowCnt++) {
-    let rowData = table.rows[rowCnt].cells;
-    for (let colCnt = 0; colCnt < rowData.length; colCnt++) {
-      let columnData = rowData[colCnt].innerText;
-      if (columnData == null || columnData.length === 0) {
-        columnData = "".replace(/"/g, '""');
-      }
-      else {
-        columnData = columnData.toString().replace(/"/g, '""'); // escape double quotes
-      }
-      console.log(result);
-      result = type === 'csv' ? result + '"' + columnData + '",' : result + columnData + '\t';
-    }
-    result = result.substring(0, result.length - 1);
-    result = result + "\r\n";
-  }
-  result = result.substring(0, result.length - 1);
-
-  return result;
-}
-
 function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
   //주요픽 정렬 오름차 내림차 상태 값
   const { items, requestSort } = useSortableData(
@@ -112,14 +85,16 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
   const { t } = useTranslation();
   const filters = useSelector((state) => state.FilterReducer);
 
-
   return (
     <PickTabWrapper>
       <TopRow>
         <MainPicks>
           <Header>
-            <span>{t("league.draft.mostPick")}</span>
-            <ExcelExport filename={t("league.draft.mostPick")} tableid="mostPick-table" />
+            <span id="header-name">{t("league.draft.mostPick")}</span>
+            <ExcelExport
+              filename={t("league.draft.mostPick")}
+              tableid="mostPick-table"
+            />
           </Header>
           <PickTable id="mostPick-table">
             <thead>
@@ -128,13 +103,9 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                 <th className="PickCount" onClick={() => requestSort("pick")}>
                   <div className="sorting">
                     {t("league.draft.picks")}
-                    <Sortingimage>
-                      <img src="Images/ico-sorting-up.png" alt="up" />
-                      <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
                   </div>
                 </th>
-                <th className="PickCount" onClick={() => requestSort("ban")}>
+                {/* <th className="PickCount" onClick={() => requestSort("ban")}>
                   <div className="sorting">
                     {t("league.draft.ban")}
                     <Sortingimage>
@@ -142,32 +113,20 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                       <img src="Images/ico-sorting-down.png" alt="down" />
                     </Sortingimage>
                   </div>
-                </th>
+                </th> */}
                 <th className="BanRate" onClick={() => requestSort("pickRate")}>
                   <div className="sorting">
                     {t("league.draft.banRate")}
-                    <Sortingimage>
-                      <img src="Images/ico-sorting-up.png" alt="up" />
-                      <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
                   </div>
                 </th>
                 <th className="WinRate" onClick={() => requestSort("winrate")}>
                   <div className="sorting">
                     {t("league.draft.winRate")}
-                    <Sortingimage>
-                      <img src="Images/ico-sorting-up.png" alt="up" />
-                      <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
                   </div>
                 </th>
                 <th className="ProbRate" onClick={() => requestSort("probRate")}>
                   <div className="sorting">
                     {t("league.draft.probRate")}
-                    <Sortingimage>
-                      <img src="Images/ico-sorting-up.png" alt="up" />
-                      <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
                   </div>
                 </th>
                 <th className="none"></th>
@@ -186,7 +145,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                       </div>
                     </td>
                     <td className="Picks">{data.pick}</td>
-                    <td className="Picks">{data.ban}</td>
+                    {/* <td className="Picks">{data.ban}</td> */}
                     <td className="PickBan">{data.pickRate.toFixed(0)}%</td>
                     <td className="Win">{data.winrate.toFixed(0)}%</td>
                     <td className="Prob">{data.probRate.toFixed(0)}%</td>
@@ -198,8 +157,11 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
         </MainPicks>
         <ChampionTier>
           <Header>
-            <span>{t("league.draft.champtier")}</span>
-            <ExcelExport filename={t("league.draft.champtier")} tableid="champtier-table" />
+            <span id="header-name">{t("league.draft.champtier")}</span>
+            <ExcelExport
+              filename={t("league.draft.champtier")}
+              tableid="champtier-table"
+            />
           </Header>
           <TierTable id="champtier-table">
             <thead>
@@ -208,28 +170,16 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                 <th className="PickCount" onClick={() => requestSorts("pick")}>
                   <div className="sorting">
                     {t("league.draft.pick")}
-                    <Sortingimage>
-                      <img src="Images/ico-sorting-up.png" alt="up" />
-                      <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
                   </div>
                 </th>
                 <th className="BanRate" onClick={() => requestSorts("ban")}>
                   <div className="sorting">
                     {t("league.draft.ban")}
-                    <Sortingimage>
-                      <img src="Images/ico-sorting-up.png" alt="up" />
-                      <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
                   </div>
                 </th>
                 <th className="WinRate" onClick={() => requestSorts("win")}>
                   <div className="sorting">
                     {t("league.draft.win")}
-                    <Sortingimage>
-                      <img src="Images/ico-sorting-up.png" alt="up" />
-                      <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
                   </div>
                 </th>
                 <th
@@ -238,37 +188,21 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                 >
                   <div className="sorting">
                     {t("league.draft.banRate")}
-                    <Sortingimage>
-                      <img src="Images/ico-sorting-up.png" alt="up" />
-                      <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
                   </div>
                 </th>
                 <th className="WinRate" onClick={() => requestSorts("winRate")}>
                   <div className="sorting">
                     {t("league.draft.winRate")}
-                    <Sortingimage>
-                      <img src="Images/ico-sorting-up.png" alt="up" />
-                      <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
                   </div>
                 </th>
                 <th className="WinRate" onClick={() => requestSorts("score")}>
                   <div className="sorting">
                     {t("league.draft.score")}
-                    <Sortingimage>
-                      <img src="Images/ico-sorting-up.png" alt="up" />
-                      <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
                   </div>
                 </th>
                 <th className="Score" onClick={() => requestSorts("score")}>
                   <div className="sorting">
                     {t("league.draft.tier")}
-                    <Sortingimage>
-                      <img src="Images/ico-sorting-up.png" alt="up" />
-                      <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
                   </div>
                 </th>
                 <th className="none"></th>
@@ -316,7 +250,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
       <BottomRow>
         <MatchHistory>
           <Header>
-            <span>{t("league.draft.against")}</span>
+            <span id="header-name">{t("league.draft.against")}</span>
           </Header>
           <MatchWrapper id="against-table">
             {pickDifference?.map((pick, idx) => {
@@ -441,8 +375,11 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
         </MatchHistory>
         <UniquePicks>
           <Header>
-            <span>{t("league.draft.unique")}</span>
-            <ExcelExport filename={t("league.draft.unique")} tableid="unique-table" />
+            <span id="header-name">{t("league.draft.unique")}</span>
+            <ExcelExport
+              filename={t("league.draft.unique")}
+              tableid="unique-table"
+            />
           </Header>
           <UniqueTable id="unique-table">
             <thead>
@@ -527,7 +464,7 @@ const Result = styled.div`
 
 const PickTabWrapper = styled.div`
   display: flex;
-  margin-top: 22px;
+  margin-top: 30px;
 `;
 
 const TopRow = styled.div`
@@ -542,39 +479,28 @@ const BottomRow = styled.div`
 
 const MainPicks = styled.div`
   width: 538px;
-  min-height: 211px;
+  height: 551px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
   margin-right: 22px;
   margin-bottom: 22px;
+  border-radius: 20px;
 `;
 
 const Header = styled.div`
   width: 100%;
-  height: 42.5px;
-  padding: 15px 0 0 13px;
+  height: 51px;
+  padding: 19.5px 0 0 21px;
   border-bottom: 1px solid rgb(35, 33, 42);
   font-family: Poppins;
   color: #84818e;
   font-size: 13px;
   font-weight: bold;
+  #header-name {
+    font-size: 16px;
+    color: #fff;
+  }
 `;
-
-const ExportButton = styled.div`
-  display: inline-block;
-  font-weight: normal;
-  float: right;
-  color: #fff;
-  cursor: pointer;
-  height: 30px;
-  line-height: 30px;  
-  margin-top: -10px;
-  margin-right: 5px;
-  padding: 0 10px;
-  background-color: #5942ba;
-  border-radius: 3px;
-`;
-
 
 const UniqueTable = styled.table`
   width: 100%;
@@ -606,8 +532,9 @@ const UniqueTable = styled.table`
   }
   > tbody {
     display: block;
-    height: 140px;
+    height: 185px;
     overflow: auto;
+    border-radius: 20px;
     &::-webkit-scrollbar {
       width: 5px;
       height: 10px;
@@ -623,10 +550,11 @@ const UniqueTable = styled.table`
       :last-child {
         border: none;
       }
+      font-size: 15px;
       display: table;
       table-layout: fixed;
       width: 100%;
-      height: 28px;
+      height: 31px;
       border: 1px solid rgb(58, 55, 69);
       img {
         width: 19px;
@@ -669,7 +597,7 @@ const PickTable = styled.table`
     .Champion {
       text-align: left;
       padding-left: 10px;
-      width: 155px;
+      width: 200px;
     }
     > .none {
       width: 3px;
@@ -677,7 +605,7 @@ const PickTable = styled.table`
     > th {
       vertical-align: middle;
       font-family: NotoSansKR, Apple SD Gothic Neo;
-      font-size: 12px;
+      font-size: 15px;
       font-weight: bold;
       color: #817e90;
       text-align: center;
@@ -691,12 +619,12 @@ const PickTable = styled.table`
   }
   > tbody {
     display: block;
-    height: 350.5px;
+    border-radius: 20px;
+    height: 470px;
     overflow: auto;
     &::-webkit-scrollbar {
       width: 5px;
       height: 10px;
-
       border-radius: 3px;
       background: transparent;
     }
@@ -711,27 +639,27 @@ const PickTable = styled.table`
       display: table;
       table-layout: fixed;
       width: 100%;
-      height: 28px;
+      height: 31px;
       border: 1px solid rgb(58, 55, 69);
       .ChampWrapper {
         display: flex;
         align-items: center;
         img {
-          width: 19px;
-          height: 19px;
+          width: 26px;
+          height: 26px;
           border-radius: 20px;
           margin: 0 13px 0 10px;
         }
       }
       > .ChampName {
-        width: 150px;
+        width: 190px;
       }
       > .Win {
         color: #f04545;
       }
       td {
         font-family: NotoSansKR, Apple SD Gothic Neo;
-        font-size: 12px;
+        font-size: 15px;
         text-align: left;
         color: #ffffff;
         vertical-align: middle;
@@ -744,7 +672,8 @@ const PickTable = styled.table`
 
 const MatchWrapper = styled.div`
   overflow: auto;
-  height: 378.5px;
+  height: 495.5px;
+  border-radius: 20px;
   &::-webkit-scrollbar {
     width: 5px;
     height: 10px;
@@ -760,10 +689,12 @@ const MatchWrapper = styled.div`
 
 const MatchHistory = styled.div`
   width: 538px;
-  height: 422px;
+  height: 551px;
   margin-right: 22px;
+  margin-bottom: 22px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
+  border-radius: 20px;
 `;
 
 const MatchContents = styled.div`
@@ -791,8 +722,9 @@ const BlueSide = styled.div`
   font-size: 13px;
   font-weight: bold;
   width: 258px;
-  height: 141px;
+  height: 147px;
   padding: 16.5px 0 26px 13.5px;
+  margin-top: 19.5px;
   /* background-image: url("Images/img-op-score-leftred.png"); */
 `;
 
@@ -806,8 +738,9 @@ const RedSide = styled.div`
   font-size: 13px;
   font-weight: bold;
   width: 258px;
-  height: 141px;
-  padding: 16.5px 26px 13.5px 0px;
+  height: 147px;
+  padding: 16.5px 13.5px 26px 0px;
+  margin-top: 19.5px;
   /* background-image: url("Images/img-op-score-rightred.png"); */
 `;
 
@@ -820,28 +753,34 @@ const ChampInfo = styled.div`
   .MatchChamp {
     text-align: left;
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
     text-align: left;
     color: #ffffff;
     margin-bottom: 5px;
   }
   .WinLose {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
     text-align: left;
     color: #ffffff;
   }
   .WinLose2 {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
     text-align: right;
     color: #ffffff;
   }
   .MatchChampTwo {
     text-align: right;
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
     color: #ffffff;
     margin-bottom: 5px;
@@ -861,7 +800,18 @@ const ChampInfo = styled.div`
 const KDA = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 9px;
+  margin-bottom: 5px;
+  span {
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.87;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+  }
   .Slash {
     color: #817e90;
     margin: 0 4px 0 4px;
@@ -870,35 +820,45 @@ const KDA = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 34px;
-    height: 16px;
+    width: 45px;
+    height: 17px;
     border-radius: 3px;
-    background-color: rgb(240, 69, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
-    font-weight: bold;
-    text-align: center;
-    color: rgb(255, 255, 255);
-    margin-right: 4px;
+    background-color: #23212a;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.15;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+    padding: 0 5px;
+    margin: 6px 8px 6px 0;
   }
   .KdaTwo {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 34px;
-    height: 16px;
+    width: 45px;
+    height: 17px;
     border-radius: 3px;
-    background-color: rgb(240, 69, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
-    font-weight: bold;
-    text-align: center;
-    color: rgb(255, 255, 255);
-    margin-left: 4px;
+    background-color: #23212a;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.15;
+    letter-spacing: normal;
+    text-align: right;
+    color: #fff;
+    padding: 0 5px;
+    margin: 6px 0px 6px 8px;
   }
   .Rate {
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-size: 15px;
     text-align: center;
     color: rgb(240, 69, 69);
     margin: 0 0px 0 8px;
@@ -907,91 +867,122 @@ const KDA = styled.div`
 
 const Kills = styled.div`
   display: flex;
-  margin-bottom: 9px;
+  margin-bottom: 5px;
+  .RateNumber {
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+  }
   .KillRate {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 34px;
-    height: 16px;
+    width: 45px;
+    height: 17px;
     border-radius: 3px;
-    background-color: rgb(240, 69, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
-    font-weight: bold;
-    text-align: center;
-    color: rgb(255, 255, 255);
-    margin-right: 4px;
+    background-color: #23212a;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.15;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+    margin: 0px 8px 6px 0;
   }
   .KillRateTwo {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 34px;
-    height: 16px;
+    width: 45px;
+    height: 17px;
     border-radius: 3px;
-    background-color: rgb(240, 69, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
-    font-weight: bold;
-    text-align: center;
-    color: rgb(255, 255, 255);
-    margin-left: 4px;
+    background-color: #23212a;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.15;
+    letter-spacing: normal;
+    text-align: right;
+    color: #fff;
+    margin: 0px 0px 6px 8px;
   }
 `;
 
 const DPM = styled.div`
   display: flex;
+  .DPMNumber {
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+  }
   .DPM {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 34px;
-    height: 16px;
+    width: 45px;
+    height: 17px;
     border-radius: 3px;
-    background-color: rgb(240, 69, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
-    font-weight: bold;
-    text-align: center;
-    color: rgb(255, 255, 255);
-    margin-right: 4px;
+    background-color: #23212a;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.15;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+    margin: 0px 8px 6px 0;
   }
   .DPMTwo {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 34px;
-    height: 16px;
+    width: 45px;
+    height: 17px;
     border-radius: 3px;
-    background-color: rgb(240, 69, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
-    font-weight: bold;
-    text-align: center;
-    color: rgb(255, 255, 255);
-    margin-left: 4px;
+    background-color: #23212a;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.15;
+    letter-spacing: normal;
+    text-align: right;
+    color: #fff;
+    margin: 0px 0px 6px 8px;
   }
 `;
 
 const UniquePicks = styled.div`
   width: 538px;
-  height: 211px;
+  height: 264px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
-  margin-top: 22px;
+  border-radius: 20px;
 `;
 
 const ChampionTier = styled.div`
   width: 538px;
-  max-height: 211px;
+  height: 264px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
+  border-radius: 20px;
 `;
 
 const UniqueNavBar = styled.tr`
   font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: bold;
   color: #817e90;
   width: 100%;
@@ -1029,11 +1020,11 @@ const TierTable = styled.table`
     > th {
       vertical-align: middle;
       font-family: NotoSansKR, Apple SD Gothic Neo;
-      font-size: 12px;
+      font-size: 15px;
       font-weight: bold;
       color: #817e90;
       text-align: center;
-      width: 30px;
+      width: 50px;
       > .sorting {
         display: flex;
         justify-content: center;
@@ -1044,8 +1035,9 @@ const TierTable = styled.table`
 
   > tbody {
     display: block;
-    height: 140px;
+    height: 185px;
     overflow: auto;
+    border-radius: 20px;
     &::-webkit-scrollbar {
       width: 5px;
       height: 10px;
@@ -1065,14 +1057,14 @@ const TierTable = styled.table`
       display: table;
       table-layout: fixed;
       width: 100%;
-      height: 28px;
+      height: 31px;
       border: 1px solid rgb(58, 55, 69);
       .NameWrapper {
         display: flex;
         align-items: center;
         img {
-          width: 19px;
-          height: 19px;
+          width: 26px;
+          height: 26px;
           border-radius: 20px;
           margin: 0 13px 0 10px;
         }
@@ -1082,14 +1074,19 @@ const TierTable = styled.table`
       }
       > .ChampName {
         width: 100px;
+        div {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
       td {
         vertical-align: middle;
         text-align: center;
         font-family: NotoSansKR, Apple SD Gothic Neo;
-        font-size: 12px;
+        font-size: 15px;
         color: #ffffff;
-        width: 30px;
+        width: 50px;
       }
     }
   }

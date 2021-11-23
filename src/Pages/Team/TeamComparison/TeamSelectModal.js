@@ -7,11 +7,10 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   OppTeam,
   GetOppTeam,
-  HandleTab
+  HandleTab,
 } from "../../../redux/modules/filtervalue";
 import { API } from "../../config";
 import axiosRequest from "../../../lib/axiosRequest";
-
 
 function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
   //팀 비교 텝 누를 떄 뜨는 모달창
@@ -39,11 +38,11 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
       patch: filters.patch,
       team: filters.team,
       token: user.token,
-      id: user.id
+      id: user.id,
     };
     axiosRequest(url, params, function (e) {
       setOppTeam(e.data.oppteam);
-    })
+    });
   };
 
   return (
@@ -55,28 +54,33 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
       <TeamModalWrapper openModal={openModal}>
         <ModalNav>
           <label>{t("filters.teamCompareLabel")}</label>
-          <img
-            src="Images/btn-popup-close.png"
-            alt="closeBtn"
-            onClick={() => setOpenModal(false)}
-          />
+          <span>
+            <img
+              src="Images/ic_close_bk_30.svg"
+              alt="closeBtn"
+              onClick={() => setOpenModal(false)}
+            />
+          </span>
         </ModalNav>
-        <ContentTitle>Team</ContentTitle>
-        <MapTeamContent>
-          {oppTeam?.map((team, idx) => {
-            return (
-              <MapTeam
-                key={idx}
-                onClick={() => dispatch(OppTeam(team))}
-                currentTeam={filters.oppteam === team}
-              >
-                <img src={`Images/TeamLogo/${team}.png`} alt="teamLogo" />
-                <div>{team}</div>
-              </MapTeam>
-            );
-          })}
-        </MapTeamContent>
-        <ButtonBox>
+        <ContentBox>
+          <ContentTitle>Team</ContentTitle>
+          <MapTeamContent>
+            {oppTeam?.map((team, idx) => {
+              return (
+                <MapTeam
+                  key={idx}
+                  onClick={() => dispatch(OppTeam(team))}
+                  currentTeam={filters.oppteam === team}
+                >
+
+                  <img src={`Images/TeamLogo/${team}.png`} alt="teamLogo" />{" "}
+                  <div>{team}</div>
+                </MapTeam>
+              );
+            })}
+          </MapTeamContent>
+        </ContentBox>
+        <ButtonBox isOppteamSelected={filters.oppteam !== ""}>
           <button
             onClick={() => {
               setOpenModal(false);
@@ -109,68 +113,104 @@ const BackScreen = styled.div`
 
 const TeamModalWrapper = styled.div`
   display: ${(props) => (props.openModal ? "block" : "none")};
-  width: 310px;
-  height: 517px;
-  border: solid 1px rgb(58, 55, 69);
-  background-color: rgb(47, 45, 56);
+  width: 500px;
+  // height: 383px;
+  border: solid 1px #23212a;
+  background-color: #23212a;
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   opacity: 1;
   position: fixed;
   z-index: 3;
+  border-radius: 20px;
 `;
 
 const ModalNav = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
-  height: 48px;
-  justify-content: space-between;
+  height: 50px;
+  justify-content: center;
   padding: 0 11px;
+  border-bottom: solid 1px #433f4e;
   label {
-    width: auto;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
     font-weight: bold;
-    color: rgb(129, 126, 144);
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    color: #fff;
   }
   img {
-    width: 24px;
-    height: 24px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
   }
+`;
+
+const ContentBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #484655;
+  margin-top: 30px;
 `;
 
 const ContentTitle = styled.div`
   display: flex;
   align-items: center;
-  width: 100%;
-  height: 34px;
-  background-color: rgb(35, 33, 42);
+  height: 18px;
   font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
-  padding: 0px 0 0px 14px;
+  font-size: 18px;
+  /* padding: 0px 0 0px 14px; */
+  padding: 10px 14px;
+  margin: 0px 39px 0px 23px;
   color: rgb(255, 255, 255);
 `;
 
 const MapTeamContent = styled.div`
-  height: 351px;
-  border-bottom: 1px solid rgb(72, 70, 85);
+  max-height: 190px;
+  //border-bottom: 1px solid rgb(72, 70, 85);
+  overflow-y: scroll;
+  padding: 0 16px;
+  padding-top: 10px;
+  &::-webkit-scrollbar {
+    width: 8px;
+    background-color: #434050;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #23212a;
+    border-radius: 10px;
+  }
 `;
 
 const ButtonBox = styled.div`
-  padding: 21px 94px 26px 94px;
-  height: 83px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90px;
+  margin: 5px 16px 0;
   button {
     outline: none;
     text-decoration: none;
-    width: 122px;
-    height: 36px;
-    border-radius: 3px;
-    background-color: rgb(240, 69, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
-    font-weight: 500;
+    width: 100%;
+    height: 60px;
+    margin: 0 5px;
+    border-radius: 20px;
+    background-color: ${(props) =>
+    props.isOppteamSelected ? "#5942ba" : "#484655"};
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
+    text-align: center;
     color: rgb(255, 255, 255);
   }
 `;
@@ -179,22 +219,30 @@ const MapTeam = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  height: 34px;
+  height: 60px;
   cursor: pointer;
   color: rgb(132, 129, 142);
+  padding: 15px 0 15px 46px;
   ${(props) =>
     props.currentTeam &&
     css`
       color: rgb(255, 255, 255);
-      background-color: rgb(58, 55, 69);
+      background-color: #16151c;
+      border-radius: 20px;
     `}
   img {
-    width: 20px;
-    height: 20px;
-    margin: 0 10px 0 15px;
+    width: 30px;
+    height: 30px;
+    margin: 0 11px 0 0px;
+
   }
   div {
-    font-family: Poppins;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 16px;
+    font-weight: 300;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
   }
 `;

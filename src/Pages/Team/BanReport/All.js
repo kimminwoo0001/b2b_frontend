@@ -16,7 +16,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
   return (
     <div>
       <SelectedPosition>
-        <TableTitle>{t("team.draft.order")}</TableTitle>
+        <TableTitle><span className="header-name">{t("team.draft.order")}</span></TableTitle>
         <TableHeader>
           <span className="First">1st PICK</span>
           <span className="First">2nd PICK</span>
@@ -163,7 +163,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
         </TableWrapper2>
       </SelectedPosition>
       <SelectedWinRate>
-        <TableTitle>{t("team.draft.mostban")}</TableTitle>
+        <TableTitle><span className="header-name">{t("team.draft.mostban")}</span></TableTitle>
         <TableHeader>
           <span className="First">1st BAN</span>
           <span className="First">2nd BAN</span>
@@ -280,7 +280,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
         </TableWrapper>
       </SelectedWinRate>
       <SelectedWinRate>
-        <TableTitle>{t("team.draft.mostbanned")}</TableTitle>
+        <TableTitle><span className="header-name">{t("team.draft.mostbanned")}</span></TableTitle>
         <TableHeader>
           <span className="First">1st BAN</span>
           <span className="First">2nd BAN</span>
@@ -398,7 +398,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
       </SelectedWinRate>
       <PhaseContainer>
         <PhaseTable>
-          <PhaseTitle>{t("team.draft.mostban")}</PhaseTitle>
+          <PhaseTitle><span className="header-name">{t("team.draft.mostban")}</span></PhaseTitle>
           <PhaseHeader>
             <span className="First">Phase 1</span>
           </PhaseHeader>
@@ -408,7 +408,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                 return (
                   <MapPhaseData key={idx}>
                     <img
-                      src={`Images/champion/${phase.champion}.png`}
+                      src={`Images/champion/${phase.key}.png`}
                       width="19px"
                       height="19px"
                       style={{ borderRadius: "30px" }}
@@ -427,7 +427,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
           </PhaseWrapper>
         </PhaseTable>
         <PhaseTable>
-          <PhaseTitle>{t("team.draft.mostban")}</PhaseTitle>
+          <PhaseTitle><span className="header-name">{t("team.draft.mostban")}</span></PhaseTitle>
           <PhaseHeader>
             <span className="First">Phase 2</span>
           </PhaseHeader>
@@ -437,7 +437,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                 return (
                   <MapPhaseData key={idx}>
                     <img
-                      src={`Images/champion/${phase.champion}.png`}
+                      src={`Images/champion/${phase.key}.png`}
                       width="19px"
                       height="19px"
                       style={{ borderRadius: "30px" }}
@@ -459,7 +459,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
 
       <PhaseContainer>
         <PhaseTable>
-          <PhaseTitle>{t("team.draft.mostbaned")}</PhaseTitle>
+          <PhaseTitle><span className="header-name">{t("team.draft.mostbaned")}</span></PhaseTitle>
           <PhaseHeader>
             <span className="First">Phase 1</span>
           </PhaseHeader>
@@ -469,7 +469,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                 return (
                   <MapPhaseData key={idx}>
                     <img
-                      src={`Images/champion/${phase.champion}.png`}
+                      src={`Images/champion/${phase.key}.png`}
                       width="19px"
                       height="19px"
                       style={{ borderRadius: "30px" }}
@@ -488,7 +488,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
           </PhaseWrapper>
         </PhaseTable>
         <PhaseTable>
-          <PhaseTitle>{t("team.draft.mostbaned")}</PhaseTitle>
+          <PhaseTitle><span className="header-name">{t("team.draft.mostbaned")}</span></PhaseTitle>
           <PhaseHeader>
             <span className="First">Phase 2</span>
           </PhaseHeader>
@@ -498,7 +498,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                 return (
                   <MapPhaseData key={idx}>
                     <img
-                      src={`Images/champion/${phase.champion}.png`}
+                      src={`Images/champion/${phase.key}.png`}
                       width="19px"
                       height="19px"
                       style={{ borderRadius: "30px" }}
@@ -524,10 +524,12 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
 export default All;
 
 const SelectedPosition = styled.div`
+  margin-top: 30px;
   width: 100%;
   min-height: 155px;
   border: solid 1px #3a3745;
   background-color: #2f2d38;
+  border-radius: 20px;
 `;
 
 const SelectedWinRate = styled.div`
@@ -536,14 +538,22 @@ const SelectedWinRate = styled.div`
   min-height: 155px;
   border: solid 1px #3a3745;
   background-color: #2f2d38;
+  border-radius: 20px;
 `;
 
 const TableTitle = styled.div`
-  padding: 13px 15px;
-  color: #6b6979;
+  width: 100%;
+  height: 50.5px;
+  padding: 19.5px 0 0 21px;
+  border-bottom: 1px solid rgb(35, 33, 42);
   font-family: Poppins;
+  color: #84818e;
   font-size: 13px;
   font-weight: bold;
+  .header-name {
+    font-size: 16px;
+    color: #fff;
+  }
 `;
 
 const TableHeader = styled.div`
@@ -554,9 +564,11 @@ const TableHeader = styled.div`
   padding: 6px 0px 5px 15px;
   height: 28px;
   background-color: rgb(58, 55, 69);
-  font-family: Poppins;
-  font-size: 12px;
-  font-weight: bold;
+  font-size: 15px;
+  font-family: SpoqaHanSansNeo;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
   text-align: left;
   color: #817e90;
   .First {
@@ -583,7 +595,8 @@ const TableWrapper = styled.div`
 const TableWrapper2 = styled.div`
   display: flex;
 `;
-const StyledTippy = styled(Tippy)``;
+const StyledTippy = styled(Tippy)`
+`;
 
 const TableContents2 = styled.div`
   display: flex;
@@ -595,7 +608,6 @@ const TableContents2 = styled.div`
 const TableContents = styled.div`
   display: flex;
   width: 219px;
-  min-height: 84px;
   max-height: 290px;
   flex-direction: column;
 `;
@@ -603,26 +615,37 @@ const TableContents = styled.div`
 const MapPickData = styled.div`
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #3a3745;
+  border-top: 1px solid #3a3745;
   padding: 7.5px 0 7.5px 15px;
   cursor: pointer;
+  height:30px;
 
   .Position {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    margin-left: 15px;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.87;
+    letter-spacing: normal;
     text-align: left;
-    color: #ffffff;
+    color: #fff;
+    margin-left: 15px;
     width: 105px;
   }
   .Total {
-    font-family: Poppins;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.87;
+    letter-spacing: normal;
     width: 80px;
     color: #f04545;
     /* width: 20px; */
     text-align: center;
+    margin-right: 10px;
   }
 `;
 
@@ -630,20 +653,33 @@ const MapBanData = styled.div`
   display: flex;
   align-items: center;
   padding: 4.5px 0 4.5px 15px;
-  border-bottom: 1px solid #3a3745;
+  border-top: 1px solid #3a3745;
+  height:30px;
   .Champion {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.87;
+    letter-spacing: normal;
     text-align: left;
-    color: #ffffff;
+    color: #fff;
     width: 105px;
     margin-left: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .Rate {
-    font-family: Poppins;
-    font-size: 12px;
-    text-align: center;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.87;
+    letter-spacing: normal;
+    text-align: right;
     color: #f04545;
     width: 50px;
   }
@@ -678,5 +714,5 @@ const PhaseContents = styled(TableContents)`
 `;
 
 const MapPhaseData = styled(MapBanData)`
-  width: 178.5px;
+  width: 176px;
 `;

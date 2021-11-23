@@ -69,8 +69,8 @@ const SelectedFilters = styled.div`
 `;
 
 const SelectedArea = styled.div`
-  width: 271px;
-  margin: 10px 0;
+  width: 250px;
+  margin: 20px 0;
   header {
     width: 250px;
     height: 31px;
@@ -90,5 +90,4 @@ const SelectedArea = styled.div`
   .not-selected {
     opacity: 0.3;
   }
-
 `;

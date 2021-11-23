@@ -14,6 +14,10 @@
     "part11": "픽 조합 계산기",
     "part12": "게임 보고서"
   },
+  "nav": {
+    "login": "로그인",
+    "logout": "로그아웃"
+  },
   "home": {
     "rank": "순위",
     "teamName": "팀명",
@@ -51,7 +55,7 @@
       "pm": "오후"
     },
     "draft": {
-      "mostPick": "주요 픽",
+      "mostPick": "대회 주요 픽",
       "against": "주요 픽 간의 전적",
       "unique": "유니크 픽",
       "champtier": "챔피언 티어",
@@ -143,7 +147,7 @@
       "sbr": "PR",
       "firstGank": "첫 갱 라인별 횟수",
       "lane": "라인",
-      "gankCount": "갱 횟수",
+      "gankCount": "갱 카운트",
       "supportTime": "라인 별 평균 서포팅 시간",
       "ySupportTime": "서포팅 시간(초)",
       "positionSBR": "포지션 별 PR",
@@ -276,8 +280,7 @@
       "CSD15": "15분 경과 시점에서 상대 라이너와의 CS 격차입니다. 리그 평균 격차는 항상 0입니다.",
       "XPD15": "15분 경과 시점에서 상대 라이너와의 경험치 격차입니다. 리그 평균 격차는 항상 0입니다.",
       "GD15": "15분 경과 시점에서 상대 라이너와의 골드 격차입니다. 리그 평균 격차는 항상 0입니다.",
-      "findLabel": "찾고 싶은 선수의",
-      "findLabel2": "소속팀을 먼저 선택해주세요.",
+      "findLabel": "찾고 싶은 선수의 소속팀을 먼저 선택해주세요.",
       "win": "승",
       "lose": "패",
       "total": "전",
@@ -295,11 +298,11 @@
     "allChampLabel": "모든 챔피언",
     "allChampLabel2": "이(가) 플레이 한 모든 챔피언",
     "teamCompareLabel": "팀을 선택해주세요.",
-    "teamCompareLabel1": "나의 팀을 선택해주세요.",
-    "teamCompareLabel2": "비교하고 싶은 팀을 선택해주세요.",
+    "teamCompareLabel1": "나의 팀 선택",
+    "teamCompareLabel2": "비교하고 싶은 팀 선택",
     "playerCompareLabel": "선수를 선택해주세요.",
-    "playerCompareLabel1": "나의 선수를 선택해주세요.",
-    "playerCompareLabel2": "비교하고 싶은 선수를 선택해주세요.",
+    "playerCompareLabel1": "나의 선수 선택",
+    "playerCompareLabel2": "비교하고 싶은 선수 선택",
     "confirm": "선택완료",
     "close": "창닫기",
     "selectOption": "보고싶은 데이터의 옵션을 선택해주세요.",
@@ -311,7 +314,15 @@
     "noTeam": "팀이 설정되지 않았습니다.",
     "onePatch": "패치는 최소 한개 이상 선택되어야 합니다.",
     "dataProcess": "현재 데이터를 수집중입니다. 수집하는 동안 사이트가 느려질 수 있습니다.",
-    "description": "보고싶은 데이터를 한눈에 볼 수 있습니다. 옵션을 선택해주세요"
+    "description": "보고싶은 데이터를 한눈에 볼 수 있습니다. 옵션을 선택해주세요",
+    "selectAll": "전체 선택",
+    "chooseOptionLabel": "옵션을 선택해주세요.",
+    "setFilter": "필터 설정",
+    "setLeague": "리그",
+    "setSeason": "시즌",
+    "setPatchVersion": "패치버전",
+    "team": "팀",
+    "player": "선수"
   },
   "video": {
     "tab": {
@@ -362,10 +373,10 @@
       "step3": "오브젝트 설정",
       "step4": "포지션 설정",
       "apply": "동선 확인하기",
-      "player": "선수",
+      "player": "선수 선택",
       "champ": "챔피언",
       "team2": "상대 팀",
-      "player2": "상대 선수",
+      "player2": "상대 선수 선택",
       "champ2": "상대 챔피언",
       "compare": "다른 팀과 비교해서 보기",
       "compare2": "한 팀만 보기",
@@ -380,7 +391,8 @@
       "return": "첫번째 귀환",
       "return2": "귀환 후 1분",
       "position": "포지션을 선택하시면 관련 된 모든 동선이 보여집니다.",
-      "confirm": "선택완료"
+      "confirm": "선택완료",
+      "selectChamp": "챔피언 선택"
     },
     "game": {
       "select": "경기 선택",
@@ -409,6 +421,14 @@
   "alert": {
     "logout": {
       "sessionExpires": "세션이 만료되어 로그인 페이지로 이동합니다."
+    },
+    "label": {
+      "confirm": "확인",
+      "cancel": "취소"
+    },
+    "desc": {
+      "copy_y": "복사되었습니다.",
+      "copy_n": "복사되지 않았습니다."
     }
   },
   "label": {
@@ -418,5 +438,12 @@
     "team": "팀",
     "player": "선수",
     "patchVersion": "패치 버전"
+  },
+  "position": {
+    "top": "탑",
+    "jg": "정글",
+    "mid": "미드",
+    "ad": "바텀",
+    "sup": "서포터"
   }
 }

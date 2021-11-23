@@ -1,7 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import qs from "qs";
-
 import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
@@ -22,15 +20,23 @@ import {
   MenuNum,
   SetLeague,
   Season,
-  CompareModal
+  CompareModal,
 } from "../../redux/modules/filtervalue";
 import { API } from "../../Pages/config";
 import { useDetectOutsideClick } from "../../Pages/PlayerCompare/useDetectOustsideClick";
 import axiosRequest from "../../lib/axiosRequest";
 
-function PlayerFilterModal({ playerModal, setPlayerModal,
-  fetchLeagueFilter, leagueFilter, seasonFilter,
-  teamFilter, setTeamFilter, playerFilter, setPlayerFilter }) {
+function PlayerFilterModal({
+  playerModal,
+  setPlayerModal,
+  fetchLeagueFilter,
+  leagueFilter,
+  seasonFilter,
+  teamFilter,
+  setTeamFilter,
+  playerFilter,
+  setPlayerFilter,
+}) {
   // sidebar 선수 비교 눌렀을때 뜨는 모달창
   const filters = useSelector((state) => state.FilterReducer);
   const selector = useSelector((state) => state.SelectorReducer);
@@ -53,14 +59,14 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
   useEffect(() => {
     setOppTeamFilter();
     setOppPlayerFilter();
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (filters.compareModal === false) {
       setOppTeamFilter();
       setOppPlayerFilter();
     }
-  }, [filters.compareModal])
+  }, [filters.compareModal]);
 
   // 확인하기 버튼 조건
   const handleConfirm = () => {
@@ -73,7 +79,6 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
       alert(t("filters.noPlayer"));
     }
   };
-
 
   // opp 팀 필터 fetch 함수
   const fetchingOppTeamFilter = (team) => {
@@ -90,7 +95,7 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
 
     axiosRequest(url, params, function (e) {
       setOppTeamFilter(e.data.oppteam);
-    })
+    });
   };
 
   //플레이어 필터 fetch 함수
@@ -108,7 +113,7 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
 
     axiosRequest(url, params, function (e) {
       dispatch(setPlayerFilter(e.data));
-    })
+    });
   };
 
   //상대 선수 필터 fetch 함수
@@ -127,25 +132,42 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
 
     axiosRequest(url, params, function (e) {
       setOppPlayerFilter(e.data);
-    })
+    });
   };
 
   return (
     <>
       <BackScreen
         playerModal={playerModal}
-      // onClick={() => setPlayerModal(false)}
+        // onClick={() => setPlayerModal(false)}
       ></BackScreen>
       <PlayerModalWrapper playerModal={playerModal}>
+        <ModalNav>
+          <label>{t("filters.chooseOptionLabel")}</label>
+          <img
+            src="Images/ic_close_bk_30.png"
+            alt="closeBtn"
+            className="Close"
+            onClick={() => {
+              dispatch(InitailizeState());
+              dispatch(MenuNum(4));
+              dispatch(CompareModal(false));
+              history.push("/solo");
+              dispatch(setTeamFilter([]));
+              dispatch(setPlayerFilter([]));
+              setOppPlayerFilter([]);
+              setOppTeamFilter([]);
+            }}
+          />
+        </ModalNav>
         <FilterContainer>
           <FilterWrapper>
             <FilterHeader>
-              <img src="Images/ico-filter.png" alt="filterIcon"></img>
-              <label>Filter</label>
+              <label>{t("filters.setFilter")}</label>
             </FilterHeader>
             <LeagueFilter>
-              <label>League</label>
-              <DropDownToggle className="container">
+              <label>{t("filters.setLeague")}</label>
+              <DropDownToggle>
                 <div className="menu-container">
                   <button
                     onClick={() => {
@@ -154,22 +176,24 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
                     }}
                     className="menu-trigger"
                   >
-                    <img
-                      className="ChampIconImg"
-                      width="14px"
-                      height="14px"
-                      src={
-                        filters.league.length === 1
-                          ? `Images/ico-league-${filters.league[0].toLowerCase()}.png`
-                          : "Images/ico-filter-none.png"
-                      }
-                      alt="champIcon"
-                    />
-                    <span className="Label">
-                      {filters.league.length === 1
-                        ? filters.league
-                        : t("filters.leagueLabel")}
-                    </span>
+                    <div className="wrapper">
+                      <img
+                        className="ChampIconImg"
+                        width="14px"
+                        height="14px"
+                        src={
+                          filters.league.length === 1
+                            ? `Images/ico-league-${filters.league[0].toLowerCase()}.png`
+                            : "Images/ico-filter-none.png"
+                        }
+                        alt="champIcon"
+                      />
+                      <span className="Label">
+                        {filters.league.length === 1
+                          ? filters.league
+                          : t("filters.leagueLabel")}
+                      </span>
+                    </div>
                     <img
                       className="ArrowIcon"
                       src="Images/ico-filter-arrow.png"
@@ -197,8 +221,10 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
                                 setIsActiveLeague(!isActiveLeague);
                                 //dispatch(ResetFilter(league));
                                 //fetchingPatchFilter(league);
-                                league !== filters.league[0] && dispatch(setTeamFilter([]));
-                                league !== filters.league[0] && setOppTeamFilter([]);
+                                league !== filters.league[0] &&
+                                  dispatch(setTeamFilter([]));
+                                league !== filters.league[0] &&
+                                  setOppTeamFilter([]);
                               }}
                               key={idx}
                             >
@@ -213,23 +239,24 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
               </DropDownToggle>
             </LeagueFilter>
             <PatchFilter>
-              <label>Season</label>
-              {seasonFilter.length === 0 ? (
-                <PatchLabels>
-                  <img
-                    className="ChampIconImg"
-                    width="14px"
-                    height="14px"
-                    src={
-                      filters.patch !== ""
-                        ? `Images/ico-filter-version.png`
-                        : "Images/ico-filter-none.png"
-                    }
-                    alt="champIcon"
-                  />
-                  <span className="Label">{t("filters.patchLabel")}</span>
-                </PatchLabels>
-              ) : (
+              <label>{t("filters.setSeason")}</label>
+              {
+                // seasonFilter.length === 0 ? (
+                //   <PatchLabels>
+                //     <img
+                //       className="ChampIconImg"
+                //       width="14px"
+                //       height="14px"
+                //       src={
+                //         filters.patch !== ""
+                //           ? `Images/ico-filter-version.png`
+                //           : "Images/ico-filter-none.png"
+                //       }
+                //       alt="champIcon"
+                //     />
+                //     <span className="Label">{t("filters.patchLabel")}</span>
+                //   </PatchLabels>
+                // ) :
                 seasonFilter?.map((season, idx) => {
                   return (
                     <SelectedPatch
@@ -245,16 +272,14 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
                         type="checkbox"
                         readOnly
                       ></input>
-                      <div className="Version">
-                        {season}
-                      </div>
+                      <div className="Version">{season}</div>
                     </SelectedPatch>
                   );
                 })
-              )}
+              }
             </PatchFilter>
             <PatchFilter>
-              <label>Patch Version</label>
+              <label>{t("filters.setPatchVersion")}</label>
               {!selector.patchFilter ? (
                 <PatchLabels>
                   <img
@@ -298,13 +323,13 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
           </FilterWrapper>
           <TeamBox>
             <TeamFilterBox>
-              <SelectTeam>
+              <SelectTeam isFilterSelected={filters.league.length > 0}>
                 <div className="SelectTitle">
                   {t("filters.playerCompareLabel1")}
                 </div>
                 <GetFilterData>
-                  <ContentBox>
-                    <div className="Nav">Team</div>
+                  <MyTeamBox isFilterSelected={filters.league.length > 0}>
+                    <div className="Nav">{t("filters.team")}</div>
                     {teamFilter?.map((team, index) => {
                       return (
                         <MapTeams
@@ -326,9 +351,12 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
                         </MapTeams>
                       );
                     })}
-                  </ContentBox>
-                  <ContentBox2>
-                    <div className="Nav2">Player</div>
+                  </MyTeamBox>
+                  <MyPlayerBox
+                    isMyTeamSelected={filters.team !== ""}
+                    isFilterSelected={filters.league.length > 0}
+                  >
+                    <div className="Nav2">{t("filters.player")}</div>
                     {playerFilter?.map((player, index) => {
                       return (
                         <MapTeams
@@ -351,16 +379,22 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
                         </MapTeams>
                       );
                     })}
-                  </ContentBox2>
+                  </MyPlayerBox>
                 </GetFilterData>
               </SelectTeam>
-              <SelectTeam>
+              <SelectOppTeam
+                isFilterSelected={filters.league.length > 0}
+                isMyPlayerSelected={filters.player !== ""}
+              >
                 <div className="SelectTitle">
                   {t("filters.playerCompareLabel2")}
                 </div>
                 <GetFilterData>
-                  <ContentBox>
-                    <div className="Nav">Team</div>
+                  <OppTeamBox
+                    isMyPlayerSelected={filters.player !== ""}
+                    isFilterSelected={filters.league.length > 0}
+                  >
+                    <div className="Nav">{t("filters.team")}</div>
                     {oppTeamFilter?.map((team, index) => {
                       return (
                         <MapTeams
@@ -380,9 +414,12 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
                         </MapTeams>
                       );
                     })}
-                  </ContentBox>
-                  <ContentBox2>
-                    <div className="Nav2">Player</div>
+                  </OppTeamBox>
+                  <OppPlayerBox
+                    isOppTeamSelected={filters.oppteam !== ""}
+                    isFilterSelected={filters.league.length > 0}
+                  >
+                    <div className="Nav2">{t("filters.player")}</div>
                     {oppPlayerFilter?.map((player, index) => {
                       return (
                         <MapTeams
@@ -398,37 +435,22 @@ function PlayerFilterModal({ playerModal, setPlayerModal,
                         </MapTeams>
                       );
                     })}
-                  </ContentBox2>
+                  </OppPlayerBox>
                 </GetFilterData>
-              </SelectTeam>
+              </SelectOppTeam>
             </TeamFilterBox>
-            <ButtonBox>
-              <button
-                className="Selected"
-                onClick={() => {
-                  handleConfirm();
-                }}
-              >
-                {t("filters.confirm")}
-              </button>
-              <button
-                className="Close"
-                onClick={() => {
-                  dispatch(InitailizeState());
-                  dispatch(MenuNum(4));
-                  dispatch(CompareModal(false));
-                  history.push("/solo");
-                  dispatch(setTeamFilter([]));
-                  dispatch(setPlayerFilter([]));
-                  setOppPlayerFilter([]);
-                  setOppTeamFilter([]);
-                }}
-              >
-                {t("filters.close")}
-              </button>
-            </ButtonBox>
           </TeamBox>
         </FilterContainer>
+        <ButtonBox isOppPlayerSelected={filters.oppplayer !== ""}>
+          <button
+            className="Selected"
+            onClick={() => {
+              handleConfirm();
+            }}
+          >
+            {t("filters.confirm")}
+          </button>
+        </ButtonBox>
       </PlayerModalWrapper>
     </>
   );
@@ -438,7 +460,9 @@ export default PlayerFilterModal;
 
 const FilterContainer = styled.div`
   display: flex;
-  border-bottom: 1px solid #484655;
+  /* border-bottom: 1px solid #484655; */
+  padding-top: 15px;
+  padding-left: 10px;
 `;
 
 const BackScreen = styled.div`
@@ -450,20 +474,42 @@ const BackScreen = styled.div`
   position: fixed;
   z-index: 3;
   background-color: rgba(0, 0, 0, 1);
-  opacity: 1;
+  opacity: 0.7;
 `;
 
 const PlayerModalWrapper = styled.div`
   display: ${(props) => (props.playerModal ? "block" : "none")};
-  width: 774px;
-  min-height: 517px;
-  background-color: #2f2d38;
+  width: 706px;
+  min-height: 666px;
+  background-color: #23212a;
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   opacity: 3;
   position: fixed;
   z-index: 3;
+  border-radius: 20px;
+`;
+
+const ModalNav = styled.div`
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 5px 0 10px;
+  border-bottom: 1px solid #433f4e;
+  label {
+    text-align: center;
+    width: 100%;
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+  }
+  img {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
 `;
 
 const TeamBox = styled.div`
@@ -486,28 +532,23 @@ const PatchLabels = styled.div`
 `;
 
 const FilterWrapper = styled.div`
-  width: 130px;
-
-  background-color: #2f2d38;
-  border-right: 1px solid #484655;
+  width: 260px;
+  background-color: #23212a;
+  padding-top: 15px;
 `;
 
 const FilterHeader = styled.div`
-  height: 49px;
-  border-bottom: 1px solid #484655;
-  img {
-    margin-left: 9px;
-    margin-top: 17px;
-  }
+  margin-left: 10px;
   label {
-    width: 24px;
+    /* width: 24px; */
     height: 15px;
     margin: 0 0 0px 6px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
+    font-family: "Spoqa Han Sans";
+    font-size: 15px;
+    font-weight: bold;
     line-height: 1.36;
     text-align: left;
-    color: #84818e;
+    color: #fff;
   }
 `;
 
@@ -523,11 +564,11 @@ const SelectedPatch = styled.div`
     props.isChecked &&
     css`
       color: rgb(255, 255, 255);
-      background-color: rgb(35, 34, 43);
+      /* background-color: rgb(35, 34, 43); */
     `}
   > .Version {
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
+    font-size: 13px;
     letter-spacing: -0.55px;
     text-align: left;
   }
@@ -537,22 +578,21 @@ const SelectedPatch = styled.div`
     appearance: none;
 
     display: inline-block;
-    width: 12px;
-    height: 12px;
-
+    width: 15px;
+    height: 15px;
     background-clip: content-box;
     border: 1.5px solid rgb(72, 70, 85);
     border-radius: 2px;
     background-color: transparent;
-
     margin-right: 8px;
 
     &:checked {
       background-color: #f04545;
       border: #f04545;
       border-radius: 2px;
-      background: url("/Images/check.svg") #f04545 no-repeat 2.5px 4px/5.5px
-        4.5px;
+      /* background: url("/Images/check.svg") #f04545 no-repeat 2.5px 4px/5.5px
+        4.5px; */
+      background: url("/Images/btn_check_on.png") no-repeat;
       float: right;
     }
 
@@ -562,90 +602,120 @@ const SelectedPatch = styled.div`
   }
 `;
 
-
-
 const LeagueFilter = styled.div`
-  height: 61px;
-  border-bottom: 1px solid #484655;
+  width: 240px;
+  margin: 17px 10px 10px 10px;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: #2f2d38;
+
   label {
-    width: 35px;
+    /* width: 35px; */
     height: 15px;
     font-family: NotoSansKR, Apple SD Gothic Neo;
     margin: 7.6px 0 11px 8px;
-    font-size: 11px;
+    font-size: 14px;
     line-height: 1.36;
     text-align: left;
-    color: #84818e;
+    color: #fff;
   }
 `;
 
 const PatchFilter = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  min-height: 61px;
-  border-bottom: 1px solid #484655;
+  align-items: flex-start;
+  background-color: #2f2d38;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 5px;
+  min-height: 60px;
+  width: 240px;
+  height: 180px;
+
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #434050;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin: 5px;
+  }
+
   label {
-    width: 120px;
+    /* width: 120px; */
     height: 15px;
     font-family: NotoSansKR, Apple SD Gothic Neo;
     margin: 7.6px 0 11px 8px;
-    font-size: 11px;
+    font-size: 14px;
     line-height: 1.36;
     text-align: left;
-    color: #84818e;
+    color: #fff;
   }
 `;
 
 const TeamFilterBox = styled.div`
   display: flex;
-  min-height: 433px;
-  border-bottom: 1px solid #484655;
 `;
 
 const SelectTeam = styled.div`
-  width: 322px;
+  width: 203px;
   height: 100%;
-  :nth-child(1) {
-    border-right: 1px solid #484655;
-  }
+  margin: 0 5px;
 
   .SelectTitle {
     display: flex;
     align-items: center;
-    padding: 0px 0 0 15px;
     height: 48px;
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: bold;
     width: 100%;
     letter-spacing: -0.6px;
     text-align: left;
-    color: #817e90;
+    color: #fff;
+    opacity: ${(props) => (props.isFilterSelected ? "1" : "0.3")};
   }
   .Nav {
-    display: flex;
-    align-items: center;
-    height: 34px;
-    width: 141px;
-    padding: 0px 0 0px 15px;
-    background-color: #23212a;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    text-align: left;
     color: #ffffff;
+    margin-bottom: 5px;
   }
   .Nav2 {
+    color: #ffffff;
+    margin-bottom: 5px;
+  }
+`;
+
+const SelectOppTeam = styled.div`
+  width: 203px;
+  height: 100%;
+  margin: 0 5px;
+
+  .SelectTitle {
     display: flex;
     align-items: center;
-    height: 34px;
-    width: 179px;
-    padding: 0px 0 0px 15px;
-    background-color: #23212a;
+    height: 48px;
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-size: 15px;
+    font-weight: bold;
+    width: 100%;
+    letter-spacing: -0.6px;
     text-align: left;
+    color: #fff;
+    opacity: ${(props) =>
+      props.isFilterSelected && props.isMyPlayerSelected ? "1" : "0.3"};
+  }
+  .Nav {
     color: #ffffff;
+    margin-bottom: 5px;
+  }
+  .Nav2 {
+    color: #ffffff;
+    margin-bottom: 5px;
   }
 `;
 
@@ -655,17 +725,18 @@ const ButtonBox = styled.div`
   align-items: center;
   height: 83px;
   .Selected {
-    width: 122px;
-    height: 36px;
-    border-radius: 3px;
-    background-color: #f04545;
+    width: 100%;
+    height: 60px;
+    border-radius: 20px;
+    background-color: ${(props) =>
+      props.isOppPlayerSelected ? "#5942ba" : "#484655"};
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 13px;
     font-weight: 500;
     letter-spacing: -0.65px;
     text-align: center;
     color: #ffffff;
-    margin-right: 20px;
+    margin: 0 20px;
   }
   .Close {
     width: 122px;
@@ -695,30 +766,128 @@ const MapTeams = styled.div`
   .TeamName {
     width: 100%;
     font-family: Poppins;
-    font-size: 12px;
+    font-size: 15px;
     text-align: left;
     color: #84818e;
+    ${(props) =>
+      props.currentTeam &&
+      css`
+        color: #ffffff;
+      `}
   }
   ${(props) =>
     props.currentTeam &&
     css`
-      color: #ffffff;
-      background-color: rgb(58, 55, 69);
+      background-color: #16151c;
+      border-radius: 20px;
     `}
 `;
 
 const GetFilterData = styled.div`
-  display: flex;
+  /* display: flex; */
 `;
 
-const ContentBox = styled.div`
-  min-height: 385px;
-  border-right: 1px solid #3a3745;
+const MyTeamBox = styled.div`
+  width: 193px;
+  height: 218px;
+  background-color: #2f2d38;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 14px;
+  opacity: ${(props) => (props.isFilterSelected ? "1" : "0.3")};
+
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #434050;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin: 5px;
+  }
 `;
 
-const ContentBox2 = styled.div`
-  min-height: 385px;
-  border-right: 1px solid #3a3745;
+const MyPlayerBox = styled.div`
+  width: 193px;
+  height: 218px;
+  /* max-height: 218px; */
+  /* border-right: 1px solid #3a3745; */
+  background-color: #2f2d38;
+  margin-right: 15px;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 14px;
+  opacity: ${(props) =>
+    props.isFilterSelected && props.isMyTeamSelected ? "1" : "0.3"};
+
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #434050;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin: 5px;
+  }
+`;
+
+const OppTeamBox = styled.div`
+  width: 193px;
+  height: 218px;
+  background-color: #2f2d38;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 14px;
+  opacity: ${(props) =>
+    props.isFilterSelected && props.isMyPlayerSelected ? "1" : "0.3"};
+
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #434050;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin: 5px;
+  }
+`;
+
+const OppPlayerBox = styled.div`
+  width: 193px;
+  height: 218px;
+  background-color: #2f2d38;
+  margin-right: 15px;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 14px;
+  opacity: ${(props) =>
+    props.isFilterSelected && props.isOppTeamSelected ? "1" : "0.3"};
+
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #434050;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin: 5px;
+  }
 `;
 
 const DropDownToggle = styled.div`
@@ -742,17 +911,18 @@ const DropDownToggle = styled.div`
   .menu-trigger {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     height: 25px;
     background-color: #2f2d38;
-    font-size: 11px;
-    width: 128px;
+    font-size: 13px;
+    width: 240px;
     color: white;
     outline: none;
     border: none;
-  }
 
-  .menu-trigger:hover {
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+    .wrapper {
+      display: flex;
+    }
   }
 
   .SelectedLabel {
@@ -767,7 +937,7 @@ const DropDownToggle = styled.div`
 
   .Label {
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-size: 13px;
     letter-spacing: -0.6px;
     text-align: left;
     color: rgb(255, 255, 255);
@@ -795,8 +965,8 @@ const DropDownToggle = styled.div`
     background: rgb(47, 45, 56);
     position: absolute;
     top: 28px;
-    right: 0;
-    width: 128px;
+    left: 0;
+    width: 230px;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
     opacity: 0;
     visibility: hidden;

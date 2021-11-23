@@ -10,10 +10,9 @@ import {
   OppPlayer,
   GetOppPlayer,
   ResetChampion,
-  HandleTab
+  HandleTab,
 } from "../../redux/modules/filtervalue";
 import axiosRequest from "../../lib/axiosRequest";
-
 
 function PlayerSelectModal({ openModal, setOpenModal }) {
   const filters = useSelector((state) => state.FilterReducer);
@@ -24,6 +23,9 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
   const [oppPlayer, setOppPlayer] = useState();
 
   useEffect(() => {
+    if (!openModal) {
+      return;
+    }
     fetchingTeamFilter();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openModal]);
@@ -38,10 +40,10 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
       team: filters.team,
       token: user.token,
       id: user.id,
-    }
+    };
     axiosRequest(url, params, function (e) {
       setOppTeam(e.data.oppteam);
-    })
+    });
   };
 
   const fetchingPlayerFilter = (team) => {
@@ -55,10 +57,10 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
       position: filters.position,
       token: user.token,
       id: user.id,
-    }
+    };
     axiosRequest(url, params, function (e) {
       setOppPlayer(e.data);
-    })
+    });
   };
 
   const HandleSelect = () => {
@@ -82,14 +84,14 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
         <ModalNav>
           <label>{t("filters.playerCompareLabel")}</label>
           <img
-            src="Images/btn-popup-close.png"
+            src="Images/ic_close_bk_30.png"
             alt="closeBtn"
             onClick={() => setOpenModal(false)}
           />
         </ModalNav>
         <ComponentBox>
           <ContentBox>
-            <ContentTitle>Team</ContentTitle>
+            <ContentTitle isOppTeamSelected={filters.player}>Team</ContentTitle>
             <MapTeamContent>
               {oppTeam?.map((team, idx) => {
                 return (
@@ -110,13 +112,14 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
             </MapTeamContent>
           </ContentBox>
           <ContentBox>
-            <ContentTitle>Player</ContentTitle>
+            <ContentTitle isOppTeamSelected={filters.oppteam !== ""}>
+              Player
+            </ContentTitle>
             <MapTeamContent>
               {!oppPlayer ? (
                 <PickTeamFirst>
                   <div className="LabelContainer">
                     {t("solo.comparison.findLabel")}
-                    <br /> {t("solo.comparison.findLabel2")}
                   </div>
                 </PickTeamFirst>
               ) : (
@@ -139,7 +142,11 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
             </MapTeamContent>
           </ContentBox>
         </ComponentBox>
-        <ButtonBox>
+        <ButtonBox
+          isAllFilterSelected={
+            filters.oppteam !== "" && filters.oppplayer !== ""
+          }
+        >
           <button onClick={() => HandleSelect()}>{t("filters.confirm")}</button>
         </ButtonBox>
       </Wrapper>
@@ -164,102 +171,122 @@ const BackScreen = styled.div`
 
 const Wrapper = styled.div`
   display: ${(props) => (props.openModal ? "block" : "none")};
-  width: 408px;
-  height: 517px;
+  width: 500px;
+  // height: 516px;
   border: solid 1px #3a3745;
-  background-color: #2f2d38;
+  background-color: #23212a;
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   opacity: 1;
   position: fixed;
   z-index: 3;
+  border-radius: 20px;
 `;
 
 const ModalNav = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  height: 48px;
+  height: 50px;
+  justify-content: center;
   padding: 0 11px;
+  border-bottom: solid 1px #433f4e;
   label {
-    width: auto;
-
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
     font-weight: bold;
-    color: rgb(129, 126, 144);
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    color: #fff;
   }
   img {
-    width: 24px;
-    height: 24px;
-
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
   }
 `;
 
-const ComponentBox = styled.div`
-  display: flex;
-  width: 408px;
-`;
+const ComponentBox = styled.div``;
 
 const ContentBox = styled.div`
   display: flex;
   flex-direction: column;
   border-right: 1px solid #484655;
-  :nth-child(2) {
-    border-right: none;
-  }
+  margin-top: 30px;
 `;
 
 const ContentTitle = styled.div`
   display: flex;
   align-items: center;
-  width: 203px;
-  height: 34px;
-  background-color: rgb(35, 33, 42);
+  height: 18px;
   font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
-  padding: 0px 0 0px 14px;
+  font-size: 18px;
+  /* padding: 0px 0 0px 14px; */
+  padding: 10px 14px;
+  margin: 0px 39px 0px 23px;
   color: rgb(255, 255, 255);
+  opacity: ${(props) => (props.isOppTeamSelected ? "1" : "0.3")};
 `;
 
 const PickTeamFirst = styled.div`
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
-  margin-top: 138px;
+  padding: 0 0 0 25px;
+  margin-top: 25px;
   .LabelContainer {
-    font-family: Poppins;
-    font-size: 12px;
+    font-family: "Spoqa Han Sans";
+    font-size: 18px;
     letter-spacing: -0.6px;
-    text-align: center;
+    text-align: left;
     color: #84818e;
     line-height: 1.5;
   }
 `;
 
 const MapTeamContent = styled.div`
-  height: 351px;
-  width: 203px;
-  border-bottom: 1px solid rgb(72, 70, 85);
+  max-height: 190px;
+  //border-bottom: 1px solid rgb(72, 70, 85);
+  overflow-y: scroll;
+  padding: 0 16px;
+  padding-top: 10px;
+  &::-webkit-scrollbar {
+    width: 8px;
+    background-color: #434050;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #23212a;
+    border-radius: 10px;
+  }
 `;
 
 const ButtonBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 83px;
+  height: 90px;
+  margin: 5px 16px 0;
   button {
     outline: none;
     text-decoration: none;
-    width: 122px;
-    height: 36px;
-    border-radius: 3px;
-    background-color: rgb(240, 69, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
-    font-weight: 500;
+    width: 100%;
+    height: 60px;
+    margin: 0 5px;
+    border-radius: 20px;
+    background-color: ${(props) => props.isAllFilterSelected ? "#5942ba" : "#484655"};
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
+    text-align: center;
     color: rgb(255, 255, 255);
   }
 `;
@@ -268,22 +295,29 @@ const MapTeam = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  height: 34px;
+  height: 60px;
   cursor: pointer;
   color: rgb(132, 129, 142);
+  padding: 15px 0 15px 46px;
   ${(props) =>
     props.currentTeam &&
     css`
       color: rgb(255, 255, 255);
-      background-color: rgb(58, 55, 69);
+      background-color: #16151c;
+      border-radius: 20px;
     `}
   img {
-    width: 20px;
-    height: 20px;
-    margin: 0 10px 0 15px;
+    width: 30px;
+    height: 30px;
+    margin: 0 11px 0 0px;
   }
   div {
-    font-family: Poppins;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 16px;
+    font-weight: 300;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
   }
 `;

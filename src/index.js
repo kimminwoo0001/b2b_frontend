@@ -11,7 +11,7 @@ import createSagaMiddleware from "redux-saga";
 import ErrorBoundary from "./Components/ErrorBoundary";
 // import reportWebVitals from "./reportWebVitals";
 import "./i18n";
-
+import { GlobalFonts } from "./Styles/fonts/fonts";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 
@@ -34,6 +34,7 @@ ReactDOM.render(
         <Provider store={store}>
           <PersistGate persistor={persistor}>
             <Routes />
+            <GlobalFonts />
             <GlobalStyles />
           </PersistGate>
         </Provider>
@@ -42,4 +43,3 @@ ReactDOM.render(
   </>,
   document.getElementById("root")
 );
-

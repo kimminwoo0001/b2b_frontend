@@ -20,7 +20,7 @@ import {
   ResetOppChampion,
 } from "../../../redux/modules/filtervalue";
 import axiosRequest from "../../../lib/axiosRequest";
-
+import ExcelExport from "../../../Components/UtilityComponent/ExcelExport";
 
 function PlayerBoard() {
   //선수 보고서 => 선수 상황판
@@ -117,7 +117,7 @@ function PlayerBoard() {
       });
       setSeason({ x: seasonX, y: seasonY });
       setLoading(false);
-    })
+    });
   };
 
   //챔피언 필터
@@ -133,9 +133,14 @@ function PlayerBoard() {
       id: user.id,
     };
     axiosRequest(url, params, function (e) {
-      setChampFilter(e.data.champion);
-      setChampEng(e.data.championEng);
-    })
+      const champArray = e.data.map((data) => `${data.kor}(${data.total}경기)`);
+      const champArrayEng = e.data.map((data) => data.eng);
+
+      // setChampFilter(e.data.champion);
+      // setChampEng(e.data.championEng);
+      setChampFilter(champArray);
+      setChampEng(champArrayEng);
+    });
   };
 
   //상대 챔피언 필터
@@ -151,11 +156,14 @@ function PlayerBoard() {
       player: filters.player,
       token: user.token,
       id: user.id,
-    }
+    };
     axiosRequest(url, params, function (e) {
-      setOppFilter(e.data.champion);
-      setOppEng(e.data.championEng);
-    })
+      const champArray = e.data.map((data) => `${data.kor}(${data.total}경기)`);
+      const champArrayEng = e.data.map((data) => data.eng);
+
+      setOppFilter(champArray);
+      setOppEng(champArrayEng);
+    });
   };
 
   // 그래프 세팅 값
@@ -186,7 +194,7 @@ function PlayerBoard() {
       },
     ],
   };
-  if (loading) return <LoadingImg />;
+  // if (loading) return <LoadingImg />;
 
   return (
     <PlayerBoardWrapper>
@@ -232,8 +240,9 @@ function PlayerBoard() {
             <div className="AttendValue">
               <span className="Wins">{`${matchInfo?.match}${t(
                 "solo.playerboard.games"
-              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${matchInfo?.loss
-                }${t("solo.playerboard.lose")}`}</span>
+              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${
+                matchInfo?.loss
+              }${t("solo.playerboard.lose")}`}</span>
               <span className="WinRate">{`${matchInfo?.winrate.toFixed(
                 1
               )}%`}</span>
@@ -244,13 +253,16 @@ function PlayerBoard() {
               {t("solo.playerboard.avgScore")}
             </div>
 
-            <div className="PerformanceValue">{sbr?.sbrAvg.toFixed(1)} / {sbr?.price > 0 ? sbr?.price + "위" : "출전 경기 부족"}</div>
+            <div className="PerformanceValue">
+              {sbr?.sbrAvg.toFixed(1)} /{" "}
+              {sbr?.price > 0 ? sbr?.price + "위" : "출전 경기 부족"}
+            </div>
           </div>
           <div className="AverageBoxTwo">
             <div className="PerformanceTitle">
               {t("solo.playerboard.bestScore")}
             </div>
-            <div className="PerformanceValue">{sbr?.maxAvg.toFixed(1)}</div>
+            <div className="PerformanceValueBest">{sbr?.maxAvg.toFixed(1)}</div>
           </div>
         </PlayerOverView>
       </PlayerInfoSection>
@@ -354,7 +366,6 @@ function PlayerBoard() {
             <button
               className="Select"
               onClick={() => {
-
                 dispatch(ResetChampion2(""));
                 GetPlayerBoardData();
               }}
@@ -368,7 +379,7 @@ function PlayerBoard() {
               }}
             >
               <img
-                src="Images/ico-team-video-return-off.png"
+                src="Images/ico_reset.png"
                 width="10px"
                 height="10px"
                 alt="resetICon"
@@ -377,176 +388,189 @@ function PlayerBoard() {
             </button>
           </FilterBox>
         </InfoNavBar>
-        <AbilityContents>
-          <TopBox>
-            <StatBox>
-              <thead>
-                <StatNav>
-                  <th className="StatTitle">
-                    {t("solo.playerboard.laneStat")}
-                  </th>
-                  <th className="LeagueAvg">
-                    {t("solo.playerboard.avgLeague")}
-                  </th>
-                  <th className="Icon"></th>
-                  <th className="PlayerScore">
-                    {t("solo.playerboard.playerStat")}
-                  </th>
-                </StatNav>
-              </thead>
-              <tbody>
-                {line?.map((title, idx) => {
-                  return (
-                    <MapStat key={idx}>
-                      <Tippy // options
-                        duration={0}
-                        delay={[300, 0]}
-                        content={
-                          <BoardToolTip
-                            title={lang === "kr" ? title.name : title.eng}
-                          />
-                        }
-                        placement="top"
-                      >
-                        <td className="StatNum">
-                          {lang === "kr" ? title.name : title.eng}
+        {loading ? (
+          <LoadingImage>
+            <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
+          </LoadingImage>
+        ) : (
+          <AbilityContents>
+            <TopBox>
+              <StatBox>
+                <thead>
+                  <StatNav>
+                    <th className="StatTitle">
+                      {t("solo.playerboard.laneStat")}
+                    </th>
+                    <th className="LeagueAvg">
+                      {t("solo.playerboard.avgLeague")}
+                    </th>
+                    <th className="Icon"></th>
+                    <th className="PlayerScore">
+                      {t("solo.playerboard.playerStat")}
+                    </th>
+                  </StatNav>
+                </thead>
+                <tbody>
+                  {line?.map((title, idx) => {
+                    return (
+                      <MapStat key={idx}>
+                        <Tippy // options
+                          duration={0}
+                          delay={[300, 0]}
+                          content={
+                            <BoardToolTip
+                              title={lang === "kr" ? title.name : title.eng}
+                            />
+                          }
+                          placement="top"
+                        >
+                          <td className="StatNum">
+                            {lang === "kr" ? title.name : title.eng}
+                          </td>
+                        </Tippy>
+                        <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
+                        <td className="Icon">
+                          <img
+                            src={
+                              title.leaguedata <= title.data
+                                ? "Images/ico-point-high.png"
+                                : "Images/ico-point-low-blue.png"
+                            }
+                            width="17px"
+                            height="11px"
+                            alt="pointIcon"
+                          ></img>
                         </td>
-                      </Tippy>
+                        <PlayerValue
+                          className="playerValue"
+                          changeColor={title.leaguedata > title.data}
+                        >
+                          {title.data.toFixed(1)}
+                        </PlayerValue>
+                      </MapStat>
+                    );
+                  })}
+                </tbody>
+              </StatBox>
+              <StatBox>
+                <thead>
+                  <StatNav>
+                    <th className="StatTitle">
+                      {t("solo.playerboard.teamFight")}
+                    </th>
+                    <th className="LeagueAvg">
+                      {t("solo.playerboard.avgLeague")}
+                    </th>
+                    <th className="Icon"></th>
+                    <th className="PlayerScore">
+                      {t("solo.playerboard.playerStat")}
+                    </th>
+                  </StatNav>
+                </thead>
+                <tbody>
+                  {engage?.map((title, idx) => {
+                    return (
+                      <MapStat key={idx}>
+                        <Tippy // options
+                          duration={0}
+                          delay={[300, 0]}
+                          content={
+                            <BoardToolTip
+                              title={lang === "kr" ? title.name : title.eng}
+                            />
+                          }
+                          placement="top"
+                        >
+                          <td className="StatNum">
+                            {lang === "kr" ? title.name : title.eng}
+                          </td>
+                        </Tippy>
+                        <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
+                        <td className="Icon">
+                          <img
+                            src={
+                              title.leaguedata <= title.data
+                                ? "Images/ico-point-high.png"
+                                : "Images/ico-point-low-blue.png"
+                            }
+                            width="17px"
+                            height="11px"
+                            alt="pointIcon"
+                          ></img>
+                        </td>
+                        <PlayerValue
+                          className="playerValue"
+                          changeColor={title.leaguedata > title.data}
+                        >
+                          {title.data.toFixed(1)}
+                        </PlayerValue>
+                      </MapStat>
+                    );
+                  })}
+                </tbody>
+              </StatBox>
+              <StatBox>
+                <thead>
+                  <StatNav>
+                    <th className="StatTitle">
+                      {t("solo.playerboard.tendency")}
+                    </th>
+                    <th className="LeagueAvg">
+                      {t("solo.playerboard.avgLeague")}
+                    </th>
+                    <th className="Icon"></th>
+                    <th className="PlayerScore">
+                      {t("solo.playerboard.playerStat")}
+                    </th>
+                  </StatNav>
+                </thead>
+                <tbody>
+                  {personality?.map((title, idx) => {
+                    return (
+                      <MapStat key={idx}>
+                        <Tippy // options
+                          duration={0}
+                          delay={[300, 0]}
+                          content={
+                            <BoardToolTip
+                              title={lang === "kr" ? title.name : title.eng}
+                            />
+                          }
+                          placement="top"
+                        >
+                          <td className="StatNum">
+                            {lang === "kr" ? title.name : title.eng}
+                          </td>
+                        </Tippy>
 
-                      <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
-                      <td className="Icon">
-                        <img
-                          src={
-                            title.leaguedata <= title.data
-                              ? "Images/ico-point-high.png"
-                              : "Images/ico-point-low-blue.png"
-                          }
-                          width="17px"
-                          height="11px"
-                          alt="pointIcon"
-                        ></img>
-                      </td>
-                      <PlayerValue changeColor={title.leaguedata > title.data}>
-                        {title.data.toFixed(1)}
-                      </PlayerValue>
-                    </MapStat>
-                  );
-                })}
-              </tbody>
-            </StatBox>
-            <StatBox>
-              <thead>
-                <StatNav>
-                  <th className="StatTitle">
-                    {t("solo.playerboard.teamFight")}
-                  </th>
-                  <th className="LeagueAvg">
-                    {t("solo.playerboard.avgLeague")}
-                  </th>
-                  <th className="Icon"></th>
-                  <th className="PlayerScore">
-                    {t("solo.playerboard.playerStat")}
-                  </th>
-                </StatNav>
-              </thead>
-              <tbody>
-                {engage?.map((title, idx) => {
-                  return (
-                    <MapStat key={idx}>
-                      <Tippy // options
-                        duration={0}
-                        delay={[300, 0]}
-                        content={
-                          <BoardToolTip
-                            title={lang === "kr" ? title.name : title.eng}
-                          />
-                        }
-                        placement="top"
-                      >
-                        <td className="StatNum">
-                          {lang === "kr" ? title.name : title.eng}
+                        <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
+                        <td className="Icon">
+                          <img
+                            src={
+                              title.leaguedata <= title.data
+                                ? "Images/ico-point-high.png"
+                                : "Images/ico-point-low-blue.png"
+                            }
+                            width="17px"
+                            height="11px"
+                            alt="pointIcon"
+                          ></img>
                         </td>
-                      </Tippy>
-                      <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
-                      <td className="Icon">
-                        <img
-                          src={
-                            title.leaguedata <= title.data
-                              ? "Images/ico-point-high.png"
-                              : "Images/ico-point-low-blue.png"
-                          }
-                          width="17px"
-                          height="11px"
-                          alt="pointIcon"
-                        ></img>
-                      </td>
-                      <PlayerValue changeColor={title.leaguedata > title.data}>
-                        {title.data.toFixed(1)}
-                      </PlayerValue>
-                    </MapStat>
-                  );
-                })}
-              </tbody>
-            </StatBox>
-            <StatBox>
-              <thead>
-                <StatNav>
-                  <th className="StatTitle">
-                    {t("solo.playerboard.tendency")}
-                  </th>
-                  <th className="LeagueAvg">
-                    {t("solo.playerboard.avgLeague")}
-                  </th>
-                  <th className="Icon"></th>
-                  <th className="PlayerScore">
-                    {t("solo.playerboard.playerStat")}
-                  </th>
-                </StatNav>
-              </thead>
-              <tbody>
-                {personality?.map((title, idx) => {
-                  return (
-                    <MapStat key={idx}>
-                      <Tippy // options
-                        duration={0}
-                        delay={[300, 0]}
-                        content={
-                          <BoardToolTip
-                            title={lang === "kr" ? title.name : title.eng}
-                          />
-                        }
-                        placement="top"
-                      >
-                        <td className="StatNum">
-                          {lang === "kr" ? title.name : title.eng}
-                        </td>
-                      </Tippy>
-
-                      <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
-                      <td className="Icon">
-                        <img
-                          src={
-                            title.leaguedata <= title.data
-                              ? "Images/ico-point-high.png"
-                              : "Images/ico-point-low-blue.png"
-                          }
-                          width="17px"
-                          height="11px"
-                          alt="pointIcon"
-                        ></img>
-                      </td>
-                      <PlayerValue changeColor={title.leaguedata > title.data}>
-                        {title.data.toFixed(1)}
-                      </PlayerValue>
-                    </MapStat>
-                  );
-                })}
-              </tbody>
-            </StatBox>
-          </TopBox>
-        </AbilityContents>
+                        <PlayerValue
+                          className="playerValue"
+                          changeColor={title.leaguedata > title.data}
+                        >
+                          {title.data.toFixed(1)}
+                        </PlayerValue>
+                      </MapStat>
+                    );
+                  })}
+                </tbody>
+              </StatBox>
+            </TopBox>
+          </AbilityContents>
+        )}
       </AbilitySection>
-      {/* // 솔로랭크 당분간 주석 처리.
       <AbilitySection>
         <InfoNavBar>
           <LeftInfo>
@@ -730,14 +754,19 @@ function PlayerBoard() {
           </TopBox>
         </AbilityContents>
       </AbilitySection>
-      */}
       <RecordWrapper>
         <RecordSection>
           <CompetitionRecord>
             <TableNav>
-              <div className="StatTitle">{t("solo.playerboard.champStat")}</div>
+              <span className="StatTitle">
+                {t("solo.playerboard.champStat")}
+              </span>
+              <ExcelExport
+                filename={t("solo.playerboard.champStat")}
+                tableid="competition-table"
+              />
             </TableNav>
-            <CompetitionTable>
+            <CompetitionTable id="competition-table">
               <TableTitle>
                 <tr>
                   <th className="Champion">{t("solo.playerboard.champion")}</th>
@@ -801,7 +830,7 @@ function PlayerBoard() {
                       {
                         ticks: {
                           fontColor: "#84818e",
-                          fontSize: 14,
+                          fontSize: 15,
                         },
                         gridLines: { color: "rgb(47, 45, 56)" },
                         offset: true,
@@ -812,7 +841,7 @@ function PlayerBoard() {
                         ticks: {
                           stepSize: graphDomain?.matchGraph["row"],
                           fontColor: "#84818e",
-                          fontSize: 14,
+                          fontSize: 15,
                           min: graphDomain?.matchGraph["min"],
                           max: graphDomain?.matchGraph["max"],
                         },
@@ -830,9 +859,13 @@ function PlayerBoard() {
         <GraphSection>
           <TotalRecord>
             <TableNav>
-              <div className="StatTitle">{t("solo.playerboard.carrer")}</div>
+              <span className="StatTitle">{t("solo.playerboard.carrer")}</span>
+              <ExcelExport
+                filename={t("solo.playerboard.carrer")}
+                tableid="record-table"
+              />
             </TableNav>
-            <RecordTable>
+            <RecordTable id="record-table">
               <thead>
                 <tr>
                   <th className="Team">{t("solo.playerboard.team")}</th>
@@ -859,9 +892,9 @@ function PlayerBoard() {
                           <span className="Deaths">{career.death}</span>
                           <p className="Slash">/</p>
                           <span className="Support">{career.assists}</span>
-                          <span className="Rate">{`${career.kda.toFixed(
-                            2
-                          )}:1`}</span>
+                          <span className="Rate">
+                            &nbsp;{`${career.kda.toFixed(2)}:1`}
+                          </span>
                         </div>
                       </td>
                     </tr>
@@ -899,7 +932,7 @@ function PlayerBoard() {
                       {
                         ticks: {
                           fontColor: "#84818e",
-                          fontSize: 14,
+                          fontSize: 15,
                         },
                         gridLines: { color: "rgb(47, 45, 56)" },
                         offset: true,
@@ -910,7 +943,7 @@ function PlayerBoard() {
                         ticks: {
                           stepSize: graphDomain?.seasonGraph["row"],
                           fontColor: "#84818e",
-                          fontSize: 14,
+                          fontSize: 15,
                           min: graphDomain?.seasonGraph["min"],
                           max: graphDomain?.seasonGraph["max"],
                         },
@@ -936,27 +969,27 @@ const LeftInfo = styled.div`
   display: flex;
   align-items: center;
   .InfoTitle {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: "Spoqa Han Sans";
+    font-size: 16px;
     font-weight: bold;
     letter-spacing: -0.6px;
     color: rgb(255, 255, 255);
     margin-right: 15px;
   }
   .NavContents {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: "Spoqa Han Sans";
+    font-size: 13px;
     letter-spacing: -0.6px;
     color: rgb(132, 129, 142);
-    margin: 0 110px 0 4px;
   }
 `;
 
 const FilterBox = styled.div`
   display: flex;
   align-items: center;
+  border-radius: 20px;
   .Vs {
-    font-family: Poppins;
+    font-family: "Spoqa Han Sans";
     font-size: 15px;
     font-weight: bold;
     color: rgb(132, 129, 142);
@@ -965,13 +998,13 @@ const FilterBox = styled.div`
   .Select {
     width: 48px;
     height: 34px;
-    border-radius: 3px;
-    background-color: rgb(240, 69, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    border-radius: 10px;
+    background-color: #5942ba;
+    font-family: "Spoqa Han Sans";
+    font-size: 13px;
     font-weight: bold;
     letter-spacing: -0.6px;
-    color: rgb(255, 255, 255);
+    color: #fff;
     margin: 0 5px;
   }
   .Reset {
@@ -979,15 +1012,15 @@ const FilterBox = styled.div`
     align-items: center;
     width: 64px;
     height: 34px;
-    border-radius: 3px;
+    border-radius: 10px;
     border: solid 1px #474554;
-    background-color: #3a3745;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
+    color: #fff;
+    background-color: #484655;
+    font-family: "Spoqa Han Sans";
+    font-size: 13px;
     letter-spacing: -0.55px;
-    color: rgb(175, 173, 190);
     p {
-      margin-left: 5px;
+      margin-left: 2px;
     }
   }
 `;
@@ -1024,7 +1057,7 @@ const KeywordContent = styled.div`
   align-items: center;
   border-radius: 3px;
   background-color: rgb(240, 69, 69);
-  font-family: NotoSansKR, Apple SD Gothic Neo;
+  font-family: "Spoqa Han Sans";
   font-size: 12px;
   letter-spacing: -0.6px;
   text-align: center;
@@ -1039,22 +1072,18 @@ const AbilitySection = styled.div`
   margin-top: 22px;
   width: 100%;
   min-height: 300px;
-  border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
+  border-radius: 20px;
 `;
 
 const RecordSection = styled.div`
-  /* margin: 22px 0px; */
   display: flex;
-  /* justify-content: space-between; */
   flex-direction: column;
-  /* flex-wrap: wrap; */
 `;
 
 const GraphSection = styled.div`
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
 `;
 
 const PlayerOverView = styled.div`
@@ -1063,10 +1092,12 @@ const PlayerOverView = styled.div`
   width: 100%;
   height: 79px;
   margin: 22.5px 0px 0 0;
-  border: solid 1px #3a3745;
+  border-radius: 20px;
+  /* border: solid 1px #3a3745; */
   background-color: #2f2d38;
   background-image: url("Images/left-red-gradient.png");
   background-repeat: no-repeat;
+
   .DetailInfo {
     display: flex;
     flex-direction: column;
@@ -1105,13 +1136,13 @@ const PlayerOverView = styled.div`
     flex-direction: column;
   }
   .NickName {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
+    font-family: "Spoqa Han Sans";
+    font-size: 13px;
     color: rgb(132, 129, 142);
     margin-bottom: 6px;
   }
   .RealName {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 15px;
     font-weight: bold;
     letter-spacing: -0.75px;
@@ -1120,8 +1151,8 @@ const PlayerOverView = styled.div`
   .Title {
     /* min-width: 50px; */
     margin-right: 11px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: "Spoqa Han Sans";
+    font-size: 13px;
     font-weight: bold;
     letter-spacing: -0.6px;
     text-align: left;
@@ -1129,8 +1160,8 @@ const PlayerOverView = styled.div`
   }
   .Title2 {
     min-width: 50px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: "Spoqa Han Sans";
+    font-size: 13px;
     font-weight: bold;
     letter-spacing: -0.6px;
     text-align: left;
@@ -1139,36 +1170,36 @@ const PlayerOverView = styled.div`
   }
   .Country {
     /* width: 245px; */
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 13px;
     letter-spacing: -0.65px;
     text-align: left;
     color: rgb(255, 255, 255);
   }
   .Num {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 13px;
     font-weight: bold;
     text-align: left;
     color: rgb(255, 255, 255);
   }
   .FullNum {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
+    font-family: "Spoqa Han Sans";
+    font-size: 13px;
     text-align: left;
     color: rgb(255, 255, 255);
   }
   .Wins {
     width: 119px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 16px;
+    font-family: "Spoqa Han Sans";
+    font-size: 18px;
     text-align: left;
     color: rgb(255, 255, 255);
     margin-right: 10px;
   }
   .WinRate {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 16px;
+    font-family: "Spoqa Han Sans";
+    font-size: 18px;
     font-weight: bold;
     letter-spacing: -0.65px;
     text-align: left;
@@ -1180,7 +1211,7 @@ const PlayerOverView = styled.div`
     /* width: 235px; */
   }
   .AttendValue {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 16px;
     font-weight: bold;
     text-align: center;
@@ -1188,8 +1219,8 @@ const PlayerOverView = styled.div`
   }
   .PerformanceTitle {
     /* width: 80px; */
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: "Spoqa Han Sans";
+    font-size: 13px;
     font-weight: bold;
     letter-spacing: -0.6px;
     text-align: left;
@@ -1197,8 +1228,12 @@ const PlayerOverView = styled.div`
     margin-bottom: 10px;
   }
   .PerformanceValue {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 16px;
+    width: 170px;
+  }
+  .PerformanceValue,
+  .PerformanceValueBest {
+    font-family: "Spoqa Han Sans";
+    font-size: 18px;
     font-weight: bold;
     text-align: center;
     color: rgb(240, 69, 69);
@@ -1219,13 +1254,15 @@ const InfoNavBar = styled.div`
   /* padding: 11px 23px 11px 23px; */
   padding: 20px 23px 20px 23px;
   border-bottom: 1px solid rgb(67, 63, 78);
+  height: 65px;
 `;
 
 const AbilityContents = styled.div`
   width: 100%;
   min-height: 260px;
-  border: solid 1px rgb(67, 63, 78);
-  background-color: rgb(58, 55, 69);
+  background-color: #23212a;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
   padding: 20px;
 `;
 
@@ -1238,7 +1275,7 @@ const BottomBox = styled.div`
   height: 211px;
   padding: 9px 15px;
   background-color: rgb(47, 45, 56);
-  font-family: NotoSansKR, Apple SD Gothic Neo;
+  font-family: "Spoqa Han Sans";
   font-size: 12px;
   font-weight: bold;
   line-height: 2.08;
@@ -1251,7 +1288,8 @@ const StatBox = styled.table`
   height: 100%;
   background-color: rgb(47, 45, 56);
   margin-right: 22px;
-  border: 1px solid rgb(35, 33, 42);
+  border-radius: 20px;
+
   :nth-child(3) {
     margin-right: 0px;
   }
@@ -1261,6 +1299,7 @@ const StatNav = styled.tr`
   width: 100%;
   height: 42.5px;
   border-bottom: 1px solid rgb(35, 33, 42);
+
   > .StatTitle {
     text-align: left;
     padding-left: 10px;
@@ -1270,8 +1309,8 @@ const StatNav = styled.tr`
     width: 17px;
   }
   > th {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: "Spoqa Han Sans";
+    font-size: 15px;
     font-weight: bold;
     letter-spacing: -0.6px;
     color: rgb(132, 129, 142);
@@ -1288,6 +1327,17 @@ const MapStat = styled.tr`
   :nth-child(2n) {
     background-color: rgb(47, 45, 56);
   }
+
+  :last-child {
+    /* 마지막 tr에 rounded border 주기 */
+    > .StatNum {
+      border-bottom-left-radius: 20px;
+    }
+    > .playerValue {
+      border-bottom-right-radius: 20px;
+    }
+  }
+
   > .Icon {
     width: 17px;
   }
@@ -1295,28 +1345,31 @@ const MapStat = styled.tr`
     text-align: left;
     padding-left: 10px;
     width: 178px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: "Spoqa Han Sans";
+    /* font-size: 12px; */
     letter-spacing: -0.6px;
     color: rgb(255, 255, 255);
     margin: 0 0px 0 14px;
-    cursor: pointer;
   }
   > td {
     vertical-align: middle;
     text-align: center;
+    font-size: 15px;
+    /* :last-child {
+      border-radius: 0 0 10px 0;
+    } */
   }
 `;
 
 const LeagueValue = styled.td`
-  font-family: NotoSansKR, Apple SD Gothic Neo;
+  font-family: "Spoqa Han Sans";
   font-size: 12px;
   text-align: center;
   color: rgb(255, 255, 255);
 `;
 
 const PlayerValue = styled.td`
-  font-family: NotoSansKR, Apple SD Gothic Neo;
+  font-family: "Spoqa Han Sans";
   font-size: 12px;
   text-align: center;
   color: rgb(240, 69, 69);
@@ -1334,6 +1387,8 @@ const SolorankRecord = styled.div`
   background-color: rgb(47, 45, 56);
   margin-right: 22px;
   border: 1px solid rgb(35, 33, 42);
+  border-radius: 20px;
+
   :nth-child(3) {
     margin-right: 0px;
   }
@@ -1356,29 +1411,32 @@ const CompetitionRecord = styled.div`
   width: 538px;
   min-height: 211px;
   margin-top: 22px;
-  border: solid 1px rgb(58, 55, 69);
-  background-color: rgb(47, 45, 56);
+  /* border: solid 1px rgb(58, 55, 69); */
+  background-color: #23212a;
+  border-radius: 20px;
 `;
 const TableNav = styled.div`
-  display: flex;
-  align-items: center;
-  height: 42.5px;
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: -0.6px;
-  text-align: left;
-  color: #84818e;
   width: 100%;
-  margin-left: 15px;
+  height: 50px;
+  padding: 15px 0 0 15px;
+  border-bottom: 1px solid rgb(35, 33, 42);
+
+  font-family: "Spoqa Han Sans";
+  color: #fff;
+  font-size: 16px;
+  font-weight: medium;
+  > .StatTitle {
+    font-weight: bold;
+  }
 `;
 
 const TotalRecord = styled.div`
   margin-top: 22px;
   width: 538px;
   min-height: 211px;
-  border: solid 1px rgb(58, 55, 69);
-  background-color: rgb(47, 45, 56);
+  /* border: solid 1px rgb(58, 55, 69); */
+  background-color: #23212a;
+  border-radius: 20px;
 `;
 
 const NoData = styled.div`
@@ -1409,8 +1467,8 @@ const TableTitle = styled.thead`
       padding-left: 15px;
     }
     > th {
-      font-family: NotoSansKR, Apple SD Gothic Neo;
-      font-size: 12px;
+      font-family: "Spoqa Han Sans";
+      font-size: 15px;
       font-weight: bold;
       letter-spacing: -0.6px;
       color: rgb(129, 126, 144);
@@ -1430,8 +1488,8 @@ const SoloTableTitle = styled.thead`
       padding-left: 15px;
     }
     > th {
-      font-family: NotoSansKR, Apple SD Gothic Neo;
-      font-size: 12px;
+      font-family: "Spoqa Han Sans";
+      font-size: 15px;
       font-weight: bold;
       letter-spacing: -0.6px;
       color: rgb(129, 126, 144);
@@ -1444,10 +1502,13 @@ const MapCompetition = styled.tr`
   width: 100%;
   height: 28px;
   border-bottom: 1px solid rgb(58, 55, 69);
+  :last-child {
+    border-bottom: none;
+  }
 
   > td {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: "Spoqa Han Sans";
+    font-size: 15px;
     letter-spacing: -0.6px;
     color: rgb(255, 255, 255);
     text-align: center;
@@ -1478,7 +1539,7 @@ const MapCompetition = styled.tr`
 `;
 
 const WinRateValue = styled.div`
-  font-family: NotoSansKR, Apple SD Gothic Neo;
+  font-family: "Spoqa Han Sans";
   font-size: 12px;
   text-align: center;
   color: #0075bf;
@@ -1508,8 +1569,8 @@ const RecordTable = styled.table`
     }
 
     > th {
-      font-family: NotoSansKR, Apple SD Gothic Neo;
-      font-size: 12px;
+      font-family: "Spoqa Han Sans";
+      font-size: 15px;
       font-weight: bold;
       letter-spacing: -0.6px;
       color: rgb(129, 126, 144);
@@ -1538,18 +1599,17 @@ const RecordTable = styled.table`
           margin: 0 4px 0 4px;
         }
         .Rate {
-          font-family: NotoSansKR, Apple SD Gothic Neo;
-          font-size: 12px;
+          font-family: "Spoqa Han Sans";
+          font-size: 15px;
           text-align: center;
           color: rgb(240, 69, 69);
-          margin-left: 4px;
         }
       }
     }
     > td {
       width: 76px;
-      font-family: NotoSansKR, Apple SD Gothic Neo;
-      font-size: 12px;
+      font-family: "Spoqa Han Sans";
+      font-size: 15px;
       color: rgb(255, 255, 255);
       vertical-align: middle;
       text-align: center;
@@ -1564,37 +1624,42 @@ const NavBar = styled.div`
   width: 100%;
   height: 42.5px;
   border-bottom: 1px solid rgb(35, 33, 42);
+  background-color: #23212a;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+
   .AverageTime {
     width: 61px;
     height: 17px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: "Spoqa Han Sans";
+    font-size: 15px;
     line-height: 2.08;
-    color: rgb(132, 129, 142);
+    color: #fff;
     margin-left: 15px;
+    font-weight: bold;
   }
   .X {
     width: auto;
     height: 17px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: "Spoqa Han Sans";
+    font-size: 15px;
     text-align: left;
     color: rgb(132, 129, 142);
     margin-right: 15px;
     ::first-letter {
-      color: #dbdbdb;
+      color: #f14444;
     }
   }
   .Y {
     width: auto;
     height: 17px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: "Spoqa Han Sans";
+    font-size: 15px;
     text-align: left;
     color: rgb(132, 129, 142);
     margin-right: 16px;
     ::first-letter {
-      color: #dbdbdb;
+      color: #f14444;
     }
   }
   .Legend {
@@ -1605,14 +1670,16 @@ const NavBar = styled.div`
 const PlayerCharts = styled.div`
   padding: 23px;
   height: 226.5px;
+  background-color: #23212a;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 `;
 
 const Player = styled.div`
   margin-top: 22px;
   width: 538px;
   height: 270px;
-  border: solid 1px rgb(58, 55, 69);
-  background-color: rgb(47, 45, 56);
+  border-radius: 20px;
 `;
 
 const DropDownContainer = styled.div`
@@ -1623,7 +1690,7 @@ const DropDownContainer = styled.div`
   }
 
   body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Spoqa Han Sans";
   }
 
   .menu-container {
@@ -1639,11 +1706,16 @@ const DropDownContainer = styled.div`
     width: 180px;
     height: 34px;
     background-color: #23212a;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
-    color: rgb(175, 173, 190);
+    color: #afadbe;
+    border-radius: 10px;
   }
 
   .menu-trigger:hover {
@@ -1654,6 +1726,7 @@ const DropDownContainer = styled.div`
     vertical-align: middle;
     width: 130px;
     margin: 0 10px;
+    white-space: nowrap;
   }
 
   .menu-trigger img {
@@ -1676,7 +1749,6 @@ const DropDownContainer = styled.div`
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
-    // 솔로랭크 현황판 앞으로 나오게 함
     z-index: 1;
   }
 
@@ -1690,7 +1762,7 @@ const DropDownContainer = styled.div`
     text-decoration: none;
     padding: 15px 20px;
     display: block;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 11px;
     letter-spacing: -0.55px;
     text-align: left;
@@ -1699,5 +1771,21 @@ const DropDownContainer = styled.div`
     :hover {
       background-color: rgb(60, 58, 72);
     }
+  }
+`;
+
+const LoadingImage = styled.div`
+  display: flex;
+  width: 100%;
+  height: 260px;
+  justify-content: center;
+  align-items: center;
+  background-color: #23212a;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+
+  img {
+    width: 50px;
+    height: 50px;
   }
 `;

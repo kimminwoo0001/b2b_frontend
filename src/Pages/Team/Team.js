@@ -18,14 +18,18 @@ function Team() {
       <Nav />
       <TeamWrapper>
         <SideBar />
-        <div className={filters.filterMenuState ? "filter-open" : "filter-close"}>
+        <div
+          className={filters.filterMenuState ? "filter-open" : "filter-close"}
+        >
           <Filter />
         </div>
-        <div className={filters.filterMenuState ? "filter-close" : "filter-open"}>
+        <div
+          className={filters.filterMenuState ? "filter-close" : "filter-open"}
+        >
           <CloseFilter />
         </div>
         <ContentWrapper>
-          {filters.team !== "" && filters.season.length > 0 ? (
+          {filters.team !== "" && filters.team.length > 0 ? (
             <TeamTabs />
           ) : (
             <SelectFilter />
@@ -44,15 +48,13 @@ const TeamWrapper = styled.div`
   min-height: 100vh;
   overflow: auto;
   display: flex;
-  /* background-color: #16151c; */
-
+  background-color: #16151c;
 
   .filter-close {
     display: none;
   }
 
-  .filter-open{
-
+  .filter-open {
   }
 `;
 
@@ -61,4 +63,5 @@ const ContentWrapper = styled.div`
   width: 100%;
   flex-direction: column;
   background-color: #16151a;
+  padding: 0px 0;
 `;

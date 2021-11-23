@@ -32,50 +32,32 @@ function LeagueTab() {
             alt="arrowIcon"
           ></img>
         </Schedule> */}
-        <Pick onClick={() => setActiveTab(1)} changeColor={activeTab === 1}>
-          <div>{t("league.tab.draft")}</div>
-          <img
-            src={
-              activeTab === 1
-                ? "Images/ico-1depth-arrow-on.png"
-                : "Images/ico-1depth-arrow-off.png"
-            }
-            alt="arrowIcon"
-          ></img>
-        </Pick>
+        <TabItem onClick={() => setActiveTab(1)} changeColor={activeTab === 1}>
+          <div>
+            <span>{t("league.tab.draft")}</span>
+          </div>
+        </TabItem>
         {filters.league.indexOf("lpl") === -1 ? (
-          <Statistics
+          <TabItem
             onClick={() => setActiveTab(2)}
             changeColor={activeTab === 2}
           >
-            <div>{t("league.tab.leagueStat")}</div>
-            <img
-              src={
-                activeTab === 2
-                  ? "Images/ico-1depth-arrow-on.png"
-                  : "Images/ico-1depth-arrow-off.png"
-              }
-              alt="arrowIcon"
-            ></img>
-          </Statistics>
+            <div>
+              <span>{t("league.tab.leagueStat")}</span>
+            </div>
+          </TabItem>
         ) : (
           <div></div>
         )}
 
-        <Information
+        <TabItem
           onClick={() => setActiveTab(3)}
           changeColor={activeTab === 3}
         >
-          <div>{t("league.tab.playerStat")}</div>
-          <img
-            src={
-              activeTab === 3
-                ? "Images/ico-1depth-arrow-on.png"
-                : "Images/ico-1depth-arrow-off.png"
-            }
-            alt="arrowIcon"
-          ></img>
-        </Information>
+          <div>
+            <span>{t("league.tab.playerStat")}</span>
+          </div>
+        </TabItem>
       </TabContainer>
       <div>{BoardTab[activeTab]}</div>
     </LeagueTabWrapper>
@@ -85,14 +67,18 @@ function LeagueTab() {
 export default LeagueTab;
 
 const LeagueTabWrapper = styled.div`
-  margin: 21px 0 25px 22px;
-  width: 1097px;
-  height: 100%;
+  width: 1170px;
+  height: 1080px;
+  margin: 0px 0 0;
+  padding: 0 30px;
 `;
 
 const TabContainer = styled.ul`
+  width: auto;
+  height: 60px;
   display: flex;
-  border-bottom: 1px solid #433f4e;
+  cursor: pointer;
+  // border-bottom: 1px solid #433f4e;
   /* padding-bottom: 15px; */
 `;
 
@@ -123,83 +109,36 @@ const TabContainer = styled.ul`
 //   }
 // `;
 
-const Pick = styled.li`
+const TabItem = styled.li`
   cursor: pointer;
   display: flex;
   align-items: center;
-  padding-bottom: 15px;
-  color: #84818e;
-  margin-right: 30px;
-  ${(props) =>
-    props.changeColor &&
-    css`
-      color: #f04545;
-      border-bottom: 2px solid #f04545;
-    `}
-  div {
-    width: auto;
-    height: 17px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
-    line-height: 1.31;
-    letter-spacing: -0.65px;
-    text-align: left;
-    margin-right: 4px;
-  }
-  img {
-  }
-`;
+  width: auto;
+  white-space: nowrap;
 
-const Statistics = styled.li`
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  padding-bottom: 15px;
-  color: #84818e;
-  margin-right: 30px;
-  ${(props) =>
-    props.changeColor &&
-    css`
-      color: #f04545;
-      border-bottom: 2px solid #f04545;
-    `}
   div {
-    width: auto;
-    height: 17px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
-    line-height: 1.31;
-    letter-spacing: -0.65px;
-    text-align: left;
-    margin-right: 4px;
+    padding: 10px 15px;
   }
-  img {
-  }
-`;
 
-const Information = styled.li`
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  padding-bottom: 15px;
-  color: #84818e;
-  margin-right: 30px;
-  ${(props) =>
-    props.changeColor &&
-    css`
-      color: #f04545;
-      border-bottom: 2px solid #f04545;
-    `}
-  div {
-    width: auto;
-    height: 17px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
-    line-height: 1.31;
-    letter-spacing: -0.65px;
-    text-align: left;
-    margin-right: 4px;
+  :hover {
+    div {
+      padding: 10px 15px;
+      border-radius: 10px;
+      background-color : #26262C;
+    }
   }
-  img {
+  
+  span {
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    padding-bottom: 19px;
+    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
   }
 `;

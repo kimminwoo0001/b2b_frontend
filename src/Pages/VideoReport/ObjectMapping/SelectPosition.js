@@ -105,7 +105,7 @@ function SelectPosition({ position, setPosition }) {
 export default SelectPosition;
 
 const SelectPositionContainer = styled.div`
-  margin: 14px 0 25px;
+  margin-bottom: 30px;
 `;
 
 const InfoNav = styled.div`
@@ -113,11 +113,15 @@ const InfoNav = styled.div`
   align-items: center;
   margin-bottom: 14px;
   > span {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
-    color: rgb(129, 126, 144);
-    margin-left: 5px;
+    color: #84818e;
   }
 `;
 
@@ -129,11 +133,11 @@ const PositionButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 2px;
-  border: solid 1px rgb(67, 63, 78);
-  background-color: rgb(47, 45, 56);
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+
+  background-color:#3a3745;
   margin-right: 5px;
   cursor: pointer;
   font-family: Poppins;
@@ -152,7 +156,6 @@ const PositionButton = styled.button`
   ${(props) =>
     props.isActive &&
     css`
-      border: solid 1px rgb(124, 119, 139);
-      background-color: rgb(35, 33, 42);
+      background-color: #23212a;
     `}
 `;

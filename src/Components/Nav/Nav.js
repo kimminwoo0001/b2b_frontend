@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 import LocaleDropdown from "./LocaleDropdown";
 import DataProcess from "../DataProcessing/DataProcess";
 import SearchBox from "./SearchBox";
+import AlertModal from "../UtilityComponent/AlertModal";
 
 function Nav() {
   // locale 값을 store에 저장된 값을 가져옴
@@ -17,6 +18,9 @@ function Nav() {
   const { i18n } = useTranslation();
   const dispatch = useDispatch();
   let history = useHistory();
+  const { t } = useTranslation();
+  const [alertDesc, setAlertDesc] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     changeLanguage();
@@ -36,46 +40,73 @@ function Nav() {
     history.push("/login");
   };
 
+  const dummyAlarm = () => {
+    setAlertDesc("새로운 알림이 없습니다.");
+    setIsOpen(true);
+  }
+
   return (
-    <NavWrapper>
-      <div className="nav-left">
-        <div className="nav-flex">
-          <img className="logo"
-            src="/Images/logo.png"
-            alt="profile"
-            onClick={() => history.push("/")}
-          />
-          <SearchBox />
+    <>
+      <AlertModal
+        desc={alertDesc}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
+      <NavWrapper>
+        <div className="nav-left">
+          <div className="nav-flex">
+            <img
+              className="logo"
+              src="/Images/logo.png"
+              alt="profile"
+              onClick={() => history.push("/")}
+            />
+            <SearchBox />
+          </div>
         </div>
-      </div>
-      <div className="nav-mid">
-        <DataProcess />
-      </div>
-      <div className="nav-right">
-        <ContentsWrapper>
-          <img className="Alert" src="Images/ico-alarm.png" alt="alertIcon"></img>
-          <img
-            className="LogOut"
-            src="Images/ico-logout.png"
-            alt="LogoutIcon"
-            onClick={() => handleLogOut()}
-          ></img>
-          <LocaleDropdown />
-          <lable>{lang === "en" ? `Hello, ${user.id}` : `${user.id} 님 안녕하세요!`}</lable>
-        </ContentsWrapper>
-      </div>
-    </NavWrapper>
+        <div className="nav-mid">
+          <DataProcess />
+        </div>
+        <div className="nav-right">
+          <ContentsWrapper>
+            <div className="icon">
+              <img
+                className="setting"
+                src="Images/ico_setting.svg"
+                alt="settingIcon"
+              ></img>
+            </div>
+            <div className="icon">
+              <img
+                className="Alert"
+                src="Images/ico-alarm.png"
+                alt="alertIcon"
+                onClick={() => dummyAlarm()}
+              ></img>
+            </div>
+            <div className="icon">
+              <LocaleDropdown />
+            </div>
+            <div className="text">
+              <lable onClick={() => handleLogOut()}>
+                {user.id.length > 0 ? `${t("nav.logout")}` : `${t("nav.login")}`}
+              </lable>
+            </div>
+          </ContentsWrapper>
+        </div>
+      </NavWrapper>
+    </>
   );
 }
 
 export default Nav;
 
 const NavWrapper = styled.div`
-
   width: 100%;
   height: 66px;
-  padding: 12px 35px 0 0;
+  padding: 12px 25px 0 0;
   background-color: #16151c;
+  border-bottom: 1px solid #484655;
   display: table;
   .nav-left {
     display: table-cell;
@@ -87,69 +118,76 @@ const NavWrapper = styled.div`
       object-fit: contain;
     }
   }
-  
+
   .nav-flex {
     display: flex;
   }
-  
+
   .nav-mid {
     display: table-cell;
   }
 
   .nav-right {
     display: table-cell;
-    lable {
-      padding-left: 20px;
-      font-family: NotoSansKR, Apple SD Gothic Neo;
-      font-size: 12px;
-      letter-spacing: -0.6px;
-      text-align: left;
-      color: #ffffff;
-    }
-  }
-
-  
-`;
-
-const Greet = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: f;
-
-  div {
-    /* width: 160px; */
-
     
   }
-  .LastUpdate {
-    width: 180px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
-    text-align: left;
-    color: #827f8c;
-    margin-left: 10px;
-  }
 `;
-
 const ContentsWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+
+  div {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    white-space: nowrap;
+    cursor: pointer;
+    border-radius: 50px;
+    justify-content: center;
+    margin: 0 1px;
+  }
+
+  .icon:hover {
+    background-color: rgba(255,255,255,0.1);
+  }
+
+  .text {
+    width: auto;
+    height: 40px;
+    border-radius: 16px;
+    margin-left: 17px;
+    lable {
+      padding-left: 0px;
+      margin: 4px 13px;
+      font-family: NotoSansKR;
+      font-size: 16px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      text-align: left;
+      color: #fff;
+      cursor: pointer;
+    }
+    :hover {
+      background-color: rgba(255,255,255,0.1);
+    }
+  }
+
+  
+ 
   > select {
-    background-color: #23212a;
+    // background-color: #23212a;
     color: #84818e;
   }
 
-  .Alert {
-    margin-left: 20px;
-    margin-right: 24.5px;
+  .setting {
     cursor: pointer;
   }
-  .LogOut {
-    margin-right: 20px;
-    cursor: pointer;
-  }
+
   > button {
     width: 50px;
     height: 20px;

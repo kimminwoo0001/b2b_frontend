@@ -14,7 +14,7 @@ import axiosRequest from "../../../lib/axiosRequest";
 
 const WardSlider = withStyles({
   root: {
-    color: "#f04545",
+    color: "#5942ba",
     height: 2
   },
   thumb: {
@@ -82,15 +82,16 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
     <WardTeamFilterContainer>
       <Steps>
         <div className="title">
-          <span className="step">STEP 1.</span>
+          <span className="step">STEP 01</span>
           <span className="subtitle">{t("video.vision.label3")}</span>
         </div>
         <DropDownContainer className="container">
           <div className="menu-container">
             <button
               onClick={() => {
-                getTeam();
-                setIsActive(!isActive);
+                // 팀 설정 비활성화
+                // getTeam();
+                // setIsActive(!isActive);
               }}
               className="menu-trigger"
             >
@@ -109,6 +110,7 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
                         dispatch(
                           Reset_Map({
                             menu_num: filters.menu_num,
+                            filterMenuState: filters.filterMenuState,
                             tab: filters.tab,
                             convertleague: filters.convertleague,
                             league: filters.league,
@@ -138,7 +140,7 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
       </Steps>
       <Steps>
         <div className="title2">
-          <span className="step">STEP 2.</span>
+          <span className="step">STEP 02 </span>
           <span className="subtitle">{t("video.vision.label2")}</span>
         </div>
         <SliderContainer className="slider-container">
@@ -181,7 +183,7 @@ const SliderContainer = styled.div`
       bottom: 10;
       border: 15px solid transparent;
       border-bottom: 0;
-      border-top: 7px solid #f04545;
+      border-top: 7px solid #5942ba;
       transform: translate(-50%, calc(100% + 5px));
     }
   }
@@ -199,21 +201,25 @@ const WardTeamFilterContainer = styled.div``;
 
 const Steps = styled.div`
   min-height: 111px;
-  border-bottom: 1px solid rgb(67, 63, 78);
-  padding: 23px;
+  padding: 0px 23px;
   :nth-child(2) {
     border-bottom: none;
   }
   > .title {
     display: flex;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    
     margin-bottom: 12px;
     > .step {
       font-weight: normal;
-      color: rgb(240, 69, 69);
+      color: #84818e;
       margin-right: 5px;
     }
     > .subtitle {
@@ -223,13 +229,18 @@ const Steps = styled.div`
   > .title2 {
     display: flex;
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
     margin-bottom: 47px;
     > .step {
       font-weight: normal;
-      color: rgb(240, 69, 69);
+      color: #84818e;
       margin-right: 5px;
     }
     > .subtitle {
@@ -253,12 +264,14 @@ const DisplayTime = styled.div`
 const DropDownContainer = styled.div`
   margin: 0;
   padding: 0;
+  
   * {
     box-sizing: border-box;
   }
 
   body {
     font-family: Arial, Helvetica, sans-serif;
+    border-radius: 20px;
   }
 
   .menu-container {
@@ -269,16 +282,22 @@ const DropDownContainer = styled.div`
   }
 
   .menu-trigger {
+    border-radius: 10px;
     display: flex;
     align-items: center;
     width: 518px;
     height: 34px;
     background-color: rgb(35, 33, 42);
     border: solid 1px rgb(35, 33, 42);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
-    color: rgb(175, 173, 190);
+    color: #fff;;
   }
 
   .menu-trigger:hover {
@@ -351,7 +370,7 @@ const DropDownContainer = styled.div`
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 12px;
     text-align: left;
-    color: rgb(175, 173, 190);
+    color: #fff;
   }
 
   .menu-trigger2:hover {

@@ -9,6 +9,8 @@ import TeamComparison from "./TeamComparison/TeamComparison";
 
 import TeamSelectModal from "./TeamComparison/TeamSelectModal";
 import { HandleTab, ResetFilter2 } from "../../redux/modules/filtervalue";
+import BanIndex from "./BanReport/BanIndex";
+import TeamIndex from "./TeamReport/TeamIndex";
 
 function TeamTabs() {
   //팀 보고서 탭
@@ -21,15 +23,15 @@ function TeamTabs() {
   const [whichTeam, setWhichTeam] = useState();
 
   const TeamTab = {
-    0: <BanReport />,
-    1: <TeamReport />,
-    2: <TeamComparison />
+    0: <BanIndex />,
+    1: <TeamIndex />,
+    2: <TeamComparison />,
   };
 
   return (
     <>
-      {
-        true && <>
+      {true && (
+        <>
           <TeamSelectModal
             openModal={openModal}
             setOpenModal={setOpenModal}
@@ -55,14 +57,16 @@ function TeamTabs() {
               alt="arrowIcon"
             ></img>
           </Schedule> */}
-              <Pick
+              <TabItem
                 onClick={() => {
                   dispatch(HandleTab(0));
                   dispatch(ResetFilter2());
                 }}
                 changeColor={filters.tab === 0}
               >
-                <div>{t("team.tab.draft")}</div>
+                <div>
+                  <span>{t("team.tab.draft")}</span>
+                </div>
                 {/* <img
                   src={
                     filters.tab === 0
@@ -71,17 +75,19 @@ function TeamTabs() {
                   }
                   alt="arrowIcon"
                 ></img> */}
-              </Pick>
+              </TabItem>
 
               {filters.league.indexOf("lpl") === -1 ? (
-                <Statistics
+                <TabItem
                   onClick={() => {
                     dispatch(HandleTab(1));
                     dispatch(ResetFilter2());
                   }}
                   changeColor={filters.tab === 1}
                 >
-                  <div>{t("team.tab.analysis")}</div>
+                  <div>
+                    <span>{t("team.tab.analysis")}</span>
+                  </div>
                   {/* <img
                     src={
                       filters.tab === 1
@@ -90,13 +96,13 @@ function TeamTabs() {
                     }
                     alt="arrowIcon"
                   ></img> */}
-                </Statistics>
+                </TabItem>
               ) : (
                 <div></div>
               )}
 
               {filters.league.indexOf("lpl") === -1 ? (
-                <TeamCompare
+                <TabItem
                   onClick={() => {
                     dispatch(HandleTab(2));
                     setOpenModal(true);
@@ -119,7 +125,8 @@ function TeamTabs() {
                     ) : (
                       t("team.tab.comparison")
                     )} */}
-                    {t("team.tab.comparison")}
+
+                    <span>{t("team.tab.comparison")}</span>
                   </div>
                   {/* <img
                     src={
@@ -129,7 +136,7 @@ function TeamTabs() {
                     }
                     alt="arrowIcon"
                   ></img> */}
-                </TeamCompare>
+                </TabItem>
               ) : (
                 <div></div>
               )}
@@ -137,8 +144,7 @@ function TeamTabs() {
             <div>{TeamTab[filters.tab]}</div>
           </TeamTabsWrapper>
         </>
-      }
-
+      )}
     </>
   );
 }
@@ -150,10 +156,11 @@ const TeamTabsWrapper = styled.div`
   width: 1097px;
   /* height: calc(100vh - 95px); */
   background-color: #16151a;
-  
 `;
 
 const TabContainer = styled.ul`
+  width: auto;
+  height: 60px;
   display: flex;
   /* border-bottom: 1px solid #433f4e; */
   /* padding-bottom: 15px; */
@@ -186,31 +193,37 @@ const TabContainer = styled.ul`
 //   }
 // `;
 
-const Pick = styled.li`
+const TabItem = styled.li`
   cursor: pointer;
   display: flex;
   align-items: center;
-  padding-bottom: 15px;
-  color: #84818e;
-  margin-right: 30px;
-  ${(props) =>
-    props.changeColor &&
-    css`
-      color: #fff;
-      /* border-bottom: 2px solid #f04545; */
-    `}
+  width: auto;
+  white-space: nowrap;
+
   div {
-    width: auto;
-    height: 17px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-weight: bold;
-  font-size: 18px;
-    line-height: 1.31;
-    letter-spacing: -0.65px;
-    text-align: left;
-    margin-right: 4px;
+    padding: 10px 15px;
   }
-  img {
+
+  :hover {
+    div {
+      padding: 10px 15px;
+      border-radius: 10px;
+      background-color: #26262c;
+    }
+  }
+
+  span {
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    padding-bottom: 19px;
+    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
   }
 `;
 
@@ -229,14 +242,16 @@ const Statistics = styled.li`
     `}
   div {
     width: auto;
-    height: 17px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
     font-weight: bold;
-  font-size: 18px;
-    line-height: 1.31;
-    letter-spacing: -0.65px;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
-    margin-right: 4px;
+    color: ##84818e;
   }
   img {
   }
@@ -257,14 +272,16 @@ const TeamCompare = styled.li`
     `}
   div {
     width: auto;
-    height: 17px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
     font-weight: bold;
-  font-size: 18px;
-    line-height: 1.31;
-    letter-spacing: -0.65px;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
-    margin-right: 4px;
+    color: #84818e;
   }
   .GetOpp {
     display: flex;

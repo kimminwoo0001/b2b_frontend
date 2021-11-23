@@ -9,7 +9,6 @@ import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetec
 import qs from "qs";
 import axiosRequest from "../../../lib/axiosRequest";
 
-
 function ChampionSetting({
   setGameData,
   side,
@@ -129,70 +128,80 @@ function ChampionSetting({
     }
   };
 
+  //
   const getTeam = () => {
     try {
-      let teamList = []
+      let teamList = [];
       for (let league of filters.league) {
         for (let year of filters.year) {
           for (let season of filters.season) {
-            if (staticvalue.filterObjects[league][year][season]) {
-              const ObjectKeys = Object.keys(staticvalue.filterObjects[league][year][season]);
+            const seasonData = staticvalue.filterObjects[league][year][season];
+            if (seasonData) {
+              const ObjectKeys = Object.keys(seasonData);
               teamList = teamList.concat(ObjectKeys);
             }
           }
         }
       }
-      teamList = teamList.filter((item, pos) => teamList.indexOf(item) === pos).sort();
+      teamList = teamList
+        .filter((item, pos) => teamList.indexOf(item) === pos)
+        .sort();
       setFilterData({ ...filterData, team: teamList });
     } catch (e) {
       console.log(e);
     }
   };
 
+  //
   const getPlayer = () => {
     try {
       let players = [];
-      let playerList = []
+      let playerList = [];
       for (let league of filters.league) {
         for (let year of filters.year) {
           for (let season of filters.season) {
-            if (staticvalue.filterObjects[league][year][season][filters.team]) {
-              const ObjectKeys = Object.values(staticvalue.filterObjects[league][year][season][filters.team]);
-              console.log("ObjectKeys", ObjectKeys);
-              playerList = playerList.concat(ObjectKeys);
+            const seasonData = staticvalue.filterObjects[league][year][season];
+            if (seasonData) {
+              if (seasonData[filters.team]) {
+                const ObjectKeys = Object.values(seasonData[filters.team]);
+                console.log("ObjectKeys", ObjectKeys);
+                playerList = playerList.concat(ObjectKeys);
+              }
             }
           }
         }
       }
-      playerList = playerList.filter((item, pos) => playerList.indexOf(item) === pos).sort();
+      playerList = playerList
+        .filter((item, pos) => playerList.indexOf(item) === pos)
+        .sort();
 
       for (let i = 0; i < playerList.length; i++) {
-        const name = playerList[i].split('#')[1];
-        const position = playerList[i].split('#')[0];
+        const name = playerList[i].split("#")[1];
+        const position = playerList[i].split("#")[0];
         if (position === "1") {
           players[i] = {
-            position: 'top',
-            name: name
+            position: "top",
+            name: name,
           };
         } else if (position === "2") {
           players[i] = {
-            position: 'jng',
-            name: name
+            position: "jng",
+            name: name,
           };
         } else if (position === "3") {
           players[i] = {
-            position: 'mid',
-            name: name
+            position: "mid",
+            name: name,
           };
         } else if (position === "4") {
           players[i] = {
-            position: 'bot',
-            name: name
+            position: "bot",
+            name: name,
           };
         } else if (position === "5") {
           players[i] = {
-            position: 'sup',
-            name: name
+            position: "sup",
+            name: name,
           };
         }
       }
@@ -214,11 +223,12 @@ function ChampionSetting({
         player: filters.player,
         token: user.token,
         id: user.id,
-      }
+      };
       axiosRequest(url, params, function (e) {
         const data = e.data.champion;
+        console.log(data);
         setFilterData({ ...filterData, champion: data });
-      })
+      });
     } catch (e) {
       console.log(e);
     }
@@ -241,7 +251,7 @@ function ChampionSetting({
       axiosRequest(url, params, function (e) {
         const data = e.data.opp_team;
         setFilterData({ ...filterData, oppteam: data });
-      })
+      });
     } catch (e) {
       console.log(e);
     }
@@ -265,7 +275,7 @@ function ChampionSetting({
       axiosRequest(url, params, function (e) {
         const data = e.data.opp_player;
         setFilterData({ ...filterData, oppplayer: data });
-      })
+      });
     } catch (e) {
       console.log(e);
     }
@@ -290,8 +300,7 @@ function ChampionSetting({
       axiosRequest(url, params, function (e) {
         const data = e.data.opp_champion;
         setFilterData({ ...filterData, oppchampion: data });
-      })
-
+      });
     } catch (e) {
       console.log(e);
     }
@@ -315,7 +324,7 @@ function ChampionSetting({
       };
       axiosRequest(url, params, function (e) {
         setGameData(Object.values(e.data["match"]));
-      })
+      });
     } catch (e) {
       console.log(e);
     }
@@ -342,7 +351,7 @@ function ChampionSetting({
         };
         axiosRequest(url, params, function (e) {
           setGameData(Object.values(e.data["match"]));
-        })
+        });
       }
     } catch (e) {
       console.log(e);
@@ -385,7 +394,7 @@ function ChampionSetting({
         oppchampion_eng: "",
       })
     );
-  }
+  };
 
   const clickCompareConfirm = () => {
     //setIsActive5(false);
@@ -412,19 +421,19 @@ function ChampionSetting({
         oppchampion_eng: champArray2,
       })
     );
-  }
-
+  };
 
   return (
     <ChampionSettingContainer>
       <FilterBox>
         <DropDownBox>
-          <DropDownToggle className="container">
+          <DropDownToggle className="container" changeColor={filters.team.length > 0} >
             <div className="menu-container">
               <button
                 onClick={() => {
-                  setIsActive(!isActive);
-                  getTeam();
+                  // 팀 선택 비활성화
+                  // setIsActive(!isActive);
+                  // getTeam();
                 }}
                 className="menu-trigger"
               >
@@ -478,7 +487,7 @@ function ChampionSetting({
               </nav>
             </div>
           </DropDownToggle>
-          <DropDownToggle className="container">
+          <DropDownToggle className="container" changeColor={filters.player.length > 0}>
             <div className="menu-container2">
               <button
                 onClick={() => {
@@ -539,7 +548,7 @@ function ChampionSetting({
               </nav>
             </div>
           </DropDownToggle>
-          <DropDownToggle className="container">
+          <DropDownToggle className="container" changeColor={champArray.length > 0}>
             <div className="menu-container2">
               <button
                 onClick={() => {
@@ -549,10 +558,19 @@ function ChampionSetting({
                 }}
                 className="menu-trigger2"
               >
-                <span className="Label3">
-                  <span className="champLength">{`${champArray.length} `}</span>
-                  {` ${t("video.object.champ")}`}
-                </span>
+
+                {
+                  champArray.length > 0 ?
+                    <span className="Label3">
+                      <span className="champLength">
+                        {`${champArray.length} `}
+                      </span>
+                      {` ${t("video.object.champ")}`}
+                    </span>
+                    : <span className="Label3">
+                      {t("video.object.selectChamp")}
+                    </span>
+                }
                 <img
                   className="ArrowIcon"
                   src="Images/select-arrow.png"
@@ -562,7 +580,8 @@ function ChampionSetting({
               {filterData?.champion ? (
                 <nav
                   ref={wrapperRef}
-                  className={`menu3 ${isActive2.current ? "active" : "inactive"}`}
+                  className={`menu3 ${isActive2.current ? "active" : "inactive"
+                    }`}
                 >
                   <ul>
                     <li
@@ -615,7 +634,7 @@ function ChampionSetting({
           </DropDownToggle>
         </DropDownBox>
         <DropDownBox2 isActive={compareOpen === true}>
-          <DropDownToggle className="container">
+          <DropDownToggle className="container" changeColor={filters.oppteam.length > 0}>
             <div className="menu-container">
               <button
                 onClick={() => {
@@ -675,7 +694,7 @@ function ChampionSetting({
               </nav>
             </div>
           </DropDownToggle>
-          <DropDownToggle className="container">
+          <DropDownToggle className="container" changeColor={filters.oppplayer.length > 0}>
             <div className="menu-container2">
               <button
                 onClick={() => {
@@ -736,7 +755,7 @@ function ChampionSetting({
               </nav>
             </div>
           </DropDownToggle>
-          <DropDownToggle className="container">
+          <DropDownToggle className="container" changeColor={champArray2.length > 0}>
             <div className="menu-container2">
               <button
                 onClick={() => {
@@ -746,10 +765,18 @@ function ChampionSetting({
                 }}
                 className="menu-trigger2"
               >
-                <span className="Label3">
-                  <span className="champLength">{`${champArray2.length}`}</span>
-                  {` ${t("video.object.champ")}`}
-                </span>
+                {
+                  champArray2.length > 0 ?
+                    <span className="Label3">
+                      <span className="champLength">
+                        {`${champArray2.length} `}
+                      </span>
+                      {` ${t("video.object.champ")}`}
+                    </span>
+                    : <span className="Label3">
+                      {t("video.object.selectChamp")}
+                    </span>
+                }
                 <img
                   className="ArrowIcon"
                   src="Images/select-arrow.png"
@@ -759,7 +786,8 @@ function ChampionSetting({
               {filterData?.oppchampion ? (
                 <nav
                   ref={wrapperRef2}
-                  className={`menu3 ${isActive5.current ? "active" : "inactive"}`}
+                  className={`menu3 ${isActive5.current ? "active" : "inactive"
+                    }`}
                 >
                   <ul>
                     <li
@@ -834,7 +862,7 @@ function ChampionSetting({
 export default ChampionSetting;
 
 const ChampionSettingContainer = styled.div`
-  margin: 14px 0 24px 0;
+  margin: 0px 0 0px 0;
   display: flex;
   /* justify-content: space-between; */
   align-items: center;
@@ -850,7 +878,8 @@ const DropDownBox = styled.div`
 `;
 
 const DropDownBox2 = styled.div`
-  display: flex;
+  display: ${(props) =>
+    props.isActive ? 'flex' : 'none'};
   justify-content: space-evenly;
   margin-bottom: 4px;
   opacity: 0;
@@ -871,13 +900,19 @@ const CompareButton = styled.button`
   align-items: center;
   justify-content: center;
   width: 330px;
-  height: 27px;
+  height: 34px;
   border: solid 1px rgb(67, 63, 78);
   background-color: rgb(67, 63, 78);
+  border-radius: 10px;
   > span {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
+    margin: 5px 3px 2px 0;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: center;
     color: rgb(175, 173, 190);
     margin-right: 10px;
@@ -886,7 +921,7 @@ const CompareButton = styled.button`
 
 const DropDownToggle = styled.div`
   margin-right: 4px;
-  
+
   :nth-child(3) {
     margin-right: 0px;
   }
@@ -915,11 +950,19 @@ const DropDownToggle = styled.div`
     align-items: center;
     height: 34px;
     background-color: rgb(35, 33, 42);
-    font-size: 12px;
+    margin: 5px 3px 2px 0;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     color: rgb(175, 173, 190);
     width: 74px;
     outline: none;
     border: none;
+    border-radius: 10px;
   }
 
   .menu-trigger2 {
@@ -927,11 +970,19 @@ const DropDownToggle = styled.div`
     align-items: center;
     height: 34px;
     background-color: rgb(35, 33, 42);
-    font-size: 12px;
+    margin: 5px 3px 2px 0;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     color: rgb(175, 173, 190);
     width: 124px;
     outline: none;
     border: none;
+    border-radius: 10px;
   }
 
   .menu-trigger:hover {
@@ -939,9 +990,14 @@ const DropDownToggle = styled.div`
   }
 
   .SelectedLabel {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
+    margin: 5px 3px 2px 0;
+    font-family: SpoqaHanSansNeo;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: left;
     color: rgb(255, 255, 255);
     width: 74px;
@@ -953,7 +1009,7 @@ const DropDownToggle = styled.div`
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
-    color: rgb(255, 255, 255);
+    color: r ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `#84818e`)};
     width: 124px;
     margin-left: 20px;
   }
@@ -963,7 +1019,7 @@ const DropDownToggle = styled.div`
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
-    color: rgb(255, 255, 255);
+    color:  ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `#84818e`)};
     width: 74px;
   }
 
@@ -972,7 +1028,7 @@ const DropDownToggle = styled.div`
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
-    color: rgb(255, 255, 255);
+    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `#84818e`)};
     width: 124px;
   }
 
@@ -981,7 +1037,7 @@ const DropDownToggle = styled.div`
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
-    color: rgb(255, 255, 255);
+    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `#84818e`)};
     width: 124px;
     /* ::first-letter {
       color: #f04545;

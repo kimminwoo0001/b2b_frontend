@@ -26,10 +26,16 @@ import All from "./All";
 import qs from "qs";
 import axiosRequest from "../../../lib/axiosRequest";
 
+function sortPhase(arr) {
+  return arr.sort(function (a, b) {
+    return b.value - a.value;
+  });
+}
 
 function BanIndex() {
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
+  const lang = useSelector((state) => state.LocaleReducer);
   const dispatch = useDispatch();
   const [phase1, setPhase1] = useState();
   const [phase2, setPhase2] = useState();
@@ -108,42 +114,54 @@ function BanIndex() {
       dispatch(Baned4(e.data.Baneds[3].BanInfos));
       dispatch(Baned5(e.data.Baneds[4].BanInfos));
 
+      const isKor = lang === "kr";
+
       let phaseArray1 = [];
-      Object.keys(e.data.phased.phase1).forEach((key) => {
+      Object.keys(e.data.phased[0]).forEach(key => {
+        const data = e.data.phased[0]
         phaseArray1.push({
-          champion: key,
-          value: e.data.phased.phase1[key]
+          champion: isKor ? data[key].championKor : data[key].championKor,
+          key: key,
+          value: data[key].total
         });
       });
 
       let phaseArray2 = [];
-      Object.keys(e.data.phased.phase2).forEach((key) => {
+      Object.keys(e.data.phased[1]).forEach(key => {
+        const data = e.data.phased[1]
         phaseArray2.push({
-          champion: key,
-          value: e.data.phased.phase2[key]
+          champion: isKor ? data[key].championKor : data[key].championKor,
+          key: key,
+          value: data[key].total
         });
       });
 
       let phaseArray2_1 = [];
-      Object.keys(e.data.phased2.phase1).forEach((key) => {
+      Object.keys(e.data.phased2[0]).forEach(key => {
+        const data = e.data.phased2[0]
         phaseArray2_1.push({
-          champion: key,
-          value: e.data.phased2.phase1[key]
+          champion: isKor ? data[key].championKor : data[key].championKor,
+          key: key,
+          value: data[key].total
         });
       });
 
       let phaseArray2_2 = [];
-      Object.keys(e.data.phased2.phase2).forEach((key) => {
+      Object.keys(e.data.phased2[1]).forEach(key => {
+        const data = e.data.phased2[1]
         phaseArray2_2.push({
-          champion: key,
-          value: e.data.phased2.phase2[key]
+          champion: isKor ? data[key].championKor : data[key].championKor,
+          key: key,
+          value: data[key].total
         });
       });
 
-      setPhase1(phaseArray1);
-      setPhase2(phaseArray2);
-      setPhase2_1(phaseArray2_1);
-      setPhase2_2(phaseArray2_2);
+
+
+      setPhase1(sortPhase(phaseArray1));
+      setPhase2(sortPhase(phaseArray2));
+      setPhase2_1(sortPhase(phaseArray2_1));
+      setPhase2_2(sortPhase(phaseArray2_2));
 
     }).finally(setLoading(false))
   };
@@ -152,29 +170,38 @@ function BanIndex() {
 
   return (
     <BanIndexWrapper>
-      <SideButtons>
-        <AllBtn
+      <BanIndexTabs>
+        <BtnItem
           className="All"
           onClick={() => setSide("all")}
           changeColor={side === "all"}
         >
-          ALL
-        </AllBtn>
-        <BlueBtn
+          <div>
+            <span>ALL</span>
+          </div>
+        </BtnItem>
+
+        <BtnItem
           className="Blue"
           onClick={() => setSide("blue")}
           changeColor={side === "blue"}
         >
-          BLUE
-        </BlueBtn>
-        <RedBtn
+          <div>
+            <span>BLUE</span>
+          </div>
+        </BtnItem>
+
+        <BtnItem
           className="Red"
           onClick={() => setSide("red")}
           changeColor={side === "red"}
         >
-          RED
-        </RedBtn>
-      </SideButtons>
+          <div>
+            <span>RED</span>
+          </div>
+        </BtnItem>
+        <LastMargin></LastMargin>
+      </BanIndexTabs>
       <div>{selectSide[side]}</div>
     </BanIndexWrapper>
   );
@@ -182,65 +209,106 @@ function BanIndex() {
 
 export default BanIndex;
 
-const BanIndexWrapper = styled.div``;
-
-const SideButtons = styled.div`
-  display: flex;
-  padding: 25px 0 19px 0;
-  width: 100%;
+const BanIndexWrapper = styled.div`
 `;
 
-const AllBtn = styled.button`
-  width: 65px;
-  height: 27px;
-  border-radius: 2px;
-  background-color: #3a3745;
-  font-family: Poppins;
-  font-size: 13px;
-  text-align: center;
-  color: #6b6979;
-  ${(props) =>
-    props.changeColor &&
-    css`
-      background-color: #23212a;
-      color: #f04545;
-      border: solid 1px #f04545;
-    `}
+const BanIndexTabs = styled.div`
+  display: flex;
+  height: 62px;
+  // margin-top: 21.5px;
+`;
+
+const LineMargin = styled.div`
+  width: 10px;
+  border-bottom: solid 1px #433f4e;
+`;
+
+const LastMargin = styled.div`
+  width:90%;
+  border-bottom: solid 1px #433f4e;
+`;
+
+const BtnItem = styled.button`
+  display: flex;
+  align-items: center;
+  width: auto;
+  border-bottom: solid 1px #433f4e;
+  white-space: nowrap;
+
+  div {
+    padding: 10px 15px;
+  }
+
+  :hover {
+    div {
+      padding: 10px 15px;
+      border-radius: 10px;
+      background-color : #26262C;
+    }
+  }
+  
+  span {
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    padding-bottom: 18px;
+    border-bottom: solid 1px ${(props) => props.changeColor ? `#fff` : `#433f4e;`};
+    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+  }
 `;
 
 const BlueBtn = styled.button`
-  width: 65px;
-  height: 27px;
-  border-radius: 2px;
-  background-color: #3a3745;
-  font-family: Poppins;
-  font-size: 13px;
-  text-align: center;
-  color: #6b6979;
-  margin: 0 10px 0 10px;
-  ${(props) =>
+display: flex;
+padding: 20px 0 20px 0;
+align-items: center;
+width: auto;
+border-bottom: solid 1px #433f4e;
+span {
+  height: 22px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+}
+${(props) =>
     props.changeColor &&
     css`
-      background-color: #23212a;
-      color: #f04545;
-      border: solid 1px #f04545;
-    `}
+  border-bottom: solid 1px #fff;
+  `}
 `;
 
 const RedBtn = styled.button`
-  width: 65px;
-  height: 27px;
-  border-radius: 2px;
-  background-color: #3a3745;
-  font-family: Poppins;
-  font-size: 13px;
-  text-align: center;
-  color: #6b6979;
-  ${(props) =>
+display: flex;
+padding: 20px 0 20px 0;
+align-items: center;
+width: auto;
+border-bottom: solid 1px #433f4e;
+span {
+  height: 22px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+}
+${(props) =>
     props.changeColor &&
     css`
-      background-color: #23212a;
-      color: #f04545;
-      border: solid 1px #f04545;
-    `}
+  border-bottom: solid 1px #fff;
+  `}
 `;

@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
-import qs from "qs";
 import styled, { css } from "styled-components";
 import { useSelector } from "react-redux";
 import ChampionSetting from "./ChampionSetting";
@@ -14,7 +12,6 @@ import { API2 } from "../../config";
 import ObjectTooltip from "./ObjectTooltip";
 import addZero from "../../../lib/addZero";
 import axiosRequest from "../../../lib/axiosRequest";
-
 
 function useInterval(callback) {
   const savedCallback = useRef();
@@ -109,7 +106,8 @@ function ObjectMapping() {
         setCurrentPos(dto.position);
         setchampInfo(dto.info);
         setPlay(true);
-      })
+        console.log(dto.position);
+      });
     } catch (e) {
       console.log(e);
     } finally {
@@ -117,6 +115,7 @@ function ObjectMapping() {
     }
   };
 
+  // normal
   useIntervalNormal(() => {
     if (play === true && range < maxTime) {
       setRange(parseInt(range) + 1);
@@ -126,6 +125,7 @@ function ObjectMapping() {
     // }
   }, 300);
 
+  // fast
   useInterval(() => {
     if (fast === true && range < maxTime) {
       setRange(parseInt(range) + 1);
@@ -135,25 +135,44 @@ function ObjectMapping() {
     // }
   }, 100);
 
+  // 동선 확인
   const handleConfirm = () => {
     let unselectedItem = [];
-    const { team, champion_eng, player, oppteam, oppplayer, oppchampion_eng } = filters;
+    const { team, champion_eng, player, oppteam, oppplayer, oppchampion_eng } =
+      filters;
 
     if (compareOpen) {
-      if (side && period && position.length > 0 && champion_eng.length > 0 && oppchampion_eng.length > 0 && gameSelect.length > 0) {
+      if (
+        side &&
+        period &&
+        position.length > 0 &&
+        champion_eng.length > 0 &&
+        oppchampion_eng.length > 0 &&
+        gameSelect.length > 0
+      ) {
         fetchingMapData();
         setRange(0);
       } else {
         if (team.length === 0) unselectedItem.push(t("video.vision.team"));
         if (player.length === 0) unselectedItem.push(t("video.vision.player"));
-        if (champion_eng.length === 0) unselectedItem.push(t("video.vision.champ"));
+        if (champion_eng.length === 0)
+          unselectedItem.push(t("video.vision.champ"));
         if (oppteam.length === 0) unselectedItem.push(t("video.vision.team2"));
-        if (oppplayer.length === 0) unselectedItem.push(t("video.vision.player2"));
-        if (oppchampion_eng.length === 0) unselectedItem.push(t("video.vision.champ2"));
-        if (gameSelect.length === 0) unselectedItem.push(t("video.vision.game"))
+        if (oppplayer.length === 0)
+          unselectedItem.push(t("video.vision.player2"));
+        if (oppchampion_eng.length === 0)
+          unselectedItem.push(t("video.vision.champ2"));
+        if (gameSelect.length === 0)
+          unselectedItem.push(t("video.vision.game"));
       }
     } else {
-      if (side && period && position.length > 0 && champion_eng.length > 0 && gameSelect.length > 0) {
+      if (
+        side &&
+        period &&
+        position.length > 0 &&
+        champion_eng.length > 0 &&
+        gameSelect.length > 0
+      ) {
         setchampInfo([]);
         fetchingMapData();
         setRange(0);
@@ -162,8 +181,10 @@ function ObjectMapping() {
       } else {
         if (team.length === 0) unselectedItem.push(t("video.vision.team"));
         if (player.length === 0) unselectedItem.push(t("video.vision.player"));
-        if (champion_eng.length === 0) unselectedItem.push(t("video.vision.champ"));
-        if (gameSelect.length === 0) unselectedItem.push(t("video.vision.game"))
+        if (champion_eng.length === 0)
+          unselectedItem.push(t("video.vision.champ"));
+        if (gameSelect.length === 0)
+          unselectedItem.push(t("video.vision.game"));
       }
     }
 
@@ -175,7 +196,10 @@ function ObjectMapping() {
           unselectedSentence += ", ";
         }
       }
-      let alertMessage = t("video.vision.selectAlert").replace('###', unselectedSentence);
+      let alertMessage = t("video.vision.selectAlert").replace(
+        "###",
+        unselectedSentence
+      );
       alert(alertMessage);
     }
   };
@@ -186,11 +210,10 @@ function ObjectMapping() {
         <StepFilterWrapper>
           <Steps>
             {/* 팀/선수 기준 설정   ChampionSetting을 불러와서 사용중*/}
-            <StepTitle onClick={() => setCustomOpen(!customOpen)}>
-              <div className="title">
-                <span className="step">STEP 1.</span>
-                <span className="subtitle">{t("video.object.step1")}</span>
-              </div>
+            <StepTitle
+              onClick={() => setCustomOpen(!customOpen)}
+              changeColor={customOpen}
+            >
               <img
                 src={
                   customOpen
@@ -199,6 +222,10 @@ function ObjectMapping() {
                 }
                 alt=""
               />
+              <div className="title">
+                <span className="step">STEP 01</span>
+                <span className="subtitle">{t("video.object.step1")}</span>
+              </div>
             </StepTitle>
             <StepContents isActive={customOpen === true}>
               <ChampionSetting
@@ -213,19 +240,21 @@ function ObjectMapping() {
           </Steps>
           <Steps>
             {/* 경기 선택 부분 SelectGame.js 를 불러와서 사용함 */}
-            <StepTitle onClick={() => setGameOpen(!gameOpen)}>
-              <div className="title">
-                <span className="step">STEP 2.</span>
-                <span className="subtitle">{t("video.object.step2")}</span>
-              </div>
+            <StepTitle
+              onClick={() => {
+                setGameOpen(!gameOpen)
+              }}
+              changeColor={gameOpen}
+            >
               <img
-                src={
-                  gameOpen
-                    ? "Images/ico-arrow-up.png"
-                    : "Images/ico-arrow-down.png"
-                }
+                src={"Images/ico-arrow-down.svg"}
                 alt=""
               />
+              <div className="title">
+                <span className="step">STEP 02</span>
+                <span className="subtitle">{t("video.object.step2")}</span>
+              </div>
+
             </StepTitle>
             <StepContents isActive={gameOpen === true}>
               <SelectGame
@@ -241,11 +270,10 @@ function ObjectMapping() {
           </Steps>
           <Steps>
             {/* 오브젝트 설정 , SelectObject를 불러와서 사용함 */}
-            <StepTitle onClick={() => setObjectOpen(!objectOpen)}>
-              <div className="title">
-                <span className="step">STEP 3.</span>
-                <span className="subtitle">{t("video.object.step3")}</span>
-              </div>
+            <StepTitle
+              onClick={() => setObjectOpen(!objectOpen)}
+              changeColor={objectOpen}
+            >
               <img
                 src={
                   objectOpen
@@ -254,6 +282,10 @@ function ObjectMapping() {
                 }
                 alt=""
               />
+              <div className="title">
+                <span className="step">STEP 03</span>
+                <span className="subtitle">{t("video.object.step3")}</span>
+              </div>
             </StepTitle>
             <StepContents isActive={objectOpen === true}>
               <SelectObject setPeriod={setPeriod} period={period} />
@@ -261,11 +293,10 @@ function ObjectMapping() {
           </Steps>
           <Steps>
             {/* 포지션 설정 SelectPosition.js 를 불러와서 사용 중 */}
-            <StepTitle onClick={() => setPositionOpen(!positionOpen)}>
-              <div className="title">
-                <span className="step">STEP 4.</span>
-                <span className="subtitle">{t("video.object.step4")}</span>
-              </div>
+            <StepTitle
+              onClick={() => setPositionOpen(!positionOpen)}
+              changeColor={positionOpen}
+            >
               <img
                 src={
                   positionOpen
@@ -274,22 +305,31 @@ function ObjectMapping() {
                 }
                 alt=""
               />
+              <div className="title">
+                <span className="step">STEP 04</span>
+                <span className="subtitle">{t("video.object.step4")}</span>
+              </div>
             </StepTitle>
             <StepContents isActive={positionOpen === true}>
               <SelectPosition position={position} setPosition={setPosition} />
             </StepContents>
           </Steps>
+          <ButtonContainer>
+            <ConfirmButton
+              onClick={() => handleConfirm()}
+              isActive={
+                filters.champion_eng &&
+                side &&
+                period &&
+                position.length > 0 &&
+                gameSelect.length > 0
+              }
+            >
+              {t("video.object.apply")}
+            </ConfirmButton>
+          </ButtonContainer>
         </StepFilterWrapper>
-        <ButtonContainer>
-          <ConfirmButton
-            onClick={() => handleConfirm()}
-            isActive={
-              filters.champion_eng && side && period && position.length > 0 && gameSelect.length > 0
-            }
-          >
-            {t("video.object.apply")}
-          </ConfirmButton>
-        </ButtonContainer>
+
       </StepFilter>
       <ObjectMapWrapper>
         {loading ? (
@@ -298,7 +338,10 @@ function ObjectMapping() {
           // 실제로 오브젝트 별 동선 Mapping이 작동되는 부분.
           <ObjectMap>
             {champInfo?.map((info, idx) => {
-              console.log("currentPos[range]?.player:", currentPos[range]?.player);
+              console.log(
+                "currentPos[range]?.player:",
+                currentPos[range]?.player
+              );
               if (range === 0) {
                 if (info.side === "red") {
                   var x = 630;
@@ -340,7 +383,7 @@ function ObjectMapping() {
                 }
               }
               return (
-                // 동선 툴팁
+                // player 아이콘 클릭 시 툴팁
                 <StyledTippy
                   // options
                   arrow={true}
@@ -400,14 +443,16 @@ function ObjectMapping() {
           <TimeStamp>
             <span className="current">
               {range
-                ? `${addZero(Math.floor((range + minTime) / 2 / 60))} : ${addZero(Math.floor((range + minTime) / 2 % 60))}`
+                ? `${addZero(
+                  Math.floor((range + minTime) / 2 / 60)
+                )} : ${addZero(Math.floor(((range + minTime) / 2) % 60))}`
                 : "00 : 00"}
             </span>
             <p>/</p>
             {maxTime ? (
-              <span className="max">{`${addZero(Math.floor(
-                (maxTime + minTime) / 2 / 60
-              ))} : ${addZero(((maxTime + minTime) / 2) % 60)}`}</span>
+              <span className="max">{`${addZero(
+                Math.floor((maxTime + minTime) / 2 / 60)
+              )} : ${addZero(((maxTime + minTime) / 2) % 60)}`}</span>
             ) : (
               <span className="max">{`00 : 00`}</span>
             )}
@@ -501,15 +546,15 @@ const ObjectMappingContainer = styled.div`
 const StepFilter = styled.div``;
 
 const StepFilterWrapper = styled.div`
-  border: solid 1px rgb(67, 63, 78);
+  //border: solid 1px rgb(67, 63, 78);
   background-color: rgb(47, 45, 56);
+  border-radius: 20px;
 `;
 
 const Steps = styled.div`
-  padding: 22px 19px 0 23px;
+  padding: 30px 19px 0 23px;
   width: 376px;
   min-height: 59px;
-  border-bottom: solid 1px rgb(67, 63, 78);
   cursor: pointer;
   :nth-child(4) {
     border-bottom: none;
@@ -520,21 +565,34 @@ const StepTitle = styled.nav`
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   > .title {
     display: flex;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    margin-bottom: 12px;
     > .step {
       font-weight: normal;
-      color: rgb(240, 69, 69);
+      color:  ${(props) => props.changeColor ? `rgb(132, 129, 142)` : `rgba(132, 129, 142,0.3)`};
       margin-right: 5px;
     }
     > .subtitle {
-      color: rgb(255, 255, 255);
+      color:  ${(props) => props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
     }
+  }
+  img {
+    content: url("Images/ico-arrow-down.svg");
+    transform: ${(props) => props.changeColor ? `rotate(0deg);` : `rotate(180deg);`};
+    opacity: ${(props) => props.changeColor ? `1` : `0.3`};
+    margin-right: 10px;
+    margin-bottom: 10px;
+    object-fit: contain;
+    vertical-align: top;
   }
 `;
 
@@ -554,20 +612,23 @@ const StepContents = styled.div`
 `;
 
 const ConfirmButton = styled.button`
-  width: 126px;
-  height: 36px;
-  border-radius: 3px;
-  background-color: rgb(105, 103, 119);
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 13px;
-  font-weight: bold;
-  letter-spacing: -0.65px;
+  width: 336px;
+  height: 60px;
+  border-radius: 20px;
+  background-color: #484655;
+  font-family: SpoqaHanSansNeo;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
   text-align: center;
   color: rgb(255, 255, 255);
   ${(props) =>
     props.isActive &&
     css`
-      background-color: rgb(240, 69, 69);
+    background-color: #5942ba;
     `}
 `;
 
@@ -575,7 +636,9 @@ const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 16px;
+  margin-top: 40px;
+  padding: 20px 0;
+  border-top : 1px solid #433f4e;
 `;
 const ObjectMapWrapper = styled.div`
   width: 700px;
@@ -626,9 +689,14 @@ const TimeStamp = styled.div`
   align-items: center;
   width: 17%;
   height: 17px;
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
-  color: white;
+  font-family: SpoqaHanSansNeo;
+  font-size: 15px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.87;
+  letter-spacing: normal;
+  color: #6b6979;
   p {
     margin: 0 4px 0 4px;
   }
@@ -638,7 +706,7 @@ const TimeStamp = styled.div`
     text-align: right;
   }
   > .max {
-    color: rgb(107, 105, 121);
+    color: #6b6979;
   }
 `;
 

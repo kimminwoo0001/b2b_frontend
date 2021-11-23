@@ -19,7 +19,6 @@ import {
 import qs from "qs";
 import axiosRequest from "../../../lib/axiosRequest";
 
-
 function NormalInfo() {
   //기본정보 탭
   const filters = useSelector((state) => state.FilterReducer);
@@ -70,7 +69,7 @@ function NormalInfo() {
       oppchampion: filters.oppchampion_eng,
       token: user.token,
       id: user.id,
-    }
+    };
     axiosRequest(url, params, function (e) {
       const copy = e.data[filters.player];
       const copyoppData = e.data[filters.oppplayer];
@@ -93,12 +92,11 @@ function NormalInfo() {
         gold: copyoppData.gold.toFixed(1),
       });
       setLoading(false);
-    })
+    });
   };
 
   //챔피언 필터
   const GetChampionFilter = () => {
-
     const url = `${API}/api/filter/champion2`;
     const params = {
       league: filters.league,
@@ -109,11 +107,11 @@ function NormalInfo() {
       oppplayer: filters.oppplayer,
       token: user.token,
       id: user.id,
-    }
+    };
     axiosRequest(url, params, function (e) {
       setChampFilter(e.data.champion);
       setChampEng(e.data.championEng);
-    })
+    });
   };
   //상대 챔피언 필터
   const GetOppFilter = () => {
@@ -128,11 +126,11 @@ function NormalInfo() {
       oppplayer: filters.oppplayer,
       token: user.token,
       id: user.id,
-    }
+    };
     axiosRequest(url, params, function (e) {
       setOppFilter(e.data.champion);
       setOppEng(e.data.championEng);
-    })
+    });
   };
 
   // 오각형 그래프 세팅
@@ -253,46 +251,32 @@ function NormalInfo() {
           <div className="PerformanceTitle">
             {t("solo.comparison.avgScore")}
           </div>
-          <PerformanceValue
-            color={data?.sbrAvg < oppData?.sbrAvg}
-            className="PerformanceValue"
-          >
+          <PerformanceValueAvg color={data?.sbrAvg < oppData?.sbrAvg}>
             {data?.sbrAvg.toFixed(1)}
-          </PerformanceValue>
+          </PerformanceValueAvg>
         </div>
         <div className="AverageBoxTwo">
           <div className="PerformanceTitle">
             {t("solo.comparison.bestScore")}
           </div>
-          <PerformanceValue
-            color={data?.sbrMax < oppData?.sbrMax}
-            className="PerformanceValue"
-          >
-            {data?.sbrMax.toFixed(1)}
-          </PerformanceValue>
+          <PerformanceValueMax>{data?.sbrMax.toFixed(1)}</PerformanceValueMax>
         </div>
         <div className="Vs">VS</div>
         <div className="AverageBox">
           <div className="PerformanceTitle">
             {t("solo.comparison.avgScore")}
           </div>
-          <PerformanceValue2
-            color={data?.sbrAvg > oppData?.sbrAvg}
-            className="PerformanceValueBlue"
-          >
+          <PerformanceValueAvg color={data?.sbrAvg > oppData?.sbrAvg}>
             {oppData?.sbrAvg.toFixed(1)}
-          </PerformanceValue2>
+          </PerformanceValueAvg>
         </div>
         <div className="AverageBoxTwo">
           <div className="PerformanceTitle">
             {t("solo.comparison.bestScore")}
           </div>
-          <PerformanceValue2
-            color={data?.sbrMax > oppData?.sbrMax}
-            className="PerformanceValueBlue"
-          >
+          <PerformanceValueMax>
             {oppData?.sbrMax.toFixed(1)}
-          </PerformanceValue2>
+          </PerformanceValueMax>
         </div>
         <div className="NameContainerBlue">
           <span className="NickName">
@@ -322,7 +306,7 @@ function NormalInfo() {
         </div>
       </PlayerCompareWrapper>
       <PlayerStatWrapper>
-        <div className="records">{`${data?.total}${t(
+        <div className="records red">{`${data?.total}${t(
           "solo.comparison.total"
         )} ${data?.win}${t("solo.comparison.win")} ${data?.lose}${t(
           "solo.comparison.lose"
@@ -330,7 +314,7 @@ function NormalInfo() {
         <span className="leftGradient"></span>
         <div className="soloRecord">{t("solo.comparison.statLabel")}</div>
         <span className="rightGradient"></span>
-        <div className="records">{`${oppData?.total}${t(
+        <div className="records blue">{`${oppData?.total}${t(
           "solo.comparison.total"
         )} ${oppData?.win}${t("solo.comparison.win")} ${oppData?.lose}${t(
           "solo.comparison.lose"
@@ -502,26 +486,28 @@ const PlayerStatWrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 38px;
-  background-color: rgb(22, 21, 26);
+  background-color: #23212a;
+  margin: 20px 0;
+  border-radius: 16px;
   > .leftGradient {
     width: 49px;
     height: 26px;
     margin-left: 170px;
-    background-image: linear-gradient(
+    /* background-image: linear-gradient(
       to left,
       rgb(38, 35, 45),
       rgb(22, 21, 26)
-    );
+    ); */
   }
   > .rightGradient {
     width: 49px;
     height: 26px;
     margin-right: 170px;
-    background-image: linear-gradient(
+    /* background-image: linear-gradient(
       to right,
       rgb(38, 35, 45),
       rgb(22, 21, 26)
-    );
+    ); */
   }
   > .soloRecord {
     display: flex;
@@ -529,52 +515,38 @@ const PlayerStatWrapper = styled.div`
     padding: 0 20px;
     height: 26px;
     background-color: rgb(38, 35, 45);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
+    font-family: "Spoqa Han Sans";
+    font-size: 16px;
     font-weight: bold;
     letter-spacing: -0.65px;
-    color: rgb(129, 126, 144);
+    color: #fff;
   }
   > .records {
-    font-family: Poppins, Apple SD Gothic Neo;
-    font-size: 14px;
+    font-family: "Spoqa Han Sans";
+    font-size: 16px;
     line-height: 32px;
-    color: rgb(132, 129, 142);
-  }
-`;
-
-const PerformanceValue = styled.div`
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-  color: rgb(240, 69, 69);
-
-  .PerformanceValueBlue {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 20px;
+    background-color: #23212a;
     font-weight: bold;
-    text-align: center;
-    color: #0075bf;
+    color: #fff;
   }
-  ${(props) =>
-    props.color &&
-    css`
-      color: #6b6979;
-    `}
 `;
 
-const PerformanceValue2 = styled.div`
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 20px;
+const PerformanceValueAvg = styled.div`
+  font-family: "Spoqa Han Sans";
+  font-size: 18px;
   font-weight: bold;
   text-align: center;
-  color: #0075bf;
-  ${(props) =>
-    props.color &&
-    css`
-      color: #6b6979;
-    `}
+  margin-top: 10px;
+  color: ${(props) => (props.color ? "#fff" : "#f04545")};
+`;
+
+const PerformanceValueMax = styled.div`
+  font-family: "Spoqa Han Sans";
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+  margin-top: 10px;
 `;
 
 const PlayerCompareWrapper = styled.div`
@@ -582,8 +554,8 @@ const PlayerCompareWrapper = styled.div`
   align-items: center;
   margin-top: 28px;
   width: 100%;
-  border: solid 1px rgb(58, 55, 69);
-  background-color: rgb(47, 45, 56);
+  border-radius: 20px;
+  background-color: #23212a;
   background-image: url("Images/full-gradient.png");
   background-repeat: no-repeat;
   .RedSidePlayer {
@@ -611,28 +583,27 @@ const PlayerCompareWrapper = styled.div`
     text-align: right;
   }
   .NickName {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
+    font-family: "Spoqa Han Sans";
+    font-size: 13px;
     color: rgb(132, 129, 142);
     margin-bottom: 3px;
   }
   .RealName {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 15px;
     font-weight: bold;
     letter-spacing: -0.75px;
     color: rgb(255, 255, 255);
   }
   .PerformanceTitle {
-    /* width: 80px; */
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    width: 150px;
+    font-family: "Spoqa Han Sans";
+    font-size: 16px;
     font-weight: bold;
     letter-spacing: -0.6px;
     text-align: left;
     color: rgb(132, 129, 142);
     margin-bottom: 4.7px;
-    text-align: center;
   }
 
   .AverageBox {
@@ -649,7 +620,7 @@ const PlayerCompareWrapper = styled.div`
     }
   }
   .Vs {
-    font-family: Poppins;
+    font-family: "Spoqa Han Sans";
     font-size: 30px;
     font-weight: bold;
     text-align: left;
@@ -663,7 +634,7 @@ const NormalInfoWrapper = styled.div``;
 const NormalCompare = styled.div`
   margin-top: 22px;
   width: 100%;
-  border: solid 1px rgb(58, 55, 69);
+  border-radius: 20px;
   background-color: rgb(47, 45, 56);
 `;
 
@@ -678,13 +649,15 @@ const ChampionSettingNav = styled.div`
 const CompareChart = styled.div`
   height: 579px;
   padding: 22px;
+  background-color: #23212a;
+  border-radius: 20px;
 `;
 
 const SettingTitle = styled.div`
   display: flex;
   align-items: center;
   .Title {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 13px;
     font-weight: bold;
     letter-spacing: -0.65px;
@@ -692,7 +665,7 @@ const SettingTitle = styled.div`
     margin: 0 15px 0 23px;
   }
   .Alert {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     letter-spacing: -0.6px;
     color: rgb(132, 129, 142);
@@ -706,7 +679,7 @@ const DropDownContainer = styled.div`
   margin: 13px 0 0 23px;
 
   .Vs {
-    font-family: Poppins;
+    font-family: "Spoqa Han Sans";
     font-size: 15px;
     font-weight: bold;
     color: rgb(132, 129, 142);
@@ -717,7 +690,7 @@ const DropDownContainer = styled.div`
     height: 40px;
     border-radius: 3px;
     background-color: rgb(240, 69, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     font-weight: bold;
     letter-spacing: -0.6px;
@@ -732,7 +705,7 @@ const DropDownContainer = styled.div`
     border-radius: 3px;
     border: solid 1px #474554;
     background-color: #3a3745;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 11px;
     letter-spacing: -0.55px;
     color: rgb(175, 173, 190);
@@ -750,7 +723,7 @@ const DropDown = styled.div`
   }
 
   body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Spoqa Han Sans";
   }
 
   .menu-container {
@@ -773,7 +746,7 @@ const DropDown = styled.div`
   }
 
   .SelectedLabel {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
@@ -783,7 +756,7 @@ const DropDown = styled.div`
   }
 
   .Label {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
@@ -832,7 +805,7 @@ const DropDown = styled.div`
     text-decoration: none;
     padding: 15px 20px;
     display: block;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 11px;
     letter-spacing: -0.55px;
     text-align: left;

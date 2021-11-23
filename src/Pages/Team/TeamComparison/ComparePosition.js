@@ -96,7 +96,7 @@ function ComparePosition() {
       for (let i = 0; i < topData.length; i++) {
         topArray.push({
           player: Object.keys(e.data["top"])[i],
-          data: topData[i]
+          data: topData[i].map(data => data?.toFixed(2))
         });
       }
       setTop(topArray);
@@ -123,7 +123,7 @@ function ComparePosition() {
       for (let i = 0; i < jngData.length; i++) {
         jngArray.push({
           player: Object.keys(e.data["jng"])[i],
-          data: jngData[i]
+          data: jngData[i].map(data => data?.toFixed(2))
         });
       }
       setJng(jngArray);
@@ -150,7 +150,7 @@ function ComparePosition() {
       for (let i = 0; i < midData.length; i++) {
         midArray.push({
           player: Object.keys(e.data["mid"])[i],
-          data: midData[i]
+          data: midData[i].map(data => data?.toFixed(2))
         });
       }
       setMid(midArray);
@@ -177,7 +177,7 @@ function ComparePosition() {
       for (let i = 0; i < botData.length; i++) {
         botArray.push({
           player: Object.keys(e.data["bot"])[i],
-          data: botData[i]
+          data: botData[i].map(data => data?.toFixed(2))
         });
       }
       setBot(botArray);
@@ -204,7 +204,7 @@ function ComparePosition() {
       for (let i = 0; i < supData.length; i++) {
         supArray.push({
           player: Object.keys(e.data["sup"])[i],
-          data: supData[i]
+          data: supData[i].map(data => data?.toFixed(2))
         });
       }
       setSup(supArray);
@@ -223,7 +223,8 @@ function ComparePosition() {
         backgroundColor: color[idx],
         borderColor: color[idx],
         borderWidth: 1,
-        data: data.data
+        data: data.data,
+        pointHitRadius: 10 // hover 범위 넓혀 줌
       };
     })
   };
@@ -237,7 +238,8 @@ function ComparePosition() {
         backgroundColor: color[idx],
         borderColor: color[idx],
         borderWidth: 1,
-        data: data.data
+        data: data.data,
+        pointHitRadius: 10 // hover 범위 넓혀 줌
       };
     })
   };
@@ -251,7 +253,8 @@ function ComparePosition() {
         backgroundColor: color[idx],
         borderColor: color[idx],
         borderWidth: 1,
-        data: data.data
+        data: data.data,
+        pointHitRadius: 10 // hover 범위 넓혀 줌
       };
     })
   };
@@ -265,7 +268,8 @@ function ComparePosition() {
         backgroundColor: color[idx],
         borderColor: color[idx],
         borderWidth: 1,
-        data: data.data
+        data: data.data,
+        pointHitRadius: 10 // hover 범위 넓혀 줌
       };
     })
   };
@@ -279,7 +283,8 @@ function ComparePosition() {
         backgroundColor: color[idx],
         borderColor: color[idx],
         borderWidth: 1,
-        data: data.data
+        data: data.data,
+        pointHitRadius: 10 // hover 범위 넓혀 줌
       };
     })
   };
@@ -289,21 +294,29 @@ function ComparePosition() {
     <ComparePositionWrapper>
       <DisplayTeams>
         <div className="RedSide"></div>
-        <div className="TeamOne">{teamName?.team}</div>
-        <img
-          src={`Images/TeamLogo/${filters.team}.png`}
-          width="54px"
-          height="54px"
-          alt="teamIcon"
-        />
+        <div className="TeamOne">
+          <div>{teamName?.team}</div>
+          <img
+            src={`Images/TeamLogo/${filters.team}.png`}
+            width="54px"
+            height="54px"
+            alt="teamIcon"
+          />
+        </div>
+
         <div className="Vs">VS</div>
-        <img
-          src={`Images/TeamLogo/${filters.oppteam}.png`}
-          width="54px"
-          height="54px"
-          alt="teamIcon"
-        />
-        <div className="TeamTwo">{teamName?.oppteam}</div>
+
+        <div className="TeamTwo">
+          <img
+            src={`Images/TeamLogo/${filters.oppteam}.png`}
+            width="54px"
+            height="54px"
+            alt="teamIcon"
+          />
+          <div>
+            {teamName?.oppteam}
+          </div>
+        </div>
         <div className="BlueSide"></div>
       </DisplayTeams>
       <TopGraph>
@@ -336,6 +349,9 @@ function ComparePosition() {
               legend: {
                 display: false
               },
+              tooltips: {
+                mode: 'x'
+              },
               // responsive: false,
               maintainAspectRatio: false,
               scales: {
@@ -343,7 +359,7 @@ function ComparePosition() {
                   {
                     ticks: {
                       fontColor: "#84818e",
-                      fontSize: 14
+                      fontSize: 15
                     },
                     gridLines: { color: "rgb(47, 45, 56)" },
                     offset: true
@@ -354,7 +370,7 @@ function ComparePosition() {
                     ticks: {
                       stepSize: 3,
                       fontColor: "#84818e",
-                      fontSize: 14,
+                      fontSize: 15,
                       min: 0,
                       max: 15
                     },
@@ -398,13 +414,16 @@ function ComparePosition() {
               legend: {
                 display: false
               },
+              tooltips: {
+                mode: 'x'
+              },
               maintainAspectRatio: false,
               scales: {
                 xAxes: [
                   {
                     ticks: {
                       fontColor: "#84818e",
-                      fontSize: 14
+                      fontSize: 15
                     },
                     gridLines: { color: "rgb(47, 45, 56)" },
                     offset: true
@@ -415,7 +434,7 @@ function ComparePosition() {
                     ticks: {
                       stepSize: 3,
                       fontColor: "#84818e",
-                      fontSize: 14,
+                      fontSize: 15,
                       min: 0,
                       max: 15
                     },
@@ -459,13 +478,16 @@ function ComparePosition() {
               legend: {
                 display: false
               },
+              tooltips: {
+                mode: 'x'
+              },
               maintainAspectRatio: false,
               scales: {
                 xAxes: [
                   {
                     ticks: {
                       fontColor: "#84818e",
-                      fontSize: 14
+                      fontSize: 15
                     },
                     gridLines: { color: "rgb(47, 45, 56)" },
                     offset: true
@@ -476,7 +498,7 @@ function ComparePosition() {
                     ticks: {
                       stepSize: 3,
                       fontColor: "#84818e",
-                      fontSize: 14,
+                      fontSize: 15,
                       min: 0,
                       max: 15
                     },
@@ -520,13 +542,16 @@ function ComparePosition() {
               legend: {
                 display: false
               },
+              tooltips: {
+                mode: 'x'
+              },
               maintainAspectRatio: false,
               scales: {
                 xAxes: [
                   {
                     ticks: {
                       fontColor: "#84818e",
-                      fontSize: 14
+                      fontSize: 15
                     },
                     gridLines: { color: "rgb(47, 45, 56)" },
                     offset: true
@@ -537,7 +562,7 @@ function ComparePosition() {
                     ticks: {
                       stepSize: 3,
                       fontColor: "#84818e",
-                      fontSize: 14,
+                      fontSize: 15,
                       min: 0,
                       max: 15
                     },
@@ -581,13 +606,17 @@ function ComparePosition() {
               legend: {
                 display: false
               },
+              tooltips: {
+                mode: 'x',
+                padding: 100
+              },
               maintainAspectRatio: false,
               scales: {
                 xAxes: [
                   {
                     ticks: {
                       fontColor: "#84818e",
-                      fontSize: 14
+                      fontSize: 15
                     },
                     gridLines: { color: "rgb(47, 45, 56)" },
                     offset: true
@@ -598,7 +627,7 @@ function ComparePosition() {
                     ticks: {
                       stepSize: 3,
                       fontColor: "#84818e",
-                      fontSize: 14,
+                      fontSize: 15,
                       min: 0,
                       max: 15
                     },
@@ -621,49 +650,103 @@ export default ComparePosition;
 const ComparePositionWrapper = styled.div``;
 
 const DisplayTeams = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 28px;
   width: 100%;
-  height: 79px;
-  border: solid 1px rgb(58, 55, 69);
-  background-color: rgb(47, 45, 56);
+  background-color: #16151a;
+  position: relative;
+  color: #fff;
+  display: flex;
+  //justify-content: space-around;
+  margin: 20px 0;
+  border-radius: 20px;
+  background-color: #2f2d38;
+
   .RedSide {
-    width: 145px;
+    width: 150px;
     height: 77px;
-    background-image: url("Images/left-red-gradient.png");
+    margin: 0 115px 0 0;
+    object-fit: contain;
+    border-radius: 20px;
+    background-image: linear-gradient(306deg, rgba(47, 45, 56, 0) 43%, #f04545 105%);
   }
+
   .BlueSide {
-    width: 145px;
+    width: 150px;
     height: 77px;
-    background-image: url("Images/right-blue-gradient.png");
+    margin: 0 0 0 87px;
+    object-fit: contain;
+    border-radius: 20px;
+    background-image: linear-gradient(54deg, rgba(56, 53, 45, 0) 37%, #0084d8 115%);
   }
+
   .TeamOne {
-    font-family: Poppins;
-    width: 244px;
-    font-size: 15px;
-    font-weight: 500;
-    text-align: right;
-    color: rgb(132, 129, 142);
-    margin: 0 23px 0 0px;
+    display: flex;
+    font-family: SpoqaHanSansNeo;
+    width: 215px;
+    margin: 0 0px 0 0px;
+    div {
+      width: 215px;
+      height: 19px;
+      margin: 30px 0px 28px 0;
+      font-family: SpoqaHanSansNeo;
+      font-size: 20px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.25;
+      letter-spacing: normal;
+      text-align: right;
+      color: #fff;
+      white-space: nowrap;
+    }
+    img {
+      width: 54px;
+      height: 54px;
+      margin: 12px 0px 11px 15px;
+      object-fit: contain;
+    }
   }
+
   .TeamTwo {
-    font-family: Poppins;
-    width: 244px;
-    font-size: 15px;
-    font-weight: 500;
-    text-align: left;
-    color: rgb(132, 129, 142);
-    margin: 0 0px 0 23px;
+    display: flex;
+    font-family: SpoqaHanSansNeo;
+    width: 215px;
+    margin: 0 0px 0 0px;
+    div {
+      width:215px;
+      height: 19px;
+      margin: 30px 0px 28px 0;
+      font-family: SpoqaHanSansNeo;
+      font-size: 20px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.25;
+      letter-spacing: normal;
+      text-align: left;
+      color: #fff;
+      white-space: nowrap;
+    }
+    img {
+      width: 54px;
+      height: 54px;
+      margin: 12px 15px 11px 0;
+      object-fit: contain;
+    }
   }
+
   .Vs {
-    width: 40px;
-    /* height: 43px; */
-    font-family: Poppins;
-    font-size: 30px;
+    width: 37px;
+    height: 37px;
+    margin: 25px 100px 0px 100px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
     font-weight: bold;
-    color: rgb(107, 105, 121);
-    margin: 0 62px;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #fff;
   }
 `;
 
@@ -683,9 +766,14 @@ const Legends = styled.ul`
     margin-right: 7px;
   }
   > .Label {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    letter-spacing: -0.6px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: normal;
+    text-align: left;
     text-align: center;
     color: #ffffff;
   }
@@ -697,6 +785,7 @@ const TopGraph = styled.div`
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
   margin-top: 22px;
+  border-radius: 20px;
 `;
 
 const JngGraph = styled(TopGraph)``;
@@ -712,39 +801,54 @@ const NavBar = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 42.5px;
+  height: 50.5px;
   border-bottom: 1px solid rgb(35, 33, 42);
   .AverageTime {
     width: 61px;
 
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
-    line-height: 2.08;
-    color: rgb(132, 129, 142);
-    margin-left: 15px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
+    margin-left: 25px;
   }
   .X {
     width: auto;
 
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.67;
+    letter-spacing: normal;
     text-align: left;
-    color: rgb(132, 129, 142);
+    color: #84818e;
     margin-right: 15px;
     ::first-letter {
-      color: #dbdbdb;
+      color: #f14444;
     }
   }
   .Y {
     width: auto;
 
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.67;
+    letter-spacing: normal;
     text-align: left;
-    color: rgb(132, 129, 142);
+    color: #84818e;
     margin-right: 16px;
     ::first-letter {
-      color: #dbdbdb;
+      color: #f14444;
     }
   }
   .Legend {

@@ -121,19 +121,33 @@ function OppStat() {
   return (
     <OppStatWrapper>
       <PlayerCompare />
+      {/* 개인전적을 보여주는 의미가 없어 주석처리 */}
+      {/* <PlayerStatWrapper>
+        <div className="records red">{`${player?.total.value}${t(
+          "solo.comparison.total"
+        )} ${player?.win}${t("solo.comparison.win")} ${player?.lose}${t(
+          "solo.comparison.lose"
+        )}`}</div>
+        <span className="leftGradient"></span>
+        <div className="soloRecord">{t("solo.comparison.statLabel")}</div>
+        <span className="rightGradient"></span>
+        <div className="records blue">{`${oppPlayer?.total.value}${t(
+          "solo.comparison.total"
+        )} ${oppPlayer?.win}${t("solo.comparison.win")} ${oppPlayer?.lose}${t(
+          "solo.comparison.lose"
+        )}`}</div>
+      </PlayerStatWrapper> */}
       <OppStatContents>
-        {/*
-        <ChampionSettingNav>
+        {/* <ChampionSettingNav>
           <SettingTitle>
             <span className="Title">{t("solo.comparison.champSetting")}</span>
-            {/* <img
+            <img
               src="Images/ico-notice-gy.png"
               width="14px"
               height="14px"
               alt="noticeIcon"
             />
-            <span className="Alert">{t("solo.comparison.settingLabel")}</span> */}
-        {/*
+            <span className="Alert">{t("solo.comparison.settingLabel")}</span>
           </SettingTitle>
           <DropDownContainer>
             <div className="DropDown">
@@ -156,8 +170,8 @@ function OppStat() {
                       {filters.champion
                         ? filters.champion
                         : lang === "kr"
-                          ? `${filters.player} ${t("filters.allChampLabel2")}`
-                          : `${t("filters.allChampLabel2")} ${filters.player} `}
+                        ? `${filters.player} ${t("filters.allChampLabel2")}`
+                        : `${t("filters.allChampLabel2")} ${filters.player} `}
                     </span>
                     <img
                       className="ArrowIcon"
@@ -210,8 +224,9 @@ function OppStat() {
                       {filters.oppchampion
                         ? filters.oppchampion
                         : lang === "kr"
-                          ? `${filters.oppplayer} ${t("filters.allChampLabel2")}`
-                          : `${t("filters.allChampLabel2")} ${filters.oppplayer
+                        ? `${filters.oppplayer} ${t("filters.allChampLabel2")}`
+                        : `${t("filters.allChampLabel2")} ${
+                            filters.oppplayer
                           } `}
                     </span>
                     <img
@@ -270,8 +285,7 @@ function OppStat() {
               <p>{t("solo.comparison.reset")}</p>
             </button>
           </DropDownContainer>
-        </ChampionSettingNav>
-        */}
+        </ChampionSettingNav> */}
         <ComapreValue>
           <DisplayValue>
             <div className="Wrapper">
@@ -753,16 +767,57 @@ function OppStat() {
 
 export default OppStat;
 
+const PlayerStatWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 38px;
+  background-color: #23212a;
+  margin: 20px 0;
+  border-radius: 16px;
+  /* background-image: url("/Images/red-blue-gradient.png"); */
+
+  > .leftGradient {
+    width: 49px;
+    height: 26px;
+    margin-left: 170px;
+  }
+  > .rightGradient {
+    width: 49px;
+    height: 26px;
+    margin-right: 170px;
+  }
+  > .soloRecord {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    height: 26px;
+    background-color: rgb(38, 35, 45);
+    font-family: NotoSansKR;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: -0.65px;
+    color: #fff;
+  }
+  > .records {
+    font-family: "Spoqa Han Sans";
+    font-size: 14px;
+    line-height: 32px;
+    background-color: #23212a;
+    font-weight: bold;
+    color: #fff;
+  }
+`;
+
 const OppStatWrapper = styled.div`
   /* height: calc(100vh - 215px); */
   height: 100%;
 `;
 
 const OppStatContents = styled.div`
-  margin-top: 22px;
   width: 100%;
-  /* border: solid 1px rgb(58, 55, 69); */
-  background-color: #16151a;
+  border-radius: 20px;
 `;
 
 const ChampionSettingNav = styled.div`
@@ -777,7 +832,7 @@ const SettingTitle = styled.div`
   display: flex;
   align-items: center;
   .Title {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 13px;
     font-weight: bold;
     letter-spacing: -0.65px;
@@ -785,7 +840,7 @@ const SettingTitle = styled.div`
     margin: 0 15px 0 23px;
   }
   .Alert {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     letter-spacing: -0.6px;
     color: rgb(132, 129, 142);
@@ -795,11 +850,13 @@ const SettingTitle = styled.div`
 
 const ComapreValue = styled.div`
   min-height: 571px;
+  /* background-color: #23212a; */
+  /* border-radius: 20px; */
 `;
 
 const PlayerValue = styled.div`
   display: flex;
-  font-family: Poppins;
+  font-family: "Spoqa Han Sans";
   font-size: 16px;
   text-align: center;
   margin-right: 5px;
@@ -822,7 +879,7 @@ const PlayerValue = styled.div`
 
 const OppValue = styled.div`
   display: flex;
-  font-family: Poppins;
+  font-family: "Spoqa Han Sans";
   font-size: 16px;
   text-align: center;
   margin: 5px 0;
@@ -844,12 +901,12 @@ const OppValue = styled.div`
 `;
 
 const DisplayValue = styled.div`
-  height: 58px;
+  height: 32px;
   border-bottom: 1px solid #433f4e;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 0;
+  padding: 30px 0;
   :last-child {
     border-bottom: none;
   }
@@ -860,7 +917,7 @@ const DisplayValue = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: Poppins;
+    font-family: "Spoqa Han Sans";
 
     text-align: center;
     color: #f04545;
@@ -872,7 +929,7 @@ const DisplayValue = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: Poppins;
+    font-family: "Spoqa Han Sans";
     text-align: center;
     color: #817e90;
     img {
@@ -885,7 +942,7 @@ const DisplayValue = styled.div`
     align-items: center;
     width: 489px;
     div {
-      font-size: 23px;
+      font-size: 16px;
     }
   }
 
@@ -895,8 +952,8 @@ const DisplayValue = styled.div`
     justify-content: center;
     width: 220px;
     height: 22px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 23px;
+    font-family: "Spoqa Han Sans";
+    font-size: 16px;
     font-weight: bold;
     letter-spacing: -0.6px;
     text-align: center;
@@ -907,7 +964,7 @@ const DisplayValue = styled.div`
 const ComparedValue = styled.div`
   display: flex;
   align-items: center;
-  font-family: Poppins;
+  font-family: "Spoqa Han Sans";
   font-size: 23px;
 
   text-align: center;
@@ -925,7 +982,7 @@ const ComparedValue = styled.div`
 const OppComparedValue = styled.div`
   display: flex;
   align-items: center;
-  font-family: Poppins;
+  font-family: "spoqa hans sans";
   font-size: 23px;
 
   text-align: center;
@@ -946,7 +1003,7 @@ const DropDownContainer = styled.div`
   margin: 13px 0 0 23px;
 
   .Vs {
-    font-family: Poppins;
+    font-family: "Spoqa Han Sans";
     font-size: 15px;
     font-weight: bold;
     color: rgb(132, 129, 142);
@@ -957,7 +1014,7 @@ const DropDownContainer = styled.div`
     height: 40px;
     border-radius: 3px;
     background-color: rgb(240, 69, 69);
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     font-weight: bold;
     letter-spacing: -0.6px;
@@ -972,7 +1029,7 @@ const DropDownContainer = styled.div`
     border-radius: 3px;
     border: solid 1px #474554;
     background-color: #3a3745;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 11px;
     letter-spacing: -0.55px;
     color: rgb(175, 173, 190);
@@ -990,7 +1047,8 @@ const DropDown = styled.div`
   }
 
   body {
-    font-family: Arial, Helvetica, sans-serif;
+    /* font-family: "Spoqa Han Sans", Arial, Helvetica, sans-serif; */
+    font-family: "Spoqa Han Sans";
   }
 
   .menu-container {
@@ -1013,7 +1071,7 @@ const DropDown = styled.div`
   }
 
   .SelectedLabel {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
@@ -1023,7 +1081,7 @@ const DropDown = styled.div`
   }
 
   .Label {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
@@ -1072,7 +1130,7 @@ const DropDown = styled.div`
     text-decoration: none;
     padding: 15px 20px;
     display: block;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 11px;
     letter-spacing: -0.55px;
     text-align: left;

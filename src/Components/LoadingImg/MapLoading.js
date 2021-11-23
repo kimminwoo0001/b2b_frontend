@@ -5,7 +5,7 @@ function Loading() {
   return (
     // 영상보고서에 있는 맵 로딩사진
     <LoadingImage>
-      <img src="Images/Loading.gif" alt="Loading" />
+      <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
     </LoadingImage>
   );
 }

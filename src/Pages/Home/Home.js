@@ -9,6 +9,7 @@ function Home() {
   // 홈 화면 컨테이너
   return (
     <ErrorBoundary>
+      {console.log("홈 실행")}
       <Nav />
       <HomeWrapper>
         <SideBar />

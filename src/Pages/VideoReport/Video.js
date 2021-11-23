@@ -18,14 +18,18 @@ function Video() {
       <Nav />
       <VideoWrapper>
         <SideBar />
-        <div className={filters.filterMenuState ? "filter-open" : "filter-close"}>
+        <div
+          className={filters.filterMenuState ? "filter-open" : "filter-close"}
+        >
           <Filter />
         </div>
-        <div className={filters.filterMenuState ? "filter-close" : "filter-open"}>
+        <div
+          className={filters.filterMenuState ? "filter-close" : "filter-open"}
+        >
           <CloseFilter />
         </div>
         <ContentWrapper>
-          {filters.team !== "" && filters.season.length > 0 ? (
+          {filters.team !== "" && filters.team.length > 0 ? (
             <VideoTabs />
           ) : (
             <SelectFilter />
@@ -50,8 +54,7 @@ const VideoWrapper = styled.div`
     display: none;
   }
 
-  .filter-open{
-
+  .filter-open {
   }
 `;
 
@@ -59,4 +62,5 @@ const ContentWrapper = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
+  padding: 0px 0;
 `;

@@ -13,7 +13,7 @@ function TabTop({ playerData, loading }) {
   return (
     <TabContentsWrapper>
       <TableNav>
-        <div className="NavTitle">{t("league.playerStat.sbrLabel")}</div>
+        <div className="NavTitle">{t("league.playerStat.sbrLabel")}<span>?</span></div>
       </TableNav>
       {/* 받아온 선수 정보 데이터 뿌려주기 */}
       {playerData?.map((playerData, idx) => {
@@ -40,9 +40,8 @@ function TabTop({ playerData, loading }) {
                 ></img>
                 <label>{playerData.team}</label>
               </p>
-              <p className="PlayerValue">{`${playerData.player} (${
-                lang === "kr" ? playerData.NativeName : playerData.name
-              })`}</p>
+              <p className="PlayerValue">{`${playerData.player} (${lang === "kr" ? playerData.NativeName : playerData.name
+                })`}</p>
             </div>
 
             <div className="ParticipateValue">
@@ -99,15 +98,39 @@ const TableNav = styled.div`
   display: flex;
   align-items: center;
   height: 43px;
-  border: solid 1px rgb(58, 55, 69);
-  background-color: rgb(58, 55, 69);
-  padding: 12px 0 14px 15px;
+  border-radius: 15px;
+  border: solid 1px #23212a;
+  background-color: #23212a;
+  padding: 12px 0 12px 20px;
+
+  span {
+    width: 15px;
+    height: 15px;
+    margin: 2px 0 2px 10px;
+    padding: 0 5px;
+    border: solid 1px #84818e;
+    border-radius: 20px;
+    font-family: NotoSansKR;
+    font-size: 10px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.5;
+    letter-spacing: -0.5px;
+    text-align: left;
+    color: #84818e;
+  }
 
   .NavTitle {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
     font-weight: 500;
-    color: rgb(132, 129, 142);
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.67;
+    letter-spacing: normal;
+    text-align: left;
+    color: #84818e;
     margin-right: 10px;
   }
 `;
@@ -119,6 +142,7 @@ const TableContents = styled.div`
   margin-top: 10px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
+  border-radius: 15px;
   .RankValue {
     width: 20px;
     font-family: NotoSansKR, Apple SD Gothic Neo;
@@ -191,7 +215,7 @@ const TableContents = styled.div`
   }
   .SBRNumber {
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 15px;
+    font-size: 17px;
     font-weight: bold;
     text-align: center;
     color: rgb(240, 69, 69);
