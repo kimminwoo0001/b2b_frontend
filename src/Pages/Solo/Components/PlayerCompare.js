@@ -316,8 +316,8 @@ export default PlayerCompare;
 // `;
 
 const PerformanceValueAvg = styled.div`
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 20px;
+  font-family: "Spoqa Han Sans";
+  font-size: 18px;
   font-weight: bold;
   text-align: center;
   margin-top: 10px;
@@ -325,12 +325,11 @@ const PerformanceValueAvg = styled.div`
 `;
 
 const PerformanceValueMax = styled.div`
-  font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 20px;
+  font-family: "Spoqa Han Sans";
+  font-size: 18px;
   font-weight: bold;
   text-align: center;
   color: #fff;
-  text-align: center;
   margin-top: 10px;
 `;
 
@@ -368,28 +367,27 @@ const PlayerCompareWrapper = styled.div`
     text-align: right;
   }
   .NickName {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
+    font-family: "Spoqa Han Sans";
+    font-size: 13px;
     color: rgb(132, 129, 142);
     margin-bottom: 3px;
   }
   .RealName {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-family: "Spoqa Han Sans";
     font-size: 15px;
     font-weight: bold;
     letter-spacing: -0.75px;
     color: rgb(255, 255, 255);
   }
   .PerformanceTitle {
-    /* width: 80px; */
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 12px;
+    width: 150px;
+    font-family: "Spoqa Han Sans";
+    font-size: 16px;
     font-weight: bold;
     letter-spacing: -0.6px;
     text-align: left;
     color: rgb(132, 129, 142);
     margin-bottom: 4.7px;
-    text-align: center;
   }
 
   .AverageBox {
@@ -406,7 +404,7 @@ const PlayerCompareWrapper = styled.div`
     }
   }
   .Vs {
-    font-family: Poppins;
+    font-family: "Spoqa Han Sans";
     font-size: 30px;
     font-weight: bold;
     text-align: left;
