@@ -288,10 +288,10 @@ const TeamFilterModal = ({
           <TeamBox>
             <TeamFilterBox>
               <TeamWrapper>
-                <SelectTitle isTeamSelected={filters.team.length >= 0}>
+                <SelectTeamTitle isFilterSelected={filters.league.length > 0}>
                   {t("filters.teamCompareLabel1")}
-                </SelectTitle>
-                <SelectTeam>
+                </SelectTeamTitle>
+                <SelectTeam isFilterSelected={filters.league.length > 0}>
                   {teamFilter?.map((team, index) => {
                     return (
                       <MapTeams
@@ -314,9 +314,9 @@ const TeamFilterModal = ({
                 </SelectTeam>
               </TeamWrapper>
               <TeamWrapper>
-                <SelectTitle isTeamSelected={filters.team.length !== 0}>
+                <SelectOppTeamTitle isTeamSelected={filters.team.length !== 0}>
                   {t("filters.teamCompareLabel2")}
-                </SelectTitle>
+                </SelectOppTeamTitle>
                 <SelectOppTeam isTeamSelected={filters.team.length !== 0}>
                   {oppTeamFilter?.map((team, index) => {
                     return (
@@ -571,6 +571,7 @@ const SelectTeam = styled.div`
   margin-right: 15px;
   border-radius: 20px;
   padding: 10px;
+  opacity: ${(props) => (props.isFilterSelected ? "1" : "0.3")};
   overflow-y: scroll;
   &::-webkit-scrollbar {
     width: 4px;
@@ -607,7 +608,21 @@ const SelectOppTeam = styled.div`
   }
 `;
 
-const SelectTitle = styled.div`
+const SelectTeamTitle = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0px 0 0 15px;
+  height: 48px;
+  font-family: NotoSansKR, Apple SD Gothic Neo;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: -0.6px;
+  text-align: left;
+  color: #fff;
+  opacity: ${(props) => (props.isFilterSelected ? "1" : "0.3")};
+`;
+
+const SelectOppTeamTitle = styled.div`
   display: flex;
   align-items: center;
   padding: 0px 0 0 15px;
