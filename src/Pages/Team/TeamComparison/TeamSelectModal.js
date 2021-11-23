@@ -49,7 +49,7 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
     <>
       <BackScreen
         openModal={openModal}
-        // onClick={() => setOpenModal(false)}
+      // onClick={() => setOpenModal(false)}
       ></BackScreen>
       <TeamModalWrapper openModal={openModal}>
         <ModalNav>
@@ -62,23 +62,24 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
             />
           </span>
         </ModalNav>
-        <ContentTitle>Team</ContentTitle>
-        <MapTeamContent>
-          {oppTeam?.map((team, idx) => {
-            return (
-              <MapTeam
-                key={idx}
-                onClick={() => dispatch(OppTeam(team))}
-                currentTeam={filters.oppteam === team}
-              >
-                <div>
+        <ContentBox>
+          <ContentTitle>Team</ContentTitle>
+          <MapTeamContent>
+            {oppTeam?.map((team, idx) => {
+              return (
+                <MapTeam
+                  key={idx}
+                  onClick={() => dispatch(OppTeam(team))}
+                  currentTeam={filters.oppteam === team}
+                >
+
                   <img src={`Images/TeamLogo/${team}.png`} alt="teamLogo" />{" "}
-                  {team}
-                </div>
-              </MapTeam>
-            );
-          })}
-        </MapTeamContent>
+                  <div>{team}</div>
+                </MapTeam>
+              );
+            })}
+          </MapTeamContent>
+        </ContentBox>
         <ButtonBox isOppteamSelected={filters.oppteam !== ""}>
           <button
             onClick={() => {
@@ -113,7 +114,7 @@ const BackScreen = styled.div`
 const TeamModalWrapper = styled.div`
   display: ${(props) => (props.openModal ? "block" : "none")};
   width: 500px;
-  height: 383px;
+  // height: 383px;
   border: solid 1px #23212a;
   background-color: #23212a;
   top: 50%;
@@ -152,26 +153,31 @@ const ModalNav = styled.div`
   }
 `;
 
+const ContentBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #484655;
+  margin-top: 30px;
+`;
+
 const ContentTitle = styled.div`
   display: flex;
   align-items: center;
-  width: 100%;
   height: 18px;
-  // background-color: rgb(35, 33, 42);
-  font-family: SpoqaHanSansNeo;
-  font-size: 16px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.63;
-  padding: 0px 0 0px 14px;
-  margin: 25px;
+  font-family: NotoSansKR, Apple SD Gothic Neo;
+  font-size: 18px;
+  /* padding: 0px 0 0px 14px; */
+  padding: 10px 14px;
+  margin: 0px 39px 0px 23px;
   color: rgb(255, 255, 255);
 `;
 
 const MapTeamContent = styled.div`
-  height: 190px;
+  max-height: 190px;
+  //border-bottom: 1px solid rgb(72, 70, 85);
   overflow-y: scroll;
+  padding: 0 16px;
+  padding-top: 10px;
   &::-webkit-scrollbar {
     width: 8px;
     background-color: #434050;
@@ -183,19 +189,28 @@ const MapTeamContent = styled.div`
 `;
 
 const ButtonBox = styled.div`
-  padding: 5px;
-  height: 83px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90px;
+  margin: 5px 16px 0;
   button {
     outline: none;
     text-decoration: none;
     width: 100%;
-    height: 54px;
+    height: 60px;
+    margin: 0 5px;
     border-radius: 20px;
     background-color: ${(props) =>
-      props.isOppteamSelected ? "#5942ba" : "#484655"};
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
-    font-weight: 500;
+    props.isOppteamSelected ? "#5942ba" : "#484655"};
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
+    text-align: center;
     color: rgb(255, 255, 255);
   }
 `;
@@ -207,6 +222,7 @@ const MapTeam = styled.div`
   height: 60px;
   cursor: pointer;
   color: rgb(132, 129, 142);
+  padding: 15px 0 15px 46px;
   ${(props) =>
     props.currentTeam &&
     css`
@@ -217,12 +233,10 @@ const MapTeam = styled.div`
   img {
     width: 30px;
     height: 30px;
-    object-fit: contain;
-    vertical-align: middle;
-    margin: 0 10px 1px 15px;
+    margin: 0 11px 0 0px;
+
   }
   div {
-    margin-left: 50px;
     font-family: SpoqaHanSansNeo;
     font-size: 16px;
     font-weight: 300;
