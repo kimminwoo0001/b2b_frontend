@@ -59,7 +59,7 @@ function LeagueStatistics() {
       patch: filters.patch,
       token: user.token,
       id: user.id,
-    }
+    };
 
     axiosRequest(url, params, function (e) {
       // 그래프 min, max, row 설정하기 위한 상태값
@@ -104,11 +104,10 @@ function LeagueStatistics() {
       setFirstGankY(GankY);
       setTotalMatchX(TotalX);
       setTotalMatchY(TotalY);
+      // console.log(supportX);
 
       setLoading(false);
-    })
-
-
+    });
   };
   //현재 패치버전 색 교체
   // const colorChange = () => {
@@ -127,12 +126,12 @@ function LeagueStatistics() {
       {
         fill: false,
         lineTension: 0,
-        backgroundColor: "#f14444",
-        borderColor: "#f14444",
+        backgroundColor: "#f04545",
+        borderColor: "#f04545",
         borderWidth: 2,
-        data: gameLengthY
-      }
-    ]
+        data: gameLengthY,
+      },
+    ],
   };
 
   //라인 별 서포팅 시간 그래프 세팅
@@ -143,12 +142,12 @@ function LeagueStatistics() {
         barThickness: 28,
         fill: false,
         lineTension: 0,
-        backgroundColor: "#f14444",
-        borderColor: "#f14444",
+        backgroundColor: "#f04545",
+        borderColor: "#f04545",
         borderWidth: 2,
-        data: supportTimeY
-      }
-    ]
+        data: supportTimeY,
+      },
+    ],
   };
 
   //평균 교전시간 그래프 세팅
@@ -158,12 +157,12 @@ function LeagueStatistics() {
       {
         fill: false,
         lineTension: 0,
-        backgroundColor: "#f14444",
-        borderColor: "#f14444",
+        backgroundColor: "#f04545",
+        borderColor: "#f04545",
         borderWidth: 2,
-        data: totalMatchY
-      }
-    ]
+        data: totalMatchY,
+      },
+    ],
   };
 
   //첫 갱 시간 그래프 세팅
@@ -173,12 +172,12 @@ function LeagueStatistics() {
       {
         fill: false,
         lineTension: 0,
-        backgroundColor: "#f14444",
-        borderColor: "#f14444",
+        backgroundColor: "#f04545",
+        borderColor: "#f04545",
         borderWidth: 2,
-        data: firstGankY
-      }
-    ]
+        data: firstGankY,
+      },
+    ],
   };
 
   if (loading) return <LoadingImg />;
@@ -202,10 +201,20 @@ function LeagueStatistics() {
               data={averageGameTime}
               options={{
                 tooltips: {
-                  intersect: false
+                  intersect: false,
+                  backgroundColor: "#1d1d1d",
+                  titleFontSize: 12,
+                  bodyFontSize: 10,
+                  displayColors: true,
+                  boxWidth: 2,
+                  boxHeight: 2,
+                  cornerRadius: 10,
+                },
+                hover: {
+                  animationDuration: 100,
                 },
                 legend: {
-                  display: false
+                  display: false,
                 },
                 maintainAspectRatio: false,
                 scales: {
@@ -213,15 +222,15 @@ function LeagueStatistics() {
                     {
                       ticks: {
                         fontColor: "#84818e",
-                        fontSize: 15
+                        fontSize: 15,
                       },
                       gridLines: {
                         color: "rgb(47, 45, 56)",
                         offsetGridLines: true,
-                        drawOnChartArea: true
+                        drawOnChartArea: true,
                       },
-                      offset: true
-                    }
+                      offset: true,
+                    },
                   ],
                   yAxes: [
                     {
@@ -230,14 +239,14 @@ function LeagueStatistics() {
                         fontColor: "#84818e",
                         fontSize: 15,
                         min: gameLengthData?.min,
-                        max: gameLengthData?.max
+                        max: gameLengthData?.max,
                       },
                       gridLines: {
-                        color: "rgb(58, 55, 69)"
-                      }
-                    }
-                  ]
-                }
+                        color: "rgb(58, 55, 69)",
+                      },
+                    },
+                  ],
+                },
               }}
             />
           </GameTimeCharts>
@@ -259,10 +268,20 @@ function LeagueStatistics() {
               data={averageSupport}
               options={{
                 tooltips: {
-                  intersect: false
+                  intersect: false,
+                  backgroundColor: "#1d1d1d",
+                  titleFontSize: 12,
+                  bodyFontSize: 10,
+                  displayColors: true,
+                  boxWidth: 2,
+                  boxHeight: 2,
+                  cornerRadius: 10,
+                },
+                hover: {
+                  animationDuration: 100,
                 },
                 legend: {
-                  display: false
+                  display: false,
                 },
                 maintainAspectRatio: false,
                 scales: {
@@ -270,11 +289,11 @@ function LeagueStatistics() {
                     {
                       ticks: {
                         fontColor: "#84818e",
-                        fontSize: 15
+                        fontSize: 15,
                       },
                       gridLines: { color: "rgb(47, 45, 56)" },
-                      offset: true
-                    }
+                      offset: true,
+                    },
                   ],
                   yAxes: [
                     {
@@ -283,14 +302,14 @@ function LeagueStatistics() {
                         fontColor: "#84818e",
                         fontSize: 15,
                         min: supportTimeData?.min,
-                        max: supportTimeData?.max
+                        max: supportTimeData?.max,
                       },
                       gridLines: {
-                        color: "rgb(58, 55, 69)"
-                      }
-                    }
-                  ]
-                }
+                        color: "rgb(58, 55, 69)",
+                      },
+                    },
+                  ],
+                },
               }}
             />
           </GameTimeCharts>
@@ -316,10 +335,20 @@ function LeagueStatistics() {
               data={firstFight}
               options={{
                 tooltips: {
-                  intersect: false
+                  intersect: false,
+                  backgroundColor: "#1d1d1d",
+                  titleFontSize: 12,
+                  bodyFontSize: 10,
+                  displayColors: true,
+                  boxWidth: 2,
+                  boxHeight: 2,
+                  cornerRadius: 10,
                 },
                 legend: {
-                  display: false
+                  display: false,
+                },
+                hover: {
+                  animationDuration: 100,
                 },
                 maintainAspectRatio: false,
                 scales: {
@@ -327,11 +356,11 @@ function LeagueStatistics() {
                     {
                       ticks: {
                         fontColor: "#84818e",
-                        fontSize: 15
+                        fontSize: 15,
                       },
                       gridLines: { color: "rgb(47, 45, 56)" },
-                      offset: true
-                    }
+                      offset: true,
+                    },
                   ],
                   yAxes: [
                     {
@@ -340,14 +369,14 @@ function LeagueStatistics() {
                         fontColor: "#84818e",
                         fontSize: 15,
                         min: totalMatchData?.min,
-                        max: totalMatchData?.max
+                        max: totalMatchData?.max,
                       },
                       gridLines: {
-                        color: "rgb(58, 55, 69)"
-                      }
-                    }
-                  ]
-                }
+                        color: "rgb(58, 55, 69)",
+                      },
+                    },
+                  ],
+                },
               }}
             />
           </GameTimeCharts>
@@ -367,10 +396,20 @@ function LeagueStatistics() {
               data={averageGank}
               options={{
                 tooltips: {
-                  intersect: false
+                  intersect: false,
+                  backgroundColor: "#1d1d1d",
+                  titleFontSize: 12,
+                  bodyFontSize: 10,
+                  displayColors: true,
+                  boxWidth: 2,
+                  boxHeight: 2,
+                  cornerRadius: 10,
                 },
                 legend: {
-                  display: false
+                  display: false,
+                },
+                hover: {
+                  animationDuration: 100,
                 },
                 maintainAspectRatio: false,
                 scales: {
@@ -378,11 +417,11 @@ function LeagueStatistics() {
                     {
                       ticks: {
                         fontColor: "#84818e",
-                        fontSize: 15
+                        fontSize: 15,
                       },
                       gridLines: { color: "rgb(47, 45, 56)" },
-                      offset: true
-                    }
+                      offset: true,
+                    },
                   ],
                   yAxes: [
                     {
@@ -391,14 +430,14 @@ function LeagueStatistics() {
                         fontColor: "#84818e",
                         fontSize: 15,
                         min: firstGankData?.min,
-                        max: firstGankData?.max
+                        max: firstGankData?.max,
                       },
                       gridLines: {
-                        color: "rgb(58, 55, 69)"
-                      }
-                    }
-                  ]
-                }
+                        color: "rgb(58, 55, 69)",
+                      },
+                    },
+                  ],
+                },
               }}
             />
           </GameTimeCharts>

@@ -69,7 +69,9 @@ const Filter = memo(() => {
   const namePlayerCompare = "/playerCompare";
   const pagePath = document.location.pathname;
   const isComparePage = [nameTeamCompare, namePlayerCompare].includes(pagePath);
-  const isNeedTeam = [nameSolo, nameTeam, nameVideo, nameGameReport].includes(pagePath);
+  const isNeedTeam = [nameSolo, nameTeam, nameVideo, nameGameReport].includes(
+    pagePath
+  );
   const dropdownRef = useRef(null);
   const [isActiveLeague, setIsActiveLeague] = useDetectOutsideClick(
     dropdownRef,
@@ -185,7 +187,7 @@ const Filter = memo(() => {
       leagueList = Object.keys(staticvalue.filterObjects).map(
         (key) =>
           Number(Object.keys(staticvalue.filterObjects[key])) ===
-          Number(filters.year) && key
+            Number(filters.year) && key
       );
     } else {
       leagueList = Object.keys(staticvalue.filterObjects);
@@ -355,7 +357,6 @@ const Filter = memo(() => {
     });
   };
 
-  //팀 필터 fetch 함수
   return (
     <>
       {pagePath === nameTeamCompare && (

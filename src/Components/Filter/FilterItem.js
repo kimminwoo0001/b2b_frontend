@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,10 +7,10 @@ import { SetLeague, SetSeason } from "../../redux/modules/filtervalue";
 const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
   const { t } = useTranslation();
   const [viewSwitch, setViewSwitch] = useState(true);
-  const [checked, setChecked] = useState(false);
   const filters = useSelector((state) => state.FilterReducer);
   const selector = useSelector((state) => state.SelectorReducer);
   const dispatch = useDispatch();
+  const [checked, setChecked] = useState(false);
 
   const changeSwitch = () => {
     setViewSwitch(!viewSwitch);
@@ -48,6 +48,14 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
     }
   };
 
+  // useEffect(() => {
+  //   if (filters.league.length === selector.leagueFilter.length) {
+  //     setChecked(true);
+  //     dispatch(SetLeague(selector.leagueFilter));
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [filters.league]);
+
   return (
     <Item>
       <InnerWrapper>
@@ -79,17 +87,13 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
           {/* 전체선택 */}
           {(title === t("label.league") ||
             (title === t("label.season") && filters.year.length > 0)) && (
-              <div className="div-select-all">
-                <div className="select_all" onClick={handleCheckboxClick}>
-                  <input
-                    type="checkbox"
-
-                    checked={checked}
-                  />
-                  <span>{t("filters.selectAll")}</span>
-                </div>
+            <div className="div-select-all">
+              <div className="select_all" onClick={handleCheckboxClick}>
+                <input type="checkbox" checked={checked} />
+                <span>{t("filters.selectAll")}</span>
               </div>
-            )}
+            </div>
+          )}
           {multiFilter}
         </div>
       </InnerWrapper>
@@ -148,7 +152,6 @@ const Item = styled.div`
   border-radius: 35px;
   background-color: #2f2d38;
 
-
   .div-select-all {
     height: 35px;
     border-bottom: 1px solid #433f4e;
@@ -163,8 +166,6 @@ const Item = styled.div`
   }
 
   .select_all {
-   
-
     display: flex;
     align-items: center;
     margin: 5px 0;
@@ -172,7 +173,6 @@ const Item = styled.div`
     width: 100%;
     height: 30px;
     cursor: pointer;
-
 
     input[type="checkbox"] {
       -webkit-appearance: none;
@@ -198,8 +198,6 @@ const Item = styled.div`
       &:focus {
         outline: none !important;
       }
-
-      
     }
     :hover {
       border-radius: 10px;

@@ -693,6 +693,7 @@ function Stats() {
                     <Tooltip
                       cursor={{ fill: "#23212a" }}
                       content={<CustomTooltip dataKey="value" />}
+                      animationDuration={100}
                     />
                     {/* <Legend formatter={renderColorfulLegendText} /> */}
                     <ReferenceLine x={0} stroke="#4e4c5c" />
@@ -779,6 +780,7 @@ function Stats() {
                     <Tooltip
                       cursor={{ fill: "#23212a" }}
                       content={<CustomTooltip />}
+                      animationDuration={100}
                     />
                     {/* <Legend formatter={renderColorfulLegendText} /> */}
                     <ReferenceLine x={0} stroke="#4e4c5c" />
@@ -810,21 +812,27 @@ function Stats() {
 export default Stats;
 
 const CustomTool = styled.div`
-  background-color: rgba(35, 33, 42, 0.9);
+  background-color: #1d1d1d;
+  border-radius: 10px;
   padding: 10px;
   width: 100%;
   color: white;
-  font-size: 12px;
   font-family: NotoSansKR, Apple SD Gothic Neo;
   > div {
     margin-bottom: 6px;
+    :last-child {
+      margin-bottom: 0;
+    }
   }
 
   > .title {
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: bold;
     margin-bottom: 6px;
   }
   > .player {
+    font-size: 10px;
+
     display: flex;
     > .player1 {
       color: #f04545;
@@ -837,6 +845,8 @@ const CustomTool = styled.div`
     }
   }
   > .league {
+    font-size: 10px;
+
     display: flex;
     color: #84818e;
     > .value {
@@ -1194,7 +1204,7 @@ const ComplexTitle = styled.div`
   .legends {
     display: flex;
     align-items: center;
-    width: 170px;
+    width: auto;
 
     .redColorBox {
       width: 12px;

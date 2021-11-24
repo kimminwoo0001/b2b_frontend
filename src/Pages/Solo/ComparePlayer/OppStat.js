@@ -289,7 +289,7 @@ function OppStat() {
         <ComapreValue>
           <DisplayValue>
             <div className="Wrapper">
-              <PlayerValue color={player?.total.value}>
+              <PlayerValue>
                 {`${player?.total.value.toFixed(0)} ${t(
                   "solo.comparison.total"
                 )} ${player?.win.toFixed(0)} ${t(
@@ -299,9 +299,7 @@ function OppStat() {
             </div>
             <div className="ValueTitle">{t("solo.comparison.statLabelvs")}</div>
             <div className="Wrapper">
-              <OppValue
-                color={oppPlayer?.total.value}
-              >{`${oppPlayer?.total.value.toFixed(0)} ${t(
+              <OppValue>{`${oppPlayer?.total.value.toFixed(0)} ${t(
                 "solo.comparison.total"
               )} ${oppPlayer?.win.toFixed(0)} ${t(
                 "solo.comparison.win"
@@ -312,7 +310,7 @@ function OppStat() {
           </DisplayValue>
           <DisplayValue>
             <div className="Wrapper">
-              <PlayerValue color={player?.total.value}>
+              <PlayerValue>
                 {`${player?.total.value.toFixed(0)} ${t(
                   "solo.comparison.games"
                 )}`}
@@ -320,16 +318,14 @@ function OppStat() {
             </div>
             <div className="ValueTitle">{t("solo.comparison.gamePlayed")}</div>
             <div className="Wrapper">
-              <OppValue
-                color={oppPlayer?.total.value}
-              >{`${oppPlayer?.total.value.toFixed(0)} ${t(
+              <OppValue>{`${oppPlayer?.total.value.toFixed(0)} ${t(
                 "solo.comparison.games"
               )}`}</OppValue>
             </div>
           </DisplayValue>
           <DisplayValue>
             <div className="Wrapper">
-              <PlayerValue color={player?.winRate.result === true ? "true" : 0}>
+              <PlayerValue color={player?.winRate.result === true}>
                 {`${player?.winRate.value.toFixed(1)} %`}
               </PlayerValue>
               <ComparedValue
@@ -360,7 +356,7 @@ function OppStat() {
                 <img
                   src={
                     oppPlayer?.winRate.result
-                      ? "Images/ico-plus-blue.png"
+                      ? "Images/ico-plus-red.png"
                       : "Images/ico-minus-grey.png"
                   }
                   alt="icon"
@@ -412,7 +408,7 @@ function OppStat() {
                 <img
                   src={
                     oppPlayer?.solokill.result
-                      ? "Images/ico-plus-blue.png"
+                      ? "Images/ico-plus-red.png"
                       : "Images/ico-minus-grey.png"
                   }
                   alt="icon"
@@ -484,7 +480,7 @@ function OppStat() {
                 <img
                   src={
                     oppPlayer?.kda.result
-                      ? "Images/ico-plus-blue.png"
+                      ? "Images/ico-plus-red.png"
                       : "Images/ico-minus-grey.png"
                   }
                   alt="icon"
@@ -525,7 +521,7 @@ function OppStat() {
                 <img
                   src={
                     oppPlayer?.cs.result
-                      ? "Images/ico-plus-blue.png"
+                      ? "Images/ico-plus-red.png"
                       : "Images/ico-minus-grey.png"
                   }
                   alt="icon"
@@ -566,7 +562,7 @@ function OppStat() {
                 <img
                   src={
                     oppPlayer?.dpm.result
-                      ? "Images/ico-plus-blue.png"
+                      ? "Images/ico-plus-red.png"
                       : "Images/ico-minus-grey.png"
                   }
                   alt="icon"
@@ -607,7 +603,7 @@ function OppStat() {
                 <img
                   src={
                     oppPlayer?.dtpm.result
-                      ? "Images/ico-plus-blue.png"
+                      ? "Images/ico-plus-red.png"
                       : "Images/ico-minus-grey.png"
                   }
                   alt="icon"
@@ -655,7 +651,7 @@ function OppStat() {
                 <img
                   src={
                     oppPlayer?.match_parti.result
-                      ? "Images/ico-plus-blue.png"
+                      ? "Images/ico-plus-red.png"
                       : "Images/ico-minus-grey.png"
                   }
                   alt="icon"
@@ -699,7 +695,7 @@ function OppStat() {
                 <img
                   src={
                     oppPlayer?.kp.result
-                      ? "Images/ico-plus-blue.png"
+                      ? "Images/ico-plus-red.png"
                       : "Images/ico-minus-grey.png"
                   }
                   alt="icon"
@@ -747,7 +743,7 @@ function OppStat() {
                 <img
                   src={
                     oppPlayer?.match.result === true
-                      ? "Images/ico-plus-blue.png"
+                      ? "Images/ico-plus-red.png"
                       : "Images/ico-minus-grey.png"
                   }
                   alt="icon"
@@ -860,21 +856,17 @@ const PlayerValue = styled.div`
   font-size: 16px;
   text-align: center;
   margin-right: 5px;
-  color: #817e90;
+  color: ${(props) => (props.color ? "#f04545" : "#fff")};
   .Slash {
-    color: #817e90;
+    color: ${(props) => (props.color ? "#f04545" : "#fff")};
     margin: 0 4px 0 4px;
   }
   .KDAValue {
-    color: rgb(255, 255, 255);
+    color: ${(props) => (props.color ? "#f04545" : "#fff")};
+
     font-weight: bold;
     margin-left: 8px;
   }
-  ${(props) =>
-    props.color &&
-    css`
-      color: rgb(255, 255, 255);
-    `}
 `;
 
 const OppValue = styled.div`
@@ -883,21 +875,16 @@ const OppValue = styled.div`
   font-size: 16px;
   text-align: center;
   margin: 5px 0;
-  color: #817e90;
+  color: ${(props) => (props.color ? "#f04545" : "#fff")};
   .Slash {
-    color: #817e90;
+    color: ${(props) => (props.color ? "#f04545" : "#fff")};
     margin: 0 4px 0 4px;
   }
   .KDAValue {
-    color: rgb(255, 255, 255);
+    color: ${(props) => (props.color ? "#f04545" : "#fff")};
     font-weight: bold;
     margin-left: 8px;
   }
-  ${(props) =>
-    props.color &&
-    css`
-      color: rgb(255, 255, 255);
-    `}
 `;
 
 const DisplayValue = styled.div`
@@ -968,7 +955,7 @@ const ComparedValue = styled.div`
   font-size: 23px;
 
   text-align: center;
-  color: #817e90;
+  color: #fff;
   img {
     margin: 0 5px 0 5px;
   }
@@ -986,14 +973,14 @@ const OppComparedValue = styled.div`
   font-size: 23px;
 
   text-align: center;
-  color: #817e90;
+  color: #fff;
   img {
     margin: 0 5px 0 5px;
   }
   ${(props) =>
     props.color &&
     css`
-      color: #0075bf;
+      color: #f04545;
     `}
 `;
 

@@ -63,10 +63,12 @@ const ArrowWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  td:first-child, th:first-child {
-    border-radius: 10px 0 0 10px; 
+  td:first-child,
+  th:first-child {
+    border-radius: 10px 0 0 10px;
   }
-  td:last-child, th:last-child {
+  td:last-child,
+  th:last-child {
     border-radius: 0 10px 10px 0;
   }
 `;
@@ -86,7 +88,6 @@ const ToolTipWrapper = styled.div`
 `;
 
 const TooltipNav = styled.tr`
- 
   text-align: center;
   vertical-align: middle;
   width: 316px;
@@ -132,7 +133,9 @@ const TooltipContent = styled.tr`
   letter-spacing: -0.6px;
   text-align: left;
   color: #ffffff;
-
+  :last-child {
+    border-bottom: none;
+  }
   > td {
     text-align: left;
     vertical-align: middle;

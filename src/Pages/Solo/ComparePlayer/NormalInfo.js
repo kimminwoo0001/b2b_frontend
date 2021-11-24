@@ -185,11 +185,21 @@ function NormalInfo() {
     tooltips: {
       intersect: false,
       enabled: true,
+      backgroundColor: "#1d1d1d",
+      titleFontSize: 12,
+      bodyFontSize: 10,
+      displayColors: true,
+      boxWidth: 2,
+      boxHeight: 2,
+      cornerRadius: 10,
       callbacks: {
         title: function (tooltipItem, data) {
           return data.labels[tooltipItem[0].index];
         },
       },
+    },
+    hover: {
+      animationDuration: 100,
     },
     legend: {
       display: true,

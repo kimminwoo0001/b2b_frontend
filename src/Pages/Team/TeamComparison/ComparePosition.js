@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import axiosRequest from "../../../lib/axiosRequest";
 
-
 function mycomparator(a, b) {
   var num1 = 0;
   if (Math.floor(a) - Math.floor(b) > 0) {
@@ -52,7 +51,7 @@ function ComparePosition() {
     "rgb(255, 196, 0)",
     "rgb(130, 172, 35)",
     "#ba00ff",
-    "#95532a"
+    "#95532a",
   ];
 
   //포지션 그래프 fetch 함수
@@ -67,12 +66,12 @@ function ComparePosition() {
       team: filters.team,
       oppteam: filters.oppteam,
       token: user.token,
-      id: user.id
-    }
+      id: user.id,
+    };
     axiosRequest(url, params, function (e) {
       setTeamName({
         team: e.data.teamName,
-        oppteam: e.data.oppteamName
+        oppteam: e.data.oppteamName,
       });
       //top데이터 받아와서 그래프에 넣기 위해 가공하는 과정
       const topData = [];
@@ -96,7 +95,7 @@ function ComparePosition() {
       for (let i = 0; i < topData.length; i++) {
         topArray.push({
           player: Object.keys(e.data["top"])[i],
-          data: topData[i].map(data => data?.toFixed(2))
+          data: topData[i].map((data) => data?.toFixed(2)),
         });
       }
       setTop(topArray);
@@ -123,7 +122,7 @@ function ComparePosition() {
       for (let i = 0; i < jngData.length; i++) {
         jngArray.push({
           player: Object.keys(e.data["jng"])[i],
-          data: jngData[i].map(data => data?.toFixed(2))
+          data: jngData[i].map((data) => data?.toFixed(2)),
         });
       }
       setJng(jngArray);
@@ -150,7 +149,7 @@ function ComparePosition() {
       for (let i = 0; i < midData.length; i++) {
         midArray.push({
           player: Object.keys(e.data["mid"])[i],
-          data: midData[i].map(data => data?.toFixed(2))
+          data: midData[i].map((data) => data?.toFixed(2)),
         });
       }
       setMid(midArray);
@@ -177,7 +176,7 @@ function ComparePosition() {
       for (let i = 0; i < botData.length; i++) {
         botArray.push({
           player: Object.keys(e.data["bot"])[i],
-          data: botData[i].map(data => data?.toFixed(2))
+          data: botData[i].map((data) => data?.toFixed(2)),
         });
       }
       setBot(botArray);
@@ -204,7 +203,7 @@ function ComparePosition() {
       for (let i = 0; i < supData.length; i++) {
         supArray.push({
           player: Object.keys(e.data["sup"])[i],
-          data: supData[i].map(data => data?.toFixed(2))
+          data: supData[i].map((data) => data?.toFixed(2)),
         });
       }
       setSup(supArray);
@@ -224,9 +223,9 @@ function ComparePosition() {
         borderColor: color[idx],
         borderWidth: 1,
         data: data.data,
-        pointHitRadius: 10 // hover 범위 넓혀 줌
+        pointHitRadius: 10, // hover 범위 넓혀 줌
       };
-    })
+    }),
   };
   const jngData = {
     labels: sortedPatch,
@@ -239,9 +238,9 @@ function ComparePosition() {
         borderColor: color[idx],
         borderWidth: 1,
         data: data.data,
-        pointHitRadius: 10 // hover 범위 넓혀 줌
+        pointHitRadius: 10, // hover 범위 넓혀 줌
       };
-    })
+    }),
   };
   const midData = {
     labels: sortedPatch,
@@ -254,9 +253,9 @@ function ComparePosition() {
         borderColor: color[idx],
         borderWidth: 1,
         data: data.data,
-        pointHitRadius: 10 // hover 범위 넓혀 줌
+        pointHitRadius: 10, // hover 범위 넓혀 줌
       };
-    })
+    }),
   };
   const botData = {
     labels: sortedPatch,
@@ -269,9 +268,9 @@ function ComparePosition() {
         borderColor: color[idx],
         borderWidth: 1,
         data: data.data,
-        pointHitRadius: 10 // hover 범위 넓혀 줌
+        pointHitRadius: 10, // hover 범위 넓혀 줌
       };
-    })
+    }),
   };
   const supData = {
     labels: sortedPatch,
@@ -284,9 +283,9 @@ function ComparePosition() {
         borderColor: color[idx],
         borderWidth: 1,
         data: data.data,
-        pointHitRadius: 10 // hover 범위 넓혀 줌
+        pointHitRadius: 10, // hover 범위 넓혀 줌
       };
-    })
+    }),
   };
 
   if (loading) return <LoadingImg />;
@@ -313,9 +312,7 @@ function ComparePosition() {
             height="54px"
             alt="teamIcon"
           />
-          <div>
-            {teamName?.oppteam}
-          </div>
+          <div>{teamName?.oppteam}</div>
         </div>
         <div className="BlueSide"></div>
       </DisplayTeams>
@@ -347,11 +344,15 @@ function ComparePosition() {
             data={topData}
             options={{
               legend: {
-                display: false
+                display: false,
               },
               tooltips: {
-                mode: 'x'
+                mode: "x",
               },
+              hover: {
+                animationDuration: 100,
+              },
+
               // responsive: false,
               maintainAspectRatio: false,
               scales: {
@@ -359,11 +360,11 @@ function ComparePosition() {
                   {
                     ticks: {
                       fontColor: "#84818e",
-                      fontSize: 15
+                      fontSize: 15,
                     },
                     gridLines: { color: "rgb(47, 45, 56)" },
-                    offset: true
-                  }
+                    offset: true,
+                  },
                 ],
                 yAxes: [
                   {
@@ -372,14 +373,14 @@ function ComparePosition() {
                       fontColor: "#84818e",
                       fontSize: 15,
                       min: 0,
-                      max: 15
+                      max: 15,
                     },
                     gridLines: {
-                      color: "rgb(58, 55, 69)"
-                    }
-                  }
-                ]
-              }
+                      color: "rgb(58, 55, 69)",
+                    },
+                  },
+                ],
+              },
             }}
           />
         </CompareSBR>
@@ -412,10 +413,13 @@ function ComparePosition() {
             data={jngData}
             options={{
               legend: {
-                display: false
+                display: false,
               },
               tooltips: {
-                mode: 'x'
+                mode: "x",
+              },
+              hover: {
+                animationDuration: 100,
               },
               maintainAspectRatio: false,
               scales: {
@@ -423,11 +427,11 @@ function ComparePosition() {
                   {
                     ticks: {
                       fontColor: "#84818e",
-                      fontSize: 15
+                      fontSize: 15,
                     },
                     gridLines: { color: "rgb(47, 45, 56)" },
-                    offset: true
-                  }
+                    offset: true,
+                  },
                 ],
                 yAxes: [
                   {
@@ -436,14 +440,14 @@ function ComparePosition() {
                       fontColor: "#84818e",
                       fontSize: 15,
                       min: 0,
-                      max: 15
+                      max: 15,
                     },
                     gridLines: {
-                      color: "rgb(58, 55, 69)"
-                    }
-                  }
-                ]
-              }
+                      color: "rgb(58, 55, 69)",
+                    },
+                  },
+                ],
+              },
             }}
           />
         </CompareSBR>
@@ -476,10 +480,13 @@ function ComparePosition() {
             data={midData}
             options={{
               legend: {
-                display: false
+                display: false,
               },
               tooltips: {
-                mode: 'x'
+                mode: "x",
+              },
+              hover: {
+                animationDuration: 100,
               },
               maintainAspectRatio: false,
               scales: {
@@ -487,11 +494,11 @@ function ComparePosition() {
                   {
                     ticks: {
                       fontColor: "#84818e",
-                      fontSize: 15
+                      fontSize: 15,
                     },
                     gridLines: { color: "rgb(47, 45, 56)" },
-                    offset: true
-                  }
+                    offset: true,
+                  },
                 ],
                 yAxes: [
                   {
@@ -500,14 +507,14 @@ function ComparePosition() {
                       fontColor: "#84818e",
                       fontSize: 15,
                       min: 0,
-                      max: 15
+                      max: 15,
                     },
                     gridLines: {
-                      color: "rgb(58, 55, 69)"
-                    }
-                  }
-                ]
-              }
+                      color: "rgb(58, 55, 69)",
+                    },
+                  },
+                ],
+              },
             }}
           />
         </CompareSBR>
@@ -540,10 +547,13 @@ function ComparePosition() {
             data={botData}
             options={{
               legend: {
-                display: false
+                display: false,
               },
               tooltips: {
-                mode: 'x'
+                mode: "x",
+              },
+              hover: {
+                animationDuration: 100,
               },
               maintainAspectRatio: false,
               scales: {
@@ -551,11 +561,11 @@ function ComparePosition() {
                   {
                     ticks: {
                       fontColor: "#84818e",
-                      fontSize: 15
+                      fontSize: 15,
                     },
                     gridLines: { color: "rgb(47, 45, 56)" },
-                    offset: true
-                  }
+                    offset: true,
+                  },
                 ],
                 yAxes: [
                   {
@@ -564,14 +574,14 @@ function ComparePosition() {
                       fontColor: "#84818e",
                       fontSize: 15,
                       min: 0,
-                      max: 15
+                      max: 15,
                     },
                     gridLines: {
-                      color: "rgb(58, 55, 69)"
-                    }
-                  }
-                ]
-              }
+                      color: "rgb(58, 55, 69)",
+                    },
+                  },
+                ],
+              },
             }}
           />
         </CompareSBR>
@@ -604,11 +614,14 @@ function ComparePosition() {
             data={supData}
             options={{
               legend: {
-                display: false
+                display: false,
               },
               tooltips: {
-                mode: 'x',
-                padding: 100
+                mode: "x",
+                padding: 100,
+              },
+              hover: {
+                animationDuration: 100,
               },
               maintainAspectRatio: false,
               scales: {
@@ -616,11 +629,11 @@ function ComparePosition() {
                   {
                     ticks: {
                       fontColor: "#84818e",
-                      fontSize: 15
+                      fontSize: 15,
                     },
                     gridLines: { color: "rgb(47, 45, 56)" },
-                    offset: true
-                  }
+                    offset: true,
+                  },
                 ],
                 yAxes: [
                   {
@@ -629,14 +642,14 @@ function ComparePosition() {
                       fontColor: "#84818e",
                       fontSize: 15,
                       min: 0,
-                      max: 15
+                      max: 15,
                     },
                     gridLines: {
-                      color: "rgb(58, 55, 69)"
-                    }
-                  }
-                ]
-              }
+                      color: "rgb(58, 55, 69)",
+                    },
+                  },
+                ],
+              },
             }}
           />
         </CompareSBR>
@@ -666,7 +679,11 @@ const DisplayTeams = styled.div`
     margin: 0 115px 0 0;
     object-fit: contain;
     border-radius: 20px;
-    background-image: linear-gradient(306deg, rgba(47, 45, 56, 0) 43%, #f04545 105%);
+    background-image: linear-gradient(
+      306deg,
+      rgba(47, 45, 56, 0) 43%,
+      #f04545 105%
+    );
   }
 
   .BlueSide {
@@ -675,7 +692,11 @@ const DisplayTeams = styled.div`
     margin: 0 0 0 87px;
     object-fit: contain;
     border-radius: 20px;
-    background-image: linear-gradient(54deg, rgba(56, 53, 45, 0) 37%, #0084d8 115%);
+    background-image: linear-gradient(
+      54deg,
+      rgba(56, 53, 45, 0) 37%,
+      #0084d8 115%
+    );
   }
 
   .TeamOne {
@@ -712,7 +733,7 @@ const DisplayTeams = styled.div`
     width: 215px;
     margin: 0 0px 0 0px;
     div {
-      width:215px;
+      width: 215px;
       height: 19px;
       margin: 30px 0px 28px 0;
       font-family: SpoqaHanSansNeo;
