@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import PlayerBoard from "../Solo/PlayerBoard/PlayerBoard";
@@ -8,19 +8,19 @@ import ComparePlayer from "../Solo/ComparePlayer/ComparePlayer";
 import PlayerSelectModal from "../../Components/Filter/PlayerSelectModal";
 import { useTranslation } from "react-i18next";
 import {
+  CompareModal,
   HandleTab,
   ResetChampion,
   ResetFilter2,
 } from "../../redux/modules/filtervalue";
 import ErrorBoundary from "../../Components/ErrorBoundary";
 import HitMap from "../VideoReport/HitMap/HitMap";
+import PlayerFilterModal from "../../Components/Filter/PlayerFilterModal";
 
 function Player() {
   const filters = useSelector((state) => state.FilterReducer);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
-  const [openModal, setOpenModal] = useState(false);
 
   const BoardTab = {
     0: <PlayerBoard />,
@@ -31,8 +31,8 @@ function Player() {
 
   return (
     <>
+      {filters.compareModal && <PlayerFilterModal />}
       <ErrorBoundary>
-        <PlayerSelectModal openModal={openModal} setOpenModal={setOpenModal} />
         <BoardWrapper>
           <TabContainer>
             <TabContent
@@ -66,7 +66,8 @@ function Player() {
           </SoloReport> */}
             <TabContent
               onClick={() => {
-                setOpenModal(true);
+                dispatch(CompareModal(true));
+                dispatch(HandleTab(1));
               }}
               changeColor={filters.tab === 1}
             >

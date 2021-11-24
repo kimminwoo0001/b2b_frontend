@@ -68,10 +68,17 @@ const Filter = memo(() => {
   const nameTeamCompare = "/teamCompare";
   const namePlayerCompare = "/playerCompare";
   const pagePath = document.location.pathname;
+<<<<<<< HEAD
   const isComparePage = [nameTeamCompare, namePlayerCompare].includes(pagePath);
   const isNeedTeam = [nameSolo, nameTeam, nameVideo, nameGameReport].includes(
     pagePath
   );
+=======
+  const isComparePage = [nameTeamCompare, namePlayerCompare].includes(pagePath)
+    || (nameTeam === pagePath && filters.tab === 2) // 팀보고서에서 팀 비교 창
+    || (nameSolo === pagePath && filters.tab === 1); // 선수보고서에서 선수 비교
+  const isNeedTeam = [nameSolo, nameTeam, nameVideo, nameGameReport].includes(pagePath);
+>>>>>>> 1dfddb7a18ac30ba09c5915dee6890bba4262f47
   const dropdownRef = useRef(null);
   const [isActiveLeague, setIsActiveLeague] = useDetectOutsideClick(
     dropdownRef,
@@ -133,15 +140,17 @@ const Filter = memo(() => {
         }
         fetchingPatchFilter();
       }
-      dispatch(ResetTeam());
-      setSeason(filters.season);
+      if (isComparePage === false) {
+        dispatch(ResetTeam());
+        setSeason(filters.season);
+      }
     }
   }, [filters.season]);
 
   useEffect(() => {
     if (JSON.stringify(team) !== JSON.stringify(filters.team)) {
       if ([nameTeam, nameVideo].includes(pagePath)) {
-        if (filters.team.length !== 0) {
+        if (filters.team.length !== 0 && isComparePage === false) {
           dispatch(HandleTab(0));
         }
       } else {
@@ -360,26 +369,10 @@ const Filter = memo(() => {
   return (
     <>
       {pagePath === nameTeamCompare && (
-        <TeamFilterModal
-          teamModal={filters.compareModal}
-          fetchLeagueFilter={fetchLeagueFilter}
-          leagueFilter={selector.leagueFilter}
-          seasonFilter={selector.seasonFilter}
-          teamFilter={selector.teamFilter}
-          setTeamFilter={setTeamFilter}
-        />
+        <TeamFilterModal />
       )}
       {pagePath === namePlayerCompare && (
-        <PlayerFilterModal
-          playerModal={filters.compareModal}
-          fetchLeagueFilter={fetchLeagueFilter}
-          leagueFilter={selector.leagueFilter}
-          seasonFilter={selector.seasonFilter}
-          teamFilter={selector.teamFilter}
-          setTeamFilter={setTeamFilter}
-          playerFilter={selector.playerFilter}
-          setPlayerFilter={setPlayerFilter}
-        />
+        <PlayerFilterModal />
       )}
       <FilterWrapper>
         <FilterHeader />

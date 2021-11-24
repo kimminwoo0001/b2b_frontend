@@ -344,8 +344,7 @@ const initialState = {
   click: 0,
   gameid: "",
   menu_num: "",
-  filterMenuState: true,
-  compareModal: true,
+  filterMenuState: true
 };
 
 export default function FilterReducer(state = initialState, action) {

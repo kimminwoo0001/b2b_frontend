@@ -6,9 +6,7 @@ import {
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useTranslation } from "react-i18next";
-import qs from "qs";
 import { Bar } from "react-chartjs-2";
-import axios from "axios";
 import { API } from "../../config";
 import { useSelector } from "react-redux";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
