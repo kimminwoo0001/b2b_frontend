@@ -8,8 +8,6 @@ import styled, { css } from "styled-components";
 const SideBarItem = ({ menu, idx }) => {
   const dispatch = useDispatch();
   let history = useHistory();
-  const marginTop = menu.marginTop ? 9 : 0;
-  const marginBottom = menu.marginBottom ? 9 : 0;
 
   return (
     <MenuWrapper

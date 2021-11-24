@@ -24,22 +24,24 @@ import {
   SetSeason,
   CompareModal,
 } from "../../redux/modules/filtervalue";
+import {
+  setLeagueFilter,
+  setPatchFilter,
+  setPlayerFilter,
+  setSeasonFilter,
+  setTeamFilter,
+  setYearFilter,
+} from "../../redux/modules/selectorvalue";
 import { API } from "../../Pages/config";
 import { useTranslation } from "react-i18next";
 import { useDetectOutsideClick } from "../../Pages/TeamCompare/useDetectOustsideClick";
 import axiosRequest from "../../lib/axiosRequest";
 
-const TeamFilterModal = ({
-  teamModal,
-  fetchLeagueFilter,
-  leagueFilter,
-  seasonFilter,
-  teamFilter,
-  setTeamFilter,
-}) => {
+const TeamFilterModal = () => {
   //사이드바에 있는 팀 비교 탭 모달창
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
+  const staticvalue = useSelector((state) => state.StaticValueReducer);
   const selector = useSelector((state) => state.SelectorReducer);
   const dispatch = useDispatch();
   const dropdownRef = useRef(null);
@@ -61,6 +63,18 @@ const TeamFilterModal = ({
   }, [filters.compareModal]);
 
   let history = useHistory();
+
+  // 리그 필터 fetch 해오는 함수
+  const fetchLeagueFilter = () => {
+    let leagueList = [];
+    leagueList = Object.keys(staticvalue.filterObjects).map(
+      (key) =>
+        Number(Object.keys(staticvalue.filterObjects[key])) ===
+        Number(filters.year) && key
+    );
+    dispatch(setLeagueFilter(leagueList.sort()));
+  };
+
   const handleConfirm = () => {
     if (filters.oppteam) {
       //history.push("/teamCompare");
@@ -92,10 +106,10 @@ const TeamFilterModal = ({
   return (
     <>
       <BackScreen
-        teamModal={teamModal}
-        // onClick={() => setTeamModal(false)}
+        teamModal={filters.compareModal}
+      // onClick={() => setTeamModal(false)}
       ></BackScreen>
-      <TeamModalWrapper teamModal={teamModal}>
+      <TeamModalWrapper teamModal={filters.compareModal}>
         <ModalNav>
           <label>{t("filters.chooseOptionLabel")}</label>
           <img
@@ -155,7 +169,7 @@ const TeamFilterModal = ({
                     className={`menu ${isActiveLeague ? "active" : "inactive"}`}
                   >
                     <ul>
-                      {leagueFilter?.map((league, idx) => {
+                      {selector.leagueFilter?.map((league, idx) => {
                         return (
                           <div className="Wrapper" key={idx}>
                             <img
@@ -207,7 +221,7 @@ const TeamFilterModal = ({
                   <span className="Label">{t("filters.patchLabel")}</span>
                 </PatchLabels>
               ) :  */}
-              {seasonFilter?.map((season, idx) => {
+              {selector.seasonFilter?.map((season, idx) => {
                 return (
                   <SelectedPatch
                     key={idx}
@@ -292,7 +306,7 @@ const TeamFilterModal = ({
                   {t("filters.teamCompareLabel1")}
                 </SelectTeamTitle>
                 <SelectTeam isFilterSelected={filters.league.length > 0}>
-                  {teamFilter?.map((team, index) => {
+                  {selector.teamFilter?.map((team, index) => {
                     return (
                       <MapTeams
                         key={index}
@@ -646,7 +660,7 @@ const ButtonBox = styled.div`
     height: 60px;
     border-radius: 20px;
     background-color: ${(props) =>
-      props.isAllTeamSelected ? "#5942ba" : "#484655"};
+    props.isAllTeamSelected ? "#5942ba" : "#484655"};
     cursor: ${(props) => (props.isAllTeamSelected ? "pointer" : "not-allowed")};
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 15px;
@@ -688,8 +702,8 @@ const MapTeams = styled.div`
     text-align: left;
     color: #84818e;
     ${(props) =>
-      props.currentTeam &&
-      css`
+    props.currentTeam &&
+    css`
         color: #fff;
       `}
   }

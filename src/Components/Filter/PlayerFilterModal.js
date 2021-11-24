@@ -22,30 +22,30 @@ import {
   Season,
   CompareModal,
 } from "../../redux/modules/filtervalue";
+import {
+  setLeagueFilter,
+  setPatchFilter,
+  setPlayerFilter,
+  setSeasonFilter,
+  setTeamFilter,
+  setYearFilter,
+} from "../../redux/modules/selectorvalue";
 import { API } from "../../Pages/config";
 import { useDetectOutsideClick } from "../../Pages/PlayerCompare/useDetectOustsideClick";
 import axiosRequest from "../../lib/axiosRequest";
 
-function PlayerFilterModal({
-  playerModal,
-  setPlayerModal,
-  fetchLeagueFilter,
-  leagueFilter,
-  seasonFilter,
-  teamFilter,
-  setTeamFilter,
-  playerFilter,
-  setPlayerFilter,
-}) {
+function PlayerFilterModal() {
   // sidebar 선수 비교 눌렀을때 뜨는 모달창
   const filters = useSelector((state) => state.FilterReducer);
   const selector = useSelector((state) => state.SelectorReducer);
   const user = useSelector((state) => state.UserReducer);
+  const staticvalue = useSelector((state) => state.StaticValueReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const dropdownRef = useRef(null);
   //필터 상태값
+  const [prevTeam, setPrevTeam] = useState("");
   const [oppTeamFilter, setOppTeamFilter] = useState();
   const [oppPlayerFilter, setOppPlayerFilter] = useState();
 
@@ -56,16 +56,47 @@ function PlayerFilterModal({
 
   let history = useHistory();
 
+  const fetchLeagueFilter = () => {
+    let leagueList = [];
+    leagueList = Object.keys(staticvalue.filterObjects).map(
+      (key) =>
+        Number(Object.keys(staticvalue.filterObjects[key])) ===
+        Number(filters.year) && key
+    )
+    dispatch(setLeagueFilter(leagueList.sort()));
+  };
+
   useEffect(() => {
+    dispatch(CompareModal(true))
     setOppTeamFilter();
     setOppPlayerFilter();
   }, []);
 
   useEffect(() => {
-    if (filters.compareModal === false) {
-      setOppTeamFilter();
-      setOppPlayerFilter();
+    if (filters.team.length > 0 && prevTeam !== filters.team) {
+      setPrevTeam(filters.team);
+      fetchingPlayerFilter();
     }
+  }, [filters.team])
+
+  useEffect(() => {
+    if (filters.player.length > 0) {
+      fetchingOppTeamFilter();
+    }
+  }, [filters.player])
+
+  useEffect(() => {
+    if (filters.oppteam.length > 0) {
+      fetchingOppPlayerFilter();
+    }
+  }, [filters.oppteam])
+
+  useEffect(() => {
+
+  }, [filters.oppplayer])
+
+  useEffect(() => {
+    console.log("자꾸 울림")
   }, [filters.compareModal]);
 
   // 확인하기 버튼 조건
@@ -81,14 +112,14 @@ function PlayerFilterModal({
   };
 
   // opp 팀 필터 fetch 함수
-  const fetchingOppTeamFilter = (team) => {
+  const fetchingOppTeamFilter = () => {
     let url = `${API}/api/filter/oppteam`;
     let params = {
       league: filters.league,
       year: filters.year,
       season: filters.season,
       patch: filters.patch,
-      team: team,
+      team: filters.team,
       token: user.token,
       id: user.id,
     };
@@ -99,14 +130,14 @@ function PlayerFilterModal({
   };
 
   //플레이어 필터 fetch 함수
-  const fetchingPlayerFilter = (team) => {
+  const fetchingPlayerFilter = () => {
     let url = `${API}/api/filter/player`;
     let params = {
       league: filters.league,
       year: filters.year,
       season: filters.season,
       patch: filters.patch,
-      team: team,
+      team: filters.team,
       token: user.token,
       id: user.id,
     };
@@ -117,14 +148,14 @@ function PlayerFilterModal({
   };
 
   //상대 선수 필터 fetch 함수
-  const fetchingOppPlayerFilter = (team) => {
+  const fetchingOppPlayerFilter = () => {
     let url = `${API}/api/filter/oppplayer`;
     let params = {
       league: filters.league,
       year: filters.year,
       season: filters.season,
       patch: filters.patch,
-      team: team,
+      team: filters.oppteam,
       position: filters.position,
       token: user.token,
       id: user.id,
@@ -138,10 +169,10 @@ function PlayerFilterModal({
   return (
     <>
       <BackScreen
-        playerModal={playerModal}
-        // onClick={() => setPlayerModal(false)}
+        playerModal={filters.compareModal}
+      // onClick={() => setPlayerModal(false)}
       ></BackScreen>
-      <PlayerModalWrapper playerModal={playerModal}>
+      <PlayerModalWrapper playerModal={filters.compareModal}>
         <ModalNav>
           <label>{t("filters.chooseOptionLabel")}</label>
           <img
@@ -205,7 +236,7 @@ function PlayerFilterModal({
                     className={`menu ${isActiveLeague ? "active" : "inactive"}`}
                   >
                     <ul>
-                      {leagueFilter?.map((league, idx) => {
+                      {selector.leagueFilter?.map((league, idx) => {
                         return (
                           <div className="Wrapper" key={idx}>
                             <img
@@ -241,23 +272,7 @@ function PlayerFilterModal({
             <PatchFilter>
               <label>{t("filters.setSeason")}</label>
               {
-                // seasonFilter.length === 0 ? (
-                //   <PatchLabels>
-                //     <img
-                //       className="ChampIconImg"
-                //       width="14px"
-                //       height="14px"
-                //       src={
-                //         filters.patch !== ""
-                //           ? `Images/ico-filter-version.png`
-                //           : "Images/ico-filter-none.png"
-                //       }
-                //       alt="champIcon"
-                //     />
-                //     <span className="Label">{t("filters.patchLabel")}</span>
-                //   </PatchLabels>
-                // ) :
-                seasonFilter?.map((season, idx) => {
+                selector.seasonFilter?.map((season, idx) => {
                   return (
                     <SelectedPatch
                       key={idx}
@@ -330,14 +345,13 @@ function PlayerFilterModal({
                 <GetFilterData>
                   <MyTeamBox isFilterSelected={filters.league.length > 0}>
                     <div className="Nav">{t("filters.team")}</div>
-                    {teamFilter?.map((team, index) => {
+                    {selector.teamFilter?.map((team, index) => {
                       return (
                         <MapTeams
                           key={index}
                           onClick={() => {
                             dispatch(Team(team));
                             dispatch(OppPlayer(""));
-                            fetchingPlayerFilter(team);
                             setOppTeamFilter([]);
                             setOppPlayerFilter([]);
                           }}
@@ -357,7 +371,7 @@ function PlayerFilterModal({
                     isFilterSelected={filters.league.length > 0}
                   >
                     <div className="Nav2">{t("filters.player")}</div>
-                    {playerFilter?.map((player, index) => {
+                    {selector.playerFilter?.map((player, index) => {
                       return (
                         <MapTeams
                           key={index}
@@ -367,7 +381,7 @@ function PlayerFilterModal({
                             dispatch(Position(player.position));
                             dispatch(OppTeam([]));
                             //fetchingOppPlayerFilter(player);
-                            fetchingOppTeamFilter(filters.team);
+                            //fetchingOppTeamFilter();
                           }}
                           currentTeam={filters.player === player.name}
                         >
@@ -402,7 +416,7 @@ function PlayerFilterModal({
                           onClick={() => {
                             dispatch(OppTeam(team));
                             dispatch(OppPlayer(""));
-                            fetchingOppPlayerFilter(team);
+                            // fetchingOppPlayerFilter(team);
                           }}
                           currentTeam={filters.oppteam === team}
                         >
@@ -707,7 +721,7 @@ const SelectOppTeam = styled.div`
     text-align: left;
     color: #fff;
     opacity: ${(props) =>
-      props.isFilterSelected && props.isMyPlayerSelected ? "1" : "0.3"};
+    props.isFilterSelected && props.isMyPlayerSelected ? "1" : "0.3"};
   }
   .Nav {
     color: #ffffff;
@@ -729,7 +743,7 @@ const ButtonBox = styled.div`
     height: 60px;
     border-radius: 20px;
     background-color: ${(props) =>
-      props.isOppPlayerSelected ? "#5942ba" : "#484655"};
+    props.isOppPlayerSelected ? "#5942ba" : "#484655"};
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 13px;
     font-weight: 500;
@@ -770,8 +784,8 @@ const MapTeams = styled.div`
     text-align: left;
     color: #84818e;
     ${(props) =>
-      props.currentTeam &&
-      css`
+    props.currentTeam &&
+    css`
         color: #ffffff;
       `}
   }

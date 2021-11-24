@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
 
@@ -8,9 +8,10 @@ import TeamReport from "./TeamReport/TeamReport";
 import TeamComparison from "./TeamComparison/TeamComparison";
 
 import TeamSelectModal from "./TeamComparison/TeamSelectModal";
-import { HandleTab, ResetFilter2 } from "../../redux/modules/filtervalue";
+import { CompareModal, HandleTab, ResetFilter2 } from "../../redux/modules/filtervalue";
 import BanIndex from "./BanReport/BanIndex";
 import TeamIndex from "./TeamReport/TeamIndex";
+import TeamFilterModal from "../../Components/Filter/TeamFilterModal"
 
 function TeamTabs() {
   //팀 보고서 탭
@@ -19,8 +20,13 @@ function TeamTabs() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
+
   const [openModal, setOpenModal] = useState(false);
   const [whichTeam, setWhichTeam] = useState();
+
+  useEffect(() => {
+    // filters.tab === 2 && dispatch(CompareModal(true));
+  }, [filters.tab])
 
   const TeamTab = {
     0: <BanIndex />,
@@ -28,16 +34,15 @@ function TeamTabs() {
     2: <TeamComparison />,
   };
 
+  useEffect(() => {
+    dispatch(CompareModal(true))
+  }, [])
+
   return (
     <>
       {true && (
         <>
-          <TeamSelectModal
-            openModal={openModal}
-            setOpenModal={setOpenModal}
-            whichTeam={whichTeam}
-            setWhichTeam={setWhichTeam}
-          />
+          {filters.tab === 2 && <TeamFilterModal />}
           <TeamTabsWrapper>
             <TabContainer>
               {/* <Schedule
@@ -105,7 +110,8 @@ function TeamTabs() {
                 <TabItem
                   onClick={() => {
                     dispatch(HandleTab(2));
-                    setOpenModal(true);
+                    dispatch(CompareModal(true))
+                    //setOpenModal(true);
                   }}
                   changeColor={filters.tab === 2}
                 >
