@@ -70,6 +70,10 @@ function TeamIndex() {
         //첫 갱 라인 데이터 fetch
         const gameX = [];
         const gameY = [];
+
+        let firstGank = e.data.firstGank;
+        firstGank.firstGankMax = firstGank?.firstGankMax % 5 === 0 ? firstGank?.firstGankMax : firstGank?.firstGankMax + (5 - firstGank?.firstGankMax % 5);
+        firstGank.firstGankRow = firstGank.firstGankMax / 5;
         setGankCount(e.data.firstGank);
         e.data.firstGank.firstGankList.forEach((game) => {
           gameX.push(game.position);
@@ -573,7 +577,7 @@ function TeamIndex() {
                         fontColor: "#84818e",
                         fontSize: 15,
                         min: gankCount?.firstGankMin,
-                        max: gankCount?.firstGankMax,
+                        max: gankCount?.firstGankMax % 5 === 0 ? gankCount?.firstGankMax : gankCount?.firstGankMax + (5 - gankCount?.firstGankMax % 5),
                       },
                       gridLines: {
                         color: "rgb(58, 55, 69)",
