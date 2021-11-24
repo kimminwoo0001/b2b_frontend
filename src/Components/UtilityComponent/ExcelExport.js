@@ -150,11 +150,11 @@ const ExportUtil = ({ filename = "none", tableid }) => {
   const copyClipboard = () => {
     clipboard.writeText(tabledata("clipboard")).then(
       function () {
-        setAlertDesc(t("alert.desc.copy_y"))
+        setAlertDesc(t("alert.desc.copy_y"));
         setIsOpen(true);
       },
       function () {
-        setAlertDesc(t("alert.desc.copy_n"))
+        setAlertDesc(t("alert.desc.copy_n"));
         setIsOpen(true);
       }
     );
@@ -162,12 +162,8 @@ const ExportUtil = ({ filename = "none", tableid }) => {
 
   return (
     <>
-      <AlertModal
-        desc={alertDesc}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-      />
-      <DropDown >
+      <AlertModal desc={alertDesc} isOpen={isOpen} setIsOpen={setIsOpen} />
+      <DropDown>
         <div className="menu-container">
           <button
             onClick={() => {
@@ -214,7 +210,8 @@ const ExportUtil = ({ filename = "none", tableid }) => {
             <ExportFile changeColor={tblvalue.headers.length > 0}>
               <button
                 onClick={() => {
-                  tblvalue.headers.length > 0 && exportCSV(filename, tblvalue.headers);
+                  tblvalue.headers.length > 0 &&
+                    exportCSV(filename, tblvalue.headers);
                   tblvalue.headers.length > 0 && setIsActive(false);
                 }}
               >
@@ -227,7 +224,8 @@ const ExportUtil = ({ filename = "none", tableid }) => {
               </button>
               <button
                 onClick={() => {
-                  tblvalue.headers.length > 0 && exportXlsx(filename, tblvalue.headers);
+                  tblvalue.headers.length > 0 &&
+                    exportXlsx(filename, tblvalue.headers);
                   tblvalue.headers.length > 0 && setIsActive(false);
                 }}
               >
@@ -327,7 +325,7 @@ const Selected = styled.div`
   }
 
   :hover {
-    width: 185px;
+    width: 165px;
     border-radius: 10px;
     background-color: #3a3745;
   }
@@ -430,8 +428,6 @@ const DropDown = styled.div`
       background-color: rgb(60, 58, 72);
     }
   }
-
-
 `;
 
 const ExportFile = styled.div`
@@ -439,15 +435,15 @@ const ExportFile = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  button {     
-    display:flex;
+  button {
+    display: flex;
     justify-content: center;
     width: 76px;
     height: 30px;
     margin: 0 5px;
     padding: 1px 2px;
     border-radius: 10px;
-    background-color: ${(props) => props.changeColor ? `#5942ba` : `#484655`};
+    background-color: ${(props) => (props.changeColor ? `#5942ba` : `#484655`)};
     color: #fff;
     padding-right: 7px;
     .download-icon {
@@ -458,7 +454,8 @@ const ExportFile = styled.div`
       margin-top: 5px;
     }
     :hover {
-      background-color: ${(props) => props.changeColor ? `#5942ba` : `#484655`};
-    }  
+      background-color: ${(props) =>
+        props.changeColor ? `#5942ba` : `#484655`};
+    }
   }
 `;

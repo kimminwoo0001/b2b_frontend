@@ -571,7 +571,7 @@ function PlayerBoard() {
           </AbilityContents>
         )}
       </AbilitySection>
-      <AbilitySection>
+      {/* <AbilitySection>
         <InfoNavBar>
           <LeftInfo>
             <span className="InfoTitle">
@@ -753,7 +753,7 @@ function PlayerBoard() {
             </SolorankRecord>
           </TopBox>
         </AbilityContents>
-      </AbilitySection>
+      </AbilitySection> */}
       <RecordWrapper>
         <RecordSection>
           <CompetitionRecord>
@@ -820,9 +820,19 @@ function PlayerBoard() {
                 options={{
                   tooltips: {
                     intersect: false,
+                    backgroundColor: "#1d1d1d",
+                    titleFontSize: 12,
+                    bodyFontSize: 10,
+                    displayColors: true,
+                    boxWidth: 2,
+                    boxHeight: 2,
+                    cornerRadius: 10,
                   },
                   legend: {
                     display: false,
+                  },
+                  hover: {
+                    animationDuration: 100,
                   },
                   maintainAspectRatio: false,
                   scales: {
@@ -922,9 +932,19 @@ function PlayerBoard() {
                 options={{
                   tooltips: {
                     intersect: false,
+                    backgroundColor: "#1d1d1d",
+                    titleFontSize: 12,
+                    bodyFontSize: 10,
+                    displayColors: true,
+                    boxWidth: 2,
+                    boxHeight: 2,
+                    cornerRadius: 10,
                   },
                   legend: {
                     display: false,
+                  },
+                  hover: {
+                    animationDuration: 100,
                   },
                   maintainAspectRatio: false,
                   scales: {

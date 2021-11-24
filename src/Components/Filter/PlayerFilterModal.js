@@ -775,7 +775,7 @@ const MapTeams = styled.div`
   img {
     width: 20px;
     height: 20px;
-    margin: 0 10px 0 15px;
+    margin: 0 10px 0 7px;
   }
   .TeamName {
     width: 100%;
@@ -808,7 +808,7 @@ const MyTeamBox = styled.div`
   margin-right: 15px;
   margin-bottom: 15px;
   border-radius: 20px;
-  padding: 10px;
+  padding: 15px;
   font-size: 14px;
   opacity: ${(props) => (props.isFilterSelected ? "1" : "0.3")};
 
@@ -834,7 +834,7 @@ const MyPlayerBox = styled.div`
   background-color: #2f2d38;
   margin-right: 15px;
   border-radius: 20px;
-  padding: 10px;
+  padding: 15px;
   font-size: 14px;
   opacity: ${(props) =>
     props.isFilterSelected && props.isMyTeamSelected ? "1" : "0.3"};
@@ -860,7 +860,7 @@ const OppTeamBox = styled.div`
   margin-right: 15px;
   margin-bottom: 15px;
   border-radius: 20px;
-  padding: 10px;
+  padding: 15px;
   font-size: 14px;
   opacity: ${(props) =>
     props.isFilterSelected && props.isMyPlayerSelected ? "1" : "0.3"};
@@ -885,7 +885,7 @@ const OppPlayerBox = styled.div`
   background-color: #2f2d38;
   margin-right: 15px;
   border-radius: 20px;
-  padding: 10px;
+  padding: 15px;
   font-size: 14px;
   opacity: ${(props) =>
     props.isFilterSelected && props.isOppTeamSelected ? "1" : "0.3"};

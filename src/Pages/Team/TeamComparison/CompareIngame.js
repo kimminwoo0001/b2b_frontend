@@ -12,11 +12,10 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend
+  Legend,
 } from "recharts";
 import qs from "qs";
 import axiosRequest from "../../../lib/axiosRequest";
-
 
 function CompareIngame() {
   //팀 비교 인게임 지표
@@ -63,12 +62,12 @@ function CompareIngame() {
       team: filters.team,
       oppteam: filters.oppteam,
       token: user.token,
-      id: user.id
-    }
+      id: user.id,
+    };
     axiosRequest(url, params, function (e) {
       setTeamName({
         team: filters.team,
-        oppteam: filters.oppteam
+        oppteam: filters.oppteam,
       });
       let gankTicks = "";
       //첫 갱크 데이터 min,max,stepsize 값
@@ -149,10 +148,19 @@ function CompareIngame() {
   };
 
   const renderColorfulLegendText = (value: string, entry: any) => {
-    return <span style={{
-      color: "white", fontSize: "15px", objectFit: "contain", verticalAlign: "middle"
-    }
-    }> {value}</span >;
+    return (
+      <span
+        style={{
+          color: "white",
+          fontSize: "15px",
+          objectFit: "contain",
+          verticalAlign: "middle",
+        }}
+      >
+        {" "}
+        {value}
+      </span>
+    );
   };
 
   //그래프 툴팁 커스텀
@@ -201,6 +209,7 @@ function CompareIngame() {
               <Tooltip
                 cursor={{ fill: "transparent" }}
                 content={<CustomTooltip />}
+                animationDuration={0}
               />
               <CartesianGrid stroke="#3a3745" vertical={false} />
               <XAxis
@@ -214,7 +223,7 @@ function CompareIngame() {
                 stroke="#3a3745 "
                 tick={{
                   fill: "#84818e",
-                  fontSize: 15
+                  fontSize: 15,
                 }}
                 ticks={gankTicks}
               />
@@ -254,6 +263,7 @@ function CompareIngame() {
               <Tooltip
                 cursor={{ fill: "transparent" }}
                 content={<CustomTooltip />}
+                animationDuration={0}
               />
               <CartesianGrid stroke="#3a3745" vertical={false} />
               <XAxis
@@ -264,12 +274,12 @@ function CompareIngame() {
               <YAxis
                 domain={[
                   supportDomain?.supportedTimeMin,
-                  supportDomain?.supportedTimeMax
+                  supportDomain?.supportedTimeMax,
                 ]}
                 stroke="#3a3745 "
                 tick={{
                   fill: "#84818e",
-                  fontSize: 15
+                  fontSize: 15,
                 }}
                 ticks={supportTicks}
               />
@@ -308,9 +318,7 @@ function CompareIngame() {
               alt="teamIcon"
             />
             <div className="TeamTwo">{teamName?.oppteam}</div>
-
           </div>
-
         </DisplayTeams>
         <CompareStats>
           {/* <GameDataBox>
@@ -346,7 +354,7 @@ function CompareIngame() {
             )}`}</BlueTeamData>
           </GameDataBox>
           <div className="under-line"></div>
-          <GameDataBox >
+          <GameDataBox>
             <RedTeamData
               changeColor={redData?.IngameStats["firstDragon"].result === true}
             >{`${redData?.IngameStats["firstDragon"].minute.toFixed(0)}${t(
@@ -373,10 +381,9 @@ function CompareIngame() {
             <AverageLabel>{t("team.comparison.slayedDragon")}</AverageLabel>
             <BlueTeamData
               changeColor={blueData?.IngameStats["dragons"].result === true}
-            >{`${blueData?.IngameStats["dragons"].value.toFixed(
-              1)}${t(
-                "team.comparison.times"
-              )}`}</BlueTeamData>
+            >{`${blueData?.IngameStats["dragons"].value.toFixed(1)}${t(
+              "team.comparison.times"
+            )}`}</BlueTeamData>
           </GameDataBox>
           <div className="under-line"></div>
           <GameDataBox>
@@ -406,9 +413,7 @@ function CompareIngame() {
             <AverageLabel>{t("team.comparison.avgHerald")}</AverageLabel>
             <BlueTeamData
               changeColor={blueData?.IngameStats["heralds"].result === true}
-            >{`${blueData?.IngameStats["heralds"].value.toFixed(
-              1
-            )}${t(
+            >{`${blueData?.IngameStats["heralds"].value.toFixed(1)}${t(
               "team.comparison.times"
             )}`}</BlueTeamData>
           </GameDataBox>
@@ -422,9 +427,7 @@ function CompareIngame() {
             <AverageLabel>{t("team.comparison.baron")}</AverageLabel>
             <BlueTeamData
               changeColor={blueData?.IngameStats["barons"].result === true}
-            >{`${blueData?.IngameStats["barons"].value.toFixed(
-              1
-            )}${t(
+            >{`${blueData?.IngameStats["barons"].value.toFixed(1)}${t(
               "team.comparison.times"
             )}`}</BlueTeamData>
           </GameDataBox>
@@ -458,9 +461,7 @@ function CompareIngame() {
               }
             >{`${redData?.IngameStats["numberOfTeamFight"].winRate.toFixed(
               1
-            )}${t(
-              "team.comparison.times"
-            )}`}</RedTeamData>
+            )}${t("team.comparison.times")}`}</RedTeamData>
             <AverageLabel>{t("team.comparison.avgTeamFight")}</AverageLabel>
             <BlueTeamData
               changeColor={
@@ -468,9 +469,7 @@ function CompareIngame() {
               }
             >{`${blueData?.IngameStats["numberOfTeamFight"].winRate.toFixed(
               1
-            )}${t(
-              "team.comparison.times"
-            )}`}</BlueTeamData>
+            )}${t("team.comparison.times")}`}</BlueTeamData>
           </GameDataBox>
         </CompareStats>
       </CompareDisplay>
@@ -481,22 +480,25 @@ function CompareIngame() {
 export default CompareIngame;
 
 const CustomTool = styled.div`
-  background-color: rgba(35, 33, 42, 0.9);
+  background-color: #1d1d1d;
+  border-radius: 10px;
   padding: 10px;
   width: 100%;
   color: white;
-  font-size: 12px;
-  font-family: NotoSansKR, Apple SD Gothic Neo;
+  font-family: "Spoqa Han Sans";
   > p {
     margin-bottom: 6px;
   }
 
   > .title {
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: bold;
     margin-bottom: 6px;
   }
   > .player {
     display: flex;
+    font-size: 10px;
+
     > .player1 {
       color: #f04545;
     }
@@ -524,7 +526,7 @@ const CompareIngameWrapper = styled.div`
 const CompareDisplay = styled.div`
   width: 550px;
   margin-top: 30px;
-  border-radius : 20px;
+  border-radius: 20px;
   background-color: #2f2d38;
 `;
 
@@ -533,14 +535,15 @@ const DisplayTeams = styled.div`
   color: #fff;
   display: flex;
   justify-content: space-around;
-  padding : 10px 10px;
+  padding: 10px 10px;
   margin-bottom: 0px;
-  .RedSide, .BlueSide {
+  .RedSide,
+  .BlueSide {
     display: flex;
     flex-direction: column;
     width: 275px;
     align-items: center;
-    font-family: SpoqaHanSansNeo;
+    font-family: "Spoqa Han Sans";
     font-size: 20px;
     font-weight: bold;
     font-stretch: normal;
@@ -549,34 +552,32 @@ const DisplayTeams = styled.div`
   }
 
   .RedSide {
-    padding-right: 40px; 
+    padding-right: 40px;
   }
 
   .BlueSide {
-    padding-left: 40px; 
+    padding-left: 40px;
   }
-
 
   .Vs {
     position: absolute;
     top: 50%;
-    font-family: Poppins;
+    font-family: "Spoqa Han Sans";
     font-size: 20px;
     font-weight: bold;
-    color :#6b6979 ;  
+    color: #6b6979;
   }
 `;
 
 const CompareStats = styled.div`
   .under-line {
     width: 85%;
-    display: table; 
-    margin-left: auto; 
+    display: table;
+    margin-left: auto;
     margin-right: auto;
-    border-top: 1px solid  #433f4e;
+    border-top: 1px solid #433f4e;
   }
 `;
-
 
 const GameDataBox = styled.div`
   display: flex;
@@ -585,13 +586,12 @@ const GameDataBox = styled.div`
   align-items: center;
   padding: 1px 0px;
   color: #fff;
-  
 `;
 
 const RedTeamData = styled.div`
-  width:30%;
+  width: 30%;
   text-align: center;
-  font-family: SpoqaHanSansNeo;
+  font-family: "Spoqa Han Sans";
   font-size: 18px;
   font-weight: bold;
   font-stretch: normal;
@@ -599,23 +599,21 @@ const RedTeamData = styled.div`
   line-height: 1.39;
   letter-spacing: normal;
   ${(props) =>
-    props.changeColor ?
-      css`
-      color: #f04545;
-    ` :
-      css`
-    opacity: 0.3;
-  `
-  }   
+    props.changeColor
+      ? css`
+          color: #f04545;
+        `
+      : css`
+          opacity: 0.3;
+        `}
 `;
-
 
 const AverageLabel = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width:30%;
-  font-family: SpoqaHanSansNeo;
+  width: 30%;
+  font-family: "Spoqa Han Sans";
   font-size: 18px;
   font-weight: 300;
   font-stretch: normal;
@@ -627,13 +625,12 @@ const AverageLabel = styled.div`
   margin: 0 0px;
 `;
 
-
 const BlueTeamData = styled.div`
   display: flex;
   justify-content: space-around;
-  padding : 15px;
-  width:30%;
-  font-family: SpoqaHanSansNeo;
+  padding: 15px;
+  width: 30%;
+  font-family: "Spoqa Han Sans";
   font-size: 18px;
   font-weight: bold;
   font-stretch: normal;
@@ -641,14 +638,13 @@ const BlueTeamData = styled.div`
   line-height: 1.39;
   letter-spacing: normal;
   ${(props) =>
-    props.changeColor ?
-      css`
-      color: #f04545;
-    ` :
-      css`
-    opacity: 0.3;
-  `
-  } 
+    props.changeColor
+      ? css`
+          color: #f04545;
+        `
+      : css`
+          opacity: 0.3;
+        `}
 `;
 
 // chart styling
@@ -685,7 +681,7 @@ const NavBar = styled.div`
   border-bottom: 1px solid rgb(35, 33, 42);
   .AverageTime {
     width: 61px;
-    font-family: SpoqaHanSansNeo;
+    font-family: "Spoqa Han Sans";
     font-size: 16px;
     font-weight: 500;
     font-stretch: normal;
@@ -698,7 +694,7 @@ const NavBar = styled.div`
   }
   .X {
     width: auto;
-    font-family: SpoqaHanSansNeo;
+    font-family: "Spoqa Han Sans";
     font-size: 15px;
     font-weight: normal;
     font-stretch: normal;
@@ -714,7 +710,7 @@ const NavBar = styled.div`
   }
   .Y {
     width: auto;
-    font-family: SpoqaHanSansNeo;
+    font-family: "Spoqa Han Sans";
     font-size: 15px;
     font-weight: normal;
     font-stretch: normal;

@@ -52,7 +52,8 @@ const MenuWrapper = styled.div`
     vertical-align: middle;
   }
   :hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: ${(props) =>
+      props.changeColor ? "#5942ba" : "rgba(255, 255, 255, 0.1)"};
     margin: 13px 0 12px;
     padding: 9px 9px 9px 14px;
     border-radius: 16px;

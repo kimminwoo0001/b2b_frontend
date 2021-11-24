@@ -68,10 +68,13 @@ const Filter = memo(() => {
   const nameTeamCompare = "/teamCompare";
   const namePlayerCompare = "/playerCompare";
   const pagePath = document.location.pathname;
-  const isComparePage = [nameTeamCompare, namePlayerCompare].includes(pagePath)
-    || (nameTeam === pagePath && filters.tab === 2) // 팀보고서에서 팀 비교 창
-    || (nameSolo === pagePath && filters.tab === 1); // 선수보고서에서 선수 비교
-  const isNeedTeam = [nameSolo, nameTeam, nameVideo, nameGameReport].includes(pagePath);
+  const isComparePage =
+    [nameTeamCompare, namePlayerCompare].includes(pagePath) ||
+    (nameTeam === pagePath && filters.tab === 2) || // 팀보고서에서 팀 비교 창
+    (nameSolo === pagePath && filters.tab === 1); // 선수보고서에서 선수 비교
+  const isNeedTeam = [nameSolo, nameTeam, nameVideo, nameGameReport].includes(
+    pagePath
+  );
   const dropdownRef = useRef(null);
   const [isActiveLeague, setIsActiveLeague] = useDetectOutsideClick(
     dropdownRef,
@@ -189,7 +192,7 @@ const Filter = memo(() => {
       leagueList = Object.keys(staticvalue.filterObjects).map(
         (key) =>
           Number(Object.keys(staticvalue.filterObjects[key])) ===
-          Number(filters.year) && key
+            Number(filters.year) && key
       );
     } else {
       leagueList = Object.keys(staticvalue.filterObjects);
@@ -359,15 +362,10 @@ const Filter = memo(() => {
     });
   };
 
-  //팀 필터 fetch 함수
   return (
     <>
-      {pagePath === nameTeamCompare && (
-        <TeamFilterModal />
-      )}
-      {pagePath === namePlayerCompare && (
-        <PlayerFilterModal />
-      )}
+      {pagePath === nameTeamCompare && <TeamFilterModal />}
+      {pagePath === namePlayerCompare && <PlayerFilterModal />}
       <FilterWrapper>
         <FilterHeader />
         {filters.filterMenuState && (
