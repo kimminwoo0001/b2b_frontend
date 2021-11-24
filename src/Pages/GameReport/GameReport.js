@@ -11,6 +11,8 @@ import Nav from "../../Components/Nav/Nav";
 import { useSelector } from "react-redux";
 import SelectFilter from '../../Components/SelectFilter/SelectFilter';
 import VideoTabs from '../VideoReport/VideoTabs';
+import GameReportIndex from './Components/GameReportIndex';
+import GameReportTab from './GameReportTab';
 
 function GameReport() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -32,7 +34,7 @@ function GameReport() {
         </div>
         <ContentWrapper>
           {filters.team !== "" && filters.team.length > 0 ? (
-            <VideoTabs />
+            <GameReportTab />
           ) : (
             <SelectFilter />
           )}
