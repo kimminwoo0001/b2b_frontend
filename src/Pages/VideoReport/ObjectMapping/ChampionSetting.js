@@ -588,7 +588,7 @@ function ChampionSetting({
                     }`}
                 >
                   <ul>
-                    <li
+                    <Menu3li
                       onClick={() =>
                         pushChampion(
                           filterData?.champion?.length === champArray.length
@@ -596,6 +596,7 @@ function ChampionSetting({
                             : "all"
                         )
                       }
+                      isChecked={filterData?.champion?.length === champArray.length}
                     >
                       <input
                         checked={
@@ -607,10 +608,15 @@ function ChampionSetting({
                         readOnly
                       ></input>
                       Select All
-                    </li>
+                    </Menu3li>
+                    <div className="hr-line"></div>
                     {filterData?.champion?.map((champion, idx) => {
                       return (
-                        <li key={idx} onClick={() => pushChampion(champion)}>
+                        <Menu3li
+                          key={idx}
+                          onClick={() => pushChampion(champion)}
+                          isChecked={champArray.includes(champion)}
+                        >
                           <input
                             checked={
                               champArray.includes(champion) ? true : false
@@ -619,7 +625,7 @@ function ChampionSetting({
                             readOnly
                           ></input>
                           {champion}
-                        </li>
+                        </Menu3li>
                       );
                     })}
                     <button
@@ -794,7 +800,7 @@ function ChampionSetting({
                     }`}
                 >
                   <ul>
-                    <li
+                    <Menu3li
                       onClick={() =>
                         pushChampion2(
                           filterData?.oppchampion?.length === champArray2.length
@@ -802,6 +808,7 @@ function ChampionSetting({
                             : "all"
                         )
                       }
+                      isChecked={filterData?.oppchampion?.length === champArray2.length}
                     >
                       <input
                         checked={
@@ -813,10 +820,15 @@ function ChampionSetting({
                         readOnly
                       ></input>
                       Select All
-                    </li>
+                    </Menu3li>
+                    <div className="hr-line"></div>
                     {filterData?.oppchampion?.map((champion, idx) => {
                       return (
-                        <li key={idx} onClick={() => pushChampion2(champion)}>
+                        <Menu3li
+                          key={idx}
+                          onClick={() => pushChampion2(champion)}
+                          isChecked={champArray2.includes(champion)}
+                        >
                           <input
                             checked={
                               champArray2.includes(champion) ? true : false
@@ -825,7 +837,7 @@ function ChampionSetting({
                             readOnly
                           ></input>
                           {champion}
-                        </li>
+                        </Menu3li>
                       );
                     })}
                     <button
@@ -1148,7 +1160,7 @@ const DropDownToggle = styled.div`
   .menu3 ul {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 0px 8px;
     z-index: 99990;
   }
   .menu li {
@@ -1185,70 +1197,92 @@ const DropDownToggle = styled.div`
     }
   }
 
-  .menu3 li {
-    text-decoration: none;
-    padding: 15px 20px;
-    display: flex;
-    width: 124px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
-    letter-spacing: -0.55px;
-    text-align: left;
-    color: rgb(255, 255, 255);
-    cursor: pointer;
-    z-index: 9999;
-    :hover {
-      background-color: rgb(60, 58, 72);
-    }
-    > input[type="checkbox"] {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-
-      background-clip: content-box;
-      border: 1.5px solid rgb(72, 70, 85);
-      border-radius: 2px;
-      background-color: transparent;
-
-      margin-right: 8px;
-
-      &:checked {
-        background-color: #f04545;
-        border: #f04545;
-        border-radius: 2px;
-        background: url("/Images/check.svg") #f04545 no-repeat 2.5px 4px/5.5px
-          4.5px;
-        /* float: right; */
-      }
-
-      &:focus {
-        outline: none !important;
-      }
-    }
-  }
-
   .menu3 button {
     text-decoration: none;
     display: block;
-    margin: 12px auto;
+    margin: 10px auto;
     width: 104px;
-    height: 25px;
-    border-radius: 3px;
-    border: solid 1px rgb(72, 70, 85);
-    background-color: rgba(72, 70, 85, 0.5);
-    font-family: NotoSansKR;
-    font-size: 11px;
-    letter-spacing: -0.55px;
+    height: 30px;
+    border-radius: 10px;
+    background-color: #5942ba;
+    font-family: SpoqaHanSansNeo;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: center;
-    color: rgb(175, 173, 190);
+    color: #fff;
     cursor: pointer;
     z-index: 9999;
-    :hover {
-      background-color: rgb(60, 58, 72);
+    // :hover {
+    //   background-color: rgb(60, 58, 72);
+  }
+
+  .hr-line {
+    width: 100%;
+    border-bottom: solid 1px rgb(67, 63, 78);
+    margin: 5px 0 7px;
+  }
+`;
+
+const Menu3li = styled.li`
+  margin-top: 4px;
+  text-decoration: none;
+  padding: 3px 5px;
+  display: flex;
+  width: 100%;
+  font-family: SpoqaHanSansNeo;
+  font-size: 13px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.75;
+  letter-spacing: normal;
+  text-align: left;
+  color: #fff;
+  cursor: pointer;
+  z-index: 9999;
+  
+
+  ${(props) =>
+    props.isChecked &&
+    css`
+        color: rgb(255, 255, 255);
+        background-color: rgba(22, 21, 28, 0.5);
+        border-radius: 10px;
+      `}
+  >  input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+
+    background-clip: content-box;
+    background: url("/Images/btn_check_off.svg") no-repeat;
+    margin-right: 8px;
+
+    &:checked {
+      background-color: #5942ba;
+      border: #5942ba;
+      border-radius: 2px;
+      background: url("/Images/btn_check_on.svg") no-repeat;
+      float: right;
+    }
+
+    &:focus {
+      outline: none !important;
     }
   }
+  :hover {
+    border-radius: 10px;
+    background-color: #3a3745;
+  }
+  }
+
+  
 `;
