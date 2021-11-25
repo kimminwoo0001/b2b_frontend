@@ -15,7 +15,7 @@ function LeagueTab() {
     0: <LeagueSchedule />,
     1: <LeaguePick />,
     2: <LeagueStatistics />,
-    3: <LeaguePlayer />
+    3: <LeaguePlayer />,
   };
 
   return (
@@ -50,10 +50,7 @@ function LeagueTab() {
           <div></div>
         )}
 
-        <TabItem
-          onClick={() => setActiveTab(3)}
-          changeColor={activeTab === 3}
-        >
+        <TabItem onClick={() => setActiveTab(3)} changeColor={activeTab === 3}>
           <div>
             <span>{t("league.tab.playerStat")}</span>
           </div>
@@ -124,10 +121,10 @@ const TabItem = styled.li`
     div {
       padding: 10px 15px;
       border-radius: 10px;
-      background-color : #26262C;
+      background-color: #26262c;
     }
   }
-  
+
   span {
     height: 22px;
     font-family: SpoqaHanSansNeo;

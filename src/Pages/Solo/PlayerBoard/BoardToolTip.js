@@ -86,7 +86,7 @@ function BoardToolTip({ title }) {
     "Mid Proximity Score+":
       "Formula: Jungler's average proximity to a specific lane until 15 minutes, divided by league average. If his overall pathing has been 5% closer to a specific lane than league average, he would get 105.",
     "Bot Proximity Score+":
-      "Formula: Jungler's average proximity to a specific lane until 15 minutes, divided by league average. If his overall pathing has been 5% closer to a specific lane than league average, he would get 105."
+      "Formula: Jungler's average proximity to a specific lane until 15 minutes, divided by league average. If his overall pathing has been 5% closer to a specific lane than league average, he would get 105.",
   };
   const [content, setContent] = useState();
 
@@ -123,23 +123,23 @@ const ArrowWrapper = styled.div`
 const BoardToolTipWrapper = styled.div`
   max-width: 232px;
   //min-height: 106px;
-  border: solid 1px #3a3745;
-  background-color: #1d1d1d;
+  background-color: #23212a;
+  border-radius: 10px;
   padding: 12px 16px;
 `;
 
 const Title = styled.div`
   font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: bold;
   text-align: left;
-  color: #ffe207;
+  color: #fff;
   margin-bottom: 5px;
 `;
 
 const Content = styled.div`
   font-family: NotoSansKR, Apple SD Gothic Neo;
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: -0.6px;
   text-align: left;
   color: #ffffff;
