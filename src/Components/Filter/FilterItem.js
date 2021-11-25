@@ -16,6 +16,30 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
     setViewSwitch(!viewSwitch);
   };
 
+  useEffect(() => {
+    if (title === t("label.league") && filters.league.length > 0 &&
+      selector.leagueFilter.length === filters.league.length) {
+      console.log("selector.leagueFilter.length === filters.league.length :", selector.leagueFilter.length === filters.league.length);
+      console.log("selector.seasonFilter.length === filters.season.length :", selector.seasonFilter.length === filters.season.length);
+      setChecked(true);
+    } else if (title === t("label.league")) {
+      setChecked(false);
+    }
+  }, [filters.league])
+
+  useEffect(() => {
+    if (title === t("label.season") && filters.season.length > 0 &&
+      selector.seasonFilter.length === filters.season.length
+    ) {
+      console.log("selector.leagueFilter.length === filters.league.length :", selector.leagueFilter.length === filters.league.length);
+      console.log("selector.seasonFilter.length === filters.season.length :", selector.seasonFilter.length === filters.season.length);
+      setChecked(true);
+    } else if (title === t("label.season")) {
+      setChecked(false);
+    }
+  }, [filters.season])
+
+
   const handleCheckboxClick = () => {
     if (
       title === t("label.league") &&
@@ -87,13 +111,13 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
           {/* 전체선택 */}
           {(title === t("label.league") ||
             (title === t("label.season") && filters.year.length > 0)) && (
-            <div className="div-select-all">
-              <div className="select_all" onClick={handleCheckboxClick}>
-                <input type="checkbox" checked={checked} />
-                <span>{t("filters.selectAll")}</span>
+              <div className="div-select-all">
+                <SelectAll onClick={handleCheckboxClick} isChecked={checked}>
+                  <input type="checkbox" checked={checked} />
+                  <span>{t("filters.selectAll")}</span>
+                </SelectAll>
               </div>
-            </div>
-          )}
+            )}
           {multiFilter}
         </div>
       </InnerWrapper>
@@ -218,6 +242,68 @@ const Item = styled.div`
       color: #fff;
     }
   }
+`;
+
+const SelectAll = styled.div`
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    padding-left: 5px;
+    width: 100%;
+    height: 30px;
+    cursor: pointer;
+
+    ${(props) =>
+    props.isChecked &&
+    css`
+        color: rgb(255, 255, 255);
+        background-color: rgba(22, 21, 28, 0.5);
+        border-radius: 10px;
+      `}
+
+    input[type="checkbox"] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+
+      background-clip: content-box;
+      background: url("/Images/btn_check_off.svg") no-repeat;
+      margin-right: 8px;
+
+      &:checked {
+        background-color: #5942ba;
+        border: #5942ba;
+        border-radius: 2px;
+        background: url("/Images/btn_check_on.svg") no-repeat;
+        float: right;
+      }
+
+      &:focus {
+        outline: none !important;
+      }
+    }
+    :hover {
+      border-radius: 10px;
+      background-color: #3a3745;
+    }
+
+    span {
+      height: 19px;
+      margin: 0px 0 2px 0px;
+      font-family: SpoqaHanSansNeo;
+      font-size: 15px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.46;
+      letter-spacing: normal;
+      text-align: left;
+      color: #fff;
+    }
 `;
 
 const InnerWrapper = styled.div`

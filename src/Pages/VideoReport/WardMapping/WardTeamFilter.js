@@ -80,7 +80,7 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
 
   return (
     <WardTeamFilterContainer>
-      <Steps>
+      <NoneVisible>
         <div className="title">
           <span className="step">STEP 01</span>
           <span className="subtitle">{t("video.vision.label3")}</span>
@@ -137,10 +137,10 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
             </nav>
           </div>
         </DropDownContainer>
-      </Steps>
+      </NoneVisible>
       <Steps>
         <div className="title2">
-          <span className="step">STEP 02 </span>
+          {/* <span className="step">STEP 02 </span> */}
           <span className="subtitle">{t("video.vision.label2")}</span>
         </div>
         <SliderContainer className="slider-container">
@@ -199,9 +199,13 @@ const SliderContainer = styled.div`
 
 const WardTeamFilterContainer = styled.div``;
 
+const NoneVisible = styled.div`
+  display: none;
+`
+
 const Steps = styled.div`
   min-height: 111px;
-  padding: 0px 23px;
+  padding: 0px 23px 30px;
   :nth-child(2) {
     border-bottom: none;
   }
@@ -255,10 +259,15 @@ const DefaultTime = styled.div`
 `;
 
 const DisplayTime = styled.div`
-  font-family: Poppins;
-  font-size: 12px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 15px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.87;
+  letter-spacing: normal;
   text-align: center;
-  color: rgb(107, 105, 121);
+  color: #6b6979;
 `;
 
 const DropDownContainer = styled.div`
