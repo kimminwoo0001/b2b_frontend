@@ -17,7 +17,7 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
   };
 
   useEffect(() => {
-    if (title === t("label.league") &&
+    if (title === t("label.league") && filters.league.length > 0 &&
       selector.leagueFilter.length === filters.league.length) {
       console.log("selector.leagueFilter.length === filters.league.length :", selector.leagueFilter.length === filters.league.length);
       console.log("selector.seasonFilter.length === filters.season.length :", selector.seasonFilter.length === filters.season.length);
@@ -28,7 +28,7 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
   }, [filters.league])
 
   useEffect(() => {
-    if (title === t("label.season") &&
+    if (title === t("label.season") && filters.season.length > 0 &&
       selector.seasonFilter.length === filters.season.length
     ) {
       console.log("selector.leagueFilter.length === filters.league.length :", selector.leagueFilter.length === filters.league.length);
