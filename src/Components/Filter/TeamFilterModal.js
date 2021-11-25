@@ -23,6 +23,7 @@ import {
   Year,
   SetSeason,
   CompareModal,
+  SetTeam,
 } from "../../redux/modules/filtervalue";
 import {
   setLeagueFilter,
@@ -311,7 +312,7 @@ const TeamFilterModal = () => {
                       <MapTeams
                         key={index}
                         onClick={() => {
-                          dispatch(Team(team));
+                          dispatch(SetTeam(team));
                           fetchingOppTeamFilter(team);
                           dispatch(OppTeam(""));
                         }}

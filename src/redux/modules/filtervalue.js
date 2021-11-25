@@ -35,10 +35,12 @@ export const RESET_YEAR = "filtervalue/RESET_YEAR";
 export const RESET_SEASON = "filtervalue/RESET_SEASON";
 export const RESET_TEAM = "filtervalue/RESET_TEAM";
 export const FILTER_MENU_SWITCH = "filtervalue/FILTER_MENU_SWITCH";
+export const COMPARE_MODAL = "filtervalue/COMPARE_MODAL";
 export const SET_LEAGUE = "filtervalue/SET_LEAGUE";
 export const SET_YEAR = "filtervalue/SET_YEAR";
 export const SET_SEASON = "filtervalue/SET_SEASON";
-export const COMPARE_MODAL = "filtervalue/COMPARE_MODAL";
+export const SET_TEAM = "filtervalue/SET_TEAM"
+export const SET_PLAYER = "filtervalue/SET_PLAYER"
 export const SET_PATCH = "filtervalue/SET_PATCH";
 export const SELECT_ALL_BTN = "filtervalue/SELECT_ALL_BTN";
 
@@ -305,6 +307,22 @@ export const SetSeason = (payload) => {
     payload,
   };
 };
+
+export const SetTeam = (payload) => {
+  return {
+    type: SET_TEAM,
+    payload,
+  };
+};
+
+
+export const SetPlayer = (payload) => {
+  return {
+    type: SET_PLAYER,
+    payload,
+  };
+};
+
 
 export const SetPatch = (payload) => {
   return {
@@ -584,6 +602,16 @@ export default function FilterReducer(state = initialState, action) {
       return {
         ...state,
         season: action.payload,
+      };
+    case SET_TEAM:
+      return {
+        ...state,
+        team: action.payload,
+      };
+    case SET_PLAYER:
+      return {
+        ...state,
+        player: action.payload,
       };
     case SET_PATCH:
       return {

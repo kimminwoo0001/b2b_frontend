@@ -21,6 +21,8 @@ import {
   SetLeague,
   Season,
   CompareModal,
+  SetPlayer,
+  SetTeam,
 } from "../../redux/modules/filtervalue";
 import {
   setLeagueFilter,
@@ -46,6 +48,7 @@ function PlayerFilterModal() {
   const dropdownRef = useRef(null);
   //필터 상태값
   const [prevTeam, setPrevTeam] = useState("");
+  const [prevPlayer, setPrevPlayer] = useState("");
   const [oppTeamFilter, setOppTeamFilter] = useState();
   const [oppPlayerFilter, setOppPlayerFilter] = useState();
 
@@ -81,6 +84,7 @@ function PlayerFilterModal() {
 
   useEffect(() => {
     if (filters.player.length > 0) {
+      setPrevPlayer(filters.player);
       fetchingOppTeamFilter();
     }
   }, [filters.player])
@@ -165,6 +169,14 @@ function PlayerFilterModal() {
       setOppPlayerFilter(e.data);
     });
   };
+
+  const reFetchingFilter = (name) => {
+    if (name === "player") {
+      if (filters.player === prevPlayer) {
+        fetchingOppTeamFilter();
+      }
+    }
+  }
 
   return (
     <>
@@ -350,7 +362,7 @@ function PlayerFilterModal() {
                         <MapTeams
                           key={index}
                           onClick={() => {
-                            dispatch(Team(team));
+                            dispatch(SetTeam(team));
                             dispatch(OppPlayer(""));
                             setOppTeamFilter([]);
                             setOppPlayerFilter([]);
@@ -376,12 +388,12 @@ function PlayerFilterModal() {
                         <MapTeams
                           key={index}
                           onClick={() => {
-                            dispatch(OppPlayer(""));
-                            dispatch(Player(player.name));
+                            dispatch(SetPlayer(player.name));
                             dispatch(Position(player.position));
+                            dispatch(OppPlayer(""));
                             dispatch(OppTeam([]));
                             //fetchingOppPlayerFilter(player);
-                            //fetchingOppTeamFilter();
+                            reFetchingFilter("player");
                           }}
                           currentTeam={filters.player === player.name}
                         >
