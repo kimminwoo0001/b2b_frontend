@@ -221,7 +221,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
             <span className="subtitle">{t("video.vision.label4")}</span>
           </div>
           <FilterWrapper>
-            <DropDownToggle className="container" changeColor={filters.team.length > 0}>
+            {/* <DropDownToggle className="container" changeColor={filters.team.length > 0}>
               <div className="menu-container">
                 <button
                   onClick={() => {
@@ -230,17 +230,18 @@ function SetByPlayer({ minFrom, setMinFrom }) {
                     // getTeam();
                   }}
                   className="menu-trigger"
+                  style={{ cursor: "default" }}
                 >
                   <span className="Label">
                     {filters.team !== ""
                       ? filters.team
                       : t("video.heatmap.team")}
                   </span>
-                  <img
+                  {filters.team === "" && <img
                     className="ArrowIcon"
                     src="Images/select-arrow.png"
                     alt="arrowIcon"
-                  />
+                  />}
                 </button>
                 <nav
                   ref={dropdownRef}
@@ -280,7 +281,10 @@ function SetByPlayer({ minFrom, setMinFrom }) {
                   </ul>
                 </nav>
               </div>
-            </DropDownToggle>
+            </DropDownToggle> */}
+            <SeletedTeam>
+              {filters.team}
+            </SeletedTeam>
             <DropDownToggle className="container" changeColor={filters.player.length > 0}>
               <div className="menu-container">
                 <button
@@ -845,3 +849,21 @@ const DropDownToggle = styled.div`
     }
   }
 `;
+
+const SeletedTeam = styled.div`
+  display: flex;
+  width: 230px;
+  height: 34px;
+  color: #fff;
+  text-align: center;
+  align-items: center;
+  font-family: SpoqaHanSansNeo;
+  font-size: 13px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  margin: 0 0 0 18px;
+`

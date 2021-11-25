@@ -11,6 +11,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import timeFormat from "../../../lib/timeFormat";
 import axiosRequest from "../../../lib/axiosRequest";
+import { style } from "dom-helpers";
 
 const WardSlider = withStyles({
   root: {
@@ -367,7 +368,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
             </LabelVs>
             <FilterContainer>
               <FilterBox>
-                <DropDownToggle className="container" changeColor={filters.team.length > 0}>
+                {/* <DropDownToggle className="container" changeColor={filters.team.length > 0}>
                   <div className="menu-container">
                     <button
                       onClick={() => {
@@ -376,17 +377,18 @@ function SetByChampion({ minFrom, setMinFrom }) {
                         // getTeam();
                       }}
                       className="menu-trigger"
+                      style={{ cursor: "default" }}
                     >
                       <span className="Label">
                         {filters.team !== ""
                           ? filters.team
                           : t("video.heatmap.team")}
                       </span>
-                      <img
+                      {filters.team === "" && <img
                         className="ArrowIcon"
                         src="Images/select-arrow.png"
                         alt="arrowIcon"
-                      />
+                      />}
                     </button>
                     <nav
                       ref={dropdownRef}
@@ -427,7 +429,10 @@ function SetByChampion({ minFrom, setMinFrom }) {
                       </ul>
                     </nav>
                   </div>
-                </DropDownToggle>
+                </DropDownToggle> */}
+                <SeletedTeam>
+                  <label>{filters.team}</label>
+                </SeletedTeam>
                 <DropDownToggle className="container" changeColor={filters.player.length > 0}>
                   <div className="menu-container">
                     <button
@@ -1263,3 +1268,21 @@ const DropDownToggle = styled.div`
     }
   }
 `;
+
+const SeletedTeam = styled.div`
+  display: flex;
+  width: 142px;
+  height: 34px;
+  color: #fff;
+  text-align: center;
+  align-items: center;
+  font-family: SpoqaHanSansNeo;
+  font-size: 13px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  margin: 0 0 0 18px;
+`

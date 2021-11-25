@@ -220,17 +220,22 @@ function WardPlayerFilter({
                     // getTeam();
                   }}
                   className="menu-trigger"
+                  style={{
+                    cursor: "default",
+                    backgroundColor: "rgba(255,255,255,0.0)"
+                  }}
                 >
                   <span className="Label">
                     {filters.team !== ""
                       ? filters.team
                       : t("video.vision.team")}
                   </span>
-                  <img
+                  {filters.team === "" && <img
                     className="ArrowIcon"
                     src="Images/select-arrow.png"
                     alt="arrowIcon"
-                  />
+                  />}
+
                 </button>
                 <nav
                   ref={dropdownRef}
@@ -252,7 +257,6 @@ function WardPlayerFilter({
                                 year: filters.year,
                                 season: filters.season,
                                 patch: filters.patch,
-
                                 team: team,
                                 player: "",
                                 champion_eng: "",
@@ -828,7 +832,7 @@ const DropDownToggle = styled.div`
   }
 
   .menu-trigger:hover {
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+    // box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
   }
 
   .SelectedLabel {
