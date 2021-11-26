@@ -135,120 +135,64 @@ function LeagueStatistics() {
   };
 
   const averageGameTimeOptions = {
-    layout: {
-      padding: 0,
+    tooltips: {
+      mode: "index",
+      intersect: false,
+      backgroundColor: "#1d1d1d",
+      titleFontSize: 12,
+      bodyFontSize: 10,
+      displayColors: true,
     },
-    responsive: true,
-    plugins: {
-      legend: {
-        display: false,
-        labels: {
-          color: "rgb(255, 99, 132)",
-        },
-      },
-      tooltip: {
-        usePointStyle: true,
-        callbacks: {
-          labelPointStyle: function (context) {
-            return {
-              pointStyle: "triangle",
-              rotation: 0,
-              backGroundColor: "#000000",
-            };
-          },
-          labelColor: function (context) {
-            return {
-              borderColor: "rgba(44,225,150,1)",
-              backgroundColor: "rgba(44,225,150,1)",
-            };
-          },
-        },
-      },
-    },
-    scales: {
-      y: {
-        min: 0,
-        grid: {
-          borderDash: [8, 8],
-        },
-        ticks: {
-          stepSize: 1,
-        },
-      },
-      x: {
-        grid: {
-          display: false,
-        },
-      },
-    },
-    // tooltips: {
-    //   mode: "index",
-    //   intersect: false,
-    //   backgroundColor: "#1d1d1d",
-    //   titleFontSize: 32,
-    //   bodyFontSize: 10,
-    //   displayColors: true,
-    //   usePointStyle: true,
-    //   callbacks: {
-    //     labelPointStyle: function (context) {
-    //       return {
-    //         pointStyle: "triangle",
-    //         rotation: 0,
-    //         backGroundColor: "#000000",
-    //       };
+    // plugins: {
+    //   tooltip: {
+    //     usePointStyle: true,
+    //     callbacks: {
+    //       labelPointStyle: function (context) {
+    //         return {
+    //           pointStyle: "triangle",
+    //           rotation: 0,
+    //         };
+    //       },
     //     },
     //   },
     // },
-    // // plugins: {
-    // //   tooltip: {
-    // //     usePointStyle: true,
-    // //     callbacks: {
-    // //       labelPointStyle: function (context) {
-    // //         return {
-    // //           pointStyle: "triangle",
-    // //           rotation: 0,
-    // //         };
-    // //       },
-    // //     },
-    // //   },
-    // // },
-    // hover: {
-    //   animationDuration: 100,
-    // },
-    // legend: {
-    //   display: false,
-    // },
-    // maintainAspectRatio: false,
-    // scales: {
-    //   xAxes: [
-    //     {
-    //       ticks: {
-    //         fontColor: "#84818e",
-    //         fontSize: 15,
-    //       },
-    //       gridLines: {
-    //         color: "rgb(47, 45, 56)",
-    //         offsetGridLines: true,
-    //         drawOnChartArea: true,
-    //       },
-    //       offset: true,
-    //     },
-    //   ],
-    //   yAxes: [
-    //     {
-    //       ticks: {
-    //         stepSize: gameLengthData?.row,
-    //         fontColor: "#84818e",
-    //         fontSize: 15,
-    //         min: gameLengthData?.min,
-    //         max: gameLengthData?.max,
-    //       },
-    //       gridLines: {
-    //         color: "rgb(58, 55, 69)",
-    //       },
-    //     },
-    //   ],
-    // },
+    hover: {
+      animationDuration: 100,
+    },
+    legend: {
+      display: false,
+    },
+    maintainAspectRatio: false,
+    scales: {
+      xAxes: [
+        {
+          ticks: {
+            fontColor: "#84818e",
+            fontSize: 15,
+          },
+          gridLines: {
+            color: "rgb(47, 45, 56)",
+            offsetGridLines: true,
+            drawOnChartArea: true,
+          },
+          offset: true,
+        },
+      ],
+      yAxes: [
+        {
+          ticks: {
+            stepSize: gameLengthData?.row,
+            fontColor: "#84818e",
+            fontSize: 15,
+            min: gameLengthData?.min,
+            max: gameLengthData?.max,
+          },
+          gridLines: {
+            color: "rgb(58, 55, 69)",
+          },
+        },
+      ],
+    },
   };
 
   //라인 별 서포팅 시간 그래프 세팅
