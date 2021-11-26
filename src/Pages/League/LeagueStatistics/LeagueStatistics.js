@@ -263,6 +263,7 @@ function LeagueStatistics() {
         borderColor: "#f04545",
         borderWidth: 2,
         data: supportTimeY,
+        bodySpacing: 5,
       },
     ],
   };
