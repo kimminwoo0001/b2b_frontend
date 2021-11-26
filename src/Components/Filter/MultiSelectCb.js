@@ -46,7 +46,7 @@ const Selecter = styled.div`
   padding-left: 5px;
   width: 100%;
   height: 30px;
-  color: #84818e;
+  /* color: #84818e; */
   cursor: pointer;
   ${(props) =>
     props.isChecked &&
@@ -65,7 +65,6 @@ const Selecter = styled.div`
         `
       : css`
           color: rgb(255, 255, 255);
-          background-color: rgba(22, 21, 28, 0.5);
           border-radius: 10px;
         `}
 
