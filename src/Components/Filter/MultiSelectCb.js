@@ -55,6 +55,20 @@ const Selecter = styled.div`
       background-color: rgba(22, 21, 28, 0.5);
       border-radius: 10px;
     `}
+
+  ${(props) =>
+    !props.isChecked && props.radioBtn
+      ? css`
+          color: rgb(255, 255, 255);
+          opacity: 0.3;
+          border-radius: 10px;
+        `
+      : css`
+          color: rgb(255, 255, 255);
+          background-color: rgba(22, 21, 28, 0.5);
+          border-radius: 10px;
+        `}
+
   > .Version {
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 11px;
