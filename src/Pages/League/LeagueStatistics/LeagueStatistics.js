@@ -146,6 +146,7 @@ function LeagueStatistics() {
         borderColor: "#f04545",
         borderWidth: 2,
         data: supportTimeY,
+        bodySpacing: 5,
       },
     ],
   };
@@ -209,6 +210,7 @@ function LeagueStatistics() {
                   boxWidth: 2,
                   boxHeight: 2,
                   cornerRadius: 10,
+                  usePointStyle: true,
                 },
                 hover: {
                   animationDuration: 100,
