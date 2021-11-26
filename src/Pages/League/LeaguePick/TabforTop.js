@@ -101,9 +101,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
               <tr>
                 <th className="Champion">{t("league.draft.champion")}</th>
                 <th className="PickCount" onClick={() => requestSort("pick")}>
-                  <div className="sorting">
-                    {t("league.draft.picks")}
-                  </div>
+                  <div className="sorting">{t("league.draft.picks")}</div>
                 </th>
                 {/* <th className="PickCount" onClick={() => requestSort("ban")}>
                   <div className="sorting">
@@ -115,19 +113,16 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                   </div>
                 </th> */}
                 <th className="BanRate" onClick={() => requestSort("pickRate")}>
-                  <div className="sorting">
-                    {t("league.draft.banRate")}
-                  </div>
+                  <div className="sorting">{t("league.draft.banRate")}</div>
                 </th>
                 <th className="WinRate" onClick={() => requestSort("winrate")}>
-                  <div className="sorting">
-                    {t("league.draft.winRate")}
-                  </div>
+                  <div className="sorting">{t("league.draft.winRate")}</div>
                 </th>
-                <th className="ProbRate" onClick={() => requestSort("probRate")}>
-                  <div className="sorting">
-                    {t("league.draft.probRate")}
-                  </div>
+                <th
+                  className="ProbRate"
+                  onClick={() => requestSort("probRate")}
+                >
+                  <div className="sorting">{t("league.draft.probRate")}</div>
                 </th>
                 <th className="none"></th>
               </tr>
@@ -168,42 +163,28 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
               <tr>
                 <th className="Champion">{t("league.draft.champion")}</th>
                 <th className="PickCount" onClick={() => requestSorts("pick")}>
-                  <div className="sorting">
-                    {t("league.draft.pick")}
-                  </div>
+                  <div className="sorting">{t("league.draft.pick")}</div>
                 </th>
                 <th className="BanRate" onClick={() => requestSorts("ban")}>
-                  <div className="sorting">
-                    {t("league.draft.ban")}
-                  </div>
+                  <div className="sorting">{t("league.draft.ban")}</div>
                 </th>
                 <th className="WinRate" onClick={() => requestSorts("win")}>
-                  <div className="sorting">
-                    {t("league.draft.win")}
-                  </div>
+                  <div className="sorting">{t("league.draft.win")}</div>
                 </th>
                 <th
                   className="BanRate"
                   onClick={() => requestSorts("pickRate")}
                 >
-                  <div className="sorting">
-                    {t("league.draft.banRate")}
-                  </div>
+                  <div className="sorting">{t("league.draft.banRate")}</div>
                 </th>
                 <th className="WinRate" onClick={() => requestSorts("winRate")}>
-                  <div className="sorting">
-                    {t("league.draft.winRate")}
-                  </div>
+                  <div className="sorting">{t("league.draft.winRate")}</div>
                 </th>
                 <th className="WinRate" onClick={() => requestSorts("score")}>
-                  <div className="sorting">
-                    {t("league.draft.score")}
-                  </div>
+                  <div className="sorting">{t("league.draft.score")}</div>
                 </th>
                 <th className="Score" onClick={() => requestSorts("score")}>
-                  <div className="sorting">
-                    {t("league.draft.tier")}
-                  </div>
+                  <div className="sorting">{t("league.draft.tier")}</div>
                 </th>
                 <th className="none"></th>
               </tr>
@@ -320,10 +301,11 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                             ? pick?.opp_champion.championKor
                             : pick?.opp_champion.champion}
                         </div>
-                        <div className="WinLose2">{`${pick?.opp_champion.win
-                          }${t("league.draft.w")} ${pick?.opp_champion.lose}${t(
-                            "league.draft.l"
-                          )}`}</div>
+                        <div className="WinLose2">{`${
+                          pick?.opp_champion.win
+                        }${t("league.draft.w")} ${pick?.opp_champion.lose}${t(
+                          "league.draft.l"
+                        )}`}</div>
                       </div>
                       <img
                         src={pick?.opp_champion.championImage}
@@ -392,6 +374,11 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
               </UniqueNavBar>
             </thead>
             <tbody>
+              {uniquePick && uniquePick.length === 0 ? (
+                <NoData>{t("league.draft.noUniquePickData")}</NoData>
+              ) : (
+                ""
+              )}
               {uniquePick?.map((data, idx) => {
                 return (
                   <UniqueMappingPicks key={idx}>
@@ -502,6 +489,13 @@ const Header = styled.div`
   }
 `;
 
+const NoData = styled.div`
+  position: absolute;
+  top: 40%;
+  right: 33%;
+  color: #fff;
+`;
+
 const UniqueTable = styled.table`
   width: 100%;
 
@@ -531,6 +525,7 @@ const UniqueTable = styled.table`
     }
   }
   > tbody {
+    position: relative;
     display: block;
     height: 185px;
     overflow: auto;

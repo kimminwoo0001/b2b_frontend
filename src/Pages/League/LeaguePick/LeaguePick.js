@@ -9,7 +9,6 @@ import TabforTop from "./TabforTop";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useTranslation } from "react-i18next";
 
-
 function LeaguePick() {
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
@@ -63,7 +62,7 @@ function LeaguePick() {
         uniquePick={uniquePick}
         tier={tier}
       />
-    )
+    ),
   };
 
   useEffect(() => {
@@ -103,7 +102,7 @@ function LeaguePick() {
       patch: filters.patch,
       position: queryPosition,
       token: user.token,
-      id: user.id
+      id: user.id,
     };
 
     axiosRequest(url, params, function (e) {
@@ -115,9 +114,7 @@ function LeaguePick() {
       setTier(e.data.championTier);
       //유니크픽 데이터 저장
       setUniquePick(e.data.uniquePick);
-    }).finally(
-      setLoading(false)
-    );
+    }).finally(setLoading(false));
   };
 
   if (loading) return <LoadingImg />;
@@ -191,7 +188,7 @@ const LineMargin = styled.div`
 `;
 
 const LastMargin = styled.div`
-  width:73%;
+  width: 73%;
   border-bottom: solid 1px #433f4e;
 `;
 
@@ -210,10 +207,10 @@ const TabItem = styled.button`
     div {
       padding: 10px 15px;
       border-radius: 10px;
-      background-color : #26262C;
+      background-color: #26262c;
     }
   }
-  
+
   span {
     height: 22px;
     font-family: SpoqaHanSansNeo;
@@ -225,12 +222,10 @@ const TabItem = styled.button`
     letter-spacing: normal;
     text-align: left;
     padding-bottom: 19px;
-    border-bottom: solid 1px ${(props) => props.changeColor ? `#fff` : `#433f4e;`};
+    border-bottom: solid 1px
+      ${(props) => (props.changeColor ? `#fff` : `#433f4e;`)};
     color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
   }
-  
 `;
-
-
 
 const TabContents = styled.div``;

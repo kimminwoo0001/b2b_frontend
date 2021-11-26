@@ -76,7 +76,8 @@
       "score": "Score",
       "w": "W",
       "l": "L",
-      "tier": "Tier"
+      "tier": "Tier",
+      "noUniquePickData": "There is no unique pick data."
     },
     "leagueStat": {
       "gameLength": "Game Length",

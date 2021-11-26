@@ -233,7 +233,11 @@ function NormalInfo() {
       <PlayerCompareWrapper>
         <div className="RedSidePlayer">
           <img
-            src={data?.playerInfo.Image}
+            src={
+              data?.playerInfo.Image
+                ? data?.playerInfo.Image
+                : "Images/player_error_image.png"
+            }
             width="94px"
             height="74px"
             alt="PlayerIcon"
@@ -305,7 +309,11 @@ function NormalInfo() {
         />
         <div className="BlueSidePlayer">
           <img
-            src={oppData?.playerInfo.Image}
+            src={
+              oppData?.playerInfo.Image
+                ? oppData?.playerInfo.Image
+                : "Images/player_error_image.png"
+            }
             width="94px"
             height="74px"
             alt="PlayerIcon"

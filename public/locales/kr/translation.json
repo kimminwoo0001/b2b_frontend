@@ -75,7 +75,8 @@
       "score": "스코어",
       "w": "승",
       "l": "패",
-      "tier": "티어"
+      "tier": "티어",
+      "noUniquePickData": "유니크 픽 데이터가 없습니다."
     },
     "leagueStat": {
       "gameLength": "평균 게임 시간",

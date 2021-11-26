@@ -201,7 +201,7 @@ function PlayerBoard() {
       <PlayerInfoSection>
         <PlayerOverView>
           <img
-            src={info?.Image}
+            src={info?.Image ? info?.Image : "Images/player_error_image.png"}
             width="94px"
             height="74px"
             alt="PlayerIcon"

@@ -41,127 +41,14 @@ function PlayerCompare() {
   };
 
   return (
-    // 디자인 변경으로 아래 코드로 대체
-    // <PlayerCompareWrapper>
-    //   <Red>
-    //     <img
-    //       src={`Images/TeamLogo/${filters.team}.png`}
-    //       alt="team logo"
-    //       width="54px"
-    //       height="54px"
-    //     />
-
-    //     <div className="NameContainer">
-    //       <span className="RealName">{data?.playerInfo.ID}</span>
-    //       <span className="NickName">
-    //         {lang === "kr"
-    //           ? data?.playerInfo.NativeName
-    //           : data?.playerInfo.Name}
-    //       </span>
-    //     </div>
-    //     <img
-    //       className="PositionIcon"
-    //       src={`Images/ico-position-${filters.position}.png`}
-    //       width="28.6px"
-    //       height="28.6px"
-    //       alt="PositionIcon"
-    //     />
-    //     <div className="RedSidePlayer">
-    //       <img
-    //         src={data?.playerInfo.Image}
-    //         width="212px"
-    //         height="168px"
-    //         alt="PlayerIcon"
-    //         onError={(e) => {
-    //           e.target.src = "Images/player_error_image.png";
-    //         }}
-    //       />
-    //     </div>
-    //     <div className="AverageBox">
-    //       <div className="PerformanceTitle">
-    //         {t("solo.comparison.avgScore")}
-    //       </div>
-    //       <PerformanceValue
-    //         color={data?.sbrAvg < oppData?.sbrAvg}
-    //         className="PerformanceValue"
-    //       >
-    //         {data?.sbrAvg.toFixed(1)}
-    //       </PerformanceValue>
-    //     </div>
-    //     <div className="AverageBoxTwo">
-    //       <div className="PerformanceTitle">
-    //         {t("solo.comparison.bestScore")}
-    //       </div>
-    //       <PerformanceValue
-    //         color={data?.sbrMax < oppData?.sbrMax}
-    //         className="PerformanceValue"
-    //       >
-    //         {data?.sbrMax.toFixed(1)}
-    //       </PerformanceValue>
-    //     </div>
-    //   </Red>
-    //   <div className="Vs">VS</div>
-    //   <Blue>
-    //     <img
-    //       src={`Images/TeamLogo/${filters.oppteam}.png`}
-    //       alt="oppteam logo"
-    //       width="54px"
-    //       height="54px"
-    //     />
-    //     <div className="NameContainer">
-    //       <span className="RealName">{oppData?.playerInfo.ID}</span>
-    //       <span className="NickName">
-    //         {lang === "kr"
-    //           ? oppData?.playerInfo.NativeName
-    //           : oppData?.playerInfo.Name}
-    //       </span>
-    //     </div>
-    //     <img
-    //       className="PositionIcon"
-    //       src={`Images/ico-position-${filters.position}.png`}
-    //       alt="PositionIcon"
-    //       width="28.6px"
-    //       height="28.6px"
-    //     />
-    //     <div className="BlueSidePlayer">
-    //       <img
-    //         src={oppData?.playerInfo.Image}
-    //         width="212px"
-    //         height="168px"
-    //         alt="PlayerIcon"
-    //         onError={(e) => {
-    //           e.target.src = "Images/player_error_image.png";
-    //         }}
-    //       />
-    //     </div>
-    //     <div className="AverageBox">
-    //       <div className="PerformanceTitle">
-    //         {t("solo.comparison.avgScore")}
-    //       </div>
-    //       <PerformanceValue2
-    //         color={data?.sbrAvg > oppData?.sbrAvg}
-    //         className="PerformanceValueBlue"
-    //       >
-    //         {oppData?.sbrAvg.toFixed(1)}
-    //       </PerformanceValue2>
-    //     </div>
-    //     <div className="AverageBoxTwo">
-    //       <div className="PerformanceTitle">
-    //         {t("solo.comparison.bestScore")}
-    //       </div>
-    //       <PerformanceValue2
-    //         color={data?.sbrMax > oppData?.sbrMax}
-    //         className="PerformanceValueBlue"
-    //       >
-    //         {oppData?.sbrMax.toFixed(1)}
-    //       </PerformanceValue2>
-    //     </div>
-    //   </Blue>
-    // </PlayerCompareWrapper>
     <PlayerCompareWrapper>
       <div className="RedSidePlayer">
         <img
-          src={data?.playerInfo.Image}
+          src={
+            data?.playerInfo.Image
+              ? data?.playerInfo.Image
+              : "Images/player_error_image.png"
+          }
           width="94px"
           height="74px"
           alt="PlayerIcon"
@@ -221,7 +108,11 @@ function PlayerCompare() {
       />
       <div className="BlueSidePlayer">
         <img
-          src={oppData?.playerInfo.Image}
+          src={
+            oppData?.playerInfo.Image
+              ? oppData?.playerInfo.Image
+              : "Images/player_error_image.png"
+          }
           width="94px"
           height="74px"
           alt="PlayerIcon"

@@ -335,8 +335,8 @@ function OppStat() {
                 <img
                   src={
                     player?.winRate.result
-                      ? "Images/ico-plus-red.png"
-                      : "Images/ico-minus-grey.png"
+                      ? "Images/ico-teamreport-num-up.png"
+                      : "Images/ico-teamreport-num-down-wh.png"
                   }
                   alt="icon"
                 />
@@ -356,8 +356,8 @@ function OppStat() {
                 <img
                   src={
                     oppPlayer?.winRate.result
-                      ? "Images/ico-plus-red.png"
-                      : "Images/ico-minus-grey.png"
+                      ? "Images/ico-teamreport-num-up.png"
+                      : "Images/ico-teamreport-num-down-wh.png"
                   }
                   alt="icon"
                 />
@@ -384,8 +384,8 @@ function OppStat() {
                 <img
                   src={
                     player?.solokill.result
-                      ? "Images/ico-plus-red.png"
-                      : "Images/ico-minus-grey.png"
+                      ? "Images/ico-teamreport-num-up.png"
+                      : "Images/ico-teamreport-num-down-wh.png"
                   }
                   alt="icon"
                 />
@@ -408,8 +408,8 @@ function OppStat() {
                 <img
                   src={
                     oppPlayer?.solokill.result
-                      ? "Images/ico-plus-red.png"
-                      : "Images/ico-minus-grey.png"
+                      ? "Images/ico-teamreport-num-up.png"
+                      : "Images/ico-teamreport-num-down-wh.png"
                   }
                   alt="icon"
                 />
@@ -445,8 +445,8 @@ function OppStat() {
                 <img
                   src={
                     player?.kda.result
-                      ? "Images/ico-plus-red.png"
-                      : "Images/ico-minus-grey.png"
+                      ? "Images/ico-teamreport-num-up.png"
+                      : "Images/ico-teamreport-num-down-wh.png"
                   }
                   alt="icon"
                 />
@@ -480,8 +480,8 @@ function OppStat() {
                 <img
                   src={
                     oppPlayer?.kda.result
-                      ? "Images/ico-plus-red.png"
-                      : "Images/ico-minus-grey.png"
+                      ? "Images/ico-teamreport-num-up.png"
+                      : "Images/ico-teamreport-num-down-wh.png"
                   }
                   alt="icon"
                 />
@@ -501,8 +501,8 @@ function OppStat() {
                 <img
                   src={
                     player?.cs.result
-                      ? "Images/ico-plus-red.png"
-                      : "Images/ico-minus-grey.png"
+                      ? "Images/ico-teamreport-num-up.png"
+                      : "Images/ico-teamreport-num-down-wh.png"
                   }
                   alt="icon"
                 />
@@ -521,8 +521,8 @@ function OppStat() {
                 <img
                   src={
                     oppPlayer?.cs.result
-                      ? "Images/ico-plus-red.png"
-                      : "Images/ico-minus-grey.png"
+                      ? "Images/ico-teamreport-num-up.png"
+                      : "Images/ico-teamreport-num-down-wh.png"
                   }
                   alt="icon"
                 />
@@ -542,8 +542,8 @@ function OppStat() {
                 <img
                   src={
                     player?.dpm.result
-                      ? "Images/ico-plus-red.png"
-                      : "Images/ico-minus-grey.png"
+                      ? "Images/ico-teamreport-num-up.png"
+                      : "Images/ico-teamreport-num-down-wh.png"
                   }
                   alt="icon"
                 />
@@ -562,8 +562,8 @@ function OppStat() {
                 <img
                   src={
                     oppPlayer?.dpm.result
-                      ? "Images/ico-plus-red.png"
-                      : "Images/ico-minus-grey.png"
+                      ? "Images/ico-teamreport-num-up.png"
+                      : "Images/ico-teamreport-num-down-wh.png"
                   }
                   alt="icon"
                 />
@@ -583,8 +583,8 @@ function OppStat() {
                 <img
                   src={
                     player?.dtpm.result
-                      ? "Images/ico-plus-red.png"
-                      : "Images/ico-minus-grey.png"
+                      ? "Images/ico-teamreport-num-up.png"
+                      : "Images/ico-teamreport-num-down-wh.png"
                   }
                   alt="icon"
                 />
@@ -603,8 +603,8 @@ function OppStat() {
                 <img
                   src={
                     oppPlayer?.dtpm.result
-                      ? "Images/ico-plus-red.png"
-                      : "Images/ico-minus-grey.png"
+                      ? "Images/ico-teamreport-num-up.png"
+                      : "Images/ico-teamreport-num-down-wh.png"
                   }
                   alt="icon"
                 />
@@ -624,8 +624,8 @@ function OppStat() {
                 <img
                   src={
                     player?.match_parti.result
-                      ? "Images/ico-plus-red.png"
-                      : "Images/ico-minus-grey.png"
+                      ? "Images/ico-teamreport-num-up.png"
+                      : "Images/ico-teamreport-num-down-wh.png"
                   }
                   alt="icon"
                 />
@@ -651,8 +651,8 @@ function OppStat() {
                 <img
                   src={
                     oppPlayer?.match_parti.result
-                      ? "Images/ico-plus-red.png"
-                      : "Images/ico-minus-grey.png"
+                      ? "Images/ico-teamreport-num-up.png"
+                      : "Images/ico-teamreport-num-down-wh.png"
                   }
                   alt="icon"
                 />
@@ -675,8 +675,8 @@ function OppStat() {
                 <img
                   src={
                     player?.kp.result
-                      ? "Images/ico-plus-red.png"
-                      : "Images/ico-minus-grey.png"
+                      ? "Images/ico-teamreport-num-up.png"
+                      : "Images/ico-teamreport-num-down-wh.png"
                   }
                   alt="icon"
                 />
@@ -695,8 +695,8 @@ function OppStat() {
                 <img
                   src={
                     oppPlayer?.kp.result
-                      ? "Images/ico-plus-red.png"
-                      : "Images/ico-minus-grey.png"
+                      ? "Images/ico-teamreport-num-up.png"
+                      : "Images/ico-teamreport-num-down-wh.png"
                   }
                   alt="icon"
                 />
@@ -718,8 +718,8 @@ function OppStat() {
                 <img
                   src={
                     player?.match.result
-                      ? "Images/ico-plus-red.png"
-                      : "Images/ico-minus-grey.png"
+                      ? "Images/ico-teamreport-num-up.png"
+                      : "Images/ico-teamreport-num-down-wh.png"
                   }
                   alt="icon"
                 />
@@ -743,8 +743,8 @@ function OppStat() {
                 <img
                   src={
                     oppPlayer?.match.result === true
-                      ? "Images/ico-plus-red.png"
-                      : "Images/ico-minus-grey.png"
+                      ? "Images/ico-teamreport-num-up.png"
+                      : "Images/ico-teamreport-num-down-wh.png"
                   }
                   alt="icon"
                 />
@@ -905,7 +905,6 @@ const DisplayValue = styled.div`
     align-items: center;
     justify-content: center;
     font-family: "Spoqa Han Sans";
-
     text-align: center;
     color: #f04545;
     img {
@@ -953,7 +952,6 @@ const ComparedValue = styled.div`
   align-items: center;
   font-family: "Spoqa Han Sans";
   font-size: 23px;
-
   text-align: center;
   color: #fff;
   img {
