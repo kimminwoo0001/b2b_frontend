@@ -15,7 +15,7 @@ import axiosRequest from "../../../lib/axiosRequest";
 const WardSlider = withStyles({
   root: {
     color: "#5942ba",
-    height: 2
+    height: 2,
   },
   thumb: {
     height: 13,
@@ -25,30 +25,30 @@ const WardSlider = withStyles({
     marginTop: -3,
     marginLeft: -7,
     "&:focus, &:hover, &$active": {
-      boxShadow: "inherit"
-    }
+      boxShadow: "inherit",
+    },
   },
   active: {},
   valueLabel: {
     left: "calc(-50%)",
-    top: -30
+    top: -30,
   },
   track: {
     height: 6,
-    borderRadius: 4
+    borderRadius: 4,
   },
   rail: {
     height: 6,
     backgroundColor: "#433f4e",
-    borderRadius: 4
-  }
+    borderRadius: 4,
+  },
 })(Slider);
 
 function WardPlayerFilter({
   compareOpen,
   setCompareOpen,
   minFrom,
-  setMinFrom
+  setMinFrom,
 }) {
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
@@ -76,12 +76,12 @@ function WardPlayerFilter({
         season: filters.season,
         patch: filters.patch,
         token: user.token,
-        id: user.id
+        id: user.id,
       };
       axiosRequest(url, params, function (e) {
         const data = e.data.team;
         setFilterData({ ...filterData, team: data });
-      })
+      });
     } catch (e) {
       console.log(e);
     }
@@ -98,12 +98,12 @@ function WardPlayerFilter({
         patch: filters.patch,
         team: filters.team,
         token: user.token,
-        id: user.id
+        id: user.id,
       };
       axiosRequest(url, params, function (e) {
         const data = e.data.player;
         setFilterData({ ...filterData, player: data });
-      })
+      });
     } catch (e) {
       console.log(e);
     }
@@ -120,12 +120,12 @@ function WardPlayerFilter({
         team: filters.team,
         player: filters.player,
         token: user.token,
-        id: user.id
+        id: user.id,
       };
       axiosRequest(url, params, function (e) {
         const data = e.data.champion;
         setFilterData({ ...filterData, champion: data });
-      })
+      });
     } catch (e) {
       console.log(e);
     }
@@ -143,12 +143,12 @@ function WardPlayerFilter({
         player: filters.player,
         champion: filters.champion_eng,
         token: user.token,
-        id: user.id
+        id: user.id,
       };
       axiosRequest(url, params, function (e) {
         const data = e.data.opp_team;
         setFilterData({ ...filterData, oppteam: data });
-      })
+      });
     } catch (e) {
       console.log(e);
     }
@@ -167,12 +167,12 @@ function WardPlayerFilter({
         champion: filters.champion_eng,
         opp_team: filters.oppteam,
         token: user.token,
-        id: user.id
+        id: user.id,
       };
       axiosRequest(url, params, function (e) {
         const data = e.data.opp_player;
         setFilterData({ ...filterData, oppplayer: data });
-      })
+      });
     } catch (e) {
       console.log(e);
     }
@@ -192,12 +192,12 @@ function WardPlayerFilter({
         opp_team: filters.oppteam,
         opp_player: filters.oppplayer,
         token: user.token,
-        id: user.id
+        id: user.id,
       };
       axiosRequest(url, params, function (e) {
         const data = e.data.opp_champion;
         setFilterData({ ...filterData, oppchampion: data });
-      })
+      });
     } catch (e) {
       console.log(e);
     }
@@ -211,7 +211,10 @@ function WardPlayerFilter({
         </div>
         <FilterBox>
           <DropDownBox>
-            <DropDownToggle className="container" changeColor={filters.team.length > 0}>
+            <DropDownToggle
+              className="container"
+              changeColor={filters.team.length > 0}
+            >
               <div className="menu-container">
                 <button
                   onClick={() => {
@@ -222,7 +225,7 @@ function WardPlayerFilter({
                   className="menu-trigger"
                   style={{
                     cursor: "default",
-                    backgroundColor: "rgba(255,255,255,0.0)"
+                    backgroundColor: "rgba(255,255,255,0.0)",
                   }}
                 >
                   <span className="Label">
@@ -230,12 +233,13 @@ function WardPlayerFilter({
                       ? filters.team
                       : t("video.vision.team")}
                   </span>
-                  {filters.team === "" && <img
-                    className="ArrowIcon"
-                    src="Images/select-arrow.png"
-                    alt="arrowIcon"
-                  />}
-
+                  {filters.team === "" && (
+                    <img
+                      className="ArrowIcon"
+                      src="Images/select-arrow.png"
+                      alt="arrowIcon"
+                    />
+                  )}
                 </button>
                 <nav
                   ref={dropdownRef}
@@ -262,7 +266,7 @@ function WardPlayerFilter({
                                 champion_eng: "",
                                 oppteam: "",
                                 oppplayer: "",
-                                oppchampion_eng: ""
+                                oppchampion_eng: "",
                               })
                             );
                           }}
@@ -275,7 +279,10 @@ function WardPlayerFilter({
                 </nav>
               </div>
             </DropDownToggle>
-            <DropDownToggle className="container" changeColor={filters.player.length > 0}>
+            <DropDownToggle
+              className="container"
+              changeColor={filters.player.length > 0}
+            >
               <div className="menu-container2">
                 <button
                   onClick={() => {
@@ -321,7 +328,7 @@ function WardPlayerFilter({
                                 champion_eng: "",
                                 oppteam: "",
                                 oppplayer: "",
-                                oppchampion_eng: ""
+                                oppchampion_eng: "",
                               })
                             );
                           }}
@@ -334,7 +341,10 @@ function WardPlayerFilter({
                 </nav>
               </div>
             </DropDownToggle>
-            <DropDownToggle className="container" changeColor={filters.champion_eng.length > 0}>
+            <DropDownToggle
+              className="container"
+              changeColor={filters.champion_eng.length > 0}
+            >
               <div className="menu-container2">
                 <button
                   onClick={() => {
@@ -380,7 +390,7 @@ function WardPlayerFilter({
                                 champion_eng: champion,
                                 oppteam: "",
                                 oppplayer: "",
-                                oppchampion_eng: ""
+                                oppchampion_eng: "",
                               })
                             );
                           }}
@@ -395,7 +405,10 @@ function WardPlayerFilter({
             </DropDownToggle>
           </DropDownBox>
           <DropDownBox2 isActive={compareOpen === true}>
-            <DropDownToggle className="container" changeColor={filters.oppteam.length > 0}>
+            <DropDownToggle
+              className="container"
+              changeColor={filters.oppteam.length > 0}
+            >
               <div className="menu-container">
                 <button
                   onClick={() => {
@@ -441,7 +454,7 @@ function WardPlayerFilter({
                                 champion_eng: filters.champion_eng,
                                 oppteam: oppteam,
                                 oppplayer: "",
-                                oppchampion_eng: ""
+                                oppchampion_eng: "",
                               })
                             );
                           }}
@@ -454,7 +467,10 @@ function WardPlayerFilter({
                 </nav>
               </div>
             </DropDownToggle>
-            <DropDownToggle className="container" changeColor={filters.oppplayer.length > 0}>
+            <DropDownToggle
+              className="container"
+              changeColor={filters.oppplayer.length > 0}
+            >
               <div className="menu-container2">
                 <button
                   onClick={() => {
@@ -500,7 +516,7 @@ function WardPlayerFilter({
                                 champion_eng: filters.champion_eng,
                                 oppteam: filters.oppteam,
                                 oppplayer: oppplayer,
-                                oppchampion_eng: ""
+                                oppchampion_eng: "",
                               })
                             );
                           }}
@@ -513,7 +529,10 @@ function WardPlayerFilter({
                 </nav>
               </div>
             </DropDownToggle>
-            <DropDownToggle className="container" changeColor={filters.oppchampion_eng.length > 0}>
+            <DropDownToggle
+              className="container"
+              changeColor={filters.oppchampion_eng.length > 0}
+            >
               <div className="menu-container2">
                 <button
                   onClick={() => {
@@ -559,7 +578,7 @@ function WardPlayerFilter({
                                 champion_eng: filters.champion_eng,
                                 oppteam: filters.oppteam,
                                 oppplayer: filters.oppplayer,
-                                oppchampion_eng: oppchampion
+                                oppchampion_eng: oppchampion,
                               })
                             );
                             setIsActive5(!isActive5);
@@ -606,7 +625,7 @@ function WardPlayerFilter({
             aria-labelledby="range-slider"
             getAriaValueText={timeFormat.ward}
             valueLabelFormat={timeFormat.ward}
-          // ValueLabelComponent={ValueLabelComponent}
+            // ValueLabelComponent={ValueLabelComponent}
           />
         </SliderContainer>
         <DefaultTime>
@@ -849,7 +868,7 @@ const DropDownToggle = styled.div`
   }
 
   .SelectedLabel2 {
-   font-family: SpoqaHanSansNeo;
+    font-family: SpoqaHanSansNeo;
     font-size: 13px;
     font-weight: normal;
     font-stretch: normal;
@@ -870,7 +889,8 @@ const DropDownToggle = styled.div`
     line-height: normal;
     letter-spacing: normal;
     text-align: left;
-    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`)};
+    color: ${(props) =>
+      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
     width: 142px;
   }
 
@@ -883,7 +903,8 @@ const DropDownToggle = styled.div`
     line-height: normal;
     letter-spacing: normal;
     text-align: left;
-    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`)};
+    color: ${(props) =>
+      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
     width: 183px;
   }
 
@@ -905,7 +926,8 @@ const DropDownToggle = styled.div`
   }
 
   .menu {
-    background: rgb(47, 45, 56);
+    background: #23212a;
+    border-radius: 10px;
     position: absolute;
     top: 10;
     right: 1;
@@ -919,7 +941,8 @@ const DropDownToggle = styled.div`
   }
 
   .menu2 {
-    background: rgb(47, 45, 56);
+    background: #23212a;
+    border-radius: 10px;
     position: absolute;
     top: 10;
     right: 1;
@@ -965,8 +988,10 @@ const DropDownToggle = styled.div`
     padding: 15px 20px;
     display: block;
     width: 142px;
+    height: 40px;
+
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
+    font-size: 13px;
     letter-spacing: -0.55px;
     text-align: left;
     color: rgb(255, 255, 255);
@@ -974,6 +999,7 @@ const DropDownToggle = styled.div`
     z-index: 9999;
     :hover {
       background-color: rgb(60, 58, 72);
+      border-radius: 20px;
     }
   }
 
@@ -982,8 +1008,9 @@ const DropDownToggle = styled.div`
     padding: 15px 20px;
     display: block;
     width: 183px;
+    height: 40px;
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 11px;
+    font-size: 13px;
     letter-spacing: -0.55px;
     text-align: left;
     color: rgb(255, 255, 255);
@@ -991,6 +1018,7 @@ const DropDownToggle = styled.div`
     z-index: 9999;
     :hover {
       background-color: rgb(60, 58, 72);
+      border-radius: 20px;
     }
   }
 `;
