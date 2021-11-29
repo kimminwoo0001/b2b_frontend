@@ -21,7 +21,7 @@ function TeamBoard() {
 
   const fetchingBanReport = () => {
     try {
-      const url = `${API}/api/report/team/analysis?`;
+      const url = `${API}/lolapi/report/team/analysis?`;
       const params = {
         league: filters.league,
         year: filters.year,

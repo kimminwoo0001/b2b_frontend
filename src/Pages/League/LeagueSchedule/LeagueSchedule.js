@@ -74,7 +74,7 @@ function LeagueSchedule() {
 
   // week 데이터 featch 함수
   const fetchingWeekData = () => {
-    const url = `${API}/api/league/schedule`;
+    const url = `${API}/lolapi/league/schedule`;
     const params = {
       league: filters.league,
       year: convertYear(startDate),

@@ -184,7 +184,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                     alt="posIcon"
                   />
                   <div className="Champion">
-                    {lang === "kr" ? ban.champion : ban.champFileName}
+                    {lang === "ko" ? ban.champion : ban.champFileName}
                   </div>
                   <div className="Rate">
                     {ban.rate ? `${ban.rate.toFixed(1)}%` : 0}
@@ -205,7 +205,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                     alt="posIcon"
                   />
                   <div className="Champion">
-                    {lang === "kr" ? ban.champion : ban.champFileName}
+                    {lang === "ko" ? ban.champion : ban.champFileName}
                   </div>
                   <div className="Rate">
                     {ban.rate ? `${ban.rate.toFixed(1)}%` : 0}
@@ -226,7 +226,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                     alt="posIcon"
                   />
                   <div className="Champion">
-                    {lang === "kr" ? ban.champion : ban.champFileName}
+                    {lang === "ko" ? ban.champion : ban.champFileName}
                   </div>
                   <div className="Rate">
                     {ban.rate ? `${ban.rate.toFixed(1)}%` : 0}
@@ -247,7 +247,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                     alt="posIcon"
                   />
                   <div className="Champion">
-                    {lang === "kr" ? ban.champion : ban.champFileName}
+                    {lang === "ko" ? ban.champion : ban.champFileName}
                   </div>
                   <div className="Rate">
                     {ban.rate ? `${ban.rate.toFixed(1)}%` : 0}
@@ -268,7 +268,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                     alt="posIcon"
                   />
                   <div className="Champion">
-                    {lang === "kr" ? ban.champion : ban.champFileName}
+                    {lang === "ko" ? ban.champion : ban.champFileName}
                   </div>
                   <div className="Rate">
                     {ban.rate ? `${ban.rate.toFixed(1)}%` : 0}
@@ -301,7 +301,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                     alt="posIcon"
                   />
                   <div className="Champion">
-                    {lang === "kr" ? ban.champion : ban.champFileName}
+                    {lang === "ko" ? ban.champion : ban.champFileName}
                   </div>
                   <div className="Rate">
                     {ban.rate ? `${ban.rate.toFixed(1)}%` : 0}
@@ -322,7 +322,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                     alt="posIcon"
                   />
                   <div className="Champion">
-                    {lang === "kr" ? ban.champion : ban.champFileName}
+                    {lang === "ko" ? ban.champion : ban.champFileName}
                   </div>
                   <div className="Rate">
                     {ban.rate ? `${ban.rate.toFixed(1)}%` : 0}
@@ -343,7 +343,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                     alt="posIcon"
                   />
                   <div className="Champion">
-                    {lang === "kr" ? ban.champion : ban.champFileName}
+                    {lang === "ko" ? ban.champion : ban.champFileName}
                   </div>
                   <div className="Rate">
                     {ban.rate ? `${ban.rate.toFixed(1)}%` : 0}
@@ -364,7 +364,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                     alt="posIcon"
                   />
                   <div className="Champion">
-                    {lang === "kr" ? ban.champion : ban.champFileName}
+                    {lang === "ko" ? ban.champion : ban.champFileName}
                   </div>
                   <div className="Rate">
                     {ban.rate ? `${ban.rate.toFixed(1)}%` : 0}
@@ -385,7 +385,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                     alt="posIcon"
                   />
                   <div className="Champion">
-                    {lang === "kr" ? ban.champion : ban.champFileName}
+                    {lang === "ko" ? ban.champion : ban.champFileName}
                   </div>
                   <div className="Rate">
                     {ban.rate ? `${ban.rate.toFixed(1)}%` : 0}
@@ -415,7 +415,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                       alt="posIcon"
                     />
                     <div className="Champion">
-                      {lang === "kr" ? phase.champion : phase.champion}
+                      {lang === "ko" ? phase.champion : phase.champion}
                     </div>
                     <div className="Rate">
                       {phase.value ? `${phase.value}` : 0}
@@ -444,7 +444,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                       alt="posIcon"
                     />
                     <div className="Champion">
-                      {lang === "kr" ? phase.champion : phase.champion}
+                      {lang === "ko" ? phase.champion : phase.champion}
                     </div>
                     <div className="Rate">
                       {phase.value ? `${phase.value}` : 0}
@@ -476,7 +476,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                       alt="posIcon"
                     />
                     <div className="Champion">
-                      {lang === "kr" ? phase.champion : phase.champion}
+                      {lang === "ko" ? phase.champion : phase.champion}
                     </div>
                     <div className="Rate">
                       {phase.value ? `${phase.value}` : 0}
@@ -505,7 +505,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                       alt="posIcon"
                     />
                     <div className="Champion">
-                      {lang === "kr" ? phase.champion : phase.champion}
+                      {lang === "ko" ? phase.champion : phase.champion}
                     </div>
                     <div className="Rate">
                       {phase.value ? `${phase.value}` : 0}

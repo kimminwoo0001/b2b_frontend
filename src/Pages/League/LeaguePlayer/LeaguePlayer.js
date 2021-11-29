@@ -35,7 +35,7 @@ function LeaguePlayer() {
   // player 데이터 featch 함수
   const fetchingPlayerData = () => {
     setIsLoading(true);
-    const url = `${API}/api/league/playerinfo`;
+    const url = `${API}/lolapi/league/playerinfo`;
     const params = {
       league: filters.league,
       year: filters.year,

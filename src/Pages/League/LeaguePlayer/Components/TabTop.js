@@ -40,7 +40,7 @@ function TabTop({ playerData, loading }) {
                 ></img>
                 <label>{playerData.team}</label>
               </p>
-              <p className="PlayerValue">{`${playerData.player} (${lang === "kr" ? playerData.NativeName : playerData.name
+              <p className="PlayerValue">{`${playerData.player} (${lang === "ko" ? playerData.NativeName : playerData.name
                 })`}</p>
             </div>
 

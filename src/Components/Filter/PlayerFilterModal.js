@@ -117,7 +117,7 @@ function PlayerFilterModal() {
 
   // opp 팀 필터 fetch 함수
   const fetchingOppTeamFilter = () => {
-    let url = `${API}/api/filter/oppteam`;
+    let url = `${API}/lolapi/filter/oppteam`;
     let params = {
       league: filters.league,
       year: filters.year,
@@ -135,7 +135,7 @@ function PlayerFilterModal() {
 
   //플레이어 필터 fetch 함수
   const fetchingPlayerFilter = () => {
-    let url = `${API}/api/filter/player`;
+    let url = `${API}/lolapi/filter/player`;
     let params = {
       league: filters.league,
       year: filters.year,
@@ -153,7 +153,7 @@ function PlayerFilterModal() {
 
   //상대 선수 필터 fetch 함수
   const fetchingOppPlayerFilter = () => {
-    let url = `${API}/api/filter/oppplayer`;
+    let url = `${API}/lolapi/filter/oppplayer`;
     let params = {
       league: filters.league,
       year: filters.year,

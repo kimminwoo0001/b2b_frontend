@@ -57,7 +57,7 @@ function ComparePosition() {
   //포지션 그래프 fetch 함수
   const GetPositionGraphData = () => {
     setLoading(true);
-    const url = `${API}/api/team/comparison`;
+    const url = `${API}/lolapi/team/comparison`;
     const params = {
       league: filters.league,
       year: filters.year,

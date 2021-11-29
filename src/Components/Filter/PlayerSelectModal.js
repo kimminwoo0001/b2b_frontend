@@ -31,7 +31,7 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
   }, [openModal]);
 
   const fetchingTeamFilter = () => {
-    const url = `${API}/api/filter/oppteam`;
+    const url = `${API}/lolapi/filter/oppteam`;
     const params = {
       league: filters.league,
       year: filters.year,
@@ -47,7 +47,7 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
   };
 
   const fetchingPlayerFilter = (team) => {
-    const url = `${API}/api/filter/oppplayer`;
+    const url = `${API}/lolapi/filter/oppplayer`;
     const params = {
       league: filters.league,
       year: filters.year,

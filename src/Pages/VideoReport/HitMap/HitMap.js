@@ -59,7 +59,7 @@ function HitMap() {
     }
 
     try {
-      const url = `${API2}/api/mappingPosition`;
+      const url = `${API2}/lolapi/mappingPosition`;
       const params = {
         league: filters.league,
         year: filters.year,

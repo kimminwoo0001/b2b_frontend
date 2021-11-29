@@ -60,7 +60,7 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
 
   const getTeam = () => {
     try {
-      const url = `${API2}/api/mappingFilter`;
+      const url = `${API2}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,

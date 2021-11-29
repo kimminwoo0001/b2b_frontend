@@ -49,7 +49,7 @@ function OppStat() {
   //팀 필터 fetch 함수
   const GetComparisonStat = () => {
     setLoading(true);
-    const url = `${API}/api/player/comparisonRecord`;
+    const url = `${API}/lolapi/player/comparisonRecord`;
     const params = {
       league: filters.league,
       year: filters.year,
@@ -73,7 +73,7 @@ function OppStat() {
   };
 
   const GetChampionFilter = () => {
-    const url = `${API}/api/filter/vschampion`;
+    const url = `${API}/lolapi/filter/vschampion`;
     const params = {
       league: filters.league,
       year: filters.year,
@@ -95,7 +95,7 @@ function OppStat() {
   };
 
   const GetOppFilter = () => {
-    const url = `${API}/api/filter/vschampion`;
+    const url = `${API}/lolapi/filter/vschampion`;
     const params = {
       league: filters.league,
       year: filters.year,
@@ -169,7 +169,7 @@ function OppStat() {
                     <span className="Label">
                       {filters.champion
                         ? filters.champion
-                        : lang === "kr"
+                        : lang === "ko"
                         ? `${filters.player} ${t("filters.allChampLabel2")}`
                         : `${t("filters.allChampLabel2")} ${filters.player} `}
                     </span>
@@ -184,7 +184,7 @@ function OppStat() {
                     className={`menu ${isActive ? "active" : "inactive"}`}
                   >
                     <ul>
-                      {(lang === "kr" ? champFilter : champEng)?.map(
+                      {(lang === "ko" ? champFilter : champEng)?.map(
                         (champion, idx) => {
                           return (
                             <li
@@ -223,7 +223,7 @@ function OppStat() {
                     <span className="Label">
                       {filters.oppchampion
                         ? filters.oppchampion
-                        : lang === "kr"
+                        : lang === "ko"
                         ? `${filters.oppplayer} ${t("filters.allChampLabel2")}`
                         : `${t("filters.allChampLabel2")} ${
                             filters.oppplayer
@@ -240,7 +240,7 @@ function OppStat() {
                     className={`menu ${isActiveOpp ? "active" : "inactive"}`}
                   >
                     <ul>
-                      {(lang === "kr" ? oppFilter : oppEng)?.map(
+                      {(lang === "ko" ? oppFilter : oppEng)?.map(
                         (champion, idx) => {
                           return (
                             <li

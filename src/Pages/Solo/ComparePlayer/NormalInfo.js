@@ -55,7 +55,7 @@ function NormalInfo() {
 
   const GetComparisonStat = () => {
     setLoading(true);
-    const url = `${API}/api/player/comparison`;
+    const url = `${API}/lolapi/player/comparison`;
     const params = {
       league: filters.league,
       year: filters.year,
@@ -97,7 +97,7 @@ function NormalInfo() {
 
   //챔피언 필터
   const GetChampionFilter = () => {
-    const url = `${API}/api/filter/champion2`;
+    const url = `${API}/lolapi/filter/champion2`;
     const params = {
       league: filters.league,
       year: filters.year,
@@ -115,7 +115,7 @@ function NormalInfo() {
   };
   //상대 챔피언 필터
   const GetOppFilter = () => {
-    const url = `${API}/api/filter/oppchampion2?`;
+    const url = `${API}/lolapi/filter/oppchampion2?`;
     const params = {
       league: filters.league,
       year: filters.year,
@@ -255,7 +255,7 @@ function NormalInfo() {
         />
         <div className="NameContainer">
           <span className="NickName">
-            {lang === "kr"
+            {lang === "ko"
               ? data?.playerInfo.NativeName
               : data?.playerInfo.Name}
           </span>
@@ -294,7 +294,7 @@ function NormalInfo() {
         </div>
         <div className="NameContainerBlue">
           <span className="NickName">
-            {lang === "kr"
+            {lang === "ko"
               ? oppData?.playerInfo.NativeName
               : oppData?.playerInfo.Name}
           </span>
@@ -386,7 +386,7 @@ function NormalInfo() {
                     className={`menu ${isActive ? "active" : "inactive"}`}
                   >
                     <ul>
-                      {(lang === "kr" ? champFilter : champEng)?.map(
+                      {(lang === "ko" ? champFilter : champEng)?.map(
                         (champion, idx) => {
                           return (
                             <li
@@ -441,7 +441,7 @@ function NormalInfo() {
                     className={`menu ${isActiveOpp ? "active" : "inactive"}`}
                   >
                     <ul>
-                      {(lang === "kr" ? oppFilter : oppEng)?.map(
+                      {(lang === "ko" ? oppFilter : oppEng)?.map(
                         (champion, idx) => {
                           return (
                             <li

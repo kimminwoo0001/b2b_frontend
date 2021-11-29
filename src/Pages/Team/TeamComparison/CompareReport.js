@@ -21,7 +21,7 @@ function CompareReport() {
 
   const fetchingBanReport = () => {
     try {
-      const url = `${API}/api/report/team/comparison`;
+      const url = `${API}/lolapi/report/team/comparison`;
       const params = {
         league: filters.league,
         year: filters.year,

@@ -31,7 +31,7 @@ function ToolTips({ pick }) {
                         className="ChampImage"
                       />
                       <div>
-                        {lang === "kr"
+                        {lang === "ko"
                           ? tooltip?.champion
                           : tooltip?.champFileName}
                       </div>

@@ -9,7 +9,7 @@ function LocaleDropdown() {
   const dispatch = useDispatch();
   const dropdownRef = useRef(null);
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
-  const [region, setRegion] = useState(lang === "kr" ? "한국어" : "English");
+  const [region, setRegion] = useState(lang === "ko" ? "한국어" : "English");
   return (
     <LocaleDropdownWrapper>
       <DropDown className="container">
@@ -50,8 +50,8 @@ function LocaleDropdown() {
                 onClick={() => {
                   setRegion("한국어");
                   setIsActive(false);
-                  dispatch(Language("kr"));
-                  sessionStorage.setItem("i18nextLng", "kr");
+                  dispatch(Language("ko"));
+                  sessionStorage.setItem("i18nextLng", "ko");
                 }}
               >
                 한국어

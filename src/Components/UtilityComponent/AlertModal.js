@@ -76,7 +76,7 @@ export default AlertModal;
 
 const ModalWrapper = styled.div`
   width: 500px;
-  height: 151px;
+  //height: 151px;
   margin: 10px 0 0;
   padding: 30px 0 20px;
   border-radius: 20px;

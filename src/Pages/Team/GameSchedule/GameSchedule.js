@@ -81,7 +81,7 @@ function GameSchedule() {
 
   // week 데이터 featch 함수
   const fetchingWeekData = () => {
-    const url = `${API}/api/team/schedule`;
+    const url = `${API}/lolapi/team/schedule`;
     const params = {
       league: filters.league,
       season: filters.season,

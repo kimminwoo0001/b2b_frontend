@@ -77,7 +77,7 @@ function WardMapping() {
   //맵핑 데이터 fetch 함수
   const fetchingWardData = (wardside) => {
     try {
-      const url = `${API2}/api/waddingFilter`;
+      const url = `${API2}/lolapi/waddingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -332,9 +332,8 @@ function WardMapping() {
       <RightSection>
         <WardMap
           style={{
-            backgroundImage: `url(${
-              mapSector ? mapSector : "Images/ward_map.png"
-            })`,
+            backgroundImage: `url(${mapSector ? mapSector : "Images/ward_map.png"
+              })`,
           }}
         >
           {ward?.map((ward, idx) => {

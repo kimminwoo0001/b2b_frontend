@@ -33,7 +33,7 @@ const HomeContents = memo(() => {
 
   useEffect(() => {
     fetchHomeData();
-    fetchFilterData();
+    //fetchFilterData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -43,17 +43,12 @@ const HomeContents = memo(() => {
     dispatch(Loading(true));
     console.log(user)
     try {
-      const url = `${API}/api/home/home`;
+      const url = `${API}/lolapi/home/home`;
       const params = {
-        token: user.token,
-        id: user.id
+        token: user.token
       }
-      axiosRequest(url, params, function (e) {
-        if (checkRequest(e)) {
-          sessionStorage.clear();
-          history.push("/login");
-        }
-        setLeagueDataset(e.data);
+      axiosRequest(url, params, function (data) {
+        setLeagueDataset(data);
         // setLckData(e.data["LCK"]);
         // setLecData(e.data["LEC"]);
         // setLcsData(e.data["LCS"]);
@@ -72,13 +67,13 @@ const HomeContents = memo(() => {
     if (staticvalue.filterObjects === null) {
       dispatch(Loading(true));
       try {
-        const url = `${API}/api/test/test`;
+        const url = `${API}/lolapi/test/test`;
         const params = {
           token: user.token,
           id: user.id
         }
-        axiosRequest(url, params, function (e) {
-          dispatch(GetFilterAllItems(e.data));
+        axiosRequest(url, null, function (data) {
+          dispatch(GetFilterAllItems(data));
           dispatch(Loading(false));
         })
       } catch (e) {

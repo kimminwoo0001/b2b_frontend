@@ -30,7 +30,7 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
   const [isActive10, setIsActive10] = useDetectOutsideClick(dropdownRef, false);
 
   const GetRoster = () => {
-    const url = `${API}/api/filter/roster`;
+    const url = `${API}/lolapi/filter/roster`;
     const params = {
       league: filters.league,
       year: filters.year,
@@ -51,7 +51,7 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
     const player1 = Object.values(roster1)?.map((name) => name.name);
     const player2 = Object.values(roster2)?.map((name) => name.name);
 
-    const url = `${API}/api/filter/roster2`;
+    const url = `${API}/lolapi/filter/roster2`;
     const params = {
       league: filters.league,
       year: filters.year,

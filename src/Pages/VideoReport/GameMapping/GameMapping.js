@@ -80,7 +80,7 @@ function GameMapping() {
 
   const getGameLists = () => {
     try {
-      const url = `${API2}/api/mappingFilter`;
+      const url = `${API2}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -107,7 +107,7 @@ function GameMapping() {
     if (gameid.length > 0) {
       setLoading(true);
       try {
-        const url = `${API2}/api/mappingPosition`;
+        const url = `${API2}/lolapi/mappingPosition`;
         const params = {
           gameid: filters.gameid,
           token: user.token,

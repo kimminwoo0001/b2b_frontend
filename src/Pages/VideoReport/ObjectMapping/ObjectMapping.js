@@ -79,7 +79,7 @@ function ObjectMapping() {
   const fetchingMapData = () => {
     try {
       setLoading(true);
-      const url = `${API2}/api/mappingPosition`;
+      const url = `${API2}/lolapi/mappingPosition`;
       const params = {
         league: filters.league,
         year: filters.year,

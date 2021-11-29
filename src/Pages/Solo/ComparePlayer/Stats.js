@@ -74,7 +74,7 @@ function Stats() {
   const GetComparisonStat = () => {
     setLoading(true);
     try {
-      const url = `${API}/api/player/comparisonStat`;
+      const url = `${API}/lolapi/player/comparisonStat`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -96,7 +96,7 @@ function Stats() {
         const lineData = Object.values(e?.data.player.LineStat)?.map((line) => {
           return {
             x1: line.percent.toFixed(1),
-            y: lang === "kr" ? line.name : line.eng,
+            y: lang === "ko" ? line.name : line.eng,
             value1: line.value.toFixed(1),
             league: line.avg.toFixed(1),
           };
@@ -106,7 +106,7 @@ function Stats() {
           (line) => {
             return {
               x2: line.percent.toFixed(1),
-              y: lang === "kr" ? line.name : line.eng,
+              y: lang === "ko" ? line.name : line.eng,
               value2: line.value.toFixed(1),
               league: line.avg.toFixed(1),
             };
@@ -122,7 +122,7 @@ function Stats() {
           (match) => {
             return {
               x1: match.percent.toFixed(1),
-              y: lang === "kr" ? match.name : match.eng,
+              y: lang === "ko" ? match.name : match.eng,
               value1: match.value.toFixed(1),
               league: match.avg.toFixed(1),
             };
@@ -133,7 +133,7 @@ function Stats() {
           (match) => {
             return {
               x2: match.percent.toFixed(1),
-              y: lang === "kr" ? match.name : match.eng,
+              y: lang === "ko" ? match.name : match.eng,
               value2: match.value.toFixed(1),
               league: match.avg.toFixed(1),
             };
@@ -162,7 +162,7 @@ function Stats() {
 
   //챔피언 필터
   const GetChampionFilter = () => {
-    const url = `${API}/api/filter/champion2`;
+    const url = `${API}/lolapi/filter/champion2`;
     const params = {
       league: filters.league,
       year: filters.year,
@@ -181,7 +181,7 @@ function Stats() {
 
   //상대 챔피언 필터
   const GetOppFilter = () => {
-    const url = `${API}/api/filter/oppchampion2`;
+    const url = `${API}/lolapi/filter/oppchampion2`;
     const params = {
       league: filters.league,
       year: filters.year,
@@ -301,7 +301,7 @@ function Stats() {
         />
         <div className="NameContainer">
           <span className="NickName">
-            {lang === "kr"
+            {lang === "ko"
               ? data?.playerInfo.NativeName
               : data?.playerInfo.Name}
           </span>
@@ -340,7 +340,7 @@ function Stats() {
         </div>
         <div className="NameContainerBlue">
           <span className="NickName">
-            {lang === "kr"
+            {lang === "ko"
               ? oppData?.playerInfo.NativeName
               : oppData?.playerInfo.Name}
           </span>
@@ -432,7 +432,7 @@ function Stats() {
                     className={`menu ${isActive ? "active" : "inactive"}`}
                   >
                     <ul>
-                      {(lang === "kr" ? champFilter : champEng)?.map(
+                      {(lang === "ko" ? champFilter : champEng)?.map(
                         (champion, idx) => {
                           return (
                             <li
@@ -487,7 +487,7 @@ function Stats() {
                     className={`menu ${isActiveOpp ? "active" : "inactive"}`}
                   >
                     <ul>
-                      {(lang === "kr" ? oppFilter : oppEng)?.map(
+                      {(lang === "ko" ? oppFilter : oppEng)?.map(
                         (champion, idx) => {
                           return (
                             <li
@@ -540,7 +540,7 @@ function Stats() {
                 return (
                   <SimpleBox key={idx}>
                     <div className="SimpleTitle">
-                      {lang === "kr" ? stat?.name : stat?.eng}
+                      {lang === "ko" ? stat?.name : stat?.eng}
                     </div>
                     <div className="SimpleValues">
                       <RedPlayer
@@ -564,7 +564,7 @@ function Stats() {
                 return (
                   <SimpleBox4 key={idx}>
                     <div className="SimpleTitle">
-                      {lang === "kr" ? stat?.name : stat?.eng}
+                      {lang === "ko" ? stat?.name : stat?.eng}
                     </div>
                     <div className="SimpleValues">
                       <RedPlayer
@@ -588,7 +588,7 @@ function Stats() {
                 return (
                   <SimpleBox5 key={idx}>
                     <div className="SimpleTitle">
-                      {lang === "kr" ? stat?.name : stat?.eng}
+                      {lang === "ko" ? stat?.name : stat?.eng}
                     </div>
                     <div className="SimpleValues">
                       <RedPlayer
@@ -612,7 +612,7 @@ function Stats() {
                 return (
                   <SimpleBox6 key={idx}>
                     <div className="SimpleTitle">
-                      {lang === "kr" ? stat?.name : stat?.eng}
+                      {lang === "ko" ? stat?.name : stat?.eng}
                     </div>
                     <div className="SimpleValues">
                       <RedPlayer
@@ -674,7 +674,7 @@ function Stats() {
                       // strokeDasharray="4 4"
                       horizontal={false}
                       vertical={false}
-                      // horizontalPoints={[40, 80, 120, 160, 200, 240]}
+                    // horizontalPoints={[40, 80, 120, 160, 200, 240]}
                     />
                     <XAxis
                       type={"number"}
@@ -761,7 +761,7 @@ function Stats() {
                       // strokeDasharray="4 4"
                       horizontal={false}
                       vertical={false}
-                      // horizontalPoints={[25, 75, 125, 175, 225]}
+                    // horizontalPoints={[25, 75, 125, 175, 225]}
                     />
                     <XAxis
                       domain={[0, 100]}

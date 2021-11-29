@@ -135,7 +135,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                       <div className="ChampWrapper">
                         <img src={data.championImage} alt="champIcon"></img>
                         <div>
-                          {lang === "kr" ? data.championKor : data.champion}
+                          {lang === "ko" ? data.championKor : data.champion}
                         </div>
                       </div>
                     </td>
@@ -210,7 +210,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                           alt="champIcon"
                         ></img>
                         <div>
-                          {lang === "kr" ? data.championKor : data.name}
+                          {lang === "ko" ? data.championKor : data.name}
                         </div>
                       </div>
                     </td>
@@ -245,7 +245,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                       ></img>
                       <div>
                         <div className="MatchChamp">
-                          {lang === "kr"
+                          {lang === "ko"
                             ? pick?.champion.championKor
                             : pick?.champion.champion}
                         </div>
@@ -297,15 +297,14 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                     <ChampInfo>
                       <div>
                         <div className="MatchChampTwo">
-                          {lang === "kr"
+                          {lang === "ko"
                             ? pick?.opp_champion.championKor
                             : pick?.opp_champion.champion}
                         </div>
-                        <div className="WinLose2">{`${
-                          pick?.opp_champion.win
-                        }${t("league.draft.w")} ${pick?.opp_champion.lose}${t(
-                          "league.draft.l"
-                        )}`}</div>
+                        <div className="WinLose2">{`${pick?.opp_champion.win
+                          }${t("league.draft.w")} ${pick?.opp_champion.lose}${t(
+                            "league.draft.l"
+                          )}`}</div>
                       </div>
                       <img
                         src={pick?.opp_champion.championImage}
@@ -392,7 +391,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                           }}
                         ></img>
                         <span>
-                          {lang === "kr" ? data.championKor : data.champion}
+                          {lang === "ko" ? data.championKor : data.champion}
                         </span>
                       </div>
                     </td>
@@ -412,7 +411,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                           alt="champIcon"
                         ></img>
                         <span>
-                          {lang === "kr"
+                          {lang === "ko"
                             ? data.oppChampionKor
                             : data.oppChampion}
                         </span>

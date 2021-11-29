@@ -89,7 +89,7 @@ const TeamFilterModal = () => {
 
   // opp 팀 필터 fetch 함수
   const fetchingOppTeamFilter = (team) => {
-    const url = `${API}/api/filter/oppteam`;
+    const url = `${API}/lolapi/filter/oppteam`;
     const params = {
       league: filters.league,
       year: filters.year,

@@ -85,7 +85,7 @@ function BanIndex() {
   //밴지표 전체 데이터 가져오는 함수
   const fetchingBanIndex = () => {
     setLoading(true);
-    const url = `${API}/api/team/pick`;
+    const url = `${API}/lolapi/team/pick`;
     const params = {
       league: filters.league,
       year: filters.year,
@@ -114,7 +114,7 @@ function BanIndex() {
       dispatch(Baned4(e.data.Baneds[3].BanInfos));
       dispatch(Baned5(e.data.Baneds[4].BanInfos));
 
-      const isKor = lang === "kr";
+      const isKor = lang === "ko";
 
       let phaseArray1 = [];
       Object.keys(e.data.phased[0]).forEach(key => {

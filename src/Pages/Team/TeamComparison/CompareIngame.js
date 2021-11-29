@@ -53,7 +53,7 @@ function CompareIngame() {
   //밴지표 전체 데이터 가져오는 함수
   const GetInGameData = () => {
     setLoading(true);
-    const url = `${API}/api/team/comparisonPi`;
+    const url = `${API}/lolapi/team/comparisonPi`;
     const params = {
       league: filters.league,
       year: filters.year,

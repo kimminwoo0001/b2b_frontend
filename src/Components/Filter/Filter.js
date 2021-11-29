@@ -192,7 +192,7 @@ const Filter = memo(() => {
       leagueList = Object.keys(staticvalue.filterObjects).map(
         (key) =>
           Number(Object.keys(staticvalue.filterObjects[key])) ===
-            Number(filters.year) && key
+          Number(filters.year) && key
       );
     } else {
       leagueList = Object.keys(staticvalue.filterObjects);
@@ -346,7 +346,7 @@ const Filter = memo(() => {
 
   // 패치 필터 fetch 함수
   const fetchingPatchFilter = () => {
-    const url = `${API}/api/filter/patch`;
+    const url = `${API}/lolapi/filter/patch`;
     const params = {
       league: filters.league,
       year: filters.year,

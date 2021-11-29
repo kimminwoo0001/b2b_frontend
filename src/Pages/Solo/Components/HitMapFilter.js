@@ -30,7 +30,7 @@ function HitMapFilter() {
     false
   );
   const GetChampionFilter = () => {
-    const url = `${API}/api/filter/champion`;
+    const url = `${API}/lolapi/filter/champion`;
     const params = {
       league: filters.league,
       year: filters.year,
@@ -47,7 +47,7 @@ function HitMapFilter() {
   };
 
   const GetOppFilter = () => {
-    const url = `${API}/api/filter/oppplayerchamp?`
+    const url = `${API}/lolapi/filter/oppplayerchamp?`
     const params = {
       league: filters.league,
       year: filters.year,

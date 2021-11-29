@@ -51,7 +51,7 @@ function LeagueStatistics() {
   // 리그통합지수 데이터 featch 함수
   const fetchingStatisticData = () => {
     setLoading(true);
-    const url = `${API}/api/league/totalinfo`;
+    const url = `${API}/lolapi/league/totalinfo`;
     const params = {
       league: filters.league,
       year: filters.year,

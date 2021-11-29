@@ -22,7 +22,7 @@ function BanBoard() {
 
   const fetchingBanReport = () => {
     try {
-      const url = `${API}/api/report/team/banpick`;
+      const url = `${API}/lolapi/report/team/banpick`;
       const params = {
         league: filters.league,
         year: filters.year,

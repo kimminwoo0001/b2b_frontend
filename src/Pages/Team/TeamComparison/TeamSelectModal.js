@@ -30,7 +30,7 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
   }, [openModal]);
 
   const fetchingTeamFilter = () => {
-    const url = `${API}/api/filter/oppteam`;
+    const url = `${API}/lolapi/filter/oppteam`;
     const params = {
       league: filters.league,
       year: filters.year,

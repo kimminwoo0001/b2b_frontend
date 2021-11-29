@@ -94,7 +94,7 @@ function LeaguePick() {
   const fetchingPickData = () => {
     setLoading(true);
 
-    let url = `${API}/api/league/pick`;
+    let url = `${API}/lolapi/league/pick`;
     let params = {
       league: filters.league,
       year: filters.year,

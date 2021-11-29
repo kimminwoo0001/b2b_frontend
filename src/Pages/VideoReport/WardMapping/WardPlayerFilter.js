@@ -69,7 +69,7 @@ function WardPlayerFilter({
 
   const getTeam = () => {
     try {
-      const url = `${API2}/api/mappingFilter`;
+      const url = `${API2}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -90,7 +90,7 @@ function WardPlayerFilter({
 
   const getPlayer = () => {
     try {
-      const url = `${API2}/api/mappingFilter`;
+      const url = `${API2}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -111,7 +111,7 @@ function WardPlayerFilter({
 
   const getChampion = () => {
     try {
-      const url = `${API2}/api/mappingFilter`;
+      const url = `${API2}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -133,7 +133,7 @@ function WardPlayerFilter({
 
   const getOppTeam = () => {
     try {
-      const url = `${API2}/api/mappingFilter`;
+      const url = `${API2}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -156,7 +156,7 @@ function WardPlayerFilter({
 
   const getOppPlayer = () => {
     try {
-      const url = `${API2}/api/mappingFilter`;
+      const url = `${API2}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -180,7 +180,7 @@ function WardPlayerFilter({
 
   const getOppChampion = () => {
     try {
-      const url = `${API2}/api/mappingFilter`;
+      const url = `${API2}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -625,7 +625,7 @@ function WardPlayerFilter({
             aria-labelledby="range-slider"
             getAriaValueText={timeFormat.ward}
             valueLabelFormat={timeFormat.ward}
-            // ValueLabelComponent={ValueLabelComponent}
+          // ValueLabelComponent={ValueLabelComponent}
           />
         </SliderContainer>
         <DefaultTime>
@@ -890,7 +890,7 @@ const DropDownToggle = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: ${(props) =>
-      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
+    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
     width: 142px;
   }
 
@@ -904,7 +904,7 @@ const DropDownToggle = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: ${(props) =>
-      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
+    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
     width: 183px;
   }
 

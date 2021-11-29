@@ -72,7 +72,7 @@ function PickCombineModal({ openModal, setOpenModal }) {
 
   // 리그 필터 fetch 해오는 함수
   const fetchLeagueFilter = async () => {
-    const rawMatchData = await fetch(`${API}/api/filter/league`);
+    const rawMatchData = await fetch(`${API}/lolapi/filter/league`);
     const parsedMatchData = await rawMatchData.json();
     // console.log("parsed Match Data", parsedMatchData);
     const convertData = [];
@@ -101,7 +101,7 @@ function PickCombineModal({ openModal, setOpenModal }) {
 
   // 패치 필터 fetch 함수
   const fetchingPatchFilter = () => {
-    const url = `${API}/api/filter/patch`;
+    const url = `${API}/lolapi/filter/patch`;
     const params = { league: filters.league }
     axiosRequest(url, params, function (e) {
       console.log(e);
@@ -111,7 +111,7 @@ function PickCombineModal({ openModal, setOpenModal }) {
 
   //팀 필터 fetch 함수
   const fetchingTeamFilter = async () => {
-    const url = `${API}/api/filter/team`;
+    const url = `${API}/lolapi/filter/team`;
     const params = {
       league: filters.league,
       year: filters.year,
@@ -124,7 +124,7 @@ function PickCombineModal({ openModal, setOpenModal }) {
 
   //플레이어 필터 fetch 함수
   const fetchingPlayerFilter = async () => {
-    const url = `${API}/api/filter/player`;
+    const url = `${API}/lolapi/filter/player`;
     const params = {
       league: filters.league,
       year: filters.year,
@@ -138,7 +138,7 @@ function PickCombineModal({ openModal, setOpenModal }) {
   };
 
   const fetchingOppPlayerFilter = async () => {
-    const url = `${API}/api/filter/player`;
+    const url = `${API}/lolapi/filter/player`;
     const params = {
       league: filters.league,
       year: filters.year,

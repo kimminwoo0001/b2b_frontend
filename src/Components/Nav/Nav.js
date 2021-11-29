@@ -4,12 +4,13 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { UserLogout } from "../../redux/modules";
-
+import { API } from "../../Pages/config";
 import { useHistory } from "react-router-dom";
 import LocaleDropdown from "./LocaleDropdown";
 import DataProcess from "../DataProcessing/DataProcess";
 import SearchBox from "./SearchBox";
 import AlertModal from "../UtilityComponent/AlertModal";
+import axiosRequest from "./../../lib/axiosRequest"
 
 function Nav() {
   // locale 값을 store에 저장된 값을 가져옴
@@ -34,10 +35,14 @@ function Nav() {
   };
 
   // 로그아웃 함수, 로그아웃 이벤트가 발생되면 session 값을 clear하고 로그인 페이지로 이동시킴
-  const handleLogOut = () => {
-    sessionStorage.clear();
-    dispatch(UserLogout());
-    history.push("/login");
+  const handleLogOut = async () => {
+    const url = `${API}/lolapi/logout`;
+    const info = `id=${user.id}&charge_time=${user.charge_time}&lang=${lang}`;
+    axiosRequest(url, info, function (data) {
+      sessionStorage.clear();
+      dispatch(UserLogout());
+      history.push("/login")
+    }, "POST");
   };
 
   const dummyAlarm = () => {

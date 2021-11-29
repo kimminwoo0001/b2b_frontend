@@ -56,7 +56,7 @@ function PickCombine() {
 
   //팀 필터 fetch 함수
   const fetchingTeamFilter = () => {
-    const url = `${API}/api/filter/team`;
+    const url = `${API}/lolapi/filter/team`;
     const params = {
       league: filters.league,
       year: filters.year,

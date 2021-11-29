@@ -213,7 +213,7 @@ function ChampionSetting({
 
   const getChampion = () => {
     try {
-      const url = `${API2}/api/mappingFilter`;
+      const url = `${API2}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -236,7 +236,7 @@ function ChampionSetting({
 
   const getOppTeam = () => {
     try {
-      const url = `${API2}/api/mappingFilter`;
+      const url = `${API2}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -259,7 +259,7 @@ function ChampionSetting({
 
   const getOppPlayer = () => {
     try {
-      const url = `${API2}/api/mappingFilter`;
+      const url = `${API2}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -283,7 +283,7 @@ function ChampionSetting({
 
   const getOppChampion = () => {
     try {
-      const url = `${API2}/api/mappingFilter`;
+      const url = `${API2}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -308,7 +308,7 @@ function ChampionSetting({
 
   const getGame = () => {
     try {
-      const url = `${API2}/api/mappingFilter`;
+      const url = `${API2}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -333,7 +333,7 @@ function ChampionSetting({
   const getGameAll = () => {
     try {
       if (filters.oppchampion_eng) {
-        const url = `${API2}/api/mappingFilter`;
+        const url = `${API2}/lolapi/mappingFilter`;
         const params = {
           league: filters.league,
           year: filters.year,

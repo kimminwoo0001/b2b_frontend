@@ -65,7 +65,7 @@ function PlayerBoard() {
   //팀 필터 fetch 함수
   const GetPlayerBoardData = () => {
     setLoading(true);
-    const url = `${API}/api/player/playerboard`;
+    const url = `${API}/lolapi/player/playerboard`;
     const params = {
       league: filters.league,
       year: filters.year,
@@ -122,7 +122,7 @@ function PlayerBoard() {
 
   //챔피언 필터
   const GetChampionFilter = () => {
-    const url = `${API}/api/filter/champion`;
+    const url = `${API}/lolapi/filter/champion`;
     const params = {
       league: filters.league,
       year: filters.year,
@@ -145,7 +145,7 @@ function PlayerBoard() {
 
   //상대 챔피언 필터
   const GetOppFilter = () => {
-    const url = `${API}/api/filter/oppchampion`;
+    const url = `${API}/lolapi/filter/oppchampion`;
     const params = {
       league: filters.league,
       year: filters.year,
@@ -216,7 +216,7 @@ function PlayerBoard() {
           />
           <div className="NameContainer">
             <span className="NickName">
-              {lang === "kr" ? info?.NativeName : info?.Name}
+              {lang === "ko" ? info?.NativeName : info?.Name}
             </span>
             <span className="RealName">{info?.ID}</span>
           </div>
@@ -240,9 +240,8 @@ function PlayerBoard() {
             <div className="AttendValue">
               <span className="Wins">{`${matchInfo?.match}${t(
                 "solo.playerboard.games"
-              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${
-                matchInfo?.loss
-              }${t("solo.playerboard.lose")}`}</span>
+              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${matchInfo?.loss
+                }${t("solo.playerboard.lose")}`}</span>
               <span className="WinRate">{`${matchInfo?.winrate.toFixed(
                 1
               )}%`}</span>
@@ -299,7 +298,7 @@ function PlayerBoard() {
                     className={`menu ${isActive ? "active" : "inactive"}`}
                   >
                     <ul>
-                      {(lang === "kr" ? champFilter : champEng)?.map(
+                      {(lang === "ko" ? champFilter : champEng)?.map(
                         (champion, idx) => {
                           return (
                             <li
@@ -342,7 +341,7 @@ function PlayerBoard() {
                     className={`menu ${isActiveOpp ? "active" : "inactive"}`}
                   >
                     <ul>
-                      {(lang === "kr" ? oppFilter : oppEng)?.map(
+                      {(lang === "ko" ? oppFilter : oppEng)?.map(
                         (champion, idx) => {
                           return (
                             <li
@@ -419,13 +418,13 @@ function PlayerBoard() {
                           delay={[300, 0]}
                           content={
                             <BoardToolTip
-                              title={lang === "kr" ? title.name : title.eng}
+                              title={lang === "ko" ? title.name : title.eng}
                             />
                           }
                           placement="top"
                         >
                           <td className="StatNum">
-                            {lang === "kr" ? title.name : title.eng}
+                            {lang === "ko" ? title.name : title.eng}
                           </td>
                         </Tippy>
                         <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
@@ -476,13 +475,13 @@ function PlayerBoard() {
                           delay={[300, 0]}
                           content={
                             <BoardToolTip
-                              title={lang === "kr" ? title.name : title.eng}
+                              title={lang === "ko" ? title.name : title.eng}
                             />
                           }
                           placement="top"
                         >
                           <td className="StatNum">
-                            {lang === "kr" ? title.name : title.eng}
+                            {lang === "ko" ? title.name : title.eng}
                           </td>
                         </Tippy>
                         <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
@@ -533,13 +532,13 @@ function PlayerBoard() {
                           delay={[300, 0]}
                           content={
                             <BoardToolTip
-                              title={lang === "kr" ? title.name : title.eng}
+                              title={lang === "ko" ? title.name : title.eng}
                             />
                           }
                           placement="top"
                         >
                           <td className="StatNum">
-                            {lang === "kr" ? title.name : title.eng}
+                            {lang === "ko" ? title.name : title.eng}
                           </td>
                         </Tippy>
 
@@ -614,7 +613,7 @@ function PlayerBoard() {
                               alt="ChampImage"
                             />
                             <div>
-                              {lang === "kr"
+                              {lang === "ko"
                                 ? data?.championKor
                                 : data.champion}
                             </div>
@@ -672,7 +671,7 @@ function PlayerBoard() {
                               alt="ChampImage"
                             />
                             <div>
-                              {lang === "kr"
+                              {lang === "ko"
                                 ? data?.championKor
                                 : data.champion}
                             </div>
@@ -726,7 +725,7 @@ function PlayerBoard() {
                               alt="ChampImage"
                             />
                             <div>
-                              {lang === "kr"
+                              {lang === "ko"
                                 ? data?.championKor
                                 : data.champion}
                             </div>
@@ -786,7 +785,7 @@ function PlayerBoard() {
                             alt="ChampImage"
                           />
                           <div>
-                            {lang === "kr" ? data?.champion : data.championEn}
+                            {lang === "ko" ? data?.champion : data.championEn}
                           </div>
                         </div>
                       </td>

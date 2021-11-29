@@ -424,6 +424,16 @@
   "alert": {
     "logout": {
       "sessionExpires": "The session has expired and moves to the login page."
+    },
+    "label": {
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    },
+    "desc": {
+      "copy_y": "Copy success..",
+      "copy_n": "Copy fail.",
+      "email_check": "Please enter a valid email address.",
+      "login_fail": "Login Fail Wrong ID(password) or Time limit is exceeded"
     }
   },
   "label": {

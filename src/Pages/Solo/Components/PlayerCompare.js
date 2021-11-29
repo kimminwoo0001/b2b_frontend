@@ -20,7 +20,7 @@ function PlayerCompare() {
 
   //팀 필터 fetch 함수
   const GetPerformance = () => {
-    const url = `${API}/api/player/comparisonRecord`;
+    const url = `${API}/lolapi/player/comparisonRecord`;
     const params = {
       league: filters.league,
       year: filters.year,
@@ -66,7 +66,7 @@ function PlayerCompare() {
       />
       <div className="NameContainer">
         <span className="NickName">
-          {lang === "kr" ? data?.playerInfo.NativeName : data?.playerInfo.Name}
+          {lang === "ko" ? data?.playerInfo.NativeName : data?.playerInfo.Name}
         </span>
         <span className="RealName">{data?.playerInfo.ID}</span>
       </div>
@@ -93,7 +93,7 @@ function PlayerCompare() {
       </div>
       <div className="NameContainerBlue">
         <span className="NickName">
-          {lang === "kr"
+          {lang === "ko"
             ? oppData?.playerInfo.NativeName
             : oppData?.playerInfo.Name}
         </span>
