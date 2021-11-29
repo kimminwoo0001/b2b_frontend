@@ -16,7 +16,9 @@
   },
   "nav": {
     "login": "로그인",
-    "logout": "로그아웃"
+    "logout": "로그아웃",
+    "confirm": "확인",
+    "notice": "알림"
   },
   "home": {
     "rank": "순위",
@@ -95,7 +97,8 @@
       "played": "출전횟수",
       "winrate": "승리횟수",
       "kda": "KDA",
-      "sbr": "Performance Rating"
+      "sbr": "Performance Rating",
+      "prInfo": "PR(Performance Rating)은 선수의 인게임 성적을 토대로, 다양한 지표를 복합적으로 계산해 선수의 전반적인 실력을 가늠 할 수 있는 지표입니다."
     }
   },
   "team": {

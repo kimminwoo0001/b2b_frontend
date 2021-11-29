@@ -10,7 +10,7 @@ const customStyles = {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.75)"
+    backgroundColor: "rgba(0, 0, 0, 0.75)",
   },
   content: {
     top: "50%",
@@ -24,8 +24,8 @@ const customStyles = {
     WebkitOverflowScrolling: "touch",
     borderRadius: "4px",
     outline: "none",
-    padding: "0px"
-  }
+    padding: "0px",
+  },
 };
 
 const AlertModal = ({ desc, isOpen, setIsOpen, isSelector = false, func }) => {
@@ -35,7 +35,7 @@ const AlertModal = ({ desc, isOpen, setIsOpen, isSelector = false, func }) => {
     if (func) {
       func();
     }
-  }
+  };
 
   return (
     <Modal
@@ -45,32 +45,37 @@ const AlertModal = ({ desc, isOpen, setIsOpen, isSelector = false, func }) => {
       contentLabel="Example Modal"
     >
       <ModalWrapper>
-        <ModalDetail>
-          {desc}
-        </ModalDetail>
+        <ModalDetail>{desc}</ModalDetail>
         <ModalClose>
-          {isSelector ? <>
-            <button className="cancel" onClick={() => setIsOpen(false)}>
-              {t("alert.label.cancel")}
-            </button>
-            <button className="confirm"
+          {isSelector ? (
+            <>
+              <button className="cancel" onClick={() => setIsOpen(false)}>
+                {t("alert.label.cancel")}
+              </button>
+              <button
+                className="confirm"
+                onClick={() => {
+                  activeFunc();
+                }}
+              >
+                {t("alert.label.confirm")}
+              </button>
+            </>
+          ) : (
+            <button
+              className="confirm"
               onClick={() => {
                 activeFunc();
-              }}>
+              }}
+            >
               {t("alert.label.confirm")}
             </button>
-          </> : <button className="confirm"
-            onClick={() => {
-              activeFunc();
-            }}>
-            {t("alert.label.confirm")}
-          </button>
-          }
+          )}
         </ModalClose>
       </ModalWrapper>
     </Modal>
   );
-}
+};
 
 export default AlertModal;
 
@@ -110,7 +115,7 @@ const ModalClose = styled.div`
     height: 42px;
     margin: 0 0px 0 0;
     padding: 0px 0px;
-    border-radius: 16px; 
+    border-radius: 16px;
     font-family: SpoqaHanSansNeo;
     font-size: 18px;
     font-weight: normal;

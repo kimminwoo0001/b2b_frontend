@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import Tippy from "@tippy.js/react";
 import LoadingImg from "../../../../Components/LoadingImg/LoadingImg";
 import { useSelector } from "react-redux";
 
@@ -13,7 +14,19 @@ function TabTop({ playerData, loading }) {
   return (
     <TabContentsWrapper>
       <TableNav>
-        <div className="NavTitle">{t("league.playerStat.sbrLabel")}<span>?</span></div>
+        <div className="NavTitle">
+          {t("league.playerStat.sbrLabel")}
+          <span>
+            {/* <Tippy // options
+              duration={0}
+              delay={[300, 0]}
+              content={t("league.playerStat.prInfo")}
+              placement="top"
+            >
+              ?
+            </Tippy> */}
+          </span>
+        </div>
       </TableNav>
       {/* 받아온 선수 정보 데이터 뿌려주기 */}
       {playerData?.map((playerData, idx) => {
@@ -40,8 +53,9 @@ function TabTop({ playerData, loading }) {
                 ></img>
                 <label>{playerData.team}</label>
               </p>
-              <p className="PlayerValue">{`${playerData.player} (${lang === "kr" ? playerData.NativeName : playerData.name
-                })`}</p>
+              <p className="PlayerValue">{`${playerData.player} (${
+                lang === "kr" ? playerData.NativeName : playerData.name
+              })`}</p>
             </div>
 
             <div className="ParticipateValue">

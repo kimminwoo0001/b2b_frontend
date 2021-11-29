@@ -4,7 +4,12 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { signIn } from "./signIn";
-import { UserID, UserToken, UserIP, UserDevice } from "../../redux/modules/user";
+import {
+  UserID,
+  UserToken,
+  UserIP,
+  UserDevice,
+} from "../../redux/modules/user";
 import { useHistory } from "react-router-dom";
 import { Language } from "../../redux/modules/locale";
 
@@ -34,14 +39,13 @@ function Login() {
   };
 
   const getUserIP = async () => {
-    const res = await axios.get('https://geolocation-db.com/json/')
+    const res = await axios.get("https://geolocation-db.com/json/");
     dispatch(UserIP(res.data.IPv4));
-  }
+  };
 
   const getUserDevice = () => {
     dispatch(UserDevice(navigator.userAgent));
-  }
-
+  };
 
   return (
     <LoginWrapper>
@@ -57,7 +61,7 @@ function Login() {
             name="id"
             autoComplete="off"
             {...register("id", {
-              required: "Required"
+              required: "Required",
             })}
           />
           <input
@@ -68,7 +72,7 @@ function Login() {
             autoComplete="off"
             placeholder="PASSWORD"
             {...register("password", {
-              required: "Required"
+              required: "Required",
             })}
           />
           <button type="submit" className="LoginBtn">
@@ -98,7 +102,7 @@ const LoginContainer = styled.div`
   display: flex;
   width: 810px;
   height: 380px;
-  border-radius: 3px;
+  border-radius: 20px;
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
   .IndexImage {
@@ -106,6 +110,8 @@ const LoginContainer = styled.div`
     background-repeat: no-repeat;
     width: 436px;
     height: 380px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
     mix-blend-mode: luminosity;
   }
 `;
@@ -137,8 +143,8 @@ const ViewContainer = styled.form`
   .id {
     width: 224px;
     height: 36px;
-    border-radius: 3px;
-    background-color: rgb(58, 55, 69);
+    border-radius: 20px;
+    background-color: #3a3745;
     font-family: Poppins;
     font-size: 13px;
     text-align: left;
@@ -148,8 +154,8 @@ const ViewContainer = styled.form`
   .password {
     width: 224px;
     height: 36px;
-    border-radius: 3px;
-    background-color: rgb(58, 55, 69);
+    border-radius: 20px;
+    background-color: #3a3745;
     margin: 15px 0 15px 0;
     font-family: Poppins;
     font-size: 13px;
@@ -160,10 +166,10 @@ const ViewContainer = styled.form`
   .LoginBtn {
     width: 224px;
     height: 36px;
-    border-radius: 3px;
-    background-color: rgb(240, 69, 69);
+    border-radius: 20px;
+    background-color: #5942ba;
     font-family: Poppins;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: bold;
     text-align: center;
     color: rgb(255, 255, 255);

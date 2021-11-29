@@ -10,6 +10,7 @@ import LocaleDropdown from "./LocaleDropdown";
 import DataProcess from "../DataProcessing/DataProcess";
 import SearchBox from "./SearchBox";
 import AlertModal from "../UtilityComponent/AlertModal";
+import NoticeDropdown from "./NoticeDropdown";
 
 function Nav() {
   // locale 값을 store에 저장된 값을 가져옴
@@ -40,18 +41,14 @@ function Nav() {
     history.push("/login");
   };
 
-  const dummyAlarm = () => {
-    setAlertDesc("새로운 알림이 없습니다.");
-    setIsOpen(true);
-  }
+  // const dummyAlarm = () => {
+  //   setAlertDesc("새로운 알림이 없습니다.");
+  //   setIsOpen(true);
+  // };
 
   return (
     <>
-      <AlertModal
-        desc={alertDesc}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-      />
+      {/* <AlertModal desc={alertDesc} isOpen={isOpen} setIsOpen={setIsOpen} />/ */}
       <NavWrapper>
         <div className="nav-left">
           <div className="nav-flex">
@@ -69,27 +66,28 @@ function Nav() {
         </div>
         <div className="nav-right">
           <ContentsWrapper>
-            <div className="icon">
+            {/* <div className="icon">
               <img
                 className="setting"
                 src="Images/ico_setting.svg"
                 alt="settingIcon"
               ></img>
-            </div>
+            </div> */}
             <div className="icon">
-              <img
-                className="Alert"
-                src="Images/ico-alarm.png"
-                alt="alertIcon"
-                onClick={() => dummyAlarm()}
-              ></img>
+              <NoticeDropdown
+                alertDesc={alertDesc}
+                setAlertDesc={setAlertDesc}
+                setIsOpen={setIsOpen}
+              />
             </div>
             <div className="icon">
               <LocaleDropdown />
             </div>
             <div className="text">
               <lable onClick={() => handleLogOut()}>
-                {user.id.length > 0 ? `${t("nav.logout")}` : `${t("nav.login")}`}
+                {user.id.length > 0
+                  ? `${t("nav.logout")}`
+                  : `${t("nav.login")}`}
               </lable>
             </div>
           </ContentsWrapper>
@@ -129,7 +127,6 @@ const NavWrapper = styled.div`
 
   .nav-right {
     display: table-cell;
-    
   }
 `;
 const ContentsWrapper = styled.div`
@@ -150,7 +147,7 @@ const ContentsWrapper = styled.div`
   }
 
   .icon:hover {
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(255, 255, 255, 0.1);
   }
 
   .text {
@@ -173,12 +170,10 @@ const ContentsWrapper = styled.div`
       cursor: pointer;
     }
     :hover {
-      background-color: rgba(255,255,255,0.1);
+      background-color: rgba(255, 255, 255, 0.1);
     }
   }
 
-  
- 
   > select {
     // background-color: #23212a;
     color: #84818e;
@@ -191,7 +186,6 @@ const ContentsWrapper = styled.div`
   > button {
     width: 50px;
     height: 20px;
-    /* background-color: red; */
     color: white;
     border: 1px solid black;
   }
