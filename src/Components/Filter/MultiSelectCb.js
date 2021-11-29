@@ -14,6 +14,9 @@ const MultiSelectCb = memo(
     radioBtn = false,
   }) => {
     const { t } = useTranslation();
+    const filters = useSelector((state) => state.FilterReducer);
+    const pagePath = document.location.pathname;
+    const isSoloPage = pagePath === "/solo";
 
     return (
       <>
@@ -21,6 +24,8 @@ const MultiSelectCb = memo(
           key={idx}
           isChecked={filterData?.includes(mapData) ? true : false}
           radioBtn={radioBtn}
+          noTeamSelected={filters.team.length === 0}
+          noPlayerSelected={isSoloPage && filters.player === ""}
           onClick={() => {
             clickEvent();
           }}
@@ -46,8 +51,9 @@ const Selecter = styled.div`
   padding-left: 5px;
   width: 100%;
   height: 30px;
-  /* color: #84818e; */
+  color: #84818e;
   cursor: pointer;
+
   ${(props) =>
     props.isChecked &&
     css`
@@ -67,6 +73,22 @@ const Selecter = styled.div`
           color: rgb(255, 255, 255);
           border-radius: 10px;
         `}
+
+
+  ${(props) =>
+    props.noTeamSelected &&
+    css`
+      opacity: 1;
+    `}
+
+    ${(props) =>
+    props.noPlayerSelected &&
+    !props.noTeamSelected &&
+    css`
+      opacity: 1;
+    `}
+
+
 
   > .Version {
     font-family: NotoSansKR, Apple SD Gothic Neo;
