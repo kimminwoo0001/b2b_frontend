@@ -17,7 +17,8 @@
   "nav": {
     "login": "Log In",
     "logout": "Log Out",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "notice" : "Notice"
   },
   "home": {
     "rank": "Rank",

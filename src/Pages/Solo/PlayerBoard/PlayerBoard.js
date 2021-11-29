@@ -1,15 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import qs from "qs";
 import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
 import { Line } from "react-chartjs-2";
 import Tippy from "@tippy.js/react";
 import BoardToolTip from "./BoardToolTip";
 import { useTranslation } from "react-i18next";
 import { API } from "../../config";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import {
   Champion,
   Champion_Eng,
