@@ -7,11 +7,10 @@ import {
   League,
   Team,
   Player,
-  GetOppPlayer
+  GetOppPlayer,
 } from "../../redux/modules/filtervalue";
 import { API } from "../config";
 import axiosRequest from "../../lib/axiosRequest";
-
 
 // import { useDetectOutsideClick } from "../../Components/SelectFilter/useDetectOustsideClick";
 
@@ -102,11 +101,11 @@ function PickCombineModal({ openModal, setOpenModal }) {
   // 패치 필터 fetch 함수
   const fetchingPatchFilter = () => {
     const url = `${API}/lolapi/filter/patch`;
-    const params = { league: filters.league }
+    const params = { league: filters.league };
     axiosRequest(url, params, function (e) {
       console.log(e);
       // setPatchFilter(result.data.patch);
-    })
+    });
   };
 
   //팀 필터 fetch 함수
@@ -115,11 +114,12 @@ function PickCombineModal({ openModal, setOpenModal }) {
     const params = {
       league: filters.league,
       year: filters.year,
-      season: filters.season, patch: filters.patch
+      season: filters.season,
+      patch: filters.patch,
     };
     axiosRequest(url, params, function (e) {
       setTeamFilter(e.data.team);
-    })
+    });
   };
 
   //플레이어 필터 fetch 함수
@@ -130,11 +130,11 @@ function PickCombineModal({ openModal, setOpenModal }) {
       year: filters.year,
       season: filters.season,
       patch: filters.patch,
-      team: filters.team
-    }
+      team: filters.team,
+    };
     axiosRequest(url, params, function (e) {
       setPlayerFilter(e.data.player);
-    })
+    });
   };
 
   const fetchingOppPlayerFilter = async () => {
@@ -144,14 +144,13 @@ function PickCombineModal({ openModal, setOpenModal }) {
       year: filters.year,
       season: filters.season,
       patch: filters.patch,
-      team: filters.oppteam
+      team: filters.oppteam,
     };
 
     axiosRequest(url, params, function (e) {
       console.log(e);
       // setOppPlayerFilter(result.data.player);
-    })
-
+    });
   };
 
   return (
