@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../../redux/modules/filtervalue";
 import { GetFilterAllItems } from "../../redux/modules/staticvalue";
 
-import checkRequest from "../../lib/checkRequest";
 import axiosRequest from "../../lib/axiosRequest";
 import LeagueRank from "./LeagueRank";
 
@@ -33,7 +32,7 @@ const HomeContents = memo(() => {
 
   useEffect(() => {
     fetchHomeData();
-    //fetchFilterData();
+    fetchFilterData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -67,12 +66,12 @@ const HomeContents = memo(() => {
     if (staticvalue.filterObjects === null) {
       dispatch(Loading(true));
       try {
-        const url = `${API}/lolapi/test/test`;
+        const url = `${API}/lolapi/filter/filterCall`;
         const params = {
           token: user.token,
           id: user.id
         }
-        axiosRequest(url, null, function (data) {
+        axiosRequest(url, params, function (data) {
           dispatch(GetFilterAllItems(data));
           dispatch(Loading(false));
         })

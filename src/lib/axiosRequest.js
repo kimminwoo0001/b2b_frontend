@@ -29,7 +29,6 @@ const axiosRequest = async (url, paramData, callback, method = "GET", history) =
   } else if (method.toUpperCase() === "POST") {
     const headers = {
       "Content-Type": "application/x-www-form-urlencoded"
-      //"Content-Type": "application/json"
     };
     await axios.post(url, paramData, {
       headers: headers,

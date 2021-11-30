@@ -18,7 +18,7 @@
     "login": "Log In",
     "logout": "Log Out",
     "confirm": "Confirm",
-    "notice" : "Notice"
+    "notice": "Notice"
   },
   "home": {
     "rank": "Rank",
@@ -434,7 +434,8 @@
       "copy_y": "Copy success..",
       "copy_n": "Copy fail.",
       "email_check": "Please enter a valid email address.",
-      "login_fail": "Login Fail Wrong ID(password) or Time limit is exceeded"
+      "login_fail": "Login Fail Wrong ID(password) or Time limit is exceeded",
+      "serverError": "There is a problem with the server. Please contact the manager."
     }
   },
   "label": {
