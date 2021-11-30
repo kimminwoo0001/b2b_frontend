@@ -28,14 +28,21 @@ const customStyles = {
   },
 };
 
-const AlertModal = ({ desc, isOpen, setIsOpen, isSelector = false, func }) => {
+const AlertModal = ({ desc, isOpen, setIsOpen, isSelector = false, confirmFunc, cancelfunc }) => {
   const { t } = useTranslation();
-  const activeFunc = () => {
+  const activeConfirmFunc = () => {
     setIsOpen(false);
-    if (func) {
-      func();
+    if (confirmFunc) {
+      confirmFunc();
     }
   };
+
+  const activeCancelFunc = () => {
+    setIsOpen(false);
+    if (cancelfunc) {
+      cancelfunc();
+    }
+  }
 
   return (
     <Modal
@@ -49,13 +56,13 @@ const AlertModal = ({ desc, isOpen, setIsOpen, isSelector = false, func }) => {
         <ModalClose>
           {isSelector ? (
             <>
-              <button className="cancel" onClick={() => setIsOpen(false)}>
+              <button className="cancel" onClick={() => activeCancelFunc()}>
                 {t("alert.label.cancel")}
               </button>
               <button
                 className="confirm"
                 onClick={() => {
-                  activeFunc();
+                  activeConfirmFunc();
                 }}
               >
                 {t("alert.label.confirm")}
@@ -65,7 +72,7 @@ const AlertModal = ({ desc, isOpen, setIsOpen, isSelector = false, func }) => {
             <button
               className="confirm"
               onClick={() => {
-                activeFunc();
+                activeConfirmFunc();
               }}
             >
               {t("alert.label.confirm")}

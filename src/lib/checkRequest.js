@@ -7,6 +7,10 @@ export default function checkRequest(status) {
     }
   } else if (['201', '200'].includes(status)) {
     return true
+  } else if ('500' === status) {
+    if (!alert(i18next.t("alert.desc.serverError"))) {
+      return true;
+    }
   }
   else {
     return false;

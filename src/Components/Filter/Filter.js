@@ -192,7 +192,7 @@ const Filter = memo(() => {
       leagueList = Object.keys(staticvalue.filterObjects).map(
         (key) =>
           Number(Object.keys(staticvalue.filterObjects[key])) ===
-          Number(filters.year) && key
+            Number(filters.year) && key
       );
     } else {
       leagueList = Object.keys(staticvalue.filterObjects);
@@ -356,9 +356,11 @@ const Filter = memo(() => {
     };
 
     axiosRequest(url, params, function (e) {
-      const patchResponse = e.data.patch ?? [];
-      dispatch(setPatchFilter(patchResponse));
-      dispatch(SetPatch(patchResponse));
+      console.log(e);
+      // const patchResponse = e.data.patch ?? [];
+      dispatch(setPatchFilter(e));
+      dispatch(SetPatch(e));
+      console.log(selector.patchFilter);
     });
   };
 
