@@ -92,7 +92,7 @@ function GameMapping() {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(null, url, params, function (e) {
         setGameListData(Object.values(e.data["match"]));
         console.log(e.data.match);
       })
@@ -114,7 +114,7 @@ function GameMapping() {
           id: user.id,
         }
 
-        axiosRequest(url, params, function (e) {
+        axiosRequest(null, url, params, function (e) {
           // 맵핑 포지션
           const dto = e.data;
 

@@ -39,11 +39,11 @@ function Nav() {
   const handleLogOut = async () => {
     const url = `${API}/lolapi/logout`;
     const info = `id=${user.id}&charge_time=${user.charge_time}&lang=${lang}`;
-    axiosRequest(url, info, function (data) {
+    axiosRequest("POST", url, info, function (e) {
       sessionStorage.clear();
       dispatch(UserLogout());
       history.push("/login")
-    }, "POST");
+    });
   };
 
   // const dummyAlarm = () => {

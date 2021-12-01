@@ -76,7 +76,7 @@ function PlayerBoard() {
       id: user.id,
     };
 
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       const data = e.data;
       // var arrNumber = [0, 0, 0, 0, 0, 0, 0];
 
@@ -129,7 +129,7 @@ function PlayerBoard() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       const champArray = e.data.map((data) => `${data.kor}(${data.total}경기)`);
       const champArrayEng = e.data.map((data) => data.eng);
 
@@ -154,7 +154,7 @@ function PlayerBoard() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       const champArray = e.data.map((data) => `${data.kor}(${data.total}경기)`);
       const champArrayEng = e.data.map((data) => data.eng);
 

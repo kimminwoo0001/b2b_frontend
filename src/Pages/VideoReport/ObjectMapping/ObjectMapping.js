@@ -99,7 +99,7 @@ function ObjectMapping() {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(null, url, params, function (e) {
         const dto = e.data;
         setMinTime(dto?.position[0].realCount ? dto?.position[0].realCount : 0);
         setMaxTime(dto.position.length - 1);

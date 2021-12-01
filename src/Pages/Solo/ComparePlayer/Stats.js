@@ -89,7 +89,7 @@ function Stats() {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(null, url, params, function (e) {
         setData(e?.data.player);
         setOppData(e?.data.oppPlayer);
         //라인전 능력치 비교 그래프 데이터 가공
@@ -173,7 +173,7 @@ function Stats() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       setChampFilter(e.data.champion);
       setChampEng(e.data.championEng);
     });
@@ -194,7 +194,7 @@ function Stats() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       setOppFilter(e.data.champion);
       setOppEng(e.data.championEng);
     });

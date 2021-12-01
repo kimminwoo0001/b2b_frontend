@@ -62,7 +62,7 @@ function PickCombine() {
       year: filters.year,
       season: filters.season,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       setTeamFilter(e.data.team);
     })
   };

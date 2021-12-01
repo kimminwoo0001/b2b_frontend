@@ -129,7 +129,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
           token: user.token,
           id: user.id,
         };
-        axiosRequest(url, params, function (e) {
+        axiosRequest(null, url, params, function (e) {
           const data = e.data.team;
           setFilterData({ ...filterData, team: data });
         });
@@ -154,7 +154,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
           token: user.token,
           id: user.id,
         };
-        axiosRequest(url, params, function (e) {
+        axiosRequest(null, url, params, function (e) {
           const data = e.data.player;
           setFilterData({ ...filterData, player: data });
         })
@@ -177,7 +177,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
         token: user.token,
         id: user.id,
       }
-      axiosRequest(url, params, function (e) {
+      axiosRequest(null, url, params, function (e) {
         const data = e.data.champion;
         setFilterData({ ...filterData, champion: data });
         if (isPageSolo && champArray.length === 0 && !filterData) {

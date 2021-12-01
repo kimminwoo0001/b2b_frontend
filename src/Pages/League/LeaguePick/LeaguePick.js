@@ -105,7 +105,7 @@ function LeaguePick() {
       id: user.id,
     };
 
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       //주요픽 데이터 저장
       setImportantPicks(e.data.importantPick);
       //주요픽간의전적 저장

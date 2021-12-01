@@ -177,7 +177,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
           token: user.token,
           id: user.id,
         };
-        axiosRequest(url, params, function (e) {
+        axiosRequest(null, url, params, function (e) {
           const data = e.data.team;
           setFilterData({ ...filterData, team: data });
         })
@@ -203,7 +203,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
           token: user.token,
           id: user.id,
         };
-        axiosRequest(url, params, function (e) {
+        axiosRequest(null, url, params, function (e) {
           const data = e.data.player;
           setFilterData({ ...filterData, player: data });
         })
@@ -226,7 +226,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(null, url, params, function (e) {
         const data = e.data.champion;
         setFilterData({ ...filterData, champion: data });
       })
@@ -249,7 +249,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(null, url, params, function (e) {
         const data = e.data.opp_team;
         setFilterData({ ...filterData, oppteam: data });
       })
@@ -273,7 +273,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(null, url, params, function (e) {
         const data = e.data.opp_player;
         setFilterData({ ...filterData, oppplayer: data });
       })
@@ -299,7 +299,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(null, url, params, function (e) {
         const data = e.data.opp_champion;
         setFilterData({ ...filterData, oppchampion: data });
       })

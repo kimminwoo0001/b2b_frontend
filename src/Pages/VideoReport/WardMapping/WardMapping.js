@@ -96,7 +96,7 @@ function WardMapping() {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(null, url, params, function (e) {
         const dto = e.data.warding;
         setWard(e.data.warding);
         console.log(e.data);

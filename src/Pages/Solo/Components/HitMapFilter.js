@@ -40,7 +40,7 @@ function HitMapFilter() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       setChampFilter(e.data.champion);
       setChampEng(e.data.championEng);
     })
@@ -60,7 +60,7 @@ function HitMapFilter() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       setOppFilter(e.data.champion);
       setOppEng(e.data.championEng);
     })

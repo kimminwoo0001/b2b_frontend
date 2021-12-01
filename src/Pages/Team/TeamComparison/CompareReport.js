@@ -32,7 +32,7 @@ function CompareReport() {
         token: user.token,
         id: user.id
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(null, url, params, function (e) {
         setBoard(e.data);
       })
     } catch (e) {

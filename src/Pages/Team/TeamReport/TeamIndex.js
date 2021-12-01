@@ -57,7 +57,7 @@ function TeamIndex() {
         id: user.id,
       };
 
-      axiosRequest(url, params, function (e) {
+      axiosRequest(null, url, params, function (e) {
         //팀 평균 데이터 fetch
         setTeamStats(e.data.teamStats);
 

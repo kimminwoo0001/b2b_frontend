@@ -68,7 +68,7 @@ function ComparePosition() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       setTeamName({
         team: e.data.teamName,
         oppteam: e.data.oppteamName,

@@ -224,7 +224,7 @@ function ChampionSetting({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(null, url, params, function (e) {
         const data = e.data.champion;
         console.log(data);
         setFilterData({ ...filterData, champion: data });
@@ -248,7 +248,7 @@ function ChampionSetting({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(null, url, params, function (e) {
         const data = e.data.opp_team;
         setFilterData({ ...filterData, oppteam: data });
       });
@@ -272,7 +272,7 @@ function ChampionSetting({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(null, url, params, function (e) {
         const data = e.data.opp_player;
         setFilterData({ ...filterData, oppplayer: data });
       });
@@ -297,7 +297,7 @@ function ChampionSetting({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(null, url, params, function (e) {
         const data = e.data.opp_champion;
         setFilterData({ ...filterData, oppchampion: data });
       });
@@ -322,7 +322,7 @@ function ChampionSetting({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(null, url, params, function (e) {
         setGameData(Object.values(e.data["match"]));
       });
     } catch (e) {
@@ -349,7 +349,7 @@ function ChampionSetting({
           token: user.token,
           id: user.id,
         };
-        axiosRequest(url, params, function (e) {
+        axiosRequest(null, url, params, function (e) {
           setGameData(Object.values(e.data["match"]));
         });
       }

@@ -40,7 +40,7 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       setOppTeam(e.data.oppteam);
     });
   };

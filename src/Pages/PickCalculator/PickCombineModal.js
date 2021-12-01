@@ -103,7 +103,7 @@ function PickCombineModal({ openModal, setOpenModal }) {
   const fetchingPatchFilter = () => {
     const url = `${API}/lolapi/filter/patch`;
     const params = { league: filters.league }
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       console.log(e);
       // setPatchFilter(result.data.patch);
     })
@@ -117,7 +117,7 @@ function PickCombineModal({ openModal, setOpenModal }) {
       year: filters.year,
       season: filters.season, patch: filters.patch
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       setTeamFilter(e.data.team);
     })
   };
@@ -132,7 +132,7 @@ function PickCombineModal({ openModal, setOpenModal }) {
       patch: filters.patch,
       team: filters.team
     }
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       setPlayerFilter(e.data.player);
     })
   };
@@ -147,7 +147,7 @@ function PickCombineModal({ openModal, setOpenModal }) {
       team: filters.oppteam
     };
 
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       console.log(e);
       // setOppPlayerFilter(result.data.player);
     })

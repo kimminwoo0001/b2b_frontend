@@ -69,7 +69,7 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
         token: user.token,
         id: user.id
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(null, url, params, function (e) {
         const data = e.data.team;
         setFilterData({ ...filterData, team: data });
       });

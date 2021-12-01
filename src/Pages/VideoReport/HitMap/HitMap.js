@@ -78,7 +78,7 @@ function HitMap() {
         firstTime: firstTime,
         secondTime: secondTime
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(null, url, params, function (e) {
         const heatData = e.data.position;
         getThreeMinBlue(heatData);
         getEightMinBlue(heatData);

@@ -2,8 +2,14 @@
 import qs from "qs";
 import axios from "axios";
 import checkRequest from "./checkRequest";
+import { createStore } from 'redux';
+import persistReducer from '../redux/modules/index';
+import { SetStatus, SetDesc, SetIsOpen, SetConfirmFuncId } from '../redux/modules/modalvalue';
 
-const axiosRequest = async (url, paramData, callback, method = "GET", history) => {
+
+
+const axiosRequest = async (method = "GET", url, paramData, callback, failCallback) => {
+  //const dispatch = useDispatch();
   if (method === "GET") {
     await axios.request({
       method: method,
@@ -15,13 +21,18 @@ const axiosRequest = async (url, paramData, callback, method = "GET", history) =
     }).then(e => {
       // 여기서도 에러를 던지면 아래의 catch로 이동된다.
       // throw Error("에러 테스트")
-      if (checkRequest(e.data.status)) {
+      const check = checkRequest(e.data.status);
+      console.log("check", check);
+      if (check?.value) {
         if (callback) {
           callback(e.data.response);
         } else {
-          sessionStorage.clear();
+          console.log(check.objStore);
+          // sessionStorage.clear();
           //history.push("/login");
         }
+      } else {
+        failCallback(check.objStore)
       }
     }).catch(error => {
       console.log("error test : ", error)
@@ -34,13 +45,17 @@ const axiosRequest = async (url, paramData, callback, method = "GET", history) =
       headers: headers,
       withCredentials: true
     }).then(e => {
-      if (checkRequest(e.data.status)) {
+      const check = checkRequest(e.data.status);
+      console.log("check", check);
+      if (check.value) {
         if (callback) {
           callback(e.data.response);
         } else {
-          sessionStorage.clear();
+          //sessionStorage.clear();
           //history.push("/login");
         }
+      } else {
+        failCallback(check.objStore)
       }
     }).catch(error => {
       console.log("error test : ", error)

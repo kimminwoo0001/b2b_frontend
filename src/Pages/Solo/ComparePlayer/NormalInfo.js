@@ -70,7 +70,7 @@ function NormalInfo() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       const copy = e.data[filters.player];
       const copyoppData = e.data[filters.oppplayer];
       setData(copy);
@@ -108,7 +108,7 @@ function NormalInfo() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       setChampFilter(e.data.champion);
       setChampEng(e.data.championEng);
     });
@@ -127,7 +127,7 @@ function NormalInfo() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       setOppFilter(e.data.champion);
       setOppEng(e.data.championEng);
     });

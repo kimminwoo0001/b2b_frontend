@@ -82,7 +82,7 @@ function LeagueSchedule() {
       token: user.token,
       id: user.id,
     }
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       setWeekData1(e.data[0].week);
       setWeekData2(e.data[1].week);
       setWeekData3(e.data[2].week);

@@ -47,7 +47,7 @@ const PiArea = () => {
       q: gameIdInput,
     }
 
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       setGameIdSearchData(e.data.items);
     })
   };
@@ -86,7 +86,7 @@ const PiArea = () => {
       const params = {
         gameid: clickedGameId,
       }
-      axiosRequest(url, params, function (e) {
+      axiosRequest(null, url, params, function (e) {
         setEntireData(e.data);
         handleYoutubeData(e.data);
       })

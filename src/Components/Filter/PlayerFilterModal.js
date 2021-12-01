@@ -128,7 +128,7 @@ function PlayerFilterModal() {
       id: user.id,
     };
 
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       setOppTeamFilter(e.data.oppteam);
     });
   };
@@ -146,7 +146,7 @@ function PlayerFilterModal() {
       id: user.id,
     };
 
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       dispatch(setPlayerFilter(e.data));
     });
   };
@@ -165,7 +165,7 @@ function PlayerFilterModal() {
       id: user.id,
     };
 
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       setOppPlayerFilter(e.data);
     });
   };

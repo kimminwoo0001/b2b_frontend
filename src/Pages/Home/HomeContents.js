@@ -12,11 +12,13 @@ import { GetFilterAllItems } from "../../redux/modules/staticvalue";
 
 import axiosRequest from "../../lib/axiosRequest";
 import LeagueRank from "./LeagueRank";
+import { SetStatus, SetModalInfo } from "../../redux/modules/modalvalue";
 
 const HomeContents = memo(() => {
   const filters = useSelector((state) => state.FilterReducer);
   const staticvalue = useSelector((state) => state.StaticValueReducer);
   const user = useSelector((state) => state.UserReducer);
+  const modal = useSelector((state) => state.ModalReducer)
 
   const { t } = useTranslation();
   let history = useHistory();
@@ -46,14 +48,12 @@ const HomeContents = memo(() => {
       const params = {
         token: user.token
       }
-      axiosRequest(url, params, function (data) {
+      axiosRequest(null, url, params, function (data, objStore) {
+        console.log("modal", modal);
         setLeagueDataset(data);
-        // setLckData(e.data["LCK"]);
-        // setLecData(e.data["LEC"]);
-        // setLcsData(e.data["LCS"]);
-        // setLplData(e.data["LPL"]);
-        // setVcsData(jsonData.data["VCS"]);
         dispatch(Loading(false));
+      }, function (objStore) {
+        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
       })
       //
     } catch (e) {
@@ -71,9 +71,12 @@ const HomeContents = memo(() => {
           token: user.token,
           id: user.id
         }
-        axiosRequest(url, params, function (data) {
+        axiosRequest(null, url, params, function (data) {
+          console.log(modal);
           dispatch(GetFilterAllItems(data));
           dispatch(Loading(false));
+        }, function (objStore) {
+          dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
         })
       } catch (e) {
         console.log(e);

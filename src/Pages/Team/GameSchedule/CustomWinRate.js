@@ -42,7 +42,7 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
       token: user.token,
       id: user.id
     }
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       setTeam1(e.data[el.Team1]);
       setTeam2(e.data[el.Team2]);
     })
@@ -63,7 +63,7 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
       token: user.token,
       id: user.id
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(null, url, params, function (e) {
       setWinRate(e.data);
     });
   };
