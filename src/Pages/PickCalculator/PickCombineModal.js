@@ -101,8 +101,8 @@ function PickCombineModal({ openModal, setOpenModal }) {
   // 패치 필터 fetch 함수
   const fetchingPatchFilter = () => {
     const url = `${API}/lolapi/filter/patch`;
-    const params = { league: filters.league };
-    axiosRequest(url, params, function (e) {
+    const params = { league: filters.league }
+    axiosRequest(undefined, url, params, function (e) {
       console.log(e);
       // setPatchFilter(result.data.patch);
     });
@@ -117,9 +117,9 @@ function PickCombineModal({ openModal, setOpenModal }) {
       season: filters.season,
       patch: filters.patch,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       setTeamFilter(e.team);
-    });
+    })
   };
 
   //플레이어 필터 fetch 함수
@@ -130,11 +130,11 @@ function PickCombineModal({ openModal, setOpenModal }) {
       year: filters.year,
       season: filters.season,
       patch: filters.patch,
-      team: filters.team,
-    };
-    axiosRequest(url, params, function (e) {
+      team: filters.team
+    }
+    axiosRequest(undefined, url, params, function (e) {
       setPlayerFilter(e.player);
-    });
+    })
   };
 
   const fetchingOppPlayerFilter = async () => {
@@ -147,7 +147,7 @@ function PickCombineModal({ openModal, setOpenModal }) {
       team: filters.oppteam,
     };
 
-    axiosRequest(url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       console.log(e);
       // setOppPlayerFilter(result.data.player);
     });

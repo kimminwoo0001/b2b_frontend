@@ -178,7 +178,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
           token: user.token,
           id: user.id,
         };
-        axiosRequest(url, params, function (e) {
+        axiosRequest(undefined, url, params, function (e) {
           const data = e.team;
           setFilterData({ ...filterData, team: data });
         });
@@ -203,7 +203,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
           token: user.token,
           id: user.id,
         };
-        axiosRequest(url, params, function (e) {
+        axiosRequest(undefined, url, params, function (e) {
           const data = e.player;
           setFilterData({ ...filterData, player: data });
         });
@@ -226,7 +226,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(undefined, url, params, function (e) {
         const data = e.champion;
         setFilterData({ ...filterData, champion: data });
       });
@@ -249,7 +249,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(undefined, url, params, function (e) {
         const data = e.opp_team;
         setFilterData({ ...filterData, oppteam: data });
       });
@@ -273,7 +273,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(undefined, url, params, function (e) {
         const data = e.opp_player;
         setFilterData({ ...filterData, oppplayer: data });
       });
@@ -298,7 +298,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(undefined, url, params, function (e) {
         const data = e.opp_champion;
         setFilterData({ ...filterData, oppchampion: data });
       });
@@ -534,9 +534,8 @@ function SetByChampion({ minFrom, setMinFrom }) {
                     {filterData?.champion ? (
                       <nav
                         ref={wrapperRef}
-                        className={`menu3 ${
-                          isActive2.current ? "active" : "inactive"
-                        }`}
+                        className={`menu3 ${isActive2.current ? "active" : "inactive"
+                          }`}
                       >
                         <ul>
                           <Menu3li
@@ -555,7 +554,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                             <input
                               checked={
                                 filterData?.champion?.length ===
-                                champArray.length
+                                  champArray.length
                                   ? true
                                   : false
                               }
@@ -762,9 +761,8 @@ function SetByChampion({ minFrom, setMinFrom }) {
                     {filterData?.oppchampion ? (
                       <nav
                         ref={wrapperRef2}
-                        className={`menu3 ${
-                          isActive5.current ? "active" : "inactive"
-                        }`}
+                        className={`menu3 ${isActive5.current ? "active" : "inactive"
+                          }`}
                       >
                         <ul>
                           <Menu3li
@@ -784,7 +782,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                             <input
                               checked={
                                 filterData?.oppchampion?.length ===
-                                champArray2.length
+                                  champArray2.length
                                   ? true
                                   : false
                               }
@@ -849,7 +847,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
               aria-labelledby="range-slider"
               getAriaValueText={timeFormat.hitmap}
               valueLabelFormat={timeFormat.hitmap}
-              // ValueLabelComponent={ValueLabelComponent}
+            // ValueLabelComponent={ValueLabelComponent}
             />
           </SliderContainer>
           <DefaultTime>
@@ -1126,7 +1124,7 @@ const DropDownToggle = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: ${(props) =>
-      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
+    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
     width: 140px;
   }
 
@@ -1140,7 +1138,7 @@ const DropDownToggle = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: ${(props) =>
-      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
+    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
     width: 124px;
     /* ::first-letter {
       color: #f04545;

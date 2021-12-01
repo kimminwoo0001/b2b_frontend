@@ -226,7 +226,7 @@ function ChampionSetting({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(undefined, url, params, function (e) {
         const data = e.champion;
         console.log(data);
         setFilterData({ ...filterData, champion: data });
@@ -250,7 +250,7 @@ function ChampionSetting({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(undefined, url, params, function (e) {
         const data = e.opp_team;
         setFilterData({ ...filterData, oppteam: data });
       });
@@ -274,7 +274,7 @@ function ChampionSetting({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(undefined, url, params, function (e) {
         const data = e.opp_player;
         setFilterData({ ...filterData, oppplayer: data });
       });
@@ -299,7 +299,7 @@ function ChampionSetting({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(undefined, url, params, function (e) {
         const data = e.opp_champion;
         setFilterData({ ...filterData, oppchampion: data });
       });
@@ -324,7 +324,7 @@ function ChampionSetting({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(undefined, url, params, function (e) {
         setGameData(Object.values(e["match"]));
       });
     } catch (e) {
@@ -351,7 +351,7 @@ function ChampionSetting({
           token: user.token,
           id: user.id,
         };
-        axiosRequest(url, params, function (e) {
+        axiosRequest(undefined, url, params, function (e) {
           setGameData(Object.values(e["match"]));
         });
       }
@@ -596,9 +596,8 @@ function ChampionSetting({
               {filterData?.champion ? (
                 <nav
                   ref={wrapperRef}
-                  className={`menu3 ${
-                    isActive2.current ? "active" : "inactive"
-                  }`}
+                  className={`menu3 ${isActive2.current ? "active" : "inactive"
+                    }`}
                 >
                   <ul>
                     <Menu3li
@@ -820,9 +819,8 @@ function ChampionSetting({
               {filterData?.oppchampion ? (
                 <nav
                   ref={wrapperRef2}
-                  className={`menu3 ${
-                    isActive5.current ? "active" : "inactive"
-                  }`}
+                  className={`menu3 ${isActive5.current ? "active" : "inactive"
+                    }`}
                 >
                   <ul>
                     <Menu3li

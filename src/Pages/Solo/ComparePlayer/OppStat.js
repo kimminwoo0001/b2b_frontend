@@ -64,7 +64,7 @@ function OppStat() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       setPlayer(e[filters.player]);
       setOppPlayer(e[filters.oppplayer]);
     }).finally((e) => {
@@ -88,7 +88,7 @@ function OppStat() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       setChampFilter(e.champion);
       setChampEng(e.championEng);
     });
@@ -111,7 +111,7 @@ function OppStat() {
       id: user.id,
     };
 
-    axiosRequest(url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       setOppFilter(e.champion);
       setOppEng(e.championEng);
     });

@@ -43,8 +43,8 @@ function LeaguePlayer() {
       position: positionClicked,
       token: user.token,
       id: user.id,
-    };
-    axiosRequest(url, params, function (e) {
+    }
+    axiosRequest(undefined, url, params, function (e) {
       setPlayerData(e);
       setIsLoading(false);
     });

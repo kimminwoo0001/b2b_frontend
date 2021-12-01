@@ -57,7 +57,7 @@ function TeamIndex() {
         id: user.id,
       };
 
-      axiosRequest(url, params, function (e) {
+      axiosRequest(undefined, url, params, function (e) {
         //팀 평균 데이터 fetch
         setTeamStats(e.teamStats);
 
@@ -205,16 +205,14 @@ function TeamIndex() {
                     height="13px"
                   ></img>
                   <TeamValue changeColor={teamStats?.playTime.result === false}>
-                    {`${teamStats?.playTime.minute}${t("team.analysis.min")} ${
-                      teamStats?.playTime.second
-                    }${t("team.analysis.sec")}`}
+                    {`${teamStats?.playTime.minute}${t("team.analysis.min")} ${teamStats?.playTime.second
+                      }${t("team.analysis.sec")}`}
                   </TeamValue>
                 </div>
-                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${
-                  leagueStat?.playTime.minute
-                }${t("team.analysis.min")} ${leagueStat?.playTime.second}${t(
-                  "team.analysis.sec"
-                )}`}</div>
+                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${leagueStat?.playTime.minute
+                  }${t("team.analysis.min")} ${leagueStat?.playTime.second}${t(
+                    "team.analysis.sec"
+                  )}`}</div>
               </DisplayInfo>
             </div>
           </div>
@@ -276,11 +274,10 @@ function TeamIndex() {
                     )}`}
                   </TeamValue>
                 </div>
-                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${
-                  leagueStat?.firstDragon.minute
-                }${t("team.analysis.min")} ${leagueStat?.firstDragon.second}${t(
-                  "team.analysis.sec"
-                )}`}</div>
+                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${leagueStat?.firstDragon.minute
+                  }${t("team.analysis.min")} ${leagueStat?.firstDragon.second}${t(
+                    "team.analysis.sec"
+                  )}`}</div>
               </DisplayInfo>
             </div>
           </div>
@@ -377,11 +374,10 @@ function TeamIndex() {
                     )}`}
                   </TeamValue>
                 </div>
-                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${
-                  leagueStat?.firstHerald.minute
-                }${t("team.analysis.min")} ${leagueStat?.firstHerald.second}${t(
-                  "team.analysis.sec"
-                )}`}</div>
+                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${leagueStat?.firstHerald.minute
+                  }${t("team.analysis.min")} ${leagueStat?.firstHerald.second}${t(
+                    "team.analysis.sec"
+                  )}`}</div>
               </DisplayInfo>
             </div>
             <div className="AvgFirstGank">
@@ -413,11 +409,9 @@ function TeamIndex() {
                     )}`}
                   </TeamValue>
                 </div>
-                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${
-                  leagueStat?.timeOfFirstGank.minute
-                }${t("team.analysis.min")} ${
-                  leagueStat?.timeOfFirstGank.second
-                }${t("team.analysis.sec")}`}</div>
+                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${leagueStat?.timeOfFirstGank.minute
+                  }${t("team.analysis.min")} ${leagueStat?.timeOfFirstGank.second
+                  }${t("team.analysis.sec")}`}</div>
               </DisplayInfo>
             </div>
           </div>
@@ -451,11 +445,10 @@ function TeamIndex() {
                     )}`}
                   </TeamValue>
                 </div>
-                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${
-                  leagueStat?.firstBaron.minute
-                }${t("team.analysis.min")} ${leagueStat?.firstBaron.second}${t(
-                  "team.analysis.sec"
-                )}`}</div>
+                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${leagueStat?.firstBaron.minute
+                  }${t("team.analysis.min")} ${leagueStat?.firstBaron.second}${t(
+                    "team.analysis.sec"
+                  )}`}</div>
               </DisplayInfo>
             </div>
             <div className="AvgCombat">
@@ -601,7 +594,7 @@ function TeamIndex() {
                           gankCount?.firstGankMax % 5 === 0
                             ? gankCount?.firstGankMax
                             : gankCount?.firstGankMax +
-                              (5 - (gankCount?.firstGankMax % 5)),
+                            (5 - (gankCount?.firstGankMax % 5)),
                       },
                       gridLines: {
                         color: "rgb(58, 55, 69)",

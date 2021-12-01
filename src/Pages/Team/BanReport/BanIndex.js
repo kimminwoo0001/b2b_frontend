@@ -97,7 +97,7 @@ function BanIndex() {
       id: user.id,
     };
 
-    axiosRequest(url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       dispatch(Pick1(e.Picks[0].order));
       dispatch(Pick2(e.Picks[1].order));
       dispatch(Pick3(e.Picks[2].order));

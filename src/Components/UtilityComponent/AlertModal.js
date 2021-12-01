@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Modal from "react-modal";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { SetIsOpen } from "../../redux/modules/modalvalue";
 
 const customStyles = {
   overlay: {
@@ -28,26 +30,36 @@ const customStyles = {
   },
 };
 
-const AlertModal = ({ desc, isOpen, setIsOpen, isSelector = false, confirmFunc, cancelfunc }) => {
+const AlertModal = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { isOpen, desc, isSelector, confirmFuncId, cancelFuncId } = useSelector((state) => state.ModalReducer);
+
+  useEffect(() => {
+    console.log("모달 창 useEffect");
+    if (isOpen) {
+      console.log("모달 창 열림")
+    }
+  }, [isOpen])
+
   const activeConfirmFunc = () => {
-    setIsOpen(false);
-    if (confirmFunc) {
-      confirmFunc();
+    dispatch(SetIsOpen(false));
+    if (confirmFuncId) {
+      //confirmFunc();
     }
   };
 
   const activeCancelFunc = () => {
-    setIsOpen(false);
-    if (cancelfunc) {
-      cancelfunc();
+    dispatch(SetIsOpen(false));
+    if (cancelFuncId) {
+      //cancelfunc();
     }
   }
 
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={() => setIsOpen(false)}
+      onRequestClose={() => dispatch(SetIsOpen(false))}
       style={customStyles}
       contentLabel="Example Modal"
     >

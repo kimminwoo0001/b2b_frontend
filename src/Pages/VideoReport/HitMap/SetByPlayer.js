@@ -128,7 +128,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
           token: user.token,
           id: user.id,
         };
-        axiosRequest(url, params, function (e) {
+        axiosRequest(undefined, url, params, function (e) {
           const data = e.team;
           setFilterData({ ...filterData, team: data });
         });
@@ -153,7 +153,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
           token: user.token,
           id: user.id,
         };
-        axiosRequest(url, params, function (e) {
+        axiosRequest(undefined, url, params, function (e) {
           const data = e.player;
           setFilterData({ ...filterData, player: data });
         });
@@ -175,8 +175,8 @@ function SetByPlayer({ minFrom, setMinFrom }) {
         player: filters.player,
         token: user.token,
         id: user.id,
-      };
-      axiosRequest(url, params, function (e) {
+      }
+      axiosRequest(undefined, url, params, function (e) {
         const data = e.champion;
         setFilterData({ ...filterData, champion: data });
         if (isPageSolo && champArray.length === 0 && !filterData) {
@@ -384,9 +384,8 @@ function SetByPlayer({ minFrom, setMinFrom }) {
               {filterData?.champion ? (
                 <nav
                   ref={wrapperRef}
-                  className={`menu2 ${
-                    isActive2.current ? "active" : "inactive"
-                  }`}
+                  className={`menu2 ${isActive2.current ? "active" : "inactive"
+                    }`}
                 >
                   <ul>
                     <Menu3li
@@ -464,7 +463,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
               aria-labelledby="range-slider"
               getAriaValueText={timeFormat.hitmap}
               valueLabelFormat={timeFormat.hitmap}
-              // ValueLabelComponent={ValueLabelComponent}
+            // ValueLabelComponent={ValueLabelComponent}
             />
           </SliderContainer>
           <DefaultTime>
@@ -694,7 +693,7 @@ const DropDownToggle = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: ${(props) =>
-      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
+    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
     width: 240px;
   }
   .Label2 {
@@ -707,7 +706,7 @@ const DropDownToggle = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: ${(props) =>
-      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
+    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
     width: 488px;
     /* ::first-letter {
       color: #f04545;

@@ -17,6 +17,7 @@ import AlertModal from "../../Components/UtilityComponent/AlertModal";
 import { useTranslation } from "react-i18next";
 import axiosRequest from "../../lib/axiosRequest";
 import { API } from "../config";
+import { SetModalInfo } from "../../redux/modules/modalvalue";
 
 function CheckEmail(str) {
   let reg_email =
@@ -50,26 +51,23 @@ function Login() {
         const user = `ids=${id}&password=${password}`;
         const url = `${API}/lolapi/logins`;
 
-        axiosRequest(
-          url,
-          user,
-          function (data) {
-            const token = data;
-            if (token !== "fail") {
-              //sessionStorage.setItem("token", token.token);
-              sessionStorage.setItem("i18nextLng", token.lang);
-              //sessionStorage.setItem("id", id);
-              dispatch(Language(token.lang));
-              dispatch(UserID(id));
-              dispatch(UserToken(token.token));
-              dispatch(UserChargeTime(token.charge_time));
-              getUserIP();
-              getUserDevice();
-              history.push("/");
-            }
-          },
-          "POST"
-        );
+        axiosRequest("POST", url, user, function (data) {
+          const token = data;
+          if (token !== "fail") {
+            //sessionStorage.setItem("token", token.token);
+            sessionStorage.setItem("i18nextLng", token.lang);
+            //sessionStorage.setItem("id", id);
+            dispatch(Language(token.lang));
+            dispatch(UserID(id));
+            dispatch(UserToken(token.token));
+            dispatch(UserChargeTime(token.charge_time))
+            getUserIP();
+            getUserDevice();
+            history.push("/");
+          }
+        }, function (objStore) {
+          dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        })
       } else {
         setAlertDesc(t("alert.desc.email_check"));
         setIsOpen(true);

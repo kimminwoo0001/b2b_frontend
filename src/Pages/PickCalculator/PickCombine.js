@@ -61,9 +61,9 @@ function PickCombine() {
       year: filters.year,
       season: filters.season,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       setTeamFilter(e.team);
-    });
+    })
   };
 
   const handleButton = () => {

@@ -71,7 +71,7 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(undefined, url, params, function (e) {
         const data = e.team;
         setFilterData({ ...filterData, team: data });
       });
@@ -155,7 +155,7 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
             aria-labelledby="range-slider"
             // getAriaValueText={valuetext}
             valueLabelFormat={timeFormat.ward}
-            // ValueLabelComponent={ValueLabelComponent}
+          // ValueLabelComponent={ValueLabelComponent}
           />
         </SliderContainer>
 

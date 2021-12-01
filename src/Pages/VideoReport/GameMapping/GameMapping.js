@@ -91,7 +91,7 @@ function GameMapping() {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(undefined, url, params, function (e) {
         setGameListData(Object.values(e.data["match"]));
         console.log(e.data.match);
       });
@@ -115,7 +115,7 @@ function GameMapping() {
           id: user.id,
         };
 
-        axiosRequest(url, params, function (e) {
+        axiosRequest(undefined, url, params, function (e) {
           // 맵핑 포지션
           const dto = e.data;
 
@@ -281,11 +281,11 @@ function GameMapping() {
                 ) {
                   if (
                     Number(currentPos[range]?.player[i].x1) -
-                      Number(currentPos[range]?.player[i].x2) !==
-                      0 &&
+                    Number(currentPos[range]?.player[i].x2) !==
+                    0 &&
                     Number(currentPos[range]?.player[i].y1) -
-                      Number(currentPos[range]?.player[i].y2) !==
-                      0
+                    Number(currentPos[range]?.player[i].y2) !==
+                    0
                   ) {
                     var x =
                       ((Number(currentPos[range]?.player[i].x1) +
@@ -412,9 +412,8 @@ function GameMapping() {
             ).toFixed(1)}`}</span>
             <p>/</p>
             {maxTime ? (
-              <span className="max">{`${Math.floor(maxTime / 2 / 60)} : ${
-                (maxTime / 2) % 60
-              }`}</span>
+              <span className="max">{`${Math.floor(maxTime / 2 / 60)} : ${(maxTime / 2) % 60
+                }`}</span>
             ) : (
               <span className="max">{`00 : 00`}</span>
             )}

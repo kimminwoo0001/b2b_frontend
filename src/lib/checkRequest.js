@@ -1,19 +1,64 @@
 import i18next from "i18next";
 
 export default function checkRequest(status) {
-  if (status === '403' || status === '401') {
-    if (!alert(i18next.t("alert.logout.sessionExpires"))) {
-      return true;
+  const tokenStatus = ['403', '401'];
+  const successStatus = ['201', '200'];
+  const errorStatus = '500';
+  const notFoundStatus = '404';
+  let returnValue = {
+    value: false,
+    objStore: {
+      status: "",
+      confirmFuncId: "",
+      desc: "",
+      isOpen: false
     }
-  } else if (['201', '200'].includes(status)) {
-    return true
-  } else if ('500' === status) {
-    if (!alert(i18next.t("alert.desc.serverError"))) {
-      return true;
-    }
-  }
-  else {
-    return false;
-  }
-}
+  };
 
+
+
+  if (successStatus.includes(status)) {
+    returnValue = {
+      value: true,
+      objStore: {
+        status: "success",
+        confirmFuncId: "",
+        desc: "",
+        isOpen: false
+      }
+    }
+  } else if (tokenStatus.includes(status)) {
+    returnValue = {
+      value: false,
+      objStore: {
+        status: "token",
+        confirmFuncId: "token",
+        desc: i18next.t("alert.logout.sessionExpires"),
+        isOpen: true
+      }
+    }
+  } else if (errorStatus === status) {
+    returnValue = {
+      value: false,
+      objStore: {
+        status: "error",
+        confirmFuncId: "",
+        desc: i18next.t("alert.desc.serverError"),
+        isOpen: true
+      }
+    }
+  } else if (notFoundStatus === status) {
+    returnValue = {
+      value: false,
+      objStore: {
+        status: "notFound",
+        confirmFuncId: "",
+        desc: i18next.t("alert.desc.serverError"),
+        isOpen: true
+      }
+    }
+  }
+
+  console.log(returnValue);
+  return returnValue;
+}

@@ -64,7 +64,7 @@ function PlayerFilterModal() {
     leagueList = Object.keys(staticvalue.filterObjects).map(
       (key) =>
         Number(Object.keys(staticvalue.filterObjects[key])) ===
-          Number(filters.year) && key
+        Number(filters.year) && key
     );
     dispatch(setLeagueFilter(leagueList.sort()));
   };
@@ -95,7 +95,7 @@ function PlayerFilterModal() {
     }
   }, [filters.oppteam]);
 
-  useEffect(() => {}, [filters.oppplayer]);
+  useEffect(() => { }, [filters.oppplayer]);
 
   useEffect(() => {
     console.log("자꾸 울림");
@@ -126,7 +126,7 @@ function PlayerFilterModal() {
       id: user.id,
     };
 
-    axiosRequest(url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       setOppTeamFilter(e);
     });
   };
@@ -144,7 +144,7 @@ function PlayerFilterModal() {
       id: user.id,
     };
 
-    axiosRequest(url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       dispatch(setPlayerFilter(e));
     });
   };
@@ -163,7 +163,7 @@ function PlayerFilterModal() {
       id: user.id,
     };
 
-    axiosRequest(url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       setOppPlayerFilter(e);
     });
   };
@@ -180,7 +180,7 @@ function PlayerFilterModal() {
     <>
       <BackScreen
         playerModal={filters.compareModal}
-        // onClick={() => setPlayerModal(false)}
+      // onClick={() => setPlayerModal(false)}
       ></BackScreen>
       <PlayerModalWrapper playerModal={filters.compareModal}>
         <ModalNav>
@@ -729,7 +729,7 @@ const SelectOppTeam = styled.div`
     text-align: left;
     color: #fff;
     opacity: ${(props) =>
-      props.isFilterSelected && props.isMyPlayerSelected ? "1" : "0.3"};
+    props.isFilterSelected && props.isMyPlayerSelected ? "1" : "0.3"};
   }
   .Nav {
     color: #ffffff;
@@ -751,7 +751,7 @@ const ButtonBox = styled.div`
     height: 60px;
     border-radius: 20px;
     background-color: ${(props) =>
-      props.isOppPlayerSelected ? "#5942ba" : "#484655"};
+    props.isOppPlayerSelected ? "#5942ba" : "#484655"};
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 13px;
     font-weight: 500;
@@ -792,8 +792,8 @@ const MapTeams = styled.div`
     text-align: left;
     color: #84818e;
     ${(props) =>
-      props.currentTeam &&
-      css`
+    props.currentTeam &&
+    css`
         color: #ffffff;
       `}
   }

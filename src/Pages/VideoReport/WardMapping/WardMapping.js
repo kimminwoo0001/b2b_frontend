@@ -99,7 +99,7 @@ function WardMapping() {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(undefined, url, params, function (e) {
         const dto = e.warding;
         setWard(e.warding);
         console.log(e);
@@ -335,9 +335,8 @@ function WardMapping() {
       <RightSection>
         <WardMap
           style={{
-            backgroundImage: `url(${
-              mapSector ? mapSector : "Images/ward_map.png"
-            })`,
+            backgroundImage: `url(${mapSector ? mapSector : "Images/ward_map.png"
+              })`,
           }}
         >
           {ward?.map((ward, idx) => {

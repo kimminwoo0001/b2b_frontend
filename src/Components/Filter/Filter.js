@@ -192,7 +192,7 @@ const Filter = memo(() => {
       leagueList = Object.keys(staticvalue.filterObjects).map(
         (key) =>
           Number(Object.keys(staticvalue.filterObjects[key])) ===
-            Number(filters.year) && key
+          Number(filters.year) && key
       );
     } else {
       leagueList = Object.keys(staticvalue.filterObjects);
@@ -357,7 +357,7 @@ const Filter = memo(() => {
 
     axiosRequest(url, params, function (e) {
       // const patchResponse = e.patch ?? [];
-      const patchResponse = e;
+      const patchResponse = e ?? [];
 
       dispatch(setPatchFilter(patchResponse));
       dispatch(SetPatch(patchResponse));

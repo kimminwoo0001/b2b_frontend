@@ -70,7 +70,7 @@ function HitMap() {
 
     try {
       // const url = `${API}/lolapi/mappingPosition`;
-      const url = `${API}/lolapi/mapping/mapping`;
+      const url = `${API2}/lolapi/mapping/mapping`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -89,7 +89,7 @@ function HitMap() {
         firstTime: firstTime,
         secondTime: secondTime,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(undefined, url, params, function (e) {
         const heatData = e.position;
         getThreeMinBlue(heatData);
         getEightMinBlue(heatData);
@@ -266,8 +266,8 @@ function HitMap() {
                   ? true
                   : false
                 : tab === "champion"
-                ? filters.champion_eng && filters.oppchampion_eng
-                : false
+                  ? filters.champion_eng && filters.oppchampion_eng
+                  : false
             }
           >
             {t("video.heatmap.apply")}

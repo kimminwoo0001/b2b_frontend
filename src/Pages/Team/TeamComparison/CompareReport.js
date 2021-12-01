@@ -31,9 +31,9 @@ function CompareReport() {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(undefined, url, params, function (e) {
         setBoard(e);
-      });
+      })
     } catch (e) {
       console.log(e);
     } finally {

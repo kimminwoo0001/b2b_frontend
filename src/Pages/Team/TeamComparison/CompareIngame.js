@@ -64,7 +64,7 @@ function CompareIngame() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       setTeamName({
         team: filters.team,
         oppteam: filters.oppteam,

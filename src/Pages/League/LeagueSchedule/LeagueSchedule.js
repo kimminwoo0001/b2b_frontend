@@ -81,8 +81,8 @@ function LeagueSchedule() {
       month: convertMonth(startDate),
       token: user.token,
       id: user.id,
-    };
-    axiosRequest(url, params, function (e) {
+    }
+    axiosRequest(undefined, url, params, function (e) {
       setWeekData1(e[0].week);
       setWeekData2(e[1].week);
       setWeekData3(e[2].week);

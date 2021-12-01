@@ -39,10 +39,10 @@ function HitMapFilter() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       setChampFilter(e.champion);
       setChampEng(e.championEng);
-    });
+    })
   };
 
   const GetOppFilter = () => {
@@ -59,10 +59,10 @@ function HitMapFilter() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       setOppFilter(e.champion);
       setOppEng(e.championEng);
-    });
+    })
   };
 
   return (

@@ -89,7 +89,7 @@ function Stats() {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
+      axiosRequest(undefined, url, params, function (e) {
         setData(e?.data.player);
         setOppData(e?.data.oppPlayer);
         //라인전 능력치 비교 그래프 데이터 가공
@@ -173,7 +173,7 @@ function Stats() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       setChampFilter(e.champion);
       setChampEng(e.championEng);
     });
@@ -194,7 +194,7 @@ function Stats() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       setOppFilter(e.champion);
       setOppEng(e.championEng);
     });
@@ -674,7 +674,7 @@ function Stats() {
                       // strokeDasharray="4 4"
                       horizontal={false}
                       vertical={false}
-                      // horizontalPoints={[40, 80, 120, 160, 200, 240]}
+                    // horizontalPoints={[40, 80, 120, 160, 200, 240]}
                     />
                     <XAxis
                       type={"number"}
@@ -761,7 +761,7 @@ function Stats() {
                       // strokeDasharray="4 4"
                       horizontal={false}
                       vertical={false}
-                      // horizontalPoints={[25, 75, 125, 175, 225]}
+                    // horizontalPoints={[25, 75, 125, 175, 225]}
                     />
                     <XAxis
                       domain={[0, 100]}

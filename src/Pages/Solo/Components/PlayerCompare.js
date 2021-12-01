@@ -33,7 +33,7 @@ function PlayerCompare() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       setData(e[filters.player]);
       setOppData(e[filters.oppplayer]);
     });

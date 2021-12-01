@@ -76,8 +76,8 @@ function PlayerBoard() {
       id: user.id,
     };
 
-    axiosRequest(url, params, function (e) {
-      // const data = e;
+    axiosRequest(undefined, url, params, function (e) {
+      //const data = e.data;
       // var arrNumber = [0, 0, 0, 0, 0, 0, 0];
 
       // for (var i = 0; i < 7; i++) {
@@ -129,10 +129,8 @@ function PlayerBoard() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
-      const champArray = e.champion.map(
-        (data) => `${data.kor}(${data.total}경기)`
-      );
+    axiosRequest(undefined, url, params, function (e) {
+      const champArray = e.champion.map((data) => `${data.kor}(${data.total}경기)`);
       const champArrayEng = e.champion.map((data) => data.eng);
 
       // setChampFilter(e.champion);
@@ -156,11 +154,10 @@ function PlayerBoard() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
-      const champArray = e.champion.map(
-        (data) => `${data.kor}(${data.total}경기)`
-      );
+    axiosRequest(undefined, url, params, function (e) {
+      const champArray = e.champion.map((data) => `${data.kor}(${data.total}경기)`);
       const champArrayEng = e.champion.map((data) => data.eng);
+
       setOppFilter(champArray);
       setOppEng(champArrayEng);
     });
@@ -240,9 +237,8 @@ function PlayerBoard() {
             <div className="AttendValue">
               <span className="Wins">{`${matchInfo?.match}${t(
                 "solo.playerboard.games"
-              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${
-                matchInfo?.loss
-              }${t("solo.playerboard.lose")}`}</span>
+              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${matchInfo?.loss
+                }${t("solo.playerboard.lose")}`}</span>
               <span className="WinRate">{`${matchInfo?.winrate.toFixed(
                 1
               )}%`}</span>

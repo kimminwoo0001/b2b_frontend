@@ -46,9 +46,9 @@ const PiArea = () => {
       q: gameIdInput,
     };
 
-    axiosRequest(url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       setGameIdSearchData(e.items);
-    });
+    })
   };
 
   // dropdown 내 game id 클릭 시 해당 id에 대한 data fetching
@@ -83,11 +83,12 @@ const PiArea = () => {
       const url = `${API4}/searchByGameidAjax.do`;
       const params = {
         gameid: clickedGameId,
-      };
-      axiosRequest(url, params, function (e) {
+      }
+      axiosRequest(undefined, url, params, function (e) {
         setEntireData(e);
         handleYoutubeData(e);
-      });
+      })
+
     };
     fetchClickedData();
   }, [clickedGameId]);

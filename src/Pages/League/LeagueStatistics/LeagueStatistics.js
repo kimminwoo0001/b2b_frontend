@@ -61,7 +61,7 @@ function LeagueStatistics() {
       id: user.id,
     };
 
-    axiosRequest(url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       // 그래프 min, max, row 설정하기 위한 상태값
       setGameLengthData(e.avgGamelength);
       setSupportTimeData(e.avgSupportingTime);
