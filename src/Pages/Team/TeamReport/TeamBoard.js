@@ -7,7 +7,6 @@ import { API } from "../../config";
 import qs from "qs";
 import axiosRequest from "../../../lib/axiosRequest";
 
-
 function TeamBoard() {
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
@@ -29,12 +28,12 @@ function TeamBoard() {
         patch: filters.patch,
         team: filters.team,
         token: user.token,
-        id: user.id
-      }
+        id: user.id,
+      };
 
       axiosRequest(url, params, function (e) {
-        setAll(e.data);
-      })
+        setAll(e);
+      });
     } catch (e) {
       console.log(e);
     } finally {

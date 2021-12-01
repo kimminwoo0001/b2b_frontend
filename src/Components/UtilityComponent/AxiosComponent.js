@@ -14,79 +14,81 @@ const AxiosComponent = ({ url, paramData, callback, method = "GET" }) => {
 
   useEffect(() => {
     axiosRequest();
-  }, [])
+  }, []);
 
   const checkRequest = (status) => {
-    if (['403', '401'].includes(status)) {
+    if (["403", "401"].includes(status)) {
       setAlertDesc(t("alert.logout.sessionExpires"));
       setIsOpen(true);
       return false;
-    } else if (['201', '200'].includes(status)) {
-      return true
-    } else if ('500' === status) {
+    } else if (["201", "200"].includes(status)) {
+      return true;
+    } else if ("500" === status) {
       setAlertDesc(t("alert.desc.serverError"));
       setIsOpen(true);
       return false;
     }
-  }
+  };
 
   const status500Func = () => {
     sessionStorage.clear();
     history.push("/login");
-  }
+  };
 
   const axiosRequest = async () => {
     if (method === "GET") {
-      await axios.request({
-        method: method,
-        url: url,
-        params: paramData,
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        },
-      }).then(e => {
-        if (checkRequest(e.data.status)) {
-          if (callback) {
-            callback(e.data.response);
-          } else {
-            sessionStorage.clear();
-            history.push("/login");
+      await axios
+        .request({
+          method: method,
+          url: url,
+          params: paramData,
+          paramsSerializer: (params) => {
+            return qs.stringify(params, { arrayFormat: "repeat" });
+          },
+        })
+        .then((e) => {
+          if (checkRequest(e.status)) {
+            if (callback) {
+              callback(e.response);
+            } else {
+              sessionStorage.clear();
+              history.push("/login");
+            }
           }
-        }
-      }).catch(error => {
-        console.log("error test : ", error)
-      })
+        })
+        .catch((error) => {
+          console.log("error test : ", error);
+        });
     } else if (method.toUpperCase() === "POST") {
       const headers = {
-        "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type": "application/x-www-form-urlencoded",
       };
-      await axios.post(url, paramData, {
-        headers: headers,
-        withCredentials: true
-      }).then(e => {
-        if (checkRequest(e.data.status)) {
-          if (callback) {
-            callback(e.data.response);
-          } else {
-            sessionStorage.clear();
-            history.push("/login");
+      await axios
+        .post(url, paramData, {
+          headers: headers,
+          withCredentials: true,
+        })
+        .then((e) => {
+          if (checkRequest(e.status)) {
+            if (callback) {
+              callback(e.response);
+            } else {
+              sessionStorage.clear();
+              history.push("/login");
+            }
           }
-        }
-      }).catch(error => {
-        console.log("error test : ", error)
-      })
+        })
+        .catch((error) => {
+          console.log("error test : ", error);
+        });
     }
-  }
+  };
 
   return (
     <>
-      <AlertModal
-        desc={alertDesc}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-      />
+      <AlertModal desc={alertDesc} isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
-  )
-}
+  );
+};
 
 export default memo(AxiosComponent);

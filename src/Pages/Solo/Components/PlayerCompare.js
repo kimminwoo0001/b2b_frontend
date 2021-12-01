@@ -34,8 +34,8 @@ function PlayerCompare() {
       id: user.id,
     };
     axiosRequest(url, params, function (e) {
-      setData(e.data[filters.player]);
-      setOppData(e.data[filters.oppplayer]);
+      setData(e[filters.player]);
+      setOppData(e[filters.oppplayer]);
     });
     // dispatch(Loading(false));
   };

@@ -6,6 +6,8 @@ import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetec
 import { Reset_Map } from "../../../redux/modules/filtervalue";
 import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
+import { API } from "../../config";
+
 import qs from "qs";
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
@@ -69,7 +71,7 @@ function WardPlayerFilter({
 
   const getTeam = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -79,7 +81,7 @@ function WardPlayerFilter({
         id: user.id,
       };
       axiosRequest(url, params, function (e) {
-        const data = e.data.team;
+        const data = e.team;
         setFilterData({ ...filterData, team: data });
       });
     } catch (e) {
@@ -90,7 +92,7 @@ function WardPlayerFilter({
 
   const getPlayer = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -101,7 +103,7 @@ function WardPlayerFilter({
         id: user.id,
       };
       axiosRequest(url, params, function (e) {
-        const data = e.data.player;
+        const data = e.player;
         setFilterData({ ...filterData, player: data });
       });
     } catch (e) {
@@ -111,7 +113,7 @@ function WardPlayerFilter({
 
   const getChampion = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -123,7 +125,7 @@ function WardPlayerFilter({
         id: user.id,
       };
       axiosRequest(url, params, function (e) {
-        const data = e.data.champion;
+        const data = e.champion;
         setFilterData({ ...filterData, champion: data });
       });
     } catch (e) {
@@ -133,7 +135,7 @@ function WardPlayerFilter({
 
   const getOppTeam = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -146,7 +148,7 @@ function WardPlayerFilter({
         id: user.id,
       };
       axiosRequest(url, params, function (e) {
-        const data = e.data.opp_team;
+        const data = e.opp_team;
         setFilterData({ ...filterData, oppteam: data });
       });
     } catch (e) {
@@ -156,7 +158,7 @@ function WardPlayerFilter({
 
   const getOppPlayer = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -170,7 +172,7 @@ function WardPlayerFilter({
         id: user.id,
       };
       axiosRequest(url, params, function (e) {
-        const data = e.data.opp_player;
+        const data = e.opp_player;
         setFilterData({ ...filterData, oppplayer: data });
       });
     } catch (e) {
@@ -180,7 +182,7 @@ function WardPlayerFilter({
 
   const getOppChampion = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -195,7 +197,7 @@ function WardPlayerFilter({
         id: user.id,
       };
       axiosRequest(url, params, function (e) {
-        const data = e.data.opp_champion;
+        const data = e.opp_champion;
         setFilterData({ ...filterData, oppchampion: data });
       });
     } catch (e) {
@@ -625,7 +627,7 @@ function WardPlayerFilter({
             aria-labelledby="range-slider"
             getAriaValueText={timeFormat.ward}
             valueLabelFormat={timeFormat.ward}
-          // ValueLabelComponent={ValueLabelComponent}
+            // ValueLabelComponent={ValueLabelComponent}
           />
         </SliderContainer>
         <DefaultTime>
@@ -890,7 +892,7 @@ const DropDownToggle = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: ${(props) =>
-    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
+      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
     width: 142px;
   }
 
@@ -904,7 +906,7 @@ const DropDownToggle = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: ${(props) =>
-    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
+      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
     width: 183px;
   }
 

@@ -77,7 +77,7 @@ function PlayerBoard() {
     };
 
     axiosRequest(url, params, function (e) {
-      const data = e.data;
+      const data = e;
       // var arrNumber = [0, 0, 0, 0, 0, 0, 0];
 
       // for (var i = 0; i < 7; i++) {
@@ -130,11 +130,11 @@ function PlayerBoard() {
       id: user.id,
     };
     axiosRequest(url, params, function (e) {
-      const champArray = e.data.map((data) => `${data.kor}(${data.total}경기)`);
-      const champArrayEng = e.data.map((data) => data.eng);
+      const champArray = e.map((data) => `${data.kor}(${data.total}경기)`);
+      const champArrayEng = e.map((data) => data.eng);
 
-      // setChampFilter(e.data.champion);
-      // setChampEng(e.data.championEng);
+      // setChampFilter(e.champion);
+      // setChampEng(e.championEng);
       setChampFilter(champArray);
       setChampEng(champArrayEng);
     });
@@ -155,8 +155,8 @@ function PlayerBoard() {
       id: user.id,
     };
     axiosRequest(url, params, function (e) {
-      const champArray = e.data.map((data) => `${data.kor}(${data.total}경기)`);
-      const champArrayEng = e.data.map((data) => data.eng);
+      const champArray = e.map((data) => `${data.kor}(${data.total}경기)`);
+      const champArrayEng = e.map((data) => data.eng);
 
       setOppFilter(champArray);
       setOppEng(champArrayEng);
@@ -237,8 +237,9 @@ function PlayerBoard() {
             <div className="AttendValue">
               <span className="Wins">{`${matchInfo?.match}${t(
                 "solo.playerboard.games"
-              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${matchInfo?.loss
-                }${t("solo.playerboard.lose")}`}</span>
+              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${
+                matchInfo?.loss
+              }${t("solo.playerboard.lose")}`}</span>
               <span className="WinRate">{`${matchInfo?.winrate.toFixed(
                 1
               )}%`}</span>
@@ -428,7 +429,7 @@ function PlayerBoard() {
                         <td className="Icon">
                           <img
                             src={
-                              title.leaguedata <= title.data
+                              title.leaguedata <= title
                                 ? "Images/ico-point-high.png"
                                 : "Images/ico-point-low-blue.png"
                             }
@@ -439,9 +440,9 @@ function PlayerBoard() {
                         </td>
                         <PlayerValue
                           className="playerValue"
-                          changeColor={title.leaguedata > title.data}
+                          changeColor={title.leaguedata > title}
                         >
-                          {title.data.toFixed(1)}
+                          {title.toFixed(1)}
                         </PlayerValue>
                       </MapStat>
                     );
@@ -485,7 +486,7 @@ function PlayerBoard() {
                         <td className="Icon">
                           <img
                             src={
-                              title.leaguedata <= title.data
+                              title.leaguedata <= title
                                 ? "Images/ico-point-high.png"
                                 : "Images/ico-point-low-blue.png"
                             }
@@ -496,9 +497,9 @@ function PlayerBoard() {
                         </td>
                         <PlayerValue
                           className="playerValue"
-                          changeColor={title.leaguedata > title.data}
+                          changeColor={title.leaguedata > title}
                         >
-                          {title.data.toFixed(1)}
+                          {title.toFixed(1)}
                         </PlayerValue>
                       </MapStat>
                     );
@@ -543,7 +544,7 @@ function PlayerBoard() {
                         <td className="Icon">
                           <img
                             src={
-                              title.leaguedata <= title.data
+                              title.leaguedata <= title
                                 ? "Images/ico-point-high.png"
                                 : "Images/ico-point-low-blue.png"
                             }
@@ -554,9 +555,9 @@ function PlayerBoard() {
                         </td>
                         <PlayerValue
                           className="playerValue"
-                          changeColor={title.leaguedata > title.data}
+                          changeColor={title.leaguedata > title}
                         >
-                          {title.data.toFixed(1)}
+                          {title.toFixed(1)}
                         </PlayerValue>
                       </MapStat>
                     );

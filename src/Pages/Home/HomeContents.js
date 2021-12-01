@@ -48,10 +48,10 @@ const HomeContents = memo(() => {
       };
       axiosRequest(url, params, function (data) {
         setLeagueDataset(data);
-        // setLckData(e.data["LCK"]);
-        // setLecData(e.data["LEC"]);
-        // setLcsData(e.data["LCS"]);
-        // setLplData(e.data["LPL"]);
+        // setLckData(e["LCK"]);
+        // setLecData(e["LEC"]);
+        // setLcsData(e["LCS"]);
+        // setLplData(e["LPL"]);
         // setVcsData(jsonData.data["VCS"]);
         dispatch(Loading(false));
       });
@@ -72,6 +72,7 @@ const HomeContents = memo(() => {
           id: user.id,
         };
         axiosRequest(url, params, function (data) {
+          console.log(data);
           dispatch(GetFilterAllItems(data));
           dispatch(Loading(false));
         });

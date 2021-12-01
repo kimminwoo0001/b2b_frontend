@@ -8,6 +8,8 @@ import { useTranslation } from "react-i18next";
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import { API2 } from "../../config";
+import { API } from "../../config";
+
 import qs from "qs";
 import timeFormat from "../../../lib/timeFormat";
 import axiosRequest from "../../../lib/axiosRequest";
@@ -15,7 +17,7 @@ import axiosRequest from "../../../lib/axiosRequest";
 const WardSlider = withStyles({
   root: {
     color: "#5942ba",
-    height: 2
+    height: 2,
   },
   thumb: {
     height: 13,
@@ -25,23 +27,23 @@ const WardSlider = withStyles({
     marginTop: -3,
     marginLeft: -7,
     "&:focus, &:hover, &$active": {
-      boxShadow: "inherit"
-    }
+      boxShadow: "inherit",
+    },
   },
   active: {},
   valueLabel: {
     left: "calc(-50%)",
-    top: -30
+    top: -30,
   },
   track: {
     height: 6,
-    borderRadius: 4
+    borderRadius: 4,
   },
   rail: {
     height: 6,
     backgroundColor: "#433f4e",
-    borderRadius: 4
-  }
+    borderRadius: 4,
+  },
 })(Slider);
 
 function WardTeamFilter({ minFrom, setMinFrom }) {
@@ -60,17 +62,17 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
 
   const getTeam = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
         season: filters.season,
         patch: filters.patch,
         token: user.token,
-        id: user.id
+        id: user.id,
       };
       axiosRequest(url, params, function (e) {
-        const data = e.data.team;
+        const data = e.team;
         setFilterData({ ...filterData, team: data });
       });
     } catch (e) {
@@ -122,7 +124,7 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
                             champion_eng: "",
                             oppteam: "",
                             oppplayer: "",
-                            oppchampion_eng: ""
+                            oppchampion_eng: "",
                           })
                         );
                         setIsActive(!isActive);
@@ -153,7 +155,7 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
             aria-labelledby="range-slider"
             // getAriaValueText={valuetext}
             valueLabelFormat={timeFormat.ward}
-          // ValueLabelComponent={ValueLabelComponent}
+            // ValueLabelComponent={ValueLabelComponent}
           />
         </SliderContainer>
 
@@ -201,7 +203,7 @@ const WardTeamFilterContainer = styled.div``;
 
 const NoneVisible = styled.div`
   display: none;
-`
+`;
 
 const Steps = styled.div`
   min-height: 111px;
@@ -219,7 +221,7 @@ const Steps = styled.div`
     line-height: normal;
     letter-spacing: normal;
     text-align: left;
-    
+
     margin-bottom: 12px;
     > .step {
       font-weight: normal;
@@ -273,7 +275,7 @@ const DisplayTime = styled.div`
 const DropDownContainer = styled.div`
   margin: 0;
   padding: 0;
-  
+
   * {
     box-sizing: border-box;
   }
@@ -306,7 +308,7 @@ const DropDownContainer = styled.div`
     line-height: normal;
     letter-spacing: normal;
     text-align: left;
-    color: #fff;;
+    color: #fff;
   }
 
   .menu-trigger:hover {

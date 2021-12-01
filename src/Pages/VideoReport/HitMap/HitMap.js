@@ -5,19 +5,21 @@ import axios from "axios";
 import qs from "qs";
 import SetByChampion from "./SetByChampion";
 import SetByPlayer from "./SetByPlayer";
-import { Reset_MapTab, ResetChampion } from "../../../redux/modules/filtervalue";
+import {
+  Reset_MapTab,
+  ResetChampion,
+} from "../../../redux/modules/filtervalue";
 import h337 from "heatmap.js";
 import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
 import axiosRequest from "../../../lib/axiosRequest";
-
 
 function HitMap() {
   // 시간 설정 상태값
   const [minFrom, setMinFrom] = useState([0, 100]);
   let firstTime = minFrom[0] * 18;
   let secondTime = minFrom[1] * 18;
-  const isPageSolo = document.location.pathname === '/solo' ? true : false;
+  const isPageSolo = document.location.pathname === "/solo" ? true : false;
 
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
@@ -29,20 +31,25 @@ function HitMap() {
   const { t } = useTranslation();
   //히트맵 데이터 fetch 함수
   const fetchingHeatMapData = () => {
-    const { team, player, champion_eng, oppteam, oppplayer, oppchampion_eng } = filters;
+    const { team, player, champion_eng, oppteam, oppplayer, oppchampion_eng } =
+      filters;
 
     let unselectedItem = [];
-    if (tab === 'player') {
+    if (tab === "player") {
       if (team.length === 0) unselectedItem.push(t("video.vision.team"));
       if (player.length === 0) unselectedItem.push(t("video.vision.player"));
-      if (champion_eng.length === 0) unselectedItem.push(t("video.vision.champ"));
-    } else if (tab === 'champion') {
+      if (champion_eng.length === 0)
+        unselectedItem.push(t("video.vision.champ"));
+    } else if (tab === "champion") {
       if (team.length === 0) unselectedItem.push(t("video.vision.team"));
       if (player.length === 0) unselectedItem.push(t("video.vision.player"));
-      if (champion_eng.length === 0) unselectedItem.push(t("video.vision.champ"));
+      if (champion_eng.length === 0)
+        unselectedItem.push(t("video.vision.champ"));
       if (oppteam.length === 0) unselectedItem.push(t("video.vision.team2"));
-      if (oppplayer.length === 0) unselectedItem.push(t("video.vision.player2"));
-      if (oppchampion_eng.length === 0) unselectedItem.push(t("video.vision.champ2"));
+      if (oppplayer.length === 0)
+        unselectedItem.push(t("video.vision.player2"));
+      if (oppchampion_eng.length === 0)
+        unselectedItem.push(t("video.vision.champ2"));
     }
 
     if (unselectedItem.length > 0) {
@@ -53,13 +60,17 @@ function HitMap() {
           unselectedSentence += ", ";
         }
       }
-      let alertMessage = t("video.vision.selectAlert").replace('###', unselectedSentence);
+      let alertMessage = t("video.vision.selectAlert").replace(
+        "###",
+        unselectedSentence
+      );
       alert(alertMessage);
       return;
     }
 
     try {
-      const url = `${API2}/lolapi/mappingPosition`;
+      // const url = `${API}/lolapi/mappingPosition`;
+      const url = `${API}/lolapi/mapping/mapping`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -76,18 +87,17 @@ function HitMap() {
         token: user.token,
         id: user.id,
         firstTime: firstTime,
-        secondTime: secondTime
+        secondTime: secondTime,
       };
       axiosRequest(url, params, function (e) {
-        const heatData = e.data.position;
+        const heatData = e.position;
         getThreeMinBlue(heatData);
         getEightMinBlue(heatData);
-      })
+      });
     } catch (e) {
       console.log(e);
     } finally {
     }
-
   };
 
   //히트맵 블루팀 데이터 가공 함수
@@ -97,7 +107,7 @@ function HitMap() {
       container: resetHeatMap1.current,
       maxOpacity: 0.6,
       radius: 30,
-      blur: 0.9
+      blur: 0.9,
     });
 
     let max = 0;
@@ -136,7 +146,7 @@ function HitMap() {
       var data2 = {
         max: 30,
         min: 0,
-        data
+        data,
       };
       heatmap.setData(data2);
     }
@@ -148,7 +158,7 @@ function HitMap() {
       container: resetHeatMap2.current,
       maxOpacity: 0.6,
       radius: 30,
-      blur: 0.9
+      blur: 0.9,
     });
 
     let max = 0;
@@ -186,7 +196,7 @@ function HitMap() {
     var data2 = {
       max: 30,
       min: 0,
-      data
+      data,
     };
     console.log(data2);
 
@@ -198,7 +208,7 @@ function HitMap() {
 
   const contents = {
     player: <SetByPlayer setMinFrom={setMinFrom} minFrom={minFrom} />,
-    champion: <SetByChampion setMinFrom={setMinFrom} minFrom={minFrom} />
+    champion: <SetByChampion setMinFrom={setMinFrom} minFrom={minFrom} />,
   };
 
   return (
@@ -251,8 +261,13 @@ function HitMap() {
           <ConfirmButton
             onClick={() => fetchingHeatMapData()}
             isActive={
-              tab === 'player' ? (filters.champion_eng.length > 0 ? true : false)
-                : (tab === 'champion' ? filters.champion_eng && filters.oppchampion_eng : false)
+              tab === "player"
+                ? filters.champion_eng.length > 0
+                  ? true
+                  : false
+                : tab === "champion"
+                ? filters.champion_eng && filters.oppchampion_eng
+                : false
             }
           >
             {t("video.heatmap.apply")}
@@ -278,7 +293,7 @@ function HitMap() {
           </HitMapWrapper>
         </HitMapSide>
       </BottomSection>
-    </HitMapContainer >
+    </HitMapContainer>
   );
 }
 
@@ -307,7 +322,7 @@ const ButtonSection = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  border-top: 1px solid  #433f4e;
+  border-top: 1px solid #433f4e;
 `;
 
 const ConfirmButton = styled.button`
@@ -356,7 +371,7 @@ const FilterTab = styled.button`
     div {
       padding: 10px 15px;
       border-radius: 10px;
-      background-color : #26262C;
+      background-color: #26262c;
     }
   }
   span {
@@ -370,7 +385,8 @@ const FilterTab = styled.button`
     letter-spacing: normal;
     text-align: left;
     padding-bottom: 18px;
-    border-bottom: solid 1px ${(props) => props.changeColor ? `#fff` : `#433f4e;`};
+    border-bottom: solid 1px
+      ${(props) => (props.changeColor ? `#fff` : `#433f4e;`)};
     color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
   }
 `;
@@ -427,6 +443,6 @@ const LineMargin = styled.div`
 `;
 
 const LastMargin = styled.div`
-  width:73%;
+  width: 73%;
   border-bottom: solid 1px #433f4e;
 `;

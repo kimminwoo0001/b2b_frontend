@@ -213,7 +213,7 @@ function ChampionSetting({
 
   const getChampion = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -225,7 +225,7 @@ function ChampionSetting({
         id: user.id,
       };
       axiosRequest(url, params, function (e) {
-        const data = e.data.champion;
+        const data = e.champion;
         console.log(data);
         setFilterData({ ...filterData, champion: data });
       });
@@ -236,7 +236,7 @@ function ChampionSetting({
 
   const getOppTeam = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -249,7 +249,7 @@ function ChampionSetting({
         id: user.id,
       };
       axiosRequest(url, params, function (e) {
-        const data = e.data.opp_team;
+        const data = e.opp_team;
         setFilterData({ ...filterData, oppteam: data });
       });
     } catch (e) {
@@ -259,7 +259,7 @@ function ChampionSetting({
 
   const getOppPlayer = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -273,7 +273,7 @@ function ChampionSetting({
         id: user.id,
       };
       axiosRequest(url, params, function (e) {
-        const data = e.data.opp_player;
+        const data = e.opp_player;
         setFilterData({ ...filterData, oppplayer: data });
       });
     } catch (e) {
@@ -283,7 +283,7 @@ function ChampionSetting({
 
   const getOppChampion = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -298,7 +298,7 @@ function ChampionSetting({
         id: user.id,
       };
       axiosRequest(url, params, function (e) {
-        const data = e.data.opp_champion;
+        const data = e.opp_champion;
         setFilterData({ ...filterData, oppchampion: data });
       });
     } catch (e) {
@@ -308,7 +308,7 @@ function ChampionSetting({
 
   const getGame = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -323,7 +323,7 @@ function ChampionSetting({
         id: user.id,
       };
       axiosRequest(url, params, function (e) {
-        setGameData(Object.values(e.data["match"]));
+        setGameData(Object.values(e["match"]));
       });
     } catch (e) {
       console.log(e);
@@ -333,7 +333,7 @@ function ChampionSetting({
   const getGameAll = () => {
     try {
       if (filters.oppchampion_eng) {
-        const url = `${API2}/lolapi/mappingFilter`;
+        const url = `${API}/lolapi/mappingFilter`;
         const params = {
           league: filters.league,
           year: filters.year,
@@ -350,7 +350,7 @@ function ChampionSetting({
           id: user.id,
         };
         axiosRequest(url, params, function (e) {
-          setGameData(Object.values(e.data["match"]));
+          setGameData(Object.values(e["match"]));
         });
       }
     } catch (e) {
@@ -427,7 +427,10 @@ function ChampionSetting({
     <ChampionSettingContainer>
       <FilterBox>
         <DropDownBox>
-          <DropDownToggle className="container" changeColor={filters.team.length > 0} >
+          <DropDownToggle
+            className="container"
+            changeColor={filters.team.length > 0}
+          >
             <div className="menu-container">
               <button
                 onClick={() => {
@@ -438,17 +441,19 @@ function ChampionSetting({
                 className="menu-trigger"
                 style={{
                   cursor: "default",
-                  backgroundColor: "rgba(0,0,0,0)"
+                  backgroundColor: "rgba(0,0,0,0)",
                 }}
               >
                 <span className="Label">
                   {filters.team !== "" ? filters.team : t("video.object.team")}
                 </span>
-                {filters.team === "" && <img
-                  className="ArrowIcon"
-                  src="Images/select-arrow.png"
-                  alt="arrowIcon"
-                />}
+                {filters.team === "" && (
+                  <img
+                    className="ArrowIcon"
+                    src="Images/select-arrow.png"
+                    alt="arrowIcon"
+                  />
+                )}
               </button>
               {console.log("isActive", isActive)}
               <nav
@@ -491,7 +496,10 @@ function ChampionSetting({
               </nav>
             </div>
           </DropDownToggle>
-          <DropDownToggle className="container" changeColor={filters.player.length > 0}>
+          <DropDownToggle
+            className="container"
+            changeColor={filters.player.length > 0}
+          >
             <div className="menu-container2">
               <button
                 onClick={() => {
@@ -552,7 +560,10 @@ function ChampionSetting({
               </nav>
             </div>
           </DropDownToggle>
-          <DropDownToggle className="container" changeColor={champArray.length > 0}>
+          <DropDownToggle
+            className="container"
+            changeColor={champArray.length > 0}
+          >
             <div className="menu-container2">
               <button
                 onClick={() => {
@@ -562,19 +573,18 @@ function ChampionSetting({
                 }}
                 className="menu-trigger2"
               >
-
-                {
-                  champArray.length > 0 ?
-                    <span className="Label3">
-                      <span className="champLength">
-                        {`${champArray.length} `}
-                      </span>
-                      {` ${t("video.object.champ")}`}
+                {champArray.length > 0 ? (
+                  <span className="Label3">
+                    <span className="champLength">
+                      {`${champArray.length} `}
                     </span>
-                    : <span className="Label3">
-                      {t("video.object.selectChamp")}
-                    </span>
-                }
+                    {` ${t("video.object.champ")}`}
+                  </span>
+                ) : (
+                  <span className="Label3">
+                    {t("video.object.selectChamp")}
+                  </span>
+                )}
                 <img
                   className="ArrowIcon"
                   src="Images/select-arrow.png"
@@ -584,8 +594,9 @@ function ChampionSetting({
               {filterData?.champion ? (
                 <nav
                   ref={wrapperRef}
-                  className={`menu3 ${isActive2.current ? "active" : "inactive"
-                    }`}
+                  className={`menu3 ${
+                    isActive2.current ? "active" : "inactive"
+                  }`}
                 >
                   <ul>
                     <Menu3li
@@ -596,7 +607,9 @@ function ChampionSetting({
                             : "all"
                         )
                       }
-                      isChecked={filterData?.champion?.length === champArray.length}
+                      isChecked={
+                        filterData?.champion?.length === champArray.length
+                      }
                     >
                       <input
                         checked={
@@ -644,7 +657,10 @@ function ChampionSetting({
           </DropDownToggle>
         </DropDownBox>
         <DropDownBox2 isActive={compareOpen === true}>
-          <DropDownToggle className="container" changeColor={filters.oppteam.length > 0}>
+          <DropDownToggle
+            className="container"
+            changeColor={filters.oppteam.length > 0}
+          >
             <div className="menu-container">
               <button
                 onClick={() => {
@@ -704,7 +720,10 @@ function ChampionSetting({
               </nav>
             </div>
           </DropDownToggle>
-          <DropDownToggle className="container" changeColor={filters.oppplayer.length > 0}>
+          <DropDownToggle
+            className="container"
+            changeColor={filters.oppplayer.length > 0}
+          >
             <div className="menu-container2">
               <button
                 onClick={() => {
@@ -765,7 +784,10 @@ function ChampionSetting({
               </nav>
             </div>
           </DropDownToggle>
-          <DropDownToggle className="container" changeColor={champArray2.length > 0}>
+          <DropDownToggle
+            className="container"
+            changeColor={champArray2.length > 0}
+          >
             <div className="menu-container2">
               <button
                 onClick={() => {
@@ -775,18 +797,18 @@ function ChampionSetting({
                 }}
                 className="menu-trigger2"
               >
-                {
-                  champArray2.length > 0 ?
-                    <span className="Label3">
-                      <span className="champLength">
-                        {`${champArray2.length} `}
-                      </span>
-                      {` ${t("video.object.champ")}`}
+                {champArray2.length > 0 ? (
+                  <span className="Label3">
+                    <span className="champLength">
+                      {`${champArray2.length} `}
                     </span>
-                    : <span className="Label3">
-                      {t("video.object.selectChamp")}
-                    </span>
-                }
+                    {` ${t("video.object.champ")}`}
+                  </span>
+                ) : (
+                  <span className="Label3">
+                    {t("video.object.selectChamp")}
+                  </span>
+                )}
                 <img
                   className="ArrowIcon"
                   src="Images/select-arrow.png"
@@ -796,8 +818,9 @@ function ChampionSetting({
               {filterData?.oppchampion ? (
                 <nav
                   ref={wrapperRef2}
-                  className={`menu3 ${isActive5.current ? "active" : "inactive"
-                    }`}
+                  className={`menu3 ${
+                    isActive5.current ? "active" : "inactive"
+                  }`}
                 >
                   <ul>
                     <Menu3li
@@ -808,7 +831,9 @@ function ChampionSetting({
                             : "all"
                         )
                       }
-                      isChecked={filterData?.oppchampion?.length === champArray2.length}
+                      isChecked={
+                        filterData?.oppchampion?.length === champArray2.length
+                      }
                     >
                       <input
                         checked={
@@ -871,7 +896,7 @@ function ChampionSetting({
           />
         </CompareButton>
       </FilterBox>
-    </ChampionSettingContainer >
+    </ChampionSettingContainer>
   );
 }
 
@@ -894,8 +919,7 @@ const DropDownBox = styled.div`
 `;
 
 const DropDownBox2 = styled.div`
-  display: ${(props) =>
-    props.isActive ? 'flex' : 'none'};
+  display: ${(props) => (props.isActive ? "flex" : "none")};
   justify-content: space-evenly;
   margin-bottom: 4px;
   opacity: 0;
@@ -1025,7 +1049,8 @@ const DropDownToggle = styled.div`
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
-    color: r ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `#84818e`)};
+    color: r
+      ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `#84818e`)};
     width: 124px;
     margin-left: 20px;
   }
@@ -1035,7 +1060,7 @@ const DropDownToggle = styled.div`
     font-size: 12px;
     letter-spacing: -0.6px;
     text-align: left;
-    color:  ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `#84818e`)};
+    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `#84818e`)};
     width: 74px;
   }
 
@@ -1249,10 +1274,10 @@ const Menu3li = styled.li`
   ${(props) =>
     props.isChecked &&
     css`
-        color: rgb(255, 255, 255);
-        background-color: rgba(22, 21, 28, 0.5);
-        border-radius: 10px;
-      `}
+      color: rgb(255, 255, 255);
+      background-color: rgba(22, 21, 28, 0.5);
+      border-radius: 10px;
+    `}
   >  input[type="checkbox"] {
     -webkit-appearance: none;
     -moz-appearance: none;

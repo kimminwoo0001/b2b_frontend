@@ -59,23 +59,26 @@ function TeamIndex() {
 
       axiosRequest(url, params, function (e) {
         //팀 평균 데이터 fetch
-        setTeamStats(e.data.teamStats);
+        setTeamStats(e.teamStats);
 
         //리그 평균 데이터 fetch
-        setLeagueStat(e.data.leagueStat);
+        setLeagueStat(e.leagueStat);
 
         //SRB 데이터 fetch
-        setSbrAnalysis(e.data.sbrAnalysis);
+        setSbrAnalysis(e.sbrAnalysis);
 
         //첫 갱 라인 데이터 fetch
         const gameX = [];
         const gameY = [];
 
-        let firstGank = e.data.firstGank;
-        firstGank.firstGankMax = firstGank?.firstGankMax % 5 === 0 ? firstGank?.firstGankMax : firstGank?.firstGankMax + (5 - firstGank?.firstGankMax % 5);
+        let firstGank = e.firstGank;
+        firstGank.firstGankMax =
+          firstGank?.firstGankMax % 5 === 0
+            ? firstGank?.firstGankMax
+            : firstGank?.firstGankMax + (5 - (firstGank?.firstGankMax % 5));
         firstGank.firstGankRow = firstGank.firstGankMax / 5;
-        setGankCount(e.data.firstGank);
-        e.data.firstGank.firstGankList.forEach((game) => {
+        setGankCount(e.firstGank);
+        e.firstGank.firstGankList.forEach((game) => {
           gameX.push(game.position);
           gameY.push(game.gankCount);
         });
@@ -86,8 +89,8 @@ function TeamIndex() {
 
         const supportX = [];
         const supportY = [];
-        setSupportTimeData(e.data.supportedTime);
-        e.data.supportedTime.supportedTimeList.forEach((support) => {
+        setSupportTimeData(e.supportedTime);
+        e.supportedTime.supportedTimeList.forEach((support) => {
           supportX.push(support.position);
           supportY.push(support.value);
         });
@@ -202,14 +205,16 @@ function TeamIndex() {
                     height="13px"
                   ></img>
                   <TeamValue changeColor={teamStats?.playTime.result === false}>
-                    {`${teamStats?.playTime.minute}${t("team.analysis.min")} ${teamStats?.playTime.second
-                      }${t("team.analysis.sec")}`}
+                    {`${teamStats?.playTime.minute}${t("team.analysis.min")} ${
+                      teamStats?.playTime.second
+                    }${t("team.analysis.sec")}`}
                   </TeamValue>
                 </div>
-                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${leagueStat?.playTime.minute
-                  }${t("team.analysis.min")} ${leagueStat?.playTime.second}${t(
-                    "team.analysis.sec"
-                  )}`}</div>
+                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${
+                  leagueStat?.playTime.minute
+                }${t("team.analysis.min")} ${leagueStat?.playTime.second}${t(
+                  "team.analysis.sec"
+                )}`}</div>
               </DisplayInfo>
             </div>
           </div>
@@ -271,10 +276,11 @@ function TeamIndex() {
                     )}`}
                   </TeamValue>
                 </div>
-                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${leagueStat?.firstDragon.minute
-                  }${t("team.analysis.min")} ${leagueStat?.firstDragon.second}${t(
-                    "team.analysis.sec"
-                  )}`}</div>
+                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${
+                  leagueStat?.firstDragon.minute
+                }${t("team.analysis.min")} ${leagueStat?.firstDragon.second}${t(
+                  "team.analysis.sec"
+                )}`}</div>
               </DisplayInfo>
             </div>
           </div>
@@ -371,10 +377,11 @@ function TeamIndex() {
                     )}`}
                   </TeamValue>
                 </div>
-                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${leagueStat?.firstHerald.minute
-                  }${t("team.analysis.min")} ${leagueStat?.firstHerald.second}${t(
-                    "team.analysis.sec"
-                  )}`}</div>
+                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${
+                  leagueStat?.firstHerald.minute
+                }${t("team.analysis.min")} ${leagueStat?.firstHerald.second}${t(
+                  "team.analysis.sec"
+                )}`}</div>
               </DisplayInfo>
             </div>
             <div className="AvgFirstGank">
@@ -406,9 +413,11 @@ function TeamIndex() {
                     )}`}
                   </TeamValue>
                 </div>
-                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${leagueStat?.timeOfFirstGank.minute
-                  }${t("team.analysis.min")} ${leagueStat?.timeOfFirstGank.second
-                  }${t("team.analysis.sec")}`}</div>
+                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${
+                  leagueStat?.timeOfFirstGank.minute
+                }${t("team.analysis.min")} ${
+                  leagueStat?.timeOfFirstGank.second
+                }${t("team.analysis.sec")}`}</div>
               </DisplayInfo>
             </div>
           </div>
@@ -442,10 +451,11 @@ function TeamIndex() {
                     )}`}
                   </TeamValue>
                 </div>
-                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${leagueStat?.firstBaron.minute
-                  }${t("team.analysis.min")} ${leagueStat?.firstBaron.second}${t(
-                    "team.analysis.sec"
-                  )}`}</div>
+                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${
+                  leagueStat?.firstBaron.minute
+                }${t("team.analysis.min")} ${leagueStat?.firstBaron.second}${t(
+                  "team.analysis.sec"
+                )}`}</div>
               </DisplayInfo>
             </div>
             <div className="AvgCombat">
@@ -587,7 +597,11 @@ function TeamIndex() {
                         fontColor: "#84818e",
                         fontSize: 15,
                         min: gankCount?.firstGankMin,
-                        max: gankCount?.firstGankMax % 5 === 0 ? gankCount?.firstGankMax : gankCount?.firstGankMax + (5 - gankCount?.firstGankMax % 5),
+                        max:
+                          gankCount?.firstGankMax % 5 === 0
+                            ? gankCount?.firstGankMax
+                            : gankCount?.firstGankMax +
+                              (5 - (gankCount?.firstGankMax % 5)),
                       },
                       gridLines: {
                         color: "rgb(58, 55, 69)",

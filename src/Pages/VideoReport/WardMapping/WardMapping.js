@@ -77,7 +77,9 @@ function WardMapping() {
   //맵핑 데이터 fetch 함수
   const fetchingWardData = (wardside) => {
     try {
-      const url = `${API2}/lolapi/waddingFilter`;
+      // const url = `${API}/lolapi/waddingFilter`;
+      const url = `${API}/lolapi/mapping/ward`;
+
       const params = {
         league: filters.league,
         year: filters.year,
@@ -97,9 +99,9 @@ function WardMapping() {
         id: user.id,
       };
       axiosRequest(url, params, function (e) {
-        const dto = e.data.warding;
-        setWard(e.data.warding);
-        console.log(e.data);
+        const dto = e.warding;
+        setWard(e.warding);
+        console.log(e);
         // sector 구분해서 섹터값 더하기
         if (dto.length > 0) {
           var total = 0;
@@ -332,8 +334,9 @@ function WardMapping() {
       <RightSection>
         <WardMap
           style={{
-            backgroundImage: `url(${mapSector ? mapSector : "Images/ward_map.png"
-              })`,
+            backgroundImage: `url(${
+              mapSector ? mapSector : "Images/ward_map.png"
+            })`,
           }}
         >
           {ward?.map((ward, idx) => {

@@ -19,7 +19,7 @@ import {
   Baned2,
   Baned3,
   Baned4,
-  Baned5
+  Baned5,
 } from "../../../redux/modules/teambanpick";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import All from "./All";
@@ -70,7 +70,7 @@ function BanIndex() {
         phase2_1={phase2_1}
         phase2_2={phase2_2}
       />
-    )
+    ),
   };
 
   useEffect(() => {
@@ -94,76 +94,73 @@ function BanIndex() {
       team: filters.team,
       side: side,
       token: user.token,
-      id: user.id
+      id: user.id,
     };
 
     axiosRequest(url, params, function (e) {
-      dispatch(Pick1(e.data.Picks[0].order));
-      dispatch(Pick2(e.data.Picks[1].order));
-      dispatch(Pick3(e.data.Picks[2].order));
-      dispatch(Pick4(e.data.Picks[3].order));
-      dispatch(Pick5(e.data.Picks[4].order));
-      dispatch(Ban1(e.data.Bans[0].BanInfos));
-      dispatch(Ban2(e.data.Bans[1].BanInfos));
-      dispatch(Ban3(e.data.Bans[2].BanInfos));
-      dispatch(Ban4(e.data.Bans[3].BanInfos));
-      dispatch(Ban5(e.data.Bans[4].BanInfos));
-      dispatch(Baned1(e.data.Baneds[0].BanInfos));
-      dispatch(Baned2(e.data.Baneds[1].BanInfos));
-      dispatch(Baned3(e.data.Baneds[2].BanInfos));
-      dispatch(Baned4(e.data.Baneds[3].BanInfos));
-      dispatch(Baned5(e.data.Baneds[4].BanInfos));
+      dispatch(Pick1(e.Picks[0].order));
+      dispatch(Pick2(e.Picks[1].order));
+      dispatch(Pick3(e.Picks[2].order));
+      dispatch(Pick4(e.Picks[3].order));
+      dispatch(Pick5(e.Picks[4].order));
+      dispatch(Ban1(e.Bans[0].BanInfos));
+      dispatch(Ban2(e.Bans[1].BanInfos));
+      dispatch(Ban3(e.Bans[2].BanInfos));
+      dispatch(Ban4(e.Bans[3].BanInfos));
+      dispatch(Ban5(e.Bans[4].BanInfos));
+      dispatch(Baned1(e.Baneds[0].BanInfos));
+      dispatch(Baned2(e.Baneds[1].BanInfos));
+      dispatch(Baned3(e.Baneds[2].BanInfos));
+      dispatch(Baned4(e.Baneds[3].BanInfos));
+      dispatch(Baned5(e.Baneds[4].BanInfos));
 
       const isKor = lang === "ko";
 
       let phaseArray1 = [];
-      Object.keys(e.data.phased[0]).forEach(key => {
-        const data = e.data.phased[0]
+      Object.keys(e.phased[0]).forEach((key) => {
+        const data = e.phased[0];
         phaseArray1.push({
           champion: isKor ? data[key].championKor : data[key].championKor,
           key: key,
-          value: data[key].total
+          value: data[key].total,
         });
       });
 
       let phaseArray2 = [];
-      Object.keys(e.data.phased[1]).forEach(key => {
-        const data = e.data.phased[1]
+      Object.keys(e.phased[1]).forEach((key) => {
+        const data = e.phased[1];
         phaseArray2.push({
           champion: isKor ? data[key].championKor : data[key].championKor,
           key: key,
-          value: data[key].total
+          value: data[key].total,
         });
       });
 
       let phaseArray2_1 = [];
-      Object.keys(e.data.phased2[0]).forEach(key => {
-        const data = e.data.phased2[0]
+      Object.keys(e.phased2[0]).forEach((key) => {
+        const data = e.phased2[0];
         phaseArray2_1.push({
           champion: isKor ? data[key].championKor : data[key].championKor,
           key: key,
-          value: data[key].total
+          value: data[key].total,
         });
       });
 
       let phaseArray2_2 = [];
-      Object.keys(e.data.phased2[1]).forEach(key => {
-        const data = e.data.phased2[1]
+      Object.keys(e.phased2[1]).forEach((key) => {
+        const data = e.phased2[1];
         phaseArray2_2.push({
           champion: isKor ? data[key].championKor : data[key].championKor,
           key: key,
-          value: data[key].total
+          value: data[key].total,
         });
       });
-
-
 
       setPhase1(sortPhase(phaseArray1));
       setPhase2(sortPhase(phaseArray2));
       setPhase2_1(sortPhase(phaseArray2_1));
       setPhase2_2(sortPhase(phaseArray2_2));
-
-    }).finally(setLoading(false))
+    }).finally(setLoading(false));
   };
 
   if (loading) return <LoadingImg />;
@@ -209,8 +206,7 @@ function BanIndex() {
 
 export default BanIndex;
 
-const BanIndexWrapper = styled.div`
-`;
+const BanIndexWrapper = styled.div``;
 
 const BanIndexTabs = styled.div`
   display: flex;
@@ -224,7 +220,7 @@ const LineMargin = styled.div`
 `;
 
 const LastMargin = styled.div`
-  width:90%;
+  width: 90%;
   border-bottom: solid 1px #433f4e;
 `;
 
@@ -243,10 +239,10 @@ const BtnItem = styled.button`
     div {
       padding: 10px 15px;
       border-radius: 10px;
-      background-color : #26262C;
+      background-color: #26262c;
     }
   }
-  
+
   span {
     height: 22px;
     font-family: SpoqaHanSansNeo;
@@ -258,57 +254,58 @@ const BtnItem = styled.button`
     letter-spacing: normal;
     text-align: left;
     padding-bottom: 18px;
-    border-bottom: solid 1px ${(props) => props.changeColor ? `#fff` : `#433f4e;`};
+    border-bottom: solid 1px
+      ${(props) => (props.changeColor ? `#fff` : `#433f4e;`)};
     color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
   }
 `;
 
 const BlueBtn = styled.button`
-display: flex;
-padding: 20px 0 20px 0;
-align-items: center;
-width: auto;
-border-bottom: solid 1px #433f4e;
-span {
-  height: 22px;
-  font-family: SpoqaHanSansNeo;
-  font-size: 18px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: left;
-  color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
-}
-${(props) =>
+  display: flex;
+  padding: 20px 0 20px 0;
+  align-items: center;
+  width: auto;
+  border-bottom: solid 1px #433f4e;
+  span {
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+  }
+  ${(props) =>
     props.changeColor &&
     css`
-  border-bottom: solid 1px #fff;
-  `}
+      border-bottom: solid 1px #fff;
+    `}
 `;
 
 const RedBtn = styled.button`
-display: flex;
-padding: 20px 0 20px 0;
-align-items: center;
-width: auto;
-border-bottom: solid 1px #433f4e;
-span {
-  height: 22px;
-  font-family: SpoqaHanSansNeo;
-  font-size: 18px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: left;
-  color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
-}
-${(props) =>
+  display: flex;
+  padding: 20px 0 20px 0;
+  align-items: center;
+  width: auto;
+  border-bottom: solid 1px #433f4e;
+  span {
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+  }
+  ${(props) =>
     props.changeColor &&
     css`
-  border-bottom: solid 1px #fff;
-  `}
+      border-bottom: solid 1px #fff;
+    `}
 `;

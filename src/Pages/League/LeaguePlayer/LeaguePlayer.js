@@ -5,7 +5,6 @@ import { API } from "../../config";
 import qs from "qs";
 import TabTop from "./Components/TabTop";
 
-
 import { useSelector } from "react-redux";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useTranslation } from "react-i18next";
@@ -24,7 +23,7 @@ function LeaguePlayer() {
     jng: <TabTop playerData={playerData} loading={loading} />,
     mid: <TabTop playerData={playerData} loading={loading} />,
     bot: <TabTop playerData={playerData} loading={loading} />,
-    sup: <TabTop playerData={playerData} loading={loading} />
+    sup: <TabTop playerData={playerData} loading={loading} />,
   };
 
   useEffect(() => {
@@ -44,11 +43,11 @@ function LeaguePlayer() {
       position: positionClicked,
       token: user.token,
       id: user.id,
-    }
+    };
     axiosRequest(url, params, function (e) {
-      setPlayerData(e.data);
+      setPlayerData(e);
       setIsLoading(false);
-    })
+    });
   };
 
   return (
@@ -123,139 +122,138 @@ const LineMargin = styled.div`
 `;
 const TabItem = styled.button`
   display: flex;
-    align-items: center;
-    width: auto;
-    border-bottom: solid 1px #433f4e;
-    white-space: nowrap;
+  align-items: center;
+  width: auto;
+  border-bottom: solid 1px #433f4e;
+  white-space: nowrap;
 
+  div {
+    padding: 10px 15px;
+  }
+
+  :hover {
     div {
       padding: 10px 15px;
+      border-radius: 10px;
+      background-color: #26262c;
     }
+  }
 
-    :hover {
-      div {
-        padding: 10px 15px;
-        border-radius: 10px;
-        background-color : #26262C;
-      }
-    }
-    
-    span {
-      height: 22px;
-      font-family: SpoqaHanSansNeo;
-      font-size: 18px;
-      font-weight: normal;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: normal;
-      letter-spacing: normal;
-      text-align: left;
-      padding-bottom: 19px;
-      border-bottom: solid 1px ${(props) => props.changeColor ? `#fff` : `#433f4e;`};
-      color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
-    }
+  span {
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    padding-bottom: 19px;
+    border-bottom: solid 1px
+      ${(props) => (props.changeColor ? `#fff` : `#433f4e;`)};
+    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+  }
 `;
 
-
 const JngTab = styled.button`
-display: flex;
-padding: 20px 0 20px 0;
-align-items: center;
-width: auto;
-border-bottom: solid 1px #433f4e;
-span {
-  height: 22px;
-  font-family: SpoqaHanSansNeo;
-  font-size: 18px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: left;
-  color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
-}
-${(props) =>
+  display: flex;
+  padding: 20px 0 20px 0;
+  align-items: center;
+  width: auto;
+  border-bottom: solid 1px #433f4e;
+  span {
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+  }
+  ${(props) =>
     props.changeColor &&
     css`
-  border-bottom: solid 1px #fff;
-  `}
+      border-bottom: solid 1px #fff;
+    `}
 `;
 
 const MidTab = styled.button`
-display: flex;
-padding: 20px 0 20px 0;
-align-items: center;
-width: auto;
-border-bottom: solid 1px #433f4e;
-span {
-  height: 22px;
-  font-family: SpoqaHanSansNeo;
-  font-size: 18px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: left;
-  color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
-}
-${(props) =>
+  display: flex;
+  padding: 20px 0 20px 0;
+  align-items: center;
+  width: auto;
+  border-bottom: solid 1px #433f4e;
+  span {
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+  }
+  ${(props) =>
     props.changeColor &&
     css`
-  border-bottom: solid 1px #fff;
-`}
+      border-bottom: solid 1px #fff;
+    `}
 `;
 
-
 const BotTab = styled.button`
-display: flex;
-padding: 20px 0 20px 0;
-align-items: center;
-width: auto;
-border-bottom: solid 1px #433f4e;
-span {
-  height: 22px;
-  font-family: SpoqaHanSansNeo;
-  font-size: 18px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: left;
-  color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
-}
-${(props) =>
+  display: flex;
+  padding: 20px 0 20px 0;
+  align-items: center;
+  width: auto;
+  border-bottom: solid 1px #433f4e;
+  span {
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+  }
+  ${(props) =>
     props.changeColor &&
     css`
-  border-bottom: solid 1px #fff;
-`}
+      border-bottom: solid 1px #fff;
+    `}
 `;
 
 const SupTab = styled.button`
-display: flex;
-padding: 20px 0 20px 0;
-align-items: center;
-width: auto;
-border-bottom: solid 1px #433f4e;
-span {
-  height: 22px;
-  font-family: SpoqaHanSansNeo;
-  font-size: 18px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: left;
-  color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
-}
-${(props) =>
+  display: flex;
+  padding: 20px 0 20px 0;
+  align-items: center;
+  width: auto;
+  border-bottom: solid 1px #433f4e;
+  span {
+    height: 22px;
+    font-family: SpoqaHanSansNeo;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
+  }
+  ${(props) =>
     props.changeColor &&
     css`
-  border-bottom: solid 1px #fff;
-`}
+      border-bottom: solid 1px #fff;
+    `}
 `;
 
 const TabContents = styled.div``;

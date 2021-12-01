@@ -11,7 +11,6 @@ import Tippy from "@tippy.js/react";
 import ObjectTooltip from "../ObjectMapping/ObjectTooltip";
 import axiosRequest from "../../../lib/axiosRequest";
 
-
 //fast 버튼 setinterval 메모리 최적화 함수
 function useInterval(callback) {
   const savedCallback = useRef();
@@ -80,7 +79,7 @@ function GameMapping() {
 
   const getGameLists = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mappingFilter/`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -93,9 +92,9 @@ function GameMapping() {
         id: user.id,
       };
       axiosRequest(url, params, function (e) {
-        setGameListData(Object.values(e.data["match"]));
-        console.log(e.data.match);
-      })
+        setGameListData(Object.values(e["match"]));
+        console.log(e.match);
+      });
     } catch (e) {
       console.log(e);
     }
@@ -103,20 +102,22 @@ function GameMapping() {
 
   //맵핑 데이터 fetch 함수
   const fetchingMapData = () => {
-    const gameid = filters?.gameid ?? '';
+    const gameid = filters?.gameid ?? "";
     if (gameid.length > 0) {
       setLoading(true);
       try {
-        const url = `${API2}/lolapi/mappingPosition`;
+        // const url = `${API}/lolapi/mappingPosition`;
+        const url = `${API}/lolapi/mapping/mapping`;
+
         const params = {
           gameid: filters.gameid,
           token: user.token,
           id: user.id,
-        }
+        };
 
         axiosRequest(url, params, function (e) {
           // 맵핑 포지션
-          const dto = e.data;
+          const dto = e;
 
           for (let i = 0; i < dto.position.length; i++) {
             if (dto.position[i].player) {
@@ -130,7 +131,7 @@ function GameMapping() {
           setCurrentPos(dto.position);
           setInfo(dto.info);
           setTimeLineData(dto.timeline);
-        })
+        });
       } catch (e) {
         console.log(e);
       } finally {
@@ -138,7 +139,7 @@ function GameMapping() {
         setPlay(true);
       }
     } else {
-      alert(t("video.vision.selectGame"))
+      alert(t("video.vision.selectGame"));
     }
   };
 
@@ -280,11 +281,11 @@ function GameMapping() {
                 ) {
                   if (
                     Number(currentPos[range]?.player[i].x1) -
-                    Number(currentPos[range]?.player[i].x2) !==
-                    0 &&
+                      Number(currentPos[range]?.player[i].x2) !==
+                      0 &&
                     Number(currentPos[range]?.player[i].y1) -
-                    Number(currentPos[range]?.player[i].y2) !==
-                    0
+                      Number(currentPos[range]?.player[i].y2) !==
+                      0
                   ) {
                     var x =
                       ((Number(currentPos[range]?.player[i].x1) +
@@ -411,8 +412,9 @@ function GameMapping() {
             ).toFixed(1)}`}</span>
             <p>/</p>
             {maxTime ? (
-              <span className="max">{`${Math.floor(maxTime / 2 / 60)} : ${(maxTime / 2) % 60
-                }`}</span>
+              <span className="max">{`${Math.floor(maxTime / 2 / 60)} : ${
+                (maxTime / 2) % 60
+              }`}</span>
             ) : (
               <span className="max">{`00 : 00`}</span>
             )}

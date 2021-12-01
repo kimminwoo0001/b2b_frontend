@@ -71,8 +71,8 @@ function NormalInfo() {
       id: user.id,
     };
     axiosRequest(url, params, function (e) {
-      const copy = e.data[filters.player];
-      const copyoppData = e.data[filters.oppplayer];
+      const copy = e[filters.player];
+      const copyoppData = e[filters.oppplayer];
       setData(copy);
       setOppData(copyoppData);
       //선수 데이터
@@ -109,8 +109,8 @@ function NormalInfo() {
       id: user.id,
     };
     axiosRequest(url, params, function (e) {
-      setChampFilter(e.data.champion);
-      setChampEng(e.data.championEng);
+      setChampFilter(e.champion);
+      setChampEng(e.championEng);
     });
   };
   //상대 챔피언 필터
@@ -128,8 +128,8 @@ function NormalInfo() {
       id: user.id,
     };
     axiosRequest(url, params, function (e) {
-      setOppFilter(e.data.champion);
-      setOppEng(e.data.championEng);
+      setOppFilter(e.champion);
+      setOppEng(e.championEng);
     });
   };
 

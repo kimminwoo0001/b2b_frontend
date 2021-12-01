@@ -118,7 +118,7 @@ function PickCombineModal({ openModal, setOpenModal }) {
       patch: filters.patch,
     };
     axiosRequest(url, params, function (e) {
-      setTeamFilter(e.data.team);
+      setTeamFilter(e.team);
     });
   };
 
@@ -133,7 +133,7 @@ function PickCombineModal({ openModal, setOpenModal }) {
       team: filters.team,
     };
     axiosRequest(url, params, function (e) {
-      setPlayerFilter(e.data.player);
+      setPlayerFilter(e.player);
     });
   };
 

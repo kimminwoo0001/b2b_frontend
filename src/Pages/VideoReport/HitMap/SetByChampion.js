@@ -64,7 +64,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
   const [filterData, setFilterData] = useState({});
   const [champArray, setChampArray] = useState([]);
   const [champArray2, setChampArray2] = useState([]);
-  const isPageSolo = document.location.pathname === '/solo' ? true : false;
+  const isPageSolo = document.location.pathname === "/solo" ? true : false;
   useOutsideAlerter(wrapperRef, isActive2, filters, champArray);
   useOutsideAlerter2(wrapperRef2, isActive5, filters, champArray2);
 
@@ -102,7 +102,6 @@ function SetByChampion({ minFrom, setMinFrom }) {
           if (!ref?.current.contains(event.target)) {
             const refClassList = Array.from(ref?.current.classList);
             if (refClassList.includes("menu3") === false) {
-
             }
             //setIsActive5(false);
             isActive5.current = false;
@@ -168,7 +167,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
       if (isPageSolo) {
         setIsActive(!isActive);
       } else {
-        const url = `${API2}/lolapi/mappingFilter`;
+        const url = `${API}/lolapi/mappingFilter`;
         const params = {
           league: filters.league,
           year: filters.year,
@@ -178,10 +177,9 @@ function SetByChampion({ minFrom, setMinFrom }) {
           id: user.id,
         };
         axiosRequest(url, params, function (e) {
-          const data = e.data.team;
+          const data = e.team;
           setFilterData({ ...filterData, team: data });
-        })
-
+        });
       }
     } catch (e) {
       console.log(e);
@@ -193,7 +191,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
       if (isPageSolo) {
         setIsActive1(!isActive);
       } else {
-        const url = `${API2}/lolapi/mappingFilter`;
+        const url = `${API}/lolapi/mappingFilter`;
         const params = {
           league: filters.league,
           year: filters.year,
@@ -204,9 +202,9 @@ function SetByChampion({ minFrom, setMinFrom }) {
           id: user.id,
         };
         axiosRequest(url, params, function (e) {
-          const data = e.data.player;
+          const data = e.player;
           setFilterData({ ...filterData, player: data });
-        })
+        });
       }
     } catch (e) {
       console.log(e);
@@ -215,7 +213,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
 
   const getChampion = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -227,9 +225,9 @@ function SetByChampion({ minFrom, setMinFrom }) {
         id: user.id,
       };
       axiosRequest(url, params, function (e) {
-        const data = e.data.champion;
+        const data = e.champion;
         setFilterData({ ...filterData, champion: data });
-      })
+      });
     } catch (e) {
       console.log(e);
     }
@@ -237,7 +235,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
 
   const getOppTeam = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -250,9 +248,9 @@ function SetByChampion({ minFrom, setMinFrom }) {
         id: user.id,
       };
       axiosRequest(url, params, function (e) {
-        const data = e.data.opp_team;
+        const data = e.opp_team;
         setFilterData({ ...filterData, oppteam: data });
-      })
+      });
     } catch (e) {
       console.log(e);
     }
@@ -260,7 +258,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
 
   const getOppPlayer = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -274,10 +272,9 @@ function SetByChampion({ minFrom, setMinFrom }) {
         id: user.id,
       };
       axiosRequest(url, params, function (e) {
-        const data = e.data.opp_player;
+        const data = e.opp_player;
         setFilterData({ ...filterData, oppplayer: data });
-      })
-
+      });
     } catch (e) {
       console.log(e);
     }
@@ -285,7 +282,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
 
   const getOppChampion = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -300,9 +297,9 @@ function SetByChampion({ minFrom, setMinFrom }) {
         id: user.id,
       };
       axiosRequest(url, params, function (e) {
-        const data = e.data.opp_champion;
+        const data = e.opp_champion;
         setFilterData({ ...filterData, oppchampion: data });
-      })
+      });
     } catch (e) {
       console.log(e);
     }
@@ -331,7 +328,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
         oppchampion_eng: "",
       })
     );
-  }
+  };
 
   const clickCompareConfirm = () => {
     //setIsActive5(false);
@@ -355,7 +352,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
         oppchampion_eng: champArray2,
       })
     );
-  }
+  };
   return (
     <SetByChampionContainer>
       <LeftSection>
@@ -437,7 +434,10 @@ function SetByChampion({ minFrom, setMinFrom }) {
                 <SeletedTeam>
                   <label>{filters.team}</label>
                 </SeletedTeam>
-                <DropDownToggle className="container" changeColor={filters.player.length > 0}>
+                <DropDownToggle
+                  className="container"
+                  changeColor={filters.player.length > 0}
+                >
                   <div className="menu-container">
                     <button
                       onClick={() => {
@@ -498,7 +498,10 @@ function SetByChampion({ minFrom, setMinFrom }) {
                     </nav>
                   </div>
                 </DropDownToggle>
-                <DropDownToggle className="container" changeColor={champArray.length > 0}>
+                <DropDownToggle
+                  className="container"
+                  changeColor={champArray.length > 0}
+                >
                   <div className="menu-container2">
                     <button
                       onClick={() => {
@@ -508,18 +511,18 @@ function SetByChampion({ minFrom, setMinFrom }) {
                       }}
                       className="menu-trigger2"
                     >
-                      {
-                        champArray.length > 0 ?
-                          <span className="Label3">
-                            <span className="champLength">
-                              {`${champArray.length} `}
-                            </span>
-                            {` ${t("video.object.champ")}`}
+                      {champArray.length > 0 ? (
+                        <span className="Label3">
+                          <span className="champLength">
+                            {`${champArray.length} `}
                           </span>
-                          : <span className="Label3">
-                            {t("video.object.selectChamp")}
-                          </span>
-                      }
+                          {` ${t("video.object.champ")}`}
+                        </span>
+                      ) : (
+                        <span className="Label3">
+                          {t("video.object.selectChamp")}
+                        </span>
+                      )}
                       <img
                         className="ArrowIcon"
                         src="Images/select-arrow.png"
@@ -529,7 +532,9 @@ function SetByChampion({ minFrom, setMinFrom }) {
                     {filterData?.champion ? (
                       <nav
                         ref={wrapperRef}
-                        className={`menu3 ${isActive2.current ? "active" : "inactive"}`}
+                        className={`menu3 ${
+                          isActive2.current ? "active" : "inactive"
+                        }`}
                       >
                         <ul>
                           <Menu3li
@@ -541,12 +546,14 @@ function SetByChampion({ minFrom, setMinFrom }) {
                                   : "all"
                               )
                             }
-                            isChecked={filterData?.champion?.length === champArray.length}
+                            isChecked={
+                              filterData?.champion?.length === champArray.length
+                            }
                           >
                             <input
                               checked={
                                 filterData?.champion?.length ===
-                                  champArray.length
+                                champArray.length
                                   ? true
                                   : false
                               }
@@ -590,7 +597,10 @@ function SetByChampion({ minFrom, setMinFrom }) {
                 </DropDownToggle>
               </FilterBox>
               <FilterBox>
-                <DropDownToggle className="container" changeColor={filters.oppteam.length > 0}>
+                <DropDownToggle
+                  className="container"
+                  changeColor={filters.oppteam.length > 0}
+                >
                   <div className="menu-container">
                     <button
                       onClick={() => {
@@ -651,7 +661,10 @@ function SetByChampion({ minFrom, setMinFrom }) {
                     </nav>
                   </div>
                 </DropDownToggle>
-                <DropDownToggle className="container" changeColor={filters.oppplayer.length > 0}>
+                <DropDownToggle
+                  className="container"
+                  changeColor={filters.oppplayer.length > 0}
+                >
                   <div className="menu-container">
                     <button
                       onClick={() => {
@@ -713,28 +726,31 @@ function SetByChampion({ minFrom, setMinFrom }) {
                     </nav>
                   </div>
                 </DropDownToggle>
-                <DropDownToggle className="container" changeColor={champArray2.length > 0}>
+                <DropDownToggle
+                  className="container"
+                  changeColor={champArray2.length > 0}
+                >
                   <div className="menu-container2">
                     <button
                       onClick={() => {
                         //setIsActive5(!isActive5);
-                        isActive5.current = !isActive5.current
+                        isActive5.current = !isActive5.current;
                         getOppChampion();
                       }}
                       className="menu-trigger2"
                     >
-                      {
-                        champArray2.length > 0 ?
-                          <span className="Label3">
-                            <span className="champLength">
-                              {`${champArray2.length} `}
-                            </span>
-                            {` ${t("video.object.champ")}`}
+                      {champArray2.length > 0 ? (
+                        <span className="Label3">
+                          <span className="champLength">
+                            {`${champArray2.length} `}
                           </span>
-                          : <span className="Label3">
-                            {t("video.object.selectChamp")}
-                          </span>
-                      }
+                          {` ${t("video.object.champ")}`}
+                        </span>
+                      ) : (
+                        <span className="Label3">
+                          {t("video.object.selectChamp")}
+                        </span>
+                      )}
                       <img
                         className="ArrowIcon"
                         src="Images/select-arrow.png"
@@ -744,7 +760,9 @@ function SetByChampion({ minFrom, setMinFrom }) {
                     {filterData?.oppchampion ? (
                       <nav
                         ref={wrapperRef2}
-                        className={`menu3 ${isActive5.current ? "active" : "inactive"}`}
+                        className={`menu3 ${
+                          isActive5.current ? "active" : "inactive"
+                        }`}
                       >
                         <ul>
                           <Menu3li
@@ -756,12 +774,15 @@ function SetByChampion({ minFrom, setMinFrom }) {
                                   : "all"
                               )
                             }
-                            isChecked={filterData?.oppchampion?.length === champArray2.length}
+                            isChecked={
+                              filterData?.oppchampion?.length ===
+                              champArray2.length
+                            }
                           >
                             <input
                               checked={
                                 filterData?.oppchampion?.length ===
-                                  champArray2.length
+                                champArray2.length
                                   ? true
                                   : false
                               }
@@ -826,7 +847,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
               aria-labelledby="range-slider"
               getAriaValueText={timeFormat.hitmap}
               valueLabelFormat={timeFormat.hitmap}
-            // ValueLabelComponent={ValueLabelComponent}
+              // ValueLabelComponent={ValueLabelComponent}
             />
           </SliderContainer>
           <DefaultTime>
@@ -835,7 +856,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
           </DefaultTime>
         </Steps>
       </RightSection>
-    </SetByChampionContainer >
+    </SetByChampionContainer>
   );
 }
 
@@ -1102,7 +1123,8 @@ const DropDownToggle = styled.div`
     line-height: normal;
     letter-spacing: normal;
     text-align: left;
-    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`)};
+    color: ${(props) =>
+      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
     width: 140px;
   }
 
@@ -1115,7 +1137,8 @@ const DropDownToggle = styled.div`
     line-height: normal;
     letter-spacing: normal;
     text-align: left;
-    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`)};
+    color: ${(props) =>
+      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
     width: 124px;
     /* ::first-letter {
       color: #f04545;
@@ -1305,7 +1328,7 @@ const SeletedTeam = styled.div`
   letter-spacing: normal;
   text-align: left;
   margin: 0 0 0 18px;
-`
+`;
 
 const Menu3li = styled.li`
   margin-top: 4px;
@@ -1329,10 +1352,10 @@ const Menu3li = styled.li`
   ${(props) =>
     props.isChecked &&
     css`
-        color: rgb(255, 255, 255);
-        background-color: rgba(22, 21, 28, 0.5);
-        border-radius: 10px;
-      `}
+      color: rgb(255, 255, 255);
+      background-color: rgba(22, 21, 28, 0.5);
+      border-radius: 10px;
+    `}
 
   >  input[type="checkbox"] {
     -webkit-appearance: none;

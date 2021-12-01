@@ -79,7 +79,9 @@ function ObjectMapping() {
   const fetchingMapData = () => {
     try {
       setLoading(true);
-      const url = `${API2}/lolapi/mappingPosition`;
+      // const url = `${API}/lolapi/mappingPosition`;
+      const url = `${API}/mapping/mapping`;
+
       const params = {
         league: filters.league,
         year: filters.year,
@@ -100,7 +102,7 @@ function ObjectMapping() {
         id: user.id,
       };
       axiosRequest(url, params, function (e) {
-        const dto = e.data;
+        const dto = e;
         setMinTime(dto?.position[0].realCount ? dto?.position[0].realCount : 0);
         setMaxTime(dto.position.length - 1);
         setCurrentPos(dto.position);
@@ -242,19 +244,15 @@ function ObjectMapping() {
             {/* 경기 선택 부분 SelectGame.js 를 불러와서 사용함 */}
             <StepTitle
               onClick={() => {
-                setGameOpen(!gameOpen)
+                setGameOpen(!gameOpen);
               }}
               changeColor={gameOpen}
             >
-              <img
-                src={"Images/ico-arrow-down.svg"}
-                alt=""
-              />
+              <img src={"Images/ico-arrow-down.svg"} alt="" />
               <div className="title">
                 <span className="step">STEP 02</span>
                 <span className="subtitle">{t("video.object.step2")}</span>
               </div>
-
             </StepTitle>
             <StepContents isActive={gameOpen === true}>
               <SelectGame
@@ -329,7 +327,6 @@ function ObjectMapping() {
             </ConfirmButton>
           </ButtonContainer>
         </StepFilterWrapper>
-
       </StepFilter>
       <ObjectMapWrapper>
         {loading ? (
@@ -358,11 +355,11 @@ function ObjectMapping() {
                   ) {
                     if (
                       Number(currentPos[range]?.player[i].x1) -
-                      Number(currentPos[range]?.player[i].x2) !==
-                      0 &&
+                        Number(currentPos[range]?.player[i].x2) !==
+                        0 &&
                       Number(currentPos[range]?.player[i].y1) -
-                      Number(currentPos[range]?.player[i].y2) !==
-                      0
+                        Number(currentPos[range]?.player[i].y2) !==
+                        0
                     ) {
                       x =
                         ((Number(currentPos[range]?.player[i].x1) +
@@ -444,8 +441,8 @@ function ObjectMapping() {
             <span className="current">
               {range
                 ? `${addZero(
-                  Math.floor((range + minTime) / 2 / 60)
-                )} : ${addZero(Math.floor(((range + minTime) / 2) % 60))}`
+                    Math.floor((range + minTime) / 2 / 60)
+                  )} : ${addZero(Math.floor(((range + minTime) / 2) % 60))}`
                 : "00 : 00"}
             </span>
             <p>/</p>
@@ -578,17 +575,20 @@ const StepTitle = styled.nav`
     margin-bottom: 12px;
     > .step {
       font-weight: normal;
-      color:  ${(props) => props.changeColor ? `rgb(132, 129, 142)` : `rgba(132, 129, 142,0.3)`};
+      color: ${(props) =>
+        props.changeColor ? `rgb(132, 129, 142)` : `rgba(132, 129, 142,0.3)`};
       margin-right: 5px;
     }
     > .subtitle {
-      color:  ${(props) => props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
+      color: ${(props) =>
+        props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
     }
   }
   img {
     content: url("Images/ico-arrow-down.svg");
-    transform: ${(props) => props.changeColor ? `rotate(0deg);` : `rotate(180deg);`};
-    opacity: ${(props) => props.changeColor ? `1` : `0.3`};
+    transform: ${(props) =>
+      props.changeColor ? `rotate(0deg);` : `rotate(180deg);`};
+    opacity: ${(props) => (props.changeColor ? `1` : `0.3`)};
     margin-right: 10px;
     margin-bottom: 10px;
     object-fit: contain;
@@ -628,7 +628,7 @@ const ConfirmButton = styled.button`
   ${(props) =>
     props.isActive &&
     css`
-    background-color: #5942ba;
+      background-color: #5942ba;
     `}
 `;
 
@@ -638,7 +638,7 @@ const ButtonContainer = styled.div`
   justify-content: center;
   margin-top: 40px;
   padding: 20px 0;
-  border-top : 1px solid #433f4e;
+  border-top: 1px solid #433f4e;
 `;
 const ObjectMapWrapper = styled.div`
   width: 700px;

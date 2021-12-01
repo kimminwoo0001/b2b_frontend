@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 import { API } from "../../config";
 import { useTranslation } from "react-i18next";
 
-
 import First from "./First";
 import Second from "./Second";
 import Third from "./Third";
@@ -35,7 +34,7 @@ function GameSchedule() {
     2: <Second weekData2={weekData2} />,
     3: <Third weekData3={weekData3} />,
     4: <Fourth weekData4={weekData4} />,
-    5: <Fifth weekData5={weekData5} />
+    5: <Fifth weekData5={weekData5} />,
   };
 
   // 왼쪽 화살표 버튼 함수
@@ -89,16 +88,16 @@ function GameSchedule() {
       month: convertMonth(startDate),
       team: filters.team,
       token: user.token,
-      id: user.id
+      id: user.id,
     };
     axiosRequest(url, params, function (e) {
-      setWeekData1(e.data[0].week);
-      setWeekData2(e.data[1].week);
-      setWeekData3(e.data[2].week);
-      setWeekData4(e.data[3].week);
-      setWeekData5(e.data[4].week);
+      setWeekData1(e[0].week);
+      setWeekData2(e[1].week);
+      setWeekData3(e[2].week);
+      setWeekData4(e[3].week);
+      setWeekData5(e[4].week);
 
-      e.data.forEach((week, idx) => {
+      e.forEach((week, idx) => {
         if (week.thisWeek === true) {
           setWhichWeek(idx + 1);
           setThisWeek(idx + 1);
@@ -107,7 +106,7 @@ function GameSchedule() {
           setWhichWeek(0);
         }
       });
-    })
+    });
   };
 
   return (

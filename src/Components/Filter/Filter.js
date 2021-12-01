@@ -356,11 +356,11 @@ const Filter = memo(() => {
     };
 
     axiosRequest(url, params, function (e) {
-      console.log(e);
-      // const patchResponse = e.data.patch ?? [];
-      dispatch(setPatchFilter(e));
-      dispatch(SetPatch(e));
-      console.log(selector.patchFilter);
+      // const patchResponse = e.patch ?? [];
+      const patchResponse = e;
+
+      dispatch(setPatchFilter(patchResponse));
+      dispatch(SetPatch(patchResponse));
     });
   };
 
