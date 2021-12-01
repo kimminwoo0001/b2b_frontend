@@ -6,6 +6,8 @@ import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetec
 import { Reset_Map } from "../../../redux/modules/filtervalue";
 import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
+import { API } from "../../config";
+
 import qs from "qs";
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
@@ -167,7 +169,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
       if (isPageSolo) {
         setIsActive(!isActive);
       } else {
-        const url = `${API}/lolapi/mappingFilter`;
+        const url = `${API}/lolapi/mapping/mappingFilter/team`;
         const params = {
           league: filters.league,
           year: filters.year,
@@ -191,7 +193,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
       if (isPageSolo) {
         setIsActive1(!isActive);
       } else {
-        const url = `${API}/lolapi/mappingFilter`;
+        const url = `${API}/lolapi/mapping/mappingFilter/player`;
         const params = {
           league: filters.league,
           year: filters.year,
@@ -213,7 +215,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
 
   const getChampion = () => {
     try {
-      const url = `${API}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter/champion`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -235,7 +237,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
 
   const getOppTeam = () => {
     try {
-      const url = `${API}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter/oppteam`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -258,7 +260,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
 
   const getOppPlayer = () => {
     try {
-      const url = `${API}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter/oppplayer`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -282,7 +284,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
 
   const getOppChampion = () => {
     try {
-      const url = `${API}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter/oppchampion`;
       const params = {
         league: filters.league,
         year: filters.year,

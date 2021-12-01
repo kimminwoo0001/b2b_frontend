@@ -9,6 +9,8 @@ import LoadingImg from "../../../Components/LoadingImg/MapLoading";
 import Tippy from "@tippy.js/react";
 import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
+import { API } from "../../config";
+
 import ObjectTooltip from "./ObjectTooltip";
 import addZero from "../../../lib/addZero";
 import axiosRequest from "../../../lib/axiosRequest";
@@ -80,7 +82,7 @@ function ObjectMapping() {
     try {
       setLoading(true);
       // const url = `${API}/lolapi/mappingPosition`;
-      const url = `${API}/mapping/mapping`;
+      const url = `${API}/lolapi/mapping/mapping/mapping`;
 
       const params = {
         league: filters.league,

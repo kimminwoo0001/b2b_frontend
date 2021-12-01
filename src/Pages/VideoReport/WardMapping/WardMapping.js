@@ -8,6 +8,7 @@ import Tippy from "@tippy.js/react";
 import { Reset_MapTab } from "../../../redux/modules/filtervalue";
 import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
+import { API } from "../../config";
 import qs from "qs";
 import WardTooltip from "./WardTooltip";
 import axiosRequest from "../../../lib/axiosRequest";
@@ -78,7 +79,7 @@ function WardMapping() {
   const fetchingWardData = (wardside) => {
     try {
       // const url = `${API}/lolapi/waddingFilter`;
-      const url = `${API}/lolapi/mapping/ward`;
+      const url = `${API}/lolapi/mapping/mapping/ward`;
 
       const params = {
         league: filters.league,

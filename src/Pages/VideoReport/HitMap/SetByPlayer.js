@@ -119,7 +119,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
       if (isPageSolo) {
         setIsActive(!isActive);
       } else {
-        const url = `${API}/lolapi/mappingFilter`;
+        const url = `${API}/lolapi/mapping/mappingFilter/team`;
         const params = {
           league: filters.league,
           year: filters.year,
@@ -143,7 +143,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
       if (isPageSolo) {
         setIsActive(!isActive);
       } else {
-        const url = `${API}/lolapi/mappingFilter`;
+        const url = `${API}/lolapi/mapping/mappingFilter/player`;
         const params = {
           league: filters.league,
           year: filters.year,
@@ -165,7 +165,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
 
   const getChampion = () => {
     try {
-      const url = `${API}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter/champion`;
       const params = {
         league: filters.league,
         year: filters.year,

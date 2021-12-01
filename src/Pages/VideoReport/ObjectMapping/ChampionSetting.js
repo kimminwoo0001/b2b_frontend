@@ -5,6 +5,8 @@ import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
 import { Reset_Map } from "../../../redux/modules/filtervalue";
 import { API2 } from "../../config";
+import { API } from "../../config";
+
 import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
 import qs from "qs";
 import axiosRequest from "../../../lib/axiosRequest";
@@ -213,7 +215,7 @@ function ChampionSetting({
 
   const getChampion = () => {
     try {
-      const url = `${API}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter/champion`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -236,7 +238,7 @@ function ChampionSetting({
 
   const getOppTeam = () => {
     try {
-      const url = `${API}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter/oppteam`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -259,7 +261,7 @@ function ChampionSetting({
 
   const getOppPlayer = () => {
     try {
-      const url = `${API}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter/oppplayer`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -283,7 +285,7 @@ function ChampionSetting({
 
   const getOppChampion = () => {
     try {
-      const url = `${API}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter/oppchampion`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -308,7 +310,7 @@ function ChampionSetting({
 
   const getGame = () => {
     try {
-      const url = `${API}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -333,7 +335,7 @@ function ChampionSetting({
   const getGameAll = () => {
     try {
       if (filters.oppchampion_eng) {
-        const url = `${API}/lolapi/mappingFilter`;
+        const url = `${API}/lolapi/mapping/mappingFilter`;
         const params = {
           league: filters.league,
           year: filters.year,

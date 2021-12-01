@@ -79,7 +79,7 @@ function GameMapping() {
 
   const getGameLists = () => {
     try {
-      const url = `${API}/lolapi/mappingFilter/`;
+      const url = `${API2}/lolapi/mappingFilter/`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -92,8 +92,8 @@ function GameMapping() {
         id: user.id,
       };
       axiosRequest(url, params, function (e) {
-        setGameListData(Object.values(e["match"]));
-        console.log(e.match);
+        setGameListData(Object.values(e.data["match"]));
+        console.log(e.data.match);
       });
     } catch (e) {
       console.log(e);
@@ -107,7 +107,7 @@ function GameMapping() {
       setLoading(true);
       try {
         // const url = `${API}/lolapi/mappingPosition`;
-        const url = `${API}/lolapi/mapping/mapping`;
+        const url = `${API2}/lolapi/mapping/mapping`;
 
         const params = {
           gameid: filters.gameid,
@@ -117,7 +117,7 @@ function GameMapping() {
 
         axiosRequest(url, params, function (e) {
           // 맵핑 포지션
-          const dto = e;
+          const dto = e.data;
 
           for (let i = 0; i < dto.position.length; i++) {
             if (dto.position[i].player) {

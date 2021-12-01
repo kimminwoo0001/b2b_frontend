@@ -71,7 +71,7 @@ function WardPlayerFilter({
 
   const getTeam = () => {
     try {
-      const url = `${API}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter/team`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -92,7 +92,7 @@ function WardPlayerFilter({
 
   const getPlayer = () => {
     try {
-      const url = `${API}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter/player`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -113,7 +113,7 @@ function WardPlayerFilter({
 
   const getChampion = () => {
     try {
-      const url = `${API}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter/champion`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -135,7 +135,7 @@ function WardPlayerFilter({
 
   const getOppTeam = () => {
     try {
-      const url = `${API}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter/oppteam`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -158,7 +158,7 @@ function WardPlayerFilter({
 
   const getOppPlayer = () => {
     try {
-      const url = `${API}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter/oppplayer`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -182,7 +182,7 @@ function WardPlayerFilter({
 
   const getOppChampion = () => {
     try {
-      const url = `${API}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter/oppchampion`;
       const params = {
         league: filters.league,
         year: filters.year,
