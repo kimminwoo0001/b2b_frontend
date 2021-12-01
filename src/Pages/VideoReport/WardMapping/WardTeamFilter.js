@@ -72,11 +72,17 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(undefined, url, params, function (e) {
-        const data = e.team;
-        setFilterData({ ...filterData, team: data });
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          const data = e.team;
+          setFilterData({ ...filterData, team: data });
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        }
       );
     } catch (e) {
       console.log(e);
@@ -158,7 +164,7 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
             aria-labelledby="range-slider"
             // getAriaValueText={valuetext}
             valueLabelFormat={timeFormat.ward}
-          // ValueLabelComponent={ValueLabelComponent}
+            // ValueLabelComponent={ValueLabelComponent}
           />
         </SliderContainer>
 

@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
-
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function TeamIndex() {
   //팀 존력 보고서 팀 지표 텝
@@ -60,50 +60,56 @@ function TeamIndex() {
         id: user.id,
       };
 
-      axiosRequest(undefined, url, params, function (e) {
-        //팀 평균 데이터 fetch
-        setTeamStats(e.teamStats);
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          //팀 평균 데이터 fetch
+          setTeamStats(e.teamStats);
 
-        //리그 평균 데이터 fetch
-        setLeagueStat(e.leagueStat);
+          //리그 평균 데이터 fetch
+          setLeagueStat(e.leagueStat);
 
-        //SRB 데이터 fetch
-        setSbrAnalysis(e.sbrAnalysis);
+          //SRB 데이터 fetch
+          setSbrAnalysis(e.sbrAnalysis);
 
-        //첫 갱 라인 데이터 fetch
-        const gameX = [];
-        const gameY = [];
+          //첫 갱 라인 데이터 fetch
+          const gameX = [];
+          const gameY = [];
 
-        let firstGank = e.firstGank;
-        firstGank.firstGankMax =
-          firstGank?.firstGankMax % 5 === 0
-            ? firstGank?.firstGankMax
-            : firstGank?.firstGankMax + (5 - (firstGank?.firstGankMax % 5));
-        firstGank.firstGankRow = firstGank.firstGankMax / 5;
-        setGankCount(e.firstGank);
-        e.firstGank.firstGankList.forEach((game) => {
-          gameX.push(game.position);
-          gameY.push(game.gankCount);
-        });
-        setGankCountX(gameX);
-        setGankCountY(gameY);
+          let firstGank = e.firstGank;
+          firstGank.firstGankMax =
+            firstGank?.firstGankMax % 5 === 0
+              ? firstGank?.firstGankMax
+              : firstGank?.firstGankMax + (5 - (firstGank?.firstGankMax % 5));
+          firstGank.firstGankRow = firstGank.firstGankMax / 5;
+          setGankCount(e.firstGank);
+          e.firstGank.firstGankList.forEach((game) => {
+            gameX.push(game.position);
+            gameY.push(game.gankCount);
+          });
+          setGankCountX(gameX);
+          setGankCountY(gameY);
 
-        //라인별 서포팅 횟수 데이터 fetch
+          //라인별 서포팅 횟수 데이터 fetch
 
-        const supportX = [];
-        const supportY = [];
-        setSupportTimeData(e.supportedTime);
-        e.supportedTime.supportedTimeList.forEach((support) => {
-          supportX.push(support.position);
-          supportY.push(support.value);
-        });
+          const supportX = [];
+          const supportY = [];
+          setSupportTimeData(e.supportedTime);
+          e.supportedTime.supportedTimeList.forEach((support) => {
+            supportX.push(support.position);
+            supportY.push(support.value);
+          });
 
-        setSupportTimeX(supportX);
-        setSupportTimeY(supportY);
-        setLoading(false);
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      });
+          setSupportTimeX(supportX);
+          setSupportTimeY(supportY);
+          setLoading(false);
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        }
+      );
     } catch (e) {
       alert(e);
     }
@@ -210,14 +216,16 @@ function TeamIndex() {
                     height="13px"
                   ></img>
                   <TeamValue changeColor={teamStats?.playTime.result === false}>
-                    {`${teamStats?.playTime.minute}${t("team.analysis.min")} ${teamStats?.playTime.second
-                      }${t("team.analysis.sec")}`}
+                    {`${teamStats?.playTime.minute}${t("team.analysis.min")} ${
+                      teamStats?.playTime.second
+                    }${t("team.analysis.sec")}`}
                   </TeamValue>
                 </div>
-                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${leagueStat?.playTime.minute
-                  }${t("team.analysis.min")} ${leagueStat?.playTime.second}${t(
-                    "team.analysis.sec"
-                  )}`}</div>
+                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${
+                  leagueStat?.playTime.minute
+                }${t("team.analysis.min")} ${leagueStat?.playTime.second}${t(
+                  "team.analysis.sec"
+                )}`}</div>
               </DisplayInfo>
             </div>
           </div>
@@ -279,10 +287,11 @@ function TeamIndex() {
                     )}`}
                   </TeamValue>
                 </div>
-                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${leagueStat?.firstDragon.minute
-                  }${t("team.analysis.min")} ${leagueStat?.firstDragon.second}${t(
-                    "team.analysis.sec"
-                  )}`}</div>
+                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${
+                  leagueStat?.firstDragon.minute
+                }${t("team.analysis.min")} ${leagueStat?.firstDragon.second}${t(
+                  "team.analysis.sec"
+                )}`}</div>
               </DisplayInfo>
             </div>
           </div>
@@ -379,10 +388,11 @@ function TeamIndex() {
                     )}`}
                   </TeamValue>
                 </div>
-                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${leagueStat?.firstHerald.minute
-                  }${t("team.analysis.min")} ${leagueStat?.firstHerald.second}${t(
-                    "team.analysis.sec"
-                  )}`}</div>
+                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${
+                  leagueStat?.firstHerald.minute
+                }${t("team.analysis.min")} ${leagueStat?.firstHerald.second}${t(
+                  "team.analysis.sec"
+                )}`}</div>
               </DisplayInfo>
             </div>
             <div className="AvgFirstGank">
@@ -414,9 +424,11 @@ function TeamIndex() {
                     )}`}
                   </TeamValue>
                 </div>
-                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${leagueStat?.timeOfFirstGank.minute
-                  }${t("team.analysis.min")} ${leagueStat?.timeOfFirstGank.second
-                  }${t("team.analysis.sec")}`}</div>
+                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${
+                  leagueStat?.timeOfFirstGank.minute
+                }${t("team.analysis.min")} ${
+                  leagueStat?.timeOfFirstGank.second
+                }${t("team.analysis.sec")}`}</div>
               </DisplayInfo>
             </div>
           </div>
@@ -450,10 +462,11 @@ function TeamIndex() {
                     )}`}
                   </TeamValue>
                 </div>
-                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${leagueStat?.firstBaron.minute
-                  }${t("team.analysis.min")} ${leagueStat?.firstBaron.second}${t(
-                    "team.analysis.sec"
-                  )}`}</div>
+                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${
+                  leagueStat?.firstBaron.minute
+                }${t("team.analysis.min")} ${leagueStat?.firstBaron.second}${t(
+                  "team.analysis.sec"
+                )}`}</div>
               </DisplayInfo>
             </div>
             <div className="AvgCombat">
@@ -599,7 +612,7 @@ function TeamIndex() {
                           gankCount?.firstGankMax % 5 === 0
                             ? gankCount?.firstGankMax
                             : gankCount?.firstGankMax +
-                            (5 - (gankCount?.firstGankMax % 5)),
+                              (5 - (gankCount?.firstGankMax % 5)),
                       },
                       gridLines: {
                         color: "rgb(58, 55, 69)",

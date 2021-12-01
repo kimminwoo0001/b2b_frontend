@@ -81,12 +81,18 @@ function WardPlayerFilter({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(undefined, url, params, function (e) {
-        const data = e.team;
-        setFilterData({ ...filterData, team: data });
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      });
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          const data = e.team;
+          setFilterData({ ...filterData, team: data });
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        }
+      );
     } catch (e) {
       console.log(e);
     }
@@ -105,11 +111,17 @@ function WardPlayerFilter({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(undefined, url, params, function (e) {
-        const data = e.player;
-        setFilterData({ ...filterData, player: data });
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          const data = e.player;
+          setFilterData({ ...filterData, player: data });
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        }
       );
     } catch (e) {
       console.log(e);
@@ -129,11 +141,17 @@ function WardPlayerFilter({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(undefined, url, params, function (e) {
-        const data = e.champion;
-        setFilterData({ ...filterData, champion: data });
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          const data = e.champion;
+          setFilterData({ ...filterData, champion: data });
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        }
       );
     } catch (e) {
       console.log(e);
@@ -154,11 +172,17 @@ function WardPlayerFilter({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(undefined, url, params, function (e) {
-        const data = e.opp_team;
-        setFilterData({ ...filterData, oppteam: data });
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          const data = e.opp_team;
+          setFilterData({ ...filterData, oppteam: data });
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        }
       );
     } catch (e) {
       console.log(e);
@@ -180,11 +204,17 @@ function WardPlayerFilter({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(undefined, url, params, function (e) {
-        const data = e.opp_player;
-        setFilterData({ ...filterData, oppplayer: data });
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          const data = e.opp_player;
+          setFilterData({ ...filterData, oppplayer: data });
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        }
       );
     } catch (e) {
       console.log(e);
@@ -207,11 +237,18 @@ function WardPlayerFilter({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(undefined, url, params, function (e) {
-        const data = e.opp_champion;
-        setFilterData({ ...filterData, oppchampion: data });
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
+
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          const data = e.opp_champion;
+          setFilterData({ ...filterData, oppchampion: data });
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        }
       );
     } catch (e) {
       console.log(e);
@@ -640,7 +677,7 @@ function WardPlayerFilter({
             aria-labelledby="range-slider"
             getAriaValueText={timeFormat.ward}
             valueLabelFormat={timeFormat.ward}
-          // ValueLabelComponent={ValueLabelComponent}
+            // ValueLabelComponent={ValueLabelComponent}
           />
         </SliderContainer>
         <DefaultTime>
@@ -905,7 +942,7 @@ const DropDownToggle = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: ${(props) =>
-    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
+      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
     width: 142px;
   }
 
@@ -919,7 +956,7 @@ const DropDownToggle = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: ${(props) =>
-    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
+      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
     width: 183px;
   }
 

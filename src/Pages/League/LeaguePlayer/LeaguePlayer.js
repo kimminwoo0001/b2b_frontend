@@ -8,6 +8,7 @@ import TabTop from "./Components/TabTop";
 import { useSelector, useDispatch } from "react-redux";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useTranslation } from "react-i18next";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function LeaguePlayer() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -44,13 +45,19 @@ function LeaguePlayer() {
       position: positionClicked,
       token: user.token,
       id: user.id,
-    }
-    axiosRequest(undefined, url, params, function (e) {
-      setPlayerData(e);
-      setIsLoading(false);
-    }, function (objStore) {
-      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    });
+    };
+    axiosRequest(
+      undefined,
+      url,
+      params,
+      function (e) {
+        setPlayerData(e);
+        setIsLoading(false);
+      },
+      function (objStore) {
+        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      }
+    );
   };
 
   return (

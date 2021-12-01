@@ -10,6 +10,7 @@ import qs from "qs";
 import checkRequestBase from "../../../lib/checkRequestBase";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function LeagueStatistics() {
   //리그 통합 지수 텝
@@ -63,55 +64,61 @@ function LeagueStatistics() {
       id: user.id,
     };
 
-    axiosRequest(undefined, url, params, function (e) {
-      // 그래프 min, max, row 설정하기 위한 상태값
-      setGameLengthData(e.avgGamelength);
-      setSupportTimeData(e.avgSupportingTime);
-      setFirstGankData(e.avgFirstGang);
-      setTotalMatchData(e.avgMatchTotal);
+    axiosRequest(
+      undefined,
+      url,
+      params,
+      function (e) {
+        // 그래프 min, max, row 설정하기 위한 상태값
+        setGameLengthData(e.avgGamelength);
+        setSupportTimeData(e.avgSupportingTime);
+        setFirstGankData(e.avgFirstGang);
+        setTotalMatchData(e.avgMatchTotal);
 
-      // 그래프에 들어갈 데이터 변환
-      const gameX = [];
-      const gameY = [];
+        // 그래프에 들어갈 데이터 변환
+        const gameX = [];
+        const gameY = [];
 
-      const supportX = [];
-      const supportY = [];
+        const supportX = [];
+        const supportY = [];
 
-      const GankX = [];
-      const GankY = [];
+        const GankX = [];
+        const GankY = [];
 
-      const TotalX = [];
-      const TotalY = [];
-      e.avgGamelength.data.forEach((game) => {
-        gameX.push(game.patch);
-        gameY.push(game.gamelength.toFixed(1));
-      });
-      e.avgSupportedTime.data.forEach((support) => {
-        supportX.push(support.position);
-        supportY.push(support.supported_time.toFixed(1));
-      });
-      e.avgFirstGang.data.forEach((gank) => {
-        GankX.push(gank.patch);
-        GankY.push(gank.first_gang_time.toFixed(1));
-      });
-      e.avgMatchTotal.data.forEach((match) => {
-        TotalX.push(match.patch);
-        TotalY.push(match.match_total.toFixed(1));
-      });
-      setGameLengthX(gameX);
-      setGameLengthY(gameY);
-      setSupportTimeX(supportX);
-      setSupportTimeY(supportY);
-      setFirstGankX(GankX);
-      setFirstGankY(GankY);
-      setTotalMatchX(TotalX);
-      setTotalMatchY(TotalY);
-      // console.log(supportX);
+        const TotalX = [];
+        const TotalY = [];
+        e.avgGamelength.data.forEach((game) => {
+          gameX.push(game.patch);
+          gameY.push(game.gamelength.toFixed(1));
+        });
+        e.avgSupportedTime.data.forEach((support) => {
+          supportX.push(support.position);
+          supportY.push(support.supported_time.toFixed(1));
+        });
+        e.avgFirstGang.data.forEach((gank) => {
+          GankX.push(gank.patch);
+          GankY.push(gank.first_gang_time.toFixed(1));
+        });
+        e.avgMatchTotal.data.forEach((match) => {
+          TotalX.push(match.patch);
+          TotalY.push(match.match_total.toFixed(1));
+        });
+        setGameLengthX(gameX);
+        setGameLengthY(gameY);
+        setSupportTimeX(supportX);
+        setSupportTimeY(supportY);
+        setFirstGankX(GankX);
+        setFirstGankY(GankY);
+        setTotalMatchX(TotalX);
+        setTotalMatchY(TotalY);
+        // console.log(supportX);
 
-      setLoading(false);
-    }, function (objStore) {
-      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    });
+        setLoading(false);
+      },
+      function (objStore) {
+        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      }
+    );
   };
   //현재 패치버전 색 교체
   // const colorChange = () => {
