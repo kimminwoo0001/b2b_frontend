@@ -11,6 +11,7 @@ import {
 } from "../../redux/modules/filtervalue";
 import { API } from "../config";
 import axiosRequest from "../../lib/axiosRequest";
+import { SetModalInfo } from "../../redux/modules/modalvalue";
 
 // import { useDetectOutsideClick } from "../../Components/SelectFilter/useDetectOustsideClick";
 
@@ -105,6 +106,8 @@ function PickCombineModal({ openModal, setOpenModal }) {
     axiosRequest(undefined, url, params, function (e) {
       console.log(e);
       // setPatchFilter(result.data.patch);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     });
   };
 
@@ -119,6 +122,8 @@ function PickCombineModal({ openModal, setOpenModal }) {
     };
     axiosRequest(undefined, url, params, function (e) {
       setTeamFilter(e.team);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     })
   };
 
@@ -134,6 +139,8 @@ function PickCombineModal({ openModal, setOpenModal }) {
     }
     axiosRequest(undefined, url, params, function (e) {
       setPlayerFilter(e.player);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     })
   };
 
@@ -150,6 +157,8 @@ function PickCombineModal({ openModal, setOpenModal }) {
     axiosRequest(undefined, url, params, function (e) {
       console.log(e);
       // setOppPlayerFilter(result.data.player);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     });
   };
 

@@ -11,6 +11,7 @@ import {
 } from "../../../redux/modules/filtervalue";
 import { API } from "../../config";
 import axiosRequest from "../../../lib/axiosRequest";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
   //팀 비교 텝 누를 떄 뜨는 모달창
@@ -42,6 +43,8 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
     };
     axiosRequest(undefined, url, params, function (e) {
       setOppTeam(e.oppteam);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     });
   };
 

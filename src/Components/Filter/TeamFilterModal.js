@@ -71,7 +71,7 @@ const TeamFilterModal = () => {
     leagueList = Object.keys(staticvalue.filterObjects).map(
       (key) =>
         Number(Object.keys(staticvalue.filterObjects[key])) ===
-          Number(filters.year) && key
+        Number(filters.year) && key
     );
     dispatch(setLeagueFilter(leagueList.sort()));
   };
@@ -89,7 +89,7 @@ const TeamFilterModal = () => {
 
   // opp 팀 필터 fetch 함수
   const fetchingOppTeamFilter = (team) => {
-    const url = `${API}/api/filter/oppteam`;
+    const url = `${API}/lolapi/filter/oppteam`;
     const params = {
       league: filters.league,
       year: filters.year,
@@ -108,7 +108,7 @@ const TeamFilterModal = () => {
     <>
       <BackScreen
         teamModal={filters.compareModal}
-        // onClick={() => setTeamModal(false)}
+      // onClick={() => setTeamModal(false)}
       ></BackScreen>
       <TeamModalWrapper teamModal={filters.compareModal}>
         <ModalNav>
@@ -661,7 +661,7 @@ const ButtonBox = styled.div`
     height: 60px;
     border-radius: 20px;
     background-color: ${(props) =>
-      props.isAllTeamSelected ? "#5942ba" : "#484655"};
+    props.isAllTeamSelected ? "#5942ba" : "#484655"};
     cursor: ${(props) => (props.isAllTeamSelected ? "pointer" : "not-allowed")};
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 15px;
@@ -703,8 +703,8 @@ const MapTeams = styled.div`
     text-align: left;
     color: #84818e;
     ${(props) =>
-      props.currentTeam &&
-      css`
+    props.currentTeam &&
+    css`
         color: #fff;
       `}
   }

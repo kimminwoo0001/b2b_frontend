@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import qs from "qs";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
 import GameLists from "./GameLists";
 import LoadingImg from "../../../Components/LoadingImg/MapLoading";
@@ -10,6 +10,8 @@ import { API2 } from "../../config";
 import Tippy from "@tippy.js/react";
 import ObjectTooltip from "../ObjectMapping/ObjectTooltip";
 import axiosRequest from "../../../lib/axiosRequest";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
+
 
 //fast 버튼 setinterval 메모리 최적화 함수
 function useInterval(callback) {
@@ -52,6 +54,7 @@ function GameMapping() {
   const user = useSelector((state) => state.UserReducer);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   // queryString 핸들링 상태값
   const [side, setSide] = useState("all");
   const [gameId, setGameId] = useState();
@@ -94,6 +97,8 @@ function GameMapping() {
       axiosRequest(undefined, url, params, function (e) {
         setGameListData(Object.values(e.data["match"]));
         console.log(e.data.match);
+      }, function (objStore) {
+        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
       });
     } catch (e) {
       console.log(e);
@@ -131,6 +136,8 @@ function GameMapping() {
           setCurrentPos(dto.position);
           setInfo(dto.info);
           setTimeLineData(dto.timeline);
+        }, function (objStore) {
+          dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
         });
       } catch (e) {
         console.log(e);

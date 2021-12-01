@@ -13,6 +13,10 @@ import WeekThree from "./WeekThree";
 import WeekFour from "./WeekFour";
 import WeekFive from "./WeekFive";
 import axiosRequest from "../../../lib/axiosRequest";
+import { useDispatch } from "react-redux";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
+
+
 
 function LeagueSchedule() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -27,6 +31,8 @@ function LeagueSchedule() {
   const [weekData5, setWeekData5] = useState();
   const [whichWeek, setWhichWeek] = useState();
   const [thisWeek, setThisWeek] = useState();
+  const dispatch = useDispatch();
+
   // week tab 컴포넌트
   const weeks = {
     1: <WeekOne weekData1={weekData1} />,
@@ -97,6 +103,8 @@ function LeagueSchedule() {
           setThisWeek(0);
           setWhichWeek(0);
         }
+      }, function (objStore) {
+        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
       });
     });
   };

@@ -13,6 +13,7 @@ import qs from "qs";
 import WardTooltip from "./WardTooltip";
 import axiosRequest from "../../../lib/axiosRequest";
 import { duration } from "@material-ui/core";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 const sectorName = {
   0: 1,
@@ -147,6 +148,8 @@ function WardMapping() {
           setTotalWard(0);
           setSector([]);
         }
+      }, function (objStore) {
+        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
       });
     } catch (e) {
       console.log(e);

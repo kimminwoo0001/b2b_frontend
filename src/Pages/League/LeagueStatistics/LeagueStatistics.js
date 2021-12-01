@@ -9,6 +9,7 @@ import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import qs from "qs";
 import checkRequestBase from "../../../lib/checkRequestBase";
 import axiosRequest from "../../../lib/axiosRequest";
+import { useDispatch } from "react-redux";
 
 function LeagueStatistics() {
   //리그 통합 지수 텝
@@ -17,6 +18,7 @@ function LeagueStatistics() {
   const { t } = useTranslation();
   const lang = useSelector((state) => state.LocaleReducer);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   //평균 게임시간
   const [gameLengthData, setGameLengthData] = useState();
@@ -107,6 +109,8 @@ function LeagueStatistics() {
       // console.log(supportX);
 
       setLoading(false);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     });
   };
   //현재 패치버전 색 교체

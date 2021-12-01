@@ -8,6 +8,9 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import axiosRequest from "../../../lib/axiosRequest";
+import { useDispatch } from "react-redux";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
+
 
 function mycomparator(a, b) {
   var num1 = 0;
@@ -39,6 +42,7 @@ function ComparePosition() {
   const [bot, setBot] = useState([]);
   const [sup, setSup] = useState([]);
   const sortedPatch = filters.patch.sort(mycomparator);
+  const dispatch = useDispatch();
   useEffect(() => {
     GetPositionGraphData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -90,6 +94,8 @@ function ComparePosition() {
           }
         }
         topData.push(topValues);
+      }, function (objStore) {
+        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
       });
 
       for (let i = 0; i < topData.length; i++) {
@@ -207,6 +213,8 @@ function ComparePosition() {
         });
       }
       setSup(supArray);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     }).finally(setLoading(false));
   };
 

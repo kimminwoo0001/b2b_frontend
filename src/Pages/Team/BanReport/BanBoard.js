@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { API } from "../../config";
 import qs from "qs";
 import axiosRequest from "../../../lib/axiosRequest";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function BanBoard() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -13,6 +14,7 @@ function BanBoard() {
   //밴픽 보고서
   const [all, setAll] = useState();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetchingBanReport();
@@ -33,6 +35,8 @@ function BanBoard() {
       };
       axiosRequest(undefined, url, params, function (e) {
         setAll(e);
+      }, function (objStore) {
+        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
       })
     } catch (e) {
       console.log(e);

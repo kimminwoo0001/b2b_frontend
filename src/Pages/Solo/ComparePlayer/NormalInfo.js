@@ -18,6 +18,7 @@ import {
 } from "../../../redux/modules/filtervalue";
 import qs from "qs";
 import axiosRequest from "../../../lib/axiosRequest";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function NormalInfo() {
   //기본정보 탭
@@ -92,6 +93,8 @@ function NormalInfo() {
         gold: copyoppData.gold.toFixed(1),
       });
       setLoading(false);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     });
   };
 
@@ -111,6 +114,8 @@ function NormalInfo() {
     axiosRequest(undefined, url, params, function (e) {
       setChampFilter(e.champion);
       setChampEng(e.championEng);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     });
   };
   //상대 챔피언 필터
@@ -130,6 +135,8 @@ function NormalInfo() {
     axiosRequest(undefined, url, params, function (e) {
       setOppFilter(e.champion);
       setOppEng(e.championEng);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     });
   };
 

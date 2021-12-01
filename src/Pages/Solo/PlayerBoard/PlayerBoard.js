@@ -18,6 +18,7 @@ import {
 } from "../../../redux/modules/filtervalue";
 import axiosRequest from "../../../lib/axiosRequest";
 import ExcelExport from "../../../Components/UtilityComponent/ExcelExport";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function PlayerBoard() {
   //선수 보고서 => 선수 상황판
@@ -114,6 +115,8 @@ function PlayerBoard() {
       });
       setSeason({ x: seasonX, y: seasonY });
       setLoading(false);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     });
   };
 
@@ -137,6 +140,8 @@ function PlayerBoard() {
       // setChampEng(e.championEng);
       setChampFilter(champArray);
       setChampEng(champArrayEng);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     });
   };
 
@@ -160,6 +165,8 @@ function PlayerBoard() {
 
       setOppFilter(champArray);
       setOppEng(champArrayEng);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     });
   };
 

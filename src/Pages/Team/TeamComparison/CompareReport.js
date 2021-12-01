@@ -6,12 +6,15 @@ import { useTranslation } from "react-i18next";
 import { API } from "../../config";
 import qs from "qs";
 import axiosRequest from "../../../lib/axiosRequest";
+import { useDispatch } from "react-redux";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function CompareReport() {
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
   const [board, setBoard] = useState();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   //팀 비교 보고서
   useEffect(() => {
     fetchingBanReport();
@@ -33,6 +36,8 @@ function CompareReport() {
       };
       axiosRequest(undefined, url, params, function (e) {
         setBoard(e);
+      }, function (objStore) {
+        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
       })
     } catch (e) {
       console.log(e);

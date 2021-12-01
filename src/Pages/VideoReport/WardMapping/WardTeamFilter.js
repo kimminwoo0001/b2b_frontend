@@ -13,6 +13,7 @@ import { API } from "../../config";
 import qs from "qs";
 import timeFormat from "../../../lib/timeFormat";
 import axiosRequest from "../../../lib/axiosRequest";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 const WardSlider = withStyles({
   root: {
@@ -74,7 +75,9 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
       axiosRequest(undefined, url, params, function (e) {
         const data = e.team;
         setFilterData({ ...filterData, team: data });
-      });
+      }, function (objStore) {
+        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      );
     } catch (e) {
       console.log(e);
     }

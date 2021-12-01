@@ -7,6 +7,8 @@ import { API } from "../../config";
 import qs from "qs";
 import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
 import axiosRequest from "../../../lib/axiosRequest";
+import { useDispatch } from "react-redux";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
   const filters = useSelector((state) => state.FilterReducer);
@@ -28,6 +30,7 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
   const [isActive8, setIsActive8] = useDetectOutsideClick(dropdownRef, false);
   const [isActive9, setIsActive9] = useDetectOutsideClick(dropdownRef, false);
   const [isActive10, setIsActive10] = useDetectOutsideClick(dropdownRef, false);
+  const dispatch = useDispatch();
 
   const GetRoster = () => {
     const url = `${API}/lolapi/filter/roster`;
@@ -44,6 +47,8 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
     axiosRequest(undefined, url, params, function (e) {
       setTeam1(e[el.Team1]);
       setTeam2(e[el.Team2]);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     })
   };
 
@@ -64,6 +69,8 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
     };
     axiosRequest(undefined, url, params, function (e) {
       setWinRate(e);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     });
   };
 

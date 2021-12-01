@@ -13,6 +13,7 @@ import {
   HandleTab,
 } from "../../redux/modules/filtervalue";
 import axiosRequest from "../../lib/axiosRequest";
+import { SetModalInfo } from "../../redux/modules/modalvalue";
 
 function PlayerSelectModal({ openModal, setOpenModal }) {
   const filters = useSelector((state) => state.FilterReducer);
@@ -43,6 +44,8 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
     };
     axiosRequest(undefined, url, params, function (e) {
       setOppTeam(e.oppteam);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     });
   };
 
@@ -60,6 +63,8 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
     };
     axiosRequest(undefined, url, params, function (e) {
       setOppPlayer(e);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     });
   };
 

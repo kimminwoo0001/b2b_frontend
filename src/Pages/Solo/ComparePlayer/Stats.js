@@ -31,6 +31,7 @@ import {
   ResetOppChampion,
 } from "../../../redux/modules/filtervalue";
 import axiosRequest from "../../../lib/axiosRequest";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function Stats() {
   //능력치 탭
@@ -153,6 +154,8 @@ function Stats() {
           // setOppMatch(Object.values(response?.data.oppPlayer.MatchStat));
           setStatData(Object.values(e?.data.tendencyStat));
         }
+      }, function (objStore) {
+        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
       });
     } catch (e) {
       console.log(e.response);
@@ -176,6 +179,8 @@ function Stats() {
     axiosRequest(undefined, url, params, function (e) {
       setChampFilter(e.champion);
       setChampEng(e.championEng);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     });
   };
 
@@ -197,6 +202,8 @@ function Stats() {
     axiosRequest(undefined, url, params, function (e) {
       setOppFilter(e.champion);
       setOppEng(e.championEng);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     });
   };
 

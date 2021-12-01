@@ -7,6 +7,7 @@ import { useDetectOutsideClick } from "../../Components/SelectFilter/useDetectOu
 import PickCombineModal from "./PickCombineModal";
 import { API } from "../config";
 import axiosRequest from "../../lib/axiosRequest";
+import { SetModalInfo } from "../../redux/modules/modalvalue";
 
 const PositionImage = [
   {
@@ -63,6 +64,8 @@ function PickCombine() {
     };
     axiosRequest(undefined, url, params, function (e) {
       setTeamFilter(e.team);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     })
   };
 
