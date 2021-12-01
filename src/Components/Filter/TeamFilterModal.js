@@ -100,7 +100,7 @@ const TeamFilterModal = () => {
       id: user.id,
     };
     axiosRequest(url, params, function (e) {
-      setOppTeamFilter(e.oppteam);
+      setOppTeamFilter(e);
     });
   };
 

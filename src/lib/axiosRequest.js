@@ -22,7 +22,7 @@ const axiosRequest = async (
       .then((e) => {
         // 여기서도 에러를 던지면 아래의 catch로 이동된다.
         // throw Error("에러 테스트")
-        console.log(e);
+        console.log(e.data.response);
         if (checkRequest(e.data.status)) {
           if (callback) {
             callback(e.data.response);
