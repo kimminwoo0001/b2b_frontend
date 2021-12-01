@@ -36,6 +36,7 @@ const axiosRequest = async (
         if (check?.value) {
           if (callback) {
             callback(e.data.response);
+            console.log(e.data.response);
           } else {
             console.log(check.objStore);
             // sessionStorage.clear();

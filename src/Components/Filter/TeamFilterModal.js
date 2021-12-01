@@ -89,7 +89,7 @@ const TeamFilterModal = () => {
 
   // opp 팀 필터 fetch 함수
   const fetchingOppTeamFilter = (team) => {
-    const url = `${API}/api/filter/oppteam`;
+    const url = `${API}/lolapi/filter/oppteam`;
     const params = {
       league: filters.league,
       year: filters.year,
@@ -334,6 +334,7 @@ const TeamFilterModal = () => {
                 </SelectOppTeamTitle>
                 <SelectOppTeam isTeamSelected={filters.team.length !== 0}>
                   {oppTeamFilter?.map((team, index) => {
+                    console.log(team);
                     return (
                       <MapTeams
                         key={index}
