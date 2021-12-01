@@ -77,29 +77,29 @@ function PlayerBoard() {
     };
 
     axiosRequest(url, params, function (e) {
-      const data = e;
+      // const data = e;
       // var arrNumber = [0, 0, 0, 0, 0, 0, 0];
 
       // for (var i = 0; i < 7; i++) {
       //   arrNumber[i] = data.stats.lineStats[`val${i}`];
       // }
 
-      setInfo(data.info);
-      setCarrer(data.records.careerrecords);
-      setChampRecord(Object.values(data.records.championrecords));
+      setInfo(e.info);
+      setCarrer(e.records.careerrecords);
+      setChampRecord(Object.values(e.records.championrecords));
       // setLeaguePlayerInfo(Object.values(data.soloInfo.leaguePlayerInfo));
       // setLeaguePlayerTotal(Object.values(data.soloInfo.leaguePlayerTotal));
       // setUserPlayerTotal(Object.values(data.soloInfo.userPlayerTotal));
-      setSbr(data.stats.sbrStats);
-      setLine(Object.values(data.stats.lineStats));
-      setEngage(Object.values(data.stats.engagementStats));
-      setPersonality(Object.values(data.stats.personalityStats));
-      setGraphDomain(data.trends);
-      setMatchInfo(data.stats.matchStats);
+      setSbr(e.stats.sbrStats);
+      setLine(Object.values(e.stats.lineStats));
+      setEngage(Object.values(e.stats.engagementStats));
+      setPersonality(Object.values(e.stats.personalityStats));
+      setGraphDomain(e.trends);
+      setMatchInfo(e.stats.matchStats);
       //match graph data conversion
       const matchX = [];
       const matchY = [];
-      data.trends.matchtrends.forEach((match) => {
+      e.trends.matchtrends.forEach((match) => {
         matchX.push(match.sum);
         matchY.push(match.sbr.toFixed(1));
       });
@@ -108,7 +108,7 @@ function PlayerBoard() {
       //SeasonTrends graph data
       const seasonX = [];
       const seasonY = [];
-      data.trends.seasontrends.forEach((season) => {
+      e.trends.seasontrends.forEach((season) => {
         seasonX.push(season.season);
         seasonY.push(season.sbr.toFixed(1));
       });
@@ -130,8 +130,10 @@ function PlayerBoard() {
       id: user.id,
     };
     axiosRequest(url, params, function (e) {
-      const champArray = e.map((data) => `${data.kor}(${data.total}경기)`);
-      const champArrayEng = e.map((data) => data.eng);
+      const champArray = e.champion.map(
+        (data) => `${data.kor}(${data.total}경기)`
+      );
+      const champArrayEng = e.champion.map((data) => data.eng);
 
       // setChampFilter(e.champion);
       // setChampEng(e.championEng);
@@ -155,9 +157,10 @@ function PlayerBoard() {
       id: user.id,
     };
     axiosRequest(url, params, function (e) {
-      const champArray = e.map((data) => `${data.kor}(${data.total}경기)`);
-      const champArrayEng = e.map((data) => data.eng);
-
+      const champArray = e.champion.map(
+        (data) => `${data.kor}(${data.total}경기)`
+      );
+      const champArrayEng = e.champion.map((data) => data.eng);
       setOppFilter(champArray);
       setOppEng(champArrayEng);
     });
@@ -429,7 +432,7 @@ function PlayerBoard() {
                         <td className="Icon">
                           <img
                             src={
-                              title.leaguedata <= title
+                              title.leaguedata <= title.data
                                 ? "Images/ico-point-high.png"
                                 : "Images/ico-point-low-blue.png"
                             }
@@ -440,9 +443,10 @@ function PlayerBoard() {
                         </td>
                         <PlayerValue
                           className="playerValue"
-                          changeColor={title.leaguedata > title}
+                          changeColor={title.leaguedata > title.data}
                         >
-                          {title.toFixed(1)}
+                          {/* {title.toFixed(1)}*/}
+                          {title.data.toFixed(1)}
                         </PlayerValue>
                       </MapStat>
                     );
@@ -486,7 +490,7 @@ function PlayerBoard() {
                         <td className="Icon">
                           <img
                             src={
-                              title.leaguedata <= title
+                              title.leaguedata <= title.data
                                 ? "Images/ico-point-high.png"
                                 : "Images/ico-point-low-blue.png"
                             }
@@ -497,9 +501,10 @@ function PlayerBoard() {
                         </td>
                         <PlayerValue
                           className="playerValue"
-                          changeColor={title.leaguedata > title}
+                          changeColor={title.leaguedata > title.data}
                         >
-                          {title.toFixed(1)}
+                          {/* {title.toFixed(1)} */}
+                          {title.data.toFixed(1)}
                         </PlayerValue>
                       </MapStat>
                     );
@@ -544,7 +549,7 @@ function PlayerBoard() {
                         <td className="Icon">
                           <img
                             src={
-                              title.leaguedata <= title
+                              title.leaguedata <= title.data
                                 ? "Images/ico-point-high.png"
                                 : "Images/ico-point-low-blue.png"
                             }
@@ -555,9 +560,9 @@ function PlayerBoard() {
                         </td>
                         <PlayerValue
                           className="playerValue"
-                          changeColor={title.leaguedata > title}
+                          changeColor={title.leaguedata > title.data}
                         >
-                          {title.toFixed(1)}
+                          {title.data.toFixed(1)}
                         </PlayerValue>
                       </MapStat>
                     );

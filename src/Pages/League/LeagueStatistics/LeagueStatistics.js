@@ -84,7 +84,7 @@ function LeagueStatistics() {
         gameX.push(game.patch);
         gameY.push(game.gamelength.toFixed(1));
       });
-      e.avgSupportedTime.forEach((support) => {
+      e.avgSupportedTime.data.forEach((support) => {
         supportX.push(support.position);
         supportY.push(support.supported_time.toFixed(1));
       });

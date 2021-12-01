@@ -127,7 +127,7 @@ function PlayerFilterModal() {
     };
 
     axiosRequest(url, params, function (e) {
-      setOppTeamFilter(e.oppteam);
+      setOppTeamFilter(e);
     });
   };
 
