@@ -355,8 +355,10 @@ const Filter = memo(() => {
       id: user.id,
     };
 
-    axiosRequest(null, url, params, function (e) {
-      const patchResponse = e.data.patch ?? [];
+    axiosRequest(url, params, function (e) {
+      // const patchResponse = e.patch ?? [];
+      const patchResponse = e ?? [];
+
       dispatch(setPatchFilter(patchResponse));
       dispatch(SetPatch(patchResponse));
     });

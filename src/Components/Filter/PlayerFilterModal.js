@@ -65,12 +65,12 @@ function PlayerFilterModal() {
       (key) =>
         Number(Object.keys(staticvalue.filterObjects[key])) ===
         Number(filters.year) && key
-    )
+    );
     dispatch(setLeagueFilter(leagueList.sort()));
   };
 
   useEffect(() => {
-    dispatch(CompareModal(true))
+    dispatch(CompareModal(true));
     setOppTeamFilter();
     setOppPlayerFilter();
   }, []);
@@ -80,27 +80,25 @@ function PlayerFilterModal() {
       setPrevTeam(filters.team);
       fetchingPlayerFilter();
     }
-  }, [filters.team])
+  }, [filters.team]);
 
   useEffect(() => {
     if (filters.player.length > 0) {
       setPrevPlayer(filters.player);
       fetchingOppTeamFilter();
     }
-  }, [filters.player])
+  }, [filters.player]);
 
   useEffect(() => {
     if (filters.oppteam.length > 0) {
       fetchingOppPlayerFilter();
     }
-  }, [filters.oppteam])
+  }, [filters.oppteam]);
+
+  useEffect(() => { }, [filters.oppplayer]);
 
   useEffect(() => {
-
-  }, [filters.oppplayer])
-
-  useEffect(() => {
-    console.log("자꾸 울림")
+    console.log("자꾸 울림");
   }, [filters.compareModal]);
 
   // 확인하기 버튼 조건
@@ -128,8 +126,8 @@ function PlayerFilterModal() {
       id: user.id,
     };
 
-    axiosRequest(null, url, params, function (e) {
-      setOppTeamFilter(e.data.oppteam);
+    axiosRequest(undefined, url, params, function (e) {
+      setOppTeamFilter(e);
     });
   };
 
@@ -146,8 +144,8 @@ function PlayerFilterModal() {
       id: user.id,
     };
 
-    axiosRequest(null, url, params, function (e) {
-      dispatch(setPlayerFilter(e.data));
+    axiosRequest(undefined, url, params, function (e) {
+      dispatch(setPlayerFilter(e));
     });
   };
 
@@ -165,8 +163,8 @@ function PlayerFilterModal() {
       id: user.id,
     };
 
-    axiosRequest(null, url, params, function (e) {
-      setOppPlayerFilter(e.data);
+    axiosRequest(undefined, url, params, function (e) {
+      setOppPlayerFilter(e);
     });
   };
 
@@ -176,7 +174,7 @@ function PlayerFilterModal() {
         fetchingOppTeamFilter();
       }
     }
-  }
+  };
 
   return (
     <>
@@ -283,27 +281,25 @@ function PlayerFilterModal() {
             </LeagueFilter>
             <PatchFilter>
               <label>{t("filters.setSeason")}</label>
-              {
-                selector.seasonFilter?.map((season, idx) => {
-                  return (
-                    <SelectedPatch
-                      key={idx}
-                      isChecked={filters.season.includes(season) ? true : false}
-                      onClick={() => {
-                        dispatch(Season(season));
-                      }}
-                    >
-                      <input
-                        id={idx}
-                        checked={filters.season.includes(season) ? true : false}
-                        type="checkbox"
-                        readOnly
-                      ></input>
-                      <div className="Version">{season}</div>
-                    </SelectedPatch>
-                  );
-                })
-              }
+              {selector.seasonFilter?.map((season, idx) => {
+                return (
+                  <SelectedPatch
+                    key={idx}
+                    isChecked={filters.season.includes(season) ? true : false}
+                    onClick={() => {
+                      dispatch(Season(season));
+                    }}
+                  >
+                    <input
+                      id={idx}
+                      checked={filters.season.includes(season) ? true : false}
+                      type="checkbox"
+                      readOnly
+                    ></input>
+                    <div className="Version">{season}</div>
+                  </SelectedPatch>
+                );
+              })}
             </PatchFilter>
             <PatchFilter>
               <label>{t("filters.setPatchVersion")}</label>

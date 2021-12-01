@@ -33,9 +33,9 @@ function PlayerCompare() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(null, url, params, function (e) {
-      setData(e.data[filters.player]);
-      setOppData(e.data[filters.oppplayer]);
+    axiosRequest(undefined, url, params, function (e) {
+      setData(e[filters.player]);
+      setOppData(e[filters.oppplayer]);
     });
     // dispatch(Loading(false));
   };

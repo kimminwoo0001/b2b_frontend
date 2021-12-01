@@ -68,10 +68,10 @@ function ComparePosition() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(null, url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       setTeamName({
-        team: e.data.teamName,
-        oppteam: e.data.oppteamName,
+        team: e.teamName,
+        oppteam: e.oppteamName,
       });
       //top데이터 받아와서 그래프에 넣기 위해 가공하는 과정
       const topData = [];
@@ -94,7 +94,7 @@ function ComparePosition() {
 
       for (let i = 0; i < topData.length; i++) {
         topArray.push({
-          player: Object.keys(e.data["top"])[i],
+          player: Object.keys(e["top"])[i],
           data: topData[i].map((data) => data?.toFixed(2)),
         });
       }
@@ -121,7 +121,7 @@ function ComparePosition() {
       });
       for (let i = 0; i < jngData.length; i++) {
         jngArray.push({
-          player: Object.keys(e.data["jng"])[i],
+          player: Object.keys(e["jng"])[i],
           data: jngData[i].map((data) => data?.toFixed(2)),
         });
       }
@@ -148,7 +148,7 @@ function ComparePosition() {
       });
       for (let i = 0; i < midData.length; i++) {
         midArray.push({
-          player: Object.keys(e.data["mid"])[i],
+          player: Object.keys(e["mid"])[i],
           data: midData[i].map((data) => data?.toFixed(2)),
         });
       }
@@ -175,7 +175,7 @@ function ComparePosition() {
       });
       for (let i = 0; i < botData.length; i++) {
         botArray.push({
-          player: Object.keys(e.data["bot"])[i],
+          player: Object.keys(e["bot"])[i],
           data: botData[i].map((data) => data?.toFixed(2)),
         });
       }
@@ -202,7 +202,7 @@ function ComparePosition() {
       });
       for (let i = 0; i < supData.length; i++) {
         supArray.push({
-          player: Object.keys(e.data["sup"])[i],
+          player: Object.keys(e["sup"])[i],
           data: supData[i].map((data) => data?.toFixed(2)),
         });
       }

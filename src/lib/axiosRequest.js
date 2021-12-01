@@ -1,4 +1,3 @@
-
 import qs from "qs";
 import axios from "axios";
 import checkRequest from "./checkRequest";
@@ -37,9 +36,9 @@ const axiosRequest = async (method = "GET", url, paramData, callback, failCallba
     }).catch(error => {
       console.log("error test : ", error)
     })
-  } else if (method.toUpperCase() === "POST") {
+  } else if (method?.toUpperCase() === "POST") {
     const headers = {
-      "Content-Type": "application/x-www-form-urlencoded"
+      "Content-Type": "application/x-www-form-urlencoded",
     };
     await axios.post(url, paramData, {
       headers: headers,
@@ -61,6 +60,6 @@ const axiosRequest = async (method = "GET", url, paramData, callback, failCallba
       console.log("error test : ", error)
     })
   }
-}
+};
 
 export default axiosRequest;

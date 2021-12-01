@@ -8,28 +8,27 @@ import PickCombineModal from "./PickCombineModal";
 import { API } from "../config";
 import axiosRequest from "../../lib/axiosRequest";
 
-
 const PositionImage = [
   {
     Image: "Images/img-player-top-none.png",
-    Icon: "Images/ico-position-top2.png"
+    Icon: "Images/ico-position-top2.png",
   },
   {
     Image: "Images/img-player-jug-none.png",
-    Icon: "Images/ico-position-jug2.png"
+    Icon: "Images/ico-position-jug2.png",
   },
   {
     Image: "Images/img-player-mid-none.png",
-    Icon: "Images/ico-position-mid2.png"
+    Icon: "Images/ico-position-mid2.png",
   },
   {
     Image: "Images/img-player-bot-none.png",
-    Icon: "Images/ico-position-bot2.png"
+    Icon: "Images/ico-position-bot2.png",
   },
   {
     Image: "Images/img-player-sup-none.png",
-    Icon: "Images/ico-position-sup2.png"
-  }
+    Icon: "Images/ico-position-sup2.png",
+  },
 ];
 
 function PickCombine() {
@@ -62,8 +61,8 @@ function PickCombine() {
       year: filters.year,
       season: filters.season,
     };
-    axiosRequest(null, url, params, function (e) {
-      setTeamFilter(e.data.team);
+    axiosRequest(undefined, url, params, function (e) {
+      setTeamFilter(e.team);
     })
   };
 

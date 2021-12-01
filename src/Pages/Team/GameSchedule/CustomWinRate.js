@@ -8,7 +8,6 @@ import qs from "qs";
 import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
 import axiosRequest from "../../../lib/axiosRequest";
 
-
 function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
@@ -42,9 +41,9 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
       token: user.token,
       id: user.id
     }
-    axiosRequest(null, url, params, function (e) {
-      setTeam1(e.data[el.Team1]);
-      setTeam2(e.data[el.Team2]);
+    axiosRequest(undefined, url, params, function (e) {
+      setTeam1(e[el.Team1]);
+      setTeam2(e[el.Team2]);
     })
   };
 
@@ -61,10 +60,10 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
       team1: player1.join(),
       team2: player2.join(),
       token: user.token,
-      id: user.id
+      id: user.id,
     };
-    axiosRequest(null, url, params, function (e) {
-      setWinRate(e.data);
+    axiosRequest(undefined, url, params, function (e) {
+      setWinRate(e);
     });
   };
 

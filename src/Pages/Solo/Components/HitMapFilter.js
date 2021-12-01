@@ -10,10 +10,9 @@ import {
   Opp_Champion,
   Opp_Champion_Eng,
   ResetChampion,
-  ResetChampion2
+  ResetChampion2,
 } from "../../../redux/modules/filtervalue";
 import axiosRequest from "../../../lib/axiosRequest";
-
 
 function HitMapFilter() {
   const dropdownRef = useRef(null);
@@ -40,14 +39,14 @@ function HitMapFilter() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(null, url, params, function (e) {
-      setChampFilter(e.data.champion);
-      setChampEng(e.data.championEng);
+    axiosRequest(undefined, url, params, function (e) {
+      setChampFilter(e.champion);
+      setChampEng(e.championEng);
     })
   };
 
   const GetOppFilter = () => {
-    const url = `${API}/lolapi/filter/oppplayerchamp?`
+    const url = `${API}/lolapi/filter/oppplayerchamp?`;
     const params = {
       league: filters.league,
       year: filters.year,
@@ -60,9 +59,9 @@ function HitMapFilter() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(null, url, params, function (e) {
-      setOppFilter(e.data.champion);
-      setOppEng(e.data.championEng);
+    axiosRequest(undefined, url, params, function (e) {
+      setOppFilter(e.champion);
+      setOppEng(e.championEng);
     })
   };
 

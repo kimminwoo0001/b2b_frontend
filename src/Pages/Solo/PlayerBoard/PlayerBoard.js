@@ -76,30 +76,30 @@ function PlayerBoard() {
       id: user.id,
     };
 
-    axiosRequest(null, url, params, function (e) {
-      const data = e.data;
+    axiosRequest(undefined, url, params, function (e) {
+      //const data = e.data;
       // var arrNumber = [0, 0, 0, 0, 0, 0, 0];
 
       // for (var i = 0; i < 7; i++) {
       //   arrNumber[i] = data.stats.lineStats[`val${i}`];
       // }
 
-      setInfo(data.info);
-      setCarrer(data.records.careerrecords);
-      setChampRecord(Object.values(data.records.championrecords));
+      setInfo(e.info);
+      setCarrer(e.records.careerrecords);
+      setChampRecord(Object.values(e.records.championrecords));
       // setLeaguePlayerInfo(Object.values(data.soloInfo.leaguePlayerInfo));
       // setLeaguePlayerTotal(Object.values(data.soloInfo.leaguePlayerTotal));
       // setUserPlayerTotal(Object.values(data.soloInfo.userPlayerTotal));
-      setSbr(data.stats.sbrStats);
-      setLine(Object.values(data.stats.lineStats));
-      setEngage(Object.values(data.stats.engagementStats));
-      setPersonality(Object.values(data.stats.personalityStats));
-      setGraphDomain(data.trends);
-      setMatchInfo(data.stats.matchStats);
+      setSbr(e.stats.sbrStats);
+      setLine(Object.values(e.stats.lineStats));
+      setEngage(Object.values(e.stats.engagementStats));
+      setPersonality(Object.values(e.stats.personalityStats));
+      setGraphDomain(e.trends);
+      setMatchInfo(e.stats.matchStats);
       //match graph data conversion
       const matchX = [];
       const matchY = [];
-      data.trends.matchtrends.forEach((match) => {
+      e.trends.matchtrends.forEach((match) => {
         matchX.push(match.sum);
         matchY.push(match.sbr.toFixed(1));
       });
@@ -108,7 +108,7 @@ function PlayerBoard() {
       //SeasonTrends graph data
       const seasonX = [];
       const seasonY = [];
-      data.trends.seasontrends.forEach((season) => {
+      e.trends.seasontrends.forEach((season) => {
         seasonX.push(season.season);
         seasonY.push(season.sbr.toFixed(1));
       });
@@ -129,12 +129,12 @@ function PlayerBoard() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(null, url, params, function (e) {
-      const champArray = e.data.map((data) => `${data.kor}(${data.total}경기)`);
-      const champArrayEng = e.data.map((data) => data.eng);
+    axiosRequest(undefined, url, params, function (e) {
+      const champArray = e.champion.map((data) => `${data.kor}(${data.total}경기)`);
+      const champArrayEng = e.champion.map((data) => data.eng);
 
-      // setChampFilter(e.data.champion);
-      // setChampEng(e.data.championEng);
+      // setChampFilter(e.champion);
+      // setChampEng(e.championEng);
       setChampFilter(champArray);
       setChampEng(champArrayEng);
     });
@@ -154,9 +154,9 @@ function PlayerBoard() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(null, url, params, function (e) {
-      const champArray = e.data.map((data) => `${data.kor}(${data.total}경기)`);
-      const champArrayEng = e.data.map((data) => data.eng);
+    axiosRequest(undefined, url, params, function (e) {
+      const champArray = e.champion.map((data) => `${data.kor}(${data.total}경기)`);
+      const champArrayEng = e.champion.map((data) => data.eng);
 
       setOppFilter(champArray);
       setOppEng(champArrayEng);
@@ -441,6 +441,7 @@ function PlayerBoard() {
                           className="playerValue"
                           changeColor={title.leaguedata > title.data}
                         >
+                          {/* {title.toFixed(1)}*/}
                           {title.data.toFixed(1)}
                         </PlayerValue>
                       </MapStat>
@@ -498,6 +499,7 @@ function PlayerBoard() {
                           className="playerValue"
                           changeColor={title.leaguedata > title.data}
                         >
+                          {/* {title.toFixed(1)} */}
                           {title.data.toFixed(1)}
                         </PlayerValue>
                       </MapStat>

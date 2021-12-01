@@ -4,7 +4,13 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { signIn } from "./signIn";
-import { UserID, UserToken, UserIP, UserDevice, UserChargeTime } from "../../redux/modules/user";
+import {
+  UserID,
+  UserToken,
+  UserIP,
+  UserDevice,
+  UserChargeTime,
+} from "../../redux/modules/user";
 import { useHistory } from "react-router-dom";
 import { Language } from "../../redux/modules/locale";
 import AlertModal from "../../Components/UtilityComponent/AlertModal";
@@ -14,11 +20,11 @@ import { API } from "../config";
 import { SetModalInfo } from "../../redux/modules/modalvalue";
 
 function CheckEmail(str) {
-  let reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+  let reg_email =
+    /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
   if (!reg_email.test(str)) {
     return false;
-  }
-  else {
+  } else {
     return true;
   }
 }
@@ -37,7 +43,7 @@ function Login() {
     } else {
       sessionStorage.setItem("i18nextLng", "en");
     }
-  }, [])
+  }, []);
 
   const onSubmit = async ({ id, password }) => {
     try {
@@ -83,10 +89,7 @@ function Login() {
 
   return (
     <>
-      <AlertModal
-        desc={alertDesc}
-        isOpen={isOpen} setIsOpen={setIsOpen}
-      />
+      <AlertModal desc={alertDesc} isOpen={isOpen} setIsOpen={setIsOpen} />
       <LoginWrapper>
         <LoginContainer>
           <div className="IndexImage"></div>
@@ -100,7 +103,7 @@ function Login() {
               name="id"
               autoComplete="off"
               {...register("id", {
-                required: "Required"
+                required: "Required",
               })}
             />
             <input
@@ -111,7 +114,7 @@ function Login() {
               autoComplete="off"
               placeholder="PASSWORD"
               {...register("password", {
-                required: "Required"
+                required: "Required",
               })}
             />
             <button type="submit" className="LoginBtn">

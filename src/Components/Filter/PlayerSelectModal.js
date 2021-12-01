@@ -41,8 +41,8 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(null, url, params, function (e) {
-      setOppTeam(e.data.oppteam);
+    axiosRequest(undefined, url, params, function (e) {
+      setOppTeam(e.oppteam);
     });
   };
 
@@ -58,8 +58,8 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(null, url, params, function (e) {
-      setOppPlayer(e.data);
+    axiosRequest(undefined, url, params, function (e) {
+      setOppPlayer(e);
     });
   };
 
@@ -278,7 +278,8 @@ const ButtonBox = styled.div`
     height: 60px;
     margin: 0 5px;
     border-radius: 20px;
-    background-color: ${(props) => props.isAllFilterSelected ? "#5942ba" : "#484655"};
+    background-color: ${(props) =>
+    props.isAllFilterSelected ? "#5942ba" : "#484655"};
     font-family: SpoqaHanSansNeo;
     font-size: 18px;
     font-weight: normal;

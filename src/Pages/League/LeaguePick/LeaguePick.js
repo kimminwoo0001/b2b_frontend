@@ -105,15 +105,15 @@ function LeaguePick() {
       id: user.id,
     };
 
-    axiosRequest(null, url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       //주요픽 데이터 저장
-      setImportantPicks(e.data.importantPick);
+      setImportantPicks(e.importantPick);
       //주요픽간의전적 저장
-      setPickDifference(e.data.pickDiff);
+      setPickDifference(e.pickDiff);
       //챔피언 티어 저장
-      setTier(e.data.championTier);
+      setTier(e.championTier);
       //유니크픽 데이터 저장
-      setUniquePick(e.data.uniquePick);
+      setUniquePick(e.uniquePick);
     }).finally(setLoading(false));
   };
 

@@ -42,13 +42,13 @@ const HomeContents = memo(() => {
 
   const fetchHomeData = () => {
     dispatch(Loading(true));
-    console.log(user)
+    console.log(user);
     try {
       const url = `${API}/lolapi/home/home`;
       const params = {
         token: user.token
       }
-      axiosRequest(null, url, params, function (data, objStore) {
+      axiosRequest(undefined, url, params, function (data) {
         console.log("modal", modal);
         setLeagueDataset(data);
         dispatch(Loading(false));
@@ -71,7 +71,7 @@ const HomeContents = memo(() => {
           token: user.token,
           id: user.id
         }
-        axiosRequest(null, url, params, function (data) {
+        axiosRequest(undefined, url, params, function (data) {
           console.log(modal);
           dispatch(GetFilterAllItems(data));
           dispatch(Loading(false));
@@ -96,15 +96,14 @@ const HomeContents = memo(() => {
             imgSrc="Images/ico-league-lck.png"
             imgAlt="lckIcon"
             leagueName="LCK"
-            leagueDataset={leagueDataset['LCK']}
+            leagueDataset={leagueDataset["LCK"]}
           />
           <LeagueRank
             imgSrc="Images/ico-league-lec.png"
             imgAlt="lecIcon"
             leagueName="LEC"
-            leagueDataset={leagueDataset['LEC']}
+            leagueDataset={leagueDataset["LEC"]}
           />
-
         </TopBox>
         <BottomBox>
           <LeagueListSmall>
@@ -133,7 +132,7 @@ const HomeContents = memo(() => {
                 </tr>
               </thead>
               <tbody>
-                {leagueDataset['LCS']?.map((leagueData, index) => {
+                {leagueDataset["LCS"]?.map((leagueData, index) => {
                   return (
                     <tr key={index}>
                       <td className="Rank">{leagueData.Place}</td>
@@ -150,7 +149,7 @@ const HomeContents = memo(() => {
                         {leagueData.PO === true ? <PlayOff>P.O</PlayOff> : ""}
                         {leagueData.PL === true ? <PL>P.L</PL> : ""}
                       </td> */}
-                      <td className="Win" > {leagueData.WinSeries}</td>
+                      <td className="Win"> {leagueData.WinSeries}</td>
                       <td className="Lose">{leagueData.LossSeries}</td>
                       <td className="WinRate">{`${leagueData.WinRate.toFixed(
                         1
@@ -166,7 +165,7 @@ const HomeContents = memo(() => {
             imgSrc="Images/ico-league-lpl.png"
             imgAlt="lplIcon"
             leagueName="LPL"
-            leagueDataset={leagueDataset['LPL']}
+            leagueDataset={leagueDataset["LPL"]}
           />
 
           {/* <LeagueList>
@@ -217,8 +216,8 @@ const HomeContents = memo(() => {
             </HomeTable>
           </LeagueList> */}
         </BottomBox>
-      </BoxWrapper >
-    </LeagueListWrapper >
+      </BoxWrapper>
+    </LeagueListWrapper>
   );
 });
 
@@ -244,7 +243,7 @@ const BottomBox = styled.div`
 const LeagueList = styled.div`
   margin: 0 20px 24.5px 0;
   width: 594px;
-  // height: 432px; 
+  // height: 432px;
   border: solid 1px #3a3745;
   background-color: #2f2d38;
   border-radius: 20px;
@@ -253,7 +252,7 @@ const LeagueList = styled.div`
 const LeagueListSmall = styled.div`
   margin: 0 20px 24.5px 0;
   width: 594px;
-  height: 457px; 
+  height: 457px;
   border: solid 1px #3a3745;
   background-color: #2f2d38;
   border-radius: 20px;

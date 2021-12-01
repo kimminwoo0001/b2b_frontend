@@ -40,8 +40,8 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(null, url, params, function (e) {
-      setOppTeam(e.data.oppteam);
+    axiosRequest(undefined, url, params, function (e) {
+      setOppTeam(e.oppteam);
     });
   };
 
@@ -72,7 +72,6 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
                   onClick={() => dispatch(OppTeam(team))}
                   currentTeam={filters.oppteam === team}
                 >
-
                   <img src={`Images/TeamLogo/${team}.png`} alt="teamLogo" />{" "}
                   <div>{team}</div>
                 </MapTeam>
@@ -234,7 +233,6 @@ const MapTeam = styled.div`
     width: 30px;
     height: 30px;
     margin: 0 11px 0 0px;
-
   }
   div {
     font-family: SpoqaHanSansNeo;

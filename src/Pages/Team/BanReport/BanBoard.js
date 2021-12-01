@@ -7,7 +7,6 @@ import { API } from "../../config";
 import qs from "qs";
 import axiosRequest from "../../../lib/axiosRequest";
 
-
 function BanBoard() {
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
@@ -30,10 +29,10 @@ function BanBoard() {
         patch: filters.patch,
         team: filters.team,
         token: user.token,
-        id: user.id
+        id: user.id,
       };
-      axiosRequest(null, url, params, function (e) {
-        setAll(e.data);
+      axiosRequest(undefined, url, params, function (e) {
+        setAll(e);
       })
     } catch (e) {
       console.log(e);

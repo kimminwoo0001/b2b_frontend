@@ -6,6 +6,8 @@ import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetec
 import { Reset_Map } from "../../../redux/modules/filtervalue";
 import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
+import { API } from "../../config";
+
 import qs from "qs";
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
@@ -56,11 +58,10 @@ function SetByPlayer({ minFrom, setMinFrom }) {
   const [isActive1, setIsActive1] = useDetectOutsideClick(dropdownRef, false);
   const { t } = useTranslation();
   const [champArray, setChampArray] = useState([]);
-  const isPageSolo = document.location.pathname === '/solo' ? true : false;
+  const isPageSolo = document.location.pathname === "/solo" ? true : false;
   useOutsideAlerter(wrapperRef, isActive2, filters, champArray);
 
   function useOutsideAlerter(ref, isActive2, filters, champArray) {
-
     useEffect(() => {
       /**
        * Alert if clicked on outside of element
@@ -88,8 +89,6 @@ function SetByPlayer({ minFrom, setMinFrom }) {
         document.removeEventListener("mousedown", handleClickOutside);
       };
     }, [ref, isActive2, filters, champArray]);
-
-
   }
 
   const pushChampion = (champion) => {
@@ -120,7 +119,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
       if (isPageSolo) {
         setIsActive(!isActive);
       } else {
-        const url = `${API2}/lolapi/mappingFilter`;
+        const url = `${API}/lolapi/mapping/mappingFilter/team`;
         const params = {
           league: filters.league,
           year: filters.year,
@@ -129,8 +128,8 @@ function SetByPlayer({ minFrom, setMinFrom }) {
           token: user.token,
           id: user.id,
         };
-        axiosRequest(null, url, params, function (e) {
-          const data = e.data.team;
+        axiosRequest(undefined, url, params, function (e) {
+          const data = e.team;
           setFilterData({ ...filterData, team: data });
         });
       }
@@ -144,7 +143,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
       if (isPageSolo) {
         setIsActive(!isActive);
       } else {
-        const url = `${API2}/lolapi/mappingFilter`;
+        const url = `${API}/lolapi/mapping/mappingFilter/player`;
         const params = {
           league: filters.league,
           year: filters.year,
@@ -154,10 +153,10 @@ function SetByPlayer({ minFrom, setMinFrom }) {
           token: user.token,
           id: user.id,
         };
-        axiosRequest(null, url, params, function (e) {
-          const data = e.data.player;
+        axiosRequest(undefined, url, params, function (e) {
+          const data = e.player;
           setFilterData({ ...filterData, player: data });
-        })
+        });
       }
     } catch (e) {
       console.log(e);
@@ -166,7 +165,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
 
   const getChampion = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter/champion`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -177,20 +176,20 @@ function SetByPlayer({ minFrom, setMinFrom }) {
         token: user.token,
         id: user.id,
       }
-      axiosRequest(null, url, params, function (e) {
-        const data = e.data.champion;
+      axiosRequest(undefined, url, params, function (e) {
+        const data = e.champion;
         setFilterData({ ...filterData, champion: data });
         if (isPageSolo && champArray.length === 0 && !filterData) {
           setChampArray(data);
           clickChampionConfirm(data);
         }
-      })
+      });
     } catch (e) {
       console.log(e);
     }
   };
 
-  const clickChampionConfirm = (champArrayData = '') => {
+  const clickChampionConfirm = (champArrayData = "") => {
     isActive2.current = false;
     dispatch(
       Reset_Map({
@@ -209,10 +208,10 @@ function SetByPlayer({ minFrom, setMinFrom }) {
         position: filters.position,
         oppteam: "",
         oppplayer: "",
-        oppchampion_eng: ""
+        oppchampion_eng: "",
       })
     );
-  }
+  };
 
   return (
     <SetByPlayerContainer>
@@ -284,10 +283,11 @@ function SetByPlayer({ minFrom, setMinFrom }) {
                 </nav>
               </div>
             </DropDownToggle> */}
-            <SeletedTeam>
-              {filters.team}
-            </SeletedTeam>
-            <DropDownToggle className="container" changeColor={filters.player.length > 0}>
+            <SeletedTeam>{filters.team}</SeletedTeam>
+            <DropDownToggle
+              className="container"
+              changeColor={filters.player.length > 0}
+            >
               <div className="menu-container">
                 <button
                   onClick={() => {
@@ -349,7 +349,10 @@ function SetByPlayer({ minFrom, setMinFrom }) {
               </div>
             </DropDownToggle>
           </FilterWrapper>
-          <DropDownToggle className="container" changeColor={champArray.length > 0}>
+          <DropDownToggle
+            className="container"
+            changeColor={champArray.length > 0}
+          >
             <div className="menu-container2">
               <button
                 onClick={() => {
@@ -359,18 +362,18 @@ function SetByPlayer({ minFrom, setMinFrom }) {
                 }}
                 className="menu-trigger2"
               >
-                {
-                  champArray.length > 0 ?
-                    <span className="Label2">
-                      <span className="champLength">
-                        {`${champArray.length} `}
-                      </span>
-                      {` ${t("video.object.champ")}`}
+                {champArray.length > 0 ? (
+                  <span className="Label2">
+                    <span className="champLength">
+                      {`${champArray.length} `}
                     </span>
-                    : <span className="Label2">
-                      {t("video.object.selectChamp")}
-                    </span>
-                }
+                    {` ${t("video.object.champ")}`}
+                  </span>
+                ) : (
+                  <span className="Label2">
+                    {t("video.object.selectChamp")}
+                  </span>
+                )}
                 <img
                   className="ArrowIcon"
                   src="Images/select-arrow.png"
@@ -381,7 +384,8 @@ function SetByPlayer({ minFrom, setMinFrom }) {
               {filterData?.champion ? (
                 <nav
                   ref={wrapperRef}
-                  className={`menu2 ${isActive2.current ? "active" : "inactive"}`}
+                  className={`menu2 ${isActive2.current ? "active" : "inactive"
+                    }`}
                 >
                   <ul>
                     <Menu3li
@@ -392,7 +396,9 @@ function SetByPlayer({ minFrom, setMinFrom }) {
                             : "all"
                         )
                       }
-                      isChecked={filterData?.champion?.length === champArray.length}
+                      isChecked={
+                        filterData?.champion?.length === champArray.length
+                      }
                     >
                       <input
                         checked={
@@ -686,7 +692,8 @@ const DropDownToggle = styled.div`
     line-height: normal;
     letter-spacing: normal;
     text-align: left;
-    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`)};
+    color: ${(props) =>
+    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
     width: 240px;
   }
   .Label2 {
@@ -698,7 +705,8 @@ const DropDownToggle = styled.div`
     line-height: normal;
     letter-spacing: normal;
     text-align: left;
-    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`)};
+    color: ${(props) =>
+    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
     width: 488px;
     /* ::first-letter {
       color: #f04545;
@@ -881,7 +889,7 @@ const SeletedTeam = styled.div`
   letter-spacing: normal;
   text-align: left;
   margin: 0 0 0 18px;
-`
+`;
 
 const Menu3li = styled.li`
   margin-top: 4px;
@@ -905,10 +913,10 @@ const Menu3li = styled.li`
   ${(props) =>
     props.isChecked &&
     css`
-        color: rgb(255, 255, 255);
-        background-color: rgba(22, 21, 28, 0.5);
-        border-radius: 10px;
-      `}
+      color: rgb(255, 255, 255);
+      background-color: rgba(22, 21, 28, 0.5);
+      border-radius: 10px;
+    `}
 
   >  input[type="checkbox"] {
     -webkit-appearance: none;

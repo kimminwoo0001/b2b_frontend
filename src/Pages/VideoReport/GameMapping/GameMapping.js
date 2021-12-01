@@ -11,7 +11,6 @@ import Tippy from "@tippy.js/react";
 import ObjectTooltip from "../ObjectMapping/ObjectTooltip";
 import axiosRequest from "../../../lib/axiosRequest";
 
-
 //fast 버튼 setinterval 메모리 최적화 함수
 function useInterval(callback) {
   const savedCallback = useRef();
@@ -80,7 +79,7 @@ function GameMapping() {
 
   const getGameLists = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API2}/lolapi/mappingFilter/`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -92,10 +91,10 @@ function GameMapping() {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(null, url, params, function (e) {
+      axiosRequest(undefined, url, params, function (e) {
         setGameListData(Object.values(e.data["match"]));
         console.log(e.data.match);
-      })
+      });
     } catch (e) {
       console.log(e);
     }
@@ -103,18 +102,20 @@ function GameMapping() {
 
   //맵핑 데이터 fetch 함수
   const fetchingMapData = () => {
-    const gameid = filters?.gameid ?? '';
+    const gameid = filters?.gameid ?? "";
     if (gameid.length > 0) {
       setLoading(true);
       try {
-        const url = `${API2}/lolapi/mappingPosition`;
+        // const url = `${API}/lolapi/mappingPosition`;
+        const url = `${API2}/lolapi/mapping/mapping`;
+
         const params = {
           gameid: filters.gameid,
           token: user.token,
           id: user.id,
-        }
+        };
 
-        axiosRequest(null, url, params, function (e) {
+        axiosRequest(undefined, url, params, function (e) {
           // 맵핑 포지션
           const dto = e.data;
 
@@ -130,7 +131,7 @@ function GameMapping() {
           setCurrentPos(dto.position);
           setInfo(dto.info);
           setTimeLineData(dto.timeline);
-        })
+        });
       } catch (e) {
         console.log(e);
       } finally {
@@ -138,7 +139,7 @@ function GameMapping() {
         setPlay(true);
       }
     } else {
-      alert(t("video.vision.selectGame"))
+      alert(t("video.vision.selectGame"));
     }
   };
 

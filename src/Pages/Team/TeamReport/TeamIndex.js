@@ -57,25 +57,28 @@ function TeamIndex() {
         id: user.id,
       };
 
-      axiosRequest(null, url, params, function (e) {
+      axiosRequest(undefined, url, params, function (e) {
         //팀 평균 데이터 fetch
-        setTeamStats(e.data.teamStats);
+        setTeamStats(e.teamStats);
 
         //리그 평균 데이터 fetch
-        setLeagueStat(e.data.leagueStat);
+        setLeagueStat(e.leagueStat);
 
         //SRB 데이터 fetch
-        setSbrAnalysis(e.data.sbrAnalysis);
+        setSbrAnalysis(e.sbrAnalysis);
 
         //첫 갱 라인 데이터 fetch
         const gameX = [];
         const gameY = [];
 
-        let firstGank = e.data.firstGank;
-        firstGank.firstGankMax = firstGank?.firstGankMax % 5 === 0 ? firstGank?.firstGankMax : firstGank?.firstGankMax + (5 - firstGank?.firstGankMax % 5);
+        let firstGank = e.firstGank;
+        firstGank.firstGankMax =
+          firstGank?.firstGankMax % 5 === 0
+            ? firstGank?.firstGankMax
+            : firstGank?.firstGankMax + (5 - (firstGank?.firstGankMax % 5));
         firstGank.firstGankRow = firstGank.firstGankMax / 5;
-        setGankCount(e.data.firstGank);
-        e.data.firstGank.firstGankList.forEach((game) => {
+        setGankCount(e.firstGank);
+        e.firstGank.firstGankList.forEach((game) => {
           gameX.push(game.position);
           gameY.push(game.gankCount);
         });
@@ -86,8 +89,8 @@ function TeamIndex() {
 
         const supportX = [];
         const supportY = [];
-        setSupportTimeData(e.data.supportedTime);
-        e.data.supportedTime.supportedTimeList.forEach((support) => {
+        setSupportTimeData(e.supportedTime);
+        e.supportedTime.supportedTimeList.forEach((support) => {
           supportX.push(support.position);
           supportY.push(support.value);
         });
@@ -587,7 +590,11 @@ function TeamIndex() {
                         fontColor: "#84818e",
                         fontSize: 15,
                         min: gankCount?.firstGankMin,
-                        max: gankCount?.firstGankMax % 5 === 0 ? gankCount?.firstGankMax : gankCount?.firstGankMax + (5 - gankCount?.firstGankMax % 5),
+                        max:
+                          gankCount?.firstGankMax % 5 === 0
+                            ? gankCount?.firstGankMax
+                            : gankCount?.firstGankMax +
+                            (5 - (gankCount?.firstGankMax % 5)),
                       },
                       gridLines: {
                         color: "rgb(58, 55, 69)",

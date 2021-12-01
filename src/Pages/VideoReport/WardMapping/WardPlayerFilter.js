@@ -6,6 +6,8 @@ import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetec
 import { Reset_Map } from "../../../redux/modules/filtervalue";
 import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
+import { API } from "../../config";
+
 import qs from "qs";
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
@@ -69,7 +71,7 @@ function WardPlayerFilter({
 
   const getTeam = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter/team`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -78,8 +80,8 @@ function WardPlayerFilter({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(null, url, params, function (e) {
-        const data = e.data.team;
+      axiosRequest(undefined, url, params, function (e) {
+        const data = e.team;
         setFilterData({ ...filterData, team: data });
       });
     } catch (e) {
@@ -90,7 +92,7 @@ function WardPlayerFilter({
 
   const getPlayer = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter/player`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -100,8 +102,8 @@ function WardPlayerFilter({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(null, url, params, function (e) {
-        const data = e.data.player;
+      axiosRequest(undefined, url, params, function (e) {
+        const data = e.player;
         setFilterData({ ...filterData, player: data });
       });
     } catch (e) {
@@ -111,7 +113,7 @@ function WardPlayerFilter({
 
   const getChampion = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter/champion`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -122,8 +124,8 @@ function WardPlayerFilter({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(null, url, params, function (e) {
-        const data = e.data.champion;
+      axiosRequest(undefined, url, params, function (e) {
+        const data = e.champion;
         setFilterData({ ...filterData, champion: data });
       });
     } catch (e) {
@@ -133,7 +135,7 @@ function WardPlayerFilter({
 
   const getOppTeam = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter/oppteam`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -145,8 +147,8 @@ function WardPlayerFilter({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(null, url, params, function (e) {
-        const data = e.data.opp_team;
+      axiosRequest(undefined, url, params, function (e) {
+        const data = e.opp_team;
         setFilterData({ ...filterData, oppteam: data });
       });
     } catch (e) {
@@ -156,7 +158,7 @@ function WardPlayerFilter({
 
   const getOppPlayer = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter/oppplayer`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -169,8 +171,8 @@ function WardPlayerFilter({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(null, url, params, function (e) {
-        const data = e.data.opp_player;
+      axiosRequest(undefined, url, params, function (e) {
+        const data = e.opp_player;
         setFilterData({ ...filterData, oppplayer: data });
       });
     } catch (e) {
@@ -180,7 +182,7 @@ function WardPlayerFilter({
 
   const getOppChampion = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mapping/mappingFilter/oppchampion`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -194,8 +196,8 @@ function WardPlayerFilter({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(null, url, params, function (e) {
-        const data = e.data.opp_champion;
+      axiosRequest(undefined, url, params, function (e) {
+        const data = e.opp_champion;
         setFilterData({ ...filterData, oppchampion: data });
       });
     } catch (e) {

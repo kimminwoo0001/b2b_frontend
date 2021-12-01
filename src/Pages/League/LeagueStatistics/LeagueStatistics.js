@@ -61,12 +61,12 @@ function LeagueStatistics() {
       id: user.id,
     };
 
-    axiosRequest(null, url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       // 그래프 min, max, row 설정하기 위한 상태값
-      setGameLengthData(e.data.avgGamelength);
-      setSupportTimeData(e.data.avgSupportingTime);
-      setFirstGankData(e.data.avgFirstGang);
-      setTotalMatchData(e.data.avgMatchTotal);
+      setGameLengthData(e.avgGamelength);
+      setSupportTimeData(e.avgSupportingTime);
+      setFirstGankData(e.avgFirstGang);
+      setTotalMatchData(e.avgMatchTotal);
 
       // 그래프에 들어갈 데이터 변환
       const gameX = [];
@@ -80,19 +80,19 @@ function LeagueStatistics() {
 
       const TotalX = [];
       const TotalY = [];
-      e.data.avgGamelength.data.forEach((game) => {
+      e.avgGamelength.data.forEach((game) => {
         gameX.push(game.patch);
         gameY.push(game.gamelength.toFixed(1));
       });
-      e.data.avgSupportedTime.data.forEach((support) => {
+      e.avgSupportedTime.data.forEach((support) => {
         supportX.push(support.position);
         supportY.push(support.supported_time.toFixed(1));
       });
-      e.data.avgFirstGang.data.forEach((gank) => {
+      e.avgFirstGang.data.forEach((gank) => {
         GankX.push(gank.patch);
         GankY.push(gank.first_gang_time.toFixed(1));
       });
-      e.data.avgMatchTotal.data.forEach((match) => {
+      e.avgMatchTotal.data.forEach((match) => {
         TotalX.push(match.patch);
         TotalY.push(match.match_total.toFixed(1));
       });

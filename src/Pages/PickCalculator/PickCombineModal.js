@@ -7,11 +7,10 @@ import {
   League,
   Team,
   Player,
-  GetOppPlayer
+  GetOppPlayer,
 } from "../../redux/modules/filtervalue";
 import { API } from "../config";
 import axiosRequest from "../../lib/axiosRequest";
-
 
 // import { useDetectOutsideClick } from "../../Components/SelectFilter/useDetectOustsideClick";
 
@@ -103,10 +102,10 @@ function PickCombineModal({ openModal, setOpenModal }) {
   const fetchingPatchFilter = () => {
     const url = `${API}/lolapi/filter/patch`;
     const params = { league: filters.league }
-    axiosRequest(null, url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       console.log(e);
       // setPatchFilter(result.data.patch);
-    })
+    });
   };
 
   //팀 필터 fetch 함수
@@ -115,10 +114,11 @@ function PickCombineModal({ openModal, setOpenModal }) {
     const params = {
       league: filters.league,
       year: filters.year,
-      season: filters.season, patch: filters.patch
+      season: filters.season,
+      patch: filters.patch,
     };
-    axiosRequest(null, url, params, function (e) {
-      setTeamFilter(e.data.team);
+    axiosRequest(undefined, url, params, function (e) {
+      setTeamFilter(e.team);
     })
   };
 
@@ -132,8 +132,8 @@ function PickCombineModal({ openModal, setOpenModal }) {
       patch: filters.patch,
       team: filters.team
     }
-    axiosRequest(null, url, params, function (e) {
-      setPlayerFilter(e.data.player);
+    axiosRequest(undefined, url, params, function (e) {
+      setPlayerFilter(e.player);
     })
   };
 
@@ -144,14 +144,13 @@ function PickCombineModal({ openModal, setOpenModal }) {
       year: filters.year,
       season: filters.season,
       patch: filters.patch,
-      team: filters.oppteam
+      team: filters.oppteam,
     };
 
-    axiosRequest(null, url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       console.log(e);
       // setOppPlayerFilter(result.data.player);
-    })
-
+    });
   };
 
   return (

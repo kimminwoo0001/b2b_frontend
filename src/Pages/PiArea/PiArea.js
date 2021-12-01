@@ -22,7 +22,6 @@ const PiArea = () => {
     1: <SetPiData piData={pi} setPi={setPI} />,
   };
 
-
   // onchange
   const handleInput = (e) => {
     setGameIdInput(e.target.value);
@@ -45,10 +44,10 @@ const PiArea = () => {
     const url = `${API4}/gameidsearchAjax.do`;
     const params = {
       q: gameIdInput,
-    }
+    };
 
-    axiosRequest(null, url, params, function (e) {
-      setGameIdSearchData(e.data.items);
+    axiosRequest(undefined, url, params, function (e) {
+      setGameIdSearchData(e.items);
     })
   };
 
@@ -81,14 +80,13 @@ const PiArea = () => {
     }
     // setEntireData("");
     const fetchClickedData = async () => {
-
       const url = `${API4}/searchByGameidAjax.do`;
       const params = {
         gameid: clickedGameId,
       }
-      axiosRequest(null, url, params, function (e) {
-        setEntireData(e.data);
-        handleYoutubeData(e.data);
+      axiosRequest(undefined, url, params, function (e) {
+        setEntireData(e);
+        handleYoutubeData(e);
       })
 
     };
@@ -98,13 +96,11 @@ const PiArea = () => {
   useEffect(() => {
     setWard(entireData[0]);
     setPI(entireData[1]);
-    console.log(entireData)
+    console.log(entireData);
   }, [entireData]);
-
 
   // db저장 submit 함수
   const handleSubmit = async () => {
-
     // table_value key에 들어갈 배열 가공함수
 
     // let newPi = [];
@@ -129,10 +125,11 @@ const PiArea = () => {
 
     // makeNewArray(pi);
     axios.defaults.baseURL = `${API4}`;
-    axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
-    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+    axios.defaults.headers.post["Content-Type"] =
+      "application/json;charset=utf-8";
+    axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 
-    console.log(pi[0])
+    console.log(pi[0]);
     // console.log(newPi)
 
     let data = {
@@ -175,19 +172,22 @@ const PiArea = () => {
 
     const options = {
       headers: {
-        'Access-Control-Allow-Headers': 'Original,Content-Type,Authorization,X-Auth-Token',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS',
-      }
-    }
+        "Access-Control-Allow-Headers":
+          "Original,Content-Type,Authorization,X-Auth-Token",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods":
+          "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS",
+      },
+    };
 
     const response = await axios.get(`${API4}/setWardPostition.do`, {
       params: {
         data,
-      }, options,
+      },
+      options,
       paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: "repeat" })
-      }
+        return qs.stringify(params, { arrayFormat: "repeat" });
+      },
     });
 
     console.log(response);
