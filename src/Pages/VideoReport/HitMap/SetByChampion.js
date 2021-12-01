@@ -14,6 +14,7 @@ import Slider from "@material-ui/core/Slider";
 import timeFormat from "../../../lib/timeFormat";
 import axiosRequest from "../../../lib/axiosRequest";
 import { style } from "dom-helpers";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 const WardSlider = withStyles({
   root: {
@@ -181,6 +182,8 @@ function SetByChampion({ minFrom, setMinFrom }) {
         axiosRequest(undefined, url, params, function (e) {
           const data = e.team;
           setFilterData({ ...filterData, team: data });
+        }, function (objStore) {
+          dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
         });
       }
     } catch (e) {
@@ -206,6 +209,8 @@ function SetByChampion({ minFrom, setMinFrom }) {
         axiosRequest(undefined, url, params, function (e) {
           const data = e.player;
           setFilterData({ ...filterData, player: data });
+        }, function (objStore) {
+          dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
         });
       }
     } catch (e) {
@@ -229,6 +234,8 @@ function SetByChampion({ minFrom, setMinFrom }) {
       axiosRequest(undefined, url, params, function (e) {
         const data = e.champion;
         setFilterData({ ...filterData, champion: data });
+      }, function (objStore) {
+        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
       });
     } catch (e) {
       console.log(e);
@@ -252,6 +259,8 @@ function SetByChampion({ minFrom, setMinFrom }) {
       axiosRequest(undefined, url, params, function (e) {
         const data = e.opp_team;
         setFilterData({ ...filterData, oppteam: data });
+      }, function (objStore) {
+        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
       });
     } catch (e) {
       console.log(e);
@@ -276,6 +285,8 @@ function SetByChampion({ minFrom, setMinFrom }) {
       axiosRequest(undefined, url, params, function (e) {
         const data = e.opp_player;
         setFilterData({ ...filterData, oppplayer: data });
+      }, function (objStore) {
+        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
       });
     } catch (e) {
       console.log(e);
@@ -301,6 +312,8 @@ function SetByChampion({ minFrom, setMinFrom }) {
       axiosRequest(undefined, url, params, function (e) {
         const data = e.opp_champion;
         setFilterData({ ...filterData, oppchampion: data });
+      }, function (objStore) {
+        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
       });
     } catch (e) {
       console.log(e);

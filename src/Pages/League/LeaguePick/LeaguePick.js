@@ -8,6 +8,8 @@ import qs from "qs";
 import TabforTop from "./TabforTop";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function LeaguePick() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -20,6 +22,7 @@ function LeaguePick() {
   const [uniquePick, setUniquePick] = useState();
   const [tier, setTier] = useState();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   // 리그 보고서 => 픽에 있는 Top, JG ,Mid, Adc, Sup 텝
   const positionTabs = {
@@ -114,6 +117,8 @@ function LeaguePick() {
       setTier(e.championTier);
       //유니크픽 데이터 저장
       setUniquePick(e.uniquePick);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     }).finally(setLoading(false));
   };
 

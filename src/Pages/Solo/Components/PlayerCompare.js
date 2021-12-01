@@ -4,6 +4,8 @@ import { API } from "../../config";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import axiosRequest from "../../../lib/axiosRequest";
+import { useDispatch } from "react-redux";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function PlayerCompare() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -12,6 +14,7 @@ function PlayerCompare() {
   const [data, setData] = useState();
   const [oppData, setOppData] = useState();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     GetPerformance();
@@ -36,6 +39,8 @@ function PlayerCompare() {
     axiosRequest(undefined, url, params, function (e) {
       setData(e[filters.player]);
       setOppData(e[filters.oppplayer]);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     });
     // dispatch(Loading(false));
   };

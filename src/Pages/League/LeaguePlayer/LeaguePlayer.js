@@ -5,7 +5,7 @@ import { API } from "../../config";
 import qs from "qs";
 import TabTop from "./Components/TabTop";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useTranslation } from "react-i18next";
 
@@ -16,6 +16,7 @@ function LeaguePlayer() {
   const [loading, setIsLoading] = useState(false);
   const [playerData, setPlayerData] = useState();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   // 선수정보 탭 변환
   const currentPosition = {
@@ -47,6 +48,8 @@ function LeaguePlayer() {
     axiosRequest(undefined, url, params, function (e) {
       setPlayerData(e);
       setIsLoading(false);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     });
   };
 

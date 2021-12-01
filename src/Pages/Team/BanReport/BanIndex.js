@@ -25,6 +25,7 @@ import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import All from "./All";
 import qs from "qs";
 import axiosRequest from "../../../lib/axiosRequest";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function sortPhase(arr) {
   return arr.sort(function (a, b) {
@@ -160,6 +161,8 @@ function BanIndex() {
       setPhase2(sortPhase(phaseArray2));
       setPhase2_1(sortPhase(phaseArray2_1));
       setPhase2_2(sortPhase(phaseArray2_2));
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     }).finally(setLoading(false));
   };
 

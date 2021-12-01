@@ -13,6 +13,7 @@ import {
   ResetChampion2,
 } from "../../../redux/modules/filtervalue";
 import axiosRequest from "../../../lib/axiosRequest";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function HitMapFilter() {
   const dropdownRef = useRef(null);
@@ -42,6 +43,8 @@ function HitMapFilter() {
     axiosRequest(undefined, url, params, function (e) {
       setChampFilter(e.champion);
       setChampEng(e.championEng);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     })
   };
 
@@ -62,6 +65,8 @@ function HitMapFilter() {
     axiosRequest(undefined, url, params, function (e) {
       setOppFilter(e.champion);
       setOppEng(e.championEng);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     })
   };
 

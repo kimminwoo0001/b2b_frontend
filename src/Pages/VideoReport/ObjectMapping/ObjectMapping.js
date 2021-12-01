@@ -14,6 +14,8 @@ import { API } from "../../config";
 import ObjectTooltip from "./ObjectTooltip";
 import addZero from "../../../lib/addZero";
 import axiosRequest from "../../../lib/axiosRequest";
+import { useDispatch } from "react-redux";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function useInterval(callback) {
   const savedCallback = useRef();
@@ -54,6 +56,7 @@ function ObjectMapping() {
   const user = useSelector((state) => state.UserReducer);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   //맵핑 데이터 핸들링 상태값
   const [currentPos, setCurrentPos] = useState();
   const [champInfo, setchampInfo] = useState();
@@ -76,6 +79,7 @@ function ObjectMapping() {
   const [period, setPeriod] = useState("all");
   const [position, setPosition] = useState(["top", "jng", "mid", "bot", "sup"]);
   const [gameSelect, setGameSelect] = useState([]);
+
 
   //맵핑 데이터 fetch 함수
   const fetchingMapData = () => {
@@ -111,6 +115,8 @@ function ObjectMapping() {
         setchampInfo(dto.info);
         setPlay(true);
         console.log(dto.position);
+      }, function (objStore) {
+        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
       });
     } catch (e) {
       console.log(e);

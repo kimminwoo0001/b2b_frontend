@@ -35,6 +35,7 @@ import {
 import { API } from "../../Pages/config";
 import { useDetectOutsideClick } from "../../Pages/PlayerCompare/useDetectOustsideClick";
 import axiosRequest from "../../lib/axiosRequest";
+import { SetModalInfo } from "../../redux/modules/modalvalue";
 
 function PlayerFilterModal() {
   // sidebar 선수 비교 눌렀을때 뜨는 모달창
@@ -128,6 +129,8 @@ function PlayerFilterModal() {
 
     axiosRequest(undefined, url, params, function (e) {
       setOppTeamFilter(e);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     });
   };
 
@@ -146,6 +149,8 @@ function PlayerFilterModal() {
 
     axiosRequest(undefined, url, params, function (e) {
       dispatch(setPlayerFilter(e));
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     });
   };
 
@@ -165,6 +170,8 @@ function PlayerFilterModal() {
 
     axiosRequest(undefined, url, params, function (e) {
       setOppPlayerFilter(e);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     });
   };
 

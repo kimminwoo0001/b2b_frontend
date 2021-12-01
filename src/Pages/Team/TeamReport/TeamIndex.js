@@ -11,6 +11,8 @@ import { API } from "../../config";
 import { useSelector } from "react-redux";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import axiosRequest from "../../../lib/axiosRequest";
+import { useDispatch } from "react-redux";
+
 
 function TeamIndex() {
   //팀 존력 보고서 팀 지표 텝
@@ -18,6 +20,7 @@ function TeamIndex() {
   const user = useSelector((state) => state.UserReducer);
   const lang = useSelector((state) => state.LocaleReducer);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   // 리그 평균 상태값
   const [leagueStat, setLeagueStat] = useState();
@@ -98,6 +101,8 @@ function TeamIndex() {
         setSupportTimeX(supportX);
         setSupportTimeY(supportY);
         setLoading(false);
+      }, function (objStore) {
+        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
       });
     } catch (e) {
       alert(e);

@@ -13,6 +13,7 @@ import h337 from "heatmap.js";
 import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
 import axiosRequest from "../../../lib/axiosRequest";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function HitMap() {
   // 시간 설정 상태값
@@ -93,6 +94,8 @@ function HitMap() {
         const heatData = e.position;
         getThreeMinBlue(heatData);
         getEightMinBlue(heatData);
+      }, function (objStore) {
+        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
       });
     } catch (e) {
       console.log(e);

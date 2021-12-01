@@ -7,6 +7,8 @@ import qs from "qs";
 
 import { API4 } from "../config";
 import axiosRequest from "../../lib/axiosRequest";
+import { useDispatch } from "react-redux";
+import { SetModalInfo } from "../../redux/modules/modalvalue";
 
 const PiArea = () => {
   const [tab, setTab] = useState(0);
@@ -17,6 +19,7 @@ const PiArea = () => {
   const [ward, setWard] = useState([]);
   const [pi, setPI] = useState([]);
   const [youtubeUrl, setYoutubeUrl] = useState("");
+  const dispatch = useDispatch();
   const tabContents = {
     0: <SetWardData wardData={ward} setWard={setWard} />,
     1: <SetPiData piData={pi} setPi={setPI} />,
@@ -48,6 +51,8 @@ const PiArea = () => {
 
     axiosRequest(undefined, url, params, function (e) {
       setGameIdSearchData(e.items);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     })
   };
 
@@ -87,6 +92,8 @@ const PiArea = () => {
       axiosRequest(undefined, url, params, function (e) {
         setEntireData(e);
         handleYoutubeData(e);
+      }, function (objStore) {
+        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
       })
 
     };

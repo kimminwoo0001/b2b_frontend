@@ -16,6 +16,9 @@ import {
 } from "recharts";
 import qs from "qs";
 import axiosRequest from "../../../lib/axiosRequest";
+import { useDispatch } from "react-redux";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
+
 
 function CompareIngame() {
   //팀 비교 인게임 지표
@@ -43,6 +46,7 @@ function CompareIngame() {
 
   const Team = filters.team;
   const OppTeam = filters.oppteam;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     GetInGameData();
@@ -123,6 +127,8 @@ function CompareIngame() {
       //Team, OppTeam을 나눠서 데이터를 저장함
       setRedData(e[Team]);
       setBlueData(e[OppTeam]);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
     }).finally(setLoading(false));
   };
 
