@@ -1,16 +1,15 @@
 import React, { memo, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
+import EachMatch from "./EachMatch";
 
 const GameReportIndex = () => {
   useEffect(() => {}, []);
 
   return (
     <GameReportIndexWrapper>
-      <MetaData>
-        <Round>LCK Spring 1R 1주차 3SET</Round>
-        <Date>2022.02.03 FRI 19:00</Date>
-      </MetaData>
-      <GameInfoBox></GameInfoBox>
+      <EachMatch />
+      <EachMatch />
+      <EachMatch />
     </GameReportIndexWrapper>
   );
 };
@@ -18,30 +17,8 @@ const GameReportIndex = () => {
 export default memo(GameReportIndex);
 
 const GameReportIndexWrapper = styled.main`
-  padding: 60px;
-  /* margin: 0 auto; */
-`;
+  padding-top: 60px;
+  padding-left: 60px;
 
-const GameInfoBox = styled.section`
-  background-color: #23212a;
-  width: 1050px;
-  height: 113px;
-  border-radius: 20px;
-`;
-
-const MetaData = styled.section`
-  color: #fff;
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-`;
-
-const Round = styled.div`
-  font-weight: bold;
-  margin-right: 5px;
-  font-size: 24px;
-`;
-
-const Date = styled.div`
-  font-size: 20px;
+  font-family: "Spoqa Han Sans";
 `;
