@@ -8,16 +8,10 @@ const GameReportTab = () => {
 
   return (
     <div>
-      {activeDetail ?
-        <GameReportDetail
-          activeDetail={activeDetail}
-          setActiveDetail={setActiveDetail}
-        />
-        :
-        <GameReportIndex
-          activeDetail={activeDetail}
-          setActiveDetail={setActiveDetail}
-        />}
+      <GameReportIndex
+        activeDetail={activeDetail}
+        setActiveDetail={setActiveDetail}
+      />
     </div>
   )
 }

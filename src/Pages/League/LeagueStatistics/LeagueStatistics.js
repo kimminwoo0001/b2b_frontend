@@ -154,19 +154,7 @@ function LeagueStatistics() {
       bodyFontSize: 10,
       displayColors: true,
     },
-    // plugins: {
-    //   tooltip: {
-    //     usePointStyle: true,
-    //     callbacks: {
-    //       labelPointStyle: function (context) {
-    //         return {
-    //           pointStyle: "triangle",
-    //           rotation: 0,
-    //         };
-    //       },
-    //     },
-    //   },
-    // },
+
     hover: {
       animationDuration: 100,
     },
