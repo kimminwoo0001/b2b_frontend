@@ -16,22 +16,26 @@ import GameReportTab from './GameReportTab';
 
 function GameReport() {
   const filters = useSelector((state) => state.FilterReducer);
+  const gamevalue = useSelector((state) => state.GameReportReducer);
+  const checkGameId = gamevalue.gameId.length > 0;
 
   return (
     <ErrorBoundary>
-      <Nav />
+      {checkGameId ? "" : <Nav />}
       <GameWrapper>
-        <SideBar />
-        <div
-          className={filters.filterMenuState ? "filter-open" : "filter-close"}
-        >
-          <Filter />
-        </div>
-        <div
-          className={filters.filterMenuState ? "filter-close" : "filter-open"}
-        >
-          <CloseFilter />
-        </div>
+        {checkGameId ? "" : <>
+          <SideBar />
+          <div
+            className={filters.filterMenuState ? "filter-open" : "filter-close"}
+          >
+            <Filter />
+          </div>
+          <div
+            className={filters.filterMenuState ? "filter-close" : "filter-open"}
+          >
+            <CloseFilter />
+          </div>
+        </>}
         <ContentWrapper>
           {filters.team !== "" && filters.team.length > 0 ? (
             <GameReportTab />
