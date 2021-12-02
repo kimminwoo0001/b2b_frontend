@@ -100,7 +100,7 @@ const TeamFilterModal = () => {
       id: user.id,
     };
     axiosRequest(url, params, function (e) {
-      setOppTeamFilter(e.oppteam);
+      setOppTeamFilter(e);
     });
   };
 
@@ -334,6 +334,7 @@ const TeamFilterModal = () => {
                 </SelectOppTeamTitle>
                 <SelectOppTeam isTeamSelected={filters.team.length !== 0}>
                   {oppTeamFilter?.map((team, index) => {
+                    console.log(team);
                     return (
                       <MapTeams
                         key={index}
