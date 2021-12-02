@@ -16,7 +16,10 @@ const GameReportIndex = () => {
   return (
     <GameReportIndexWrapper>
       {gamevalue.gameId.length > 0 ?
-        <GameReportDetail videoId={gamevalue.gameId} />
+        <GameReportDetail
+          videoId={gamevalue.gameId}
+          platform={gamevalue.platform}
+        />
         : <>
           <EachMatch />
           <EachMatch />
