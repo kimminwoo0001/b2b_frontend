@@ -1,7 +1,11 @@
 import React, { memo, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+import { SetGameId } from "../../../redux/modules/gamevalue";
 
 const EachMatch = () => {
+  const dispatch = useDispatch();
+
   return (
     <>
       <MetaData>
@@ -26,7 +30,9 @@ const EachMatch = () => {
         </MatchInfo>
         <SetInfo>
           <SetTitle>SET</SetTitle>
-          <SetList>1</SetList>
+          <SetList onClick={() => {
+            dispatch(SetGameId())
+          }}>1</SetList>
           <SetList>2</SetList>
           <SetList>3</SetList>
           <SetList>4</SetList>

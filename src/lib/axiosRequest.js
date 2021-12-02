@@ -11,7 +11,7 @@ import {
 } from "../redux/modules/modalvalue";
 
 const axiosRequest = async (
-  method = "GET",
+  method = "POST",
   url,
   paramData,
   callback,
@@ -19,15 +19,15 @@ const axiosRequest = async (
 ) => {
   //const dispatch = useDispatch();
   if (method === "GET") {
-    await axios
-      .request({
-        method: method,
-        url: url,
-        params: paramData,
-        paramsSerializer: (params) => {
-          return qs.stringify(params, { arrayFormat: "repeat" });
-        },
-      })
+    await axios({
+      method: method,
+      url: url,
+      params: paramData,
+      headers: { 'Accept': `Bearer  ${paramData.token}` },
+      paramsSerializer: (params) => {
+        return qs.stringify(params, { arrayFormat: "repeat" });
+      }
+    })
       .then((e) => {
         // 여기서도 에러를 던지면 아래의 catch로 이동된다.
         // throw Error("에러 테스트")
@@ -52,26 +52,27 @@ const axiosRequest = async (
   } else if (method?.toUpperCase() === "POST") {
     const headers = {
       "Content-Type": "application/x-www-form-urlencoded",
+      "token": paramData.token ?? "N"
     };
-    await axios
-      .post(url, paramData, {
-        headers: headers,
-        withCredentials: true,
-      })
-      .then((e) => {
-        const check = checkRequest(e.data.status);
-        console.log("check", check);
-        if (check.value) {
-          if (callback) {
-            callback(e.data.response);
-          } else {
-            //sessionStorage.clear();
-            //history.push("/login");
-          }
+    await axios({
+      method: 'post',
+      url: url,
+      data: paramData,
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    }).then((e) => {
+      const check = checkRequest(e.data.status);
+      console.log("check", check);
+      if (check.value) {
+        if (callback) {
+          callback(e.data.response);
         } else {
-          failCallback(check.objStore);
+          //sessionStorage.clear();
+          //history.push("/login");
         }
-      })
+      } else {
+        failCallback(check.objStore);
+      }
+    })
       .catch((error) => {
         console.log("error test : ", error);
       });
