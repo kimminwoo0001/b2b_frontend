@@ -26,11 +26,21 @@ const EachMatch = () => {
         </MatchInfo>
         <SetInfo>
           <SetTitle>SET</SetTitle>
-          <SetList>1</SetList>
-          <SetList>2</SetList>
-          <SetList>3</SetList>
-          <SetList>4</SetList>
-          <SetList>5</SetList>
+          <SetList>
+            <Num>1</Num>
+          </SetList>
+          <SetList>
+            <Num>2</Num>
+          </SetList>
+          <SetList>
+            <Num>3</Num>
+          </SetList>
+          <SetList>
+            <Num>4</Num>
+          </SetList>
+          <SetList>
+            <Num>5</Num>
+          </SetList>
         </SetInfo>
       </GameInfoBox>
     </>
@@ -139,8 +149,21 @@ const SetList = styled.li`
   /* opacity: 0.3; */
   font-size: 20px;
   cursor: pointer;
+  color: #fff;
 
   &:hover {
-    background-color: #484655;
+    background-color: #fff;
+    /* opacity: 0.1; */
+    cursor: pointer;
+  }
+`;
+
+const Num = styled.span`
+  color: #fff;
+
+  &:hover {
+    background-color: #fff;
+    opacity: 0.1;
+    cursor: pointer;
   }
 `;
