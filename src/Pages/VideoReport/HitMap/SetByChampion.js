@@ -236,7 +236,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
         setFilterData({ ...filterData, champion: data });
       }, function (objStore) {
         dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      });
+      })
     } catch (e) {
       console.log(e);
     }
@@ -261,7 +261,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
         setFilterData({ ...filterData, oppteam: data });
       }, function (objStore) {
         dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      });
+      })
     } catch (e) {
       console.log(e);
     }
@@ -287,7 +287,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
         setFilterData({ ...filterData, oppplayer: data });
       }, function (objStore) {
         dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      });
+      })
     } catch (e) {
       console.log(e);
     }
@@ -314,7 +314,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
         setFilterData({ ...filterData, oppchampion: data });
       }, function (objStore) {
         dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      });
+      })
     } catch (e) {
       console.log(e);
     }

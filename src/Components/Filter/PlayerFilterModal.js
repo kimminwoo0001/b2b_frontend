@@ -131,7 +131,7 @@ function PlayerFilterModal() {
       setOppTeamFilter(e);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    });
+    })
   };
 
   //플레이어 필터 fetch 함수
@@ -151,7 +151,7 @@ function PlayerFilterModal() {
       dispatch(setPlayerFilter(e));
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    });
+    })
   };
 
   //상대 선수 필터 fetch 함수
@@ -172,7 +172,7 @@ function PlayerFilterModal() {
       setOppPlayerFilter(e);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    });
+    })
   };
 
   const reFetchingFilter = (name) => {

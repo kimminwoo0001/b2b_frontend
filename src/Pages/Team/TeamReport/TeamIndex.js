@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 
 function TeamIndex() {
@@ -103,7 +104,7 @@ function TeamIndex() {
         setLoading(false);
       }, function (objStore) {
         dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      });
+      })
     } catch (e) {
       alert(e);
     }

@@ -86,7 +86,7 @@ function WardPlayerFilter({
         setFilterData({ ...filterData, team: data });
       }, function (objStore) {
         dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      });
+      })
     } catch (e) {
       console.log(e);
     }
@@ -110,7 +110,7 @@ function WardPlayerFilter({
         setFilterData({ ...filterData, player: data });
       }, function (objStore) {
         dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      );
+      })
     } catch (e) {
       console.log(e);
     }
@@ -134,7 +134,7 @@ function WardPlayerFilter({
         setFilterData({ ...filterData, champion: data });
       }, function (objStore) {
         dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      );
+      })
     } catch (e) {
       console.log(e);
     }
@@ -159,7 +159,7 @@ function WardPlayerFilter({
         setFilterData({ ...filterData, oppteam: data });
       }, function (objStore) {
         dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      );
+      })
     } catch (e) {
       console.log(e);
     }
@@ -185,7 +185,7 @@ function WardPlayerFilter({
         setFilterData({ ...filterData, oppplayer: data });
       }, function (objStore) {
         dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      );
+      })
     } catch (e) {
       console.log(e);
     }
@@ -212,7 +212,7 @@ function WardPlayerFilter({
         setFilterData({ ...filterData, oppchampion: data });
       }, function (objStore) {
         dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      );
+      })
     } catch (e) {
       console.log(e);
     }

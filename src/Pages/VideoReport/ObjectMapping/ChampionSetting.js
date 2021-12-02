@@ -233,7 +233,7 @@ function ChampionSetting({
         setFilterData({ ...filterData, champion: data });
       }, function (objStore) {
         dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      });
+      })
     } catch (e) {
       console.log(e);
     }
@@ -258,7 +258,7 @@ function ChampionSetting({
         setFilterData({ ...filterData, oppteam: data });
       }, function (objStore) {
         dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      });
+      })
     } catch (e) {
       console.log(e);
     }
@@ -284,7 +284,7 @@ function ChampionSetting({
         setFilterData({ ...filterData, oppplayer: data });
       }, function (objStore) {
         dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      });
+      })
     } catch (e) {
       console.log(e);
     }
@@ -311,7 +311,7 @@ function ChampionSetting({
         setFilterData({ ...filterData, oppchampion: data });
       }, function (objStore) {
         dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      });
+      })
     } catch (e) {
       console.log(e);
     }
@@ -337,7 +337,7 @@ function ChampionSetting({
         setGameData(Object.values(e["match"]));
       }, function (objStore) {
         dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      });
+      })
     } catch (e) {
       console.log(e);
     }

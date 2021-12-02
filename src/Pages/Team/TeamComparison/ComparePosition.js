@@ -96,7 +96,7 @@ function ComparePosition() {
         topData.push(topValues);
       }, function (objStore) {
         dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      });
+      })
 
       for (let i = 0; i < topData.length; i++) {
         topArray.push({

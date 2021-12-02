@@ -108,7 +108,7 @@ function PickCombineModal({ openModal, setOpenModal }) {
       // setPatchFilter(result.data.patch);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    });
+    })
   };
 
   //팀 필터 fetch 함수
@@ -159,7 +159,7 @@ function PickCombineModal({ openModal, setOpenModal }) {
       // setOppPlayerFilter(result.data.player);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    });
+    })
   };
 
   return (

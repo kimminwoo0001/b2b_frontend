@@ -10,6 +10,7 @@ import qs from "qs";
 import checkRequestBase from "../../../lib/checkRequestBase";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function LeagueStatistics() {
   //리그 통합 지수 텝
@@ -111,7 +112,7 @@ function LeagueStatistics() {
       setLoading(false);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    });
+    })
   };
   //현재 패치버전 색 교체
   // const colorChange = () => {

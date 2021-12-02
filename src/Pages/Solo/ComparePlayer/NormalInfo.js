@@ -95,7 +95,7 @@ function NormalInfo() {
       setLoading(false);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    });
+    })
   };
 
   //챔피언 필터
@@ -116,7 +116,7 @@ function NormalInfo() {
       setChampEng(e.championEng);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    });
+    })
   };
   //상대 챔피언 필터
   const GetOppFilter = () => {
@@ -137,7 +137,7 @@ function NormalInfo() {
       setOppEng(e.championEng);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    });
+    })
   };
 
   // 오각형 그래프 세팅

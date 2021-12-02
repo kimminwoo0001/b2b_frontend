@@ -88,8 +88,8 @@ function Nav() {
             <div className="icon">
               <LocaleDropdown />
             </div>
-            <div className="text">
-              <lable onClick={() => handleLogOut()}>
+            <div className="text" onClick={() => handleLogOut()}>
+              <lable>
                 {user.id.length > 0
                   ? `${t("nav.logout")}`
                   : `${t("nav.login")}`}

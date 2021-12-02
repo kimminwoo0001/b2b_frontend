@@ -156,7 +156,7 @@ function Stats() {
         }
       }, function (objStore) {
         dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      });
+      })
     } catch (e) {
       console.log(e.response);
     }
@@ -181,7 +181,7 @@ function Stats() {
       setChampEng(e.championEng);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    });
+    })
   };
 
   //상대 챔피언 필터
@@ -204,7 +204,7 @@ function Stats() {
       setOppEng(e.championEng);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    });
+    })
   };
 
   const renderColorfulLegendText = (value: string, entry: any) => {

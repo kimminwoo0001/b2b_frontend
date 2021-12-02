@@ -117,7 +117,7 @@ function PlayerBoard() {
       setLoading(false);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    });
+    })
   };
 
   //챔피언 필터
@@ -142,7 +142,7 @@ function PlayerBoard() {
       setChampEng(champArrayEng);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    });
+    })
   };
 
   //상대 챔피언 필터
@@ -167,7 +167,7 @@ function PlayerBoard() {
       setOppEng(champArrayEng);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    });
+    })
   };
 
   // 그래프 세팅 값

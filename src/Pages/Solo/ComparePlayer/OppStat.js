@@ -72,7 +72,7 @@ function OppStat() {
       setLoading(false);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    });
+    })
   };
 
   const GetChampionFilter = () => {
@@ -96,7 +96,7 @@ function OppStat() {
       setChampEng(e.championEng);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    });
+    })
   };
 
   const GetOppFilter = () => {
@@ -121,7 +121,7 @@ function OppStat() {
       setOppEng(e.championEng);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    });
+    })
   };
 
   if (loading) return <LoadingImg />;
