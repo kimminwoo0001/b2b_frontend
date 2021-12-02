@@ -87,7 +87,7 @@ function TeamIndex() {
           setGankCount(e.firstGank);
           e.firstGank.firstGankList.forEach((game) => {
             gameX.push(game.position);
-            gameY.push(game.gankCount);
+            gameY.push(game.value);
           });
           setGankCountX(gameX);
           setGankCountY(gameY);

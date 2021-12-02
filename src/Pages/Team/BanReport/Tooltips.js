@@ -6,6 +6,7 @@ function ToolTips({ pick }) {
   const { t } = useTranslation();
   const lang = useSelector((state) => state.LocaleReducer);
   const tooltip = pick.PlayInfos;
+  console.log(tooltip);
 
   return (
     <ArrowWrapper>

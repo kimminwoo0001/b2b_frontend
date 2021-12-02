@@ -19,7 +19,6 @@ import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
-
 function CompareIngame() {
   //팀 비교 인게임 지표
   const filters = useSelector((state) => state.FilterReducer);
@@ -49,10 +48,12 @@ function CompareIngame() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    GetInGameData();
-
+    // 모달창이 닫혀있으면서 팀비교 탭인 경우에만 인게임지표 api 호출
+    if (!filters.compareModal && filters.tab === 2) {
+      GetInGameData();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.oppteam, filters.patch]);
+  }, [filters.compareModal, filters.tab]);
 
   //밴지표 전체 데이터 가져오는 함수
   const GetInGameData = () => {
@@ -68,68 +69,74 @@ function CompareIngame() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(undefined, url, params, function (e) {
-      setTeamName({
-        team: filters.team,
-        oppteam: filters.oppteam,
-      });
-      let gankTicks = "";
-      //첫 갱크 데이터 min,max,stepsize 값
-      if (
-        e[Team]?.firstGank.firstGankMax > e[OppTeam]?.firstGank.firstGankMax
-      ) {
-        setGankDomain(e[Team]?.firstGank);
-        gankTicks = e[Team];
-      } else {
-        setGankDomain(e[OppTeam]?.firstGank);
-        gankTicks = e[OppTeam];
-      }
-
-      //첫 갱크 데이터 가져와서 x,y로 나눠서 배열로 만듬
-      const gankData = e[Team]?.firstGank.firstGankList?.map((gank) => {
-        return { x: gank.position, y1: gank.gankCount };
-      });
-
-      const gankData2 = e[OppTeam]?.firstGank.firstGankList?.map((gank) => {
-        return { x: gank.position, y2: gank.gankCount };
-      });
-      for (let i = 0; i < gankData.length; i++) {
-        Object.assign(gankData[i], gankData2[i]);
-        setGank(gankData);
-      }
-      //첫 서포팅 데이터 min, max, stepsize값
-      let supTicks = "";
-      if (
-        e[Team]?.supportedTime.supportedTimeMax >
-        e[OppTeam]?.supportedTime.supportedTimeMax
-      ) {
-        supTicks = e[Team];
-        setSupportDomain(e[Team]?.supportedTime);
-      } else {
-        supTicks = e[OppTeam];
-        setSupportDomain(e[OppTeam]?.supportedTime);
-      }
-
-      //첫 서포팅 데이터 가져와서 x,y로 나눠서 배열로 만듬
-      const supData = e[Team]?.supportedTime.supportedTimeList?.map((sup) => {
-        return { x: sup.position, y1: sup.value };
-      });
-      const supData2 = e[OppTeam]?.supportedTime.supportedTimeList.map(
-        (sup) => {
-          return { x: sup.position, y2: sup.value };
+    axiosRequest(
+      undefined,
+      url,
+      params,
+      function (e) {
+        setTeamName({
+          team: filters.team,
+          oppteam: filters.oppteam,
+        });
+        let gankTicks = "";
+        //첫 갱크 데이터 min,max,stepsize 값
+        if (
+          e[Team]?.firstGank.firstGankMax > e[OppTeam]?.firstGank.firstGankMax
+        ) {
+          setGankDomain(e[Team]?.firstGank);
+          gankTicks = e[Team];
+        } else {
+          setGankDomain(e[OppTeam]?.firstGank);
+          gankTicks = e[OppTeam];
         }
-      );
-      for (let i = 0; i < supData.length; i++) {
-        Object.assign(supData[i], supData2[i]);
-        setSupport(supData);
+
+        //첫 갱크 데이터 가져와서 x,y로 나눠서 배열로 만듬
+        const gankData = e[Team]?.firstGank.firstGankList?.map((gank) => {
+          return { x: gank.position, y1: gank.gankCount };
+        });
+
+        const gankData2 = e[OppTeam]?.firstGank.firstGankList?.map((gank) => {
+          return { x: gank.position, y2: gank.gankCount };
+        });
+        for (let i = 0; i < gankData.length; i++) {
+          Object.assign(gankData[i], gankData2[i]);
+          setGank(gankData);
+        }
+        //첫 서포팅 데이터 min, max, stepsize값
+        let supTicks = "";
+        if (
+          e[Team]?.supportedTime.supportedTimeMax >
+          e[OppTeam]?.supportedTime.supportedTimeMax
+        ) {
+          supTicks = e[Team];
+          setSupportDomain(e[Team]?.supportedTime);
+        } else {
+          supTicks = e[OppTeam];
+          setSupportDomain(e[OppTeam]?.supportedTime);
+        }
+
+        //첫 서포팅 데이터 가져와서 x,y로 나눠서 배열로 만듬
+        const supData = e[Team]?.supportedTime.supportedTimeList?.map((sup) => {
+          return { x: sup.position, y1: sup.value };
+        });
+        const supData2 = e[OppTeam]?.supportedTime.supportedTimeList.map(
+          (sup) => {
+            return { x: sup.position, y2: sup.value };
+          }
+        );
+        for (let i = 0; i < supData.length; i++) {
+          Object.assign(supData[i], supData2[i]);
+          setSupport(supData);
+        }
+        hanldleTicks(gankTicks, supTicks);
+        //Team, OppTeam을 나눠서 데이터를 저장함
+        setRedData(e[Team]);
+        setBlueData(e[OppTeam]);
+      },
+      function (objStore) {
+        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
       }
-      hanldleTicks(gankTicks, supTicks);
-      //Team, OppTeam을 나눠서 데이터를 저장함
-      setRedData(e[Team]);
-      setBlueData(e[OppTeam]);
-    }, function (objStore) {
-      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    }).finally(setLoading(false));
+    ).finally(setLoading(false));
   };
 
   //그래프 y 축 max값 받아오는거 비교해서 더 높은것으로 출력 해주는 함수
@@ -181,9 +188,9 @@ function CompareIngame() {
         </CustomTool>
       );
     }
-
     return null;
   };
+
   if (loading) return <LoadingImg />;
   return (
     <CompareIngameWrapper>

@@ -11,7 +11,6 @@ import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
-
 function mycomparator(a, b) {
   var num1 = 0;
   if (Math.floor(a) - Math.floor(b) > 0) {
@@ -72,150 +71,159 @@ function ComparePosition() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(undefined, url, params, function (e) {
-      setTeamName({
-        team: e.teamName,
-        oppteam: e.oppteamName,
-      });
-      //top데이터 받아와서 그래프에 넣기 위해 가공하는 과정
-      const topData = [];
-      const topArray = [];
-      Object.values(e?.data["top"]).forEach((patch) => {
-        const topValues = [];
-        for (let i = 0; i < sortedPatch.length; i++) {
-          if (Object.keys(patch).includes(sortedPatch[i])) {
-            for (let j = 0; j < sortedPatch.length; j++) {
-              if (sortedPatch[i] === Object.keys(patch)[j]) {
-                topValues.push(Object.values(patch)[j]);
+    axiosRequest(
+      undefined,
+      url,
+      params,
+      function (e) {
+        setTeamName({
+          team: e.teamName,
+          oppteam: e.oppteamName,
+        });
+        //top데이터 받아와서 그래프에 넣기 위해 가공하는 과정
+        const topData = [];
+        const topArray = [];
+        Object.values(e?.["top"]).forEach(
+          (patch) => {
+            const topValues = [];
+            for (let i = 0; i < sortedPatch.length; i++) {
+              if (Object.keys(patch).includes(sortedPatch[i])) {
+                for (let j = 0; j < sortedPatch.length; j++) {
+                  if (sortedPatch[i] === Object.keys(patch)[j]) {
+                    topValues.push(Object.values(patch)[j]);
+                  }
+                }
+              } else {
+                topValues.push(null);
               }
             }
-          } else {
-            topValues.push(null);
+            topData.push(topValues);
+          },
+          function (objStore) {
+            dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
           }
+        );
+
+        for (let i = 0; i < topData.length; i++) {
+          topArray.push({
+            player: Object.keys(e["top"])[i],
+            data: topData[i].map((data) => data?.toFixed(2)),
+          });
         }
-        topData.push(topValues);
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      })
+        setTop(topArray);
 
-      for (let i = 0; i < topData.length; i++) {
-        topArray.push({
-          player: Object.keys(e["top"])[i],
-          data: topData[i].map((data) => data?.toFixed(2)),
-        });
-      }
-      setTop(topArray);
-
-      //정글데이터 받아와서 그래프에 넣기 위해 가공하는 과정
-      const jngData = [];
-      const jngArray = [];
-      Object.values(e?.data["jng"]).forEach((patch) => {
-        const jngValues = [];
-        for (let i = 0; i < sortedPatch.length; i++) {
-          if (Object.keys(patch).includes(sortedPatch[i])) {
-            for (let j = 0; j < sortedPatch.length; j++) {
-              if (sortedPatch[i] === Object.keys(patch)[j]) {
-                jngValues.push(Object.values(patch)[j]);
+        //정글데이터 받아와서 그래프에 넣기 위해 가공하는 과정
+        const jngData = [];
+        const jngArray = [];
+        Object.values(e?.["jng"]).forEach((patch) => {
+          const jngValues = [];
+          for (let i = 0; i < sortedPatch.length; i++) {
+            if (Object.keys(patch).includes(sortedPatch[i])) {
+              for (let j = 0; j < sortedPatch.length; j++) {
+                if (sortedPatch[i] === Object.keys(patch)[j]) {
+                  jngValues.push(Object.values(patch)[j]);
+                }
               }
+            } else {
+              jngValues.push(null);
             }
-          } else {
-            jngValues.push(null);
           }
-        }
 
-        jngData.push(jngValues);
-      });
-      for (let i = 0; i < jngData.length; i++) {
-        jngArray.push({
-          player: Object.keys(e["jng"])[i],
-          data: jngData[i].map((data) => data?.toFixed(2)),
+          jngData.push(jngValues);
         });
-      }
-      setJng(jngArray);
+        for (let i = 0; i < jngData.length; i++) {
+          jngArray.push({
+            player: Object.keys(e["jng"])[i],
+            data: jngData[i].map((data) => data?.toFixed(2)),
+          });
+        }
+        setJng(jngArray);
 
-      //미드 데이터 받아와서 그래프에 넣기 위해 가공하는 과정
-      const midData = [];
-      const midArray = [];
-      Object.values(e?.data["mid"]).forEach((patch) => {
-        const midValues = [];
-        for (let i = 0; i < sortedPatch.length; i++) {
-          if (Object.keys(patch).includes(sortedPatch[i])) {
-            for (let j = 0; j < sortedPatch.length; j++) {
-              if (sortedPatch[i] === Object.keys(patch)[j]) {
-                midValues.push(Object.values(patch)[j]);
+        //미드 데이터 받아와서 그래프에 넣기 위해 가공하는 과정
+        const midData = [];
+        const midArray = [];
+        Object.values(e?.["mid"]).forEach((patch) => {
+          const midValues = [];
+          for (let i = 0; i < sortedPatch.length; i++) {
+            if (Object.keys(patch).includes(sortedPatch[i])) {
+              for (let j = 0; j < sortedPatch.length; j++) {
+                if (sortedPatch[i] === Object.keys(patch)[j]) {
+                  midValues.push(Object.values(patch)[j]);
+                }
               }
+            } else {
+              midValues.push(null);
             }
-          } else {
-            midValues.push(null);
           }
-        }
 
-        midData.push(midValues);
-      });
-      for (let i = 0; i < midData.length; i++) {
-        midArray.push({
-          player: Object.keys(e["mid"])[i],
-          data: midData[i].map((data) => data?.toFixed(2)),
+          midData.push(midValues);
         });
-      }
-      setMid(midArray);
+        for (let i = 0; i < midData.length; i++) {
+          midArray.push({
+            player: Object.keys(e["mid"])[i],
+            data: midData[i].map((data) => data?.toFixed(2)),
+          });
+        }
+        setMid(midArray);
 
-      //원딜 데이터 받아와서 그래프에 넣기 위해 가공하는 과정
-      const botData = [];
-      const botArray = [];
-      Object.values(e?.data["bot"]).forEach((patch) => {
-        const botValues = [];
-        for (let i = 0; i < sortedPatch.length; i++) {
-          if (Object.keys(patch).includes(sortedPatch[i])) {
-            for (let j = 0; j < sortedPatch.length; j++) {
-              if (sortedPatch[i] === Object.keys(patch)[j]) {
-                botValues.push(Object.values(patch)[j]);
+        //원딜 데이터 받아와서 그래프에 넣기 위해 가공하는 과정
+        const botData = [];
+        const botArray = [];
+        Object.values(e?.["bot"]).forEach((patch) => {
+          const botValues = [];
+          for (let i = 0; i < sortedPatch.length; i++) {
+            if (Object.keys(patch).includes(sortedPatch[i])) {
+              for (let j = 0; j < sortedPatch.length; j++) {
+                if (sortedPatch[i] === Object.keys(patch)[j]) {
+                  botValues.push(Object.values(patch)[j]);
+                }
               }
+            } else {
+              botValues.push(null);
             }
-          } else {
-            botValues.push(null);
           }
-        }
 
-        botData.push(botValues);
-      });
-      for (let i = 0; i < botData.length; i++) {
-        botArray.push({
-          player: Object.keys(e["bot"])[i],
-          data: botData[i].map((data) => data?.toFixed(2)),
+          botData.push(botValues);
         });
-      }
-      setBot(botArray);
+        for (let i = 0; i < botData.length; i++) {
+          botArray.push({
+            player: Object.keys(e["bot"])[i],
+            data: botData[i].map((data) => data?.toFixed(2)),
+          });
+        }
+        setBot(botArray);
 
-      //서포터 데이터 받아와서 그래프에 넣기 위해 가공하는 과정
-      const supData = [];
-      const supArray = [];
-      Object.values(e?.data["sup"]).forEach((patch) => {
-        const supValues = [];
-        for (let i = 0; i < sortedPatch.length; i++) {
-          if (Object.keys(patch).includes(sortedPatch[i])) {
-            for (let j = 0; j < sortedPatch.length; j++) {
-              if (sortedPatch[i] === Object.keys(patch)[j]) {
-                supValues.push(Object.values(patch)[j]);
+        //서포터 데이터 받아와서 그래프에 넣기 위해 가공하는 과정
+        const supData = [];
+        const supArray = [];
+        Object.values(e?.["sup"]).forEach((patch) => {
+          const supValues = [];
+          for (let i = 0; i < sortedPatch.length; i++) {
+            if (Object.keys(patch).includes(sortedPatch[i])) {
+              for (let j = 0; j < sortedPatch.length; j++) {
+                if (sortedPatch[i] === Object.keys(patch)[j]) {
+                  supValues.push(Object.values(patch)[j]);
+                }
               }
+            } else {
+              supValues.push(null);
             }
-          } else {
-            supValues.push(null);
           }
-        }
 
-        supData.push(supValues);
-      });
-      for (let i = 0; i < supData.length; i++) {
-        supArray.push({
-          player: Object.keys(e["sup"])[i],
-          data: supData[i].map((data) => data?.toFixed(2)),
+          supData.push(supValues);
         });
+        for (let i = 0; i < supData.length; i++) {
+          supArray.push({
+            player: Object.keys(e["sup"])[i],
+            data: supData[i].map((data) => data?.toFixed(2)),
+          });
+        }
+        setSup(supArray);
+      },
+      function (objStore) {
+        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
       }
-      setSup(supArray);
-    }, function (objStore) {
-      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    }).finally(setLoading(false));
+    ).finally(setLoading(false));
   };
 
   //그래프 세팅

@@ -71,7 +71,7 @@ const TeamFilterModal = () => {
     leagueList = Object.keys(staticvalue.filterObjects).map(
       (key) =>
         Number(Object.keys(staticvalue.filterObjects[key])) ===
-        Number(filters.year) && key
+          Number(filters.year) && key
     );
     dispatch(setLeagueFilter(leagueList.sort()));
   };
@@ -89,6 +89,7 @@ const TeamFilterModal = () => {
 
   // opp 팀 필터 fetch 함수
   const fetchingOppTeamFilter = (team) => {
+    console.log("entered1111");
     const url = `${API}/lolapi/filter/oppteam`;
     const params = {
       league: filters.league,
@@ -99,16 +100,23 @@ const TeamFilterModal = () => {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
+      console.log("entered222");
+
       setOppTeamFilter(e);
     });
   };
+
+  // 모달창 열렸을 때 team이 있으면 oppteam api 호출
+  useEffect(() => {
+    if (filters.team !== "") fetchingOppTeamFilter(filters.team);
+  }, []);
 
   return (
     <>
       <BackScreen
         teamModal={filters.compareModal}
-      // onClick={() => setTeamModal(false)}
+        // onClick={() => setTeamModal(false)}
       ></BackScreen>
       <TeamModalWrapper teamModal={filters.compareModal}>
         <ModalNav>
@@ -662,7 +670,7 @@ const ButtonBox = styled.div`
     height: 60px;
     border-radius: 20px;
     background-color: ${(props) =>
-    props.isAllTeamSelected ? "#5942ba" : "#484655"};
+      props.isAllTeamSelected ? "#5942ba" : "#484655"};
     cursor: ${(props) => (props.isAllTeamSelected ? "pointer" : "not-allowed")};
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 15px;
@@ -704,8 +712,8 @@ const MapTeams = styled.div`
     text-align: left;
     color: #84818e;
     ${(props) =>
-    props.currentTeam &&
-    css`
+      props.currentTeam &&
+      css`
         color: #fff;
       `}
   }

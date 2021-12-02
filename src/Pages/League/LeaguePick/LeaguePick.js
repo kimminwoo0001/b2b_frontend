@@ -96,6 +96,10 @@ function LeaguePick() {
   // week 데이터 fetch 함수
   const fetchingPickData = () => {
     setLoading(true);
+    //  선택된 리그가 없을 시 api호출 X
+    if (filters.league.length === 0) {
+      return;
+    }
 
     let url = `${API}/lolapi/league/pick`;
     let params = {
@@ -108,18 +112,24 @@ function LeaguePick() {
       id: user.id,
     };
 
-    axiosRequest(undefined, url, params, function (e) {
-      //주요픽 데이터 저장
-      setImportantPicks(e.importantPick);
-      //주요픽간의전적 저장
-      setPickDifference(e.pickDiff);
-      //챔피언 티어 저장
-      setTier(e.championTier);
-      //유니크픽 데이터 저장
-      setUniquePick(e.uniquePick);
-    }, function (objStore) {
-      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    }).finally(setLoading(false));
+    axiosRequest(
+      undefined,
+      url,
+      params,
+      function (e) {
+        //주요픽 데이터 저장
+        setImportantPicks(e.importantPick);
+        //주요픽간의전적 저장
+        setPickDifference(e.pickDiff);
+        //챔피언 티어 저장
+        setTier(e.championTier);
+        //유니크픽 데이터 저장
+        setUniquePick(e.uniquePick);
+      },
+      function (objStore) {
+        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      }
+    ).finally(setLoading(false));
   };
 
   if (loading) return <LoadingImg />;

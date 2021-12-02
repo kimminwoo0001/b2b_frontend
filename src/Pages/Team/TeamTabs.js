@@ -8,10 +8,14 @@ import TeamReport from "./TeamReport/TeamReport";
 import TeamComparison from "./TeamComparison/TeamComparison";
 
 import TeamSelectModal from "./TeamComparison/TeamSelectModal";
-import { CompareModal, HandleTab, ResetFilter2 } from "../../redux/modules/filtervalue";
+import {
+  CompareModal,
+  HandleTab,
+  ResetFilter2,
+} from "../../redux/modules/filtervalue";
 import BanIndex from "./BanReport/BanIndex";
 import TeamIndex from "./TeamReport/TeamIndex";
-import TeamFilterModal from "../../Components/Filter/TeamFilterModal"
+import TeamFilterModal from "../../Components/Filter/TeamFilterModal";
 
 function TeamTabs() {
   //팀 보고서 탭
@@ -20,13 +24,12 @@ function TeamTabs() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-
   const [openModal, setOpenModal] = useState(false);
   const [whichTeam, setWhichTeam] = useState();
 
   useEffect(() => {
     // filters.tab === 2 && dispatch(CompareModal(true));
-  }, [filters.tab])
+  }, [filters.tab]);
 
   const TeamTab = {
     0: <BanIndex />,
@@ -35,8 +38,8 @@ function TeamTabs() {
   };
 
   useEffect(() => {
-    dispatch(CompareModal(true))
-  }, [])
+    dispatch(CompareModal(true));
+  }, []);
 
   return (
     <>
@@ -110,7 +113,7 @@ function TeamTabs() {
                 <TabItem
                   onClick={() => {
                     dispatch(HandleTab(2));
-                    dispatch(CompareModal(true))
+                    dispatch(CompareModal(true));
                     //setOpenModal(true);
                   }}
                   changeColor={filters.tab === 2}
