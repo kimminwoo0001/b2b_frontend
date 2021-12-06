@@ -50,7 +50,7 @@ const AlertModal = () => {
     dispatch(SetIsOpen(false));
 
     if (desc === t("alert.logout.sessionExpires")) {
-      history.push("/");
+      history.push("/login");
     }
     if (confirmFuncId) {
       //confirmFunc();
