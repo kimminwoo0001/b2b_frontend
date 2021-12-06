@@ -9,7 +9,6 @@ import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./redux/modules";
 import createSagaMiddleware from "redux-saga";
 import ErrorBoundary from "./Components/ErrorBoundary";
-// import reportWebVitals from "./reportWebVitals";
 import "./i18n";
 import { GlobalFonts } from "./Styles/fonts/fonts";
 import { persistStore } from "redux-persist";
@@ -17,8 +16,6 @@ import { PersistGate } from "redux-persist/integration/react";
 // import AlertModal from "./Components/UtilityComponent/AlertModal";
 
 const sagaMiddleware = createSagaMiddleware();
-// reportWebVitals();
-
 const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(sagaMiddleware))

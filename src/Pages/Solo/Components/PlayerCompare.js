@@ -19,7 +19,7 @@ function PlayerCompare() {
   useEffect(() => {
     GetPerformance();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters]);
+  }, [filters.oppplayer]);
 
   //팀 필터 fetch 함수
   const GetPerformance = () => {
@@ -36,12 +36,18 @@ function PlayerCompare() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(undefined, url, params, function (e) {
-      setData(e[filters.player]);
-      setOppData(e[filters.oppplayer]);
-    }, function (objStore) {
-      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    })
+    axiosRequest(
+      undefined,
+      url,
+      params,
+      function (e) {
+        setData(e[filters.player]);
+        setOppData(e[filters.oppplayer]);
+      },
+      function (objStore) {
+        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      }
+    );
     // dispatch(Loading(false));
   };
 

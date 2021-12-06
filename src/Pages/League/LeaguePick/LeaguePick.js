@@ -90,6 +90,12 @@ function LeaguePick() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [positionTab]);
 
+  // useEffect(() => {
+  //   if (positionTab === 0) {
+  //     fetchingPickData();
+  //   }
+  // }, []);
+
   // 선택된 탭에 따라서 백엔드 요청에 쓰일 position 저장해주는 함수
   const convertPosition = () => {
     if (positionTab === 0) {

@@ -18,7 +18,8 @@
     "login": "Log In",
     "logout": "Log Out",
     "confirm": "Confirm",
-    "notice": "Notice"
+    "notice": "Notice",
+    "noData" : "No new notifications"
   },
   "home": {
     "rank": "Rank",
@@ -97,7 +98,8 @@
       "played": "Game Played",
       "winrate": "Win Rate",
       "kda": "KDA",
-      "sbr": "Performance Rating "
+      "sbr": "Performance Rating ",
+      "prInfo": "PR(Performance Rating) is an index that can measure a player's overall performance by calculating various indicators in a complex manner based on the player's in-game performance."
     }
   },
   "team": {

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Tippy from "@tippy.js/react";
 import LoadingImg from "../../../../Components/LoadingImg/LoadingImg";
 import { useSelector } from "react-redux";
+import PRInfoTooltip from "./PRInfoTooltip";
 
 function TabTop({ playerData, loading }) {
   const { t } = useTranslation();
@@ -16,17 +17,14 @@ function TabTop({ playerData, loading }) {
       <TableNav>
         <div className="NavTitle">
           {t("league.playerStat.sbrLabel")}
-          <span>
-            ?
-            {/* <Tippy // options
-              duration={0}
-              delay={[300, 0]}
-              content={t("league.playerStat.prInfo")}
-              placement="top"
-            >
-              ?
-            </Tippy> */}
-          </span>
+          <StyledTippy
+            duration={0}
+            delay={[100, 0]}
+            content={<PRInfoTooltip PRInfo={t("league.playerStat.prInfo")} />}
+            placement="top"
+          >
+            <span>?</span>
+          </StyledTippy>
         </div>
       </TableNav>
       {/* 받아온 선수 정보 데이터 뿌려주기 */}
@@ -267,3 +265,5 @@ const KDA = styled.div`
     color: rgb(240, 69, 69);
   }
 `;
+
+const StyledTippy = styled(Tippy)``;

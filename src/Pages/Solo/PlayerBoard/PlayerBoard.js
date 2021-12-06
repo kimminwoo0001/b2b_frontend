@@ -392,7 +392,7 @@ function PlayerBoard() {
             <button
               className="Select"
               onClick={() => {
-                dispatch(ResetChampion2(""));
+                // dispatch(ResetChampion2(""));
                 GetPlayerBoardData();
               }}
             >
