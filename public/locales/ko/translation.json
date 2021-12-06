@@ -246,7 +246,9 @@
       "games": "경기",
       "win": "승",
       "lose": "패",
-      "ageLabel": "세"
+      "ageLabel": "세",
+      "place": "위",
+      "noEnoughMatch": "출전 경기 부족"
     },
     "comparison": {
       "overview": "기본정보",
@@ -289,7 +291,8 @@
       "lose": "패",
       "total": "전",
       "statLabel": "개인전적",
-      "statLabelvs": "상대전적"
+      "statLabelvs": "상대전적",
+      "noOppStatData": "상대 전적 기록이 없습니다."
     }
   },
   "filters": {

@@ -90,73 +90,77 @@ function Stats() {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(undefined, url, params, function (e) {
-        setData(e?.data.player);
-        setOppData(e?.data.oppPlayer);
-        //라인전 능력치 비교 그래프 데이터 가공
-        const lineData = Object.values(e?.data.player.LineStat)?.map((line) => {
-          return {
-            x1: line.percent.toFixed(1),
-            y: lang === "ko" ? line.name : line.eng,
-            value1: line.value.toFixed(1),
-            league: line.avg.toFixed(1),
-          };
-        });
-
-        const lineData2 = Object.values(e?.data.oppPlayer.LineStat)?.map(
-          (line) => {
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          setData(e?.player);
+          setOppData(e?.oppPlayer);
+          //라인전 능력치 비교 그래프 데이터 가공
+          const lineData = Object.values(e?.player.LineStat)?.map((line) => {
             return {
-              x2: line.percent.toFixed(1),
+              x1: line.percent.toFixed(1),
               y: lang === "ko" ? line.name : line.eng,
-              value2: line.value.toFixed(1),
+              value1: line.value.toFixed(1),
               league: line.avg.toFixed(1),
             };
+          });
+
+          const lineData2 = Object.values(e?.oppPlayer.LineStat)?.map(
+            (line) => {
+              return {
+                x2: line.percent.toFixed(1),
+                y: lang === "ko" ? line.name : line.eng,
+                value2: line.value.toFixed(1),
+                league: line.avg.toFixed(1),
+              };
+            }
+          );
+          for (let i = 0; i < lineData.length; i++) {
+            Object.assign(lineData[i], lineData2[i]);
+            setLineStat(lineData);
           }
-        );
-        for (let i = 0; i < lineData.length; i++) {
-          Object.assign(lineData[i], lineData2[i]);
-          setLineStat(lineData);
-        }
-        console.log(Object.values(lineData));
-        //교전 능력치 비교 그래프 데이터 가공
-        const matchData = Object.values(e?.data.player.MatchStat)?.map(
-          (match) => {
+          console.log(Object.values(lineData));
+          //교전 능력치 비교 그래프 데이터 가공
+          const matchData = Object.values(e?.player.MatchStat)?.map((match) => {
             return {
               x1: match.percent.toFixed(1),
               y: lang === "ko" ? match.name : match.eng,
               value1: match.value.toFixed(1),
               league: match.avg.toFixed(1),
             };
-          }
-        );
+          });
 
-        const matchData2 = Object.values(e?.data.oppPlayer.MatchStat)?.map(
-          (match) => {
-            return {
-              x2: match.percent.toFixed(1),
-              y: lang === "ko" ? match.name : match.eng,
-              value2: match.value.toFixed(1),
-              league: match.avg.toFixed(1),
-            };
+          const matchData2 = Object.values(e?.oppPlayer.MatchStat)?.map(
+            (match) => {
+              return {
+                x2: match.percent.toFixed(1),
+                y: lang === "ko" ? match.name : match.eng,
+                value2: match.value.toFixed(1),
+                league: match.avg.toFixed(1),
+              };
+            }
+          );
+          for (let i = 0; i < matchData.length; i++) {
+            Object.assign(matchData[i], matchData2[i]);
+            setMatch(matchData);
           }
-        );
-        for (let i = 0; i < matchData.length; i++) {
-          Object.assign(matchData[i], matchData2[i]);
-          setMatch(matchData);
-        }
 
-        if (e === null || e === undefined) {
-          return 0;
-        } else {
-          // setLineStat(Object.values(response?.data.player.LineStat));
-          // setOppLineStat(Object.values(response?.data.oppPlayer.LineStat));
-          // setMatch(Object.values(response?.data.player.MatchStat));
-          // setOppMatch(Object.values(response?.data.oppPlayer.MatchStat));
-          setStatData(Object.values(e?.data.tendencyStat));
+          if (e === null || e === undefined) {
+            return 0;
+          } else {
+            // setLineStat(Object.values(response?.data.player.LineStat));
+            // setOppLineStat(Object.values(response?.data.oppPlayer.LineStat));
+            // setMatch(Object.values(response?.data.player.MatchStat));
+            // setOppMatch(Object.values(response?.data.oppPlayer.MatchStat));
+            setStatData(Object.values(e?.tendencyStat));
+          }
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
         }
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      })
+      );
     } catch (e) {
       console.log(e.response);
     }
@@ -176,12 +180,18 @@ function Stats() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(undefined, url, params, function (e) {
-      setChampFilter(e.champion);
-      setChampEng(e.championEng);
-    }, function (objStore) {
-      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    })
+    axiosRequest(
+      undefined,
+      url,
+      params,
+      function (e) {
+        setChampFilter(e.champion);
+        setChampEng(e.championEng);
+      },
+      function (objStore) {
+        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      }
+    );
   };
 
   //상대 챔피언 필터
@@ -199,12 +209,18 @@ function Stats() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(undefined, url, params, function (e) {
-      setOppFilter(e.champion);
-      setOppEng(e.championEng);
-    }, function (objStore) {
-      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    })
+    axiosRequest(
+      undefined,
+      url,
+      params,
+      function (e) {
+        setOppFilter(e.champion);
+        setOppEng(e.championEng);
+      },
+      function (objStore) {
+        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      }
+    );
   };
 
   const renderColorfulLegendText = (value: string, entry: any) => {
@@ -681,7 +697,7 @@ function Stats() {
                       // strokeDasharray="4 4"
                       horizontal={false}
                       vertical={false}
-                    // horizontalPoints={[40, 80, 120, 160, 200, 240]}
+                      // horizontalPoints={[40, 80, 120, 160, 200, 240]}
                     />
                     <XAxis
                       type={"number"}
@@ -768,7 +784,7 @@ function Stats() {
                       // strokeDasharray="4 4"
                       horizontal={false}
                       vertical={false}
-                    // horizontalPoints={[25, 75, 125, 175, 225]}
+                      // horizontalPoints={[25, 75, 125, 175, 225]}
                     />
                     <XAxis
                       domain={[0, 100]}

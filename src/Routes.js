@@ -4,6 +4,7 @@ import {
   Switch,
   Route,
   Redirect,
+  useHistory,
 } from "react-router-dom";
 
 import Home from "./Pages/Home/Home";
@@ -23,7 +24,8 @@ import MetaAnalysis from "./Pages/MetaAnalysis/MetaAnalysis";
 import MatchAnalysis from "./Pages/MatchAnalysis/MatchAnalysis";
 import { useSelector } from "react-redux";
 import PiArea from "./Pages/PiArea/PiArea";
-import GameReport from './Pages/GameReport/GameReport'
+import GameReport from "./Pages/GameReport/GameReport";
+import AlertModal from "./Components/UtilityComponent/AlertModal";
 
 function Routes() {
   //const token = sessionStorage.getItem("token");
@@ -40,6 +42,7 @@ function Routes() {
 
   return (
     <Router>
+      <AlertModal />
       <Switch>
         <PrivateRoute exact path="/" component={Home} />
         <PrivateRoute exact path="/league" component={League} />

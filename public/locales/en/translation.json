@@ -245,7 +245,9 @@
       "games": "G",
       "win": "W",
       "lose": "L",
-      "ageLabel": ""
+      "ageLabel": "",
+      "place": "",
+      "noEnoughMatch": "No enough matches."
     },
     "comparison": {
       "overview": "Overview",
@@ -288,7 +290,8 @@
       "lose": "L",
       "total": "G",
       "statLabel": "Record",
-      "statLabelvs": "VS"
+      "statLabelvs": "VS",
+      "noOppStatData": "There is no data for this match."
     }
   },
   "filters": {
@@ -445,5 +448,12 @@
     "team": "Team",
     "player": "Player",
     "patchVersion": "Patch Version"
+  },
+  "position": {
+    "top": "TOP",
+    "jg": "JNG",
+    "mid": "MID",
+    "ad": "BOT",
+    "sup": "SUP"
   }
 }

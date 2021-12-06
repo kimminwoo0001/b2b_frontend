@@ -23,10 +23,10 @@ const axiosRequest = async (
       method: method,
       url: url,
       params: paramData,
-      headers: { 'Accept': `Bearer  ${paramData.token}` },
+      headers: { Accept: `Bearer  ${paramData.token}` },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: "repeat" });
-      }
+      },
     })
       .then((e) => {
         // 여기서도 에러를 던지면 아래의 catch로 이동된다.
@@ -52,27 +52,29 @@ const axiosRequest = async (
   } else if (method?.toUpperCase() === "POST") {
     const headers = {
       "Content-Type": "application/x-www-form-urlencoded",
-      "token": paramData.token ?? "N"
+      token: paramData.token ?? "N",
     };
     await axios({
-      method: 'post',
+      method: "post",
       url: url,
       data: paramData,
-      headers: { 'content-type': 'application/x-www-form-urlencoded' },
-    }).then((e) => {
-      const check = checkRequest(e.data.status);
-      console.log("check", check);
-      if (check.value) {
-        if (callback) {
-          callback(e.data.response);
-        } else {
-          //sessionStorage.clear();
-          //history.push("/login");
-        }
-      } else {
-        failCallback(check.objStore);
-      }
+      headers: { "content-type": "application/x-www-form-urlencoded" },
     })
+      .then((e) => {
+        const check = checkRequest(e.data.status);
+        console.log("check", check);
+        if (check.value) {
+          if (callback) {
+            console.log(e);
+            callback(e.data.response);
+          } else {
+            //sessionStorage.clear();
+            //history.push("/login");
+          }
+        } else {
+          failCallback(check.objStore);
+        }
+      })
       .catch((error) => {
         console.log("error test : ", error);
       });

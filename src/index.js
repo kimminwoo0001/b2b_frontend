@@ -14,7 +14,7 @@ import "./i18n";
 import { GlobalFonts } from "./Styles/fonts/fonts";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
-import AlertModal from "./Components/UtilityComponent/AlertModal";
+// import AlertModal from "./Components/UtilityComponent/AlertModal";
 
 const sagaMiddleware = createSagaMiddleware();
 // reportWebVitals();
@@ -33,7 +33,7 @@ ReactDOM.render(
     <ErrorBoundary>
       <Suspense fallback={<div>Loading...</div>}>
         <Provider store={store}>
-          <AlertModal />
+          {/* <AlertModal />/ */}
           <PersistGate persistor={persistor}>
             <Routes />
             <GlobalFonts />
