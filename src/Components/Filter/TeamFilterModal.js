@@ -52,6 +52,7 @@ const TeamFilterModal = () => {
     dropdownRef,
     false
   );
+  const pagePath = document.location.pathname;
 
   useEffect(() => {
     setOppTeamFilter();
@@ -89,7 +90,6 @@ const TeamFilterModal = () => {
 
   // opp 팀 필터 fetch 함수
   const fetchingOppTeamFilter = (team) => {
-    console.log("entered1111");
     const url = `${API}/lolapi/filter/oppteam`;
     const params = {
       league: filters.league,
@@ -101,15 +101,18 @@ const TeamFilterModal = () => {
       id: user.id,
     };
     axiosRequest(undefined, url, params, function (e) {
-      console.log("entered222");
-
       setOppTeamFilter(e);
     });
   };
 
   // 모달창 열렸을 때 team이 있으면 oppteam api 호출
   useEffect(() => {
-    if (filters.team !== "") fetchingOppTeamFilter(filters.team);
+    if (pagePath === "/teamCompare" || filters.team === "") {
+      return;
+    }
+    if (filters.team !== "") {
+      fetchingOppTeamFilter(filters.team);
+    }
   }, []);
 
   return (

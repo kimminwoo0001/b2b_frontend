@@ -34,7 +34,6 @@ import styled, { css } from "styled-components";
 import { API } from "../../Pages/config";
 import { useTranslation } from "react-i18next";
 import { useDetectOutsideClick } from "../SelectFilter/useDetectOustsideClick";
-import qs from "qs";
 import FilterHeader from "./FilterHeader";
 
 import MultiSelectCb from "./MultiSelectCb";
@@ -50,8 +49,8 @@ const Filter = memo(() => {
   const user = useSelector((state) => state.UserReducer);
   const staticvalue = useSelector((state) => state.StaticValueReducer);
   const selector = useSelector((state) => state.SelectorReducer);
-
   const dispatch = useDispatch();
+  const isInitialMount = useRef(true);
 
   const [league, setLeague] = useState(filters.league);
   const [year, setYear] = useState(filters.year);
@@ -110,9 +109,11 @@ const Filter = memo(() => {
       } else {
         fetchYearFilter();
         fetchActiveFilter();
+        fetchingPatchFilter();
       }
       setLeague(filters.league);
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.league]);
 
@@ -183,7 +184,7 @@ const Filter = memo(() => {
     if (selector.seasonFilter?.length > 0) fetchSeasonFilter();
     if (selector.teamFilter?.length > 0) fetchingTeamFilter();
     if (selector.playerFilter?.length > 0) fetchingPlayerFilter();
-    if (filters?.patchFilter > 0) fetchingPatchFilter();
+    // if (filters?.patchFilter > 0) fetchingPatchFilter();
   };
 
   // 리그 필터 fetch 해오는 함수
@@ -357,9 +358,7 @@ const Filter = memo(() => {
     };
 
     axiosRequest(undefined, url, params, function (e) {
-      // const patchResponse = e.patch ?? [];
       const patchResponse = e ?? [];
-      // const patchResponse = e;
 
       dispatch(setPatchFilter(patchResponse));
       dispatch(SetPatch(patchResponse));

@@ -73,11 +73,12 @@ function LeaguePick() {
 
   useEffect(() => {
     // 컴포넌트 최초 mount시에는 실행되지 않도록 함
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-    } else {
-      fetchingPickData();
-    }
+    // if (isInitialMount.current) {
+    //   isInitialMount.current = false;
+    // } else {
+    fetchingPickData();
+    // }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.patch, queryPosition]);
 
@@ -89,12 +90,6 @@ function LeaguePick() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [positionTab]);
-
-  // useEffect(() => {
-  //   if (positionTab === 0) {
-  //     fetchingPickData();
-  //   }
-  // }, []);
 
   // 선택된 탭에 따라서 백엔드 요청에 쓰일 position 저장해주는 함수
   const convertPosition = () => {
