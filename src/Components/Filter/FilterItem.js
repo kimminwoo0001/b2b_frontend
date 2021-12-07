@@ -11,12 +11,19 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
   const selector = useSelector((state) => state.SelectorReducer);
   const dispatch = useDispatch();
   const [checked, setChecked] = useState(false);
+  const pagePath = document.location.pathname;
+  const nameTeam = "/team";
+  const nameSolo = "/solo";
 
   const changeSwitch = () => {
     setViewSwitch(!viewSwitch);
   };
 
   useEffect(() => {
+    if ([nameTeam, nameSolo].includes(pagePath)) {
+      return;
+    }
+
     if (
       title === t("label.league") &&
       filters.league.length > 0 &&
@@ -117,15 +124,16 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
         </Header>
         <div className={viewSwitch ? "open-filter-item" : "close-filter-item"}>
           {/* 전체선택 */}
-          {(title === t("label.league") ||
-            (title === t("label.season") && filters.year.length > 0)) && (
-            <div className="div-select-all">
-              <SelectAll onClick={handleCheckboxClick} isChecked={checked}>
-                <input type="checkbox" checked={checked} />
-                <span>{t("filters.selectAll")}</span>
-              </SelectAll>
-            </div>
-          )}
+          {![nameTeam, nameSolo].includes(pagePath) &&
+            (title === t("label.league") ||
+              (title === t("label.season") && filters.year.length > 0)) && (
+              <div className="div-select-all">
+                <SelectAll onClick={handleCheckboxClick} isChecked={checked}>
+                  <input type="checkbox" checked={checked} />
+                  <span>{t("filters.selectAll")}</span>
+                </SelectAll>
+              </div>
+            )}
           {multiFilter}
         </div>
       </InnerWrapper>

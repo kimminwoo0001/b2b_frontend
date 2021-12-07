@@ -52,6 +52,7 @@ const TeamFilterModal = () => {
     dropdownRef,
     false
   );
+  const pagePath = document.location.pathname;
 
   useEffect(() => {
     setOppTeamFilter();
@@ -71,7 +72,7 @@ const TeamFilterModal = () => {
     leagueList = Object.keys(staticvalue.filterObjects).map(
       (key) =>
         Number(Object.keys(staticvalue.filterObjects[key])) ===
-        Number(filters.year) && key
+          Number(filters.year) && key
     );
     dispatch(setLeagueFilter(leagueList.sort()));
   };
@@ -99,16 +100,26 @@ const TeamFilterModal = () => {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
+    axiosRequest(undefined, url, params, function (e) {
       setOppTeamFilter(e);
     });
   };
+
+  // 모달창 열렸을 때 team이 있으면 oppteam api 호출
+  useEffect(() => {
+    if (pagePath === "/teamCompare" || filters.team === "") {
+      return;
+    }
+    if (filters.team !== "") {
+      fetchingOppTeamFilter(filters.team);
+    }
+  }, []);
 
   return (
     <>
       <BackScreen
         teamModal={filters.compareModal}
-      // onClick={() => setTeamModal(false)}
+        // onClick={() => setTeamModal(false)}
       ></BackScreen>
       <TeamModalWrapper teamModal={filters.compareModal}>
         <ModalNav>
@@ -389,7 +400,7 @@ const BackScreen = styled.div`
   position: fixed;
   z-index: 3;
   background-color: rgba(0, 0, 0, 1);
-  opacity: 0.7;
+  opacity: 0.9;
 `;
 
 const TeamModalWrapper = styled.div`
@@ -662,7 +673,7 @@ const ButtonBox = styled.div`
     height: 60px;
     border-radius: 20px;
     background-color: ${(props) =>
-    props.isAllTeamSelected ? "#5942ba" : "#484655"};
+      props.isAllTeamSelected ? "#5942ba" : "#484655"};
     cursor: ${(props) => (props.isAllTeamSelected ? "pointer" : "not-allowed")};
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 15px;
@@ -704,8 +715,8 @@ const MapTeams = styled.div`
     text-align: left;
     color: #84818e;
     ${(props) =>
-    props.currentTeam &&
-    css`
+      props.currentTeam &&
+      css`
         color: #fff;
       `}
   }

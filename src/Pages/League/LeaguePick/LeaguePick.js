@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useRef } from "react";
 import styled, { css } from "styled-components";
 import axios from "axios";
 import { API } from "../../config";
@@ -23,6 +24,8 @@ function LeaguePick() {
   const [tier, setTier] = useState();
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const isInitialMount = useRef(true);
+  const isInitialMount2 = useRef(true);
 
   // 리그 보고서 => 픽에 있는 Top, JG ,Mid, Adc, Sup 텝
   const positionTabs = {
@@ -69,12 +72,22 @@ function LeaguePick() {
   };
 
   useEffect(() => {
+    // 컴포넌트 최초 mount시에는 실행되지 않도록 함
+    // if (isInitialMount.current) {
+    //   isInitialMount.current = false;
+    // } else {
     fetchingPickData();
+    // }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters, queryPosition]);
+  }, [filters.patch, queryPosition]);
 
   useEffect(() => {
-    convertPosition();
+    if (isInitialMount2.current) {
+      isInitialMount2.current = false;
+    } else {
+      convertPosition();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [positionTab]);
 
@@ -96,6 +109,10 @@ function LeaguePick() {
   // week 데이터 fetch 함수
   const fetchingPickData = () => {
     setLoading(true);
+    //  선택된 리그가 없을 시 api호출 X
+    if (filters.league.length === 0) {
+      return;
+    }
 
     let url = `${API}/lolapi/league/pick`;
     let params = {
@@ -108,18 +125,24 @@ function LeaguePick() {
       id: user.id,
     };
 
-    axiosRequest(undefined, url, params, function (e) {
-      //주요픽 데이터 저장
-      setImportantPicks(e.importantPick);
-      //주요픽간의전적 저장
-      setPickDifference(e.pickDiff);
-      //챔피언 티어 저장
-      setTier(e.championTier);
-      //유니크픽 데이터 저장
-      setUniquePick(e.uniquePick);
-    }, function (objStore) {
-      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    }).finally(setLoading(false));
+    axiosRequest(
+      undefined,
+      url,
+      params,
+      function (e) {
+        //주요픽 데이터 저장
+        setImportantPicks(e.importantPick);
+        //주요픽간의전적 저장
+        setPickDifference(e.pickDiff);
+        //챔피언 티어 저장
+        setTier(e.championTier);
+        //유니크픽 데이터 저장
+        setUniquePick(e.uniquePick);
+      },
+      function (objStore) {
+        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      }
+    ).finally(setLoading(false));
   };
 
   if (loading) return <LoadingImg />;

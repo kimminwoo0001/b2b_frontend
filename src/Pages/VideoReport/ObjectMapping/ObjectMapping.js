@@ -80,13 +80,12 @@ function ObjectMapping() {
   const [position, setPosition] = useState(["top", "jng", "mid", "bot", "sup"]);
   const [gameSelect, setGameSelect] = useState([]);
 
-
   //맵핑 데이터 fetch 함수
   const fetchingMapData = () => {
     try {
       setLoading(true);
       // const url = `${API}/lolapi/mappingPosition`;
-      const url = `${API}/lolapi/mapping/mapping/mapping`;
+      const url = `${API2}/lolapi/mapping/mapping`;
 
       const params = {
         league: filters.league,
@@ -107,17 +106,25 @@ function ObjectMapping() {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(undefined, url, params, function (e) {
-        const dto = e;
-        setMinTime(dto?.position[0].realCount ? dto?.position[0].realCount : 0);
-        setMaxTime(dto.position.length - 1);
-        setCurrentPos(dto.position);
-        setchampInfo(dto.info);
-        setPlay(true);
-        console.log(dto.position);
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      })
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          const dto = e;
+          setMinTime(
+            dto?.position[0].realCount ? dto?.position[0].realCount : 0
+          );
+          setMaxTime(dto.position.length - 1);
+          setCurrentPos(dto.position);
+          setchampInfo(dto.info);
+          setPlay(true);
+          console.log(dto.position);
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        }
+      );
     } catch (e) {
       console.log(e);
     } finally {
@@ -363,11 +370,11 @@ function ObjectMapping() {
                   ) {
                     if (
                       Number(currentPos[range]?.player[i].x1) -
-                      Number(currentPos[range]?.player[i].x2) !==
-                      0 &&
+                        Number(currentPos[range]?.player[i].x2) !==
+                        0 &&
                       Number(currentPos[range]?.player[i].y1) -
-                      Number(currentPos[range]?.player[i].y2) !==
-                      0
+                        Number(currentPos[range]?.player[i].y2) !==
+                        0
                     ) {
                       x =
                         ((Number(currentPos[range]?.player[i].x1) +
@@ -449,8 +456,8 @@ function ObjectMapping() {
             <span className="current">
               {range
                 ? `${addZero(
-                  Math.floor((range + minTime) / 2 / 60)
-                )} : ${addZero(Math.floor(((range + minTime) / 2) % 60))}`
+                    Math.floor((range + minTime) / 2 / 60)
+                  )} : ${addZero(Math.floor(((range + minTime) / 2) % 60))}`
                 : "00 : 00"}
             </span>
             <p>/</p>
@@ -584,18 +591,18 @@ const StepTitle = styled.nav`
     > .step {
       font-weight: normal;
       color: ${(props) =>
-    props.changeColor ? `rgb(132, 129, 142)` : `rgba(132, 129, 142,0.3)`};
+        props.changeColor ? `rgb(132, 129, 142)` : `rgba(132, 129, 142,0.3)`};
       margin-right: 5px;
     }
     > .subtitle {
       color: ${(props) =>
-    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
+        props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
     }
   }
   img {
     content: url("Images/ico-arrow-down.svg");
     transform: ${(props) =>
-    props.changeColor ? `rotate(0deg);` : `rotate(180deg);`};
+      props.changeColor ? `rotate(0deg);` : `rotate(180deg);`};
     opacity: ${(props) => (props.changeColor ? `1` : `0.3`)};
     margin-right: 10px;
     margin-bottom: 10px;

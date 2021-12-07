@@ -216,7 +216,7 @@ function ChampionSetting({
 
   const getChampion = () => {
     try {
-      const url = `${API}/lolapi/mapping/mappingFilter/champion`;
+      const url = `${API2}/lolapi/mappingFilter/champion`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -227,13 +227,19 @@ function ChampionSetting({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(undefined, url, params, function (e) {
-        const data = e.champion;
-        console.log(data);
-        setFilterData({ ...filterData, champion: data });
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      })
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          const data = e.champion;
+          console.log(data);
+          setFilterData({ ...filterData, champion: data });
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        }
+      );
     } catch (e) {
       console.log(e);
     }
@@ -241,7 +247,7 @@ function ChampionSetting({
 
   const getOppTeam = () => {
     try {
-      const url = `${API}/lolapi/mapping/mappingFilter/oppteam`;
+      const url = `${API2}/lolapi/mappingFilter/oppteam`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -253,12 +259,18 @@ function ChampionSetting({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(undefined, url, params, function (e) {
-        const data = e.opp_team;
-        setFilterData({ ...filterData, oppteam: data });
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      })
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          const data = e.opp_team;
+          setFilterData({ ...filterData, oppteam: data });
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        }
+      );
     } catch (e) {
       console.log(e);
     }
@@ -266,7 +278,7 @@ function ChampionSetting({
 
   const getOppPlayer = () => {
     try {
-      const url = `${API}/lolapi/mapping/mappingFilter/oppplayer`;
+      const url = `${API2}/lolapi/mappingFilter/oppplayer`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -279,12 +291,18 @@ function ChampionSetting({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(undefined, url, params, function (e) {
-        const data = e.opp_player;
-        setFilterData({ ...filterData, oppplayer: data });
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      })
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          const data = e.opp_player;
+          setFilterData({ ...filterData, oppplayer: data });
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        }
+      );
     } catch (e) {
       console.log(e);
     }
@@ -292,7 +310,7 @@ function ChampionSetting({
 
   const getOppChampion = () => {
     try {
-      const url = `${API}/lolapi/mapping/mappingFilter/oppchampion`;
+      const url = `${API2}/lolapi/mappingFilter/oppchampion`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -306,12 +324,18 @@ function ChampionSetting({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(undefined, url, params, function (e) {
-        const data = e.opp_champion;
-        setFilterData({ ...filterData, oppchampion: data });
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      })
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          const data = e.opp_champion;
+          setFilterData({ ...filterData, oppchampion: data });
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        }
+      );
     } catch (e) {
       console.log(e);
     }
@@ -319,7 +343,7 @@ function ChampionSetting({
 
   const getGame = () => {
     try {
-      const url = `${API}/lolapi/mapping/mappingFilter`;
+      const url = `${API2}/lolapi/mappingFilter`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -333,11 +357,17 @@ function ChampionSetting({
         token: user.token,
         id: user.id,
       };
-      axiosRequest(undefined, url, params, function (e) {
-        setGameData(Object.values(e["match"]));
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      })
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          setGameData(Object.values(e["match"]));
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        }
+      );
     } catch (e) {
       console.log(e);
     }
@@ -346,7 +376,7 @@ function ChampionSetting({
   const getGameAll = () => {
     try {
       if (filters.oppchampion_eng) {
-        const url = `${API}/lolapi/mapping/mappingFilter`;
+        const url = `${API2}/lolapi/mappingFilter`;
         const params = {
           league: filters.league,
           year: filters.year,
@@ -362,11 +392,17 @@ function ChampionSetting({
           token: user.token,
           id: user.id,
         };
-        axiosRequest(undefined, url, params, function (e) {
-          setGameData(Object.values(e["match"]));
-        }, function (objStore) {
-          dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-        });
+        axiosRequest(
+          undefined,
+          url,
+          params,
+          function (e) {
+            setGameData(Object.values(e["match"]));
+          },
+          function (objStore) {
+            dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+          }
+        );
       }
     } catch (e) {
       console.log(e);
@@ -609,8 +645,9 @@ function ChampionSetting({
               {filterData?.champion ? (
                 <nav
                   ref={wrapperRef}
-                  className={`menu3 ${isActive2.current ? "active" : "inactive"
-                    }`}
+                  className={`menu3 ${
+                    isActive2.current ? "active" : "inactive"
+                  }`}
                 >
                   <ul>
                     <Menu3li
@@ -832,8 +869,9 @@ function ChampionSetting({
               {filterData?.oppchampion ? (
                 <nav
                   ref={wrapperRef2}
-                  className={`menu3 ${isActive5.current ? "active" : "inactive"
-                    }`}
+                  className={`menu3 ${
+                    isActive5.current ? "active" : "inactive"
+                  }`}
                 >
                   <ul>
                     <Menu3li

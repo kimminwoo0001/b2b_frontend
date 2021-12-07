@@ -179,12 +179,18 @@ function SetByChampion({ minFrom, setMinFrom }) {
           token: user.token,
           id: user.id,
         };
-        axiosRequest(undefined, url, params, function (e) {
-          const data = e.team;
-          setFilterData({ ...filterData, team: data });
-        }, function (objStore) {
-          dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-        });
+        axiosRequest(
+          undefined,
+          url,
+          params,
+          function (e) {
+            const data = e.team;
+            setFilterData({ ...filterData, team: data });
+          },
+          function (objStore) {
+            dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+          }
+        );
       }
     } catch (e) {
       console.log(e);
@@ -196,7 +202,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
       if (isPageSolo) {
         setIsActive1(!isActive);
       } else {
-        const url = `${API}/lolapi/mapping/mappingFilter/player`;
+        const url = `${API2}/lolapi/mappingFilter/player`;
         const params = {
           league: filters.league,
           year: filters.year,
@@ -206,12 +212,18 @@ function SetByChampion({ minFrom, setMinFrom }) {
           token: user.token,
           id: user.id,
         };
-        axiosRequest(undefined, url, params, function (e) {
-          const data = e.player;
-          setFilterData({ ...filterData, player: data });
-        }, function (objStore) {
-          dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-        });
+        axiosRequest(
+          undefined,
+          url,
+          params,
+          function (e) {
+            const data = e.player;
+            setFilterData({ ...filterData, player: data });
+          },
+          function (objStore) {
+            dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+          }
+        );
       }
     } catch (e) {
       console.log(e);
@@ -220,7 +232,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
 
   const getChampion = () => {
     try {
-      const url = `${API}/lolapi/mapping/mappingFilter/champion`;
+      const url = `${API2}/lolapi/mappingFilter/champion`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -231,12 +243,18 @@ function SetByChampion({ minFrom, setMinFrom }) {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(undefined, url, params, function (e) {
-        const data = e.champion;
-        setFilterData({ ...filterData, champion: data });
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      })
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          const data = e.champion;
+          setFilterData({ ...filterData, champion: data });
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        }
+      );
     } catch (e) {
       console.log(e);
     }
@@ -244,7 +262,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
 
   const getOppTeam = () => {
     try {
-      const url = `${API}/lolapi/mapping/mappingFilter/oppteam`;
+      const url = `${API2}/lolapi/mappingFilter/oppteam`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -256,12 +274,18 @@ function SetByChampion({ minFrom, setMinFrom }) {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(undefined, url, params, function (e) {
-        const data = e.opp_team;
-        setFilterData({ ...filterData, oppteam: data });
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      })
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          const data = e.opp_team;
+          setFilterData({ ...filterData, oppteam: data });
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        }
+      );
     } catch (e) {
       console.log(e);
     }
@@ -269,7 +293,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
 
   const getOppPlayer = () => {
     try {
-      const url = `${API}/lolapi/mapping/mappingFilter/oppplayer`;
+      const url = `${API2}/lolapi/mappingFilter/oppplayer`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -282,12 +306,18 @@ function SetByChampion({ minFrom, setMinFrom }) {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(undefined, url, params, function (e) {
-        const data = e.opp_player;
-        setFilterData({ ...filterData, oppplayer: data });
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      })
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          const data = e.opp_player;
+          setFilterData({ ...filterData, oppplayer: data });
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        }
+      );
     } catch (e) {
       console.log(e);
     }
@@ -295,7 +325,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
 
   const getOppChampion = () => {
     try {
-      const url = `${API}/lolapi/mapping/mappingFilter/oppchampion`;
+      const url = `${API2}/lolapi/mappingFilter/oppchampion`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -309,12 +339,18 @@ function SetByChampion({ minFrom, setMinFrom }) {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(undefined, url, params, function (e) {
-        const data = e.opp_champion;
-        setFilterData({ ...filterData, oppchampion: data });
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      })
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          const data = e.opp_champion;
+          setFilterData({ ...filterData, oppchampion: data });
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        }
+      );
     } catch (e) {
       console.log(e);
     }
@@ -547,8 +583,9 @@ function SetByChampion({ minFrom, setMinFrom }) {
                     {filterData?.champion ? (
                       <nav
                         ref={wrapperRef}
-                        className={`menu3 ${isActive2.current ? "active" : "inactive"
-                          }`}
+                        className={`menu3 ${
+                          isActive2.current ? "active" : "inactive"
+                        }`}
                       >
                         <ul>
                           <Menu3li
@@ -567,7 +604,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                             <input
                               checked={
                                 filterData?.champion?.length ===
-                                  champArray.length
+                                champArray.length
                                   ? true
                                   : false
                               }
@@ -774,8 +811,9 @@ function SetByChampion({ minFrom, setMinFrom }) {
                     {filterData?.oppchampion ? (
                       <nav
                         ref={wrapperRef2}
-                        className={`menu3 ${isActive5.current ? "active" : "inactive"
-                          }`}
+                        className={`menu3 ${
+                          isActive5.current ? "active" : "inactive"
+                        }`}
                       >
                         <ul>
                           <Menu3li
@@ -795,7 +833,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                             <input
                               checked={
                                 filterData?.oppchampion?.length ===
-                                  champArray2.length
+                                champArray2.length
                                   ? true
                                   : false
                               }
@@ -860,7 +898,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
               aria-labelledby="range-slider"
               getAriaValueText={timeFormat.hitmap}
               valueLabelFormat={timeFormat.hitmap}
-            // ValueLabelComponent={ValueLabelComponent}
+              // ValueLabelComponent={ValueLabelComponent}
             />
           </SliderContainer>
           <DefaultTime>
@@ -1137,7 +1175,7 @@ const DropDownToggle = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: ${(props) =>
-    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
+      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
     width: 140px;
   }
 
@@ -1151,7 +1189,7 @@ const DropDownToggle = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: ${(props) =>
-    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
+      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
     width: 124px;
     /* ::first-letter {
       color: #f04545;

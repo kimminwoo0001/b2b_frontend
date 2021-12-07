@@ -16,7 +16,9 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
   return (
     <div>
       <SelectedPosition>
-        <TableTitle><span className="header-name">{t("team.draft.order")}</span></TableTitle>
+        <TableTitle>
+          <span className="header-name">{t("team.draft.order")}</span>
+        </TableTitle>
         <TableHeader>
           <span className="First">1st PICK</span>
           <span className="First">2nd PICK</span>
@@ -163,7 +165,9 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
         </TableWrapper2>
       </SelectedPosition>
       <SelectedWinRate>
-        <TableTitle><span className="header-name">{t("team.draft.mostban")}</span></TableTitle>
+        <TableTitle>
+          <span className="header-name">{t("team.draft.mostban")}</span>
+        </TableTitle>
         <TableHeader>
           <span className="First">1st BAN</span>
           <span className="First">2nd BAN</span>
@@ -280,7 +284,9 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
         </TableWrapper>
       </SelectedWinRate>
       <SelectedWinRate>
-        <TableTitle><span className="header-name">{t("team.draft.mostbanned")}</span></TableTitle>
+        <TableTitle>
+          <span className="header-name">{t("team.draft.mostbanned")}</span>
+        </TableTitle>
         <TableHeader>
           <span className="First">1st BAN</span>
           <span className="First">2nd BAN</span>
@@ -398,13 +404,16 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
       </SelectedWinRate>
       <PhaseContainer>
         <PhaseTable>
-          <PhaseTitle><span className="header-name">{t("team.draft.mostban")}</span></PhaseTitle>
+          <PhaseTitle>
+            <span className="header-name">{t("team.draft.mostban")}</span>
+          </PhaseTitle>
           <PhaseHeader>
             <span className="First">Phase 1</span>
           </PhaseHeader>
           <PhaseWrapper>
             <PhaseContents>
               {phase1?.map((phase, idx) => {
+                console.log(phase);
                 return (
                   <MapPhaseData key={idx}>
                     <img
@@ -415,7 +424,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                       alt="posIcon"
                     />
                     <div className="Champion">
-                      {lang === "ko" ? phase.champion : phase.champion}
+                      {lang === "ko" ? phase.champion : phase.key}
                     </div>
                     <div className="Rate">
                       {phase.value ? `${phase.value}` : 0}
@@ -427,7 +436,9 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
           </PhaseWrapper>
         </PhaseTable>
         <PhaseTable>
-          <PhaseTitle><span className="header-name">{t("team.draft.mostban")}</span></PhaseTitle>
+          <PhaseTitle>
+            <span className="header-name">{t("team.draft.mostban")}</span>
+          </PhaseTitle>
           <PhaseHeader>
             <span className="First">Phase 2</span>
           </PhaseHeader>
@@ -444,7 +455,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                       alt="posIcon"
                     />
                     <div className="Champion">
-                      {lang === "ko" ? phase.champion : phase.champion}
+                      {lang === "ko" ? phase.champion : phase.key}
                     </div>
                     <div className="Rate">
                       {phase.value ? `${phase.value}` : 0}
@@ -459,7 +470,9 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
 
       <PhaseContainer>
         <PhaseTable>
-          <PhaseTitle><span className="header-name">{t("team.draft.mostbaned")}</span></PhaseTitle>
+          <PhaseTitle>
+            <span className="header-name">{t("team.draft.mostbaned")}</span>
+          </PhaseTitle>
           <PhaseHeader>
             <span className="First">Phase 1</span>
           </PhaseHeader>
@@ -476,7 +489,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                       alt="posIcon"
                     />
                     <div className="Champion">
-                      {lang === "ko" ? phase.champion : phase.champion}
+                      {lang === "ko" ? phase.champion : phase.key}
                     </div>
                     <div className="Rate">
                       {phase.value ? `${phase.value}` : 0}
@@ -488,7 +501,9 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
           </PhaseWrapper>
         </PhaseTable>
         <PhaseTable>
-          <PhaseTitle><span className="header-name">{t("team.draft.mostbaned")}</span></PhaseTitle>
+          <PhaseTitle>
+            <span className="header-name">{t("team.draft.mostbaned")}</span>
+          </PhaseTitle>
           <PhaseHeader>
             <span className="First">Phase 2</span>
           </PhaseHeader>
@@ -505,7 +520,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                       alt="posIcon"
                     />
                     <div className="Champion">
-                      {lang === "ko" ? phase.champion : phase.champion}
+                      {lang === "ko" ? phase.champion : phase.key}
                     </div>
                     <div className="Rate">
                       {phase.value ? `${phase.value}` : 0}
@@ -595,8 +610,7 @@ const TableWrapper = styled.div`
 const TableWrapper2 = styled.div`
   display: flex;
 `;
-const StyledTippy = styled(Tippy)`
-`;
+const StyledTippy = styled(Tippy)``;
 
 const TableContents2 = styled.div`
   display: flex;
@@ -618,7 +632,7 @@ const MapPickData = styled.div`
   border-top: 1px solid #3a3745;
   padding: 7.5px 0 7.5px 15px;
   cursor: pointer;
-  height:30px;
+  height: 30px;
 
   .Position {
     font-family: SpoqaHanSansNeo;
@@ -654,7 +668,7 @@ const MapBanData = styled.div`
   align-items: center;
   padding: 4.5px 0 4.5px 15px;
   border-top: 1px solid #3a3745;
-  height:30px;
+  height: 30px;
   .Champion {
     font-family: SpoqaHanSansNeo;
     font-size: 15px;

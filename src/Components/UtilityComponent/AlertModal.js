@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Modal from "react-modal";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { SetIsOpen } from "../../redux/modules/modalvalue";
 
 const customStyles = {
@@ -33,17 +34,24 @@ const customStyles = {
 const AlertModal = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { isOpen, desc, isSelector, confirmFuncId, cancelFuncId } = useSelector((state) => state.ModalReducer);
+  const history = useHistory();
+  const { isOpen, desc, isSelector, confirmFuncId, cancelFuncId } = useSelector(
+    (state) => state.ModalReducer
+  );
 
   useEffect(() => {
     console.log("모달 창 useEffect");
     if (isOpen) {
-      console.log("모달 창 열림")
+      console.log("모달 창 열림");
     }
-  }, [isOpen])
+  }, [isOpen]);
 
   const activeConfirmFunc = () => {
     dispatch(SetIsOpen(false));
+
+    if (desc === t("alert.logout.sessionExpires")) {
+      history.push("/login");
+    }
     if (confirmFuncId) {
       //confirmFunc();
     }
@@ -51,10 +59,11 @@ const AlertModal = () => {
 
   const activeCancelFunc = () => {
     dispatch(SetIsOpen(false));
+
     if (cancelFuncId) {
       //cancelfunc();
     }
-  }
+  };
 
   return (
     <Modal

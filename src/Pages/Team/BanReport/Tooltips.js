@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 function ToolTips({ pick }) {
   const { t } = useTranslation();
   const lang = useSelector((state) => state.LocaleReducer);
-  const tooltip = pick.PlayInfos;
+  const tooltip = pick.playinfos;
 
   return (
     <ArrowWrapper>

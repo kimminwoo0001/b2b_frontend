@@ -145,8 +145,12 @@ const SetList = styled.li`
   /* opacity: 0.3; */
   font-size: 20px;
   cursor: pointer;
+  color: #fff;
 
   &:hover {
-    background-color: #484655;
+    background-color: #fff;
+    opacity: 0.1;
+    cursor: pointer;
+    color: #fff;
   }
 `;

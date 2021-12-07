@@ -77,47 +77,53 @@ function PlayerBoard() {
       id: user.id,
     };
 
-    axiosRequest(undefined, url, params, function (e) {
-      //const data = e.data;
-      // var arrNumber = [0, 0, 0, 0, 0, 0, 0];
+    axiosRequest(
+      undefined,
+      url,
+      params,
+      function (e) {
+        //const data = e.data;
+        // var arrNumber = [0, 0, 0, 0, 0, 0, 0];
 
-      // for (var i = 0; i < 7; i++) {
-      //   arrNumber[i] = data.stats.lineStats[`val${i}`];
-      // }
+        // for (var i = 0; i < 7; i++) {
+        //   arrNumber[i] = data.stats.lineStats[`val${i}`];
+        // }
 
-      setInfo(e.info);
-      setCarrer(e.records.careerrecords);
-      setChampRecord(Object.values(e.records.championrecords));
-      // setLeaguePlayerInfo(Object.values(data.soloInfo.leaguePlayerInfo));
-      // setLeaguePlayerTotal(Object.values(data.soloInfo.leaguePlayerTotal));
-      // setUserPlayerTotal(Object.values(data.soloInfo.userPlayerTotal));
-      setSbr(e.stats.sbrStats);
-      setLine(Object.values(e.stats.lineStats));
-      setEngage(Object.values(e.stats.engagementStats));
-      setPersonality(Object.values(e.stats.personalityStats));
-      setGraphDomain(e.trends);
-      setMatchInfo(e.stats.matchStats);
-      //match graph data conversion
-      const matchX = [];
-      const matchY = [];
-      e.trends.matchtrends.forEach((match) => {
-        matchX.push(match.sum);
-        matchY.push(match.sbr.toFixed(1));
-      });
-      setMatch({ x: matchX, y: matchY });
+        setInfo(e.info);
+        setCarrer(e.records.careerrecords);
+        setChampRecord(Object.values(e.records.championrecords));
+        // setLeaguePlayerInfo(Object.values(data.soloInfo.leaguePlayerInfo));
+        // setLeaguePlayerTotal(Object.values(data.soloInfo.leaguePlayerTotal));
+        // setUserPlayerTotal(Object.values(data.soloInfo.userPlayerTotal));
+        setSbr(e.stats.sbrStats);
+        setLine(Object.values(e.stats.lineStats));
+        setEngage(Object.values(e.stats.engagementStats));
+        setPersonality(Object.values(e.stats.personalityStats));
+        setGraphDomain(e.trends);
+        setMatchInfo(e.stats.matchStats);
+        //match graph data conversion
+        const matchX = [];
+        const matchY = [];
+        e.trends.matchtrends.forEach((match) => {
+          matchX.push(match.sum);
+          matchY.push(match.sbr.toFixed(1));
+        });
+        setMatch({ x: matchX, y: matchY });
 
-      //SeasonTrends graph data
-      const seasonX = [];
-      const seasonY = [];
-      e.trends.seasontrends.forEach((season) => {
-        seasonX.push(season.season);
-        seasonY.push(season.sbr.toFixed(1));
-      });
-      setSeason({ x: seasonX, y: seasonY });
-      setLoading(false);
-    }, function (objStore) {
-      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    })
+        //SeasonTrends graph data
+        const seasonX = [];
+        const seasonY = [];
+        e.trends.seasontrends.forEach((season) => {
+          seasonX.push(season.season);
+          seasonY.push(season.sbr.toFixed(1));
+        });
+        setSeason({ x: seasonX, y: seasonY });
+        setLoading(false);
+      },
+      function (objStore) {
+        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      }
+    );
   };
 
   //챔피언 필터
@@ -132,17 +138,25 @@ function PlayerBoard() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(undefined, url, params, function (e) {
-      const champArray = e.champion.map((data) => `${data.kor}(${data.total}경기)`);
-      const champArrayEng = e.champion.map((data) => data.eng);
+    axiosRequest(
+      undefined,
+      url,
+      params,
+      function (e) {
+        const champArray = e.champion.map(
+          (data) => `${data.kor}(${data.total}경기)`
+        );
+        const champArrayEng = e.champion.map((data) => data.eng);
 
-      // setChampFilter(e.champion);
-      // setChampEng(e.championEng);
-      setChampFilter(champArray);
-      setChampEng(champArrayEng);
-    }, function (objStore) {
-      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    })
+        // setChampFilter(e.champion);
+        // setChampEng(e.championEng);
+        setChampFilter(champArray);
+        setChampEng(champArrayEng);
+      },
+      function (objStore) {
+        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      }
+    );
   };
 
   //상대 챔피언 필터
@@ -159,15 +173,23 @@ function PlayerBoard() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(undefined, url, params, function (e) {
-      const champArray = e.champion.map((data) => `${data.kor}(${data.total}경기)`);
-      const champArrayEng = e.champion.map((data) => data.eng);
+    axiosRequest(
+      undefined,
+      url,
+      params,
+      function (e) {
+        const champArray = e.champion.map(
+          (data) => `${data.kor}(${data.total}경기)`
+        );
+        const champArrayEng = e.champion.map((data) => data.eng);
 
-      setOppFilter(champArray);
-      setOppEng(champArrayEng);
-    }, function (objStore) {
-      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    })
+        setOppFilter(champArray);
+        setOppEng(champArrayEng);
+      },
+      function (objStore) {
+        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      }
+    );
   };
 
   // 그래프 세팅 값
@@ -244,8 +266,9 @@ function PlayerBoard() {
             <div className="AttendValue">
               <span className="Wins">{`${matchInfo?.match}${t(
                 "solo.playerboard.games"
-              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${matchInfo?.loss
-                }${t("solo.playerboard.lose")}`}</span>
+              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${
+                matchInfo?.loss
+              }${t("solo.playerboard.lose")}`}</span>
               <span className="WinRate">{`${matchInfo?.winrate.toFixed(
                 1
               )}%`}</span>
@@ -369,7 +392,7 @@ function PlayerBoard() {
             <button
               className="Select"
               onClick={() => {
-                dispatch(ResetChampion2(""));
+                // dispatch(ResetChampion2(""));
                 GetPlayerBoardData();
               }}
             >

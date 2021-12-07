@@ -49,7 +49,7 @@ function LeagueStatistics() {
     }
     // colorChange();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters, lang]);
+  }, [filters.patch, lang]);
 
   // 리그통합지수 데이터 featch 함수
   const fetchingStatisticData = () => {
