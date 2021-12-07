@@ -80,7 +80,8 @@ function WardMapping() {
   const fetchingWardData = (wardside) => {
     try {
       // const url = `${API}/lolapi/waddingFilter`;
-      const url = `${API}/lolapi/mapping/mapping/ward`;
+      // const url = `${API}/lolapi/mapping/mapping/ward`;
+      const url = `${API2}/lolapi/mapping/ward`;
 
       const params = {
         league: filters.league,
@@ -100,57 +101,63 @@ function WardMapping() {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(undefined, url, params, function (e) {
-        const dto = e.warding;
-        setWard(e.warding);
-        console.log(e);
-        // sector 구분해서 섹터값 더하기
-        if (dto.length > 0) {
-          var total = 0;
-          for (let i = 0; i < dto.length; i++) {
-            if (dto[i].firstward) {
-              total += 1;
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          const dto = e.warding;
+          setWard(e.warding);
+          console.log(e);
+          // sector 구분해서 섹터값 더하기
+          if (dto.length > 0) {
+            var total = 0;
+            for (let i = 0; i < dto.length; i++) {
+              if (dto[i].firstward) {
+                total += 1;
+              }
+              if (dto[i].secondward) {
+                total += 1;
+              }
             }
-            if (dto[i].secondward) {
-              total += 1;
-            }
-          }
-          setTotalWard(total);
+            setTotalWard(total);
 
-          var arrNumber = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-          var arrNumber2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-          for (var i = 0; i < dto.length; i++) {
-            if (dto[i].firstwardPlaced === 200) {
-              var placed = 15;
-            } else if (dto[i].firstwardPlaced === 100) {
-              placed = 14;
-            } else {
-              placed = Number(dto[i].firstwardPlaced);
+            var arrNumber = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            var arrNumber2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            for (var i = 0; i < dto.length; i++) {
+              if (dto[i].firstwardPlaced === 200) {
+                var placed = 15;
+              } else if (dto[i].firstwardPlaced === 100) {
+                placed = 14;
+              } else {
+                placed = Number(dto[i].firstwardPlaced);
+              }
+              arrNumber[placed] = arrNumber[placed] + 1;
             }
-            arrNumber[placed] = arrNumber[placed] + 1;
-          }
-          for (let i = 0; i < dto.length; i++) {
-            if (dto[i].secondwardPlaced === 200) {
-              placed = 15;
-            } else if (dto[i].secondwardPlaced === 100) {
-              placed = 14;
-            } else {
-              placed = Number(dto[i].secondwardPlaced);
+            for (let i = 0; i < dto.length; i++) {
+              if (dto[i].secondwardPlaced === 200) {
+                placed = 15;
+              } else if (dto[i].secondwardPlaced === 100) {
+                placed = 14;
+              } else {
+                placed = Number(dto[i].secondwardPlaced);
+              }
+              arrNumber2[placed] = arrNumber2[placed] + 1;
             }
-            arrNumber2[placed] = arrNumber2[placed] + 1;
+            const arrSum = arrNumber.map((first, idx) => {
+              return first + arrNumber2[idx];
+            });
+            setSector(arrSum);
+          } else {
+            alert(t("video.vision.noData"));
+            setTotalWard(0);
+            setSector([]);
           }
-          const arrSum = arrNumber.map((first, idx) => {
-            return first + arrNumber2[idx];
-          });
-          setSector(arrSum);
-        } else {
-          alert(t("video.vision.noData"));
-          setTotalWard(0);
-          setSector([]);
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
         }
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      })
+      );
     } catch (e) {
       console.log(e);
     } finally {
@@ -338,8 +345,9 @@ function WardMapping() {
       <RightSection>
         <WardMap
           style={{
-            backgroundImage: `url(${mapSector ? mapSector : "Images/ward_map.png"
-              })`,
+            backgroundImage: `url(${
+              mapSector ? mapSector : "Images/ward_map.png"
+            })`,
           }}
         >
           {ward?.map((ward, idx) => {

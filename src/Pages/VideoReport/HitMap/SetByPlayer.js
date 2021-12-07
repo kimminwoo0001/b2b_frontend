@@ -129,12 +129,18 @@ function SetByPlayer({ minFrom, setMinFrom }) {
           token: user.token,
           id: user.id,
         };
-        axiosRequest(undefined, url, params, function (e) {
-          const data = e.team;
-          setFilterData({ ...filterData, team: data });
-        }, function (objStore) {
-          dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-        });
+        axiosRequest(
+          undefined,
+          url,
+          params,
+          function (e) {
+            const data = e.team;
+            setFilterData({ ...filterData, team: data });
+          },
+          function (objStore) {
+            dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+          }
+        );
       }
     } catch (e) {
       console.log(e);
@@ -146,7 +152,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
       if (isPageSolo) {
         setIsActive(!isActive);
       } else {
-        const url = `${API}/lolapi/mapping/mappingFilter/player`;
+        const url = `${API2}/lolapi/mappingFilter/player`;
         const params = {
           league: filters.league,
           year: filters.year,
@@ -156,12 +162,18 @@ function SetByPlayer({ minFrom, setMinFrom }) {
           token: user.token,
           id: user.id,
         };
-        axiosRequest(undefined, url, params, function (e) {
-          const data = e.player;
-          setFilterData({ ...filterData, player: data });
-        }, function (objStore) {
-          dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-        });
+        axiosRequest(
+          undefined,
+          url,
+          params,
+          function (e) {
+            const data = e.player;
+            setFilterData({ ...filterData, player: data });
+          },
+          function (objStore) {
+            dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+          }
+        );
       }
     } catch (e) {
       console.log(e);
@@ -170,7 +182,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
 
   const getChampion = () => {
     try {
-      const url = `${API}/lolapi/mapping/mappingFilter/champion`;
+      const url = `${API2}/lolapi/mappingFilter/champion`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -180,17 +192,23 @@ function SetByPlayer({ minFrom, setMinFrom }) {
         player: filters.player,
         token: user.token,
         id: user.id,
-      }
-      axiosRequest(undefined, url, params, function (e) {
-        const data = e.champion;
-        setFilterData({ ...filterData, champion: data });
-        if (isPageSolo && champArray.length === 0 && !filterData) {
-          setChampArray(data);
-          clickChampionConfirm(data);
+      };
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          const data = e.champion;
+          setFilterData({ ...filterData, champion: data });
+          if (isPageSolo && champArray.length === 0 && !filterData) {
+            setChampArray(data);
+            clickChampionConfirm(data);
+          }
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
         }
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      })
+      );
     } catch (e) {
       console.log(e);
     }
@@ -391,8 +409,9 @@ function SetByPlayer({ minFrom, setMinFrom }) {
               {filterData?.champion ? (
                 <nav
                   ref={wrapperRef}
-                  className={`menu2 ${isActive2.current ? "active" : "inactive"
-                    }`}
+                  className={`menu2 ${
+                    isActive2.current ? "active" : "inactive"
+                  }`}
                 >
                   <ul>
                     <Menu3li
@@ -470,7 +489,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
               aria-labelledby="range-slider"
               getAriaValueText={timeFormat.hitmap}
               valueLabelFormat={timeFormat.hitmap}
-            // ValueLabelComponent={ValueLabelComponent}
+              // ValueLabelComponent={ValueLabelComponent}
             />
           </SliderContainer>
           <DefaultTime>
@@ -700,7 +719,7 @@ const DropDownToggle = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: ${(props) =>
-    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
+      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
     width: 240px;
   }
   .Label2 {
@@ -713,7 +732,7 @@ const DropDownToggle = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: ${(props) =>
-    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
+      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
     width: 488px;
     /* ::first-letter {
       color: #f04545;

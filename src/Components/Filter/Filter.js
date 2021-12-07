@@ -19,6 +19,7 @@ import {
   SetSeason,
   SetYear,
   SetPatch,
+  SetLeague,
 } from "../../redux/modules/filtervalue";
 import {
   setLeagueFilter,
@@ -391,9 +392,12 @@ const Filter = memo(() => {
                       idx={idx}
                       filterData={filters.league}
                       mapData={league}
+                      radioBtn={[nameTeam, nameSolo].includes(pagePath)}
                       pngPath={`ico-league-${league.toLowerCase()}`}
                       clickEvent={() => {
-                        dispatch(League(league));
+                        [nameTeam, nameSolo].includes(pagePath)
+                          ? dispatch(SetLeague([league]))
+                          : dispatch(League(league));
                       }}
                     />
                   );
