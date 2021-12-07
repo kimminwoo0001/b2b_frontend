@@ -23,7 +23,7 @@ function GameReport() {
     <ErrorBoundary>
       {checkGameId ? "" : <Nav />}
       <GameWrapper>
-        {checkGameId ? "" : <>
+        {checkGameId && filters.team !== "" && filters.team.length > 0 ? "" : <>
           <SideBar />
           <div
             className={filters.filterMenuState ? "filter-open" : "filter-close"}

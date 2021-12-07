@@ -452,5 +452,37 @@
     "mid": "미드",
     "ad": "바텀",
     "sup": "서포터"
+  },
+  "game": {
+    "log": {
+      "event": {
+        "subject": "이벤트 로그"
+      },
+      "status": {
+        "subject": "상태 로그"
+      },
+      "detail": {
+        "subject": "디테일 로그"
+      }
+    },
+    "summary": {
+      "tab": {
+        "champion": "Champion",
+        "detail": "Detail",
+        "banpick": "Ban Pick"
+      },
+      "champion": {
+        "kda": "K/D/A",
+        "cs": "CS",
+        "kill-point": "킬 관여율",
+        "placed-ward": "설치한 와드",
+        "destroyed-ward": "파괴한 와드",
+        "cur-gold": "현재 골드",
+        "total-gold": "누적 골드",
+        "gold-gap": "맞라인 골드 격차",
+        "skill-build": "스킬 빌드",
+        "item-build": "템 빌드"
+      }
+    }
   }
 }

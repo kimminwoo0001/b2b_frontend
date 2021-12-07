@@ -52,13 +52,13 @@ const axiosRequest = async (
   } else if (method?.toUpperCase() === "POST") {
     const headers = {
       "Content-Type": "application/x-www-form-urlencoded",
-      "token": paramData.token ?? "N"
     };
     await axios({
       method: 'post',
       url: url,
       data: paramData,
-      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      headers: headers,
+      body: JSON.stringify({ token: paramData.token ?? "N" }),
     }).then((e) => {
       const check = checkRequest(e.data.status);
       console.log("check", check);

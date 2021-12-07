@@ -445,5 +445,37 @@
     "team": "Team",
     "player": "Player",
     "patchVersion": "Patch Version"
+  },
+  "game": {
+    "log": {
+      "event": {
+        "subject": "Event Log"
+      },
+      "status": {
+        "subject": "Status Log"
+      },
+      "detail": {
+        "subject": "Detail Log"
+      }
+    },
+    "summary": {
+      "tab": {
+        "champion": "Champion",
+        "detail": "Detail",
+        "banpick": "Ban Pick"
+      },
+      "champion": {
+        "kda": "K/D/A",
+        "cs": "CS",
+        "kill-point": "KP%",
+        "placed-ward": "Wards Placed",
+        "destroyed-ward": "Wards Destroyed",
+        "cur-gold": "Cur. Gold",
+        "total-gold": "Total Gold",
+        "gold-gap": "Gold Gap",
+        "skill-build": "Skill",
+        "item-build": "Item"
+      }
+    }
   }
 }
