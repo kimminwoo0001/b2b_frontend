@@ -19,7 +19,7 @@
     "logout": "Log Out",
     "confirm": "Confirm",
     "notice": "Notice",
-    "noData" : "No new notifications"
+    "noData": "No new notifications"
   },
   "home": {
     "rank": "Rank",
@@ -451,6 +451,14 @@
     "player": "Player",
     "patchVersion": "Patch Version"
   },
+
+  "position": {
+    "top": "TOP",
+    "jg": "JNG",
+    "mid": "MID",
+    "ad": "BOT",
+    "sup": "SUP"
+  },
   "game": {
     "log": {
       "event": {
@@ -481,12 +489,6 @@
         "skill-build": "Skill",
         "item-build": "Item"
       }
-    },
-  "position": {
-    "top": "TOP",
-    "jg": "JNG",
-    "mid": "MID",
-    "ad": "BOT",
-    "sup": "SUP"
+    }
   }
 }

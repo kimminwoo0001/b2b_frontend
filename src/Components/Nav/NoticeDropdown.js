@@ -11,7 +11,7 @@ function NoticeDropdown({ alertDesc, setAlertDesc, setIsOpen }) {
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
 
   const dummyAlarm = () => {
-    setAlertDesc("새로운 알림이 없습니다.");
+    setAlertDesc(t("nav.noData"));
     // setIsOpen(true);
     setIsActive(!isActive);
   };

@@ -18,7 +18,8 @@
     "login": "로그인",
     "logout": "로그아웃",
     "confirm": "확인",
-    "notice": "알림"
+    "notice": "알림",
+    "noData": "새로운 알림이 없습니다."
   },
   "home": {
     "rank": "순위",
