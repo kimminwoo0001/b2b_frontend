@@ -170,7 +170,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
       if (isPageSolo) {
         setIsActive(!isActive);
       } else {
-        const url = `${API}/lolapi/mapping/mappingFilter/team`;
+        const url = `${API}/lolapi/mapping/mappingfilter/team`;
         const params = {
           league: filters.league,
           year: filters.year,
@@ -202,7 +202,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
       if (isPageSolo) {
         setIsActive1(!isActive);
       } else {
-        const url = `${API2}/lolapi/mappingFilter/player`;
+        const url = `${API}/lolapi/mappingfilter/player`;
         const params = {
           league: filters.league,
           year: filters.year,
@@ -232,7 +232,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
 
   const getChampion = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter/champion`;
+      const url = `${API}/lolapi/mappingfilter/champion`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -262,7 +262,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
 
   const getOppTeam = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter/oppteam`;
+      const url = `${API}/lolapi/mappingfilter/oppteam`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -293,7 +293,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
 
   const getOppPlayer = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter/oppplayer`;
+      const url = `${API}/lolapi/mappingfilter/oppplayer`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -325,7 +325,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
 
   const getOppChampion = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter/oppchampion`;
+      const url = `${API}/lolapi/mappingfilter/oppchampion`;
       const params = {
         league: filters.league,
         year: filters.year,
