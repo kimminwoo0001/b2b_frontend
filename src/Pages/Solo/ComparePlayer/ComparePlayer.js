@@ -70,7 +70,7 @@ const ComparePlayerWrapper = styled.div``;
 
 const ComparePlayerTabs = styled.div`
   display: flex;
-  height: 64px;
+  height: 62px;
   //border-bottom: 1px solid #433f4e;
 `;
 const LineMargin = styled.div`
@@ -79,7 +79,7 @@ const LineMargin = styled.div`
 `;
 
 const LastMargin = styled.div`
-  width:73%;
+  width: 73%;
   border-bottom: solid 1px #433f4e;
 `;
 
@@ -98,7 +98,7 @@ const TabItem = styled.button`
     div {
       padding: 10px 15px;
       border-radius: 10px;
-      background-color : #26262C;
+      background-color: #26262c;
     }
   }
 
@@ -112,8 +112,9 @@ const TabItem = styled.button`
     line-height: normal;
     letter-spacing: normal;
     text-align: left;
-    padding-bottom: 20px;
-    border-bottom: solid 1px ${(props) => props.changeColor ? `#fff` : `#433f4e;`};
+    padding-bottom: 18px;
+    border-bottom: solid 1px
+      ${(props) => (props.changeColor ? `#fff` : `#433f4e;`)};
     color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
   }
 `;

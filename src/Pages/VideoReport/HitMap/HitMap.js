@@ -12,6 +12,8 @@ import {
 import h337 from "heatmap.js";
 import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
+import { API } from "../../config";
+
 import axiosRequest from "../../../lib/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
@@ -71,7 +73,7 @@ function HitMap() {
 
     try {
       // const url = `${API}/lolapi/mappingPosition`;
-      const url = `${API2}/lolapi/mapping/mapping`;
+      const url = `${API}/lolapi/mapping/mapping`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -90,13 +92,19 @@ function HitMap() {
         firstTime: firstTime,
         secondTime: secondTime,
       };
-      axiosRequest(undefined, url, params, function (e) {
-        const heatData = e.position;
-        getThreeMinBlue(heatData);
-        getEightMinBlue(heatData);
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      })
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          const heatData = e.position;
+          getThreeMinBlue(heatData);
+          getEightMinBlue(heatData);
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        }
+      );
     } catch (e) {
       console.log(e);
     } finally {
@@ -269,8 +277,8 @@ function HitMap() {
                   ? true
                   : false
                 : tab === "champion"
-                  ? filters.champion_eng && filters.oppchampion_eng
-                  : false
+                ? filters.champion_eng && filters.oppchampion_eng
+                : false
             }
           >
             {t("video.heatmap.apply")}

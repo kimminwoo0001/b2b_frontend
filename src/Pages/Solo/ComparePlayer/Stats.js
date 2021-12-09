@@ -74,97 +74,94 @@ function Stats() {
   //팀 필터 fetch 함수
   const GetComparisonStat = () => {
     setLoading(true);
-    try {
-      const url = `${API}/lolapi/player/comparisonStat`;
-      const params = {
-        league: filters.league,
-        year: filters.year,
-        season: filters.season,
-        patch: filters.patch,
-        team: filters.team,
-        player: filters.player,
-        oppteam: filters.oppteam,
-        oppplayer: filters.oppplayer,
-        champion: filters.champion_eng,
-        oppchampion: filters.oppchampion_eng,
-        token: user.token,
-        id: user.id,
-      };
-      axiosRequest(
-        undefined,
-        url,
-        params,
-        function (e) {
-          setData(e?.player);
-          setOppData(e?.oppPlayer);
-          //라인전 능력치 비교 그래프 데이터 가공
-          const lineData = Object.values(e?.player.LineStat)?.map((line) => {
-            return {
-              x1: line.percent.toFixed(1),
-              y: lang === "ko" ? line.name : line.eng,
-              value1: line.value.toFixed(1),
-              league: line.avg.toFixed(1),
-            };
-          });
+    console.log("시작", loading);
+    const url = `${API}/lolapi/player/comparisonStat`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      team: filters.team,
+      player: filters.player,
+      oppteam: filters.oppteam,
+      oppplayer: filters.oppplayer,
+      champion: filters.champion_eng,
+      oppchampion: filters.oppchampion_eng,
+      token: user.token,
+      id: user.id,
+    };
+    axiosRequest(
+      undefined,
+      url,
+      params,
+      function (e) {
+        setData(e?.player);
+        setOppData(e?.oppPlayer);
+        //라인전 능력치 비교 그래프 데이터 가공
+        const lineData = Object.values(e?.player.LineStat)?.map((line) => {
+          return {
+            x1: line.percent.toFixed(1),
+            y: lang === "ko" ? line.name : line.eng,
+            value1: line.value.toFixed(1),
+            league: line.avg.toFixed(1),
+          };
+        });
 
-          const lineData2 = Object.values(e?.oppPlayer.LineStat)?.map(
-            (line) => {
-              return {
-                x2: line.percent.toFixed(1),
-                y: lang === "ko" ? line.name : line.eng,
-                value2: line.value.toFixed(1),
-                league: line.avg.toFixed(1),
-              };
-            }
-          );
-          for (let i = 0; i < lineData.length; i++) {
-            Object.assign(lineData[i], lineData2[i]);
-            setLineStat(lineData);
-          }
-          console.log(Object.values(lineData));
-          //교전 능력치 비교 그래프 데이터 가공
-          const matchData = Object.values(e?.player.MatchStat)?.map((match) => {
+        const lineData2 = Object.values(e?.oppPlayer.LineStat)?.map((line) => {
+          return {
+            x2: line.percent.toFixed(1),
+            y: lang === "ko" ? line.name : line.eng,
+            value2: line.value.toFixed(1),
+            league: line.avg.toFixed(1),
+          };
+        });
+        for (let i = 0; i < lineData.length; i++) {
+          Object.assign(lineData[i], lineData2[i]);
+
+          setLineStat(lineData);
+        }
+        console.log(Object.values(lineData));
+        //교전 능력치 비교 그래프 데이터 가공
+        const matchData = Object.values(e?.player.MatchStat)?.map((match) => {
+          return {
+            x1: match.percent.toFixed(1),
+            y: lang === "ko" ? match.name : match.eng,
+            value1: match.value.toFixed(1),
+            league: match.avg.toFixed(1),
+          };
+        });
+
+        const matchData2 = Object.values(e?.oppPlayer.MatchStat)?.map(
+          (match) => {
             return {
-              x1: match.percent.toFixed(1),
+              x2: match.percent.toFixed(1),
               y: lang === "ko" ? match.name : match.eng,
-              value1: match.value.toFixed(1),
+              value2: match.value.toFixed(1),
               league: match.avg.toFixed(1),
             };
-          });
-
-          const matchData2 = Object.values(e?.oppPlayer.MatchStat)?.map(
-            (match) => {
-              return {
-                x2: match.percent.toFixed(1),
-                y: lang === "ko" ? match.name : match.eng,
-                value2: match.value.toFixed(1),
-                league: match.avg.toFixed(1),
-              };
-            }
-          );
-          for (let i = 0; i < matchData.length; i++) {
-            Object.assign(matchData[i], matchData2[i]);
-            setMatch(matchData);
           }
-
-          if (e === null || e === undefined) {
-            return 0;
-          } else {
-            // setLineStat(Object.values(response?.data.player.LineStat));
-            // setOppLineStat(Object.values(response?.data.oppPlayer.LineStat));
-            // setMatch(Object.values(response?.data.player.MatchStat));
-            // setOppMatch(Object.values(response?.data.oppPlayer.MatchStat));
-            setStatData(Object.values(e?.tendencyStat));
-          }
-        },
-        function (objStore) {
-          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        );
+        for (let i = 0; i < matchData.length; i++) {
+          Object.assign(matchData[i], matchData2[i]);
+          setMatch(matchData);
         }
-      );
-    } catch (e) {
-      console.log(e.response);
-    }
-    setLoading(false);
+
+        if (e === null || e === undefined) {
+          return 0;
+        } else {
+          // setLineStat(Object.values(response?.data.player.LineStat));
+          // setOppLineStat(Object.values(response?.data.oppPlayer.LineStat));
+          // setMatch(Object.values(response?.data.player.MatchStat));
+          // setOppMatch(Object.values(response?.data.oppPlayer.MatchStat));
+          setStatData(Object.values(e?.tendencyStat));
+        }
+        setLoading(false);
+        console.log("종료", loading);
+      },
+      function (objStore) {
+        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      }
+    );
   };
 
   //챔피언 필터
@@ -295,7 +292,6 @@ function Stats() {
 
     return null;
   };
-
   if (loading) return <LoadingImg />;
   return (
     <StatWrapper>

@@ -12,7 +12,6 @@ import ObjectTooltip from "../ObjectMapping/ObjectTooltip";
 import axiosRequest from "../../../lib/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
-
 //fast 버튼 setinterval 메모리 최적화 함수
 function useInterval(callback) {
   const savedCallback = useRef();
@@ -82,7 +81,7 @@ function GameMapping() {
 
   const getGameLists = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter/`;
+      const url = `${API2}/lolapi/mappingfilter/`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -94,12 +93,18 @@ function GameMapping() {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(undefined, url, params, function (e) {
-        setGameListData(Object.values(e.data["match"]));
-        console.log(e.data.match);
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      })
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          setGameListData(Object.values(e.data["match"]));
+          console.log(e.data.match);
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        }
+      );
     } catch (e) {
       console.log(e);
     }
@@ -120,25 +125,31 @@ function GameMapping() {
           id: user.id,
         };
 
-        axiosRequest(undefined, url, params, function (e) {
-          // 맵핑 포지션
-          const dto = e.data;
+        axiosRequest(
+          undefined,
+          url,
+          params,
+          function (e) {
+            // 맵핑 포지션
+            const dto = e.data;
 
-          for (let i = 0; i < dto.position.length; i++) {
-            if (dto.position[i].player) {
-              setMinTime(dto.position[i]);
-              setRange(dto.position[i].realCount);
-              break;
+            for (let i = 0; i < dto.position.length; i++) {
+              if (dto.position[i].player) {
+                setMinTime(dto.position[i]);
+                setRange(dto.position[i].realCount);
+                break;
+              }
             }
+            setVod(dto.vod);
+            setMaxTime(dto?.position[dto.position.length - 1]?.realCount);
+            setCurrentPos(dto.position);
+            setInfo(dto.info);
+            setTimeLineData(dto.timeline);
+          },
+          function (objStore) {
+            dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
           }
-          setVod(dto.vod);
-          setMaxTime(dto?.position[dto.position.length - 1]?.realCount);
-          setCurrentPos(dto.position);
-          setInfo(dto.info);
-          setTimeLineData(dto.timeline);
-        }, function (objStore) {
-          dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-        });
+        );
       } catch (e) {
         console.log(e);
       } finally {
@@ -288,11 +299,11 @@ function GameMapping() {
                 ) {
                   if (
                     Number(currentPos[range]?.player[i].x1) -
-                    Number(currentPos[range]?.player[i].x2) !==
-                    0 &&
+                      Number(currentPos[range]?.player[i].x2) !==
+                      0 &&
                     Number(currentPos[range]?.player[i].y1) -
-                    Number(currentPos[range]?.player[i].y2) !==
-                    0
+                      Number(currentPos[range]?.player[i].y2) !==
+                      0
                   ) {
                     var x =
                       ((Number(currentPos[range]?.player[i].x1) +
@@ -419,8 +430,9 @@ function GameMapping() {
             ).toFixed(1)}`}</span>
             <p>/</p>
             {maxTime ? (
-              <span className="max">{`${Math.floor(maxTime / 2 / 60)} : ${(maxTime / 2) % 60
-                }`}</span>
+              <span className="max">{`${Math.floor(maxTime / 2 / 60)} : ${
+                (maxTime / 2) % 60
+              }`}</span>
             ) : (
               <span className="max">{`00 : 00`}</span>
             )}

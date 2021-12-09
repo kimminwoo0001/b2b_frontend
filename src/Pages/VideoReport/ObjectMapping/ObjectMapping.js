@@ -85,7 +85,7 @@ function ObjectMapping() {
     try {
       setLoading(true);
       // const url = `${API}/lolapi/mappingPosition`;
-      const url = `${API2}/lolapi/mapping/mapping`;
+      const url = `${API}/lolapi/mapping/mapping`;
 
       const params = {
         league: filters.league,

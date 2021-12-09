@@ -81,7 +81,7 @@ function WardMapping() {
     try {
       // const url = `${API}/lolapi/waddingFilter`;
       // const url = `${API}/lolapi/mapping/mapping/ward`;
-      const url = `${API2}/lolapi/mapping/ward`;
+      const url = `${API}/lolapi/mapping/ward`;
 
       const params = {
         league: filters.league,

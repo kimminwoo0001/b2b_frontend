@@ -161,6 +161,12 @@ function PlayerBoard() {
 
   //상대 챔피언 필터
   const GetOppFilter = () => {
+    if (
+      filters.champion === "" ||
+      (filters.resetchamp === "reset" && filters.champion === "")
+    ) {
+      return;
+    }
     const url = `${API}/lolapi/filter/oppchampion`;
     const params = {
       league: filters.league,
@@ -351,8 +357,8 @@ function PlayerBoard() {
                 <div className="menu-container">
                   <button
                     onClick={() => {
-                      setIsActiveOpp(!isActiveOpp);
                       GetOppFilter();
+                      setIsActiveOpp(!isActiveOpp);
                     }}
                     className="menu-trigger"
                   >
@@ -392,7 +398,7 @@ function PlayerBoard() {
             <button
               className="Select"
               onClick={() => {
-                // dispatch(ResetChampion2(""));
+                dispatch(ResetChampion2(""));
                 GetPlayerBoardData();
               }}
             >

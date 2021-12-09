@@ -310,7 +310,11 @@ function CompareIngame() {
         <DisplayTeams>
           <div className="RedSide">
             <img
-              src={`Images/TeamLogo/${filters.team}.png`}
+              src={
+                filters.team.slice(-2) === ".C"
+                  ? `Images/LCK_CL_LOGO/${filters.team}.png`
+                  : `Images/TeamLogo/${filters.team}.png`
+              }
               width="100px"
               height="100px"
               alt="teamIcon"
@@ -320,7 +324,11 @@ function CompareIngame() {
           <div className="Vs">VS</div>
           <div className="BlueSide">
             <img
-              src={`Images/TeamLogo/${filters.oppteam}.png`}
+              src={
+                filters.oppteam.slice(-2) === ".C"
+                  ? `Images/LCK_CL_LOGO/${filters.oppteam}.png`
+                  : `Images/TeamLogo/${filters.oppteam}.png`
+              }
               width="100px"
               height="100px"
               alt="teamIcon"

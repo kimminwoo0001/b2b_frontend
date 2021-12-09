@@ -216,7 +216,7 @@ function ChampionSetting({
 
   const getChampion = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter/champion`;
+      const url = `${API}/lolapi/mappingfilter/champion`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -247,7 +247,7 @@ function ChampionSetting({
 
   const getOppTeam = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter/oppteam`;
+      const url = `${API}/lolapi/mappingfilter/oppteam`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -278,7 +278,7 @@ function ChampionSetting({
 
   const getOppPlayer = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter/oppplayer`;
+      const url = `${API}/lolapi/mappingfilter/oppplayer`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -310,7 +310,7 @@ function ChampionSetting({
 
   const getOppChampion = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter/oppchampion`;
+      const url = `${API}/lolapi/mappingfilter/oppchampion`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -343,7 +343,7 @@ function ChampionSetting({
 
   const getGame = () => {
     try {
-      const url = `${API2}/lolapi/mappingFilter`;
+      const url = `${API}/lolapi/mappingfilter/objectgame`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -352,7 +352,7 @@ function ChampionSetting({
         team: filters.team,
         player: filters.player,
         champion: champArray,
-        compare: "off",
+        // compare: "off",
         side: side,
         token: user.token,
         id: user.id,
@@ -376,7 +376,7 @@ function ChampionSetting({
   const getGameAll = () => {
     try {
       if (filters.oppchampion_eng) {
-        const url = `${API2}/lolapi/mappingFilter`;
+        const url = `${API}/lolapi/mappingfilter/objectgame`;
         const params = {
           league: filters.league,
           year: filters.year,
