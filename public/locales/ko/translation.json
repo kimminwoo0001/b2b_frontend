@@ -484,7 +484,14 @@
         "total-gold": "누적 골드",
         "gold-gap": "맞라인 골드 격차",
         "skill-build": "스킬 빌드",
-        "item-build": "템 빌드"
+        "item-build": "템 빌드",
+        "item-current": "현재 아이템",
+        "item-end": "최종 아이템"
+      },
+      "detail": {
+        "get-gold": "골드 획득량",
+        "placed-ward": "와드 설치",
+        "cs": "CS"
       }
     }
   }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
-import ChampDetail from "./ChampDatailOption/ChampDetail";
+import ChampDetail from "./ChampionOption/ChampDetail";
 import Detail from "./DetailOption/Detail";
 import BanPick from "./BanPickOption/BanPick";
 

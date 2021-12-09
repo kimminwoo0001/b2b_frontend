@@ -19,7 +19,7 @@
     "logout": "Log Out",
     "confirm": "Confirm",
     "notice": "Notice",
-    "noData" : "No new notifications"
+    "noData": "No new notifications"
   },
   "home": {
     "rank": "Rank",
@@ -451,6 +451,13 @@
     "player": "Player",
     "patchVersion": "Patch Version"
   },
+  "position": {
+    "top": "TOP",
+    "jg": "JNG",
+    "mid": "MID",
+    "ad": "BOT",
+    "sup": "SUP"
+  },
   "game": {
     "log": {
       "event": {
@@ -479,14 +486,15 @@
         "total-gold": "Total Gold",
         "gold-gap": "Gold Gap",
         "skill-build": "Skill",
-        "item-build": "Item"
+        "item-build": "Item",
+        "item-current": "Current Item",
+        "item-end": "End Item"
+      },
+      "detail": {
+        "get-gold": "Golds",
+        "placed-ward": "Wards placed",
+        "cs": "CS"
       }
-    },
-  "position": {
-    "top": "TOP",
-    "jg": "JNG",
-    "mid": "MID",
-    "ad": "BOT",
-    "sup": "SUP"
+    }
   }
 }

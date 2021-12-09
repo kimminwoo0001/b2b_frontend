@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import styled, { css } from "styled-components";
 import YoutubeVideo from '../../../lib/youtube';
-import ChampDetail from './SummaryOption/ChampDatailOption/ChampDetail';
+import ChampDetail from './SummaryOption/ChampionOption/ChampDetail';
 import DetailLog from './DetailLogOption/DetailLog';
 import TeamStatus from './TeamStatusOption/TeamStatus';
 import TimeLine from './TimeLineOption/TimeLine';

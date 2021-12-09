@@ -74,7 +74,6 @@ const TabContainer = styled.ul`
   width: auto;
   height: 60px;
   display: flex;
-  cursor: pointer;
   // border-bottom: 1px solid #433f4e;
   /* padding-bottom: 15px; */
 `;
