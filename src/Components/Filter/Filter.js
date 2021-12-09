@@ -254,9 +254,6 @@ const Filter = memo(() => {
       seasonList = seasonList.filter(
         (item, pos) => seasonList.indexOf(item) === pos
       );
-      if (filters.season.length === 0) {
-        dispatch(Season(seasonList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
-      }
 
       let updateSeason = [];
       for (const season of filters.season) {
@@ -265,6 +262,10 @@ const Filter = memo(() => {
         }
       }
       dispatch(SetSeason(updateSeason));
+
+      if (filters.season.length === 0) {
+        dispatch(Season(seasonList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
+      }
     } else {
       dispatch(ResetSeason());
     }

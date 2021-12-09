@@ -159,7 +159,7 @@ const TabItem = styled.button`
     line-height: normal;
     letter-spacing: normal;
     text-align: left;
-    padding-bottom: 19px;
+    padding-bottom: 18px;
     border-bottom: solid 1px
       ${(props) => (props.changeColor ? `#fff` : `#433f4e;`)};
     color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
