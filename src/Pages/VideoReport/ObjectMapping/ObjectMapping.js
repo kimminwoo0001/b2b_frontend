@@ -59,7 +59,7 @@ function ObjectMapping() {
   const dispatch = useDispatch();
   //맵핑 데이터 핸들링 상태값
   const [currentPos, setCurrentPos] = useState();
-  const [champInfo, setchampInfo] = useState();
+  const [champInfo, setChampInfo] = useState();
   //Range 핸들링 상태값
   const [range, setRange] = useState(0);
   const [minTime, setMinTime] = useState();
@@ -86,7 +86,6 @@ function ObjectMapping() {
       setLoading(true);
       // const url = `${API}/lolapi/mappingPosition`;
       const url = `${API}/lolapi/mapping/mapping`;
-
       const params = {
         league: filters.league,
         year: filters.year,
@@ -96,9 +95,9 @@ function ObjectMapping() {
         player: filters.player,
         champion: filters.champion_eng,
         compare: compareOpen ? "" : "off",
-        opp_team: filters.oppteam,
-        opp_player: filters.oppplayer,
-        opp_champion: filters.oppchampion_eng,
+        oppteam: filters.oppteam,
+        oppplayer: filters.oppplayer,
+        oppchampion: filters.oppchampion_eng,
         side: side,
         time: period,
         position: position,
@@ -117,7 +116,7 @@ function ObjectMapping() {
           );
           setMaxTime(dto.position.length - 1);
           setCurrentPos(dto.position);
-          setchampInfo(dto.info);
+          setChampInfo(dto.info);
           setPlay(true);
           console.log(dto.position);
         },
@@ -190,7 +189,7 @@ function ObjectMapping() {
         champion_eng.length > 0 &&
         gameSelect.length > 0
       ) {
-        setchampInfo([]);
+        setChampInfo([]);
         fetchingMapData();
         setRange(0);
         setFast(false);
@@ -404,7 +403,7 @@ function ObjectMapping() {
                   trigger="click"
                   content={
                     <ObjectTooltip
-                      champion={info.champion}
+                      champion={info.champions}
                       side={info.side}
                       gameid={info.gameid}
                       position={info.position}
@@ -424,7 +423,7 @@ function ObjectMapping() {
                       height: "29px",
                       width: "29px",
                       transition: "all 0.25s ease-out 0s",
-                      backgroundImage: `url(Images/champion/${info.champion}.png)`,
+                      backgroundImage: `url(Images/champion/${info.champions}.png)`,
                       backgroundRepeat: "no-repeat",
                       backgroundSize: "contain",
                       borderRadius: "50%",

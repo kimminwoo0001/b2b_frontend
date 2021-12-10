@@ -391,7 +391,11 @@ function PlayerFilterModal() {
                           currentTeam={filters.team === team}
                         >
                           <img
-                            src={`Images/TeamLogo/${team}.png`}
+                            src={
+                              team.slice(-2) === ".C"
+                                ? `Images/LCK_CL_LOGO/${team}.png`
+                                : `Images/TeamLogo/${team}.png`
+                            }
                             alt="TeamLogo"
                           ></img>
                           <div className="TeamName">{team}</div>
@@ -454,7 +458,11 @@ function PlayerFilterModal() {
                           currentTeam={filters.oppteam === team}
                         >
                           <img
-                            src={`Images/TeamLogo/${team}.png`}
+                            src={
+                              team.slice(-2) === ".C"
+                                ? `Images/LCK_CL_LOGO/${team}.png`
+                                : `Images/TeamLogo/${team}.png`
+                            }
                             alt="TeamLogo"
                           ></img>
                           <div className="TeamName">{team}</div>

@@ -82,7 +82,6 @@ function WardMapping() {
       // const url = `${API}/lolapi/waddingFilter`;
       // const url = `${API}/lolapi/mapping/mapping/ward`;
       const url = `${API}/lolapi/mapping/ward`;
-
       const params = {
         league: filters.league,
         year: filters.year,
@@ -92,9 +91,9 @@ function WardMapping() {
         player: filters.player,
         champion: filters.champion_eng,
         compare: compareOpen ? "on" : "off",
-        opp_team: filters.oppteam,
-        opp_player: filters.oppplayer,
-        opp_champion: filters.oppchampion_eng,
+        oppteam: filters.oppteam,
+        oppplayer: filters.oppplayer,
+        oppchampion: filters.oppchampion_eng,
         side: wardside,
         firstTime: firstTime,
         secondTime: secondTime,

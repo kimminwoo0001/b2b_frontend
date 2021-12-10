@@ -238,7 +238,7 @@ function CompareIngame() {
               <Legend
                 verticalAlign="bottom"
                 align="left"
-                wrapperStyle={{ top: 220, left: 230 }}
+                wrapperStyle={{ top: 235, left: 200 }}
                 height={36}
                 iconType="plainline"
                 formatter={renderColorfulLegendText}
@@ -294,7 +294,7 @@ function CompareIngame() {
               <Legend
                 verticalAlign="top"
                 align="left"
-                wrapperStyle={{ top: 220, left: 230 }}
+                wrapperStyle={{ top: 235, left: 200 }}
                 height={36}
                 iconType="plainline"
                 formatter={renderColorfulLegendText}

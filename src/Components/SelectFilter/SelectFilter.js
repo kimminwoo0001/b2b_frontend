@@ -26,6 +26,7 @@ const SelectFilterWrapper = styled.div`
   /* width: 100%;
   height: calc(100vh - 50px); */
   padding-top: 60px;
+  padding-left: 60px;
 `;
 
 const InnerWrapper = styled.div`

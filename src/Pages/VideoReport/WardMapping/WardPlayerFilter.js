@@ -97,7 +97,15 @@ function WardPlayerFilter({
       console.log(e);
     }
   };
-  console.log(filterData);
+
+  // mappingfilter/player response 가공
+  const refinePlayerData = (data) => {
+    let refined = [];
+    for (let i = 0; i < data.length; i++) {
+      refined.push(data[i].name);
+    }
+    return refined;
+  };
 
   const getPlayer = () => {
     try {
@@ -116,8 +124,8 @@ function WardPlayerFilter({
         url,
         params,
         function (e) {
-          const data = e.player;
-          setFilterData({ ...filterData, player: data });
+          const refinedData = refinePlayerData(e);
+          setFilterData({ ...filterData, player: refinedData });
         },
         function (objStore) {
           dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -146,7 +154,7 @@ function WardPlayerFilter({
         url,
         params,
         function (e) {
-          const data = e.champion;
+          const data = e.championEng;
           setFilterData({ ...filterData, champion: data });
         },
         function (objStore) {
@@ -177,8 +185,7 @@ function WardPlayerFilter({
         url,
         params,
         function (e) {
-          const data = e.opp_team;
-          setFilterData({ ...filterData, oppteam: data });
+          setFilterData({ ...filterData, oppteam: e });
         },
         function (objStore) {
           dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -189,9 +196,18 @@ function WardPlayerFilter({
     }
   };
 
+  // mappingfilter/opplayer response 가공
+  const refineOppPlayerData = (data) => {
+    let refined = [];
+    for (let i = 0; i < data.length; i++) {
+      refined.push(data[i].oppplayer);
+    }
+    return refined;
+  };
+
   const getOppPlayer = () => {
     try {
-      const url = `${API}/lolapi/mappingfilter/oppplayer`;
+      const url = `${API}/lolapi/mappingfilter/oppplayer2`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -200,7 +216,7 @@ function WardPlayerFilter({
         team: filters.team,
         player: filters.player,
         champion: filters.champion_eng,
-        opp_team: filters.oppteam,
+        oppteam: filters.oppteam,
         token: user.token,
         id: user.id,
       };
@@ -209,8 +225,8 @@ function WardPlayerFilter({
         url,
         params,
         function (e) {
-          const data = e.opp_player;
-          setFilterData({ ...filterData, oppplayer: data });
+          const refinedData = refineOppPlayerData(e);
+          setFilterData({ ...filterData, oppplayer: refinedData });
         },
         function (objStore) {
           dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -232,8 +248,8 @@ function WardPlayerFilter({
         team: filters.team,
         player: filters.player,
         champion: filters.champion_eng,
-        opp_team: filters.oppteam,
-        opp_player: filters.oppplayer,
+        oppteam: filters.oppteam,
+        oppplayer: filters.oppplayer,
         token: user.token,
         id: user.id,
       };
@@ -242,7 +258,7 @@ function WardPlayerFilter({
         url,
         params,
         function (e) {
-          const data = e.opp_champion;
+          const data = e.championEng;
           setFilterData({ ...filterData, oppchampion: data });
         },
         function (objStore) {

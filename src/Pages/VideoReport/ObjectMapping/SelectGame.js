@@ -8,7 +8,7 @@ function SelectGame({
   gameSelect,
   setGameSelect,
   setObjectOpen,
-  setPositionOpen
+  setPositionOpen,
 }) {
   //오브젝트 별 동선 경기 데이터 받아와서 선택하는 부분
   const getGameId = (data) => {
@@ -50,7 +50,7 @@ function SelectGame({
                     <img src={`Images/TeamLogo/${data.team}.png`} alt="team" />
                     <span>VS</span>
                     <img
-                      src={`Images/TeamLogo/${data.opp_team}.png`}
+                      src={`Images/TeamLogo/${data.oppteam}.png`}
                       alt="team"
                     />
                   </TeamImage>
@@ -85,23 +85,23 @@ function SelectGame({
                   <VS>VS</VS>
                   <BlueSide isActive={data.side === "red"}>
                     <img
-                      src={`Images/champion/${data?.opp_champions[0]}.png`}
+                      src={`Images/champion/${data?.oppchampion[0]}.png`}
                       alt="champ"
                     />
                     <img
-                      src={`Images/champion/${data?.opp_champions[1]}.png`}
+                      src={`Images/champion/${data?.oppchampion[1]}.png`}
                       alt="champ"
                     />
                     <img
-                      src={`Images/champion/${data?.opp_champions[2]}.png`}
+                      src={`Images/champion/${data?.oppchampion[2]}.png`}
                       alt="champ"
                     />
                     <img
-                      src={`Images/champion/${data?.opp_champions[3]}.png`}
+                      src={`Images/champion/${data?.oppchampion[3]}.png`}
                       alt="champ"
                     />
                     <img
-                      src={`Images/champion/${data?.opp_champions[4]}.png`}
+                      src={`Images/champion/${data?.oppchampion[4]}.png`}
                       alt="champ"
                     />
                   </BlueSide>
@@ -129,7 +129,7 @@ const SideButton = styled.button`
   width: 62px;
   height: 34px;
   border-radius: 10px;
-  background-color:  ${(props) => props.isActive ? '#23212a' : '#3a3745'};
+  background-color: ${(props) => (props.isActive ? "#23212a" : "#3a3745")};
   font-family: SpoqaHanSansNeo;
   font-size: 13px;
   font-weight: normal;
@@ -138,8 +138,8 @@ const SideButton = styled.button`
   line-height: normal;
   letter-spacing: normal;
   text-align: center;
-  color:  #fff;
-  opacity: ${(props) => props.isActive ? 1.0 : 0.3};
+  color: #fff;
+  opacity: ${(props) => (props.isActive ? 1.0 : 0.3)};
   margin-right: 5px;
 `;
 
@@ -173,7 +173,7 @@ const Game = styled.div`
   ${(props) =>
     props.isActive &&
     css`
-    background-color: #16151c;
+      background-color: #16151c;
     `}
 `;
 

@@ -65,8 +65,8 @@ const axiosRequest = async (
         console.log("check", check);
         if (check.value) {
           if (callback) {
-            console.log(e);
             callback(e.data.response);
+            console.log(e.data.response);
           } else {
             //sessionStorage.clear();
             //history.push("/login");

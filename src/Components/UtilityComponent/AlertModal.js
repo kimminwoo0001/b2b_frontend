@@ -108,6 +108,7 @@ const AlertModal = () => {
 export default AlertModal;
 
 const ModalWrapper = styled.div`
+  position: relative;
   width: 500px;
   //height: 151px;
   margin: 10px 0 0;
@@ -116,6 +117,7 @@ const ModalWrapper = styled.div`
   box-shadow: 0px 8px 16px 0 rgba(4, 0, 0, 0.4);
   background-color: #2f2d38;
   overflow-y: hidden;
+  z-index: 99999;
 `;
 
 const ModalDetail = styled.div`

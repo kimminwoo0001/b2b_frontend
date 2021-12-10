@@ -232,7 +232,7 @@ function ChampionSetting({
         url,
         params,
         function (e) {
-          const data = e.champion;
+          const data = e.championEng;
           console.log(data);
           setFilterData({ ...filterData, champion: data });
         },
@@ -243,6 +243,16 @@ function ChampionSetting({
     } catch (e) {
       console.log(e);
     }
+  };
+
+  // mappingfilter/oppTean response 가공
+  const refineOppTeamData = (data) => {
+    let refined = [];
+    for (let i = 0; i < data.length; i++) {
+      refined.push(data[i]);
+      console.log(data[i]);
+    }
+    return refined;
   };
 
   const getOppTeam = () => {
@@ -264,8 +274,8 @@ function ChampionSetting({
         url,
         params,
         function (e) {
-          const data = e.opp_team;
-          setFilterData({ ...filterData, oppteam: data });
+          const refinedData = refineOppTeamData(e);
+          setFilterData({ ...filterData, oppteam: refinedData });
         },
         function (objStore) {
           dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -276,9 +286,18 @@ function ChampionSetting({
     }
   };
 
+  // mappingfilter/opplayer response 가공
+  const refineOppPlayerData = (data) => {
+    let refined = [];
+    for (let i = 0; i < data.length; i++) {
+      refined.push(data[i].oppplayer);
+    }
+    return refined;
+  };
+
   const getOppPlayer = () => {
     try {
-      const url = `${API}/lolapi/mappingfilter/oppplayer`;
+      const url = `${API}/lolapi/mappingfilter/oppplayer2`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -287,7 +306,7 @@ function ChampionSetting({
         team: filters.team,
         player: filters.player,
         champion: filters.champion_eng,
-        opp_team: filters.oppteam,
+        oppteam: filters.oppteam,
         token: user.token,
         id: user.id,
       };
@@ -296,8 +315,8 @@ function ChampionSetting({
         url,
         params,
         function (e) {
-          const data = e.opp_player;
-          setFilterData({ ...filterData, oppplayer: data });
+          const refinedData = refineOppPlayerData(e);
+          setFilterData({ ...filterData, oppplayer: refinedData });
         },
         function (objStore) {
           dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -319,8 +338,8 @@ function ChampionSetting({
         team: filters.team,
         player: filters.player,
         champion: filters.champion_eng,
-        opp_team: filters.oppteam,
-        opp_player: filters.oppplayer,
+        oppteam: filters.oppteam,
+        oppplayer: filters.oppplayer,
         token: user.token,
         id: user.id,
       };
@@ -329,7 +348,7 @@ function ChampionSetting({
         url,
         params,
         function (e) {
-          const data = e.opp_champion;
+          const data = e.championEng;
           setFilterData({ ...filterData, oppchampion: data });
         },
         function (objStore) {
@@ -352,6 +371,9 @@ function ChampionSetting({
         team: filters.team,
         player: filters.player,
         champion: champArray,
+        oppteam: "",
+        oppplayer: "",
+        oppchampion: "",
         // compare: "off",
         side: side,
         token: user.token,
@@ -362,7 +384,7 @@ function ChampionSetting({
         url,
         params,
         function (e) {
-          setGameData(Object.values(e["match"]));
+          setGameData(Object.values(e["game"]));
         },
         function (objStore) {
           dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -385,9 +407,9 @@ function ChampionSetting({
           team: filters.team,
           player: filters.player,
           champion: champArray,
-          opp_team: filters.oppteam,
-          opp_player: filters.oppplayer,
-          opp_champion: filters.oppchampion_eng,
+          oppteam: filters.oppteam,
+          oppplayer: filters.oppplayer,
+          oppchampion: filters.oppchampion_eng,
           side: side,
           token: user.token,
           id: user.id,
@@ -397,7 +419,7 @@ function ChampionSetting({
           url,
           params,
           function (e) {
-            setGameData(Object.values(e["match"]));
+            setGameData(Object.values(e["game"]));
           },
           function (objStore) {
             dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용

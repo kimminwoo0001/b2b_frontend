@@ -2,21 +2,28 @@ import React, { memo, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { SetGameId } from "../../../redux/modules/gamevalue";
+import axiosRequest from "../../../lib/axiosRequest";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
+import { API } from "../../config";
+import { API2 } from "../../config";
 
-const EachMatch = () => {
+const EachMatch = ({ matchData, team }) => {
   const dispatch = useDispatch();
+  const { date, game, gameid, oppteam, season, uniqueId } = matchData;
 
   return (
     <>
       <MetaData>
-        <Round>LCK Spring 1R 1주차</Round>
-        <Date>2022.02.03 FRI 19:00</Date>
+        <Round>{uniqueId}</Round>
+        <Date>{date}</Date>
       </MetaData>
       <GameInfoBox>
         <MatchInfo>
           <Team>
-            <TeamName>DK</TeamName>
-            <TeamImg src="Images/TeamLogo/ico-team-dk.png"></TeamImg>
+            <TeamName>{team}</TeamName>
+            <TeamImg
+              src={`Images/TeamLogo/ico-team-${team.toLowerCase()}.png`}
+            ></TeamImg>
           </Team>
           <LeftArrow></LeftArrow>
           <Score>
@@ -24,19 +31,25 @@ const EachMatch = () => {
           </Score>
           <RightArrow></RightArrow>
           <OppTeam>
-            <OppTeamImg src="Images/TeamLogo/ico-team-t1.png"></OppTeamImg>
-            <OppTeamName>T1</OppTeamName>
+            <OppTeamImg
+              src={`Images/TeamLogo/ico-team-${oppteam.toLowerCase()}.png`}
+            ></OppTeamImg>
+            <OppTeamName>{oppteam}</OppTeamName>
           </OppTeam>
         </MatchInfo>
         <SetInfo>
           <SetTitle>SET</SetTitle>
-          <SetList onClick={() => {
-            dispatch(SetGameId())
-          }}>1</SetList>
-          <SetList>2</SetList>
-          <SetList>3</SetList>
-          <SetList>4</SetList>
-          <SetList>5</SetList>
+          {gameid?.map((game, idx) => {
+            return (
+              <SetList
+                onClick={() => {
+                  dispatch(SetGameId(game));
+                }}
+              >
+                {idx + 1}
+              </SetList>
+            );
+          })}
         </SetInfo>
       </GameInfoBox>
     </>

@@ -54,14 +54,16 @@ const TeamFilterModal = () => {
   );
   const pagePath = document.location.pathname;
 
-  useEffect(() => {
-    setOppTeamFilter();
-  }, []);
+  // useEffect(() => {
+  //   // setOppTeamFilter();
+  //   fetchingOppTeamFilter();
+  // }, []);
 
   useEffect(() => {
-    if (filters.compareModal === false) {
-      setOppTeamFilter();
+    if (!filters.compareModal) {
+      return;
     }
+    fetchingOppTeamFilter();
   }, [filters.compareModal]);
 
   let history = useHistory();
@@ -349,7 +351,6 @@ const TeamFilterModal = () => {
                 </SelectOppTeamTitle>
                 <SelectOppTeam isTeamSelected={filters.team.length !== 0}>
                   {oppTeamFilter?.map((team, index) => {
-                    console.log(team);
                     return (
                       <MapTeams
                         key={index}

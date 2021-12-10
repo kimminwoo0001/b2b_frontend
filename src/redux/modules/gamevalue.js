@@ -1,41 +1,41 @@
-export const SET_GAME_ID = "gamevalue/SET_GAME_ID"
-export const SET_PLATFORM = "gamevalue/SET_PLATFORM"
+export const SET_GAME_ID = "gamevalue/SET_GAME_ID";
+export const SET_PLATFORM = "gamevalue/SET_PLATFORM";
 
 export const SetGameId = (payload) => {
   return {
     type: SET_GAME_ID,
-    payload
-  }
-}
+    payload,
+  };
+};
 
 export const SetPlatform = (payload) => {
   return {
     type: SET_PLATFORM,
-    payload
-  }
-}
+    payload,
+  };
+};
 
 const initialState = {
-  gameId: "1136669396",
-  platform: "twitch",
-}
+  gameId: "",
+  platform: "",
+};
 
 export default function GameReportReducer(state = initialState, action) {
   switch (action.type) {
     case "initialState":
       return {
-        initialState
-      }
+        initialState,
+      };
     case SET_GAME_ID:
       return {
         ...state,
-        gameId: action.payload
-      }
+        gameId: action.payload,
+      };
     case SET_PLATFORM:
       return {
         ...state,
-        platform: action.payload
-      }
+        platform: action.payload,
+      };
     default:
       return state;
   }
