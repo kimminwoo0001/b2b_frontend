@@ -15,12 +15,12 @@ const Detail = () => {
             <span>{t("game.summary.detail.get-gold")}</span>
           </div>
         </TabItem>
-        <TabItem onClick={() => setDetailTab(1)} changeColor={detailTab === 1}>
+        <TabItem onClick={() => setDetailTab(2)} changeColor={detailTab === 2}>
           <div>
             <span>{t("game.summary.detail.placed-ward")}</span>
           </div>
         </TabItem>
-        <TabItem onClick={() => setDetailTab(1)} changeColor={detailTab === 1}>
+        <TabItem onClick={() => setDetailTab(3)} changeColor={detailTab === 3}>
           <div>
             <span>{t("game.summary.detail.cs")}</span>
           </div>
@@ -34,7 +34,11 @@ const Detail = () => {
               <div className="value">
                 11,402<span className="max">/22,122</span>
               </div>
-              <div className="bar"></div>
+              <Bar curMax={152} cur={51}>
+                <div className="bar common-max"></div>
+                <div className="bar blue-cur-max"></div>
+                <div className="bar blue-cur"></div>
+              </Bar>
             </div>
           </div>
           <div className="champ-box">
@@ -43,7 +47,11 @@ const Detail = () => {
               <div className="value">
                 11,402<span className="max">/22,122</span>
               </div>
-              <div className="bar"></div>
+              <Bar curMax={152} cur={51}>
+                <div className="bar common-max"></div>
+                <div className="bar blue-cur-max"></div>
+                <div className="bar blue-cur"></div>
+              </Bar>
             </div>
           </div>
           <div className="champ-box">
@@ -52,7 +60,11 @@ const Detail = () => {
               <div className="value">
                 11,402<span className="max">/22,122</span>
               </div>
-              <div className="bar"></div>
+              <Bar curMax={152} cur={51}>
+                <div className="bar common-max"></div>
+                <div className="bar blue-cur-max"></div>
+                <div className="bar blue-cur"></div>
+              </Bar>
             </div>
           </div>
           <div className="champ-box">
@@ -61,7 +73,11 @@ const Detail = () => {
               <div className="value">
                 11,402<span className="max">/22,122</span>
               </div>
-              <div className="bar"></div>
+              <Bar curMax={152} cur={51}>
+                <div className="bar common-max"></div>
+                <div className="bar blue-cur-max"></div>
+                <div className="bar blue-cur"></div>
+              </Bar>
             </div>
           </div>
           <div className="champ-box">
@@ -70,20 +86,33 @@ const Detail = () => {
               <div className="value">
                 11,402<span className="max">/22,122</span>
               </div>
-              <div className="bar"></div>
+              <Bar curMax={152} cur={51}>
+                <div className="bar common-max"></div>
+                <div className="bar blue-cur-max"></div>
+                <div className="bar blue-cur"></div>
+              </Bar>
             </div>
           </div>
         </div>
+
         <div className="total">
           <div className="flex-box">
-            <div className="arrow-box"></div>
+            <ArrowBox isShow={true}>
+              <img className="arrow" src="Images/ic_win-blue.svg" alt="" />
+            </ArrowBox>
             <div className="value-box blue-value">74,384</div>
-            <div className="arrow-box"></div>
+            <ArrowBox></ArrowBox>
           </div>
           <div className="flex-box">
-            <div className="arrow-box"></div>
+            <ArrowBox></ArrowBox>
             <div className="value-box red-value">55,819</div>
-            <div className="arrow-box"></div>
+            <ArrowBox isShow={true}>
+              <img
+                className="arrow red-arrow"
+                src="Images/ic_win-red.svg"
+                alt=""
+              />
+            </ArrowBox>
           </div>
         </div>
 
@@ -93,7 +122,11 @@ const Detail = () => {
               <div className="value">
                 11,402<span className="max">/22,122</span>
               </div>
-              <div className="bar"></div>
+              <Bar curMax={213} cur={166}>
+                <div className="bar common-max"></div>
+                <div className="bar red-cur-max"></div>
+                <div className="bar red-cur"></div>
+              </Bar>
             </div>
             <img src={`Images/champion/${testChampImg}.png`} alt="champion" />
           </div>
@@ -102,7 +135,11 @@ const Detail = () => {
               <div className="value">
                 11,402<span className="max">/22,122</span>
               </div>
-              <div className="bar"></div>
+              <Bar curMax={213} cur={166}>
+                <div className="bar common-max"></div>
+                <div className="bar red-cur-max"></div>
+                <div className="bar red-cur"></div>
+              </Bar>
             </div>
             <img src={`Images/champion/${testChampImg}.png`} alt="champion" />
           </div>
@@ -111,7 +148,11 @@ const Detail = () => {
               <div className="value">
                 11,402<span className="max">/22,122</span>
               </div>
-              <div className="bar"></div>
+              <Bar curMax={213} cur={166}>
+                <div className="bar common-max"></div>
+                <div className="bar red-cur-max"></div>
+                <div className="bar red-cur"></div>
+              </Bar>
             </div>
             <img src={`Images/champion/${testChampImg}.png`} alt="champion" />
           </div>
@@ -120,7 +161,11 @@ const Detail = () => {
               <div className="value">
                 11,402<span className="max">/22,122</span>
               </div>
-              <div className="bar"></div>
+              <Bar curMax={213} cur={166}>
+                <div className="bar common-max"></div>
+                <div className="bar red-cur-max"></div>
+                <div className="bar red-cur"></div>
+              </Bar>
             </div>
             <img src={`Images/champion/${testChampImg}.png`} alt="champion" />
           </div>
@@ -129,13 +174,16 @@ const Detail = () => {
               <div className="value">
                 11,402<span className="max">/22,122</span>
               </div>
-              <div className="bar"></div>
+              <Bar curMax={213} cur={166}>
+                <div className="bar common-max"></div>
+                <div className="bar red-cur-max"></div>
+                <div className="bar red-cur"></div>
+              </Bar>
             </div>
             <img src={`Images/champion/${testChampImg}.png`} alt="champion" />
           </div>
         </div>
       </DetailChampTimeStatus>
-      <DetailChampTimeLine></DetailChampTimeLine>
     </DetailContainer>
   );
 };
@@ -195,7 +243,6 @@ const DetailChampTimeStatus = styled.div`
   height: 168px;
   margin: 5px 0px 0 8px;
   display: flex;
-  background-color: #912345;
 
   .flex-box {
     display: flex;
@@ -207,25 +254,17 @@ const DetailChampTimeStatus = styled.div`
   }
 
   .blue {
-    margin: 0px 12px 0 0;
+    margin: 0px 0px 0 0;
   }
 
   .red {
-    margin: 0px 0px 0 12px;
+    margin: 0px 0px 0 0px;
   }
 
   .total {
     width: 106px;
     height: 168px;
-    padding-top: 66px;
-    padding-bottom: 48px;
-    background-color: #0f0;
-
-    .arrow-box {
-      width: 24px;
-      height: 24px;
-      background-color: #090;
-    }
+    margin: 66px 12px 48px;
 
     .value-box {
       width: 58px;
@@ -266,8 +305,8 @@ const DetailChampTimeStatus = styled.div`
     margin: 0 0 11px;
 
     img {
-      width: 24px;
-      height: 25px;
+      width: 21px;
+      height: 20px;
       border-radius: 3px;
     }
   }
@@ -294,14 +333,62 @@ const DetailChampTimeStatus = styled.div`
         opacity: 0.3;
       }
     }
-    .bar {
-    }
   }
 `;
 
-const DetailChampTimeLine = styled.div`
-  width: 702px;
-  height: 19px;
-  display: flex;
-  background-color: #515353;
+const Bar = styled.div`
+  position: relative;
+
+  .bar {
+    position: absolute;
+    height: 6px;
+    margin: 3px 0 0;
+    padding: 0 0px 0 0;
+    border-radius: 10px;
+  }
+
+  .common-max {
+    width: 253px;
+    background-color: #3a3745;
+  }
+
+  .blue-cur-max {
+    width: ${(props) => props.curMax}px;
+    background-color: #234e69;
+  }
+
+  .blue-cur {
+    width: ${(props) => props.cur}px;
+    background-color: #0075bf;
+  }
+
+  .red-cur-max {
+    right: 0px;
+    width: ${(props) => props.curMax}px;
+    background-color: #623535;
+  }
+
+  .red-cur {
+    right: 0px;
+    width: ${(props) => props.cur}px;
+    background-color: #f04545;
+  }
+`;
+
+const ArrowBox = styled.div`
+  width: 24px;
+  height: 24px;
+
+  .blue-arrow {
+    margin: 1px 3px 11px 0px;
+  }
+
+  .red-arrow {
+    margin: 2px 0 1px 3px;
+  }
+
+  .arrow {
+    display: ${(props) => (props.isShow ? `block` : `none`)};
+    object-fit: contain;
+  }
 `;
