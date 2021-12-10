@@ -107,3 +107,4 @@ const StatusBar = styled.div`
     }
   }
 `;
+
