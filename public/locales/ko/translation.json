@@ -493,6 +493,16 @@
         "get-gold": "골드 획득량",
         "placed-ward": "와드 설치",
         "cs": "CS"
+      },
+      "timeline": {
+        "roming": "로밍성공",
+        "ganking": "갱킹성공",
+        "fight": "교전",
+        "blue-kill": "블루킬",
+        "red-kill": "레드킬",
+        "tower": "타워",
+        "herald&baron": "전령,바론",
+        "dragon": "용"
       }
     }
   }

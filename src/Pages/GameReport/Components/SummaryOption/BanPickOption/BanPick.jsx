@@ -16,28 +16,39 @@ const BanPick = () => {
   ];
 
   const banObject = [
-    { team: 1, champion: "LeeSin" },
-    { team: 1, champion: "LeeSin" },
-    { team: 1, champion: "LeeSin" },
-    { team: 1, champion: "LeeSin" },
-    { team: 1, champion: "LeeSin" },
-    { team: 1, champion: "LeeSin" },
-    { team: 1, champion: "LeeSin" },
-    { team: 1, champion: "LeeSin" },
-    { team: 1, champion: "LeeSin" },
+    { team: 1, champion: "Aphelios" },
+    { team: 2, champion: "Yuumi" },
+    { team: 2, champion: "Syndra" },
+    { team: 1, champion: "Nami" },
+    { team: 1, champion: "Graves" },
+    { team: 2, champion: "TwistedFate" },
+    { team: 2, champion: "Ziggs" },
+    { team: 1, champion: "Thresh" },
+    { team: 1, champion: "Jinx" },
+    { team: 2, champion: "Rakan" },
   ];
 
   const phase1Champion = pickObject.slice(0, 6);
   const phase2Champion = pickObject.slice(6, 10);
+  const phase1Ban = banObject.slice(0, 6);
+  const phase2Ban = banObject.slice(6, 10);
 
   return (
     <BanPickContainer>
       <PhaseBox1>
         <div className="nav">Phase</div>
         <BanBox>
-          <div className="ban-champ"></div>
-          <div className="ban-champ"></div>
-          <div className="ban-champ"></div>
+          {phase1Ban.map((data) => {
+            return (
+              data.team === 1 && (
+                <img
+                  className="ban-champ"
+                  src={`Images/champion/${data.champion}.png`}
+                  alt="ban"
+                />
+              )
+            );
+          })}
         </BanBox>
         <SelectedPick>
           <div className="blue-team">
@@ -80,19 +91,37 @@ const BanPick = () => {
           </div>
         </SelectedPick>
         <BanBox>
-          <div className="ban-champ"></div>
-          <div className="ban-champ"></div>
-          <div className="ban-champ"></div>
+          {phase1Ban.map((data) => {
+            return (
+              data.team === 2 && (
+                <img
+                  className="ban-champ"
+                  src={`Images/champion/${data.champion}.png`}
+                  alt="ban"
+                />
+              )
+            );
+          })}
         </BanBox>
       </PhaseBox1>
       <PhaseBox2>
         <div className="nav">Phase</div>
         <BanBox>
-          <div className="ban-champ"></div>
-          <div className="ban-champ"></div>
+          {phase2Ban.map((data) => {
+            return (
+              data.team === 1 && (
+                <img
+                  className="ban-champ"
+                  src={`Images/champion/${data.champion}.png`}
+                  alt="ban"
+                />
+              )
+            );
+          })}
         </BanBox>
         <SelectedPick>
           <div className="blue-team">
+            <PickChampion></PickChampion>
             {phase2Champion.map((data) => {
               return (
                 <PickChampion>
@@ -104,6 +133,7 @@ const BanPick = () => {
             })}
           </div>
           <div className="red-team">
+            <PickChampion></PickChampion>
             {phase2Champion.map((data) => {
               return (
                 <PickChampion>
@@ -116,8 +146,17 @@ const BanPick = () => {
           </div>
         </SelectedPick>
         <BanBox>
-          <div className="ban-champ"></div>
-          <div className="ban-champ"></div>
+          {phase2Ban.map((data) => {
+            return (
+              data.team === 2 && (
+                <img
+                  className="ban-champ"
+                  src={`Images/champion/${data.champion}.png`}
+                  alt="ban"
+                />
+              )
+            );
+          })}
         </BanBox>
       </PhaseBox2>
     </BanPickContainer>
@@ -143,7 +182,6 @@ const BanPickContainer = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: #fff;
-    background-color: #00f;
   }
 `;
 
@@ -160,7 +198,6 @@ const PhaseBox2 = styled.div`
 const BanBox = styled.div`
   width: 100%;
   height: 40px;
-  background-color: #0f0;
   display: flex;
 
   .ban-champ {

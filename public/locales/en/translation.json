@@ -494,6 +494,16 @@
         "get-gold": "Golds",
         "placed-ward": "Wards placed",
         "cs": "CS"
+      },
+      "timeline": {
+        "roming": "Roming",
+        "ganking": "Ganking",
+        "fight": "Fight",
+        "blue-kill": "Blue",
+        "red-kill": "Red",
+        "tower": "Tower",
+        "herald&baron": "Object",
+        "dragon": "Dragon"
       }
     }
   }
