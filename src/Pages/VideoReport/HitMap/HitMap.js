@@ -91,6 +91,9 @@ function HitMap() {
         id: user.id,
         firsttime: firstTime,
         secondtime: secondTime,
+        // time: "all",
+        // position: position,
+        // gameid:"",
       };
       axiosRequest(
         undefined,

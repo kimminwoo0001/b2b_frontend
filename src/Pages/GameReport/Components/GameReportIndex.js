@@ -23,7 +23,7 @@ const GameReportIndex = () => {
 
   const getGameIndexData = () => {
     try {
-      const url = `${API2}/lolapi/mappingfilter/game`;
+      const url = `${API}/lolapi/mappingfilter/game`;
       const params = {
         league: filters.league,
         year: filters.year,

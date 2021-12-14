@@ -316,9 +316,18 @@ function SetByChampion({ minFrom, setMinFrom }) {
     }
   };
 
+  // mappingfilter/opplayer response 가공
+  const refineOppPlayerData = (data) => {
+    let refined = [];
+    for (let i = 0; i < data.length; i++) {
+      refined.push(data[i].oppplayer);
+    }
+    return refined;
+  };
+
   const getOppPlayer = () => {
     try {
-      const url = `${API}/lolapi/mappingfilter/oppplayer`;
+      const url = `${API}/lolapi/mappingfilter/oppplayer2`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -336,7 +345,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
         url,
         params,
         function (e) {
-          const refinedData = refinePlayerData(e);
+          const refinedData = refineOppPlayerData(e);
           setFilterData({ ...filterData, oppplayer: refinedData });
         },
         function (objStore) {
@@ -369,7 +378,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
         url,
         params,
         function (e) {
-          const data = e.opp_champion;
+          const data = e.championEng;
           setFilterData({ ...filterData, oppchampion: data });
         },
         function (objStore) {

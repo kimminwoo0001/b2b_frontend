@@ -196,7 +196,6 @@ function WardPlayerFilter({
     }
   };
 
-  // mappingfilter/opplayer response 가공
   const refineOppPlayerData = (data) => {
     let refined = [];
     for (let i = 0; i < data.length; i++) {

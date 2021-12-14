@@ -9,7 +9,7 @@ import { API2 } from "../../config";
 
 const EachMatch = ({ matchData, team }) => {
   const dispatch = useDispatch();
-  const { date, game, gameid, oppteam, season, uniqueId } = matchData;
+  const { date, game, gameid, oppteam, uniqueId } = matchData;
 
   return (
     <>
@@ -22,7 +22,8 @@ const EachMatch = ({ matchData, team }) => {
           <Team>
             <TeamName>{team}</TeamName>
             <TeamImg
-              src={`Images/TeamLogo/ico-team-${team.toLowerCase()}.png`}
+              // src={`Images/TeamLogo/ico-team-${team.toLowerCase()}.png`}
+              src={`Images/TeamLogo/${team.toUpperCase()}.png`}
             ></TeamImg>
           </Team>
           <LeftArrow></LeftArrow>
@@ -32,7 +33,8 @@ const EachMatch = ({ matchData, team }) => {
           <RightArrow></RightArrow>
           <OppTeam>
             <OppTeamImg
-              src={`Images/TeamLogo/ico-team-${oppteam.toLowerCase()}.png`}
+              // src={`Images/TeamLogo/ico-team-${oppteam.toLowerCase()}.png`}
+              src={`Images/TeamLogo/${oppteam.toUpperCase()}.png`}
             ></OppTeamImg>
             <OppTeamName>{oppteam}</OppTeamName>
           </OppTeam>
@@ -123,15 +125,27 @@ const RightArrow = styled.div`
   border-bottom: 7px solid transparent;
 `;
 
-const TeamName = styled.div``;
-const TeamImg = styled.img``;
+const TeamName = styled.div`
+  font-size: 20px;
+  margin-right: 10px;
+`;
+const TeamImg = styled.img`
+  width: 73px;
+  height: 73px;
+`;
 
 const OppTeam = styled.div`
   display: flex;
   align-items: center;
 `;
-const OppTeamName = styled.div``;
-const OppTeamImg = styled.img``;
+const OppTeamName = styled.div`
+  font-size: 20px;
+  margin-left: 10px;
+`;
+const OppTeamImg = styled.img`
+  width: 73px;
+  height: 73px;
+`;
 
 const SetInfo = styled.div`
   /* background-color: #fff; */

@@ -155,6 +155,14 @@ function SetByPlayer({ minFrom, setMinFrom }) {
     return refined;
   };
 
+  // const refinePositionData = (data) => {
+  //   let refined = [];
+  //   for (let i = 0; i < data.length; i++) {
+  //     refined.push(data[i].position);
+  //   }
+  //   return refined;
+  // };
+
   const getPlayer = () => {
     try {
       if (isPageSolo) {
@@ -176,7 +184,12 @@ function SetByPlayer({ minFrom, setMinFrom }) {
           params,
           function (e) {
             const refinedData = refinePlayerData(e);
-            setFilterData({ ...filterData, player: refinedData });
+            // const refinedPositionData = refinePositionData(e);
+            setFilterData({
+              ...filterData,
+              player: refinedData,
+              // position: refinedPositionData,
+            });
           },
           function (objStore) {
             dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
