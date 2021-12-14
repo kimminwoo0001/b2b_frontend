@@ -106,7 +106,7 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
       <TwitchPlayer
         ref={twitchPlayer}
         time={gamevalue.startTime}
-        video={gamevalue.gameId}
+        video={gamevalue.vodId}
         id="player"
         width="1440px"
         height="800px"
@@ -119,7 +119,7 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
         onPlaying={() => {
           // 영상이 시작한 시점
           console.log("영상이 시작한 시점");
-          timerStart(twitchTimeToMilliSec(gamevalue.startTime) + gamevalue.timer)
+          //timerStart(twitchTimeToMilliSec(gamevalue.startTime) + gamevalue.timer)
 
         }}
         onPause={() => {
@@ -130,7 +130,7 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
           console.log("준비를 마친 시점")
         }}
       />
-      <div className='time-bar'>
+      {/* <div className='time-bar'>
         <div className='icon-bar'></div>
         <div className='icon-bar'></div>
         <div className='icon-bar'></div>
@@ -153,7 +153,7 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
             aria-labelledby="range-slider"
           />
         </div>
-      </div>
+      </div> */}
     </TwtichVideoContainer>
   );
 }

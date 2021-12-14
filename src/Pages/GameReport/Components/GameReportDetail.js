@@ -35,7 +35,6 @@ const GameReportDetail = () => {
               <iframe id="twitch-vod-ifram-id" name="twitch-vod-ifram-name" src={`https://player.twitch.tv?video=${videoId}&parent=localhost`} width="1440px" height="800px"></iframe>
               : <div id="player"></div>
             } */}
-            <div id="player"></div>
           </VideoContainer>
         </FlexContainer>
         <FlexContainer>
