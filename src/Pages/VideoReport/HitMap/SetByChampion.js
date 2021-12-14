@@ -205,6 +205,14 @@ function SetByChampion({ minFrom, setMinFrom }) {
     return refined;
   };
 
+  // const refinePositionData = (data) => {
+  //   let refinedPosition = [];
+  //   for (let i = 0; i < data.length; i++) {
+  //     refinedPosition.push(data[i].position);
+  //   }
+  //   return refinedPosition;
+  // };
+
   const getPlayer = () => {
     try {
       if (isPageSolo) {
@@ -226,6 +234,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
           params,
           function (e) {
             const refinedData = refinePlayerData(e);
+            // const refinePositionData = refinePositionData(e);
             setFilterData({ ...filterData, player: refinedData });
           },
           function (objStore) {
