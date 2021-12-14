@@ -8,7 +8,6 @@ const StatusBox2 = () => {
   return (
     <StatusContainer>
       <FlexBox>
-        <StatusImgBox></StatusImgBox>
         <StatusDesc>
           <StatusTime>05:32</StatusTime>
           <StatusText>인베이드 중</StatusText>
@@ -40,21 +39,22 @@ const StatusImgBox = styled.div`
 `;
 
 const StatusDesc = styled.div`
-  width: 72px;
-  height: 36px;
+  width: 98px;
+  height: 21px;;
   margin: 0px 0px 11px 0px;
+  display flex;
 `;
 
 const StatusTime = styled.div`
   height: 13px;
   width: 100%;
-  margin: 0 0 0 0;
+  margin: 0 6px 0 0;
   font-family: SpoqaHanSansNeo;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 300;
   font-stretch: normal;
   font-style: normal;
-  line-height: 2.2;
+  line-height: 1.69;
   letter-spacing: normal;
   text-align: left;
   color: #fff;

@@ -16,8 +16,11 @@ export const SetPlatform = (payload) => {
 };
 
 const initialState = {
-  gameId: "",
-  platform: "",
+  gameId: "", //"1136669396",
+  platform: "", //"twitch",
+  startTime: "", //"0h34m06s",
+  gameTime: "", //"2200",
+  timer: 0
 };
 
 export default function GameReportReducer(state = initialState, action) {
