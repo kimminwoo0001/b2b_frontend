@@ -56,7 +56,7 @@ function SelectGame({
                   </TeamImage>
                   <TimeStamp>
                     <LabelWin>{data.win}</LabelWin>
-                    <LabelDate>{data.date}</LabelDate>
+                    <LabelDate>{data.date.slice(0, 10)}</LabelDate>
                   </TimeStamp>
                 </GameNav>
                 <ShowChampion>

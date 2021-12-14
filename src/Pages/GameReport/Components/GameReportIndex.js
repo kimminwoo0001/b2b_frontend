@@ -23,7 +23,7 @@ const GameReportIndex = () => {
 
   const getGameIndexData = () => {
     try {
-      const url = `${API2}/lolapi/mappingfilter/game`;
+      const url = `${API}/lolapi/mappingfilter/game`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -39,7 +39,6 @@ const GameReportIndex = () => {
         params,
         function (e) {
           setIndexData(e.game);
-          console.log("데이터:", e);
         },
         function (objstore) {
           dispatch(SetModalInfo(objstore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -68,8 +67,6 @@ const GameReportIndex = () => {
               />
             );
           })}
-          {/* <EachMatch />
-          <EachMatch /> */}
         </>
       )}
     </GameReportIndexWrapper>

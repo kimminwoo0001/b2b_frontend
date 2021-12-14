@@ -147,6 +147,22 @@ function SetByPlayer({ minFrom, setMinFrom }) {
     }
   };
 
+  const refinePlayerData = (data) => {
+    let refined = [];
+    for (let i = 0; i < data.length; i++) {
+      refined.push(data[i].name);
+    }
+    return refined;
+  };
+
+  // const refinePositionData = (data) => {
+  //   let refined = [];
+  //   for (let i = 0; i < data.length; i++) {
+  //     refined.push(data[i].position);
+  //   }
+  //   return refined;
+  // };
+
   const getPlayer = () => {
     try {
       if (isPageSolo) {
@@ -167,8 +183,13 @@ function SetByPlayer({ minFrom, setMinFrom }) {
           url,
           params,
           function (e) {
-            const data = e.player;
-            setFilterData({ ...filterData, player: data });
+            const refinedData = refinePlayerData(e);
+            // const refinedPositionData = refinePositionData(e);
+            setFilterData({
+              ...filterData,
+              player: refinedData,
+              // position: refinedPositionData,
+            });
           },
           function (objStore) {
             dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -198,7 +219,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
         url,
         params,
         function (e) {
-          const data = e.champion;
+          const data = e.championEng;
           setFilterData({ ...filterData, champion: data });
           if (isPageSolo && champArray.length === 0 && !filterData) {
             setChampArray(data);
