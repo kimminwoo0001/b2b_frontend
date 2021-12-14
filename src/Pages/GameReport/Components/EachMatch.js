@@ -7,9 +7,16 @@ import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import { API } from "../../config";
 import { API2 } from "../../config";
 
+const TOTAL_SET = [0, 1, 2, 3, 4];
+
 const EachMatch = ({ matchData, team }) => {
   const dispatch = useDispatch();
-  const { date, game, gameid, oppteam, uniqueId } = matchData;
+  const { date, game, gameid, oppteam, uniqueId, teamresult, oppteamresult } =
+    matchData;
+  // const acitveSetList = () => {
+  //   let activeSet = [];
+  //   for (let i = 0; i < TOTAL_SET; i++) {}
+  // };
 
   return (
     <>
@@ -22,18 +29,17 @@ const EachMatch = ({ matchData, team }) => {
           <Team>
             <TeamName>{team}</TeamName>
             <TeamImg
-              // src={`Images/TeamLogo/ico-team-${team.toLowerCase()}.png`}
               src={`Images/TeamLogo/${team.toUpperCase()}.png`}
             ></TeamImg>
           </Team>
-          <LeftArrow></LeftArrow>
+          <LeftArrow didMyTeamWin={teamresult > oppteamresult}></LeftArrow>
           <Score>
-            <LeftScore>3</LeftScore>:<RightScore>0</RightScore>
+            <LeftScore>{teamresult}</LeftScore>:
+            <RightScore>{oppteamresult}</RightScore>
           </Score>
-          <RightArrow></RightArrow>
+          <RightArrow didOppTeamWin={teamresult < oppteamresult}></RightArrow>
           <OppTeam>
             <OppTeamImg
-              // src={`Images/TeamLogo/ico-team-${oppteam.toLowerCase()}.png`}
               src={`Images/TeamLogo/${oppteam.toUpperCase()}.png`}
             ></OppTeamImg>
             <OppTeamName>{oppteam}</OppTeamName>
@@ -41,11 +47,13 @@ const EachMatch = ({ matchData, team }) => {
         </MatchInfo>
         <SetInfo>
           <SetTitle>SET</SetTitle>
-          {gameid?.map((game, idx) => {
+          {TOTAL_SET.map((game, idx) => {
             return (
               <SetList
+                inactive={gameid[game] === undefined}
                 onClick={() => {
-                  dispatch(SetGameId(game));
+                  dispatch(SetGameId(gameid[game]));
+                  // console.log(gameid[game]);
                 }}
               >
                 {idx + 1}
@@ -95,7 +103,7 @@ const MatchInfo = styled.div`
   justify-content: space-between;
   align-items: center;
   color: #ffffff;
-  width: 336px;
+  width: 360px;
 `;
 
 const Team = styled.div`
@@ -109,6 +117,7 @@ const LeftArrow = styled.div`
   border-top: 7px solid transparent;
   border-right: 8px solid #fff;
   border-bottom: 7px solid transparent;
+  display: ${(props) => (props.didMyTeamWin ? "block" : "none")};
 `;
 const Score = styled.div`
   font-size: 20px;
@@ -123,6 +132,7 @@ const RightArrow = styled.div`
   border-top: 7px solid transparent;
   border-left: 8px solid #fff;
   border-bottom: 7px solid transparent;
+  display: ${(props) => (props.didOppTeamWin ? "block" : "none")};
 `;
 
 const TeamName = styled.div`
@@ -169,14 +179,20 @@ const SetList = styled.li`
   line-height: 50px;
   border-radius: 50%;
   background-color: #16151c;
-  /* opacity: 0.3; */
   font-size: 20px;
   cursor: pointer;
   color: #fff;
 
+  ${(props) =>
+    props.inactive &&
+    css`
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 0.3;
+    `}
+
   &:hover {
-    background-color: #fff;
-    opacity: 0.1;
+    background-color: #484655;
     cursor: pointer;
     color: #fff;
   }

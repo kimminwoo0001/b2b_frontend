@@ -21,8 +21,11 @@ const SideBarItem = ({ menu, idx }) => {
       }}
       changeColor={menu.changeColor}
     >
-      <img src={menu.image} alt="menu"></img>
+      <MenuImg src={menu.image} alt="menu" />
       <div className="Name">{menu.name}</div>
+      {menu.version && menu.version === "beta" && (
+        <Beta src="Images/icon_beta.png" alt="beta" />
+      )}
     </MenuWrapper>
   );
 };
@@ -31,6 +34,7 @@ export default SideBarItem;
 
 const MenuWrapper = styled.div`
   display: flex;
+  align-items: center;
   width: 170px;
   height: 42px;
   text-align: center;
@@ -45,13 +49,6 @@ const MenuWrapper = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: #fff;
-  }
-  img {
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
-    object-fit: contain;
-    vertical-align: middle;
   }
   :hover {
     background-color: ${(props) =>
@@ -71,4 +68,18 @@ const MenuWrapper = styled.div`
       border-radius: 16px;
       background-color: #5942ba;
     `}
+`;
+
+const MenuImg = styled.img`
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  object-fit: contain;
+  vertical-align: middle;
+`;
+
+const Beta = styled.img`
+  margin-left: 3px;
+  width: 30px;
+  height: 13px;
 `;

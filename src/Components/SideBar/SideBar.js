@@ -120,6 +120,7 @@ function Sidebar() {
       path: "/gameReport",
       image: "/Images/sidebar_newLogo/ico_game.png",
       changeColor: pathName === "/gameReport",
+      version: "beta",
     },
   ];
 
