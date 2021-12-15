@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
+import transferTimetoWidth from "../../../../lib/transferTimetoWidth";
 
 const romingSuccessTime = [
   { team: 1, time: 500 },
@@ -17,33 +18,32 @@ const TimeLine = ({ fullTime = 1800 }) => {
   const { t } = useTranslation();
   const fullWidth = 623;
 
-  function transferTime(time) {
-    const time1px = fullTime / 100; // 9
-    const width1px = fullWidth / 100; // 6.23
-
-    return (time / time1px) * width1px;
-  }
-
   return (
     <TimeLineContainer>
       <TimeLineDataContainer>
         <div className="title">{t("game.summary.timeline.roming")}</div>
-        <TimeLine15Box width={transferTime(900)}>
+        <TimeLine15Box width={transferTimetoWidth(fullTime, fullWidth, 900)}>
           {romingSuccessTime.map((data) => {
             return (
               <TimeLineValue
                 team={data.team}
-                move={transferTime(data.time)}
+                move={transferTimetoWidth(fullTime, fullWidth, data.time)}
               ></TimeLineValue>
             );
           })}
         </TimeLine15Box>
-        <TimeLine15OutBox width={transferTime(900)}></TimeLine15OutBox>
+        <TimeLine15OutBox
+          width={transferTimetoWidth(fullTime, fullWidth, 900)}
+        ></TimeLine15OutBox>
       </TimeLineDataContainer>
       <TimeLineDataContainer>
         <div className="title">{t("game.summary.timeline.ganking")}</div>
-        <TimeLine15Box width={transferTime(900)}></TimeLine15Box>
-        <TimeLine15OutBox width={transferTime(900)}></TimeLine15OutBox>
+        <TimeLine15Box
+          width={transferTimetoWidth(fullTime, fullWidth, 900)}
+        ></TimeLine15Box>
+        <TimeLine15OutBox
+          width={transferTimetoWidth(fullTime, fullWidth, 900)}
+        ></TimeLine15OutBox>
       </TimeLineDataContainer>
       <TimeLineDataContainer>
         <div className="title">{t("game.summary.timeline.fight")}</div>
