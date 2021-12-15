@@ -57,7 +57,7 @@ const EachMatch = ({ matchData, team }) => {
     <>
       <MetaData>
         <Round>{uniqueId}</Round>
-        <Date>{date}</Date>
+        <Date>{date.substring(0, 16)}</Date>
       </MetaData>
       <GameInfoBox>
         <MatchInfo>
@@ -127,7 +127,7 @@ const Date = styled.div`
 `;
 
 const GameInfoBox = styled.section`
-  background-color: #23212a;
+  background-color: #2f2d38;
   width: 1050px;
   height: 113px;
   border-radius: 20px;
@@ -135,7 +135,7 @@ const GameInfoBox = styled.section`
   justify-content: space-between;
   align-items: center;
   padding: 20px 40px;
-  margin-bottom: 20px;
+  margin-bottom: 53px;
 `;
 
 const MatchInfo = styled.div`
@@ -143,18 +143,20 @@ const MatchInfo = styled.div`
   justify-content: space-between;
   align-items: center;
   color: #ffffff;
-  width: 336px;
+  width: 380px;
 `;
 
 const Team = styled.div`
   display: flex;
   align-items: center;
+  width: 155px;
 `;
 
 const ScoreBox = styled.div`
   display: flex;
   align-items: center;
-  justify-contents: space-between;
+  justify-content: center;
+  width: 130px;
 `;
 
 const LeftArrow = styled.div`
@@ -170,9 +172,11 @@ const Score = styled.div`
 `;
 
 const LeftScore = styled.span`
+  width: 40px;
   margin-left: 10px;
 `;
 const RightScore = styled.span`
+  width: 40px;
   margin-right: 10px;
 `;
 
@@ -197,6 +201,8 @@ const TeamImg = styled.img`
 const OppTeam = styled.div`
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+  width: 155px;
 `;
 const OppTeamName = styled.div`
   font-size: 20px;
@@ -208,7 +214,6 @@ const OppTeamImg = styled.img`
 `;
 
 const SetInfo = styled.div`
-  /* background-color: #fff; */
   width: 386px;
   height: 50px;
   display: flex;
@@ -228,7 +233,7 @@ const SetList = styled.li`
   text-align: center;
   line-height: 50px;
   border-radius: 50%;
-  background-color: #16151c;
+  background-color: #484655;
   font-size: 20px;
   cursor: pointer;
   color: #fff;
@@ -236,13 +241,13 @@ const SetList = styled.li`
   ${(props) =>
     props.inactive &&
     css`
-      cursor: not-allowed;
       pointer-events: none;
       opacity: 0.3;
     `}
 
   &:hover {
     background-color: #484655;
+    opacity: 0.7;
     cursor: pointer;
     color: #fff;
   }
