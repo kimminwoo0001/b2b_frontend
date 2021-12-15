@@ -1,7 +1,13 @@
 import React, { memo, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { SetDetailDataSet, SetGameId, SetPlatform, SetStartTime, SetVodId } from "../../../redux/modules/gamevalue";
+import {
+  SetDetailDataSet,
+  SetGameId,
+  SetPlatform,
+  SetStartTime,
+  SetVodId,
+} from "../../../redux/modules/gamevalue";
 import axiosRequest from "../../../lib/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import { API } from "../../config";
@@ -12,21 +18,27 @@ const TOTAL_SET = [0, 1, 2, 3, 4];
 
 const EachMatch = ({ matchData, team }) => {
   const dispatch = useDispatch();
-  const { date, game, gameid, vod, platform, starttime, oppteam, uniqueId, teamresult, oppteamresult } =
-    matchData;
-  // const acitveSetList = () => {
-  //   let activeSet = [];
-  //   for (let i = 0; i < TOTAL_SET; i++) {}
-  // };
+  const {
+    date,
+    game,
+    gameid,
+    vod,
+    platform,
+    starttime,
+    oppteam,
+    uniqueId,
+    teamresult,
+    oppteamresult,
+  } = matchData;
 
   const getGameDetailData = (gameId) => {
     try {
       const url = `${API5}/test/test2`;
       const params = {
-        gameid: gameId
+        gameid: gameId,
       };
       axiosRequest(
-        'GET',
+        "GET",
         url,
         params,
         function (e) {
@@ -39,7 +51,7 @@ const EachMatch = ({ matchData, team }) => {
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   return (
     <>
@@ -55,12 +67,14 @@ const EachMatch = ({ matchData, team }) => {
               src={`Images/TeamLogo/${team.toUpperCase()}.png`}
             ></TeamImg>
           </Team>
-          <LeftArrow didMyTeamWin={teamresult > oppteamresult}></LeftArrow>
-          <Score>
-            <LeftScore>{teamresult}</LeftScore>&nbsp;:&nbsp;
-            <RightScore>{oppteamresult}</RightScore>
-          </Score>
-          <RightArrow didOppTeamWin={teamresult < oppteamresult}></RightArrow>
+          <ScoreBox>
+            <LeftArrow didMyTeamWin={teamresult > oppteamresult}></LeftArrow>
+            <Score>
+              <LeftScore>{teamresult}</LeftScore>&nbsp;:&nbsp;
+              <RightScore>{oppteamresult}</RightScore>
+            </Score>
+            <RightArrow didOppTeamWin={teamresult < oppteamresult}></RightArrow>
+          </ScoreBox>
           <OppTeam>
             <OppTeamImg
               src={`Images/TeamLogo/${oppteam.toUpperCase()}.png`}
@@ -76,10 +90,10 @@ const EachMatch = ({ matchData, team }) => {
                 inactive={gameid[game] === undefined}
                 onClick={() => {
                   dispatch(SetGameId(gameid[game]));
-                  dispatch(SetPlatform(platform[game]))
-                  dispatch(SetVodId(vod[game]))
-                  dispatch(SetStartTime(starttime[game]))
-                  getGameDetailData(gameid[game])
+                  dispatch(SetPlatform(platform[game]));
+                  dispatch(SetVodId(vod[game]));
+                  dispatch(SetStartTime(starttime[game]));
+                  getGameDetailData(gameid[game]);
                 }}
               >
                 {idx + 1}
@@ -129,7 +143,7 @@ const MatchInfo = styled.div`
   justify-content: space-between;
   align-items: center;
   color: #ffffff;
-  width: 360px;
+  width: 336px;
 `;
 
 const Team = styled.div`
@@ -137,28 +151,38 @@ const Team = styled.div`
   align-items: center;
 `;
 
+const ScoreBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-contents: space-between;
+`;
+
 const LeftArrow = styled.div`
   width: 0px;
   height: 0px;
-  border-top: 7px solid transparent;
+  border-top: 5px solid transparent;
   border-right: 8px solid #fff;
-  border-bottom: 7px solid transparent;
-  visibility: ${(props) => (props.didMyTeamWin ? "visibile" : "hidden ")};
+  border-bottom: 5px solid transparent;
+  visibility: ${(props) => (props.didMyTeamWin ? "visible" : "hidden")};
 `;
 const Score = styled.div`
   font-size: 20px;
 `;
 
-const LeftScore = styled.span``;
-const RightScore = styled.span``;
+const LeftScore = styled.span`
+  margin-left: 10px;
+`;
+const RightScore = styled.span`
+  margin-right: 10px;
+`;
 
 const RightArrow = styled.div`
   width: 0px;
   height: 0px;
-  border-top: 7px solid transparent;
+  border-top: 5px solid transparent;
   border-left: 8px solid #fff;
-  border-bottom: 7px solid transparent;
-  visibility: ${(props) => (props.didOppTeamWin ? "visibile" : "hidden ")};
+  border-bottom: 5px solid transparent;
+  visibility: ${(props) => (props.didOppTeamWin ? "visible" : "hidden")};
 `;
 
 const TeamName = styled.div`

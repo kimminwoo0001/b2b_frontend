@@ -19,7 +19,7 @@ const GameReportIndex = () => {
 
   useEffect(() => {
     getGameIndexData();
-  }, []);
+  }, [filters.team]);
 
   const getGameIndexData = () => {
     try {
