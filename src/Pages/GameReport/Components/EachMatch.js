@@ -34,7 +34,7 @@ const EachMatch = ({ matchData, team }) => {
           </Team>
           <LeftArrow didMyTeamWin={teamresult > oppteamresult}></LeftArrow>
           <Score>
-            <LeftScore>{teamresult}</LeftScore>:
+            <LeftScore>{teamresult}</LeftScore>&nbsp;:&nbsp;
             <RightScore>{oppteamresult}</RightScore>
           </Score>
           <RightArrow didOppTeamWin={teamresult < oppteamresult}></RightArrow>
@@ -117,7 +117,7 @@ const LeftArrow = styled.div`
   border-top: 7px solid transparent;
   border-right: 8px solid #fff;
   border-bottom: 7px solid transparent;
-  display: ${(props) => (props.didMyTeamWin ? "block" : "none")};
+  visibility: ${(props) => (props.didMyTeamWin ? "visibile" : "hidden ")};
 `;
 const Score = styled.div`
   font-size: 20px;
@@ -132,7 +132,7 @@ const RightArrow = styled.div`
   border-top: 7px solid transparent;
   border-left: 8px solid #fff;
   border-bottom: 7px solid transparent;
-  display: ${(props) => (props.didOppTeamWin ? "block" : "none")};
+  visibility: ${(props) => (props.didOppTeamWin ? "visibile" : "hidden ")};
 `;
 
 const TeamName = styled.div`

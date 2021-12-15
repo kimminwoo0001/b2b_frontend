@@ -35,7 +35,7 @@ export default SideBarItem;
 const MenuWrapper = styled.div`
   display: flex;
   align-items: center;
-  width: 170px;
+  width: 180px;
   height: 42px;
   text-align: center;
   margin: 13px 0 12px;
@@ -61,7 +61,7 @@ const MenuWrapper = styled.div`
   ${(props) =>
     props.changeColor &&
     css`
-      width: 170px;
+      width: 180px;
       height: 42px;
       margin: 13px 0 12px 0;
       padding: 9px 9px 9px 14px;
