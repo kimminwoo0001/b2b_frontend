@@ -7,19 +7,13 @@ import DetailLog from './DetailLogOption/DetailLog';
 import TeamStatus from './TeamStatusOption/TeamStatus';
 import TimeLine from './TimeLineOption/TimeLine';
 import Summary from './SummaryOption/Summary';
-import TwitchVideoPlayer from '../../../Components/UtilityComponent/TwitchVideoPlayer';
+import VideoPlayer from '../../../Components/Video/VideoPlayer';
 
 
 const GameReportDetail = () => {
-  const gamevalue = useSelector((state) => state.GameReportReducer);
 
   useEffect(() => {
-    //YoutubeVideo(videoId);
-    // let timer = setInterval(() => {
-    //   if (document.querySelector("[data-a-target='player-seekbar-current-time']")) {
-    //     console.log(document.querySelector("[data-a-target='player-seekbar-current-time']").innerText)
-    //   }
-    // }, 500);
+
   }, [])
 
   return (
@@ -30,11 +24,7 @@ const GameReportDetail = () => {
       <BlockContainer>
         <FlexContainer>
           <VideoContainer>
-            <TwitchVideoPlayer />
-            {/* {platform === "twitch" ?
-              <iframe id="twitch-vod-ifram-id" name="twitch-vod-ifram-name" src={`https://player.twitch.tv?video=${videoId}&parent=localhost`} width="1440px" height="800px"></iframe>
-              : <div id="player"></div>
-            } */}
+            <VideoPlayer />
           </VideoContainer>
         </FlexContainer>
         <FlexContainer>

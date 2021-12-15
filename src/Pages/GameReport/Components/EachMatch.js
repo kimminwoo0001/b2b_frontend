@@ -26,7 +26,7 @@ const EachMatch = ({ matchData, team }) => {
         gameid: gameId
       };
       axiosRequest(
-        undefined,
+        'GET',
         url,
         params,
         function (e) {
