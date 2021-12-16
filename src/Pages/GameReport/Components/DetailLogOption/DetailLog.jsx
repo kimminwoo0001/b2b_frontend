@@ -1,14 +1,25 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
+import { useSelector, useDispatch } from "react-redux";
+import { InitializeGameState } from "../../../../redux/modules/gamevalue";
 
 const DetailLog = () => {
+  const gamevalue = useSelector((state) => state.GameReportReducer);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+
   return (
     <LogContainer>
       <NavContainer>
-        <img src={"Images/ic_close_bk_30.svg"} alt="question" />
-        <span>Worlds GroupStage A조 Tiebreak</span>
+        <img
+          onClick={() => {
+            dispatch(InitializeGameState());
+          }}
+          src={"Images/ic_close_bk_30.svg"}
+          alt="question"
+        />
+        <span>{gamevalue.uniqueId}</span>
       </NavContainer>
       <LogDetailContainer>
         <LogTitle>
@@ -97,6 +108,7 @@ const NavContainer = styled.div`
     height: 29px;
     object-fit: contain;
     vertical-align: bottom;
+    cursor: pointer;
   }
 
   span {

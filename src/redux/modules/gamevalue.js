@@ -1,6 +1,6 @@
 export const INITIALIZE_GAME_STATE = "gamevalue/INITIALIZE_GAME_STATE";
 export const SET_GAME_ID = "gamevalue/SET_GAME_ID";
-export const SET_VOD_ID = "gamevalue/SET_VOD_ID";
+export const SET_VOD_URL = "gamevalue/SET_VOD_ID";
 export const SET_PLATFORM = "gamevalue/SET_PLATFORM";
 export const SET_START_TIME = "gamevalue/SET_START_TIME";
 export const SET_GAME_TIME = "gamevalue/SET_GAME_TIME";
@@ -31,6 +31,7 @@ export const SET_PLAYBACK_RATE = "gamevalue/SET_PLAYBACK_RATE";
 export const SET_PLAY = "gamevalue/SET_PLAY";
 export const SET_PAUSE = "gamevalue/SET_PAUSE";
 export const SET_URL = "gamevalue/SET_URL";
+export const SET_UNIQUE_ID = "gamevalue/SET_UNIQUE_ID";
 
 
 export const InitializeGameState = (payload) => {
@@ -47,9 +48,9 @@ export const SetGameId = (payload) => {
   };
 };
 
-export const SetVodId = (payload) => {
+export const SetVodUrl = (payload) => {
   return {
-    type: SET_VOD_ID,
+    type: SET_VOD_URL,
     payload,
   };
 };
@@ -224,13 +225,19 @@ export const SetUrl = (payload) => {
     payload
   };
 };
+export const SetUniqueId = (payload) => {
+  return {
+    type: SET_UNIQUE_ID,
+    payload
+  };
+};
 
 
 
 
 const initialState = {
   gameId: "",
-  vodId: "", //"1136669396",
+  vodUrl: "", //"1136669396",
   platform: "", //"twitch",
   startTime: "", //"0h34m06s",
   gameTime: "", //"2200",
@@ -247,7 +254,9 @@ const initialState = {
   duration: 0,
   playbackRate: 1.0,
   loop: false,
-  url: ""
+  url: "",
+  playedSeconds: 0,
+  uniqueId: ""
 };
 export default function GameReportReducer(state = initialState, action) {
   switch (action.type) {
@@ -260,15 +269,20 @@ export default function GameReportReducer(state = initialState, action) {
         ...state,
         gameId: action.payload,
       };
-    case SET_VOD_ID:
+    case SET_VOD_URL:
       return {
         ...state,
-        vodId: action.payload,
+        vodUrl: action.payload,
       };
     case SET_PLATFORM:
       return {
         ...state,
         platform: action.payload,
+      };
+    case SET_UNIQUE_ID:
+      return {
+        ...state,
+        uniqueId: action.payload,
       };
     case SET_START_TIME:
       return {
@@ -298,7 +312,7 @@ export default function GameReportReducer(state = initialState, action) {
     case HANDLE_PLAYING:
       return {
         ...state,
-        player: action.payload,
+        playing: !action.payload,
       }
     case HANDLE_STOP:
       return {
@@ -328,7 +342,7 @@ export default function GameReportReducer(state = initialState, action) {
     case HANDLE_TOGGLE_MUTED:
       return {
         ...state,
-        muted: action.payload,
+        muted: !state.muted,
       }
     case SET_PLAYBACK_RATE:
       return {
@@ -374,6 +388,7 @@ export default function GameReportReducer(state = initialState, action) {
       return {
         ...state,
         played: action.payload,
+        //playedSeconds: action.payload,
       }
     case HANDLE_SEEK_MOUSE_UP:
       return {

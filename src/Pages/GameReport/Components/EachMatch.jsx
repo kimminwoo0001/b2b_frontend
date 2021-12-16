@@ -4,9 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   SetDetailDataSet,
   SetGameId,
+  SetGameTime,
   SetPlatform,
   SetStartTime,
-  SetVodId,
+  SetUniqueId, SetVodUrl,
 } from "../../../redux/modules/gamevalue";
 import axiosRequest from "../../../lib/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
@@ -23,6 +24,7 @@ const EachMatch = ({ matchData, team }) => {
     game,
     gameid,
     vod,
+    gamelength,
     platform,
     starttime,
     oppteam,
@@ -56,9 +58,9 @@ const EachMatch = ({ matchData, team }) => {
   return (
     <>
       <MetaData>
-        <Round>{uniqueId}</Round>
+        <Round>{uniqueId.replaceAll("_", " ")}</Round>
         <Date>{date.substring(0, 16)}</Date>
-      </MetaData>
+      </MetaData >
       <GameInfoBox>
         <MatchInfo>
           <Team>
@@ -90,9 +92,10 @@ const EachMatch = ({ matchData, team }) => {
                 inactive={gameid[game] === undefined}
                 onClick={() => {
                   dispatch(SetGameId(gameid[game]));
-                  dispatch(SetPlatform(platform[game]));
-                  dispatch(SetVodId(vod[game]));
-                  dispatch(SetStartTime(starttime[game]));
+                  dispatch(SetVodUrl(vod[game]));
+                  dispatch(SetGameTime(gamelength[game] / 2 ?? 0));
+                  dispatch(SetStartTime(starttime[game] ?? 0));
+                  dispatch(SetUniqueId(uniqueId.replaceAll("_", " ")))
                   getGameDetailData(gameid[game]);
                 }}
               >

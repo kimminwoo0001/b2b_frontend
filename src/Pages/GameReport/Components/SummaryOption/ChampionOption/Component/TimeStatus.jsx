@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
-import transferTimetoWidth from "../../../../../lib/transferTimetoWidth";
+import transferTimetoWidth from "../../../../../../lib/transferTimetoWidth";
+import TimeLineTimeBar from "../../../Common/TimeBar";
+import TimeBarTitle from "../../../Common/TimeBarTitle";
 
 const skillBoxWidth = 610;
 
@@ -273,7 +275,7 @@ const DetailChampTimeStatus = styled.div`
 const TabContainer = styled.div`
   width: 42px;
   height: 100%;
-  margin: -4px 7px 50px 0px;
+  margin: -4px 7px 0px 0px;
 `;
 
 const TabItem = styled.div`

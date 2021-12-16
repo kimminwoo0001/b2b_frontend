@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
-import StatusBox1 from "./StatusBox1";
-import StatusBox2 from "./StatusBox2";
-import StatusBox3 from "./StatusBox3";
-import StatusBox4 from "./StatusBox4";
-import TimeStatus from "./TimeStatus";
+import TimeBar from "../../Common/TimeBar";
+import TimeBarTitle from "../../Common/TimeBarTitle";
+import StatusBox1 from "./Component/StatusBox1";
+import StatusBox2 from "./Component/StatusBox2";
+import StatusBox3 from "./Component/StatusBox3";
+import StatusBox4 from "./Component/StatusBox4";
+import TimeStatus from "./Component/TimeStatus";
 
 const ChampDetail = () => {
   return (
@@ -16,7 +18,14 @@ const ChampDetail = () => {
         <StatusBox4 />
       </StatusContainer>
       <TimeStatus />
-      <DetailChampTimeLine></DetailChampTimeLine>
+      <DetailChampTimeLine>
+        <div>
+          <TimeBarTitle textAligh="left" />
+        </div>
+        <div className="time-bar">
+          <TimeBar />
+        </div>
+      </DetailChampTimeLine>
     </DetailChampContainer>
   );
 };
@@ -36,8 +45,14 @@ const StatusContainer = styled.div`
 `;
 
 const DetailChampTimeLine = styled.div`
-  width: 702px;
+  width: 100%;
   height: 19px;
   display: flex;
-  background-color: #515353;
+  padding-left: 10px;
+
+  .time-bar {
+    padding-left: 4px;
+    width: 100%;
+    padding-right: 9px;
+  }
 `;

@@ -6,44 +6,22 @@ import ReactPlayer from 'react-player'
 import twitchTimeToMilliSec from '../../lib/twitchTimeToMilliSec';
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
-import { HandledisablePip, HandleDuration, HandleEnablePip, handleEnablePip, HandleEnded, HandlePlaybackRateChange, HandlePlaying, HandleProgress, HandleSeekChange, HandleSeekMouseDown, HandleSeekMouseUp, HandleStop, HandleToggleControls, HandleToggleLight, HandleToggleLoop, HandleToggleMuted, HandleTogglePip, HandleVolumeChange, SetPause, SetPlay, SetPlayBackRate, SetPlayRate, SetUrl } from '../../redux/modules/gamevalue';
+import { HandledisablePip, HandleDuration, HandleEnablePip, handleEnablePip, HandleEnded, HandlePlaybackRateChange, HandlePlaying, HandleProgress, HandleSeekChange, HandleSeekMouseDown, HandleSeekMouseUp, HandleStop, HandleToggleControls, HandleToggleLight, HandleToggleLoop, HandleToggleMuted, HandleTogglePip, HandleVolumeChange, SetPause, SetPlay, SetPlayBackRate, SetPlayRate, SetUrl, SET_PAUSE } from '../../redux/modules/gamevalue';
+import secToMS from '../../lib/secToMS';
 
 
 const TwitchVideoPlayer = ({ video, startTime }) => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
+  const [seekTime, setSeekTime] = useState(0)
   const dispatch = useDispatch();
   let player;
-  //const twitchPlayer = useRef(null);
-  const [range, setRange] = useState(0);
-  const [minTime, setMinTime] = useState();
-  const [maxTime, setMaxTime] = useState();
-  const { t } = useTranslation();
-  const [play, setPlay] = useState(false);
-  const [fast, setFast] = useState(false);
-  const [pause, setPause] = useState(false);
-  let timerId = null;
-
-
-  const handleChange = (event, newValue) => {
-    console.log("newValue", newValue)
-    setRange(newValue);
-  };
-
-  function timerStart(time) {
-    //currentTime = time * 2;
-    timerId = setInterval(() => {
-
-    }, 1000);
-  }
+  const endTime = +gamevalue.startTime + +gamevalue.gameTime;
+  const startPlayed = +gamevalue.startTime / +gamevalue.duration;
+  const sec5 = 5;
+  const sec30 = 30;
 
   const load = url => {
     dispatch(SetUrl(url));
-    // this.setState({
-    //   url,
-    //   played: 0,
-    //   loaded: 0,
-    //   pip: false
-    // })
   }
 
   const handlePlayPause = () => {
@@ -59,11 +37,6 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
   const handleToggleControls = () => {
     dispatch(HandleToggleControls(!gamevalue.controls))
       .then(() => load(gamevalue.url))
-    // const url = gamevalue.url
-    // this.setState({
-    //   controls: !gamevalue.controls,
-    //   url: null
-    // }, () => this.load(url))
   }
 
   const handleToggleLight = () => {
@@ -82,7 +55,7 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
   }
 
   const handleToggleMuted = () => {
-    dispatch(HandleToggleMuted(!gamevalue.muted))
+    dispatch(HandleToggleMuted())
     //this.setState({ muted: !gamevalue.muted })
   }
 
@@ -131,19 +104,36 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
   }
 
   const handleSeekChange = e => {
+    //console.log("handleSeekChange", parseFloat(e.target.value))
+    setSeekTime(parseFloat(e.target.value));
     dispatch(HandleSeekChange(parseFloat(e.target.value)))
     //this.setState({ played: parseFloat(e.target.value) })
+  }
+
+  const handleSeekMove = (move) => {
+    handleSeekMouseDown();
+    const movePlayed = (parseFloat(+gamevalue.playedSeconds) + move) / gamevalue.duration;
+    dispatch(HandleSeekChange(movePlayed))
+    dispatch(HandleSeekMouseUp())
+    player.seekTo(movePlayed)
   }
 
   const handleSeekMouseUp = e => {
     dispatch(HandleSeekMouseUp())
     //this.setState({ seeking: false })
-    player.seekTo(parseFloat(e.target.value))
+    //console.log("handleSeekMouseUp", parseFloat(seekTime))
+    player.seekTo(parseFloat(seekTime))
+    //player.seekTo(parseFloat(gamevalue.playedSeconds))
   }
 
   const handleProgress = state => {
-    console.log('onProgress', state)
+    //console.log('onProgress', state)
     // We only want to update time slider if we are not currently seeking
+
+    // 총 게임 시간 넘어가면 자동으로 멈춤 
+    if (state.playedSeconds > endTime) {
+      dispatch(SetPause());
+    }
     if (!gamevalue.seeking) {
       dispatch(HandleProgress(state))
       //this.setState(state)
@@ -157,7 +147,6 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
   }
 
   const handleDuration = (duration) => {
-    console.log('onDuration', duration)
     dispatch(HandleDuration(duration));
     //this.setState({ duration })
   }
@@ -173,7 +162,7 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
   return (
     <TwtichVideoContainer>
       <ReactPlayer
-        url='https://www.twitch.tv/videos/1136669396?t=0h45m23s'
+        url={gamevalue.vodUrl}
         width="1440px"
         height="800px"
         ref={ref}
@@ -185,6 +174,7 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
         playbackRate={gamevalue.playbackRate}
         volume={gamevalue.volume}
         muted={gamevalue.muted}
+        progressInterval={500}
         onReady={() => console.log('onReady')}
         onStart={() => console.log('onStart')}
         onPlay={handlePlay}
@@ -199,58 +189,39 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
         onProgress={handleProgress}
         onDuration={handleDuration}
       />
-      {/* ref={twitchPlayer}
-        time={gamevalue.startTime}
-        video={gamevalue.vodId}
-        id="player"
-        width="1440px"
-        height="800px"
-        hideControls={false} // 컨트롤 UI 숨김
-        theme="dark"
-        // onPlay={() => {
-        //   // 중지를 해제한 시점
-        //   console.log("일시 중지를 해제한 시점")
-        // }}
-        onPlaying={() => {
-          // 영상이 시작한 시점
-          console.log("영상이 시작한 시점");
-          timerStart(twitchTimeToMilliSec(gamevalue.startTime) + gamevalue.timer)
-
-        }}
-        onPause={() => {
-          clearInterval()
-          console.log("일시 중지된 시점")
-        }}
-        onReady={() => {
-          console.log("준비를 마친 시점")
-        }}
-      /> */}
       <div className='time-bar'>
-        <div className='icon-bar'></div>
-        <div className='icon-bar'></div>
-        <div className='icon-bar'>
-          <button onClick={handlePlayPause}>{gamevalue.playing ? 'Pause' : 'Play'}</button>
-        </div>
-        <div className='icon-bar'></div>
-        <div className='icon-bar'></div>
-        <div className='icon-bar'>
-          <input type='range' min={0} max={1} step='any' value={gamevalue.volume} onChange={handleVolumeChange} />
+        <img className='icon' onClick={() => {
+          handleSeekMove(-sec30)
+        }} src='Images/back_30.svg' alt='' />
+        <img className='icon' onClick={() => {
+          handleSeekMove(-sec5)
+        }} src='Images/back_5.svg' alt='' />
+        <img className='icon' onClick={handlePlayPause} src={gamevalue.playing ? 'Images/btn_stop.svg' : 'Images/btn_play.svg'} alt='' />
+        <img className='icon' onClick={() => {
+          handleSeekMove(+sec5)
+        }} src='Images/pre_5.svg' alt='' />
+        <img className='icon' onClick={() => {
+          handleSeekMove(+sec30)
+        }} src='Images/pre_30.svg' alt='' />
+        <div className='volume-box'>
+          <img className='icon' onClick={handleToggleMuted} src={gamevalue.volume === 0 || gamevalue.muted ? 'Images/btn_vol-x.svg' : 'Images/btn_vol-1.svg'} alt='' />
+          <input className='volume' type='range' min={0} max={1} step='any' value={gamevalue.volume} onChange={handleVolumeChange} />
         </div>
         <div className='line-bar'>
           <div className='time-text-box'>
-            <span>00:00 / 37:00</span>
+            <span>{secToMS(Math.floor(+gamevalue.playedSeconds) - +gamevalue.startTime)} / {secToMS(gamevalue.gameTime)}</span>
           </div>
           <input
             className='game-time-bar'
-            type='range' min={0} max={0.999999} step='any'
-            value={gamevalue.played}
+            type='range' min={startPlayed} max={(endTime) / +gamevalue.duration} step='any'
+            value={(+gamevalue.playedSeconds - +gamevalue.startTime) / gamevalue.duration + startPlayed}
             onMouseDown={handleSeekMouseDown}
             onChange={handleSeekChange}
             onMouseUp={handleSeekMouseUp}
           />
         </div>
       </div>
-    </TwtichVideoContainer>
+    </TwtichVideoContainer >
   );
 }
 
@@ -267,16 +238,37 @@ const TwtichVideoContainer = styled.div`
     height: 67px;
     padding-bottom: 17px;
     padding-left: 20px;
-    background-color: #33f;
     bottom: 0;
     display: flex;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.74));
 
-    .icon-bar {
+    .icon {
       width: 50px;
       height: 50px;
       object-fit: contain;
-      background-color: #3f0;
+      cursor: pointer;
     }
+
+    .volume-box {
+      position: relative;
+      .volume {
+        display: none;
+        height: 60px;
+      }
+
+      :hover {
+        .volume {
+          display: block;
+          position: absolute;
+          top: -55px;
+          left: -40px;
+          writing-mode: bt-lr; /* IE */
+          -webkit-appearance: slider-vertical; /* WebKit */
+        }
+      }
+    }
+
+   
 
     .line-bar {
       width: 1069px;
@@ -312,27 +304,33 @@ const TwtichVideoContainer = styled.div`
         opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
         -webkit-transition: .2s; /* 0.2 seconds transition on hover */
         transition: opacity .2s;
+        border-radius: 10px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
 
         ::-webkit-slider-thumb {
           -webkit-appearance: none; /* Override default look */
           appearance: none;
           width: 25px; /* Set a specific slider handle width */
           height: 6px; /* Slider handle height */
-          background: #04AA6D; /* Green background */
+          background: #5942ba; /* Green background */
+          box-shadow: -100vw 0 0 100vw #5942ba;
           cursor: pointer; /* Cursor on hover */
         }
 
         ::-webkit-slider-runnable-track {
+          width: 100%;
           height: 6px;
-          -webkit-appearance: none;
-          color: #13bba4;
-          margin-top: -1px;
+          cursor: pointer;
+          animate: 0.2s;
+          background: #3a3745;
         }
 
         ::-moz-range-thumb {
           width: 25px; /* Set a specific slider handle width */
           height: 6px; /* Slider handle height */
-          background: #04AA6D; /* Green background */
+          background: #5942ba; /* Green background */
           cursor: pointer; /* Cursor on hover */
         }
       }
@@ -341,39 +339,6 @@ const TwtichVideoContainer = styled.div`
 `;
 
 
-const Sliders = withStyles({
-  root: {
-    color: "#5942ba",
-    height: 2,
-    width: 1000,
-    marginTop: -6
-  },
-  thumb: {
-    height: 13,
-    width: 13,
-    backgroundColor: "#817e90",
-    border: "1px solid #817e90",
-    marginTop: -3,
-    marginLeft: -7,
-    "&:focus, &:hover, &$active": {
-      boxShadow: "inherit",
-    },
-  },
-  active: {},
-  valueLabel: {
-    left: "calc(-50%)",
-    top: -30,
-  },
-  track: {
-    height: 6,
-    borderRadius: 4,
-  },
-  rail: {
-    height: 6,
-    backgroundColor: "#433f4e",
-    borderRadius: 4,
-  },
-})(Slider);
 
 
 
