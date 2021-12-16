@@ -460,10 +460,12 @@
   "game": {
     "log": {
       "event": {
-        "subject": "이벤트 로그"
+        "subject": "이벤트 로그",
+        "tooltipInfo": "게임시간 15분 이후에는 오브젝트 획득, 와드 설치만 표시됩니다."
       },
       "status": {
-        "subject": "상태 로그"
+        "subject": "상태 로그",
+        "tooltipInfo": "게임시간 15분 이후 상태로그는 아직 지원하지 않습니다."
       },
       "detail": {
         "subject": "디테일 로그"
@@ -502,7 +504,8 @@
         "red-kill": "레드킬",
         "tower": "타워",
         "herald&baron": "전령,바론",
-        "dragon": "용"
+        "dragon": "용",
+        "tooltipInfo": "게임시간 15분 이후 데이터는 아직 지원하지 않습니다."
       }
     }
   }

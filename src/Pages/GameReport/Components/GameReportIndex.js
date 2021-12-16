@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
-import EachMatch from "./EachMatch";
+import EachMatch from "./EachMatch.jsx";
 import GameReportDetail from "./GameReportDetail";
 import axiosRequest from "../../../lib/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";

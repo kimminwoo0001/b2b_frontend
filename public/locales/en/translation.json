@@ -461,10 +461,12 @@
   "game": {
     "log": {
       "event": {
-        "subject": "Event Log"
+        "subject": "Event Log",
+        "tooltipInfo": "After 15 minutes of game time, only optical and ward installations are displayed."
       },
       "status": {
-        "subject": "Status Log"
+        "subject": "Status Log",
+        "tooltipInfo": "Status logs after 15 minutes of game time are not yet supported."
       },
       "detail": {
         "subject": "Detail Log"
@@ -503,7 +505,8 @@
         "red-kill": "Red",
         "tower": "Tower",
         "herald&baron": "Object",
-        "dragon": "Dragon"
+        "dragon": "Dragon",
+        "tooltipInfo": "Data after 15 minutes is not yet supported."
       }
     }
   }

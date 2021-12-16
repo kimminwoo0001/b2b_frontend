@@ -1,5 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import Tippy from "@tippy.js/react";
+import GameReportToolTip from "../Common/GameReportToolTip";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 import { InitializeGameState } from "../../../../redux/modules/gamevalue";
@@ -17,7 +19,7 @@ const DetailLog = () => {
             dispatch(InitializeGameState());
           }}
           src={"Images/ic_close_bk_30.svg"}
-          alt="question"
+          alt="close"
         />
         <span>{gamevalue.uniqueId}</span>
       </NavContainer>
@@ -25,7 +27,18 @@ const DetailLog = () => {
         <LogTitle>
           <div>
             <span>{t("game.log.event.subject")}</span>
-            <img src={"Images/ico-question-mark.svg"} alt="question" />
+            <StyledTippy
+              duration={0}
+              delay={[100, 0]}
+              content={
+                <GameReportToolTip
+                  tooltipInfo={t("game.log.event.tooltipInfo")}
+                />
+              }
+              placement="bottom"
+            >
+              <img src={"Images/ico-question-mark.svg"} alt="question" />
+            </StyledTippy>
           </div>
         </LogTitle>
         <LogContentBox>
@@ -52,7 +65,18 @@ const DetailLog = () => {
       <LogDetailContainer>
         <LogTitle>
           <span>{t("game.log.status.subject")}</span>
-          <img src={"Images/ico-question-mark.svg"} alt="question" />
+          <StyledTippy
+            duration={0}
+            delay={[100, 0]}
+            content={
+              <GameReportToolTip
+                tooltipInfo={t("game.log.status.tooltipInfo")}
+              />
+            }
+            placement="top"
+          >
+            <img src={"Images/ico-question-mark.svg"} alt="question" />
+          </StyledTippy>
         </LogTitle>
         <LogContentBox>
           <LogContent isActive={false} team={"blue"}></LogContent>
@@ -195,3 +219,5 @@ const LogContent = styled.div`
     border-radius: 10px;
   }
 `;
+
+const StyledTippy = styled(Tippy)``;

@@ -5,6 +5,7 @@ import transferTimetoWidth from "../../../../lib/transferTimetoWidth";
 import { useSelector, useDispatch } from "react-redux";
 import TimeBar from "../Common/TimeBar";
 import TimeBarTitle from "../Common/TimeBarTitle";
+import GameReportToolTip from "../Common/GameReportToolTip";
 
 const romingSuccessTime = [
   { team: 1, time: 500 },
