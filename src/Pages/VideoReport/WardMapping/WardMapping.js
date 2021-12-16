@@ -359,7 +359,7 @@ function WardMapping() {
                   <Tippy // optionsx
                     duration={0}
                     delay={[100, 0]}
-                    trigger="click"
+                    trigger="mouseenter"
                     content={
                       <WardTooltip
                         wardType={ward.firstward}
@@ -396,7 +396,7 @@ function WardMapping() {
                   <Tippy // options
                     duration={0}
                     delay={[100, 0]}
-                    trigger="click"
+                    trigger="mouseenter"
                     content={
                       <WardTooltip
                         wardType={ward.secondward}

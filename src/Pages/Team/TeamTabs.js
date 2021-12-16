@@ -26,6 +26,7 @@ function TeamTabs() {
 
   const [openModal, setOpenModal] = useState(false);
   const [whichTeam, setWhichTeam] = useState();
+  const pagePath = document.location.pathname;
 
   useEffect(() => {
     // filters.tab === 2 && dispatch(CompareModal(true));
@@ -65,25 +66,21 @@ function TeamTabs() {
               alt="arrowIcon"
             ></img>
           </Schedule> */}
-              <TabItem
-                onClick={() => {
-                  dispatch(HandleTab(0));
-                  dispatch(ResetFilter2());
-                }}
-                changeColor={filters.tab === 0}
-              >
-                <div>
-                  <span>{t("team.tab.draft")}</span>
-                </div>
-                {/* <img
-                  src={
-                    filters.tab === 0
-                      ? "Images/ico-1depth-arrow-on.png"
-                      : "Images/ico-1depth-arrow-off.png"
-                  }
-                  alt="arrowIcon"
-                ></img> */}
-              </TabItem>
+              {pagePath === "/teamCompare" ? (
+                ""
+              ) : (
+                <TabItem
+                  onClick={() => {
+                    dispatch(HandleTab(0));
+                    dispatch(ResetFilter2());
+                  }}
+                  changeColor={filters.tab === 0}
+                >
+                  <div>
+                    <span>{t("team.tab.draft")}</span>
+                  </div>
+                </TabItem>
+              )}
 
               {filters.league.indexOf("lpl") === -1 ? (
                 <TabItem
@@ -96,14 +93,6 @@ function TeamTabs() {
                   <div>
                     <span>{t("team.tab.analysis")}</span>
                   </div>
-                  {/* <img
-                    src={
-                      filters.tab === 1
-                        ? "Images/ico-1depth-arrow-on.png"
-                        : "Images/ico-1depth-arrow-off.png"
-                    }
-                    alt="arrowIcon"
-                  ></img> */}
                 </TabItem>
               ) : (
                 <div></div>

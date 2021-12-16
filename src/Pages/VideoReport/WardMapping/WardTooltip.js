@@ -39,7 +39,7 @@ function WardTooltip({
         <ChampionContents>
           <PlayerInfo>{`${team.toUpperCase()} ${pos} ${player}`}</PlayerInfo>
           <OtherInfo>
-            <GameInfo>{`${uniqueId}`}</GameInfo>
+            <GameInfo>{`${uniqueId.replaceAll("_", " ")}`}</GameInfo>
             {`${date} VS ${oppteam}`}
           </OtherInfo>
         </ChampionContents>

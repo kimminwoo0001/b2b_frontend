@@ -35,6 +35,7 @@ function LeaguePick() {
         pickDifference={pickDifference}
         uniquePick={uniquePick}
         tier={tier}
+        loading={loading}
       />
     ),
     1: (
@@ -43,6 +44,7 @@ function LeaguePick() {
         pickDifference={pickDifference}
         uniquePick={uniquePick}
         tier={tier}
+        loading={loading}
       />
     ),
     2: (
@@ -51,6 +53,7 @@ function LeaguePick() {
         pickDifference={pickDifference}
         uniquePick={uniquePick}
         tier={tier}
+        loading={loading}
       />
     ),
     3: (
@@ -59,6 +62,7 @@ function LeaguePick() {
         pickDifference={pickDifference}
         uniquePick={uniquePick}
         tier={tier}
+        loading={loading}
       />
     ),
     4: (
@@ -67,6 +71,7 @@ function LeaguePick() {
         pickDifference={pickDifference}
         uniquePick={uniquePick}
         tier={tier}
+        loading={loading}
       />
     ),
   };
@@ -138,6 +143,7 @@ function LeaguePick() {
         setTier(e.championTier);
         //유니크픽 데이터 저장
         setUniquePick(e.uniquePick);
+        setLoading(false);
       },
       function (objStore) {
         dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
