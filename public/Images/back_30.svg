@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2, .cls-3 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        stroke: rgba(0,0,0,0);
+        stroke-miterlimit: 10;
+      }
+
+      .cls-3 {
+        font-size: 16px;
+        font-family: SpoqaHanSansNeo-Bold, Spoqa Han Sans Neo;
+        font-weight: 700;
+      }
+    </style>
+  </defs>
+  <g id="back_30" transform="translate(-527 -743)">
+    <g id="btn_back" transform="translate(542.5 748.5)">
+      <rect id="area" class="cls-1" width="50" height="50" transform="translate(-15.5 -5.5)"/>
+      <path id="Union_61" data-name="Union 61" class="cls-2" d="M0,15.5A15.46,15.46,0,0,0,11.773,30.55l.006,1.963a1.229,1.229,0,0,0,1.848,1.061l5.531-3.212a1.229,1.229,0,0,0,0-2.128l-5.547-3.185a1.213,1.213,0,0,0-.613-.163,1.231,1.231,0,0,0-1.231,1.233L11.768,28A13.041,13.041,0,1,1,23.476,25.82a1.23,1.23,0,0,0,1.507,1.945A15.5,15.5,0,1,0,0,15.5Zm14.229,12.74,1.85,1.063-1.844,1.074Z" transform="translate(25.5 36.241) rotate(180)"/>
+    </g>
+    <text id="_30" data-name="30" class="cls-3" transform="translate(552 775)"><tspan x="-9.536" y="0">30</tspan></text>
+  </g>
+</svg>

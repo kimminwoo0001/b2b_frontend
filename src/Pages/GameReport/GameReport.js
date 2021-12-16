@@ -59,6 +59,7 @@ min-height: 100vh;
 overflow: auto;
 display: flex;
 background-color: #16151c;
+overflow: hidden;
 
 .filter-close {
   display: none;

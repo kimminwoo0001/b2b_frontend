@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
 import transferTimetoWidth from "../../../../lib/transferTimetoWidth";
+import { useSelector, useDispatch } from "react-redux";
+import TimeBar from "../Common/TimeBar";
+import TimeBarTitle from "../Common/TimeBarTitle";
 
 const romingSuccessTime = [
   { team: 1, time: 500 },
@@ -12,9 +15,6 @@ const romingSuccessTime = [
 ];
 
 const TimeLine = ({ fullTime = 1800 }) => {
-  const [range, setRange] = useState(0);
-  const [minTime, setMinTime] = useState();
-  const [maxTime, setMaxTime] = useState();
   const { t } = useTranslation();
   const fullWidth = 623;
 
@@ -71,21 +71,10 @@ const TimeLine = ({ fullTime = 1800 }) => {
       </TimeLineDataContainer>
       <TimeLineGoldContainer></TimeLineGoldContainer>
       <TimeLineDataContainer>
-        <div className="title"></div>
-        <RangeInput
-          min={0}
-          value={range}
-          max={maxTime}
-          id="rangeSlider"
-          type="range"
-          onChange={(e) => {
-            setRange(Number(e.target.value));
-          }}
-          onKeyPress={(e) => {
-            setRange(Number(e.target.value));
-          }}
-          step="1"
-        />
+        <TimeBarTitle />
+        <div className="time-bar">
+          <TimeBar />
+        </div>
       </TimeLineDataContainer>
     </TimeLineContainer>
   );
@@ -99,14 +88,12 @@ const TimeLineContainer = styled.div`
   margin: 0px 0 px;
   padding: 17px 27px 0 5px;
   opacity: 1;
-  background-color: #953;
 `;
 
 const TimeLineDataContainer = styled.div`
   width: 691px;
   height: 17px;
   margin: 4px 0 4px 5px;
-  background-color: #412;
   display: flex;
 
   .title {
@@ -118,8 +105,13 @@ const TimeLineDataContainer = styled.div`
     font-style: normal;
     line-height: 1.3;
     letter-spacing: normal;
-    text-align: left;
+    text-align: right;
     color: #fff;
+  }
+
+  .time-bar {
+    margin-left: 5px;
+    width: 100%;
   }
 `;
 const TimeLine15Box = styled.div`
@@ -171,25 +163,4 @@ const TimeLineTimeLine = styled.div`
   margin: 9px 0 0 19px;
   display: flex;
   background-color: #515353;
-`;
-
-const RangeInput = styled.input`
-  width: 85%;
-  height: 6px;
-  border-radius: 3px;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  background-color: rgb(58, 55, 69);
-  border-radius: 6px;
-  border: 0.2px solid rgb(58, 55, 69);
-  -webkit-appearance: none;
-  ::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    border: 1px solid #817e90;
-    height: 11px;
-    width: 11px;
-    border-radius: 50%;
-    background: #817e90;
-    cursor: pointer;
-  }
 `;

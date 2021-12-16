@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { SetDetailDataSet, SetGameId, SetPlatform, SetStartTime, SetVodId } from "../../../redux/modules/gamevalue";
+import { SetDetailDataSet, SetGameId, SetGameTime, SetStartTime, SetUniqueId, SetVodUrl } from "../../../redux/modules/gamevalue";
 import axiosRequest from "../../../lib/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import { API } from "../../config";
@@ -12,7 +12,7 @@ const TOTAL_SET = [0, 1, 2, 3, 4];
 
 const EachMatch = ({ matchData, team }) => {
   const dispatch = useDispatch();
-  const { date, game, gameid, vod, platform, starttime, oppteam, uniqueId, teamresult, oppteamresult } =
+  const { date, game, gameid, vod, gamelength, starttime, oppteam, uniqueId, teamresult, oppteamresult } =
     matchData;
   // const acitveSetList = () => {
   //   let activeSet = [];
@@ -44,7 +44,7 @@ const EachMatch = ({ matchData, team }) => {
   return (
     <>
       <MetaData>
-        <Round>{uniqueId}</Round>
+        <Round>{uniqueId.replaceAll("_", " ")}</Round>
         <Date>{date}</Date>
       </MetaData>
       <GameInfoBox>
@@ -76,10 +76,11 @@ const EachMatch = ({ matchData, team }) => {
                 inactive={gameid[game] === undefined}
                 onClick={() => {
                   dispatch(SetGameId(gameid[game]));
-                  dispatch(SetPlatform(platform[game]))
-                  dispatch(SetVodId(vod[game]))
-                  dispatch(SetStartTime(starttime[game]))
-                  getGameDetailData(gameid[game])
+                  dispatch(SetVodUrl(vod[game]));
+                  dispatch(SetGameTime(gamelength[game] / 2 ?? 0));
+                  dispatch(SetStartTime(starttime[game] ?? 0));
+                  dispatch(SetUniqueId(uniqueId.replaceAll("_", " ")))
+                  getGameDetailData(gameid[game]);
                 }}
               >
                 {idx + 1}
