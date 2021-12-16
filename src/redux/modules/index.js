@@ -9,6 +9,7 @@ import pivalue from "./pivalue";
 import selectorvalue from "./selectorvalue";
 import modalvalue from "./modalvalue";
 import gamevalue from "./gamevalue";
+import videovalue from "./videovalue";
 
 import { persistReducer } from "redux-persist";
 import storageSession from "redux-persist/lib/storage/session";
@@ -37,7 +38,8 @@ const appReducer = combineReducers({
   PiAreaReducer: pivalue,
   SelectorReducer: selectorvalue,
   ModalReducer: modalvalue,
-  GameReportReducer: gamevalue
+  GameReportReducer: gamevalue,
+  VideoReducer: videovalue
 });
 
 const rootReducer = (state, action) => {

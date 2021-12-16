@@ -6,17 +6,17 @@ import ReactPlayer from 'react-player'
 import twitchTimeToMilliSec from '../../lib/twitchTimeToMilliSec';
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
-import { HandledisablePip, HandleDuration, HandleEnablePip, handleEnablePip, HandleEnded, HandlePlaybackRateChange, HandlePlaying, HandleProgress, HandleSeekChange, HandleSeekMouseDown, HandleSeekMouseUp, HandleStop, HandleToggleControls, HandleToggleLight, HandleToggleLoop, HandleToggleMuted, HandleTogglePip, HandleVolumeChange, SetPause, SetPlay, SetPlayBackRate, SetPlayRate, SetUrl, SET_PAUSE } from '../../redux/modules/gamevalue';
+import { HandledisablePip, HandleDuration, HandleEnablePip, HandleEnded, HandlePlaybackRateChange, HandlePlaying, HandleProgress, HandleSeekChange, HandleSeekMouseDown, HandleSeekMouseUp, HandleStop, HandleToggleControls, HandleToggleLight, HandleToggleLoop, HandleToggleMuted, HandleTogglePip, HandleVolumeChange, SetPause, SetPlay, SetPlayBackRate, SetUrl } from '../../redux/modules/videovalue';
 import secToMS from '../../lib/secToMS';
 
 
 const TwitchVideoPlayer = ({ video, startTime }) => {
-  const gamevalue = useSelector((state) => state.GameReportReducer);
+  const videovalue = useSelector((state) => state.VideoReducer);
   const [seekTime, setSeekTime] = useState(0)
   const dispatch = useDispatch();
   let player;
-  const endTime = +gamevalue.startTime + +gamevalue.gameTime;
-  const startPlayed = +gamevalue.startTime / +gamevalue.duration;
+  const endTime = +videovalue.startTime + +videovalue.gameTime;
+  const startPlayed = +videovalue.startTime / +videovalue.duration;
   const sec5 = 5;
   const sec30 = 30;
 
@@ -25,8 +25,8 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
   }
 
   const handlePlayPause = () => {
-    dispatch(HandlePlaying(gamevalue.playing))
-    //this.setState({ playing: !gamevalue.playing })
+    dispatch(HandlePlaying(videovalue.playing))
+    //this.setState({ playing: !videovalue.playing })
   }
 
   const handleStop = () => {
@@ -35,18 +35,18 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
   }
 
   const handleToggleControls = () => {
-    dispatch(HandleToggleControls(!gamevalue.controls))
-      .then(() => load(gamevalue.url))
+    dispatch(HandleToggleControls(!videovalue.controls))
+      .then(() => load(videovalue.url))
   }
 
   const handleToggleLight = () => {
-    dispatch(HandleToggleLight(!gamevalue.light))
-    //this.setState({ light: !gamevalue.light })
+    dispatch(HandleToggleLight(!videovalue.light))
+    //this.setState({ light: !videovalue.light })
   }
 
   const handleToggleLoop = () => {
-    dispatch(HandleToggleLoop(!gamevalue.loop))
-    //this.setState({ loop: !gamevalue.loop })
+    dispatch(HandleToggleLoop(!videovalue.loop))
+    //this.setState({ loop: !videovalue.loop })
   }
 
   const handleVolumeChange = e => {
@@ -56,7 +56,7 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
 
   const handleToggleMuted = () => {
     dispatch(HandleToggleMuted())
-    //this.setState({ muted: !gamevalue.muted })
+    //this.setState({ muted: !videovalue.muted })
   }
 
   const handleSetPlaybackRate = e => {
@@ -70,8 +70,8 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
   }
 
   const handleTogglePIP = () => {
-    dispatch(HandleTogglePip(!gamevalue.pip))
-    //this.setState({ pip: !gamevalue.pip })
+    dispatch(HandleTogglePip(!videovalue.pip))
+    //this.setState({ pip: !videovalue.pip })
   }
 
   const handlePlay = () => {
@@ -112,7 +112,7 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
 
   const handleSeekMove = (move) => {
     handleSeekMouseDown();
-    const movePlayed = (parseFloat(+gamevalue.playedSeconds) + move) / gamevalue.duration;
+    const movePlayed = (parseFloat(+videovalue.playedSeconds) + move) / videovalue.duration;
     dispatch(HandleSeekChange(movePlayed))
     dispatch(HandleSeekMouseUp())
     player.seekTo(movePlayed)
@@ -123,7 +123,7 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
     //this.setState({ seeking: false })
     //console.log("handleSeekMouseUp", parseFloat(seekTime))
     player.seekTo(parseFloat(seekTime))
-    //player.seekTo(parseFloat(gamevalue.playedSeconds))
+    //player.seekTo(parseFloat(videovalue.playedSeconds))
   }
 
   const handleProgress = state => {
@@ -134,7 +134,7 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
     if (state.playedSeconds > endTime) {
       dispatch(SetPause());
     }
-    if (!gamevalue.seeking) {
+    if (!videovalue.seeking) {
       dispatch(HandleProgress(state))
       //this.setState(state)
     }
@@ -142,8 +142,8 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
 
   const handleEnded = () => {
     console.log('onEnded')
-    dispatch(HandleEnded(gamevalue.loop))
-    //this.setState({ playing: gamevalue.loop })
+    dispatch(HandleEnded(videovalue.loop))
+    //this.setState({ playing: videovalue.loop })
   }
 
   const handleDuration = (duration) => {
@@ -156,24 +156,24 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
   }
 
   useEffect(() => {
-    //twitchPlayer(gamevalue);
+    //twitchPlayer(videovalue);
   }, [])
 
   return (
     <TwtichVideoContainer>
       <ReactPlayer
-        url={gamevalue.vodUrl}
+        url={videovalue.vodUrl}
         width="1440px"
         height="800px"
         ref={ref}
         className='react-player'
-        playing={gamevalue.playing}
-        controls={gamevalue.controls}
-        light={gamevalue.light}
-        loop={gamevalue.loop}
-        playbackRate={gamevalue.playbackRate}
-        volume={gamevalue.volume}
-        muted={gamevalue.muted}
+        playing={videovalue.playing}
+        controls={videovalue.controls}
+        light={videovalue.light}
+        loop={videovalue.loop}
+        playbackRate={videovalue.playbackRate}
+        volume={videovalue.volume}
+        muted={videovalue.muted}
         progressInterval={500}
         onReady={() => console.log('onReady')}
         onStart={() => console.log('onStart')}
@@ -196,7 +196,7 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
         <img className='icon' onClick={() => {
           handleSeekMove(-sec5)
         }} src='Images/back_5.svg' alt='' />
-        <img className='icon' onClick={handlePlayPause} src={gamevalue.playing ? 'Images/btn_stop.svg' : 'Images/btn_play.svg'} alt='' />
+        <img className='icon' onClick={handlePlayPause} src={videovalue.playing ? 'Images/btn_stop.svg' : 'Images/btn_play.svg'} alt='' />
         <img className='icon' onClick={() => {
           handleSeekMove(+sec5)
         }} src='Images/pre_5.svg' alt='' />
@@ -204,17 +204,17 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
           handleSeekMove(+sec30)
         }} src='Images/pre_30.svg' alt='' />
         <div className='volume-box'>
-          <img className='icon' onClick={handleToggleMuted} src={gamevalue.volume === 0 || gamevalue.muted ? 'Images/btn_vol-x.svg' : 'Images/btn_vol-1.svg'} alt='' />
-          <input className='volume' type='range' min={0} max={1} step='any' value={gamevalue.volume} onChange={handleVolumeChange} />
+          <img className='icon' onClick={handleToggleMuted} src={videovalue.volume === 0 || videovalue.muted ? 'Images/btn_vol-x.svg' : 'Images/btn_vol-1.svg'} alt='' />
+          <input className='volume' type='range' min={0} max={1} step='any' value={videovalue.volume} onChange={handleVolumeChange} />
         </div>
         <div className='line-bar'>
           <div className='time-text-box'>
-            <span>{secToMS(Math.floor(+gamevalue.playedSeconds) - +gamevalue.startTime)} / {secToMS(gamevalue.gameTime)}</span>
+            <span>{secToMS(Math.floor(+videovalue.playedSeconds) - +videovalue.startTime)} / {secToMS(videovalue.gameTime)}</span>
           </div>
           <input
             className='game-time-bar'
-            type='range' min={startPlayed} max={(endTime) / +gamevalue.duration} step='any'
-            value={(+gamevalue.playedSeconds - +gamevalue.startTime) / gamevalue.duration + startPlayed}
+            type='range' min={startPlayed} max={(endTime) / +videovalue.duration} step='any'
+            value={(+videovalue.playedSeconds - +videovalue.startTime) / videovalue.duration + startPlayed}
             onMouseDown={handleSeekMouseDown}
             onChange={handleSeekChange}
             onMouseUp={handleSeekMouseUp}

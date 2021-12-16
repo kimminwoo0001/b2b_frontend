@@ -20,31 +20,31 @@ const TeamStatus = () => {
       <ChampLineContainer>
         <ChampionContainer />
         <ChampionOppContainer />
-        <img className="position" src="Images/ic_line_top.svg"></img>
+        <img className="position" src="Images/ic_line_top.svg" alt=""></img>
         <GoldGap gold={933} win={100} />
       </ChampLineContainer>
       <ChampLineContainer>
         <ChampionContainer />
         <ChampionOppContainer />
-        <img className="position" src="Images/ic_line_jng.svg"></img>
+        <img className="position" src="Images/ic_line_jng.svg" alt=""></img>
         <GoldGap gold={467} win={200} />
       </ChampLineContainer>
       <ChampLineContainer>
         <ChampionContainer />
         <ChampionOppContainer />
-        <img className="position" src="Images/ic_line_mid.svg"></img>
+        <img className="position" src="Images/ic_line_mid.svg" alt=""></img>
         <GoldGap gold={394} win={200} />
       </ChampLineContainer>
       <ChampLineContainer>
         <ChampionContainer />
         <ChampionOppContainer />
-        <img className="position" src="Images/ic_line_ad.svg"></img>
+        <img className="position" src="Images/ic_line_ad.svg" alt=""></img>
         <GoldGap gold={933} win={100} />
       </ChampLineContainer>
       <ChampLineContainer>
         <ChampionContainer />
         <ChampionOppContainer />
-        <img className="position" src="Images/ic_line_sup.svg"></img>
+        <img className="position" src="Images/ic_line_sup.svg" alt=""></img>
         <GoldGap gold={22} win={200} />
       </ChampLineContainer>
     </ChamStatusContainer>

@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
 import transferTimetoWidth from "../../../../../../lib/transferTimetoWidth";
-import TimeLineTimeBar from "../../../Common/TimeBar";
-import TimeBarTitle from "../../../Common/TimeBarTitle";
 
 const skillBoxWidth = 610;
 
