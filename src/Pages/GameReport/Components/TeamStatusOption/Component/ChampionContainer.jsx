@@ -1,18 +1,36 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import ChampionEventBox from "./ChampionEventBox";
+import { useSelector, useDispatch } from "react-redux";
+import { SetSelectedPlayer } from "../../../../../redux/modules/gamevalue";
 
-const ChampionContainer = () => {
+const ChampionContainer = ({ player, winner, participant, teamName }) => {
+  const gamevalue = useSelector((state) => state.GameReportReducer);
+  const dispatch = useDispatch();
   return (
-    <ChampTeamContainer isActive={true} isDeath={false}>
+    <ChampTeamContainer
+      isActive={participant === gamevalue.selectedParticipant}
+      isDeath={false}
+      champImg={player.info.championEng}
+      onClick={() => {
+        dispatch(
+          SetSelectedPlayer({
+            team: 0,
+            position: participant,
+            participant: participant,
+          })
+        );
+      }}
+    >
       <div className="name">
-        <span>DK Khan</span>
+        <span>{`${teamName} ${player.info.player}`}</span>
       </div>
       <div className="champ-pic-box">
         <div className="champ-pic">
+          <div className="img-box"></div>
           <div className="champ-revive-count">21</div>
         </div>
-        <Superiority winner={"blue"}>
+        <Superiority winner={winner}>
           <img
             className="super-img"
             src="Images/ico-point-high-blue.svg"
@@ -65,20 +83,25 @@ const ChampTeamContainer = styled.div`
     .champ-pic {
       width: 60px;
       height: 60px;
-      margin: 0 2px;
-      padding: 40px 40px 0 0;
+      margin: 0 0px;
       object-fit: contain;
-      background-color: #fff;
-      border-radius: 30px;
-      border: solid 2px
-        ${(props) => (props.isActive ? `#1580b6` : `rgba(0,0,0,0)`)};
       position: relative;
 
-      img {
-        ${(props) => props.isDeath && `opacity: 0.5;`}
-      }
+      .img-box {
+        width: 60px;
+        height: 60px;
+        background-image: url(https://ddragon.leagueoflegends.com/cdn/11.24.1/img/champion/${(
+          props
+        ) => props.champImg}.png);
+       background-size: 60px;
+       ${(props) => props.isDeath && `mix-blend-mode: luminosity;`}
+       border-radius: 30px;
+       border: solid 2px
+        ${(props) => (props.isActive ? `#1580b6` : `rgba(0,0,0,0)`)};
+     }
 
       .champ-revive-count {
+        display:  ${(props) => (props.isDeath ? "block" : "none")};
         width: 25px;
         height: 25px;
         position: absolute;

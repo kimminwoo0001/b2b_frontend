@@ -1,11 +1,44 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
+import { useSelector } from "react-redux";
 
 const StatusBox4 = () => {
+  const staticvalue = useSelector((state) => state.StaticValueReducer);
+  const gamevalue = useSelector((state) => state.GameReportReducer);
+  const runesJoson = staticvalue.runesObjects;
+  const runesData =
+    gamevalue.fixedDataset[gamevalue.selectedTeam].players[
+      gamevalue.selectedPosition
+    ].rune;
+
+  const mainRune = getMainRunes(runesData.slice(0, 5));
+  const subRune = runesData.slice(5, 8);
+  const statRune = runesData.slice(8, 11);
+
+  function getMainRunes(runeList) {
+    let arrImgAddr = [];
+
+    for (let id of runeList) {
+      for (let runeObject of runesJoson) {
+        if (runeObject.id === mainRune[0]) {
+          let slots = runeObject.slots;
+          arrImgAddr.push(runeObject.icon);
+          for (let runes of slots) {
+
+          }
+
+          break;
+        }
+      }
+    }
+  }
+
   return (
     <RunesContainer>
       <RunesBox>
-        <div className="main-rune"></div>
+        <div className="main-rune">
+          <img src="" alt="" />
+        </div>
         <div className="sub-rune"></div>
         <div className="sub-rune"></div>
         <div className="sub-rune"></div>
@@ -45,6 +78,11 @@ const RunesBox = styled.div`
     margin: 0 4px 0 0;
     object-fit: contain;
     background-color: #f0f;
+
+    img {
+      width: 26px;
+      height: 26px;
+    }
   }
 
   .sub-rune {

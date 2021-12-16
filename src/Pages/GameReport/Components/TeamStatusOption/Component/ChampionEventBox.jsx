@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const ChampionEventBox = ({ isDeath }) => {
+const ChampionEventBox = ({ isDeath, isOpp }) => {
   return (
-    <EventBox isDeath={isDeath}>
+    <EventBox isDeath={isDeath} isOpp={isOpp}>
+      {isOpp && <div className="event-img"></div>}
       <div className="desc">
         <div className="time">05:32</div>
         <div className="status">인베이드</div>
       </div>
-      <div className="event-img"></div>
+      {!isOpp && <div className="event-img"></div>}
     </EventBox>
   );
 };
@@ -32,7 +33,7 @@ const EventBox = styled.div`
       font-style: normal;
       line-height: 1;
       letter-spacing: normal;
-      text-align: left;
+      text-align: ${(props) => (props.isOpp ? "right" : "left")};
       color: #fff;
     }
     .status {
@@ -43,7 +44,7 @@ const EventBox = styled.div`
       font-style: normal;
       line-height: 1.5;
       letter-spacing: normal;
-      text-align: left;
+      text-align: ${(props) => (props.isOpp ? "right" : "left")};
       color: #fff;
     }
   }

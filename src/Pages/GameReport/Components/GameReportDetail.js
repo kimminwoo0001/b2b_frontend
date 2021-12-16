@@ -11,7 +11,7 @@ import VideoPlayer from '../../../Components/Video/VideoPlayer';
 
 
 const GameReportDetail = () => {
-
+  
   useEffect(() => {
 
   }, [])

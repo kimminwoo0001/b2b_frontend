@@ -1,16 +1,22 @@
 import React, { memo, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, batch } from "react-redux";
 import {
+  SetBlueTeam,
   SetDetailDataSet,
   SetFixedDataset,
   SetGameId,
   SetLogDataset,
   SetOppside,
   SetPlayersDataset,
+  SetRedTeam,
   SetUniqueId,
 } from "../../../redux/modules/gamevalue";
-import { SetGameTime, SetStartTime, SetVodUrl } from "../../../redux/modules/videovalue";
+import {
+  SetGameTime,
+  SetStartTime,
+  SetVodUrl,
+} from "../../../redux/modules/videovalue";
 import axiosRequest from "../../../lib/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import { API } from "../../config";
@@ -43,13 +49,15 @@ const EachMatch = ({ matchData, team }) => {
         gameid: gameId,
       };
       axiosRequest(
-        'GET',
+        "GET",
         url,
         params,
         function (e) {
-          dispatch(SetFixedDataset(e?.infos));
-          dispatch(SetPlayersDataset(e?.players));
-          dispatch(SetLogDataset(e?.logs));
+          batch(() => {
+            dispatch(SetFixedDataset(e?.infos));
+            dispatch(SetPlayersDataset(e?.players));
+            dispatch(SetLogDataset(e?.logs));
+          });
         },
         function (objstore) {
           dispatch(SetModalInfo(objstore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -65,7 +73,7 @@ const EachMatch = ({ matchData, team }) => {
       <MetaData>
         <Round>{uniqueId.replaceAll("_", " ")}</Round>
         <Date>{date.substring(0, 16)}</Date>
-      </MetaData >
+      </MetaData>
       <GameInfoBox>
         <MatchInfo>
           <Team>
@@ -100,8 +108,18 @@ const EachMatch = ({ matchData, team }) => {
                   dispatch(SetVodUrl(vod[game]));
                   dispatch(SetGameTime(gamelength[game] / 2 ?? 0));
                   dispatch(SetStartTime(starttime[game] ?? 0));
-                  dispatch(SetUniqueId(uniqueId.replaceAll("_", " ")))
-                  dispatch(SetOppside(oppside[game]))
+                  dispatch(SetUniqueId(uniqueId.replaceAll("_", " ")));
+                  //dispatch(SetOppside(oppside[game]))
+                  dispatch(
+                    SetBlueTeam(
+                      (oppside[game] === "red" ? team : oppteam).toUpperCase()
+                    )
+                  );
+                  dispatch(
+                    SetRedTeam(
+                      (oppside[game] === "red" ? oppteam : team).toUpperCase()
+                    )
+                  );
                   getGameDetailData(gameid[game]);
                 }}
               >

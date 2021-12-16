@@ -18,3 +18,7 @@ export const API3 = "https://nunu.gg:8443/LeagueCollectionPi";
 export const API4 = "http://192.168.0.36:8081/LeagueCollectionPi2";
 
 export const API5 = "http://nunu.gg:8901";
+
+
+// 라이엇 최신 버전(json)
+export const recentVersion = '11.24.1';

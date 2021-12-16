@@ -1,9 +1,16 @@
-export const GET_FILTER_ALL_ITMES = "staticvalue/Get_Filter_All_Items";
+export const SET_FILTER_ALL_ITMES = "staticvalue/SET_FILTER_ALL_ITMES";
+export const SET_RUNES_OBJECT = "staticvalue/SET_RUNES_OBJECT";
 
 
-export const GetFilterAllItems = (payload) => {
+export const SetFilterAllItems = (payload) => {
   return {
-    type: GET_FILTER_ALL_ITMES,
+    type: SET_FILTER_ALL_ITMES,
+    payload
+  };
+}
+export const SetRunesJson = (payload) => {
+  return {
+    type: SET_RUNES_OBJECT,
     payload
   };
 }
@@ -14,10 +21,16 @@ export default function StaticValueReducer(state = initialState, action) {
       return {
         initialState
       }
-    case GET_FILTER_ALL_ITMES:
+    case SET_FILTER_ALL_ITMES:
       return {
         ...state,
         filterObjects: action.payload
+      }
+    case SET_RUNES_OBJECT:
+      console.log('runesObjects', action.payload);
+      return {
+        ...state,
+        runesObjects: action.payload
       }
     default:
       return state;
@@ -26,6 +39,7 @@ export default function StaticValueReducer(state = initialState, action) {
 
 const initialState = {
   filterObjects: null,
+  runesObjects: null,
   filterHeader: {
     "league": "league",
     "year": "year",

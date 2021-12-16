@@ -11,6 +11,13 @@ export const SET_FIXED_DATASET = "gamevalue/SET_FIXED_DATASET";
 export const SET_PLAYERS_DATASET = "gamevalue/SET_PLAYERS_DATASET";
 export const SET_LOG_DATASET = "gamevalue/SET_LOG_DATASET";
 export const SET_AUTO_DATASET = "gamevalue/SET_AUTO_DATASET";
+export const SET_BLUE_TEAM = "gamevalue/SET_BLUE_TEAM";
+export const SET_RED_TEAM = "gamevalue/SET_RED_TEAM";
+
+export const SET_SELECTED_PLAYER = "gamevalue/SET_SELECTED_PLAYER";
+export const SET_SELECTED_TEAM = "gamevalue/SET_SELECTED_TEAM";
+export const SET_SELECTED_POSITION = "gamevalue/SET_SELECTED_POSITION";
+export const SET_SELECTED_PARTICIPANT = "gamevalue/SET_SELECTED_PARTICIPANT";
 
 
 export const InitializeGameState = (payload) => {
@@ -82,6 +89,43 @@ export const SetAutoDataset = (payload) => {
     payload
   };
 }
+export const SetBlueTeam = (payload) => {
+  return {
+    type: SET_BLUE_TEAM,
+    payload
+  };
+}
+export const SetRedTeam = (payload) => {
+  return {
+    type: SET_RED_TEAM,
+    payload
+  };
+}
+
+export const SetSelectedPlayer = (payload) => {
+  return {
+    type: SET_SELECTED_PLAYER,
+    payload
+  };
+}
+export const SetSelectedTeam = (payload) => {
+  return {
+    type: SET_SELECTED_TEAM,
+    payload
+  };
+}
+export const SetSelectedPosition = (payload) => {
+  return {
+    type: SET_SELECTED_POSITION,
+    payload
+  };
+}
+export const SetSelectedParticipant = (payload) => {
+  return {
+    type: SET_SELECTED_PARTICIPANT,
+    payload
+  };
+}
 
 const initialState = {
   gameId: "",
@@ -89,10 +133,15 @@ const initialState = {
   detail: null,
   player: null,
   uniqueId: "",
-  fixedDataset: {},
+  fixedDataset: [],
   playerDataset: {},
   logDataset: {},
   autoDataset: {},
+  blueteam: "",
+  redteam: "",
+  selectedTeam: 0, // 0: 블루팀, 1: 레드팀
+  selectedPosition: 0, // 0: top, 1: jng, 2:mid, 3:ad, 4:sup
+  selectedParticipant: 0 // 0~4 blue(t,j,m,a,s), 5~9 ted(t,j,m,a,s)
 };
 
 export default function GameReportReducer(state = initialState, action) {
@@ -153,6 +202,39 @@ export default function GameReportReducer(state = initialState, action) {
       return {
         ...state,
         fixedDataset: action.payload
+      }
+    case SET_BLUE_TEAM:
+      return {
+        ...state,
+        blueteam: action.payload
+      }
+    case SET_RED_TEAM:
+      return {
+        ...state,
+        redteam: action.payload
+      }
+    case SET_SELECTED_PLAYER:
+      console.log('SET_SELECTED_PLAYER', action.payload);
+      return {
+        ...state,
+        selectedTeam: action.payload.team,
+        selectedPosition: action.payload.position,
+        selectedParticipant: action.payload.participant
+      }
+    case SET_SELECTED_TEAM:
+      return {
+        ...state,
+        selectedTeam: action.payload
+      }
+    case SET_SELECTED_POSITION:
+      return {
+        ...state,
+        selectedPosition: action.payload
+      }
+    case SET_SELECTED_PARTICIPANT:
+      return {
+        ...state,
+        selectedParticipant: action.payload
       }
     case INITIALIZE_GAME_STATE:
       return initialState;
