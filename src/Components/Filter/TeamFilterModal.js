@@ -53,11 +53,7 @@ const TeamFilterModal = () => {
     false
   );
   const pagePath = document.location.pathname;
-
-  // useEffect(() => {
-  //   // setOppTeamFilter();
-  //   fetchingOppTeamFilter();
-  // }, []);
+  let history = useHistory();
 
   useEffect(() => {
     if (!filters.compareModal) {
@@ -65,8 +61,6 @@ const TeamFilterModal = () => {
     }
     fetchingOppTeamFilter();
   }, [filters.compareModal]);
-
-  let history = useHistory();
 
   // 리그 필터 fetch 해오는 함수
   const fetchLeagueFilter = () => {
@@ -98,7 +92,8 @@ const TeamFilterModal = () => {
       year: filters.year,
       season: filters.season,
       patch: filters.patch,
-      team: team,
+      team: team ? team : filters.team,
+      // team: team,
       token: user.token,
       id: user.id,
     };
@@ -106,16 +101,6 @@ const TeamFilterModal = () => {
       setOppTeamFilter(e);
     });
   };
-
-  // 모달창 열렸을 때 team이 있으면 oppteam api 호출
-  useEffect(() => {
-    if (pagePath === "/teamCompare" || filters.team === "") {
-      return;
-    }
-    if (filters.team !== "") {
-      fetchingOppTeamFilter(filters.team);
-    }
-  }, []);
 
   return (
     <>

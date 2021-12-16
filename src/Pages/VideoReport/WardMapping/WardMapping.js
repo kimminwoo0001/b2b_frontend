@@ -232,7 +232,10 @@ function WardMapping() {
           <FilterContents>{contents[tab]}</FilterContents>
           <div className="ward-btn-area">
             <WardButton
-              onClick={() => handleWardClick()}
+              onClick={() => {
+                setSide("all");
+                handleWardClick();
+              }}
               isActive={tab === "player" ? filters.champion_eng : filters.team}
             >
               {t("video.vision.checkWard")}

@@ -555,7 +555,7 @@ const DisplayTeams = styled.div`
   color: #fff;
   display: flex;
   justify-content: space-around;
-  padding: 10px 10px;
+  padding: 20px 10px 10px 10px;
   margin-bottom: 0px;
   .RedSide,
   .BlueSide {

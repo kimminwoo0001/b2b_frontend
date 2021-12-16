@@ -128,11 +128,12 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
               </tr>
             </thead>
             <tbody>
-              {items.length === 0 ? (
-                <LoadingImage>
-                  <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
-                </LoadingImage>
-              ) : (
+              {
+                // items.length === 0 ? (
+                //   <LoadingImage>
+                //     <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
+                //   </LoadingImage>
+                // ) :
                 items?.map((data, idx) => {
                   return (
                     <tr key={idx}>
@@ -152,7 +153,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                     </tr>
                   );
                 })
-              )}
+              }
             </tbody>
           </PickTable>
         </MainPicks>
