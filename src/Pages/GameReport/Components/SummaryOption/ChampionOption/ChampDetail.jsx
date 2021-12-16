@@ -23,7 +23,7 @@ const ChampDetail = () => {
           <TimeBarTitle textAligh="left" />
         </div>
         <div className="time-bar">
-          <TimeBar />
+          <TimeBar hidebar={true} />
         </div>
       </DetailChampTimeLine>
     </DetailChampContainer>
@@ -53,6 +53,6 @@ const DetailChampTimeLine = styled.div`
   .time-bar {
     padding-left: 4px;
     width: 100%;
-    padding-right: 9px;
+    padding-right: 8px;
   }
 `;

@@ -4,36 +4,59 @@ import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 import secToMS from "../../../../lib/secToMS";
 
-const TimeBar = () => {
-  const gamevalue = useSelector((state) => state.GameReportReducer);
-  const minValue = +gamevalue.startTime / +gamevalue.duration;
+const TimeBar = ({ hidebar = false }) => {
+  const videovalue = useSelector((state) => state.VideoReducer);
+  const minValue = +videovalue.startTime / +videovalue.duration;
   const [value, setValue] = useState(
-    (+gamevalue.playedSeconds - +gamevalue.startTime) / gamevalue.duration +
-      +gamevalue.startTime / +gamevalue.duration
+    (+videovalue.playedSeconds - +videovalue.startTime) / videovalue.duration +
+      +videovalue.startTime / +videovalue.duration
   );
   const maxValue =
-    (+gamevalue.startTime + +gamevalue.gameTime) / +gamevalue.duration;
+    (+videovalue.startTime + +videovalue.gameTime) / +videovalue.duration;
 
   useEffect(() => {
     setValue(
-      (+gamevalue.playedSeconds - +gamevalue.startTime) / gamevalue.duration +
-        +gamevalue.startTime / +gamevalue.duration
+      (+videovalue.playedSeconds - +videovalue.startTime) /
+        videovalue.duration +
+        +videovalue.startTime / +videovalue.duration
     );
-  }, [gamevalue.playedSeconds]);
+  }, [videovalue.playedSeconds]);
 
   return (
-    <RangeInput
-      min={minValue}
-      value={value}
-      max={maxValue}
-      id="rangeSlider"
-      type="range"
-      step="any"
-    />
+    <>
+      <TimeBarContainer
+        value={((value - minValue) / (maxValue - minValue)) * 100}
+      >
+        {hidebar && <TimeBarHideBar></TimeBarHideBar>}
+      </TimeBarContainer>
+      <RangeInput
+        min={minValue}
+        value={value}
+        max={maxValue}
+        id="rangeSlider"
+        type="range"
+        step="any"
+      />
+    </>
   );
 };
 
 export default TimeBar;
+
+const TimeBarContainer = styled.div`
+  margin-left: ${(props) => props.value}%;
+  position: relative;
+`;
+
+const TimeBarHideBar = styled.div`
+  position: absolute;
+  width: 98.5%;
+  margin-left: 10px;
+  height: 100px;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: -90px;
+  left: 0;
+`;
 const RangeInput = styled.input`
   -webkit-appearance: none; /* Override default CSS styles */
   appearance: none;

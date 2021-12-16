@@ -3,12 +3,14 @@ import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import {
   SetDetailDataSet,
+  SetFixedDataset,
   SetGameId,
-  SetGameTime,
-  SetPlatform,
-  SetStartTime,
-  SetUniqueId, SetVodUrl,
+  SetLogDataset,
+  SetOppside,
+  SetPlayersDataset,
+  SetUniqueId,
 } from "../../../redux/modules/gamevalue";
+import { SetGameTime, SetStartTime, SetVodUrl } from "../../../redux/modules/videovalue";
 import axiosRequest from "../../../lib/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import { API } from "../../config";
@@ -31,20 +33,23 @@ const EachMatch = ({ matchData, team }) => {
     uniqueId,
     teamresult,
     oppteamresult,
+    oppside,
   } = matchData;
 
   const getGameDetailData = (gameId) => {
     try {
-      const url = `${API5}/test/test2`;
+      const url = `${API5}/api/test/test2`;
       const params = {
         gameid: gameId,
       };
       axiosRequest(
-        "GET",
+        'GET',
         url,
         params,
         function (e) {
-          SetDetailDataSet(e);
+          dispatch(SetFixedDataset(e?.infos));
+          dispatch(SetPlayersDataset(e?.players));
+          dispatch(SetLogDataset(e?.logs));
         },
         function (objstore) {
           dispatch(SetModalInfo(objstore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -96,6 +101,7 @@ const EachMatch = ({ matchData, team }) => {
                   dispatch(SetGameTime(gamelength[game] / 2 ?? 0));
                   dispatch(SetStartTime(starttime[game] ?? 0));
                   dispatch(SetUniqueId(uniqueId.replaceAll("_", " ")))
+                  dispatch(SetOppside(oppside[game]))
                   getGameDetailData(gameid[game]);
                 }}
               >
