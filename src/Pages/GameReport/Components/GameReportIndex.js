@@ -19,11 +19,11 @@ const GameReportIndex = () => {
 
   useEffect(() => {
     getGameIndexData();
-  }, []);
+  }, [filters.team]);
 
   const getGameIndexData = () => {
     try {
-      const url = `${API}/lolapi/mappingfilter/game`;
+      const url = `${API2}/lolapi/mappingfilter/game`;
       const params = {
         league: filters.league,
         year: filters.year,
