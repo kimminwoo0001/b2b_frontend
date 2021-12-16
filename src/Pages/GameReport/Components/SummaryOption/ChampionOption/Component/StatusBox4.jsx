@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useSelector } from "react-redux";
+import { recentVersion } from "../../../../../config";
 
 const StatusBox4 = () => {
   const staticvalue = useSelector((state) => state.StaticValueReducer);
@@ -11,48 +12,100 @@ const StatusBox4 = () => {
       gamevalue.selectedPosition
     ].rune;
 
-  const mainRune = getMainRunes(runesData.slice(0, 5));
-  const subRune = runesData.slice(5, 8);
+  const mainRune = getRunesAddr(runesData.slice(0, 5));
+  const subRune = getRunesAddr(runesData.slice(5, 8));
   const statRune = runesData.slice(8, 11);
 
-  function getMainRunes(runeList) {
+  function getRunesAddr(runeList) {
     let arrImgAddr = [];
+    let slots = null;
+    for (let runeObject of runesJoson) {
+      if (runeObject.id === runeList[0]) {
+        slots = runeObject.slots;
+        arrImgAddr.push(runeObject.icon);
+        break;
+      }
+    }
 
-    for (let id of runeList) {
-      for (let runeObject of runesJoson) {
-        if (runeObject.id === mainRune[0]) {
-          let slots = runeObject.slots;
-          arrImgAddr.push(runeObject.icon);
-          for (let runes of slots) {
-
+    for (let id of runeList.slice(1)) {
+      for (let slot of slots) {
+        for (let rune of slot.runes) {
+          if (id === rune.id) {
+            arrImgAddr.push(rune.icon);
+            break;
           }
-
-          break;
         }
       }
     }
+
+    console.log("arrImgAddr", arrImgAddr);
+    return arrImgAddr;
   }
 
   return (
     <RunesContainer>
       <RunesBox>
         <div className="main-rune">
-          <img src="" alt="" />
+          <img
+            src={`https://ddragon.leagueoflegends.com/cdn/img/${mainRune[0]}`}
+            alt=""
+          />
         </div>
-        <div className="sub-rune"></div>
-        <div className="sub-rune"></div>
-        <div className="sub-rune"></div>
-        <div className="sub-rune"></div>
+        <div className="sub-rune">
+          <img
+            src={`https://ddragon.leagueoflegends.com/cdn/img/${mainRune[1]}`}
+            alt=""
+          />
+        </div>
+        <div className="sub-rune">
+          <img
+            src={`https://ddragon.leagueoflegends.com/cdn/img/${mainRune[2]}`}
+            alt=""
+          />
+        </div>
+        <div className="sub-rune">
+          <img
+            src={`https://ddragon.leagueoflegends.com/cdn/img/${mainRune[3]}`}
+            alt=""
+          />
+        </div>
+        <div className="sub-rune">
+          <img
+            src={`https://ddragon.leagueoflegends.com/cdn/img/${mainRune[4]}`}
+            alt=""
+          />
+        </div>
       </RunesBox>
       <RunesBox>
-        <div className="main-rune"></div>
-        <div className="sub-rune"></div>
-        <div className="sub-rune"></div>
+        <div className="main-rune">
+          <img
+            src={`https://ddragon.leagueoflegends.com/cdn/img/${subRune[0]}`}
+            alt=""
+          />
+        </div>
+        <div className="sub-rune">
+          <img
+            src={`https://ddragon.leagueoflegends.com/cdn/img/${subRune[1]}`}
+            alt=""
+          />
+        </div>
+        <div className="sub-rune">
+          <img
+            src={`https://ddragon.leagueoflegends.com/cdn/img/${subRune[2]}`}
+            alt=""
+          />
+        </div>
       </RunesBox>
       <RuneStatsBox>
-        <div className="rune-stat"></div>
-        <div className="rune-stat"></div>
-        <div className="rune-stat"></div>
+        <div className="rune-stat">
+          <img src={`Images/icon/${statRune[0]}.png`} alt="" />
+        </div>
+        <div className="rune-stat">
+          <img src={`Images/icon/${statRune[1]}.png`} alt="" />
+        </div>
+        <div className="rune-stat">
+          <img src={`Images/icon/${statRune[2]}.png`} alt="" />
+        </div>
       </RuneStatsBox>
     </RunesContainer>
   );
@@ -77,7 +130,6 @@ const RunesBox = styled.div`
     height: 26px;
     margin: 0 4px 0 0;
     object-fit: contain;
-    background-color: #f0f;
 
     img {
       width: 26px;
@@ -90,7 +142,11 @@ const RunesBox = styled.div`
     height: 21px;
     margin: 2px 3px 3px 0px;
     object-fit: contain;
-    background-color: #ff0;
+
+    img {
+      width: 21px;
+      height: 21px;
+    }
   }
 `;
 
@@ -105,6 +161,10 @@ const RuneStatsBox = styled.div`
     margin: 0 6px 0 0;
     object-fit: contain;
     border-radius: 10px;
-    border: solid 1px #bb9834;
+
+    img {
+      width: 16px;
+      height: 16px;
+    }
   }
 `;

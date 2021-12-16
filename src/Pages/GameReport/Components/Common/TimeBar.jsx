@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import styled, { css } from "styled-components";
-import { useTranslation } from "react-i18next";
-import { useSelector, useDispatch } from "react-redux";
-import secToMS from "../../../../lib/secToMS";
+import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 const TimeBar = ({ hidebar = false }) => {
   const videovalue = useSelector((state) => state.VideoReducer);
@@ -25,7 +23,7 @@ const TimeBar = ({ hidebar = false }) => {
   return (
     <>
       <TimeBarContainer
-        value={((value - minValue) / (maxValue - minValue)) * 100}
+        value={((value - minValue) / (maxValue - minValue)) * 98.5}
       >
         {hidebar && <TimeBarHideBar></TimeBarHideBar>}
       </TimeBarContainer>
@@ -70,24 +68,21 @@ const RangeInput = styled.input`
   -webkit-transition: 0.2s; /* 0.2 seconds transition on hover */
   transition: opacity 0.2s;
   border-radius: 10px;
-  cursor: pointer;
   position: relative;
   overflow: hidden;
 
   ::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
     appearance: none;
-    width: 25px; /* Set a specific slider handle width */
+    width: 0px; /* Set a specific slider handle width */
     height: 6px; /* Slider handle height */
-    background: #5942ba; /* Green background */
+    background: #fff; /* Green background */
     box-shadow: -100vw 0 0 100vw #5942ba;
-    cursor: pointer; /* Cursor on hover */
   }
 
   ::-webkit-slider-runnable-track {
     width: 100%;
     height: 6px;
-    cursor: pointer;
     animate: 0.2s;
     background: #3a3745;
   }
@@ -96,6 +91,5 @@ const RangeInput = styled.input`
     width: 25px; /* Set a specific slider handle width */
     height: 6px; /* Slider handle height */
     background: #5942ba; /* Green background */
-    cursor: pointer; /* Cursor on hover */
   }
 `;

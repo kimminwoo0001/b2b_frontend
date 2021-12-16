@@ -2,13 +2,51 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
 import transferTimetoWidth from "../../../../../../lib/transferTimetoWidth";
+import { useSelector } from "react-redux";
 
 const skillBoxWidth = 610;
 
+function getSkillSet(skills, fullTime) {
+  let q = [];
+  let w = [];
+  let e = [];
+  let r = [];
+
+  for (let skill of skills) {
+    let id = skill.skillId;
+    if (id === 1) {
+      q.push(skill);
+    } else if (id === 2) {
+      w.push(skill);
+    } else if (id === 3) {
+      e.push(skill);
+    } else if (id === 4) {
+      r.push(skill);
+    }
+  }
+
+  q.push(fullTime);
+  w.push(fullTime);
+  e.push(fullTime);
+  r.push(fullTime);
+
+  return { q: q, w: w, e: e, r: r };
+}
+
 const TimeStatus = ({ fullTime = 1800 }) => {
   const clickParticipantId = 1; // redux로 받기.
+  const gamevalue = useSelector((state) => state.GameReportReducer);
   const { t } = useTranslation();
   const [tab, setTab] = useState(0);
+  const skillData =
+    gamevalue.fixedDataset[gamevalue.selectedTeam].players[
+      gamevalue.selectedPosition
+    ].info.skills;
+  const skillBuildData = getSkillSet(
+    gamevalue.playerDataset[gamevalue.selectedParticipant].skill
+  );
+
+  console.log("skillBuildData", skillBuildData);
 
   const item_list = [
     {
@@ -83,7 +121,9 @@ const TimeStatus = ({ fullTime = 1800 }) => {
         <div className="skill-build">
           <div className="skill-box">
             <div className="header-color q"></div>
-            <div className="header-img"></div>
+            <div className="header-img">
+              <img src={`Images/spell/${skillData[0]}.png`} alt="" />
+            </div>
             <SkillValueBox
               marginLeft={skill_list[clickParticipantId - 1]["q"][0]}
             >
@@ -109,7 +149,9 @@ const TimeStatus = ({ fullTime = 1800 }) => {
           </div>
           <div className="skill-box">
             <div className="header-color w"></div>
-            <div className="header-img"></div>
+            <div className="header-img">
+              <img src={`Images/spell/${skillData[1]}.png`} alt="" />
+            </div>
             <SkillValueBox
               marginLeft={transferTimetoWidth(
                 fullTime,
@@ -139,7 +181,9 @@ const TimeStatus = ({ fullTime = 1800 }) => {
           </div>
           <div className="skill-box">
             <div className="header-color e"></div>
-            <div className="header-img"></div>
+            <div className="header-img">
+              <img src={`Images/spell/${skillData[2]}.png`} alt="" />
+            </div>
             <SkillValueBox
               marginLeft={transferTimetoWidth(
                 fullTime,
@@ -169,7 +213,9 @@ const TimeStatus = ({ fullTime = 1800 }) => {
           </div>
           <div className="skill-box">
             <div className="header-color r"></div>
-            <div className="header-img"></div>
+            <div className="header-img">
+              <img src={`Images/spell/${skillData[3]}.png`} alt="" />
+            </div>
             <SkillValueBox
               marginLeft={transferTimetoWidth(
                 fullTime,
@@ -348,6 +394,11 @@ const BuildBox = styled.div`
         object-fit: contain;
         border-radius: 3px;
         background-color: #fff;
+
+        img {
+          width: 20px;
+          height: 20px;
+        }
       }
     }
   }
