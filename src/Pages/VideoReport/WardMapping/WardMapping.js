@@ -232,7 +232,10 @@ function WardMapping() {
           <FilterContents>{contents[tab]}</FilterContents>
           <div className="ward-btn-area">
             <WardButton
-              onClick={() => handleWardClick()}
+              onClick={() => {
+                setSide("all");
+                handleWardClick();
+              }}
               isActive={tab === "player" ? filters.champion_eng : filters.team}
             >
               {t("video.vision.checkWard")}
@@ -359,7 +362,7 @@ function WardMapping() {
                   <Tippy // optionsx
                     duration={0}
                     delay={[100, 0]}
-                    trigger="click"
+                    trigger="mouseenter"
                     content={
                       <WardTooltip
                         wardType={ward.firstward}
@@ -396,7 +399,7 @@ function WardMapping() {
                   <Tippy // options
                     duration={0}
                     delay={[100, 0]}
-                    trigger="click"
+                    trigger="mouseenter"
                     content={
                       <WardTooltip
                         wardType={ward.secondward}

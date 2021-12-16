@@ -5,6 +5,7 @@ import transferTimetoWidth from "../../../../lib/transferTimetoWidth";
 import { useSelector, useDispatch } from "react-redux";
 import TimeBar from "../Common/TimeBar";
 import TimeBarTitle from "../Common/TimeBarTitle";
+import Tippy from "@tippy.js/react";
 import GameReportToolTip from "../Common/GameReportToolTip";
 
 const romingSuccessTime = [
@@ -165,3 +166,5 @@ const TimeLineTimeLine = styled.div`
   display: flex;
   background-color: #515353;
 `;
+
+const StyledTippy = styled(Tippy)``;

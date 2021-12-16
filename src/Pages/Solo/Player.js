@@ -21,6 +21,7 @@ function Player() {
   const filters = useSelector((state) => state.FilterReducer);
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const pagePath = document.location.pathname;
 
   const BoardTab = {
     0: <PlayerBoard />,
@@ -35,18 +36,23 @@ function Player() {
       <ErrorBoundary>
         <BoardWrapper>
           <TabContainer>
-            <TabContent
-              onClick={() => {
-                dispatch(HandleTab(0));
-                dispatch(ResetChampion());
-                dispatch(ResetFilter2());
-              }}
-              changeColor={filters.tab === 0}
-            >
-              <div>
-                <span>{t("solo.tabs.board")}</span>
-              </div>
-            </TabContent>
+            {pagePath === "/playerCompare" ? (
+              ""
+            ) : (
+              <TabContent
+                onClick={() => {
+                  dispatch(HandleTab(0));
+                  dispatch(ResetChampion());
+                  dispatch(ResetFilter2());
+                }}
+                changeColor={filters.tab === 0}
+              >
+                <div>
+                  <span>{t("solo.tabs.board")}</span>
+                </div>
+              </TabContent>
+            )}
+
             {/* <SoloReport
             onClick={() => {
               dispatch(HandleTab(1));
@@ -72,12 +78,12 @@ function Player() {
               changeColor={filters.tab === 1}
             >
               <div>
-                {filters.getoppplayer ? (
-                  <span>{t("solo.tabs.comparison")} : {filters.getoppplayer}</span>
-                ) : (
+                {filters.getoppplayer && pagePath !== "/playerCompare" ? (
                   <span>
-                    {t("solo.tabs.comparison")}
+                    {t("solo.tabs.comparison")} : {filters.getoppplayer}
                   </span>
+                ) : (
+                  <span>{t("solo.tabs.comparison")}</span>
                 )}
               </div>
             </TabContent>
@@ -162,7 +168,7 @@ const TabContent = styled.li`
     div {
       padding: 10px 15px;
       border-radius: 10px;
-      background-color : #26262C;
+      background-color: #26262c;
     }
   }
 

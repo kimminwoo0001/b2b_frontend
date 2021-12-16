@@ -309,31 +309,35 @@ function CompareIngame() {
       <CompareDisplay>
         <DisplayTeams>
           <div className="RedSide">
-            <img
-              src={
-                filters.team.slice(-2) === ".C"
-                  ? `Images/LCK_CL_LOGO/${filters.team}.png`
-                  : `Images/TeamLogo/${filters.team}.png`
-              }
-              width="100px"
-              height="100px"
-              alt="teamIcon"
-            />
-            <div className="TeamOne">{teamName?.team}</div>
+            <div className="imgWrapper">
+              <img
+                src={
+                  filters.team.slice(-2) === ".C"
+                    ? `Images/LCK_CL_LOGO/${filters.team}.png`
+                    : `Images/TeamLogo/${filters.team}.png`
+                }
+                width="73px"
+                height="73px"
+                alt="teamIcon"
+              />
+            </div>
+            <div className="TeamName">{teamName?.team}</div>
           </div>
           <div className="Vs">VS</div>
           <div className="BlueSide">
-            <img
-              src={
-                filters.oppteam.slice(-2) === ".C"
-                  ? `Images/LCK_CL_LOGO/${filters.oppteam}.png`
-                  : `Images/TeamLogo/${filters.oppteam}.png`
-              }
-              width="100px"
-              height="100px"
-              alt="teamIcon"
-            />
-            <div className="TeamTwo">{teamName?.oppteam}</div>
+            <div className="imgWrapper">
+              <img
+                src={
+                  filters.oppteam.slice(-2) === ".C"
+                    ? `Images/LCK_CL_LOGO/${filters.oppteam}.png`
+                    : `Images/TeamLogo/${filters.oppteam}.png`
+                }
+                width="73px"
+                height="73px"
+                alt="teamIcon"
+              />
+            </div>
+            <div className="TeamName">{teamName?.oppteam}</div>
           </div>
         </DisplayTeams>
         <CompareStats>
@@ -551,7 +555,7 @@ const DisplayTeams = styled.div`
   color: #fff;
   display: flex;
   justify-content: space-around;
-  padding: 10px 10px;
+  padding: 20px 10px 10px 10px;
   margin-bottom: 0px;
   .RedSide,
   .BlueSide {
@@ -565,6 +569,21 @@ const DisplayTeams = styled.div`
     font-stretch: normal;
     font-style: normal;
     line-height: 1.25;
+
+    .imgWrapper {
+      width: 100px;
+      height: 100px;
+      background-color: #23212a;
+      border-radius: 50%;
+      padding-top: 13px;
+      img {
+        display: block;
+        margin: auto;
+      }
+    }
+    .TeamName {
+      margin-top: 10px;
+    }
   }
 
   .RedSide {

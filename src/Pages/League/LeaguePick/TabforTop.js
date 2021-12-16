@@ -128,25 +128,32 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
               </tr>
             </thead>
             <tbody>
-              {items?.map((data, idx) => {
-                return (
-                  <tr key={idx}>
-                    <td className="ChampName">
-                      <div className="ChampWrapper">
-                        <img src={data.championImage} alt="champIcon"></img>
-                        <div>
-                          {lang === "ko" ? data.championKor : data.champion}
+              {
+                // items.length === 0 ? (
+                //   <LoadingImage>
+                //     <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
+                //   </LoadingImage>
+                // ) :
+                items?.map((data, idx) => {
+                  return (
+                    <tr key={idx}>
+                      <td className="ChampName">
+                        <div className="ChampWrapper">
+                          <img src={data.championImage} alt="champIcon"></img>
+                          <div>
+                            {lang === "ko" ? data.championKor : data.champion}
+                          </div>
                         </div>
-                      </div>
-                    </td>
-                    <td className="Picks">{data.pick}</td>
-                    {/* <td className="Picks">{data.ban}</td> */}
-                    <td className="PickBan">{data.pickRate.toFixed(0)}%</td>
-                    <td className="Win">{data.winrate.toFixed(0)}%</td>
-                    <td className="Prob">{data.probRate.toFixed(0)}%</td>
-                  </tr>
-                );
-              })}
+                      </td>
+                      <td className="Picks">{data.pick}</td>
+                      {/* <td className="Picks">{data.ban}</td> */}
+                      <td className="PickBan">{data.pickRate.toFixed(0)}%</td>
+                      <td className="Win">{data.winrate.toFixed(0)}%</td>
+                      <td className="Prob">{data.probRate.toFixed(0)}%</td>
+                    </tr>
+                  );
+                })
+              }
             </tbody>
           </PickTable>
         </MainPicks>
@@ -301,10 +308,11 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                             ? pick?.opp_champion.championKor
                             : pick?.opp_champion.champion}
                         </div>
-                        <div className="WinLose2">{`${pick?.opp_champion.win
-                          }${t("league.draft.w")} ${pick?.opp_champion.lose}${t(
-                            "league.draft.l"
-                          )}`}</div>
+                        <div className="WinLose2">{`${
+                          pick?.opp_champion.win
+                        }${t("league.draft.w")} ${pick?.opp_champion.lose}${t(
+                          "league.draft.l"
+                        )}`}</div>
                       </div>
                       <img
                         src={pick?.opp_champion.championImage}
@@ -1083,5 +1091,21 @@ const TierTable = styled.table`
         width: 50px;
       }
     }
+  }
+`;
+
+const LoadingImage = styled.div`
+  display: flex;
+  width: 100%;
+  height: 260px;
+  justify-content: center;
+  align-items: center;
+  background-color: #23212a;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+
+  img {
+    width: 50px;
+    height: 50px;
   }
 `;
