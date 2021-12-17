@@ -17,7 +17,7 @@ import GameReportTab from './GameReportTab';
 function GameReport() {
   const filters = useSelector((state) => state.FilterReducer);
   const gamevalue = useSelector((state) => state.GameReportReducer);
-  const checkGameId = gamevalue.gameId.length > 0;
+  const checkGameId = gamevalue.fixedDataset.length === 2;
 
   return (
     <ErrorBoundary>

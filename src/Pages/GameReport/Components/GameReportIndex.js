@@ -15,7 +15,7 @@ const GameReportIndex = () => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const [indexData, setIndexData] = useState([]);
 
-  useEffect(() => {}, [gamevalue.gameId]);
+  useEffect(() => { }, [gamevalue.gameId]);
 
   useEffect(() => {
     getGameIndexData();
@@ -51,7 +51,7 @@ const GameReportIndex = () => {
 
   return (
     <GameReportIndexWrapper>
-      {gamevalue.gameId.length > 0 ? (
+      {gamevalue.fixedDataset.length === 2 ? (
         <GameReportDetail
           videoId={gamevalue.gameId}
           platform={gamevalue.platform}

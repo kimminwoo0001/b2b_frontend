@@ -1,15 +1,32 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import ChampionEventBox from "./ChampionEventBox";
+import { useSelector, useDispatch } from "react-redux";
+import { SetSelectedPlayer } from "../../../../../redux/modules/gamevalue";
 
-const ChampionOppContainer = () => {
+const ChampionOppContainer = ({ player, winner, participant, teamName }) => {
+  const gamevalue = useSelector((state) => state.GameReportReducer);
+  const dispatch = useDispatch();
   return (
-    <ChampOppTeamContainer isActive={false} isDeath={true}>
+    <ChampOppTeamContainer
+      isActive={participant === gamevalue.selectedParticipant}
+      isDeath={true}
+      champImg={player.info.championEng}
+      onClick={() => {
+        dispatch(
+          SetSelectedPlayer({
+            team: 1,
+            position: participant - 5,
+            participant: participant,
+          })
+        );
+      }}
+    >
       <div className="name">
-        <span>T1 Odoamne </span>
+        <span>{`${teamName} ${player.info.player}`}</span>
       </div>
       <div className="champ-pic-box">
-        <Superiority winner={"red"}>
+        <Superiority winner={winner}>
           <img
             className="super-img"
             src="Images/ico-point-high-red.svg"
@@ -17,10 +34,11 @@ const ChampionOppContainer = () => {
           />
         </Superiority>
         <div className="champ-pic">
+          <div className="img-box"></div>
           <div className="champ-revive-count">8</div>
         </div>
       </div>
-      <ChampionEventBox isDeath={true} />
+      <ChampionEventBox isDeath={true} isOpp={true} />
       <div className="champ-status-bar">
         <HpBox>
           <div className="usable" style={{ backgroundColor: "#37b537" }}></div>
@@ -67,18 +85,26 @@ const ChampOppTeamContainer = styled.div`
     .champ-pic {
       width: 60px;
       height: 60px;
-      margin: 0px 2px 0px;
-      padding: 40px 40px 0 0;
+      margin: 0px 0px 0px;
       object-fit: contain;
-      border-radius: 30px;
-      background-color: #fff;
-      position: relative;
 
-      img {
-        ${(props) => props.isDeath && `opacity: 0.5;`}
-      }
+      position: relative;
+     
+      .img-box {
+        width: 60px;
+        height: 60px;
+        background-image: url(https://ddragon.leagueoflegends.com/cdn/11.24.1/img/champion/${(
+          props
+        ) => props.champImg}.png);
+       background-size: 60px;
+       ${(props) => props.isDeath && `mix-blend-mode: luminosity;`}
+       border-radius: 30px;
+       border: solid 2px
+        ${(props) => (props.isActive ? `#f04545` : `rgba(0,0,0,0)`)};
+     }
 
       .champ-revive-count {
+        display:  ${(props) => (props.isDeath ? "block" : "none")};
         ${(props) => (props.isDeath ? `opacity: 1` : `opacity: 0`)};
         width: 25px;
         height: 25px;
@@ -146,13 +172,6 @@ const ChampOppTeamContainer = styled.div`
     width: 90px;
     height: 23px;
     margin: 6px 0 0 2px;
-
-    .hp {
-     
-    }
-    .mp {
-     
-    }
     .usable {
       height: 10px;
       padding: 0 10px 0 5px;

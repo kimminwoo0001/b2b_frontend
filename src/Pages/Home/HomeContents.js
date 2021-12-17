@@ -5,10 +5,10 @@ import styled from "styled-components";
 
 import axios from "axios";
 import LoadingImg from "../../Components/LoadingImg/LoadingImg";
-import { API } from "../config";
+import { API, recentVersion } from "../config";
 import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../../redux/modules/filtervalue";
-import { GetFilterAllItems } from "../../redux/modules/staticvalue";
+import { SetFilterAllItems, SetRunesJson } from "../../redux/modules/staticvalue";
 
 import axiosRequest from "../../lib/axiosRequest";
 import LeagueRank from "./LeagueRank";
@@ -35,6 +35,7 @@ const HomeContents = memo(() => {
   useEffect(() => {
     fetchHomeData();
     fetchFilterData();
+    fetchRunesObject();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -73,7 +74,7 @@ const HomeContents = memo(() => {
         }
         axiosRequest(undefined, url, params, function (data) {
           console.log(modal);
-          dispatch(GetFilterAllItems(data));
+          dispatch(SetFilterAllItems(data));
           dispatch(Loading(false));
         }, function (objStore) {
           dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -84,6 +85,22 @@ const HomeContents = memo(() => {
       }
     }
   };
+
+  const fetchRunesObject = () => {
+    if (staticvalue.runesObjects === null) {
+      dispatch(Loading(true));
+      try {
+        fetch(`https://ddragon.leagueoflegends.com/cdn/${recentVersion}/data/ko_KR/runesReforged.json`)
+          .then(res => res.json())
+          .then(out => dispatch(SetRunesJson(out)))
+          .catch(err => console.log("Not load Rune Dataset."));
+      } catch (e) {
+        console.log(e);
+        dispatch(Loading(false));
+      }
+      dispatch(Loading(false));
+    }
+  }
 
   if (filters.loading) return <LoadingImg />;
 
