@@ -11,12 +11,10 @@ import {
   SetPlayersDataset,
   SetRedTeam,
   SetUniqueId,
-} from "../../../redux/modules/gamevalue";
-import {
   SetGameTime,
   SetStartTime,
-  SetVodUrl,
-} from "../../../redux/modules/videovalue";
+} from "../../../redux/modules/gamevalue";
+import { SetVodUrl } from "../../../redux/modules/videovalue";
 import axiosRequest from "../../../lib/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import { API } from "../../config";

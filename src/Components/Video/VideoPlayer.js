@@ -12,11 +12,12 @@ import secToMS from '../../lib/secToMS';
 
 const TwitchVideoPlayer = ({ video, startTime }) => {
   const videovalue = useSelector((state) => state.VideoReducer);
+  const gamevalue = useSelector((state) => state.GameReportReducer);
   const [seekTime, setSeekTime] = useState(0)
   const dispatch = useDispatch();
   let player;
-  const endTime = +videovalue.startTime + +videovalue.gameTime;
-  const startPlayed = +videovalue.startTime / +videovalue.duration;
+  const endTime = +gamevalue.startTime + +gamevalue.gameTime;
+  const startPlayed = +gamevalue.startTime / +videovalue.duration;
   const sec5 = 5;
   const sec30 = 30;
 
@@ -209,12 +210,12 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
         </div>
         <div className='line-bar'>
           <div className='time-text-box'>
-            <span>{secToMS(Math.floor(+videovalue.playedSeconds) - +videovalue.startTime)} / {secToMS(videovalue.gameTime)}</span>
+            <span>{secToMS(Math.floor(+videovalue.playedSeconds) - +gamevalue.startTime)} / {secToMS(gamevalue.gameTime)}</span>
           </div>
           <input
             className='game-time-bar'
             type='range' min={startPlayed} max={(endTime) / +videovalue.duration} step='any'
-            value={(+videovalue.playedSeconds - +videovalue.startTime) / videovalue.duration + startPlayed}
+            value={(+videovalue.playedSeconds - +gamevalue.startTime) / videovalue.duration + startPlayed}
             onMouseDown={handleSeekMouseDown}
             onChange={handleSeekChange}
             onMouseUp={handleSeekMouseUp}

@@ -4,19 +4,19 @@ import { useSelector } from "react-redux";
 
 const TimeBar = ({ hidebar = false }) => {
   const videovalue = useSelector((state) => state.VideoReducer);
-  const minValue = +videovalue.startTime / +videovalue.duration;
+  const gamevalue = useSelector((state) => state.GameReportReducer);
+  const minValue = +gamevalue.startTime / +videovalue.duration;
   const [value, setValue] = useState(
-    (+videovalue.playedSeconds - +videovalue.startTime) / videovalue.duration +
-      +videovalue.startTime / +videovalue.duration
+    (+videovalue.playedSeconds - +gamevalue.startTime) / videovalue.duration +
+      +gamevalue.startTime / +videovalue.duration
   );
   const maxValue =
-    (+videovalue.startTime + +videovalue.gameTime) / +videovalue.duration;
+    (+gamevalue.startTime + +gamevalue.gameTime) / +videovalue.duration;
 
   useEffect(() => {
     setValue(
-      (+videovalue.playedSeconds - +videovalue.startTime) /
-        videovalue.duration +
-        +videovalue.startTime / +videovalue.duration
+      (+videovalue.playedSeconds - +gamevalue.startTime) / videovalue.duration +
+        +gamevalue.startTime / +videovalue.duration
     );
   }, [videovalue.playedSeconds]);
 

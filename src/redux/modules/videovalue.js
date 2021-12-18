@@ -1,8 +1,6 @@
 
 export const SET_VOD_URL = "videovalue/SET_VOD_ID";
 export const SET_PLATFORM = "videovalue/SET_PLATFORM";
-export const SET_START_TIME = "videovalue/SET_START_TIME";
-export const SET_GAME_TIME = "videovalue/SET_GAME_TIME";
 export const HANDLE_PLAYING = "videovalue/HANDLE_PLAYING";
 export const HANDLE_STOP = "videovalue/SET_STOP";
 export const HANDLE_VOLUME_CHANGE = "videovalue/HANDLE_VOLUME_CHANGE";
@@ -36,18 +34,6 @@ export const SetVodUrl = (payload) => {
 export const SetPlatform = (payload) => {
   return {
     type: SET_PLATFORM,
-    payload,
-  };
-};
-export const SetStartTime = (payload) => {
-  return {
-    type: SET_START_TIME,
-    payload,
-  };
-};
-export const SetGameTime = (payload) => {
-  return {
-    type: SET_GAME_TIME,
     payload,
   };
 };
@@ -212,16 +198,6 @@ export default function GameReportReducer(state = initialState, action) {
       return {
         ...state,
         platform: action.payload,
-      };
-    case SET_START_TIME:
-      return {
-        ...state,
-        startTime: action.payload,
-      };
-    case SET_GAME_TIME:
-      return {
-        ...state,
-        gameTime: action.payload,
       };
     case HANDLE_PLAYING:
       return {
