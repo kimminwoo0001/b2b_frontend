@@ -15,7 +15,7 @@ const GameReportIndex = () => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const [indexData, setIndexData] = useState([]);
 
-  useEffect(() => { }, [gamevalue.gameId]);
+  useEffect(() => {}, [gamevalue.gameId]);
 
   useEffect(() => {
     getGameIndexData();
