@@ -1,46 +1,43 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import { useSelector } from "react-redux";
 
 const BanPick = () => {
-  const pickObject = [
-    { team: 1, champion: "LeeSin", first: "2" },
-    { team: 2, champion: "Ryze", first: "3" },
-    { team: 2, champion: "Jayce", first: "1" },
-    { team: 1, champion: "Lucian", first: "" },
-    { team: 1, champion: "Leblanc", first: "" },
-    { team: 2, champion: "Poppy", first: "" },
-    { team: 2, champion: "Leona", first: "5" },
-    { team: 1, champion: "Jhin", first: "4" },
-    { team: 1, champion: "Maokai", first: "" },
-    { team: 2, champion: "MissFortune", first: "" },
-  ];
+  const gamevalue = useSelector((state) => state.GameReportReducer);
+  const banObject = gamevalue.fixedDataset[0].BanPick.bans.concat(
+    gamevalue.fixedDataset[1].BanPick.bans
+  );
 
-  const banObject = [
-    { team: 1, champion: "Aphelios" },
-    { team: 2, champion: "Yuumi" },
-    { team: 2, champion: "Syndra" },
-    { team: 1, champion: "Nami" },
-    { team: 1, champion: "Graves" },
-    { team: 2, champion: "TwistedFate" },
-    { team: 2, champion: "Ziggs" },
-    { team: 1, champion: "Thresh" },
-    { team: 1, champion: "Jinx" },
-    { team: 2, champion: "Rakan" },
-  ];
+  const bluePick = gamevalue.fixedDataset[0].BanPick.picks;
+  const redPick = gamevalue.fixedDataset[1].BanPick.picks;
+  const pickObject = [];
+  pickObject.push(
+    bluePick[0],
+    redPick[0],
+    redPick[1],
+    bluePick[1],
+    bluePick[2],
+    redPick[2],
+    redPick[3],
+    bluePick[3],
+    bluePick[4],
+    redPick[4]
+  );
 
   const phase1Champion = pickObject.slice(0, 6);
   const phase2Champion = pickObject.slice(6, 10);
-  const phase1Ban = banObject.slice(0, 6);
-  const phase2Ban = banObject.slice(6, 10);
+  const phase1Ban = banObject.slice(0, 3).concat(banObject.slice(5, 8));
+  console.log(phase1Ban);
+  const phase2Ban = banObject.slice(3, 5).concat(banObject.slice(8, 10));
 
   return (
     <BanPickContainer>
       <PhaseBox1>
-        <div className="nav">Phase</div>
+        <div className="nav">Phase 1</div>
         <BanBox>
           {phase1Ban.map((data) => {
             return (
-              data.team === 1 && (
+              data.team === "100" && (
                 <img
                   className="ban-champ"
                   src={`Images/champion/${data.champion}.png`}
@@ -55,15 +52,15 @@ const BanPick = () => {
             <div className="title">
               <img
                 className="logo"
-                src={`Images/TeamLogo/${"C9"}.png`}
+                src={`Images/TeamLogo/${gamevalue.blueteam}.png`}
                 alt=""
               />
-              <span>Cloud9</span>
+              <span>{gamevalue.blueteam}</span>
             </div>
             {phase1Champion.map((data) => {
               return (
                 <PickChampion>
-                  {data.team === 1 && (
+                  {data.team === "100" && (
                     <img src={`Images/champion/${data.champion}.png`} alt="" />
                   )}
                 </PickChampion>
@@ -74,15 +71,15 @@ const BanPick = () => {
             <div className="title">
               <img
                 className="logo"
-                src={`Images/TeamLogo/${"DK"}.png`}
+                src={`Images/TeamLogo/${gamevalue.redteam}.png`}
                 alt=""
               />
-              <span>DWA KIA</span>
+              <span>{gamevalue.redteam}</span>
             </div>
             {phase1Champion.map((data) => {
               return (
                 <PickChampion>
-                  {data.team === 2 && (
+                  {data.team === "200" && (
                     <img src={`Images/champion/${data.champion}.png`} alt="" />
                   )}
                 </PickChampion>
@@ -93,7 +90,7 @@ const BanPick = () => {
         <BanBox>
           {phase1Ban.map((data) => {
             return (
-              data.team === 2 && (
+              data.team === "200" && (
                 <img
                   className="ban-champ"
                   src={`Images/champion/${data.champion}.png`}
@@ -105,11 +102,11 @@ const BanPick = () => {
         </BanBox>
       </PhaseBox1>
       <PhaseBox2>
-        <div className="nav">Phase</div>
+        <div className="nav">Phase 2</div>
         <BanBox>
           {phase2Ban.map((data) => {
             return (
-              data.team === 1 && (
+              data.team === "100" && (
                 <img
                   className="ban-champ"
                   src={`Images/champion/${data.champion}.png`}
@@ -125,7 +122,7 @@ const BanPick = () => {
             {phase2Champion.map((data) => {
               return (
                 <PickChampion>
-                  {data.team === 1 && (
+                  {data.team === "100" && (
                     <img src={`Images/champion/${data.champion}.png`} alt="" />
                   )}
                 </PickChampion>
@@ -137,7 +134,7 @@ const BanPick = () => {
             {phase2Champion.map((data) => {
               return (
                 <PickChampion>
-                  {data.team === 2 && (
+                  {data.team === "200" && (
                     <img src={`Images/champion/${data.champion}.png`} alt="" />
                   )}
                 </PickChampion>
@@ -148,7 +145,7 @@ const BanPick = () => {
         <BanBox>
           {phase2Ban.map((data) => {
             return (
-              data.team === 2 && (
+              data.team === "200" && (
                 <img
                   className="ban-champ"
                   src={`Images/champion/${data.champion}.png`}

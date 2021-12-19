@@ -11,7 +11,7 @@ import VideoPlayer from '../../../Components/Video/VideoPlayer';
 
 
 const GameReportDetail = () => {
-  
+
   useEffect(() => {
 
   }, [])
@@ -59,33 +59,4 @@ const FlexContainer = styled.div`
 const VideoContainer = styled.div`
   width: 1440px;
   height: 800px;
-  background-color: #0f0;
-`;
-
-const DetailContainer = styled.div`
-  width: 702px;
-  height: 260px;
-  margin: 10px 25px 10px 0px;
-  background-color: #99a;
-`;
-
-const DetailNav = styled.div`
-  width: 702px;
-  height: 40px;
-  margin: 0 0 11px;
-  background-color: #f00;
-`;
-
-const DetailChampContainer = styled.div`
-  display: block;
-  backgorund-color: orange;
-`;
-
-
-const MapContainer = styled.div`
-  width: 282px;
-  height: 280px;
-  margin: 0 0 0 16px;
-  object-fit: contain;
-  background-color: #a0a;
 `;

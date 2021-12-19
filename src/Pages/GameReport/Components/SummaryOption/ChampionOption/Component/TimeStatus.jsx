@@ -2,13 +2,53 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
 import transferTimetoWidth from "../../../../../../lib/transferTimetoWidth";
+import { useSelector, useDispatch } from "react-redux";
+import { SetChampTab } from "../../../../../../redux/modules/gamevalue";
 
 const skillBoxWidth = 610;
+const purchasedItemBoxWidth = 339;
+function getSkillSet(skills, fullTime) {
+  let q = [];
+  let w = [];
+  let e = [];
+  let r = [];
 
-const TimeStatus = ({ fullTime = 1800 }) => {
-  const clickParticipantId = 1; // redux로 받기.
+  for (let skill of skills) {
+    let id = skill.skillId;
+    if (id === 1) {
+      q.push(skill.realCount / 2);
+    } else if (id === 2) {
+      w.push(skill.realCount / 2);
+    } else if (id === 3) {
+      e.push(skill.realCount / 2);
+    } else if (id === 4) {
+      r.push(skill.realCount / 2);
+    }
+  }
+
+  q.push(fullTime);
+  w.push(fullTime);
+  e.push(fullTime);
+  r.push(fullTime);
+
+  return { q: q, w: w, e: e, r: r };
+}
+
+const TimeStatus = () => {
+  const gamevalue = useSelector((state) => state.GameReportReducer);
   const { t } = useTranslation();
-  const [tab, setTab] = useState(0);
+  const dispatch = useDispatch();
+  const skillData =
+    gamevalue.fixedDataset[gamevalue.selectedTeam].players[
+      gamevalue.selectedPosition
+    ].info.skills;
+  const skillBuildData = getSkillSet(
+    gamevalue.playerDataset[gamevalue.selectedParticipant].skill,
+    gamevalue.gameTime
+  );
+
+  const purchasedItemBuildData =
+    gamevalue.playerDataset[gamevalue.selectedParticipant].purchasedItem;
 
   const item_list = [
     {
@@ -26,20 +66,6 @@ const TimeStatus = ({ fullTime = 1800 }) => {
       ],
     },
   ];
-
-  const skill_list = [
-    {
-      q: [0, 300, 700, 1100, 1400],
-      w: [100, 400, 800, 1200, 1600],
-      e: [200, 600, 900, 1300, 1700],
-      r: [500, 1000, 1500],
-    },
-  ];
-
-  skill_list[0]["q"].push(fullTime);
-  skill_list[0]["w"].push(fullTime);
-  skill_list[0]["e"].push(fullTime);
-  skill_list[0]["r"].push(fullTime);
 
   const buy_list = item_list[0]["buy"];
   const cur_list = item_list[0]["cur"];
@@ -59,9 +85,9 @@ const TimeStatus = ({ fullTime = 1800 }) => {
     <DetailChampTimeStatus>
       <TabContainer>
         <TabItem
-          changeColor={tab === 0}
+          changeColor={gamevalue.champTab === 0}
           onClick={() => {
-            setTab(0);
+            dispatch(SetChampTab(0));
           }}
         >
           <div>
@@ -69,9 +95,9 @@ const TimeStatus = ({ fullTime = 1800 }) => {
           </div>
         </TabItem>
         <TabItem
-          changeColor={tab === 1}
+          changeColor={gamevalue.champTab === 1}
           onClick={() => {
-            setTab(1);
+            dispatch(SetChampTab(1));
           }}
         >
           <div>
@@ -79,25 +105,29 @@ const TimeStatus = ({ fullTime = 1800 }) => {
           </div>
         </TabItem>
       </TabContainer>
-      <BuildBox tab={tab}>
+      <BuildBox tab={gamevalue.champTab}>
         <div className="skill-build">
           <div className="skill-box">
             <div className="header-color q"></div>
-            <div className="header-img"></div>
+            <div className="header-img">
+              <img src={`Images/spell/${skillData[0]}.png`} alt="" />
+            </div>
             <SkillValueBox
-              marginLeft={skill_list[clickParticipantId - 1]["q"][0]}
+              marginLeft={transferTimetoWidth(
+                gamevalue.gameTime,
+                skillBoxWidth,
+                skillBuildData["q"][0]
+              )}
             >
-              {skill_list[clickParticipantId - 1]["q"].map((data, idx) => {
+              {skillBuildData["q"].map((data, idx) => {
                 return (
-                  idx !==
-                    skill_list[clickParticipantId - 1]["q"].length - 1 && (
+                  idx !== skillBuildData["q"].length - 1 && (
                     <SkillValue
                       className="q"
                       width={transferTimetoWidth(
-                        fullTime,
+                        gamevalue.gameTime,
                         skillBoxWidth,
-                        skill_list[clickParticipantId - 1]["q"][idx + 1] -
-                          skill_list[clickParticipantId - 1]["q"][idx]
+                        skillBuildData["q"][idx + 1] - skillBuildData["q"][idx]
                       )}
                     >
                       <span>q{idx + 1}</span>
@@ -109,28 +139,28 @@ const TimeStatus = ({ fullTime = 1800 }) => {
           </div>
           <div className="skill-box">
             <div className="header-color w"></div>
-            <div className="header-img"></div>
+            <div className="header-img">
+              <img src={`Images/spell/${skillData[1]}.png`} alt="" />
+            </div>
             <SkillValueBox
               marginLeft={transferTimetoWidth(
-                fullTime,
+                gamevalue.gameTime,
                 skillBoxWidth,
-                skill_list[clickParticipantId - 1]["w"][0]
+                skillBuildData["w"][0]
               )}
             >
-              {skill_list[clickParticipantId - 1]["w"].map((data, idx) => {
+              {skillBuildData["w"].map((data, idx) => {
                 return (
-                  idx !==
-                    skill_list[clickParticipantId - 1]["w"].length - 1 && (
+                  idx !== skillBuildData["w"].length - 1 && (
                     <SkillValue
                       className="w"
                       width={transferTimetoWidth(
-                        fullTime,
+                        gamevalue.gameTime,
                         skillBoxWidth,
-                        skill_list[clickParticipantId - 1]["w"][idx + 1] -
-                          skill_list[clickParticipantId - 1]["w"][idx]
+                        skillBuildData["w"][idx + 1] - skillBuildData["w"][idx]
                       )}
                     >
-                      <span>q{idx + 1}</span>
+                      <span>w{idx + 1}</span>
                     </SkillValue>
                   )
                 );
@@ -139,28 +169,28 @@ const TimeStatus = ({ fullTime = 1800 }) => {
           </div>
           <div className="skill-box">
             <div className="header-color e"></div>
-            <div className="header-img"></div>
+            <div className="header-img">
+              <img src={`Images/spell/${skillData[2]}.png`} alt="" />
+            </div>
             <SkillValueBox
               marginLeft={transferTimetoWidth(
-                fullTime,
+                gamevalue.gameTime,
                 skillBoxWidth,
-                skill_list[clickParticipantId - 1]["e"][0]
+                skillBuildData["e"][0]
               )}
             >
-              {skill_list[clickParticipantId - 1]["e"].map((data, idx) => {
+              {skillBuildData["e"].map((data, idx) => {
                 return (
-                  idx !==
-                    skill_list[clickParticipantId - 1]["e"].length - 1 && (
+                  idx !== skillBuildData["e"].length - 1 && (
                     <SkillValue
                       className="e"
                       width={transferTimetoWidth(
-                        fullTime,
+                        gamevalue.gameTime,
                         skillBoxWidth,
-                        skill_list[clickParticipantId - 1]["e"][idx + 1] -
-                          skill_list[clickParticipantId - 1]["e"][idx]
+                        skillBuildData["e"][idx + 1] - skillBuildData["e"][idx]
                       )}
                     >
-                      <span>q{idx + 1}</span>
+                      <span>e{idx + 1}</span>
                     </SkillValue>
                   )
                 );
@@ -169,28 +199,28 @@ const TimeStatus = ({ fullTime = 1800 }) => {
           </div>
           <div className="skill-box">
             <div className="header-color r"></div>
-            <div className="header-img"></div>
+            <div className="header-img">
+              <img src={`Images/spell/${skillData[3]}.png`} alt="" />
+            </div>
             <SkillValueBox
               marginLeft={transferTimetoWidth(
-                fullTime,
+                gamevalue.gameTime,
                 skillBoxWidth,
-                skill_list[clickParticipantId - 1]["r"][0]
+                skillBuildData["r"][0]
               )}
             >
-              {skill_list[clickParticipantId - 1]["r"].map((data, idx) => {
+              {skillBuildData["r"].map((data, idx) => {
                 return (
-                  idx !==
-                    skill_list[clickParticipantId - 1]["r"].length - 1 && (
+                  idx !== skillBuildData["r"].length - 1 && (
                     <SkillValue
                       className="r"
                       width={transferTimetoWidth(
-                        fullTime,
+                        gamevalue.gameTime,
                         skillBoxWidth,
-                        skill_list[clickParticipantId - 1]["r"][idx + 1] -
-                          skill_list[clickParticipantId - 1]["r"][idx]
+                        skillBuildData["r"][idx + 1] - skillBuildData["r"][idx]
                       )}
                     >
-                      <span>q{idx + 1}</span>
+                      <span>r{idx + 1}</span>
                     </SkillValue>
                   )
                 );
@@ -199,20 +229,31 @@ const TimeStatus = ({ fullTime = 1800 }) => {
           </div>
         </div>
         <div className="item-build">
-          <div className="item-box">
-            <div className="item-img-box">
-              {buy_list.map((item) => {
-                console.log("item:", item);
-                return (
-                  <ItemBuildImg
-                    className="item-img"
-                    src={`Images/item/${item.id}.png`}
-                    alt="itemImg"
-                  ></ItemBuildImg>
-                );
-              })}
-            </div>
-          </div>
+          {purchasedItemBuildData.map((purchaseditemList) => {
+            console.log("purchaseditemList:", purchaseditemList);
+            return (
+              <PurchasedItemBox
+                marginLeft={transferTimetoWidth(
+                  gamevalue.gameTime,
+                  purchasedItemBoxWidth,
+                  purchaseditemList.realCount / 2
+                )}
+              >
+                <div className="item-img-box">
+                  {purchaseditemList.items.map((item) => {
+                    return (
+                      <ItemBuildImg
+                        className="item-img"
+                        src={`Images/item/${item.itemId}.png`}
+                        alt="itemImg"
+                      ></ItemBuildImg>
+                    );
+                  })}
+                </div>
+              </PurchasedItemBox>
+            );
+          })}
+
           <div className="item-status-box current">
             <div className="nav">{t("game.summary.champion.item-current")}</div>
             <div className="img-box">
@@ -348,6 +389,11 @@ const BuildBox = styled.div`
         object-fit: contain;
         border-radius: 3px;
         background-color: #fff;
+
+        img {
+          width: 20px;
+          height: 20px;
+        }
       }
     }
   }
@@ -356,17 +402,7 @@ const BuildBox = styled.div`
     width: 640px;
     height: 89px;
     display: ${(props) => (props.tab === 1 ? `flex` : `none`)};
-
-    .item-box {
-      width: 339px;
-      height: 89px;
-
-      .item-img-box {
-        display: block;
-        width: 20px;
-        margin-bottom: 3px;
-      }
-    }
+    position: relative;
 
     .item-status-box {
       width: 128px;
@@ -408,7 +444,7 @@ const BuildBox = styled.div`
     }
 
     .current {
-      margin: 8px 15px 2px 10px;
+      margin: 4px 15px 2px ${40 + 339}px;
     }
 
     .last {
@@ -417,11 +453,26 @@ const BuildBox = styled.div`
   }
 `;
 
+const PurchasedItemBox = styled.div`
+  width: 339px;
+  height: 89px;
+  margin-left: ${(props) => props.marginLeft + 5}px;
+  position: absolute;
+  overflow: hidden;
+
+  .item-img-box {
+    display: block;
+    width: 20px;
+    margin-bottom: 3px;
+  }
+`;
+
 const SkillValueBox = styled.div`
   width: ${(props) => skillBoxWidth - props.marginLeft}px;
   height: 20px;
   margin-left: ${(props) => props.marginLeft + 5}px;
   display: flex;
+  flex-shrink: 0;
 `;
 
 const SkillValue = styled.div`

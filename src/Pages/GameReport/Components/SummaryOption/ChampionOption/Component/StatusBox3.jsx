@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 function thousand(value) {
   let result = "";
@@ -12,6 +13,13 @@ function thousand(value) {
 
 const StatusBox3 = () => {
   const { t } = useTranslation();
+  const gamevalue = useSelector((state) => state.GameReportReducer);
+  const totalDetail =
+    gamevalue.fixedDataset[gamevalue.selectedTeam].players[
+      gamevalue.selectedPosition
+    ].detail;
+
+  console.log("totalDetail", totalDetail);
 
   return (
     <ChampStatContainer>
@@ -19,29 +27,29 @@ const StatusBox3 = () => {
         <div className="performance-box">
           <div className="title">{t("game.summary.champion.kda")}</div>
           <div className="content">17 / 16 / 24</div>
-          <div className="all-content">22 / 20 / 35</div>
+          <div className="all-content">{`${totalDetail.kills} / ${totalDetail.deaths} / ${totalDetail.assists}`}</div>
         </div>
         <div className="performance-box">
           <div className="title">{t("game.summary.champion.cs")}</div>
           <div className="content">{`${325}`}</div>
-          <div className="all-content">{`${325}`}</div>
+          <div className="all-content">{`${totalDetail.cs}`}</div>
         </div>
         <div className="performance-box">
           <div className="title">{t("game.summary.champion.kill-point")}</div>
           <div className="content">{`${24}%`}</div>
-          <div className="all-content">{`${78}%`}</div>
+          <div className="all-content">{`${"수정"}%`}</div>
         </div>
         <div className="performance-box">
           <div className="title">{t("game.summary.champion.placed-ward")}</div>
           <div className="content">{`${13}`}</div>
-          <div className="all-content">{`${29}`}</div>
+          <div className="all-content">{`${totalDetail.wardsplaced}`}</div>
         </div>
         <div className="performance-box">
           <div className="title">
             {t("game.summary.champion.destroyed-ward")}
           </div>
           <div className="content">{`${2}`}</div>
-          <div className="all-content">{`${18}`}</div>
+          <div className="all-content">{`${totalDetail.wardskilled}`}</div>
         </div>
       </PerformanceContainer>
       <GoldContainer>

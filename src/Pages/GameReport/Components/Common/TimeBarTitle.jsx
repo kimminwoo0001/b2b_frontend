@@ -6,10 +6,11 @@ import secToMS from "../../../../lib/secToMS";
 
 const TimeBarTitle = ({ textAligh = "right" }) => {
   const videovalue = useSelector((state) => state.VideoReducer);
+  const gamevalue = useSelector((state) => state.GameReportReducer);
 
   return (
     <Title textAligh={textAligh}>
-      {secToMS(Math.floor(+videovalue.playedSeconds) - +videovalue.startTime)}
+      {secToMS(Math.floor(+videovalue.playedSeconds) - +gamevalue.startTime)}
     </Title>
   );
 };

@@ -7,8 +7,10 @@ import StatusBox2 from "./Component/StatusBox2";
 import StatusBox3 from "./Component/StatusBox3";
 import StatusBox4 from "./Component/StatusBox4";
 import TimeStatus from "./Component/TimeStatus";
+import { useSelector } from "react-redux";
 
 const ChampDetail = () => {
+  const gamevalue = useSelector((state) => state.GameReportReducer);
   return (
     <DetailChampContainer>
       <StatusContainer>
@@ -18,7 +20,7 @@ const ChampDetail = () => {
         <StatusBox4 />
       </StatusContainer>
       <TimeStatus />
-      <DetailChampTimeLine>
+      <DetailChampTimeLine itemBuild={gamevalue.champTab === 1}>
         <div>
           <TimeBarTitle textAligh="left" />
         </div>
@@ -45,10 +47,10 @@ const StatusContainer = styled.div`
 `;
 
 const DetailChampTimeLine = styled.div`
-  width: 100%;
+  width: ${(props) => (props.itemBuild ? "397px" : "100%")};
   height: 19px;
   display: flex;
-  padding-left: 10px;
+  padding-left: ${(props) => (props.itemBuild ? "0" : "10")}px;
 
   .time-bar {
     padding-left: 4px;
