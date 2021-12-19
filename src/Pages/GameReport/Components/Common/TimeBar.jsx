@@ -25,7 +25,9 @@ const TimeBar = ({ hidebar = false }) => {
       <TimeBarContainer
         value={((value - minValue) / (maxValue - minValue)) * 98.5}
       >
-        {hidebar && <TimeBarHideBar></TimeBarHideBar>}
+        {hidebar && (
+          <TimeBarHideBar itemBuild={gamevalue.champTab === 1}></TimeBarHideBar>
+        )}
       </TimeBarContainer>
       <RangeInput
         min={minValue}
@@ -34,6 +36,7 @@ const TimeBar = ({ hidebar = false }) => {
         id="rangeSlider"
         type="range"
         step="any"
+        itemBuild={gamevalue.champTab === 1}
       />
     </>
   );
@@ -48,8 +51,8 @@ const TimeBarContainer = styled.div`
 
 const TimeBarHideBar = styled.div`
   position: absolute;
-  width: 98.5%;
-  margin-left: 10px;
+  width: ${(props) => (props.itemBuild ? "100%" : "98.5%")};
+  margin-left: 0px;
   height: 100px;
   background-color: rgba(0, 0, 0, 0.5);
   top: -90px;
@@ -59,8 +62,8 @@ const RangeInput = styled.input`
   -webkit-appearance: none; /* Override default CSS styles */
   appearance: none;
   margin-top: 6px;
-  margin-left: 10px;
-  width: 98.5%; /* Full-width */
+  margin-left: ${(props) => (props.itemBuild ? "0" : "10")}px;
+  width: ${(props) => (props.itemBuild ? "100%" : "98.5%")}; /* Full-width */
   height: 6px; /* Specified height */
   background: #d3d3d3; /* Grey background */
   outline: none; /* Remove outline */

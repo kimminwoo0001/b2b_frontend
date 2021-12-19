@@ -20,6 +20,7 @@ export const SET_SELECTED_POSITION = "gamevalue/SET_SELECTED_POSITION";
 export const SET_SELECTED_PARTICIPANT = "gamevalue/SET_SELECTED_PARTICIPANT";
 export const SET_START_TIME = "gamevalue/SET_START_TIME";
 export const SET_GAME_TIME = "gamevalue/SET_GAME_TIME";
+export const SET_CHAMP_TAB = "gamevalue/SET_CHAMP_TAB";
 
 export const InitializeGameState = (payload) => {
   return {
@@ -139,6 +140,12 @@ export const SetGameTime = (payload) => {
     payload,
   };
 };
+export const SetChampTab = (payload) => {
+  return {
+    type: SET_CHAMP_TAB,
+    payload,
+  };
+};
 
 const initialState = {
   gameId: "",
@@ -157,6 +164,7 @@ const initialState = {
   selectedParticipant: 0, // 0~4 blue(t,j,m,a,s), 5~9 ted(t,j,m,a,s)
   startTime: "", //"0h34m06s",
   gameTime: "", //"2200",
+  champTab: 0,
 };
 
 export default function GameReportReducer(state = initialState, action) {
@@ -260,6 +268,11 @@ export default function GameReportReducer(state = initialState, action) {
       return {
         ...state,
         gameTime: action.payload,
+      };
+    case SET_CHAMP_TAB:
+      return {
+        ...state,
+        champTab: action.payload,
       };
     case INITIALIZE_GAME_STATE:
       return initialState;

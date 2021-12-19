@@ -10,8 +10,8 @@ import ErrorBoundary from "../../Components/ErrorBoundary";
 import Nav from "../../Components/Nav/Nav";
 import { useSelector } from "react-redux";
 import SelectFilter from '../../Components/SelectFilter/SelectFilter';
-import VideoTabs from '../VideoReport/VideoTabs';
-import GameReportIndex from './Components/GameReportIndex';
+// import VideoTabs from '../VideoReport/VideoTabs';
+// import GameReportIndex from './Components/GameReportIndex';
 import GameReportTab from './GameReportTab';
 
 function GameReport() {
@@ -58,7 +58,7 @@ height: 100%;
 min-height: 100vh;
 overflow: auto;
 display: flex;
-background-color: #16151c;
+background-color: #000000;
 overflow: hidden;
 
 .filter-close {
