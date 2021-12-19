@@ -53,11 +53,16 @@ const EachMatch = ({ matchData, team }) => {
         url,
         params,
         function (e) {
-          batch(() => {
-            dispatch(SetFixedDataset(e?.infos));
-            dispatch(SetPlayersDataset(e?.players));
-            dispatch(SetLogDataset(e?.logs));
-          });
+          console.log("fixedDataSet:", e?.infos);
+          console.log("playerDataSet:", e?.players);
+          console.log("logDataSet:", e?.log);
+          return (dispatch, getState) => {
+            batch(() => {
+              dispatch(SetFixedDataset(e?.infos));
+              dispatch(SetPlayersDataset(e?.players));
+              dispatch(SetLogDataset(e?.log));
+            });
+          };
         },
         function (objstore) {
           dispatch(SetModalInfo(objstore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용

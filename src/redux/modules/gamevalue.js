@@ -19,7 +19,6 @@ export const SET_SELECTED_TEAM = "gamevalue/SET_SELECTED_TEAM";
 export const SET_SELECTED_POSITION = "gamevalue/SET_SELECTED_POSITION";
 export const SET_SELECTED_PARTICIPANT = "gamevalue/SET_SELECTED_PARTICIPANT";
 
-
 export const InitializeGameState = (payload) => {
   return {
     type: INITIALIZE_GAME_STATE,
@@ -52,80 +51,79 @@ export const SetPlatformPlayer = (payload) => {
   };
 };
 
-
 export const SetUniqueId = (payload) => {
   return {
     type: SET_UNIQUE_ID,
-    payload
+    payload,
   };
 };
 export const SetOppside = (payload) => {
   return {
     type: SET_OPPSIDE,
-    payload
+    payload,
   };
 };
 export const SetFixedDataset = (payload) => {
   return {
     type: SET_FIXED_DATASET,
-    payload
+    payload,
   };
-}
+};
 export const SetPlayersDataset = (payload) => {
   return {
     type: SET_PLAYERS_DATASET,
-    payload
+    payload,
   };
-}
+};
 export const SetLogDataset = (payload) => {
   return {
     type: SET_LOG_DATASET,
-    payload
+    payload,
   };
-}
+};
 export const SetAutoDataset = (payload) => {
   return {
     type: SET_AUTO_DATASET,
-    payload
+    payload,
   };
-}
+};
 export const SetBlueTeam = (payload) => {
   return {
     type: SET_BLUE_TEAM,
-    payload
+    payload,
   };
-}
+};
 export const SetRedTeam = (payload) => {
   return {
     type: SET_RED_TEAM,
-    payload
+    payload,
   };
-}
+};
 
 export const SetSelectedPlayer = (payload) => {
   return {
     type: SET_SELECTED_PLAYER,
-    payload
+    payload,
   };
-}
+};
 export const SetSelectedTeam = (payload) => {
   return {
     type: SET_SELECTED_TEAM,
-    payload
+    payload,
   };
-}
+};
 export const SetSelectedPosition = (payload) => {
   return {
     type: SET_SELECTED_POSITION,
-    payload
+    payload,
   };
-}
+};
 export const SetSelectedParticipant = (payload) => {
   return {
     type: SET_SELECTED_PARTICIPANT,
-    payload
+    payload,
   };
-}
+};
 
 const initialState = {
   gameId: "",
@@ -141,7 +139,7 @@ const initialState = {
   redteam: "",
   selectedTeam: 0, // 0: 블루팀, 1: 레드팀
   selectedPosition: 0, // 0: top, 1: jng, 2:mid, 3:ad, 4:sup
-  selectedParticipant: 0 // 0~4 blue(t,j,m,a,s), 5~9 ted(t,j,m,a,s)
+  selectedParticipant: 0, // 0~4 blue(t,j,m,a,s), 5~9 ted(t,j,m,a,s)
 };
 
 export default function GameReportReducer(state = initialState, action) {
@@ -171,71 +169,71 @@ export default function GameReportReducer(state = initialState, action) {
       return {
         ...state,
         detail: action.payload,
-      }
+      };
     case SET_PLATFORM_PLAYER:
       return {
         ...state,
         player: action.payload,
-      }
+      };
 
     case SET_OPPSIDE:
       return {
         ...state,
-        oppside: action.payload
-      }
+        oppside: action.payload,
+      };
     case SET_FIXED_DATASET:
       return {
         ...state,
-        fixedDataset: action.payload
-      }
+        fixedDataset: action.payload,
+      };
     case SET_PLAYERS_DATASET:
       return {
         ...state,
-        playerDataset: action.payload
-      }
+        playerDataset: action.payload,
+      };
     case SET_LOG_DATASET:
       return {
         ...state,
-        logDataset: action.payload
-      }
+        logDataset: action.payload,
+      };
     case SET_AUTO_DATASET:
       return {
         ...state,
-        fixedDataset: action.payload
-      }
+        fixedDataset: action.payload,
+      };
     case SET_BLUE_TEAM:
       return {
         ...state,
-        blueteam: action.payload
-      }
+        blueteam: action.payload,
+      };
     case SET_RED_TEAM:
       return {
         ...state,
-        redteam: action.payload
-      }
+        redteam: action.payload,
+      };
     case SET_SELECTED_PLAYER:
-      console.log('SET_SELECTED_PLAYER', action.payload);
+      console.log("SET_SELECTED_PLAYER", action.payload);
       return {
         ...state,
         selectedTeam: action.payload.team,
         selectedPosition: action.payload.position,
-        selectedParticipant: action.payload.participant
-      }
+        selectedParticipant: action.payload.participant,
+      };
     case SET_SELECTED_TEAM:
       return {
         ...state,
-        selectedTeam: action.payload
-      }
+        selectedTeam: action.payload,
+      };
     case SET_SELECTED_POSITION:
       return {
         ...state,
-        selectedPosition: action.payload
-      }
+        selectedPosition: action.payload,
+      };
     case SET_SELECTED_PARTICIPANT:
       return {
         ...state,
-        selectedParticipant: action.payload
-      }
+        selectedParticipant: action.payload,
+      };
     case INITIALIZE_GAME_STATE:
       return initialState;
     default:

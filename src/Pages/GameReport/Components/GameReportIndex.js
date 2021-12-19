@@ -60,11 +60,7 @@ const GameReportIndex = () => {
         <>
           {indexData?.map((match, idx) => {
             return (
-              <EachMatch
-                matchData={match}
-                team={filters.team}
-                key={match.data + idx}
-              />
+              <EachMatch matchData={match} team={filters.team} key={idx} />
             );
           })}
         </>
