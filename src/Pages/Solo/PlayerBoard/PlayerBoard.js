@@ -286,16 +286,18 @@ function PlayerBoard() {
             </div>
 
             <div className="PerformanceValue">
-              {sbr?.sbrAvg.toFixed(1)} /{" "}
-              {sbr?.price > 0 ? sbr?.price + "위" : "출전 경기 부족"}
+              <SbrStat>{sbr?.sbrAvg.toFixed(1)}</SbrStat>
+              <SbrPrice isPriceUnderZero={sbr?.price <= 0}>
+                {sbr?.price > 0 ? " / " + sbr?.price + "위" : "출전 경기 부족"}
+              </SbrPrice>
             </div>
           </div>
-          <div className="AverageBoxTwo">
+          {/* <div className="AverageBoxTwo">
             <div className="PerformanceTitle">
               {t("solo.playerboard.bestScore")}
             </div>
             <div className="PerformanceValueBest">{sbr?.maxAvg.toFixed(1)}</div>
-          </div>
+          </div> */}
         </PlayerOverView>
       </PlayerInfoSection>
       <AbilitySection>
@@ -1143,6 +1145,7 @@ const GraphSection = styled.div`
 const PlayerOverView = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-around;
   width: 100%;
   height: 79px;
   margin: 22.5px 0px 0 0;
@@ -1842,4 +1845,10 @@ const LoadingImage = styled.div`
     width: 50px;
     height: 50px;
   }
+`;
+
+const SbrStat = styled.span``;
+
+const SbrPrice = styled.span`
+  display: ${(props) => (props.isPriceUnderZero ? "none" : "inline-block")};
 `;

@@ -13,6 +13,9 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  active,
+  payload,
+  label,
 } from "recharts";
 import qs from "qs";
 import axiosRequest from "../../../lib/axiosRequest";
@@ -188,6 +191,7 @@ function CompareIngame() {
         </CustomTool>
       );
     }
+
     return null;
   };
 

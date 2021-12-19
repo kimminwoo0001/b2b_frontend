@@ -1,20 +1,16 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { useSelector } from "react-redux";
 //import YoutubeVideo from '../../../lib/youtube';
-import ChampDetail from './SummaryOption/ChampionOption/ChampDetail';
-import DetailLog from './DetailLogOption/DetailLog';
-import TeamStatus from './TeamStatusOption/TeamStatus';
-import TimeLine from './TimeLineOption/TimeLine';
-import Summary from './SummaryOption/Summary';
-import VideoPlayer from '../../../Components/Video/VideoPlayer';
-
+import ChampDetail from "./SummaryOption/ChampionOption/ChampDetail";
+import DetailLog from "./DetailLogOption/DetailLog";
+import TeamStatus from "./TeamStatusOption/TeamStatus";
+import TimeLine from "./TimeLineOption/TimeLine";
+import Summary from "./SummaryOption/Summary";
+import VideoPlayer from "../../../Components/Video/VideoPlayer";
 
 const GameReportDetail = () => {
-
-  useEffect(() => {
-
-  }, [])
+  useEffect(() => {}, []);
 
   return (
     <GameReportDetailContainer>
@@ -34,13 +30,10 @@ const GameReportDetail = () => {
         </FlexContainer>
       </BlockContainer>
     </GameReportDetailContainer>
-
-  )
-}
+  );
+};
 
 export default memo(GameReportDetail);
-
-
 
 const GameReportDetailContainer = styled.div`
   width: 1920px;
