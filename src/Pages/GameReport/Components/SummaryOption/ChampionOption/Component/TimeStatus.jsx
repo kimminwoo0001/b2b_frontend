@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import transferTimetoWidth from "../../../../../../lib/transferTimetoWidth";
 import { useSelector, useDispatch } from "react-redux";
 import { SetChampTab } from "../../../../../../redux/modules/gamevalue";
+import ItemTimeBox from "./ItemTimeBox";
 
 const skillBoxWidth = 610;
 const purchasedItemBoxWidth = 339;
@@ -49,37 +50,6 @@ const TimeStatus = () => {
 
   const purchasedItemBuildData =
     gamevalue.playerDataset[gamevalue.selectedParticipant].purchasedItem;
-
-  const item_list = [
-    {
-      buy: [
-        { id: 2010, cnt: 2 },
-        { id: 1052, cnt: 1 },
-        { id: 1082, cnt: 1 },
-        { id: 3222, cnt: 1 },
-      ],
-      cur: [
-        { id: 2010, cnt: 2 },
-        { id: 1052, cnt: 1 },
-        { id: 1082, cnt: 1 },
-        { id: 3222, cnt: 1 },
-      ],
-    },
-  ];
-
-  const buy_list = item_list[0]["buy"];
-  const cur_list = item_list[0]["cur"];
-
-  const NoneItem = (len) => {
-    const empty = 6 - len;
-    let result = [];
-    for (let i = 0; i < empty; i++) {
-      result.push(i);
-    }
-    console.log("result", result);
-
-    return result;
-  };
 
   return (
     <DetailChampTimeStatus>
@@ -253,50 +223,7 @@ const TimeStatus = () => {
               </PurchasedItemBox>
             );
           })}
-
-          <div className="item-status-box current">
-            <div className="nav">{t("game.summary.champion.item-current")}</div>
-            <div className="img-box">
-              <div className="img-col">
-                {cur_list.map((item) => {
-                  return (
-                    <ItemStatusImg
-                      className="item-img"
-                      src={`Images/item/${item.id}.png`}
-                      alt="itemImg"
-                    ></ItemStatusImg>
-                  );
-                })}
-                {NoneItem(cur_list.length).map(() => {
-                  console.log("maping 중");
-                  return <ItemStatusNotImg></ItemStatusNotImg>;
-                })}
-              </div>
-              <div className="img-col-trick"></div>
-            </div>
-          </div>
-
-          <div className="item-status-box last">
-            <div className="nav">{t("game.summary.champion.item-end")}</div>
-            <div className="img-box">
-              <div className="img-col">
-                {cur_list.map((item) => {
-                  return (
-                    <ItemStatusImg
-                      className="item-img"
-                      src={`Images/item/${item.id}.png`}
-                      alt="itemImg"
-                    ></ItemStatusImg>
-                  );
-                })}
-                {NoneItem(cur_list.length).map(() => {
-                  console.log("maping 중");
-                  return <ItemStatusNotImg></ItemStatusNotImg>;
-                })}
-              </div>
-              <div className="img-col-trick">0</div>
-            </div>
-          </div>
+          <ItemTimeBox />
         </div>
       </BuildBox>
     </DetailChampTimeStatus>
@@ -405,7 +332,7 @@ const BuildBox = styled.div`
     position: relative;
 
     .item-status-box {
-      width: 128px;
+      width: 130px;
       height: 79px;
 
       display: block;
@@ -429,7 +356,7 @@ const BuildBox = styled.div`
         display: flex;
 
         .img-col {
-          width: 102px;
+          width: 108px;
           heigh: 63px;
           margin-right: 3px;
         }
@@ -501,24 +428,4 @@ const ItemBuildImg = styled.img`
   height: 20px;
   object-fit: contain;
   border-radius: 3px;
-`;
-
-const ItemStatusImg = styled.img`
-  width: 30px;
-  height: 30px;
-  margin: 0 3px 3px 0;
-  object-fit: contain;
-  border-radius: 3px;
-`;
-
-const ItemStatusNotImg = styled.img`
-  width: 31px;
-  height: 31px;
-  margin: 0 3px 3px 0;
-  object-fit: contain;
-  border-radius: 3px;
-  background-color: #3a3745;
-  border: solid 15px #3a3745;
-  display: inline-block;
-  content: "";
 `;
