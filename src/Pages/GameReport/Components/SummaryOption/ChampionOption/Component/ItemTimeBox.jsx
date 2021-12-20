@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,26 +7,32 @@ const ItemTimeBox = () => {
   const { t } = useTranslation();
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const videovalue = useSelector((state) => state.VideoReducer);
-
   const currentItem =
     gamevalue.playerDataset[gamevalue.selectedParticipant].currentItem;
   const currentTime = Math.floor(
     videovalue.playedSeconds - +gamevalue.startTime
   );
-
   const curTime = currentTime < 0 ? 0 : currentTime;
+  const [itemIdx, setItemIdx] = useState(0);
 
   console.log(currentItem);
   console.log(curTime);
 
-  function func() {
-    if (currentTime > currentItem[0].realCount) {
-      currentItem.shift();
+  const getItemIdx = () => {
+    let minusItemIdx = itemIdx === 0 ? itemIdx : itemIdx - 1;
+
+    if (currentItem[itemIdx].realCount / 2 <= curTime) {
+      setItemIdx(itemIdx + 1);
+    } else if (
+      itemIdx !== 0 &&
+      currentItem[minusItemIdx].realCount / 2 > curTime
+    ) {
+      setItemIdx(itemIdx - 1);
     }
-    console.log(currentItem[0]);
-    return currentItem[0].items;
-  }
-  func();
+    console.log("itemIdx", itemIdx);
+    console.log("currentItem[itemIdx]", currentItem[itemIdx]);
+    return minusItemIdx;
+  };
 
   const NoneItem = (len) => {
     const empty = 6 - len;
@@ -34,7 +40,7 @@ const ItemTimeBox = () => {
     for (let i = 0; i < empty; i++) {
       result.push(i);
     }
-    console.log("result", result);
+    //console.log("result", result);
 
     return result;
   };
@@ -45,7 +51,7 @@ const ItemTimeBox = () => {
         <div className="nav">{t("game.summary.champion.item-current")}</div>
         <div className="img-box">
           <div className="img-col">
-            {func().map((item) => {
+            {currentItem[getItemIdx()].items.map((item) => {
               return (
                 <ItemStatusImg
                   className="item-img"
@@ -54,7 +60,7 @@ const ItemTimeBox = () => {
                 ></ItemStatusImg>
               );
             })}
-            {NoneItem(func().length).map(() => {
+            {NoneItem(currentItem[getItemIdx()].items.length).map(() => {
               console.log("maping 중");
               return <ItemStatusNotImg></ItemStatusNotImg>;
             })}
