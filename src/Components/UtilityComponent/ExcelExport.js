@@ -9,6 +9,7 @@ import XLSX from "xlsx";
 import timeFormat from "../../lib/timeFormat";
 import Modal from "react-modal";
 import AlertModal from "./AlertModal";
+import { SetIsOpen, SetDesc } from "../../redux/modules/modalvalue";
 
 const customStyles = {
   overlay: {
@@ -42,7 +43,9 @@ const ExportUtil = ({ filename = "none", tableid }) => {
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const dispatch = useDispatch();
   const tblvalue = useSelector((state) => state.TableReducer);
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen } = useSelector((state) => state.ModalReducer);
+
+  // const [isOpen, setIsOpen] = useState(false);
   const [alertDesc, setAlertDesc] = useState("");
 
   const getTableHeaders = () => {
@@ -150,19 +153,24 @@ const ExportUtil = ({ filename = "none", tableid }) => {
   const copyClipboard = () => {
     clipboard.writeText(tabledata("clipboard")).then(
       function () {
-        setAlertDesc(t("alert.desc.copy_y"));
-        setIsOpen(true);
+        // setAlertDesc(t("alert.desc.copy_y"));
+        // setIsOpen(true);
+        dispatch(SetDesc(t("alert.desc.copy_y")));
+        dispatch(SetIsOpen(true));
       },
       function () {
-        setAlertDesc(t("alert.desc.copy_n"));
-        setIsOpen(true);
+        // setAlertDesc(t("alert.desc.copy_n"));
+        // setIsOpen(true);
+        dispatch(SetDesc(t("alert.desc.copy_n")));
+        dispatch(SetIsOpen(true));
       }
     );
   };
 
   return (
     <>
-      <AlertModal desc={alertDesc} isOpen={isOpen} setIsOpen={setIsOpen} />
+      {/* <AlertModal desc={alertDesc} isOpen={isOpen} setIsOpen={setIsOpen} /> */}
+      <AlertModal />
       <DropDown>
         <div className="menu-container">
           <button

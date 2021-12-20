@@ -287,7 +287,7 @@ function PlayerBoard() {
 
             <div className="PerformanceValue">
               <SbrStat>{sbr?.sbrAvg.toFixed(1)}</SbrStat>
-              <SbrPrice isPriceUnderZero={sbr?.price <= 0}>
+              <SbrPrice isChampNotSelected={filters.champion !== ""}>
                 {sbr?.price > 0 ? " / " + sbr?.price + "위" : "출전 경기 부족"}
               </SbrPrice>
             </div>
@@ -1850,5 +1850,5 @@ const LoadingImage = styled.div`
 const SbrStat = styled.span``;
 
 const SbrPrice = styled.span`
-  display: ${(props) => (props.isPriceUnderZero ? "none" : "inline-block")};
+  display: ${(props) => (props.isChampNotSelected ? "none" : "inline-block")};
 `;
