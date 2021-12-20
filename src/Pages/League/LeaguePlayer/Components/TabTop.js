@@ -184,6 +184,7 @@ const TableContents = styled.div`
     font-weight: bold;
     color: rgb(255, 255, 255);
     margin-left: 15.3px;
+    margin-top: 5px;
   }
   .ParticipateTitle {
     font-family: NotoSansKR, Apple SD Gothic Neo;

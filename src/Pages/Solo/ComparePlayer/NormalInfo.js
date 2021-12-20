@@ -71,31 +71,37 @@ function NormalInfo() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(undefined, url, params, function (e) {
-      const copy = e[filters.player];
-      const copyoppData = e[filters.oppplayer];
-      setData(copy);
-      setOppData(copyoppData);
-      //선수 데이터
-      setPlayer({
-        line: copy.line.toFixed(1),
-        investment: copy.investment.toFixed(1),
-        loss: copy.loss.toFixed(1),
-        match: copy.match.toFixed(1),
-        gold: copy.gold.toFixed(1),
-      });
-      //상대 선수 데이터
-      setOppPlayer({
-        line: copyoppData.line.toFixed(1),
-        investment: copyoppData.investment.toFixed(1),
-        loss: copyoppData.loss.toFixed(1),
-        match: copyoppData.match.toFixed(1),
-        gold: copyoppData.gold.toFixed(1),
-      });
-      setLoading(false);
-    }, function (objStore) {
-      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    })
+    axiosRequest(
+      undefined,
+      url,
+      params,
+      function (e) {
+        const copy = e[filters.player];
+        const copyoppData = e[filters.oppplayer];
+        setData(copy);
+        setOppData(copyoppData);
+        //선수 데이터
+        setPlayer({
+          line: copy.line.toFixed(1),
+          investment: copy.investment.toFixed(1),
+          loss: copy.loss.toFixed(1),
+          match: copy.match.toFixed(1),
+          gold: copy.gold.toFixed(1),
+        });
+        //상대 선수 데이터
+        setOppPlayer({
+          line: copyoppData.line.toFixed(1),
+          investment: copyoppData.investment.toFixed(1),
+          loss: copyoppData.loss.toFixed(1),
+          match: copyoppData.match.toFixed(1),
+          gold: copyoppData.gold.toFixed(1),
+        });
+        setLoading(false);
+      },
+      function (objStore) {
+        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      }
+    );
   };
 
   //챔피언 필터
@@ -111,12 +117,18 @@ function NormalInfo() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(undefined, url, params, function (e) {
-      setChampFilter(e.champion);
-      setChampEng(e.championEng);
-    }, function (objStore) {
-      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    })
+    axiosRequest(
+      undefined,
+      url,
+      params,
+      function (e) {
+        setChampFilter(e.champion);
+        setChampEng(e.championEng);
+      },
+      function (objStore) {
+        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      }
+    );
   };
   //상대 챔피언 필터
   const GetOppFilter = () => {
@@ -132,12 +144,18 @@ function NormalInfo() {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(undefined, url, params, function (e) {
-      setOppFilter(e.champion);
-      setOppEng(e.championEng);
-    }, function (objStore) {
-      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    })
+    axiosRequest(
+      undefined,
+      url,
+      params,
+      function (e) {
+        setOppFilter(e.champion);
+        setOppEng(e.championEng);
+      },
+      function (objStore) {
+        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      }
+    );
   };
 
   // 오각형 그래프 세팅
@@ -551,7 +569,7 @@ const PlayerStatWrapper = styled.div`
     font-size: 16px;
     line-height: 32px;
     background-color: #23212a;
-    font-weight: bold;
+    /* font-weight: bold; */
     color: #fff;
   }
 `;

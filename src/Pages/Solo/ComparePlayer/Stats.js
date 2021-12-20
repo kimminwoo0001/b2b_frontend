@@ -929,7 +929,7 @@ const PlayerStatWrapper = styled.div`
     font-size: 16px;
     line-height: 32px;
     background-color: #23212a;
-    font-weight: bold;
+    /* font-weight: bold; */
     color: #fff;
   }
 

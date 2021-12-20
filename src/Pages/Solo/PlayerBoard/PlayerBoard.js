@@ -292,6 +292,7 @@ function PlayerBoard() {
               </SbrPrice>
             </div>
           </div>
+          {/*  주석 처리 */}
           {/* <div className="AverageBoxTwo">
             <div className="PerformanceTitle">
               {t("solo.playerboard.bestScore")}
@@ -1035,6 +1036,7 @@ const LeftInfo = styled.div`
   .NavContents {
     font-family: "Spoqa Han Sans";
     font-size: 13px;
+    margin-left: 5px;
     letter-spacing: -0.6px;
     color: rgb(132, 129, 142);
   }

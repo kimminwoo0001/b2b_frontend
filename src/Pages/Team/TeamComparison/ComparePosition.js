@@ -318,9 +318,7 @@ function ComparePosition() {
             alt="teamIcon"
           />
         </div>
-
         <div className="Vs">VS</div>
-
         <div className="TeamTwo">
           <img
             src={`Images/TeamLogo/${filters.oppteam}.png`}
@@ -684,7 +682,6 @@ const DisplayTeams = styled.div`
   position: relative;
   color: #fff;
   display: flex;
-  //justify-content: space-around;
   margin: 20px 0;
   border-radius: 20px;
   background-color: #2f2d38;
@@ -717,6 +714,7 @@ const DisplayTeams = styled.div`
 
   .TeamOne {
     display: flex;
+    align-items: center;
     font-family: SpoqaHanSansNeo;
     width: 215px;
     margin: 0 0px 0 0px;
