@@ -52,7 +52,7 @@ const TimeBarContainer = styled.div`
 const TimeBarHideBar = styled.div`
   position: absolute;
   width: ${(props) => (props.itemBuild ? "100%" : "98.5%")};
-  margin-left: 0px;
+  margin-left: ${(props) => (props.itemBuild ? "0" : "10")}px;
   height: 100px;
   background-color: rgba(0, 0, 0, 0.5);
   top: -90px;

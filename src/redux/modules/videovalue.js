@@ -167,8 +167,6 @@ export const SetUrl = (payload) => {
 const initialState = {
   vodUrl: "", //"1136669396",
   platform: "", //"twitch",
-  startTime: "", //"0h34m06s",
-  gameTime: "", //"2200",
   playing: true,
   controls: false,
   light: false,
