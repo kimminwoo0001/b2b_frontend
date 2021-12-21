@@ -37,6 +37,11 @@ function ChampionSetting({
   const [isActive4, setIsActive4] = useDetectOutsideClick(dropdownRef, false);
   //const [isActive5, setIsActive5] = useState(false);
   const isActive5 = useRef(false);
+
+  //최초 render시 getGame,getGameAll 호출되지 않도록
+  const isInitialMount = useRef(true);
+  const isInitialMount2 = useRef(true);
+
   const [filterData, setFilterData] = useState({});
   const [champArray, setChampArray] = useState([]);
   const [champArray2, setChampArray2] = useState([]);
@@ -245,7 +250,6 @@ function ChampionSetting({
     }
   };
 
-  // mappingfilter/oppTean response 가공
   const refineOppTeamData = (data) => {
     let refined = [];
     for (let i = 0; i < data.length; i++) {
@@ -286,7 +290,6 @@ function ChampionSetting({
     }
   };
 
-  // mappingfilter/opplayer response 가공
   const refineOppPlayerData = (data) => {
     let refined = [];
     for (let i = 0; i < data.length; i++) {
@@ -371,9 +374,9 @@ function ChampionSetting({
         team: filters.team,
         player: filters.player,
         champion: champArray,
-        oppteam: "",
-        oppplayer: "",
-        oppchampion: "",
+        oppteam: filters.oppteam ? filters.oppteam : "",
+        oppplayer: filters.oppplayer ? filters.oppplayer : "",
+        oppchampion: filters.oppchampion_eng ? filters.oppchampion_eng : "",
         // compare: "off",
         side: side,
         token: user.token,
@@ -432,14 +435,22 @@ function ChampionSetting({
   };
 
   useEffect(() => {
-    getGame();
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+      getGame();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [side, filters.patch]);
 
   useEffect(() => {
-    getGameAll();
+    if (isInitialMount2.current) {
+      isInitialMount2.current = false;
+    } else {
+      getGameAll();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.oppchampion_eng, side, filters.patch]);
+  }, [filters.oppchampion_eng, filters.patch]);
 
   const clickChampionConfirm = () => {
     //setIsActive2(false);
@@ -646,7 +657,7 @@ function ChampionSetting({
                 }}
                 className="menu-trigger2"
               >
-                {champArray.length > 0 ? (
+                {champArray && champArray.length !== 0 ? (
                   <span className="Label3">
                     <span className="champLength">
                       {`${champArray.length} `}

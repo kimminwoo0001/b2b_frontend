@@ -75,6 +75,10 @@ const Filter = memo(() => {
   const isNeedTeam = [nameSolo, nameTeam, nameVideo, nameGameReport].includes(
     pagePath
   );
+  const isVideoOrGameReportPage = [nameVideo, nameGameReport].includes(
+    pagePath
+  );
+
   const dropdownRef = useRef(null);
   const [isActiveLeague, setIsActiveLeague] = useDetectOutsideClick(
     dropdownRef,
@@ -196,6 +200,11 @@ const Filter = memo(() => {
           Number(Object.keys(staticvalue.filterObjects[key])) ===
             Number(filters.year) && key
       );
+      // 영상보고서, 게임보고서일 경우 LPL,LCK CL 제외
+    } else if (isVideoOrGameReportPage) {
+      leagueList = Object.keys(staticvalue.filterObjects).filter(
+        (key) => key !== "LPL" && key !== "LCK CL"
+      );
     } else {
       leagueList = Object.keys(staticvalue.filterObjects);
       console.log("keys of static value: ", leagueList);
@@ -248,12 +257,14 @@ const Filter = memo(() => {
           const ObjectKeys = Object.keys(
             staticvalue.filterObjects[league][year]
           );
+
           seasonList = seasonList.concat(ObjectKeys);
         }
       }
       seasonList = seasonList.filter(
         (item, pos) => seasonList.indexOf(item) === pos
       );
+      console.log("sortedSeasonList", seasonList);
 
       let updateSeason = [];
       for (const season of filters.season) {

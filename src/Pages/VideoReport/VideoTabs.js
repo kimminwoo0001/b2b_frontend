@@ -1,7 +1,11 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { HandleTab, Reset_MapTab } from "../../redux/modules/filtervalue";
+import {
+  HandleTab,
+  Reset_MapTab,
+  Reset_Object_MapTab,
+} from "../../redux/modules/filtervalue";
 import WardMapping from "./WardMapping/WardMapping";
 import ObjectMapping from "./ObjectMapping/ObjectMapping";
 import GameMapping from "./GameMapping/GameMapping";
@@ -17,7 +21,7 @@ function VideoTabs() {
     0: <WardMapping />,
     1: <ObjectMapping />,
     2: <GameMapping />,
-    3: <HitMap />
+    3: <HitMap />,
   };
 
   return (
@@ -38,7 +42,8 @@ function VideoTabs() {
           <TabContent
             onClick={() => {
               dispatch(HandleTab(1));
-              dispatch(Reset_MapTab());
+              // dispatch(Reset_MapTab());
+              dispatch(Reset_Object_MapTab());
             }}
             changeColor={filters.tab === 1}
           >
@@ -112,7 +117,7 @@ const TabContent = styled.li`
     div {
       padding: 10px 15px;
       border-radius: 10px;
-      background-color : #26262C;
+      background-color: #26262c;
     }
   }
 

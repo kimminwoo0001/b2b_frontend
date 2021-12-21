@@ -720,6 +720,7 @@ const TimeStamp = styled.div`
     text-align: right;
   }
   > .max {
+    width: 55px;
     color: #6b6979;
   }
 `;

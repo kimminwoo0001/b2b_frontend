@@ -1642,6 +1642,11 @@ const RecordTable = styled.table`
     border-bottom: 1px solid rgb(58, 55, 69);
     height: 28px;
     width: 100%;
+
+    :last-child {
+      border-bottom: none;
+    }
+
     > .TeamName {
       width: 190px;
       text-align: left;

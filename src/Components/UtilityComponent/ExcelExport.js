@@ -366,7 +366,7 @@ const DropDown = styled.div`
     width: 78px;
     height: 30px;
     margin: 0px;
-    padding: 0px 0px 2px 5px;
+    padding: 5px 0px 2px 5px;
     border-radius: 10px;
     background-color: #5942ba;
     font-family: SpoqaHanSansNeo;
@@ -391,7 +391,7 @@ const DropDown = styled.div`
     letter-spacing: -0.6px;
     text-align: left;
     color: rgb(255, 255, 255);
-    margin: 0 0px 0 11.4px;
+    margin: 0 0 0 11.4px;
     /* padding-right: 29.6px; */
     width: 140px;
   }
