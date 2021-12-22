@@ -26,6 +26,7 @@ export const CHAMPION_ENG = "filtervalue/CHAMPION_ENG";
 export const OPP_CHAMPION_ENG = "filtervalue/OPP_CHAMPION_ENG";
 export const RESET_MAPPING = "filtervalue/RESET_MAPPING";
 export const RESET_MAPPINGTAB = "filtervalue/RESET_MAPPINGTAB";
+export const RESET_OBJECT_MAPPINGTAB = "filtervalue/RESET_OBJECT_MAPPINGTAB";
 export const GET_GAME_ID = "filtervalue/GET_GAME_ID";
 export const MENU_NUM = "filtervalue/MENU_NUM";
 export const YEAR = "filtervalue/YEAR";
@@ -39,8 +40,8 @@ export const COMPARE_MODAL = "filtervalue/COMPARE_MODAL";
 export const SET_LEAGUE = "filtervalue/SET_LEAGUE";
 export const SET_YEAR = "filtervalue/SET_YEAR";
 export const SET_SEASON = "filtervalue/SET_SEASON";
-export const SET_TEAM = "filtervalue/SET_TEAM"
-export const SET_PLAYER = "filtervalue/SET_PLAYER"
+export const SET_TEAM = "filtervalue/SET_TEAM";
+export const SET_PLAYER = "filtervalue/SET_PLAYER";
 export const SET_PATCH = "filtervalue/SET_PATCH";
 export const SELECT_ALL_BTN = "filtervalue/SELECT_ALL_BTN";
 
@@ -50,6 +51,14 @@ export const Reset_MapTab = (payload) => {
     payload,
   };
 };
+
+export const Reset_Object_MapTab = (payload) => {
+  return {
+    type: RESET_OBJECT_MAPPINGTAB,
+    payload,
+  };
+};
+
 export const Reset_Map = (payload) => {
   return {
     type: RESET_MAPPING,
@@ -315,14 +324,12 @@ export const SetTeam = (payload) => {
   };
 };
 
-
 export const SetPlayer = (payload) => {
   return {
     type: SET_PLAYER,
     payload,
   };
 };
-
 
 export const SetPatch = (payload) => {
   return {
@@ -362,7 +369,7 @@ const initialState = {
   click: 0,
   gameid: "",
   menu_num: "",
-  filterMenuState: true
+  filterMenuState: true,
 };
 
 export default function FilterReducer(state = initialState, action) {
@@ -513,6 +520,17 @@ export default function FilterReducer(state = initialState, action) {
         oppchampion: "",
         champion_eng: "",
         oppchampion_eng: "",
+      };
+    case RESET_OBJECT_MAPPINGTAB:
+      return {
+        ...state,
+        player: "",
+        oppplayer: "",
+        oppteam: "",
+        champion: "",
+        oppchampion: "",
+        champion_eng: [],
+        oppchampion_eng: [],
       };
     case MENU_NUM:
       return {

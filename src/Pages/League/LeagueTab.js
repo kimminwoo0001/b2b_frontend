@@ -66,8 +66,8 @@ export default LeagueTab;
 const LeagueTabWrapper = styled.div`
   width: 1170px;
   height: 1080px;
-  margin: 0px 0 0;
-  padding: 0 30px;
+  margin: 21px 0 25px 22px;
+  /* padding: 0 30px; */
 `;
 
 const TabContainer = styled.ul`

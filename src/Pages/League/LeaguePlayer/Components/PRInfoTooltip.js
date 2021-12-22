@@ -28,9 +28,12 @@ const Arrow = styled.div`
 `;
 
 const ToolTipWrapper = styled.div`
-  background-color: #000000;
-  padding: 23.5px 14px 16.5px 14px;
-  border-radius: 20px;
+  max-width: 295px;
+  background-color: #433f4e;
+  padding: 10px;
+  border-radius: 10px;
+  /* text-align: left; */
+  font-size: 13px;
 `;
 
 const Contents = styled.div`

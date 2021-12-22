@@ -729,4 +729,5 @@ const PhaseContents = styled(TableContents)`
 
 const MapPhaseData = styled(MapBanData)`
   width: 176px;
+  padding: 0 15px;
 `;

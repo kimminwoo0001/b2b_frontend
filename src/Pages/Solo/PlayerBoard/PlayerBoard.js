@@ -286,16 +286,19 @@ function PlayerBoard() {
             </div>
 
             <div className="PerformanceValue">
-              {sbr?.sbrAvg.toFixed(1)} /{" "}
-              {sbr?.price > 0 ? sbr?.price + "위" : "출전 경기 부족"}
+              <SbrStat>{sbr?.sbrAvg.toFixed(1)}</SbrStat>
+              <SbrPrice isChampNotSelected={filters.champion !== ""}>
+                {sbr?.price > 0 ? " / " + sbr?.price + "위" : "출전 경기 부족"}
+              </SbrPrice>
             </div>
           </div>
-          <div className="AverageBoxTwo">
+          {/*  주석 처리 */}
+          {/* <div className="AverageBoxTwo">
             <div className="PerformanceTitle">
               {t("solo.playerboard.bestScore")}
             </div>
             <div className="PerformanceValueBest">{sbr?.maxAvg.toFixed(1)}</div>
-          </div>
+          </div> */}
         </PlayerOverView>
       </PlayerInfoSection>
       <AbilitySection>
@@ -1033,6 +1036,7 @@ const LeftInfo = styled.div`
   .NavContents {
     font-family: "Spoqa Han Sans";
     font-size: 13px;
+    margin-left: 5px;
     letter-spacing: -0.6px;
     color: rgb(132, 129, 142);
   }
@@ -1143,6 +1147,7 @@ const GraphSection = styled.div`
 const PlayerOverView = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-around;
   width: 100%;
   height: 79px;
   margin: 22.5px 0px 0 0;
@@ -1637,6 +1642,11 @@ const RecordTable = styled.table`
     border-bottom: 1px solid rgb(58, 55, 69);
     height: 28px;
     width: 100%;
+
+    :last-child {
+      border-bottom: none;
+    }
+
     > .TeamName {
       width: 190px;
       text-align: left;
@@ -1842,4 +1852,10 @@ const LoadingImage = styled.div`
     width: 50px;
     height: 50px;
   }
+`;
+
+const SbrStat = styled.span``;
+
+const SbrPrice = styled.span`
+  display: ${(props) => (props.isChampNotSelected ? "none" : "inline-block")};
 `;

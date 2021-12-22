@@ -311,7 +311,8 @@ function LeagueStatistics() {
                         stepSize: supportTimeData?.row,
                         fontColor: "#84818e",
                         fontSize: 15,
-                        min: supportTimeData?.min,
+                        // min: supportTimeData?.min,
+                        min: 0,
                         max: supportTimeData?.max,
                       },
                       gridLines: {

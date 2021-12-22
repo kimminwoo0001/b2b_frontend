@@ -1,30 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
-import axios from "axios";
 import { API } from "../../config";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
-import qs from "qs";
 import TabforTop from "./TabforTop";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function LeaguePick() {
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
+
   const [loading, setLoading] = useState(false);
   const [positionTab, setPositionTab] = useState(0);
   const [queryPosition, setQueryPosition] = useState();
+
   const [importantPicks, setImportantPicks] = useState();
   const [pickDifference, setPickDifference] = useState();
   const [uniquePick, setUniquePick] = useState();
   const [tier, setTier] = useState();
+
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const isInitialMount = useRef(true);
   const isInitialMount2 = useRef(true);
 
   // 리그 보고서 => 픽에 있는 Top, JG ,Mid, Adc, Sup 텝
@@ -35,7 +33,6 @@ function LeaguePick() {
         pickDifference={pickDifference}
         uniquePick={uniquePick}
         tier={tier}
-        loading={loading}
       />
     ),
     1: (
@@ -44,7 +41,6 @@ function LeaguePick() {
         pickDifference={pickDifference}
         uniquePick={uniquePick}
         tier={tier}
-        loading={loading}
       />
     ),
     2: (
@@ -53,7 +49,6 @@ function LeaguePick() {
         pickDifference={pickDifference}
         uniquePick={uniquePick}
         tier={tier}
-        loading={loading}
       />
     ),
     3: (
@@ -62,7 +57,6 @@ function LeaguePick() {
         pickDifference={pickDifference}
         uniquePick={uniquePick}
         tier={tier}
-        loading={loading}
       />
     ),
     4: (
@@ -71,19 +65,12 @@ function LeaguePick() {
         pickDifference={pickDifference}
         uniquePick={uniquePick}
         tier={tier}
-        loading={loading}
       />
     ),
   };
 
   useEffect(() => {
-    // 컴포넌트 최초 mount시에는 실행되지 않도록 함
-    // if (isInitialMount.current) {
-    //   isInitialMount.current = false;
-    // } else {
     fetchingPickData();
-    // }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.patch, queryPosition]);
 
@@ -143,7 +130,6 @@ function LeaguePick() {
         setTier(e.championTier);
         //유니크픽 데이터 저장
         setUniquePick(e.uniquePick);
-        setLoading(false);
       },
       function (objStore) {
         dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -256,8 +242,7 @@ const TabItem = styled.button`
     letter-spacing: normal;
     text-align: left;
     padding-bottom: 18px;
-    border-bottom: solid 1px
-      ${(props) => (props.changeColor ? `#fff` : `#433f4e;`)};
+    border-bottom: solid 1px ${(props) => (props.changeColor ? `#fff` : `none`)};
     color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
   }
 `;

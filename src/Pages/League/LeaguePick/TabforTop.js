@@ -76,6 +76,7 @@ const useSortableData2 = (tiers, config = null) => {
 
 function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
   //주요픽 정렬 오름차 내림차 상태 값
+
   const { items, requestSort } = useSortableData(
     importantPicks ? importantPicks : []
   );
@@ -128,32 +129,30 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
               </tr>
             </thead>
             <tbody>
-              {
-                // items.length === 0 ? (
-                //   <LoadingImage>
-                //     <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
-                //   </LoadingImage>
-                // ) :
-                items?.map((data, idx) => {
-                  return (
-                    <tr key={idx}>
-                      <td className="ChampName">
-                        <div className="ChampWrapper">
-                          <img src={data.championImage} alt="champIcon"></img>
-                          <div>
-                            {lang === "ko" ? data.championKor : data.champion}
-                          </div>
+              {items.length === 0 && (
+                <LoadingImage>
+                  <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
+                </LoadingImage>
+              )}
+              {items?.map((data, idx) => {
+                return (
+                  <tr key={idx}>
+                    <td className="ChampName">
+                      <div className="ChampWrapper">
+                        <img src={data.championImage} alt="champIcon"></img>
+                        <div>
+                          {lang === "ko" ? data.championKor : data.champion}
                         </div>
-                      </td>
-                      <td className="Picks">{data.pick}</td>
-                      {/* <td className="Picks">{data.ban}</td> */}
-                      <td className="PickBan">{data.pickRate.toFixed(0)}%</td>
-                      <td className="Win">{data.winrate.toFixed(0)}%</td>
-                      <td className="Prob">{data.probRate.toFixed(0)}%</td>
-                    </tr>
-                  );
-                })
-              }
+                      </div>
+                    </td>
+                    <td className="Picks">{data.pick}</td>
+                    {/* <td className="Picks">{data.ban}</td> */}
+                    <td className="PickBan">{data.pickRate.toFixed(0)}%</td>
+                    <td className="Win">{data.winrate.toFixed(0)}%</td>
+                    <td className="Prob">{data.probRate.toFixed(0)}%</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </PickTable>
         </MainPicks>
@@ -197,6 +196,11 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
               </tr>
             </thead>
             <tbody>
+              {tiers.length === 0 && (
+                <LoadingImage>
+                  <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
+                </LoadingImage>
+              )}
               {tiers?.map((data, idx) => {
                 let tierData = 0;
                 if (data.score >= 29.5) {
@@ -241,6 +245,11 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
             <span id="header-name">{t("league.draft.against")}</span>
           </Header>
           <MatchWrapper id="against-table">
+            {pickDifference && pickDifference.length === 0 && (
+              <LoadingImage>
+                <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
+              </LoadingImage>
+            )}
             {pickDifference?.map((pick, idx) => {
               return (
                 <MatchContents key={idx}>
@@ -1097,15 +1106,15 @@ const TierTable = styled.table`
 const LoadingImage = styled.div`
   display: flex;
   width: 100%;
-  height: 260px;
+  height: 100%;
   justify-content: center;
   align-items: center;
-  background-color: #23212a;
+  background-color: #2f2d38;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
 
   img {
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
   }
 `;

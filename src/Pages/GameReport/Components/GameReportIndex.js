@@ -15,7 +15,7 @@ const GameReportIndex = () => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const [indexData, setIndexData] = useState([]);
 
-  useEffect(() => { }, [gamevalue.gameId]);
+  useEffect(() => {}, [gamevalue.gameId]);
 
   useEffect(() => {
     getGameIndexData();
@@ -60,11 +60,7 @@ const GameReportIndex = () => {
         <>
           {indexData?.map((match, idx) => {
             return (
-              <EachMatch
-                matchData={match}
-                team={filters.team}
-                key={match.data + idx}
-              />
+              <EachMatch matchData={match} team={filters.team} key={idx} />
             );
           })}
         </>

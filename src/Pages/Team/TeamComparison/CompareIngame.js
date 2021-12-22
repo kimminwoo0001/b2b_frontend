@@ -13,6 +13,9 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  active,
+  payload,
+  label,
 } from "recharts";
 import qs from "qs";
 import axiosRequest from "../../../lib/axiosRequest";
@@ -188,6 +191,7 @@ function CompareIngame() {
         </CustomTool>
       );
     }
+
     return null;
   };
 
@@ -555,7 +559,8 @@ const DisplayTeams = styled.div`
   color: #fff;
   display: flex;
   justify-content: space-around;
-  padding: 20px 10px 10px 10px;
+  /* padding: 20px 10px 10px 10px;   */
+  padding: 30px 0;
   margin-bottom: 0px;
   .RedSide,
   .BlueSide {

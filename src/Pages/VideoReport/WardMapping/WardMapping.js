@@ -80,7 +80,6 @@ function WardMapping() {
   const fetchingWardData = (wardside) => {
     try {
       // const url = `${API}/lolapi/waddingFilter`;
-      // const url = `${API}/lolapi/mapping/mapping/ward`;
       const url = `${API}/lolapi/mapping/ward`;
       const params = {
         league: filters.league,
@@ -107,7 +106,6 @@ function WardMapping() {
         function (e) {
           const dto = e.warding;
           setWard(e.warding);
-          console.log(e);
           // sector 구분해서 섹터값 더하기
           if (dto.length > 0) {
             var total = 0;
@@ -206,6 +204,7 @@ function WardMapping() {
               setTab("team");
               handleTimeReset();
               setCompareOpen(false);
+              setWard([]);
             }}
             changeColor={tab === "team"}
           >
@@ -219,6 +218,7 @@ function WardMapping() {
               setTab("player");
               handleTimeReset();
               setCompareOpen(false);
+              setWard([]);
             }}
             changeColor={tab === "player"}
           >
@@ -579,8 +579,7 @@ const TabItem = styled.button`
     letter-spacing: normal;
     text-align: left;
     padding-bottom: 18px;
-    border-bottom: solid 1px
-      ${(props) => (props.changeColor ? `#fff` : `#433f4e;`)};
+    border-bottom: solid 1px ${(props) => (props.changeColor ? `#fff` : `none`)};
     color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
   }
 `;

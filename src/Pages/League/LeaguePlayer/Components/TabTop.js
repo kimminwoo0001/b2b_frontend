@@ -23,7 +23,7 @@ function TabTop({ playerData, loading }) {
             content={<PRInfoTooltip PRInfo={t("league.playerStat.prInfo")} />}
             placement="top"
           >
-            <span>?</span>
+            <img src="Images/ico-question-mark.png" alt="question" />
           </StyledTippy>
         </div>
       </TableNav>
@@ -45,7 +45,12 @@ function TabTop({ playerData, loading }) {
             <div className="PlayerInfoBox">
               <p className="TeamValue">
                 <img
-                  src={`Images/TeamLogo/${playerData.team}.png`}
+                  // src={`Images/TeamLogo/${playerData.team}.png`}
+                  src={
+                    playerData.team.slice(-2) === ".C"
+                      ? `Images/LCK_CL_LOGO/${playerData.team}.png`
+                      : `Images/TeamLogo/${playerData.team}.png`
+                  }
                   width="20px"
                   height="20px"
                   alt="teamIcon"
@@ -145,6 +150,10 @@ const TableNav = styled.div`
     text-align: left;
     color: #84818e;
     margin-right: 10px;
+    > img {
+      margin-left: 5px;
+      vertical-align: middle;
+    }
   }
 `;
 
@@ -184,6 +193,7 @@ const TableContents = styled.div`
     font-weight: bold;
     color: rgb(255, 255, 255);
     margin-left: 15.3px;
+    margin-top: 5px;
   }
   .ParticipateTitle {
     font-family: NotoSansKR, Apple SD Gothic Neo;

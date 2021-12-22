@@ -28,11 +28,13 @@ function HitMap() {
   const user = useSelector((state) => state.UserReducer);
   const resetHeatMap1 = useRef(null);
   const resetHeatMap2 = useRef(null);
-  // const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState("player");
+  const [loading, setLoading] = useState(false);
+
   const dispatch = useDispatch();
   const { t } = useTranslation();
   //히트맵 데이터 fetch 함수
+
   const fetchingHeatMapData = () => {
     const { team, player, champion_eng, oppteam, oppplayer, oppchampion_eng } =
       filters;
@@ -72,7 +74,7 @@ function HitMap() {
     }
 
     try {
-      // const url = `${API}/lolapi/mappingPosition`;
+      setLoading(true);
       const url = `${API}/lolapi/mapping/mapping`;
       const params = {
         league: filters.league,
@@ -91,10 +93,8 @@ function HitMap() {
         id: user.id,
         firsttime: firstTime,
         secondtime: secondTime,
-        // time: "all",
-        // position: position,
-        // gameid:"",
       };
+
       axiosRequest(
         undefined,
         url,
@@ -104,13 +104,16 @@ function HitMap() {
           getThreeMinBlue(heatData);
           getEightMinBlue(heatData);
         },
+
         function (objStore) {
           dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
         }
       );
+      setLoading(false);
     } catch (e) {
       console.log(e);
     } finally {
+      setLoading(false);
     }
   };
 
@@ -293,17 +296,31 @@ function HitMap() {
         <HitMapSide>
           <SideNav>BLUE {t("video.heatmap.side")}</SideNav>
           <HitMapWrapper>
-            <MapContainer>
-              <Map ref={resetHeatMap1}></Map>
-            </MapContainer>
+            {loading && (
+              <LoadingImage>
+                <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
+              </LoadingImage>
+            )}
+            {!loading && (
+              <MapContainer>
+                <Map ref={resetHeatMap1}></Map>
+              </MapContainer>
+            )}
           </HitMapWrapper>
         </HitMapSide>
         <HitMapSide>
           <SideNav2>RED {t("video.heatmap.side")}</SideNav2>
           <HitMapWrapper>
-            <MapContainer>
-              <Map ref={resetHeatMap2}></Map>
-            </MapContainer>
+            {loading && (
+              <LoadingImage>
+                <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
+              </LoadingImage>
+            )}
+            {!loading && (
+              <MapContainer>
+                <Map ref={resetHeatMap2}></Map>
+              </MapContainer>
+            )}
           </HitMapWrapper>
         </HitMapSide>
       </BottomSection>
@@ -399,8 +416,7 @@ const FilterTab = styled.button`
     letter-spacing: normal;
     text-align: left;
     padding-bottom: 18px;
-    border-bottom: solid 1px
-      ${(props) => (props.changeColor ? `#fff` : `#433f4e;`)};
+    border-bottom: solid 1px ${(props) => (props.changeColor ? `#fff` : `none`)};
     color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
   }
 `;
@@ -459,4 +475,20 @@ const LineMargin = styled.div`
 const LastMargin = styled.div`
   width: 73%;
   border-bottom: solid 1px #433f4e;
+`;
+
+const LoadingImage = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: #2f2d38;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+
+  img {
+    width: 30px;
+    height: 30px;
+  }
 `;

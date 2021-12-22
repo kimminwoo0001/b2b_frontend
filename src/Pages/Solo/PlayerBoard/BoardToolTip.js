@@ -106,7 +106,7 @@ function BoardToolTip({ title }) {
         <Title>{title}</Title>
         <Content>{content}</Content>
       </BoardToolTipWrapper>
-      <Arrow />
+      {/* <Arrow /> */}
     </ArrowWrapper>
   );
 }
@@ -122,8 +122,7 @@ const ArrowWrapper = styled.div`
 
 const BoardToolTipWrapper = styled.div`
   max-width: 232px;
-  //min-height: 106px;
-  background-color: #23212a;
+  background-color: #433f4e;
   border-radius: 10px;
   padding: 12px 16px;
 `;

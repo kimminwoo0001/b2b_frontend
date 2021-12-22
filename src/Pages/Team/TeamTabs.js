@@ -82,7 +82,8 @@ function TeamTabs() {
                 </TabItem>
               )}
 
-              {filters.league.indexOf("lpl") === -1 ? (
+              {pagePath !== "/teamCompare" &&
+              filters.league.indexOf("lpl") === -1 ? (
                 <TabItem
                   onClick={() => {
                     dispatch(HandleTab(1));

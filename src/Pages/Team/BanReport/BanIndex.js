@@ -98,72 +98,78 @@ function BanIndex() {
       id: user.id,
     };
 
-    axiosRequest(undefined, url, params, function (e) {
-      dispatch(Pick1(e.Picks[0].order));
-      dispatch(Pick2(e.Picks[1].order));
-      dispatch(Pick3(e.Picks[2].order));
-      dispatch(Pick4(e.Picks[3].order));
-      dispatch(Pick5(e.Picks[4].order));
-      dispatch(Ban1(e.Bans[0].BanInfos));
-      dispatch(Ban2(e.Bans[1].BanInfos));
-      dispatch(Ban3(e.Bans[2].BanInfos));
-      dispatch(Ban4(e.Bans[3].BanInfos));
-      dispatch(Ban5(e.Bans[4].BanInfos));
-      dispatch(Baned1(e.Baneds[0].BanInfos));
-      dispatch(Baned2(e.Baneds[1].BanInfos));
-      dispatch(Baned3(e.Baneds[2].BanInfos));
-      dispatch(Baned4(e.Baneds[3].BanInfos));
-      dispatch(Baned5(e.Baneds[4].BanInfos));
+    axiosRequest(
+      undefined,
+      url,
+      params,
+      function (e) {
+        dispatch(Pick1(e.Picks[0].order));
+        dispatch(Pick2(e.Picks[1].order));
+        dispatch(Pick3(e.Picks[2].order));
+        dispatch(Pick4(e.Picks[3].order));
+        dispatch(Pick5(e.Picks[4].order));
+        dispatch(Ban1(e.Bans[0].BanInfos));
+        dispatch(Ban2(e.Bans[1].BanInfos));
+        dispatch(Ban3(e.Bans[2].BanInfos));
+        dispatch(Ban4(e.Bans[3].BanInfos));
+        dispatch(Ban5(e.Bans[4].BanInfos));
+        dispatch(Baned1(e.Baneds[0].BanInfos));
+        dispatch(Baned2(e.Baneds[1].BanInfos));
+        dispatch(Baned3(e.Baneds[2].BanInfos));
+        dispatch(Baned4(e.Baneds[3].BanInfos));
+        dispatch(Baned5(e.Baneds[4].BanInfos));
 
-      const isKor = lang === "ko";
+        const isKor = lang === "ko";
 
-      let phaseArray1 = [];
-      Object.keys(e.phased[0]).forEach((key) => {
-        const data = e.phased[0];
-        phaseArray1.push({
-          champion: isKor ? data[key].championKor : data[key].championKor,
-          key: key,
-          value: data[key].total,
+        let phaseArray1 = [];
+        Object.keys(e.phased[0]).forEach((key) => {
+          const data = e.phased[0];
+          phaseArray1.push({
+            champion: isKor ? data[key].championKor : data[key].championKor,
+            key: key,
+            value: data[key].total,
+          });
         });
-      });
 
-      let phaseArray2 = [];
-      Object.keys(e.phased[1]).forEach((key) => {
-        const data = e.phased[1];
-        phaseArray2.push({
-          champion: isKor ? data[key].championKor : data[key].championKor,
-          key: key,
-          value: data[key].total,
+        let phaseArray2 = [];
+        Object.keys(e.phased[1]).forEach((key) => {
+          const data = e.phased[1];
+          phaseArray2.push({
+            champion: isKor ? data[key].championKor : data[key].championKor,
+            key: key,
+            value: data[key].total,
+          });
         });
-      });
 
-      let phaseArray2_1 = [];
-      Object.keys(e.phased2[0]).forEach((key) => {
-        const data = e.phased2[0];
-        phaseArray2_1.push({
-          champion: isKor ? data[key].championKor : data[key].championKor,
-          key: key,
-          value: data[key].total,
+        let phaseArray2_1 = [];
+        Object.keys(e.phased2[0]).forEach((key) => {
+          const data = e.phased2[0];
+          phaseArray2_1.push({
+            champion: isKor ? data[key].championKor : data[key].championKor,
+            key: key,
+            value: data[key].total,
+          });
         });
-      });
 
-      let phaseArray2_2 = [];
-      Object.keys(e.phased2[1]).forEach((key) => {
-        const data = e.phased2[1];
-        phaseArray2_2.push({
-          champion: isKor ? data[key].championKor : data[key].championKor,
-          key: key,
-          value: data[key].total,
+        let phaseArray2_2 = [];
+        Object.keys(e.phased2[1]).forEach((key) => {
+          const data = e.phased2[1];
+          phaseArray2_2.push({
+            champion: isKor ? data[key].championKor : data[key].championKor,
+            key: key,
+            value: data[key].total,
+          });
         });
-      });
 
-      setPhase1(sortPhase(phaseArray1));
-      setPhase2(sortPhase(phaseArray2));
-      setPhase2_1(sortPhase(phaseArray2_1));
-      setPhase2_2(sortPhase(phaseArray2_2));
-    }, function (objStore) {
-      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    }).finally(setLoading(false));
+        setPhase1(sortPhase(phaseArray1));
+        setPhase2(sortPhase(phaseArray2));
+        setPhase2_1(sortPhase(phaseArray2_1));
+        setPhase2_2(sortPhase(phaseArray2_2));
+      },
+      function (objStore) {
+        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      }
+    ).finally(setLoading(false));
   };
 
   if (loading) return <LoadingImg />;
@@ -258,7 +264,7 @@ const BtnItem = styled.button`
     text-align: left;
     padding-bottom: 18px;
     border-bottom: solid 1px
-      ${(props) => (props.changeColor ? `#fff` : `#433f4e;`)};
+      ${(props) => (props.changeColor ? `#fff` : `none;`)};
     color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
   }
 `;
