@@ -1,57 +1,39 @@
 import React from "react";
-import styled, { css } from "styled-components";
 import Tippy from "@tippy.js/react";
-import GameReportToolTip from "../Common/GameReportToolTip";
+import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
-import { InitializeGameState } from "../../../../redux/modules/gamevalue";
-import EventLogBox from "./Component/EventLogBox";
-import StatusLogBox from "./Component/StatusLogBox";
+import GameReportToolTip from "../../Common/GameReportToolTip";
 
-const DetailLog = () => {
+const StatusLogBox = () => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
   return (
-    <LogContainer>
-      <NavContainer>
-        <img
-          onClick={() => {
-            dispatch(InitializeGameState());
-          }}
-          src={"Images/ic_close_bk_30.svg"}
-          alt="close"
-        />
-        <span>{gamevalue.uniqueId}</span>
-      </NavContainer>
-      <EventLogBox />
-      <StatusLogBox />
-
-      {/* <LogDetailContainer>
-        <LogTitle>
-          <span> {t("game.log.detail.subject")}</span>
+    <LogDetailContainer>
+      <LogTitle>
+        <span>{t("game.log.status.subject")}</span>
+        <StyledTippy
+          duration={0}
+          delay={[100, 0]}
+          content={
+            <GameReportToolTip tooltipInfo={t("game.log.status.tooltipInfo")} />
+          }
+          placement="top"
+        >
           <img src={"Images/ico-question-mark.svg"} alt="question" />
-        </LogTitle>
-        <LogContentBox>
-          <LogContent isActive={false} team={"red"}></LogContent>
-          <LogContent isActive={true} team={"red"}></LogContent>
-          <LogContent isActive={false} team={"red"}></LogContent>
-        </LogContentBox>
-      </LogDetailContainer> */}
-    </LogContainer>
+        </StyledTippy>
+      </LogTitle>
+      <LogContentBox>
+        <LogContent isActive={false} team={"blue"}></LogContent>
+        <LogContent isActive={true} team={"blue"}></LogContent>
+        <LogContent isActive={false} team={"blue"}></LogContent>
+      </LogContentBox>
+    </LogDetailContainer>
   );
 };
 
-export default DetailLog;
-
-const LogContainer = styled.div`
-  width: 240px;
-  height: 1080px;
-  padding: 0;
-  box-shadow: 5px 5px 30px 0 rgba(0, 0, 0, 0.15);
-  display: block;
-`;
+export default StatusLogBox;
 
 const LogDetailContainer = styled.div`
   width: 200px;
@@ -61,36 +43,6 @@ const LogDetailContainer = styled.div`
   border-radius: 20px;
   background-color: #23212a;
   overflow: hidden;
-`;
-
-const NavContainer = styled.div`
-  width: 240px;
-  height: 55px;
-  padding: 10px 2px 16px 10px;
-  box-shadow: 5px 5px 30px 0 rgba(0, 0, 0, 0.15);
-  display: flex;
-  white-space: nowrap;
-
-  img {
-    width: 29px;
-    height: 29px;
-    object-fit: contain;
-    vertical-align: bottom;
-    cursor: pointer;
-  }
-
-  span {
-    font-family: SpoqaHanSansNeo;
-    font-size: 13px;
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: left;
-    color: #fff;
-    margin-top: 5px;
-  }
 `;
 
 const LogTitle = styled.div`
@@ -116,6 +68,8 @@ const LogTitle = styled.div`
     vertical-align: middle;
   }
 `;
+
+const StyledTippy = styled(Tippy)``;
 
 const LogContentBox = styled.div`
   width: 180px;
@@ -163,5 +117,3 @@ const LogContent = styled.div`
     border-radius: 10px;
   }
 `;
-
-const StyledTippy = styled(Tippy)``;

@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
-import transferTimetoWidth from "../../../../../../lib/transferTimetoWidth";
+import transferValuetoWidth from "../../../../../../lib/transferValuetoWidth";
 import { useSelector, useDispatch } from "react-redux";
 import { SetChampTab } from "../../../../../../redux/modules/gamevalue";
 import ItemTimeBox from "./ItemTimeBox";
+import NoneItem from "../../../../../../lib/NoneItem";
 
 const skillBoxWidth = 610;
 const purchasedItemBoxWidth = 339;
+
 function getSkillSet(skills, fullTime) {
   let q = [];
   let w = [];
@@ -47,6 +49,11 @@ const TimeStatus = () => {
     gamevalue.playerDataset[gamevalue.selectedParticipant].skill,
     gamevalue.gameTime
   );
+  const lastItemSet =
+    gamevalue.playerDataset[gamevalue.selectedParticipant].currentItem[
+      gamevalue.playerDataset[gamevalue.selectedParticipant].currentItem
+        .length - 1
+    ];
 
   const purchasedItemBuildData =
     gamevalue.playerDataset[gamevalue.selectedParticipant].purchasedItem;
@@ -83,7 +90,7 @@ const TimeStatus = () => {
               <img src={`Images/spell/${skillData[0]}.png`} alt="" />
             </div>
             <SkillValueBox
-              marginLeft={transferTimetoWidth(
+              marginLeft={transferValuetoWidth(
                 gamevalue.gameTime,
                 skillBoxWidth,
                 skillBuildData["q"][0]
@@ -94,7 +101,7 @@ const TimeStatus = () => {
                   idx !== skillBuildData["q"].length - 1 && (
                     <SkillValue
                       className="q"
-                      width={transferTimetoWidth(
+                      width={transferValuetoWidth(
                         gamevalue.gameTime,
                         skillBoxWidth,
                         skillBuildData["q"][idx + 1] - skillBuildData["q"][idx]
@@ -113,7 +120,7 @@ const TimeStatus = () => {
               <img src={`Images/spell/${skillData[1]}.png`} alt="" />
             </div>
             <SkillValueBox
-              marginLeft={transferTimetoWidth(
+              marginLeft={transferValuetoWidth(
                 gamevalue.gameTime,
                 skillBoxWidth,
                 skillBuildData["w"][0]
@@ -124,7 +131,7 @@ const TimeStatus = () => {
                   idx !== skillBuildData["w"].length - 1 && (
                     <SkillValue
                       className="w"
-                      width={transferTimetoWidth(
+                      width={transferValuetoWidth(
                         gamevalue.gameTime,
                         skillBoxWidth,
                         skillBuildData["w"][idx + 1] - skillBuildData["w"][idx]
@@ -143,7 +150,7 @@ const TimeStatus = () => {
               <img src={`Images/spell/${skillData[2]}.png`} alt="" />
             </div>
             <SkillValueBox
-              marginLeft={transferTimetoWidth(
+              marginLeft={transferValuetoWidth(
                 gamevalue.gameTime,
                 skillBoxWidth,
                 skillBuildData["e"][0]
@@ -154,7 +161,7 @@ const TimeStatus = () => {
                   idx !== skillBuildData["e"].length - 1 && (
                     <SkillValue
                       className="e"
-                      width={transferTimetoWidth(
+                      width={transferValuetoWidth(
                         gamevalue.gameTime,
                         skillBoxWidth,
                         skillBuildData["e"][idx + 1] - skillBuildData["e"][idx]
@@ -173,7 +180,7 @@ const TimeStatus = () => {
               <img src={`Images/spell/${skillData[3]}.png`} alt="" />
             </div>
             <SkillValueBox
-              marginLeft={transferTimetoWidth(
+              marginLeft={transferValuetoWidth(
                 gamevalue.gameTime,
                 skillBoxWidth,
                 skillBuildData["r"][0]
@@ -184,7 +191,7 @@ const TimeStatus = () => {
                   idx !== skillBuildData["r"].length - 1 && (
                     <SkillValue
                       className="r"
-                      width={transferTimetoWidth(
+                      width={transferValuetoWidth(
                         gamevalue.gameTime,
                         skillBoxWidth,
                         skillBuildData["r"][idx + 1] - skillBuildData["r"][idx]
@@ -203,7 +210,7 @@ const TimeStatus = () => {
             console.log("purchaseditemList:", purchaseditemList);
             return (
               <PurchasedItemBox
-                marginLeft={transferTimetoWidth(
+                marginLeft={transferValuetoWidth(
                   gamevalue.gameTime,
                   purchasedItemBoxWidth,
                   purchaseditemList.realCount / 2
@@ -224,6 +231,27 @@ const TimeStatus = () => {
             );
           })}
           <ItemTimeBox />
+          <div className="item-status-box last">
+            <div className="nav">{t("game.summary.champion.item-end")}</div>
+            <div className="img-box">
+              <div className="img-col">
+                {lastItemSet.items.map((item) => {
+                  return (
+                    <ItemStatusImg
+                      className="item-img"
+                      src={`Images/item/${item}.png`}
+                      alt="itemImg"
+                    ></ItemStatusImg>
+                  );
+                })}
+                {NoneItem(lastItemSet.items.length).map(() => {
+                  //console.log("maping 중");
+                  return <ItemStatusNotImg></ItemStatusNotImg>;
+                })}
+              </div>
+              <div className="img-col-trick">0</div>
+            </div>
+          </div>
         </div>
       </BuildBox>
     </DetailChampTimeStatus>
@@ -428,4 +456,24 @@ const ItemBuildImg = styled.img`
   height: 20px;
   object-fit: contain;
   border-radius: 3px;
+`;
+
+const ItemStatusImg = styled.img`
+  width: 30px;
+  height: 30px;
+  margin: 0 3px 3px 0;
+  object-fit: contain;
+  border-radius: 3px;
+`;
+
+const ItemStatusNotImg = styled.img`
+  width: 31px;
+  height: 31px;
+  margin: 0 3px 3px 0;
+  object-fit: contain;
+  border-radius: 3px;
+  background-color: #3a3745;
+  border: solid 15px #3a3745;
+  display: inline-block;
+  content: "";
 `;

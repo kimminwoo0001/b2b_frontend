@@ -461,7 +461,32 @@
     "log": {
       "event": {
         "subject": "이벤트 로그",
-        "tooltipInfo": "게임시간 15분 이후에는 오브젝트 획득, 와드 설치만 표시됩니다."
+        "tooltipInfo": "게임시간 15분 이후에는 오브젝트 획득, 와드 설치만 표시됩니다.",
+        "buildDestroyed": "를 파괴했습니다.",
+        "kill": "킬",
+        "dragon": "드래곤",
+        "herald": "협곡의 전령",
+        "baron": "내셔 남작",
+        "dragonType": {
+          "air": "바람",
+          "earth": "대지",
+          "fire": "화염",
+          "water": "바다",
+          "hextech": "마법공학",
+          "chemtech": "화학공학",
+          "elder": "장로"
+        },
+        "build": {
+          "outer": "1차 타워",
+          "inner": "2차 타워",
+          "base": "억제기 타워",
+          "inhibitor": "억제기",
+          "nexus": "넥서스 타워"
+        },
+        "broken": {
+          "tower": "타워파괴",
+          "inhibitor": "억제기파괴"
+        }
       },
       "status": {
         "subject": "상태 로그",
