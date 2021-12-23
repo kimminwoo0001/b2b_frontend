@@ -179,11 +179,12 @@ const VideoPlayer = ({ video, startTime }) => {
             result = idx;
             if (idx > eventIdx) {
               dispatch(SetEventLogActiveIdx(result));
+              console.log("result1 : ", result);
               break;
             }
           }
         }
-      } else if (eventLog[logIdx - 2 < 0 ? 0 : logIdx - 2].realCount / 2 > curTime) {
+      } else if (eventLog[logIdx - 1 < 0 ? 0 : logIdx - 1].realCount / 2 >= curTime) {
         let eventIdx = logIdx;
         let result = 0;
 
@@ -211,10 +212,13 @@ const VideoPlayer = ({ video, startTime }) => {
             result = eventIdx;
             if (logIdx > eventIdx) {
               dispatch(SetEventLogActiveIdx(result));
+              console.log("result2 : ", result);
               break;
             }
           }
         }
+      } else if (logIdx !== 1 && eventLog[logIdx - 1 < 0 ? 0 : logIdx - 1].realCount / 2 < curTime) {
+        dispatch(SetEventLogActiveIdx(0));
       }
     } catch (e) {
       console.log("logIdx: ", logIdx);
@@ -247,7 +251,7 @@ const VideoPlayer = ({ video, startTime }) => {
           }
         }
         if (idx !== eventIdx) {
-          console.log("Event Idx:", idx);
+          //console.log("Event Idx:", idx);
           result = idx;
           if (idx > eventIdx) {
             dispatch(SetCurrentItemIdxActiveIdx(result));
@@ -282,7 +286,7 @@ const VideoPlayer = ({ video, startTime }) => {
           }
         }
         if (itemIdx !== eventIdx) {
-          console.log("Event Idx:", idx);
+          //console.log("Event Idx:", idx);
           result = eventIdx;
           if (itemIdx > eventIdx) {
             dispatch(SetCurrentItemIdxActiveIdx(result));

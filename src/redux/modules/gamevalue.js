@@ -10,7 +10,11 @@ export const SET_OPPSIDE = "gamevalue/SET_OPPSIDE";
 export const SET_FIXED_DATASET = "gamevalue/SET_FIXED_DATASET";
 export const SET_PLAYERS_DATASET = "gamevalue/SET_PLAYERS_DATASET";
 export const SET_LOG_DATASET = "gamevalue/SET_LOG_DATASET";
-export const SET_AUTO_DATASET = "gamevalue/SET_AUTO_DATASET";
+
+export const SET_TEAM_GOLD_DATASET = "gamevalue/SET_TEAM_GOLD_DATASET";
+export const SET_MAPPING_DATASET = "gamevalue/SET_MAPPING_DATASET";
+export const SET_LIVE_DATASET = "gamevalue/SET_LIVE_DATASET";
+
 export const SET_BLUE_TEAM = "gamevalue/SET_BLUE_TEAM";
 export const SET_RED_TEAM = "gamevalue/SET_RED_TEAM";
 
@@ -87,9 +91,21 @@ export const SetLogDataset = (payload) => {
     payload,
   };
 };
-export const SetAutoDataset = (payload) => {
+export const SetTeamGoldDataset = (payload) => {
   return {
-    type: SET_AUTO_DATASET,
+    type: SET_TEAM_GOLD_DATASET,
+    payload,
+  };
+};
+export const SetMappingDataset = (payload) => {
+  return {
+    type: SET_MAPPING_DATASET,
+    payload,
+  };
+};
+export const SetLiveDataset = (payload) => {
+  return {
+    type: SET_LIVE_DATASET,
     payload,
   };
 };
@@ -188,6 +204,9 @@ const initialState = {
   eventLogActiveIdx: 0,
   statusLogActiveIdx: 0,
   itemActiveIdx: 0,
+  teamGoldDataset: [],
+  mappingDataset: [],
+  liveDataset: [],
 };
 
 export default function GameReportReducer(state = initialState, action) {
@@ -244,10 +263,20 @@ export default function GameReportReducer(state = initialState, action) {
         ...state,
         logDataset: action.payload,
       };
-    case SET_AUTO_DATASET:
+    case SET_TEAM_GOLD_DATASET:
       return {
         ...state,
-        fixedDataset: action.payload,
+        teamGoldDataset: action.payload,
+      };
+    case SET_MAPPING_DATASET:
+      return {
+        ...state,
+        mappingDataset: action.payload,
+      };
+    case SET_LIVE_DATASET:
+      return {
+        ...state,
+        liveDataset: action.payload,
       };
     case SET_BLUE_TEAM:
       return {

@@ -13,6 +13,9 @@ import {
   SetUniqueId,
   SetGameTime,
   SetStartTime,
+  SetMappingDataset,
+  SetLiveDataset,
+  SetTeamGoldDataset,
 } from "../../../redux/modules/gamevalue";
 import { SetVodUrl } from "../../../redux/modules/videovalue";
 import axiosRequest from "../../../lib/axiosRequest";
@@ -55,6 +58,9 @@ const EachMatch = ({ matchData, team }) => {
             dispatch(SetFixedDataset(e?.infos));
             dispatch(SetPlayersDataset(e?.players));
             dispatch(SetLogDataset(e?.log));
+            dispatch(SetMappingDataset(e?.mapping));
+            dispatch(SetLiveDataset(e?.live));
+            dispatch(SetTeamGoldDataset(e?.teamGold));
           });
         },
         function (objstore) {
