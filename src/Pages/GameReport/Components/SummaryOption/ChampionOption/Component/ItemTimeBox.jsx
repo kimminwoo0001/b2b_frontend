@@ -2,48 +2,50 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
+import NoneItem from "../../../../../../lib/NoneItem";
 
 const ItemTimeBox = () => {
   const { t } = useTranslation();
   const gamevalue = useSelector((state) => state.GameReportReducer);
-  const videovalue = useSelector((state) => state.VideoReducer);
+
   const currentItem =
     gamevalue.playerDataset[gamevalue.selectedParticipant].currentItem;
-  const currentTime = Math.floor(
-    videovalue.playedSeconds - +gamevalue.startTime
-  );
-  const curTime = currentTime < 0 ? 0 : currentTime;
   const [itemIdx, setItemIdx] = useState(0);
+  const [trinket, setTrinket] = useState(3340);
 
-  console.log(currentItem);
-  console.log(curTime);
+  // console.log(currentItem);
+  // console.log(curTime);gG
 
-  const getItemIdx = () => {
-    let minusItemIdx = itemIdx === 0 ? itemIdx : itemIdx - 1;
+  // const getItemIdx = () => {
+  //   let minusItemIdx = itemIdx === 0 ? itemIdx : itemIdx - 1;
+  //   let idx = itemIdx;
+  //   let trink = trinket;
 
-    if (currentItem[itemIdx].realCount / 2 <= curTime) {
-      setItemIdx(itemIdx + 1);
-    } else if (
-      itemIdx !== 0 &&
-      currentItem[minusItemIdx].realCount / 2 > curTime
-    ) {
-      setItemIdx(itemIdx - 1);
-    }
-    console.log("itemIdx", itemIdx);
-    console.log("currentItem[itemIdx]", currentItem[itemIdx]);
-    return minusItemIdx;
-  };
+  //   if (
+  //     currentItem.length !== idx + 1 &&
+  //     currentItem[itemIdx].realCount / 2 <= curTime
+  //   ) {
+  //     idx = itemIdx + 1;
+  //     trink = currentItem[itemIdx + 1].trinket ?? trinket;
+  //   } else if (
+  //     itemIdx !== 0 &&
+  //     currentItem[minusItemIdx].realCount / 2 > curTime
+  //   ) {
+  //     trink = currentItem[minusItemIdx].trinket ?? trinket;
+  //     idx = minusItemIdx;
+  //   }
 
-  const NoneItem = (len) => {
-    const empty = 6 - len;
-    let result = [];
-    for (let i = 0; i < empty; i++) {
-      result.push(i);
-    }
-    //console.log("result", result);
+  //   if (idx !== itemIdx) {
+  //     setItemIdx(idx);
+  //   }
+  //   if (trink !== trinket) {
+  //     setTrinket(currentItem[minusItemIdx].trinket ?? trinket);
+  //   }
 
-    return result;
-  };
+  //   // console.log("idx", idx);
+  //   // console.log("currentItem[itemIdx]", currentItem[itemIdx]);
+  //   return minusItemIdx;
+  // };
 
   return (
     <ItemTimeContainer>
@@ -51,7 +53,7 @@ const ItemTimeBox = () => {
         <div className="nav">{t("game.summary.champion.item-current")}</div>
         <div className="img-box">
           <div className="img-col">
-            {currentItem[getItemIdx()].items.map((item) => {
+            {currentItem[gamevalue.itemActiveIdx].items.map((item) => {
               return (
                 <ItemStatusImg
                   className="item-img"
@@ -60,34 +62,20 @@ const ItemTimeBox = () => {
                 ></ItemStatusImg>
               );
             })}
-            {NoneItem(currentItem[getItemIdx()].items.length).map(() => {
-              console.log("maping 중");
-              return <ItemStatusNotImg></ItemStatusNotImg>;
-            })}
+            {NoneItem(currentItem[gamevalue.itemActiveIdx].items.length).map(
+              () => {
+                // console.log("maping 중");
+                return <ItemStatusNotImg></ItemStatusNotImg>;
+              }
+            )}
           </div>
-          <div className="img-col-trick"></div>
-        </div>
-      </div>
-
-      <div className="item-status-box last">
-        <div className="nav">{t("game.summary.champion.item-end")}</div>
-        <div className="img-box">
-          <div className="img-col">
-            {/* {cur_list.map((item) => {
-              return (
-                <ItemStatusImg
-                  className="item-img"
-                  src={`Images/item/${item.id}.png`}
-                  alt="itemImg"
-                ></ItemStatusImg>
-              );
-            })}
-            {NoneItem(cur_list.length).map(() => {
-              console.log("maping 중");
-              return <ItemStatusNotImg></ItemStatusNotImg>;
-            })} */}
+          <div className="img-col-trick">
+            <ItemStatusImg
+              className="item-img"
+              src={`Images/item/${trinket}.png`}
+              alt="itemImg"
+            ></ItemStatusImg>
           </div>
-          <div className="img-col-trick">0</div>
         </div>
       </div>
     </ItemTimeContainer>

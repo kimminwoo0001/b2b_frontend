@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 const TimeBar = ({ hidebar = false }) => {
   const videovalue = useSelector((state) => state.VideoReducer);
   const gamevalue = useSelector((state) => state.GameReportReducer);
+
   const minValue = +gamevalue.startTime / +videovalue.duration;
   const [value, setValue] = useState(
     (+videovalue.playedSeconds - +gamevalue.startTime) / videovalue.duration +

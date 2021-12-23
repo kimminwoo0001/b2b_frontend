@@ -8,18 +8,30 @@ import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import { HandledisablePip, HandleDuration, HandleEnablePip, HandleEnded, HandlePlaybackRateChange, HandlePlaying, HandleProgress, HandleSeekChange, HandleSeekMouseDown, HandleSeekMouseUp, HandleStop, HandleToggleControls, HandleToggleLight, HandleToggleLoop, HandleToggleMuted, HandleTogglePip, HandleVolumeChange, SetPause, SetPlay, SetPlayBackRate, SetUrl } from '../../redux/modules/videovalue';
 import secToMS from '../../lib/secToMS';
+import { SetCurrentItemIdxActiveIdx, SetEventLogActiveIdx } from '../../redux/modules/gamevalue';
 
 
-const TwitchVideoPlayer = ({ video, startTime }) => {
+const VideoPlayer = ({ video, startTime }) => {
   const videovalue = useSelector((state) => state.VideoReducer);
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const [seekTime, setSeekTime] = useState(0)
   const dispatch = useDispatch();
+
+  // video option
   let player;
   const endTime = +gamevalue.startTime + +gamevalue.gameTime;
   const startPlayed = +gamevalue.startTime / +videovalue.duration;
   const sec5 = 5;
   const sec30 = 30;
+  const currentTime = Math.floor(
+    videovalue.playedSeconds - +gamevalue.startTime
+  );
+  const curTime = currentTime < 0 ? 0 : currentTime;
+
+  // log option
+  const eventLog = gamevalue.logDataset.event;
+  const currentItem =
+    gamevalue.playerDataset[gamevalue.selectedParticipant].currentItem;
 
   const load = url => {
     dispatch(SetUrl(url));
@@ -128,13 +140,160 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
   }
 
   const handleProgress = state => {
-    //console.log('onProgress', state)
-    // We only want to update time slider if we are not currently seeking
+    const logIdx = gamevalue.eventLogActiveIdx;
+    const itemIdx = gamevalue.itemActiveIdx;
 
     // 총 게임 시간 넘어가면 자동으로 멈춤 
     if (state.playedSeconds > endTime) {
       dispatch(SetPause());
     }
+    // 이벤트 로그 Idx
+    try {
+      if (eventLog[logIdx === eventLog.length ? logIdx - 1 : logIdx].realCount / 2 < curTime) { // 현재 인덱스 보다 큰 것들 중에서 찾기
+        let eventIdx = logIdx;
+        let result = 0;
+        for (let idx of eventLog.slice(logIdx).keys()) {
+          if (
+            eventLog.length !== idx + 1 &&
+            eventLog[idx].realCount / 2 <= curTime
+          ) {
+            idx = eventIdx + 1;
+            if (eventLog[idx === eventLog.length ? idx - 1 : idx].realCount / 2 < curTime) {
+              continue;
+            }
+            if (eventLog[idx].realCount / 2 > curTime) {
+              idx = idx - 1;
+            }
+          } else if (
+            eventLog.length !== idx + 1 &&
+            eventLog[idx].realCount / 2 > curTime
+          ) {
+            idx = idx - 1;
+            if (eventLog[idx].realCount / 2 > curTime) {
+              // 더할 필요 없는 경우 브레이크 
+              break;
+            }
+          }
+          if (idx !== eventIdx) {
+            console.log("Event Idx:", idx);
+            result = idx;
+            if (idx > eventIdx) {
+              dispatch(SetEventLogActiveIdx(result));
+              break;
+            }
+          }
+        }
+      } else if (eventLog[logIdx - 2 < 0 ? 0 : logIdx - 2].realCount / 2 > curTime) {
+        let eventIdx = logIdx;
+        let result = 0;
+
+        for (let idx of eventLog.slice(0, logIdx).keys()) {
+          if (
+            eventIdx - 1 >= 0 &&
+            eventLog[eventIdx].realCount / 2 > curTime
+          ) {
+            eventIdx = eventIdx - 1;
+            if (eventLog[eventIdx === 0 ? 0 : eventIdx].realCount / 2 > curTime) {
+              continue;
+            }
+          } else if (
+            eventIdx - 1 >= 0 &&
+            eventLog[eventIdx].realCount / 2 > curTime
+          ) {
+            eventIdx = eventIdx === 0 ? 0 : eventIdx - 1;
+            if (eventLog[eventIdx].realCount / 2 < curTime) {
+              // 더할 필요 없는 경우 브레이크 
+              break;
+            }
+          }
+          if (logIdx !== eventIdx) {
+            console.log("Event Idx:", idx);
+            result = eventIdx;
+            if (logIdx > eventIdx) {
+              dispatch(SetEventLogActiveIdx(result));
+              break;
+            }
+          }
+        }
+      }
+    } catch (e) {
+      console.log("logIdx: ", logIdx);
+      console.log("ERROR : ", e);
+    }
+    //currentItem
+    if (currentItem[itemIdx === currentItem.length ? itemIdx - 1 : itemIdx].realCount / 2 < curTime) { // 현재 인덱스 보다 큰 것들 중에서 찾기
+      let eventIdx = itemIdx;
+      let result = 0;
+      for (let idx of currentItem.slice(itemIdx).keys()) {
+        if (
+          currentItem.length !== idx + 1 &&
+          currentItem[idx].realCount / 2 <= curTime
+        ) {
+          idx = eventIdx + 1;
+          if (currentItem[idx === currentItem.length ? idx - 1 : idx].realCount / 2 < curTime) {
+            continue;
+          }
+          if (currentItem[idx].realCount / 2 > curTime) {
+            idx = idx - 1;
+          }
+        } else if (
+          currentItem.length !== idx + 1 &&
+          currentItem[idx].realCount / 2 > curTime
+        ) {
+          idx = idx - 1;
+          if (currentItem[idx].realCount / 2 > curTime) {
+            // 더할 필요 없는 경우 브레이크 
+            break;
+          }
+        }
+        if (idx !== eventIdx) {
+          console.log("Event Idx:", idx);
+          result = idx;
+          if (idx > eventIdx) {
+            dispatch(SetCurrentItemIdxActiveIdx(result));
+            break;
+          }
+        }
+      }
+    } else if (currentItem[itemIdx - 2 < 0 ? 0 : itemIdx - 2].realCount / 2 > curTime) {
+      let eventIdx = itemIdx;
+      let result = 0;
+
+      for (let idx of currentItem.slice(0, itemIdx).keys()) {
+        if (
+          eventIdx - 1 >= 0 &&
+          currentItem[eventIdx].realCount / 2 > curTime
+        ) {
+          eventIdx = eventIdx - 1;
+          if (currentItem[eventIdx === 0 ? 0 : eventIdx].realCount / 2 > curTime) {
+            continue;
+          }
+          if (currentItem[eventIdx].realCount / 2 < curTime) {
+            eventIdx = eventIdx - 1;
+          }
+        } else if (
+          eventIdx - 1 >= 0 &&
+          currentItem[eventIdx].realCount / 2 > curTime
+        ) {
+          eventIdx = eventIdx === 0 ? 0 : eventIdx - 1;
+          if (currentItem[eventIdx].realCount / 2 < curTime) {
+            // 더할 필요 없는 경우 브레이크 
+            break;
+          }
+        }
+        if (itemIdx !== eventIdx) {
+          console.log("Event Idx:", idx);
+          result = eventIdx;
+          if (itemIdx > eventIdx) {
+            dispatch(SetCurrentItemIdxActiveIdx(result));
+            break;
+          }
+        }
+      }
+    }
+
+
+
     if (!videovalue.seeking) {
       dispatch(HandleProgress(state))
       //this.setState(state)
@@ -226,7 +385,7 @@ const TwitchVideoPlayer = ({ video, startTime }) => {
   );
 }
 
-export default TwitchVideoPlayer;
+export default VideoPlayer;
 
 const TwtichVideoContainer = styled.div`
   width:1440px;

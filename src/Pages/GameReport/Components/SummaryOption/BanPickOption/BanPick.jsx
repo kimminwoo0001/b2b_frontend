@@ -37,7 +37,7 @@ const BanPick = () => {
         <BanBox>
           {phase1Ban.map((data) => {
             return (
-              data.team === "100" && (
+              data.team === 100 && (
                 <img
                   className="ban-champ"
                   src={`Images/champion/${data.champion}.png`}
@@ -60,7 +60,7 @@ const BanPick = () => {
             {phase1Champion.map((data) => {
               return (
                 <PickChampion>
-                  {data.team === "100" && (
+                  {data.team === 100 && (
                     <img src={`Images/champion/${data.champion}.png`} alt="" />
                   )}
                 </PickChampion>
@@ -79,7 +79,7 @@ const BanPick = () => {
             {phase1Champion.map((data) => {
               return (
                 <PickChampion>
-                  {data.team === "200" && (
+                  {data.team === 200 && (
                     <img src={`Images/champion/${data.champion}.png`} alt="" />
                   )}
                 </PickChampion>
@@ -90,7 +90,7 @@ const BanPick = () => {
         <BanBox>
           {phase1Ban.map((data) => {
             return (
-              data.team === "200" && (
+              data.team === 200 && (
                 <img
                   className="ban-champ"
                   src={`Images/champion/${data.champion}.png`}
@@ -106,7 +106,7 @@ const BanPick = () => {
         <BanBox>
           {phase2Ban.map((data) => {
             return (
-              data.team === "100" && (
+              data.team === 100 && (
                 <img
                   className="ban-champ"
                   src={`Images/champion/${data.champion}.png`}
@@ -122,7 +122,7 @@ const BanPick = () => {
             {phase2Champion.map((data) => {
               return (
                 <PickChampion>
-                  {data.team === "100" && (
+                  {data.team === 100 && (
                     <img src={`Images/champion/${data.champion}.png`} alt="" />
                   )}
                 </PickChampion>
@@ -134,7 +134,7 @@ const BanPick = () => {
             {phase2Champion.map((data) => {
               return (
                 <PickChampion>
-                  {data.team === "200" && (
+                  {data.team === 200 && (
                     <img src={`Images/champion/${data.champion}.png`} alt="" />
                   )}
                 </PickChampion>
@@ -145,7 +145,7 @@ const BanPick = () => {
         <BanBox>
           {phase2Ban.map((data) => {
             return (
-              data.team === "200" && (
+              data.team === 200 && (
                 <img
                   className="ban-champ"
                   src={`Images/champion/${data.champion}.png`}
@@ -166,7 +166,6 @@ const BanPickContainer = styled.div`
   width: 676px;
   height: 213px;
   margin: 12px 18px 0 0;
-  background-color: #333;
   display: flex;
 
   .nav {

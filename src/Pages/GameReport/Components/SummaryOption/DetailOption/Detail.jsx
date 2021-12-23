@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
 
+import BlueChampBox from "./Component/BlueChampBox";
+import RedChampBox from "./Component/RedChampBox";
+
 const testChampImg = "Teemo";
 
 const Detail = () => {
   const [detailTab, setDetailTab] = useState(1);
   const { t } = useTranslation();
+
   return (
     <DetailContainer>
       <DetailTabContainer>
@@ -28,71 +32,7 @@ const Detail = () => {
       </DetailTabContainer>
       <DetailChampTimeStatus>
         <div className="team-box blue">
-          <div className="champ-box">
-            <img src={`Images/champion/${testChampImg}.png`} alt="champion" />
-            <div className="bar-box">
-              <div className="value">
-                11,402<span className="max">/22,122</span>
-              </div>
-              <Bar curMax={152} cur={51}>
-                <div className="bar common-max"></div>
-                <div className="bar blue-cur-max"></div>
-                <div className="bar blue-cur"></div>
-              </Bar>
-            </div>
-          </div>
-          <div className="champ-box">
-            <img src={`Images/champion/${testChampImg}.png`} alt="champion" />
-            <div className="bar-box">
-              <div className="value">
-                11,402<span className="max">/22,122</span>
-              </div>
-              <Bar curMax={152} cur={51}>
-                <div className="bar common-max"></div>
-                <div className="bar blue-cur-max"></div>
-                <div className="bar blue-cur"></div>
-              </Bar>
-            </div>
-          </div>
-          <div className="champ-box">
-            <img src={`Images/champion/${testChampImg}.png`} alt="champion" />
-            <div className="bar-box">
-              <div className="value">
-                11,402<span className="max">/22,122</span>
-              </div>
-              <Bar curMax={152} cur={51}>
-                <div className="bar common-max"></div>
-                <div className="bar blue-cur-max"></div>
-                <div className="bar blue-cur"></div>
-              </Bar>
-            </div>
-          </div>
-          <div className="champ-box">
-            <img src={`Images/champion/${testChampImg}.png`} alt="champion" />
-            <div className="bar-box">
-              <div className="value">
-                11,402<span className="max">/22,122</span>
-              </div>
-              <Bar curMax={152} cur={51}>
-                <div className="bar common-max"></div>
-                <div className="bar blue-cur-max"></div>
-                <div className="bar blue-cur"></div>
-              </Bar>
-            </div>
-          </div>
-          <div className="champ-box">
-            <img src={`Images/champion/${testChampImg}.png`} alt="champion" />
-            <div className="bar-box">
-              <div className="value">
-                11,402<span className="max">/22,122</span>
-              </div>
-              <Bar curMax={152} cur={51}>
-                <div className="bar common-max"></div>
-                <div className="bar blue-cur-max"></div>
-                <div className="bar blue-cur"></div>
-              </Bar>
-            </div>
-          </div>
+          <BlueChampBox detailTab={detailTab} />
         </div>
 
         <div className="total">
@@ -117,71 +57,7 @@ const Detail = () => {
         </div>
 
         <div className="team-box red">
-          <div className="champ-box">
-            <div className="bar-box">
-              <div className="value">
-                11,402<span className="max">/22,122</span>
-              </div>
-              <Bar curMax={213} cur={166}>
-                <div className="bar common-max"></div>
-                <div className="bar red-cur-max"></div>
-                <div className="bar red-cur"></div>
-              </Bar>
-            </div>
-            <img src={`Images/champion/${testChampImg}.png`} alt="champion" />
-          </div>
-          <div className="champ-box">
-            <div className="bar-box">
-              <div className="value">
-                11,402<span className="max">/22,122</span>
-              </div>
-              <Bar curMax={213} cur={166}>
-                <div className="bar common-max"></div>
-                <div className="bar red-cur-max"></div>
-                <div className="bar red-cur"></div>
-              </Bar>
-            </div>
-            <img src={`Images/champion/${testChampImg}.png`} alt="champion" />
-          </div>
-          <div className="champ-box">
-            <div className="bar-box">
-              <div className="value">
-                11,402<span className="max">/22,122</span>
-              </div>
-              <Bar curMax={213} cur={166}>
-                <div className="bar common-max"></div>
-                <div className="bar red-cur-max"></div>
-                <div className="bar red-cur"></div>
-              </Bar>
-            </div>
-            <img src={`Images/champion/${testChampImg}.png`} alt="champion" />
-          </div>
-          <div className="champ-box">
-            <div className="bar-box">
-              <div className="value">
-                11,402<span className="max">/22,122</span>
-              </div>
-              <Bar curMax={213} cur={166}>
-                <div className="bar common-max"></div>
-                <div className="bar red-cur-max"></div>
-                <div className="bar red-cur"></div>
-              </Bar>
-            </div>
-            <img src={`Images/champion/${testChampImg}.png`} alt="champion" />
-          </div>
-          <div className="champ-box">
-            <div className="bar-box">
-              <div className="value">
-                11,402<span className="max">/22,122</span>
-              </div>
-              <Bar curMax={213} cur={166}>
-                <div className="bar common-max"></div>
-                <div className="bar red-cur-max"></div>
-                <div className="bar red-cur"></div>
-              </Bar>
-            </div>
-            <img src={`Images/champion/${testChampImg}.png`} alt="champion" />
-          </div>
+          <RedChampBox detailTab={detailTab} />
         </div>
       </DetailChampTimeStatus>
     </DetailContainer>
@@ -305,9 +181,10 @@ const DetailChampTimeStatus = styled.div`
     margin: 0 0 11px;
 
     img {
-      width: 21px;
-      height: 20px;
-      border-radius: 3px;
+      margin-top: 2px;
+      width: 24px;
+      height: 24px;
+      border-radius: 25px;
     }
   }
 
@@ -327,11 +204,16 @@ const DetailChampTimeStatus = styled.div`
       font-style: normal;
       line-height: 1.2;
       letter-spacing: normal;
-      text-align: left;
       color: #fff;
       .max {
         opacity: 0.3;
       }
+    }
+    .blue-text {
+      text-align: left;
+    }
+    .red-text {
+      text-align: right;
     }
   }
 `;

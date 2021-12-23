@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
-import transferTimetoWidth from "../../../../lib/transferTimetoWidth";
+import transferValuetoWidth from "../../../../lib/transferValuetoWidth";
 import { useSelector, useDispatch } from "react-redux";
 import TimeBar from "../Common/TimeBar";
 import TimeBarTitle from "../Common/TimeBarTitle";
@@ -24,27 +24,27 @@ const TimeLine = ({ fullTime = 1800 }) => {
     <TimeLineContainer>
       <TimeLineDataContainer>
         <div className="title">{t("game.summary.timeline.roming")}</div>
-        <TimeLine15Box width={transferTimetoWidth(fullTime, fullWidth, 900)}>
+        <TimeLine15Box width={transferValuetoWidth(fullTime, fullWidth, 900)}>
           {romingSuccessTime.map((data) => {
             return (
               <TimeLineValue
                 team={data.team}
-                move={transferTimetoWidth(fullTime, fullWidth, data.time)}
+                move={transferValuetoWidth(fullTime, fullWidth, data.time)}
               ></TimeLineValue>
             );
           })}
         </TimeLine15Box>
         <TimeLine15OutBox
-          width={transferTimetoWidth(fullTime, fullWidth, 900)}
+          width={transferValuetoWidth(fullTime, fullWidth, 900)}
         ></TimeLine15OutBox>
       </TimeLineDataContainer>
       <TimeLineDataContainer>
         <div className="title">{t("game.summary.timeline.ganking")}</div>
         <TimeLine15Box
-          width={transferTimetoWidth(fullTime, fullWidth, 900)}
+          width={transferValuetoWidth(fullTime, fullWidth, 900)}
         ></TimeLine15Box>
         <TimeLine15OutBox
-          width={transferTimetoWidth(fullTime, fullWidth, 900)}
+          width={transferValuetoWidth(fullTime, fullWidth, 900)}
         ></TimeLine15OutBox>
       </TimeLineDataContainer>
       <TimeLineDataContainer>

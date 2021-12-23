@@ -463,7 +463,32 @@
     "log": {
       "event": {
         "subject": "Event Log",
-        "tooltipInfo": "After 15 minutes of game time, only optical and ward installations are displayed."
+        "tooltipInfo": "After 15 minutes of game time, only optical and ward installations are displayed.",
+        "buildDestroyed": " Destroyed.",
+        "kill": "Kill",
+        "dragon": "Drake",
+        "herald": "Rift Herald",
+        "baron": "Baron Nashor",
+        "dragonType": {
+          "air": "Cloud",
+          "earth": "Mountain",
+          "fire": "Infernal",
+          "water": "Ocean",
+          "hextech": "Hextech",
+          "chemtech": "Chemtech",
+          "elder": "Elder"
+        },
+        "build": {
+          "outer": "1st Tower",
+          "inner": "2nd Tower",
+          "base": "Inhibitor Tower",
+          "inhibitor": "Inhibitor",
+          "nexus": "Nexus Tower"
+        },
+        "broken": {
+          "tower": "Tower Destroyed",
+          "inhibitor": "Inhibitor Destroyed"
+        }
       },
       "status": {
         "subject": "Status Log",

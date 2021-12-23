@@ -54,7 +54,7 @@ const EachMatch = ({ matchData, team }) => {
           batch(() => {
             dispatch(SetFixedDataset(e?.infos));
             dispatch(SetPlayersDataset(e?.players));
-            dispatch(SetLogDataset(e?.log.event));
+            dispatch(SetLogDataset(e?.log));
           });
         },
         function (objstore) {

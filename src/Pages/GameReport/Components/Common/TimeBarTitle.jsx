@@ -5,8 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import secToMS from "../../../../lib/secToMS";
 
 const TimeBarTitle = ({ textAligh = "right" }) => {
-  const videovalue = useSelector((state) => state.VideoReducer);
   const gamevalue = useSelector((state) => state.GameReportReducer);
+  const videovalue = useSelector((state) => state.VideoReducer);
 
   return (
     <Title textAligh={textAligh}>

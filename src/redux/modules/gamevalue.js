@@ -22,6 +22,10 @@ export const SET_START_TIME = "gamevalue/SET_START_TIME";
 export const SET_GAME_TIME = "gamevalue/SET_GAME_TIME";
 export const SET_CHAMP_TAB = "gamevalue/SET_CHAMP_TAB";
 
+export const SET_EVENT_LOG_ACTIVE_IDX = "gamevalue/SET_EVENT_LOG_ACTIVE_IDX";
+export const SET_STATUS_LOG_ACTIVE_IDX = "gamevalue/SET_STATUS_LOG_ACTIVE_IDX";
+export const SET_CURRENT_ITEM_IDX_ACTIVE_IDX = "gamevalue/SET_CURRENT_ITEM_IDX_ACTIVE_IDX";
+
 export const InitializeGameState = (payload) => {
   return {
     type: INITIALIZE_GAME_STATE,
@@ -53,7 +57,6 @@ export const SetPlatformPlayer = (payload) => {
     payload,
   };
 };
-
 export const SetUniqueId = (payload) => {
   return {
     type: SET_UNIQUE_ID,
@@ -145,6 +148,24 @@ export const SetChampTab = (payload) => {
     payload,
   };
 };
+export const SetEventLogActiveIdx = (payload) => {
+  return {
+    type: SET_EVENT_LOG_ACTIVE_IDX,
+    payload,
+  };
+};
+export const SetStatusLogActiveIdx = (payload) => {
+  return {
+    type: SET_STATUS_LOG_ACTIVE_IDX,
+    payload,
+  };
+};
+export const SetCurrentItemIdxActiveIdx = (payload) => {
+  return {
+    type: SET_CURRENT_ITEM_IDX_ACTIVE_IDX,
+    payload,
+  };
+};
 
 const initialState = {
   gameId: "",
@@ -164,6 +185,9 @@ const initialState = {
   startTime: "", //"0h34m06s",
   gameTime: "", //"2200",
   champTab: 0,
+  eventLogActiveIdx: 0,
+  statusLogActiveIdx: 0,
+  itemActiveIdx: 0,
 };
 
 export default function GameReportReducer(state = initialState, action) {
@@ -236,7 +260,6 @@ export default function GameReportReducer(state = initialState, action) {
         redteam: action.payload,
       };
     case SET_SELECTED_PLAYER:
-      console.log("SET_SELECTED_PLAYER", action.payload);
       return {
         ...state,
         selectedTeam: action.payload.team,
@@ -272,6 +295,21 @@ export default function GameReportReducer(state = initialState, action) {
       return {
         ...state,
         champTab: action.payload,
+      };
+    case SET_EVENT_LOG_ACTIVE_IDX:
+      return {
+        ...state,
+        eventLogActiveIdx: action.payload,
+      };
+    case SET_STATUS_LOG_ACTIVE_IDX:
+      return {
+        ...state,
+        statusLogActiveIdx: action.payload,
+      };
+    case SET_CURRENT_ITEM_IDX_ACTIVE_IDX:
+      return {
+        ...state,
+        itemActiveIdx: action.payload,
       };
     case INITIALIZE_GAME_STATE:
       return initialState;
