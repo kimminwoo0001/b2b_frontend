@@ -419,6 +419,7 @@ function PlayerFilterModal() {
                             dispatch(OppTeam([]));
                             //fetchingOppPlayerFilter(player);
                             reFetchingFilter("player");
+                            setOppPlayerFilter([]);
                           }}
                           currentTeam={filters.player === player.name}
                         >

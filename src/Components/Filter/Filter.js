@@ -75,9 +75,11 @@ const Filter = memo(() => {
   const isNeedTeam = [nameSolo, nameTeam, nameVideo, nameGameReport].includes(
     pagePath
   );
-  const isVideoOrGameReportPage = [nameVideo, nameGameReport].includes(
-    pagePath
-  );
+  const pagesWithLimitedLeagues = [
+    nameVideo,
+    nameGameReport,
+    nameSolo,
+  ].includes(pagePath);
 
   const dropdownRef = useRef(null);
   const [isActiveLeague, setIsActiveLeague] = useDetectOutsideClick(
@@ -200,8 +202,8 @@ const Filter = memo(() => {
           Number(Object.keys(staticvalue.filterObjects[key])) ===
             Number(filters.year) && key
       );
-      // 영상보고서, 게임보고서일 경우 LPL,LCK CL 제외
-    } else if (isVideoOrGameReportPage) {
+      // 선수보고서, 영상보고서, 게임보고서일 경우 LPL,LCK CL 리그 제외
+    } else if (pagesWithLimitedLeagues) {
       leagueList = Object.keys(staticvalue.filterObjects).filter(
         (key) => key !== "LPL" && key !== "LCK CL"
       );

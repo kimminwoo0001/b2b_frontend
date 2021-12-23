@@ -38,6 +38,7 @@ function NormalInfo() {
   const { t } = useTranslation();
   const [data, setData] = useState();
   const [oppData, setOppData] = useState();
+  const isInitialMount = useRef(true);
 
   const [isActiveOpp, setIsActiveOpp] = useDetectOutsideClick(
     dropdownRef,
@@ -45,7 +46,11 @@ function NormalInfo() {
   );
 
   useEffect(() => {
-    GetComparisonStat();
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+      GetComparisonStat();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.player, filters.patch, filters.oppplayer, filters.resetchamp]);
 

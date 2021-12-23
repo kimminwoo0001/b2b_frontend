@@ -14,87 +14,102 @@ function TabTop({ playerData, loading }) {
 
   return (
     <TabContentsWrapper>
-      <TableNav>
-        <div className="NavTitle">
-          {t("league.playerStat.sbrLabel")}
-          <StyledTippy
-            duration={0}
-            delay={[100, 0]}
-            content={<PRInfoTooltip PRInfo={t("league.playerStat.prInfo")} />}
-            placement="top"
-          >
-            <img src="Images/ico-question-mark.png" alt="question" />
-          </StyledTippy>
-        </div>
-      </TableNav>
-      {/* 받아온 선수 정보 데이터 뿌려주기 */}
-      {playerData?.map((playerData, idx) => {
-        return (
-          <TableContents key={idx}>
-            <div className="RankValue">{idx + 1}</div>
-            <img
-              src={playerData.image}
-              alt="PlayerImage"
-              className="PlayerImage"
-              width="98.7px"
-              height=" 74px"
-              onError={(e) => {
-                e.target.src = "Images/player_error_image.png";
-              }}
-            />
-            <div className="PlayerInfoBox">
-              <p className="TeamValue">
+      {filters.league.includes("LPL") ? (
+        <NoLplData>
+          <NoData>{t("league.playerStat.noLplData")}</NoData>
+        </NoLplData>
+      ) : (
+        <>
+          <TableNav>
+            <div className="NavTitle">
+              {t("league.playerStat.sbrLabel")}
+              <StyledTippy
+                duration={0}
+                delay={[100, 0]}
+                content={
+                  <PRInfoTooltip PRInfo={t("league.playerStat.prInfo")} />
+                }
+                placement="top"
+              >
+                <img src="Images/ico-question-mark.png" alt="question" />
+              </StyledTippy>
+            </div>
+          </TableNav>
+          {/* 받아온 선수 정보 데이터 뿌려주기 */}
+          {playerData?.map((playerData, idx) => {
+            return (
+              <TableContents key={idx}>
+                <div className="RankValue">{idx + 1}</div>
                 <img
-                  // src={`Images/TeamLogo/${playerData.team}.png`}
-                  src={
-                    playerData.team.slice(-2) === ".C"
-                      ? `Images/LCK_CL_LOGO/${playerData.team}.png`
-                      : `Images/TeamLogo/${playerData.team}.png`
-                  }
-                  width="20px"
-                  height="20px"
-                  alt="teamIcon"
-                ></img>
-                <label>{playerData.team}</label>
-              </p>
-              <p className="PlayerValue">{`${playerData.player} (${
-                lang === "ko" ? playerData.NativeName : playerData.name
-              })`}</p>
-            </div>
+                  src={playerData.image}
+                  alt="PlayerImage"
+                  className="PlayerImage"
+                  width="98.7px"
+                  height=" 74px"
+                  onError={(e) => {
+                    e.target.src = "Images/player_error_image.png";
+                  }}
+                />
+                <div className="PlayerInfoBox">
+                  <p className="TeamValue">
+                    <img
+                      src={
+                        playerData.team.slice(-2) === ".C"
+                          ? `Images/LCK_CL_LOGO/${playerData.team}.png`
+                          : `Images/TeamLogo/${playerData.team}.png`
+                      }
+                      width="20px"
+                      height="20px"
+                      alt="teamIcon"
+                    ></img>
+                    <label>{playerData.team}</label>
+                  </p>
+                  <p className="PlayerValue">{`${playerData.player} (${
+                    lang === "ko" ? playerData.NativeName : playerData.name
+                  })`}</p>
+                </div>
 
-            <div className="ParticipateValue">
-              <p className="ParticipateTitle">
-                {t("league.playerStat.played")}
-              </p>
-              <p className="ParticipateNumber">{playerData.total}</p>
-            </div>
-            <div className="WinsValue">
-              <p className="WinTitle">{t("league.playerStat.winrate")}</p>
-              <p className="WinNumber">{playerData.wins}</p>
-            </div>
-            <div className="KDAValue">
-              <p className="KDATitle">{t("league.playerStat.kda")}</p>
-              <KDA>
-                <span className="Kills">{playerData.kills.toFixed(1)}</span>
-                <p className="Slash">/</p>
-                <span className="Deaths">{playerData.deaths.toFixed(1)}</span>
-                <p className="Slash">/</p>
-                <span className="Support">{playerData.assists.toFixed(1)}</span>
-                <span className="Rate">{`${playerData.kda.toFixed(2)}:1`}</span>
-              </KDA>
-            </div>
+                <div className="ParticipateValue">
+                  <p className="ParticipateTitle">
+                    {t("league.playerStat.played")}
+                  </p>
+                  <p className="ParticipateNumber">{playerData.total}</p>
+                </div>
+                <div className="WinsValue">
+                  <p className="WinTitle">{t("league.playerStat.winrate")}</p>
+                  <p className="WinNumber">{playerData.wins}</p>
+                </div>
+                <div className="KDAValue">
+                  <p className="KDATitle">{t("league.playerStat.kda")}</p>
+                  <KDA>
+                    <span className="Kills">{playerData.kills.toFixed(1)}</span>
+                    <p className="Slash">/</p>
+                    <span className="Deaths">
+                      {playerData.deaths.toFixed(1)}
+                    </span>
+                    <p className="Slash">/</p>
+                    <span className="Support">
+                      {playerData.assists.toFixed(1)}
+                    </span>
+                    <span className="Rate">{`${playerData.kda.toFixed(
+                      2
+                    )}:1`}</span>
+                  </KDA>
+                </div>
 
-            {filters.league.indexOf("lpl") === -1 ? (
-              <div className="SBRValue">
-                <p className="SBRTitle">{t("league.playerStat.sbr")}</p>
-                <p className="SBRNumber">{playerData.sbr}</p>
-              </div>
-            ) : (
-              <div></div>
-            )}
-          </TableContents>
-        );
-      })}
+                {filters.league.indexOf("lpl") === -1 ? (
+                  <div className="SBRValue">
+                    <p className="SBRTitle">{t("league.playerStat.sbr")}</p>
+                    <p className="SBRNumber">{playerData.sbr}</p>
+                  </div>
+                ) : (
+                  <div></div>
+                )}
+              </TableContents>
+            );
+          })}
+        </>
+      )}
     </TabContentsWrapper>
   );
 }
@@ -277,3 +292,17 @@ const KDA = styled.div`
 `;
 
 const StyledTippy = styled(Tippy)``;
+
+const NoLplData = styled.div``;
+
+const NoData = styled.div`
+  width: 100%;
+  min-height: 571px;
+  background-color: #23212a;
+  color: #fff;
+  text-align: center;
+  line-height: 571px;
+  border-radius: 20px;
+  margin-top: 10px;
+  font-size: 18px;
+`;
