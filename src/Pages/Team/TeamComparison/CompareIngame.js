@@ -175,6 +175,8 @@ function CompareIngame() {
   };
 
   //그래프 툴팁 커스텀
+  // 향후 data가 없으면 -1 로 받을 예정
+
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       console.log("payload", payload);

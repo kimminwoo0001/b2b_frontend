@@ -99,7 +99,6 @@ function PlayerFilterModal() {
   useEffect(() => {}, [filters.oppplayer]);
 
   useEffect(() => {
-    console.log("자꾸 울림");
   }, [filters.compareModal]);
 
   // 확인하기 버튼 조건

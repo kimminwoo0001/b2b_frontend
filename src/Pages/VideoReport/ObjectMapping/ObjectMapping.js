@@ -220,6 +220,13 @@ function ObjectMapping() {
     }
   };
 
+  useEffect(() => {
+    setGameOpen(false);
+    setObjectOpen(false);
+    setPositionOpen(false);
+    setCompareOpen(false);
+  }, [filters.player]);
+
   return (
     <ObjectMappingContainer>
       <StepFilter>
