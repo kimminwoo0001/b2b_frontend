@@ -68,7 +68,6 @@ function VideoTabs() {
               alt="arrowIcon"
             ></img>
           </TabContent> */}
-          3{" "}
           <TabContent
             onClick={() => {
               dispatch(HandleTab(3));
