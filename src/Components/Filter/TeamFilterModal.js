@@ -1,7 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import qs from "qs";
-
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { createBrowserHistory } from "history";
@@ -53,7 +51,8 @@ const TeamFilterModal = () => {
     false
   );
   const pagePath = document.location.pathname;
-  let history = useHistory();
+  const history = useHistory();
+  const isInitialMount = useRef(true);
 
   useEffect(() => {
     if (!filters.compareModal) {
@@ -116,12 +115,12 @@ const TeamFilterModal = () => {
             alt="closeBtn"
             className="Close"
             onClick={() => {
-              dispatch(InitailizeState());
-              dispatch(MenuNum(2));
+              // dispatch(InitailizeState());
+              // dispatch(MenuNum(2));
               dispatch(CompareModal(false));
-              history.push("/team");
-              dispatch(setTeamFilter([]));
-              setOppTeamFilter([]);
+              // history.push("/team");
+              // dispatch(setTeamFilter([]));
+              // setOppTeamFilter([]);
             }}
           />
         </ModalNav>

@@ -38,6 +38,7 @@ const AlertModal = () => {
   const { isOpen, desc, isSelector, confirmFuncId, cancelFuncId } = useSelector(
     (state) => state.ModalReducer
   );
+  const pagePath = document.location.pathname;
 
   useEffect(() => {
     console.log("모달 창 useEffect");
@@ -52,6 +53,13 @@ const AlertModal = () => {
     if (desc === t("alert.logout.sessionExpires")) {
       history.push("/login");
     }
+
+    // 팀 비교 이후 - 다시 팀 비교 누르고 oppteam 선택 없이 창 닫았을 경우 home으로 이동
+    if (desc === t("alert.desc.serverError")) {
+      if (pagePath === "/team" || pagePath === "/teamCompare")
+        history.push("/");
+    }
+
     if (confirmFuncId) {
       //confirmFunc();
     }

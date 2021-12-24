@@ -177,18 +177,21 @@ function CompareIngame() {
   //그래프 툴팁 커스텀
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
+      console.log("payload", payload);
       return (
-        <CustomTool className="custom-tooltip">
-          <div className="title">{label}</div>
-          <p className="player">
-            <p className="player1">{`${payload[0].name} `}</p>
-            <p className="value">{`: ${payload[0].value}`}</p>
-          </p>
-          <p className="player">
-            <p className="player2">{`${payload[1].name} `}</p>
-            <p className="value">{`: ${payload[1].value}`}</p>
-          </p>
-        </CustomTool>
+        payload.length > 1 && (
+          <CustomTool className="custom-tooltip">
+            <div className="title">{label}</div>
+            <p className="player">
+              <p className="player1">{`${payload[0].name} `}</p>
+              <p className="value">{`: ${payload[0].value}`}</p>
+            </p>
+            <p className="player">
+              <p className="player2">{`${payload[1].name} `}</p>
+              <p className="value">{`: ${payload[1].value}`}</p>
+            </p>
+          </CustomTool>
+        )
       );
     }
 

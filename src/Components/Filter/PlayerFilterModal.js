@@ -215,14 +215,14 @@ function PlayerFilterModal() {
             alt="closeBtn"
             className="Close"
             onClick={() => {
-              dispatch(InitailizeState());
-              dispatch(MenuNum(4));
+              // dispatch(InitailizeState());
+              // dispatch(MenuNum(4));
               dispatch(CompareModal(false));
-              history.push("/solo");
-              dispatch(setTeamFilter([]));
-              dispatch(setPlayerFilter([]));
-              setOppPlayerFilter([]);
-              setOppTeamFilter([]);
+              // history.push("/solo");
+              // dispatch(setTeamFilter([]));
+              // dispatch(setPlayerFilter([]));
+              // setOppPlayerFilter([]);
+              // setOppTeamFilter([]);
             }}
           />
         </ModalNav>

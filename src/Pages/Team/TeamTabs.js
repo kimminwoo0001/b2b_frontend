@@ -39,6 +39,9 @@ function TeamTabs() {
   };
 
   useEffect(() => {
+    if (pagePath === "/team") {
+      return;
+    }
     dispatch(CompareModal(true));
   }, []);
 
@@ -46,7 +49,9 @@ function TeamTabs() {
     <>
       {true && (
         <>
-          {filters.tab === 2 && <TeamFilterModal />}
+          {/* {filters.tab === 2 && <TeamFilterModal />} */}
+          {filters.compareModal === true && <TeamFilterModal />}
+
           <TeamTabsWrapper>
             <TabContainer>
               {/* <Schedule
@@ -102,7 +107,7 @@ function TeamTabs() {
               {filters.league.indexOf("lpl") === -1 ? (
                 <TabItem
                   onClick={() => {
-                    dispatch(HandleTab(2));
+                    // dispatch(HandleTab(2));
                     dispatch(CompareModal(true));
                     //setOpenModal(true);
                   }}

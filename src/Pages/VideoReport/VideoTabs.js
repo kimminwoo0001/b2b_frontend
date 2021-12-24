@@ -42,8 +42,8 @@ function VideoTabs() {
           <TabContent
             onClick={() => {
               dispatch(HandleTab(1));
-              // dispatch(Reset_MapTab());
-              dispatch(Reset_Object_MapTab());
+              dispatch(Reset_MapTab());
+              // dispatch(Reset_Object_MapTab());
             }}
             changeColor={filters.tab === 1}
           >
@@ -68,6 +68,7 @@ function VideoTabs() {
               alt="arrowIcon"
             ></img>
           </TabContent> */}
+          3{" "}
           <TabContent
             onClick={() => {
               dispatch(HandleTab(3));

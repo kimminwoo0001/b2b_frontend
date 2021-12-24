@@ -73,7 +73,7 @@ function Player() {
             <TabContent
               onClick={() => {
                 dispatch(CompareModal(true));
-                dispatch(HandleTab(1));
+                // dispatch(HandleTab(1));/
               }}
               changeColor={filters.tab === 1}
             >
