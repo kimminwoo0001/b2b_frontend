@@ -51,6 +51,7 @@ function WardMapping() {
   const [sector, setSector] = useState([]);
   const [totalWard, setTotalWard] = useState();
   const [mapSector, setMapSector] = useState("");
+  const [isClicked, setIsClicked] = useState(false);
 
   let firstTime = minFrom[0] * 5100;
   let secondTime = minFrom[1] * 5100;
@@ -206,6 +207,7 @@ function WardMapping() {
               setCompareOpen(false);
               setWard([]);
               setTotalWard(0);
+              setMapSector("");
             }}
             changeColor={tab === "team"}
           >
@@ -221,6 +223,7 @@ function WardMapping() {
               setCompareOpen(false);
               setWard([]);
               setTotalWard(0);
+              setMapSector("");
             }}
             changeColor={tab === "player"}
           >
@@ -266,7 +269,6 @@ function WardMapping() {
             >
               <div>BLUE</div>
             </TabItem>
-
             <TabItem
               onClick={() => {
                 setSide("red");
@@ -287,7 +289,12 @@ function WardMapping() {
               <LabelArea>
                 {totalWard ? (
                   <button
-                    onClick={() => setMapSector(`Images/minimap_new/15.png`)}
+                    onClick={() => {
+                      mapSector === "" ||
+                      mapSector !== `Images/minimap_new/15.png`
+                        ? setMapSector(`Images/minimap_new/15.png`)
+                        : setMapSector("");
+                    }}
                   >
                     {t("video.vision.allLabel")}
                   </button>
