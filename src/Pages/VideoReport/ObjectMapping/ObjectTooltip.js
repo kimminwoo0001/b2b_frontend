@@ -21,9 +21,12 @@ function ObjectTooltip({
           ></ChampionImage>
         </LeftSection>
         <RightSection>
-          <PlayerInfo
-            color={side === "red" ? "#f04545" : "#0075bf"}
-          >{`${player.toUpperCase()} ${position.toUpperCase()} ${result.toUpperCase()}`}</PlayerInfo>
+          <PlayerInfo color={side === "red" ? "#f04545" : "#0075bf"}>
+            {`${player} ${position.toUpperCase()}`}
+          </PlayerInfo>
+          <WinLose color={side === "red" ? "#f04545" : "#0075bf"}>
+            {`${result.charAt(0).toUpperCase() + result.slice(1)}`}
+          </WinLose>
         </RightSection>
       </Top>
       <VS>VS</VS>
@@ -47,19 +50,20 @@ export default ObjectTooltip;
 
 const ObjectTooltipWrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: center;
   align-items: center;
   padding: 10px 9px;
-  min-width: 151px;
-  min-height: 55px;
+  min-width: 170px;
+  min-height: 70px;
   border-radius: 10px;
   background-color: #433f4e;
 `;
 
 const Top = styled.div`
   display: flex;
-  justify-content: center;
+  /* flex-direction: column; */
+  justify-content: space-between;
   align-items: center;
 `;
 
@@ -67,7 +71,9 @@ const LeftSection = styled.section`
   margin-right: 5px;
 `;
 
-const RightSection = styled.section``;
+const RightSection = styled.section`
+  margin-right: 5px;
+`;
 
 const ChampionImage = styled.img`
   width: 26px;
@@ -83,12 +89,21 @@ const PlayerInfo = styled.div`
   letter-spacing: -0.06px;
   text-align: left;
   color: ${(props) => props.color};
-  margin-bottom: 5px;
+  margin-bottom: 2px;
+`;
+
+const WinLose = styled.div`
+  font-family: NotoSansKR;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: -0.06px;
+  text-align: left;
+  color: ${(props) => props.color};
 `;
 
 const VS = styled.div`
   color: #fff;
-  margin-bottom: 10px;
+  margin: 0 5px;
   font-size: 13px;
 `;
 
