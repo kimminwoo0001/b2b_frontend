@@ -366,35 +366,81 @@ function CompareIngame() {
             )}`}</BlueTeamData>
         </GameDataBox> */}
           <GameDataBox>
-            <RedTeamData
-              changeColor={redData?.IngameStats["gameTime"].result === true}
-            >{`${redData?.IngameStats["gameTime"]?.minute.toFixed(0)}${t(
-              "team.comparison.min"
-            )} ${redData?.IngameStats["gameTime"]?.second.toFixed(0)}${t(
-              "team.comparison.sec"
-            )}`}</RedTeamData>
-            <AverageLabel>{t("team.comparison.playTime")}</AverageLabel>
-            <BlueTeamData
-              changeColor={blueData?.IngameStats["gameTime"].result === true}
-            >{`${blueData?.IngameStats["gameTime"]?.minute.toFixed(0)}${t(
-              "team.comparison.min"
-            )} ${blueData?.IngameStats["gameTime"]?.second.toFixed(0)}${t(
-              "team.comparison.sec"
-            )}`}</BlueTeamData>
+            <RedTeamData>{`${redData?.IngameStats["gameTime"]?.minute.toFixed(
+              0
+            )}${t("team.comparison.min")} ${redData?.IngameStats[
+              "gameTime"
+            ]?.second.toFixed(0)}${t("team.comparison.sec")}`}</RedTeamData>
+            <IndexBox>
+              <LeftArrow
+                didMyTeamWin={
+                  (redData?.IngameStats["gameTime"].minute !==
+                    blueData?.IngameStats["gameTime"].minute &&
+                    redData?.IngameStats["gameTime"].minute <
+                      blueData?.IngameStats["gameTime"].minute) ||
+                  (redData?.IngameStats["gameTime"].minute ===
+                    blueData?.IngameStats["gameTime"].minute &&
+                    redData?.IngameStats["gameTime"].second <
+                      blueData?.IngameStats["gameTime"].second)
+                }
+              ></LeftArrow>
+              <AverageLabel>{t("team.comparison.playTime")}</AverageLabel>
+              <RightArrow
+                didOppTeamWin={
+                  (redData?.IngameStats["gameTime"].minute !==
+                    blueData?.IngameStats["gameTime"].minute &&
+                    redData?.IngameStats["gameTime"].minute >
+                      blueData?.IngameStats["gameTime"].minute) ||
+                  (redData?.IngameStats["gameTime"].minute ===
+                    blueData?.IngameStats["gameTime"].minute &&
+                    redData?.IngameStats["gameTime"].second >
+                      blueData?.IngameStats["gameTime"].second)
+                }
+              ></RightArrow>
+            </IndexBox>
+            <BlueTeamData>{`${blueData?.IngameStats["gameTime"]?.minute.toFixed(
+              0
+            )}${t("team.comparison.min")} ${blueData?.IngameStats[
+              "gameTime"
+            ]?.second.toFixed(0)}${t("team.comparison.sec")}`}</BlueTeamData>
           </GameDataBox>
           <div className="under-line"></div>
           <GameDataBox>
-            <RedTeamData
-              changeColor={redData?.IngameStats["firstDragon"].result === true}
-            >{`${redData?.IngameStats["firstDragon"].minute.toFixed(0)}${t(
-              "team.comparison.min"
-            )} ${redData?.IngameStats["firstDragon"].second.toFixed(0)}${t(
-              "team.comparison.sec"
-            )}`}</RedTeamData>
-            <AverageLabel>{t("team.comparison.firstdragon")}</AverageLabel>
-            <BlueTeamData
-              changeColor={blueData?.IngameStats["firstDragon"].result === true}
-            >{`${blueData?.IngameStats["firstDragon"].minute.toFixed(0)}${t(
+            <RedTeamData>{`${redData?.IngameStats["firstDragon"].minute.toFixed(
+              0
+            )}${t("team.comparison.min")} ${redData?.IngameStats[
+              "firstDragon"
+            ].second.toFixed(0)}${t("team.comparison.sec")}`}</RedTeamData>
+            <IndexBox>
+              <LeftArrow
+                didMyTeamWin={
+                  (redData?.IngameStats["firstDragon"].minute !==
+                    blueData?.IngameStats["firstDragon"].minute &&
+                    redData?.IngameStats["firstDragon"].minute <
+                      blueData?.IngameStats["firstDragon"].minute) ||
+                  (redData?.IngameStats["firstDragon"].minute ===
+                    blueData?.IngameStats["firstDragon"].minute &&
+                    redData?.IngameStats["firstDragon"].second <
+                      blueData?.IngameStats["firstDragon"].second)
+                }
+              ></LeftArrow>
+              <AverageLabel>{t("team.comparison.firstdragon")}</AverageLabel>
+              <RightArrow
+                didOppTeamWin={
+                  (redData?.IngameStats["firstDragon"].minute !==
+                    blueData?.IngameStats["firstDragon"].minute &&
+                    redData?.IngameStats["firstDragon"].minute >
+                      blueData?.IngameStats["firstDragon"].minute) ||
+                  (redData?.IngameStats["firstDragon"].minute ===
+                    blueData?.IngameStats["firstDragon"].minute &&
+                    redData?.IngameStats["firstDragon"].second >
+                      blueData?.IngameStats["firstDragon"].second)
+                }
+              ></RightArrow>
+            </IndexBox>
+            <BlueTeamData>{`${blueData?.IngameStats[
+              "firstDragon"
+            ].minute.toFixed(0)}${t(
               "team.comparison.min"
             )} ${blueData?.IngameStats["firstDragon"].second.toFixed(0)}${t(
               "team.comparison.sec"
@@ -402,31 +448,65 @@ function CompareIngame() {
           </GameDataBox>
           <div className="under-line"></div>
           <GameDataBox>
-            <RedTeamData
-              changeColor={redData?.IngameStats["dragons"].result === true}
-            >{`${redData?.IngameStats["dragons"].value.toFixed(1)}${t(
-              "team.comparison.times"
-            )}`}</RedTeamData>
-            <AverageLabel>{t("team.comparison.slayedDragon")}</AverageLabel>
-            <BlueTeamData
-              changeColor={blueData?.IngameStats["dragons"].result === true}
-            >{`${blueData?.IngameStats["dragons"].value.toFixed(1)}${t(
-              "team.comparison.times"
-            )}`}</BlueTeamData>
+            <RedTeamData>{`${redData?.IngameStats["dragons"].value.toFixed(
+              1
+            )}${t("team.comparison.times")}`}</RedTeamData>
+            <IndexBox>
+              <LeftArrow
+                didMyTeamWin={
+                  redData?.IngameStats["dragons"].value.toFixed(1) >
+                  blueData?.IngameStats["dragons"].value.toFixed(1)
+                }
+              ></LeftArrow>
+              <AverageLabel>{t("team.comparison.slayedDragon")}</AverageLabel>
+              <RightArrow
+                didOppTeamWin={
+                  redData?.IngameStats["dragons"].value.toFixed(1) <
+                  blueData?.IngameStats["dragons"].value.toFixed(1)
+                }
+              ></RightArrow>
+            </IndexBox>
+            <BlueTeamData>{`${blueData?.IngameStats["dragons"].value.toFixed(
+              1
+            )}${t("team.comparison.times")}`}</BlueTeamData>
           </GameDataBox>
           <div className="under-line"></div>
           <GameDataBox>
-            <RedTeamData
-              changeColor={redData?.IngameStats["firstHerald"].result === true}
-            >{`${redData?.IngameStats["firstHerald"].minute.toFixed(0)}${t(
-              "team.comparison.min"
-            )} ${redData?.IngameStats["firstHerald"].second.toFixed(0)}${t(
-              "team.comparison.sec"
-            )}`}</RedTeamData>
-            <AverageLabel>{t("team.comparison.firstHerald")}</AverageLabel>
-            <BlueTeamData
-              changeColor={blueData?.IngameStats["firstHerald"].result === true}
-            >{`${blueData?.IngameStats["firstHerald"].minute.toFixed(0)}${t(
+            <RedTeamData>{`${redData?.IngameStats["firstHerald"].minute.toFixed(
+              0
+            )}${t("team.comparison.min")} ${redData?.IngameStats[
+              "firstHerald"
+            ].second.toFixed(0)}${t("team.comparison.sec")}`}</RedTeamData>
+            <IndexBox>
+              <LeftArrow
+                didMyTeamWin={
+                  (redData?.IngameStats["firstHerald"].minute !==
+                    blueData?.IngameStats["firstHerald"].minute &&
+                    redData?.IngameStats["firstHerald"].minute <
+                      blueData?.IngameStats["firstHerald"].minute) ||
+                  (redData?.IngameStats["firstHerald"].minute ===
+                    blueData?.IngameStats["firstHerald"].minute &&
+                    redData?.IngameStats["firstHerald"].second <
+                      blueData?.IngameStats["firstHerald"].second)
+                }
+              ></LeftArrow>
+              <AverageLabel>{t("team.comparison.firstHerald")}</AverageLabel>
+              <RightArrow
+                didOppTeamWin={
+                  (redData?.IngameStats["firstHerald"].minute !==
+                    blueData?.IngameStats["firstHerald"].minute &&
+                    redData?.IngameStats["firstHerald"].minute >
+                      blueData?.IngameStats["firstHerald"].minute) ||
+                  (redData?.IngameStats["firstHerald"].minute ===
+                    blueData?.IngameStats["firstHerald"].minute &&
+                    redData?.IngameStats["firstHerald"].second >
+                      blueData?.IngameStats["firstHerald"].second)
+                }
+              ></RightArrow>
+            </IndexBox>
+            <BlueTeamData>{`${blueData?.IngameStats[
+              "firstHerald"
+            ].minute.toFixed(0)}${t(
               "team.comparison.min"
             )} ${blueData?.IngameStats["firstHerald"].second.toFixed(0)}${t(
               "team.comparison.sec"
@@ -434,49 +514,69 @@ function CompareIngame() {
           </GameDataBox>
           <div className="under-line"></div>
           <GameDataBox>
-            <RedTeamData
-              changeColor={redData?.IngameStats["heralds"].result === true}
-            >{`${redData?.IngameStats["heralds"].value.toFixed(1)}${t(
-              "team.comparison.times"
-            )}`}</RedTeamData>
-            <AverageLabel>{t("team.comparison.avgHerald")}</AverageLabel>
-            <BlueTeamData
-              changeColor={blueData?.IngameStats["heralds"].result === true}
-            >{`${blueData?.IngameStats["heralds"].value.toFixed(1)}${t(
-              "team.comparison.times"
-            )}`}</BlueTeamData>
+            <RedTeamData>{`${redData?.IngameStats["heralds"].value.toFixed(
+              1
+            )}${t("team.comparison.times")}`}</RedTeamData>
+            <IndexBox>
+              <LeftArrow
+                didMyTeamWin={
+                  redData?.IngameStats["heralds"].value.toFixed(1) >
+                  blueData?.IngameStats["heralds"].value.toFixed(1)
+                }
+              ></LeftArrow>
+              <AverageLabel>{t("team.comparison.avgHerald")}</AverageLabel>
+              <RightArrow
+                didOppTeamWin={
+                  redData?.IngameStats["heralds"].value.toFixed(1) <
+                  blueData?.IngameStats["heralds"].value.toFixed(1)
+                }
+              ></RightArrow>
+            </IndexBox>
+            <BlueTeamData>{`${blueData?.IngameStats["heralds"].value.toFixed(
+              1
+            )}${t("team.comparison.times")}`}</BlueTeamData>
           </GameDataBox>
           <div className="under-line"></div>
           <GameDataBox>
-            <RedTeamData
-              changeColor={redData?.IngameStats["barons"].result === true}
-            >{`${redData?.IngameStats["barons"].value.toFixed(1)}${t(
-              "team.comparison.times"
-            )}`}</RedTeamData>
-            <AverageLabel>{t("team.comparison.baron")}</AverageLabel>
-            <BlueTeamData
-              changeColor={blueData?.IngameStats["barons"].result === true}
-            >{`${blueData?.IngameStats["barons"].value.toFixed(1)}${t(
-              "team.comparison.times"
-            )}`}</BlueTeamData>
+            <RedTeamData>{`${redData?.IngameStats["barons"].value.toFixed(
+              1
+            )}${t("team.comparison.times")}`}</RedTeamData>
+            <IndexBox>
+              <LeftArrow
+                didMyTeamWin={
+                  redData?.IngameStats["barons"].value.toFixed(1) >
+                  blueData?.IngameStats["barons"].value.toFixed(1)
+                }
+              ></LeftArrow>
+              <AverageLabel>{t("team.comparison.baron")}</AverageLabel>
+              <RightArrow
+                didOppTeamWin={
+                  redData?.IngameStats["barons"].value.toFixed(1) <
+                  blueData?.IngameStats["barons"].value.toFixed(1)
+                }
+              ></RightArrow>
+            </IndexBox>
+            <BlueTeamData>{`${blueData?.IngameStats["barons"].value.toFixed(
+              1
+            )}${t("team.comparison.times")}`}</BlueTeamData>
           </GameDataBox>
           <div className="under-line"></div>
           <GameDataBox>
-            <RedTeamData
-              changeColor={
-                redData?.IngameStats["timeOfFirstGank"].result === true
-              }
-            >{`${redData?.IngameStats["timeOfFirstGank"].minute.toFixed(0)}${t(
+            <RedTeamData>{`${redData?.IngameStats[
+              "timeOfFirstGank"
+            ].minute.toFixed(0)}${t(
               "team.comparison.min"
             )} ${redData?.IngameStats["timeOfFirstGank"].second.toFixed(0)}${t(
               "team.comparison.sec"
             )}`}</RedTeamData>
-            <AverageLabel>{t("team.comparison.firstGank")}</AverageLabel>
-            <BlueTeamData
-              changeColor={
-                blueData?.IngameStats["timeOfFirstGank"].result === true
-              }
-            >{`${blueData?.IngameStats["timeOfFirstGank"].minute.toFixed(0)}${t(
+            <IndexBox>
+              <LeftArrow></LeftArrow>
+              <AverageLabel>{t("team.comparison.firstGank")}</AverageLabel>
+              <RightArrow></RightArrow>
+            </IndexBox>
+            <BlueTeamData>{`${blueData?.IngameStats[
+              "timeOfFirstGank"
+            ].minute.toFixed(0)}${t(
               "team.comparison.min"
             )} ${blueData?.IngameStats["timeOfFirstGank"].second.toFixed(0)}${t(
               "team.comparison.sec"
@@ -484,21 +584,17 @@ function CompareIngame() {
           </GameDataBox>
           <div className="under-line"></div>
           <GameDataBox>
-            <RedTeamData
-              changeColor={
-                redData?.IngameStats["numberOfTeamFight"].result === true
-              }
-            >{`${redData?.IngameStats["numberOfTeamFight"].winRate.toFixed(
-              1
-            )}${t("team.comparison.times")}`}</RedTeamData>
-            <AverageLabel>{t("team.comparison.avgTeamFight")}</AverageLabel>
-            <BlueTeamData
-              changeColor={
-                blueData?.IngameStats["numberOfTeamFight"].result === true
-              }
-            >{`${blueData?.IngameStats["numberOfTeamFight"].winRate.toFixed(
-              1
-            )}${t("team.comparison.times")}`}</BlueTeamData>
+            <RedTeamData>{`${redData?.IngameStats[
+              "numberOfTeamFight"
+            ].winRate.toFixed(1)}${t("team.comparison.times")}`}</RedTeamData>
+            <IndexBox>
+              <LeftArrow></LeftArrow>
+              <AverageLabel>{t("team.comparison.avgTeamFight")}</AverageLabel>
+              <RightArrow></RightArrow>
+            </IndexBox>
+            <BlueTeamData>{`${blueData?.IngameStats[
+              "numberOfTeamFight"
+            ].winRate.toFixed(1)}${t("team.comparison.times")}`}</BlueTeamData>
           </GameDataBox>
         </CompareStats>
       </CompareDisplay>
@@ -638,26 +734,26 @@ const RedTeamData = styled.div`
   text-align: center;
   font-family: "Spoqa Han Sans";
   font-size: 18px;
-  font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.39;
   letter-spacing: normal;
-  ${(props) =>
+  color: #fff;
+  /* ${(props) =>
     props.changeColor
       ? css`
           color: #f04545;
         `
       : css`
           opacity: 0.3;
-        `}
+        `} */
 `;
 
 const AverageLabel = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30%;
+  width: 169px;
   font-family: "Spoqa Han Sans";
   font-size: 18px;
   font-weight: 300;
@@ -677,19 +773,20 @@ const BlueTeamData = styled.div`
   width: 30%;
   font-family: "Spoqa Han Sans";
   font-size: 18px;
-  font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.39;
   letter-spacing: normal;
-  ${(props) =>
+  color: #fff;
+
+  /* ${(props) =>
     props.changeColor
       ? css`
           color: #f04545;
         `
       : css`
           opacity: 0.3;
-        `}
+        `} */
 `;
 
 // chart styling
@@ -777,4 +874,29 @@ const NavBar = styled.div`
 const CompareTeamStat = styled.div`
   /* padding: 20px; */
   height: 317px;
+`;
+
+const LeftArrow = styled.div`
+  width: 0px;
+  height: 0px;
+  border-top: 5px solid transparent;
+  border-right: 8px solid #fff;
+  border-bottom: 5px solid transparent;
+  visibility: ${(props) => (props.didMyTeamWin ? "visible" : "hidden")};
+`;
+
+const RightArrow = styled.div`
+  width: 0px;
+  height: 0px;
+  border-top: 5px solid transparent;
+  border-left: 8px solid #fff;
+  border-bottom: 5px solid transparent;
+  visibility: ${(props) => (props.didOppTeamWin ? "visible" : "hidden")};
+`;
+
+const IndexBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 209px;
 `;
