@@ -22,6 +22,8 @@ import {
   SetSeason,
   CompareModal,
   SetTeam,
+  SetModalTeam,
+  SetModalOppTeam,
 } from "../../redux/modules/filtervalue";
 import {
   setLeagueFilter,
@@ -78,6 +80,11 @@ const TeamFilterModal = () => {
       dispatch(CompareModal(false));
       dispatch(GetOppTeam(filters.oppteam));
       dispatch(HandleTab(2));
+      dispatch(
+        SetTeam(
+          filters.modalteam.length === 0 ? filters.team : filters.modalteam
+        )
+      );
     } else {
       alert(t("filters.noTeam"));
     }
@@ -118,6 +125,9 @@ const TeamFilterModal = () => {
               // dispatch(InitailizeState());
               // dispatch(MenuNum(2));
               dispatch(CompareModal(false));
+              dispatch(SetModalTeam([]));
+              dispatch(OppTeam([]));
+
               // history.push("/team");
               // dispatch(setTeamFilter([]));
               // setOppTeamFilter([]);
@@ -309,11 +319,16 @@ const TeamFilterModal = () => {
                       <MapTeams
                         key={index}
                         onClick={() => {
-                          dispatch(SetTeam(team));
+                          // dispatch(SetTeam(team));
+                          dispatch(SetModalTeam(team));
                           fetchingOppTeamFilter(team);
                           dispatch(OppTeam(""));
                         }}
-                        currentTeam={filters.team === team}
+                        currentTeam={
+                          filters.modalteam.length === 0
+                            ? filters.team === team
+                            : filters.modalteam === team
+                        }
                       >
                         <img
                           src={

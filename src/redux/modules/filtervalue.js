@@ -44,6 +44,8 @@ export const SET_TEAM = "filtervalue/SET_TEAM";
 export const SET_PLAYER = "filtervalue/SET_PLAYER";
 export const SET_PATCH = "filtervalue/SET_PATCH";
 export const SELECT_ALL_BTN = "filtervalue/SELECT_ALL_BTN";
+export const SET_MODAL_TEAM = "filtervalue/SET_MODAL_TEAM";
+export const SET_MODAL_OPPTEAM = "filtervalue/SET_MODAL_OPPTEAM";
 
 export const Reset_MapTab = (payload) => {
   return {
@@ -345,6 +347,20 @@ export const CompareModal = (payload) => {
   };
 };
 
+export const SetModalTeam = (payload) => {
+  return {
+    type: SET_MODAL_TEAM,
+    payload,
+  };
+};
+
+export const SetModalOppTeam = (payload) => {
+  return {
+    type: SET_MODAL_OPPTEAM,
+    payload,
+  };
+};
+
 const initialState = {
   league: [],
   year: [],
@@ -370,6 +386,8 @@ const initialState = {
   gameid: "",
   menu_num: "",
   filterMenuState: true,
+  modalteam: [],
+  modalOppteam: [],
 };
 
 export default function FilterReducer(state = initialState, action) {
@@ -640,6 +658,18 @@ export default function FilterReducer(state = initialState, action) {
       return {
         ...state,
         compareModal: action.payload,
+      };
+
+    case SET_MODAL_TEAM:
+      return {
+        ...state,
+        modalteam: action.payload,
+      };
+
+    case SET_MODAL_OPPTEAM:
+      return {
+        ...state,
+        modalOppteam: action.payload,
       };
     default:
       return state;
