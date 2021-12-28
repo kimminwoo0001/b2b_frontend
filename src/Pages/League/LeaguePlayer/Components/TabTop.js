@@ -121,6 +121,7 @@ const TabContentsWrapper = styled.div`
   min-height: 100vh;
   height: 100%;
   margin-top: 22px;
+  padding-bottom: 30px;
   font-family: NotoSansKR, Apple SD Gothic Neo;
   font-weight: bold;
   font-size: 12px;
