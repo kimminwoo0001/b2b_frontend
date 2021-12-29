@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="5.387" height="4.387" viewBox="0 0 5.387 4.387">
+    <defs>
+        <style>
+            .cls-1{fill:none;stroke:#fff;stroke-linecap:round}
+        </style>
+    </defs>
+    <g id="check" transform="translate(-85.307 -161.807)">
+        <path id="선_17" d="M0 0L2 3" class="cls-1" transform="translate(86 162.5)"/>
+        <path id="선_18" d="M2 0L0 3" class="cls-1" transform="translate(88 162.5)"/>
+    </g>
+</svg>
