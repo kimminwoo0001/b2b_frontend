@@ -91,7 +91,8 @@
       "teamFight": "Number of Engagements (until 15)",
       "yTeamFight": "Count",
       "gank": "Time of First Gank",
-      "time": "Time (min)"
+      "time": "Time (min)",
+      "noData": "This information is not yet supported."
     },
     "playerStat": {
       "sbrLabel": "PR Ranking",

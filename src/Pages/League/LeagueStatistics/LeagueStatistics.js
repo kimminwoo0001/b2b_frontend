@@ -114,12 +114,16 @@ function LeagueStatistics() {
         // console.log(supportX);
 
         setLoading(false);
+        console.log(supportTimeX);
+        console.log(supportTimeY);
       },
       function (objStore) {
         dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
       }
     );
   };
+
+
   //현재 패치버전 색 교체
   // const colorChange = () => {
   //   const newData = gameLengthX?.map((el, idx) => {
@@ -273,57 +277,59 @@ function LeagueStatistics() {
               <p className="Y">Y {t("league.leagueStat.yPressure")}</p>
             </div>
           </NavBar>
+          {supportTimeX === undefined || supportTimeX.length === 0 ?
+            (<NoData>{t("league.leagueStat.noData")}</NoData>) :
           <GameTimeCharts>
-            <Bar
-              data={averageSupport}
-              options={{
-                tooltips: {
-                  intersect: false,
-                  backgroundColor: "#1d1d1d",
-                  titleFontSize: 12,
-                  bodyFontSize: 10,
-                  displayColors: true,
-                  boxWidth: 2,
-                  boxHeight: 2,
-                  cornerRadius: 10,
-                },
-                hover: {
-                  animationDuration: 100,
-                },
-                legend: {
-                  display: false,
-                },
-                maintainAspectRatio: false,
-                scales: {
-                  xAxes: [
-                    {
-                      ticks: {
-                        fontColor: "#84818e",
-                        fontSize: 15,
+              <Bar
+                data={averageSupport}
+                options={{
+                  tooltips: {
+                    intersect: false,
+                    backgroundColor: "#1d1d1d",
+                    titleFontSize: 12,
+                    bodyFontSize: 10,
+                    displayColors: true,
+                    boxWidth: 2,
+                    boxHeight: 2,
+                    cornerRadius: 10,
+                  },
+                  hover: {
+                    animationDuration: 100,
+                  },
+                  legend: {
+                    display: false,
+                  },
+                  maintainAspectRatio: false,
+                  scales: {
+                    xAxes: [
+                      {
+                        ticks: {
+                          fontColor: "#84818e",
+                          fontSize: 15,
+                        },
+                        gridLines: { color: "rgb(47, 45, 56)" },
+                        offset: true,
                       },
-                      gridLines: { color: "rgb(47, 45, 56)" },
-                      offset: true,
-                    },
-                  ],
-                  yAxes: [
-                    {
-                      ticks: {
-                        stepSize: supportTimeData?.row,
-                        fontColor: "#84818e",
-                        fontSize: 15,
-                        // min: supportTimeData?.min,
-                        min: 0,
-                        max: supportTimeData?.max,
+                    ],
+                    yAxes: [
+                      {
+                        ticks: {
+                          stepSize: supportTimeData?.row,
+                          fontColor: "#84818e",
+                          fontSize: 15,
+                          // min: supportTimeData?.min,
+                          min: 0,
+                          max: supportTimeData?.max,
+                        },
+                        gridLines: {
+                          color: "rgb(58, 55, 69)",
+                        },
                       },
-                      gridLines: {
-                        color: "rgb(58, 55, 69)",
-                      },
-                    },
-                  ],
-                },
-              }}
-            />
-          </GameTimeCharts>
+                    ],
+                  },
+                }}
+              />
+            </GameTimeCharts>}
         </SupportCounts>
       </TopBox>
       <BottomBox>
@@ -485,6 +491,8 @@ const SupportCounts = styled.div`
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
   border-radius: 20px;
+  position: relative;
+
 `;
 
 const BottomBox = styled.div`
@@ -549,7 +557,6 @@ const NavBar = styled.div`
   }
   .Y {
     width: auto;
-
     font-family: SpoqaHanSansNeo;
     font-size: 15px;
     font-weight: normal;
@@ -572,4 +579,18 @@ const NavBar = styled.div`
 const GameTimeCharts = styled.div`
   padding: 23px;
   height: 226.5px;
+`;
+
+
+const NoData = styled.div`
+background-color: #2f2d38;
+color: #fff;
+width: 530px;
+text-align: center;
+position: absolute;
+left: 50%;
+top: 60%;
+transform: translate(-50%, -50%);
+
+
 `;

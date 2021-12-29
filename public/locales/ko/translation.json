@@ -91,7 +91,8 @@
       "teamFight": "평균 교전 횟수",
       "yTeamFight": "첫 교전 횟수",
       "gank": "평균 첫 갱 시간",
-      "time": "시간(분)"
+      "time": "시간(분)",
+      "noData": "현재 해당 지표를 제공하지 않습니다."
     },
     "playerStat": {
       "sbrLabel": "선수 별 PR 순위",
