@@ -9,9 +9,13 @@ import LoadingImg from "../../../Components/LoadingImg/MapLoading";
 import Tippy from "@tippy.js/react";
 import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
+import { API } from "../../config";
+
 import ObjectTooltip from "./ObjectTooltip";
 import addZero from "../../../lib/addZero";
 import axiosRequest from "../../../lib/axiosRequest";
+import { useDispatch } from "react-redux";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function useInterval(callback) {
   const savedCallback = useRef();
@@ -52,9 +56,10 @@ function ObjectMapping() {
   const user = useSelector((state) => state.UserReducer);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   //맵핑 데이터 핸들링 상태값
   const [currentPos, setCurrentPos] = useState();
-  const [champInfo, setchampInfo] = useState();
+  const [champInfo, setChampInfo] = useState();
   //Range 핸들링 상태값
   const [range, setRange] = useState(0);
   const [minTime, setMinTime] = useState();
@@ -79,7 +84,8 @@ function ObjectMapping() {
   const fetchingMapData = () => {
     try {
       setLoading(true);
-      const url = `${API2}/api/mappingPosition`;
+      // const url = `${API}/lolapi/mappingPosition`;
+      const url = `${API}/lolapi/mapping/mapping`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -89,9 +95,9 @@ function ObjectMapping() {
         player: filters.player,
         champion: filters.champion_eng,
         compare: compareOpen ? "" : "off",
-        opp_team: filters.oppteam,
-        opp_player: filters.oppplayer,
-        opp_champion: filters.oppchampion_eng,
+        oppteam: filters.oppteam,
+        oppplayer: filters.oppplayer,
+        oppchampion: filters.oppchampion_eng,
         side: side,
         time: period,
         position: position,
@@ -99,15 +105,25 @@ function ObjectMapping() {
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
-        const dto = e.data;
-        setMinTime(dto?.position[0].realCount ? dto?.position[0].realCount : 0);
-        setMaxTime(dto.position.length - 1);
-        setCurrentPos(dto.position);
-        setchampInfo(dto.info);
-        setPlay(true);
-        console.log(dto.position);
-      });
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          const dto = e;
+          setMinTime(
+            dto?.position[0].realCount ? dto?.position[0].realCount : 0
+          );
+          setMaxTime(dto.position.length - 1);
+          setCurrentPos(dto.position);
+          setChampInfo(dto.info);
+          setPlay(true);
+          console.log(dto.position);
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        }
+      );
     } catch (e) {
       console.log(e);
     } finally {
@@ -173,7 +189,7 @@ function ObjectMapping() {
         champion_eng.length > 0 &&
         gameSelect.length > 0
       ) {
-        setchampInfo([]);
+        setChampInfo([]);
         fetchingMapData();
         setRange(0);
         setFast(false);
@@ -203,6 +219,13 @@ function ObjectMapping() {
       alert(alertMessage);
     }
   };
+
+  useEffect(() => {
+    setGameOpen(false);
+    setObjectOpen(false);
+    setPositionOpen(false);
+    setCompareOpen(false);
+  }, [filters.player]);
 
   return (
     <ObjectMappingContainer>
@@ -242,19 +265,15 @@ function ObjectMapping() {
             {/* 경기 선택 부분 SelectGame.js 를 불러와서 사용함 */}
             <StepTitle
               onClick={() => {
-                setGameOpen(!gameOpen)
+                setGameOpen(!gameOpen);
               }}
               changeColor={gameOpen}
             >
-              <img
-                src={"Images/ico-arrow-down.svg"}
-                alt=""
-              />
+              <img src={"Images/ico-arrow-down.svg"} alt="" />
               <div className="title">
                 <span className="step">STEP 02</span>
                 <span className="subtitle">{t("video.object.step2")}</span>
               </div>
-
             </StepTitle>
             <StepContents isActive={gameOpen === true}>
               <SelectGame
@@ -329,7 +348,6 @@ function ObjectMapping() {
             </ConfirmButton>
           </ButtonContainer>
         </StepFilterWrapper>
-
       </StepFilter>
       <ObjectMapWrapper>
         {loading ? (
@@ -358,11 +376,11 @@ function ObjectMapping() {
                   ) {
                     if (
                       Number(currentPos[range]?.player[i].x1) -
-                      Number(currentPos[range]?.player[i].x2) !==
-                      0 &&
+                        Number(currentPos[range]?.player[i].x2) !==
+                        0 &&
                       Number(currentPos[range]?.player[i].y1) -
-                      Number(currentPos[range]?.player[i].y2) !==
-                      0
+                        Number(currentPos[range]?.player[i].y2) !==
+                        0
                     ) {
                       x =
                         ((Number(currentPos[range]?.player[i].x1) +
@@ -392,11 +410,14 @@ function ObjectMapping() {
                   trigger="click"
                   content={
                     <ObjectTooltip
-                      champion={info.champion}
+                      champion={info.champions}
                       side={info.side}
                       gameid={info.gameid}
                       position={info.position}
                       player={info.player}
+                      result={info.win}
+                      oppteam={info.opp_team}
+                      oppchampion={info.opp_champions}
                     />
                   }
                   placement="top"
@@ -412,7 +433,7 @@ function ObjectMapping() {
                       height: "29px",
                       width: "29px",
                       transition: "all 0.25s ease-out 0s",
-                      backgroundImage: `url(Images/champion/${info.champion}.png)`,
+                      backgroundImage: `url(Images/champion/${info.champions}.png)`,
                       backgroundRepeat: "no-repeat",
                       backgroundSize: "contain",
                       borderRadius: "50%",
@@ -444,8 +465,8 @@ function ObjectMapping() {
             <span className="current">
               {range
                 ? `${addZero(
-                  Math.floor((range + minTime) / 2 / 60)
-                )} : ${addZero(Math.floor(((range + minTime) / 2) % 60))}`
+                    Math.floor((range + minTime) / 2 / 60)
+                  )} : ${addZero(Math.floor(((range + minTime) / 2) % 60))}`
                 : "00 : 00"}
             </span>
             <p>/</p>
@@ -578,17 +599,20 @@ const StepTitle = styled.nav`
     margin-bottom: 12px;
     > .step {
       font-weight: normal;
-      color:  ${(props) => props.changeColor ? `rgb(132, 129, 142)` : `rgba(132, 129, 142,0.3)`};
+      color: ${(props) =>
+        props.changeColor ? `rgb(132, 129, 142)` : `rgba(132, 129, 142,0.3)`};
       margin-right: 5px;
     }
     > .subtitle {
-      color:  ${(props) => props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
+      color: ${(props) =>
+        props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
     }
   }
   img {
     content: url("Images/ico-arrow-down.svg");
-    transform: ${(props) => props.changeColor ? `rotate(0deg);` : `rotate(180deg);`};
-    opacity: ${(props) => props.changeColor ? `1` : `0.3`};
+    transform: ${(props) =>
+      props.changeColor ? `rotate(0deg);` : `rotate(180deg);`};
+    opacity: ${(props) => (props.changeColor ? `1` : `0.3`)};
     margin-right: 10px;
     margin-bottom: 10px;
     object-fit: contain;
@@ -628,7 +652,7 @@ const ConfirmButton = styled.button`
   ${(props) =>
     props.isActive &&
     css`
-    background-color: #5942ba;
+      background-color: #5942ba;
     `}
 `;
 
@@ -638,7 +662,7 @@ const ButtonContainer = styled.div`
   justify-content: center;
   margin-top: 40px;
   padding: 20px 0;
-  border-top : 1px solid #433f4e;
+  border-top: 1px solid #433f4e;
 `;
 const ObjectMapWrapper = styled.div`
   width: 700px;
@@ -706,6 +730,7 @@ const TimeStamp = styled.div`
     text-align: right;
   }
   > .max {
+    width: 55px;
     color: #6b6979;
   }
 `;

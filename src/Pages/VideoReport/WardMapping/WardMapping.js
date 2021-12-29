@@ -8,10 +8,12 @@ import Tippy from "@tippy.js/react";
 import { Reset_MapTab } from "../../../redux/modules/filtervalue";
 import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
+import { API } from "../../config";
 import qs from "qs";
 import WardTooltip from "./WardTooltip";
 import axiosRequest from "../../../lib/axiosRequest";
-
+import { duration } from "@material-ui/core";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 const sectorName = {
   0: 1,
@@ -49,6 +51,7 @@ function WardMapping() {
   const [sector, setSector] = useState([]);
   const [totalWard, setTotalWard] = useState();
   const [mapSector, setMapSector] = useState("");
+  const [isClicked, setIsClicked] = useState(false);
 
   let firstTime = minFrom[0] * 5100;
   let secondTime = minFrom[1] * 5100;
@@ -77,7 +80,8 @@ function WardMapping() {
   //맵핑 데이터 fetch 함수
   const fetchingWardData = (wardside) => {
     try {
-      const url = `${API2}/api/waddingFilter`;
+      // const url = `${API}/lolapi/waddingFilter`;
+      const url = `${API}/lolapi/mapping/ward`;
       const params = {
         league: filters.league,
         year: filters.year,
@@ -87,64 +91,71 @@ function WardMapping() {
         player: filters.player,
         champion: filters.champion_eng,
         compare: compareOpen ? "on" : "off",
-        opp_team: filters.oppteam,
-        opp_player: filters.oppplayer,
-        opp_champion: filters.oppchampion_eng,
+        oppteam: filters.oppteam,
+        oppplayer: filters.oppplayer,
+        oppchampion: filters.oppchampion_eng,
         side: wardside,
         firstTime: firstTime,
         secondTime: secondTime,
         token: user.token,
         id: user.id,
       };
-      axiosRequest(url, params, function (e) {
-        const dto = e.data.warding;
-        setWard(e.data.warding);
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          const dto = e.warding;
+          setWard(e.warding);
+          // sector 구분해서 섹터값 더하기
+          if (dto.length > 0) {
+            var total = 0;
+            for (let i = 0; i < dto.length; i++) {
+              if (dto[i].firstward) {
+                total += 1;
+              }
+              if (dto[i].secondward) {
+                total += 1;
+              }
+            }
+            setTotalWard(total);
 
-        // sector 구분해서 섹터값 더하기
-        if (dto.length > 0) {
-          var total = 0;
-          for (let i = 0; i < dto.length; i++) {
-            if (dto[i].firstward) {
-              total += 1;
+            var arrNumber = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            var arrNumber2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            for (var i = 0; i < dto.length; i++) {
+              if (dto[i].firstwardPlaced === 200) {
+                var placed = 15;
+              } else if (dto[i].firstwardPlaced === 100) {
+                placed = 14;
+              } else {
+                placed = Number(dto[i].firstwardPlaced);
+              }
+              arrNumber[placed] = arrNumber[placed] + 1;
             }
-            if (dto[i].secondward) {
-              total += 1;
+            for (let i = 0; i < dto.length; i++) {
+              if (dto[i].secondwardPlaced === 200) {
+                placed = 15;
+              } else if (dto[i].secondwardPlaced === 100) {
+                placed = 14;
+              } else {
+                placed = Number(dto[i].secondwardPlaced);
+              }
+              arrNumber2[placed] = arrNumber2[placed] + 1;
             }
+            const arrSum = arrNumber.map((first, idx) => {
+              return first + arrNumber2[idx];
+            });
+            setSector(arrSum);
+          } else {
+            alert(t("video.vision.noData"));
+            setTotalWard(0);
+            setSector([]);
           }
-          setTotalWard(total);
-
-          var arrNumber = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-          var arrNumber2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-          for (var i = 0; i < dto.length; i++) {
-            if (dto[i].firstwardPlaced === 200) {
-              var placed = 15;
-            } else if (dto[i].firstwardPlaced === 100) {
-              placed = 14;
-            } else {
-              placed = Number(dto[i].firstwardPlaced);
-            }
-            arrNumber[placed] = arrNumber[placed] + 1;
-          }
-          for (let i = 0; i < dto.length; i++) {
-            if (dto[i].secondwardPlaced === 200) {
-              placed = 15;
-            } else if (dto[i].secondwardPlaced === 100) {
-              placed = 14;
-            } else {
-              placed = Number(dto[i].secondwardPlaced);
-            }
-            arrNumber2[placed] = arrNumber2[placed] + 1;
-          }
-          const arrSum = arrNumber.map((first, idx) => {
-            return first + arrNumber2[idx];
-          });
-          setSector(arrSum);
-        } else {
-          alert(t("video.vision.noData"));
-          setTotalWard(0);
-          setSector([]);
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
         }
-      })
+      );
     } catch (e) {
       console.log(e);
     } finally {
@@ -187,42 +198,49 @@ function WardMapping() {
 
   return (
     <WardMappingContainer>
-
-
       <LeftSection>
         <WardMappingTabs>
-          <TabItem
+          <TopTabItem
             onClick={() => {
               setTab("team");
               handleTimeReset();
               setCompareOpen(false);
+              setWard([]);
+              setTotalWard(0);
+              setMapSector("");
             }}
             changeColor={tab === "team"}
           >
             <div>
               <span>{t("video.vision.teamview")}</span>
             </div>
-          </TabItem>
+          </TopTabItem>
 
-          <TabItem
+          <TopTabItem
             onClick={() => {
               setTab("player");
               handleTimeReset();
               setCompareOpen(false);
+              setWard([]);
+              setTotalWard(0);
+              setMapSector("");
             }}
             changeColor={tab === "player"}
           >
             <div>
               <span>{t("video.vision.playerview")}</span>
             </div>
-          </TabItem>
+          </TopTabItem>
           <LastMargin></LastMargin>
         </WardMappingTabs>
         <FilterContainer>
           <FilterContents>{contents[tab]}</FilterContents>
           <div className="ward-btn-area">
             <WardButton
-              onClick={() => handleWardClick()}
+              onClick={() => {
+                setSide("all");
+                handleWardClick();
+              }}
               isActive={tab === "player" ? filters.champion_eng : filters.team}
             >
               {t("video.vision.checkWard")}
@@ -239,9 +257,7 @@ function WardMapping() {
               }}
               changeColor={side === "all"}
             >
-              <div>
-                <span>ALL</span>
-              </div>
+              <div>ALL</div>
             </TabItem>
 
             <TabItem
@@ -251,11 +267,8 @@ function WardMapping() {
               }}
               changeColor={side === "blue"}
             >
-              <div>
-                <span>BLUE</span>
-              </div>
+              <div>BLUE</div>
             </TabItem>
-
             <TabItem
               onClick={() => {
                 setSide("red");
@@ -263,11 +276,9 @@ function WardMapping() {
               }}
               changeColor={side === "red"}
             >
-              <div>
-                <span>RED</span>
-              </div>
+              <div>RED</div>
             </TabItem>
-            <LastMargin></LastMargin>
+            {/* <LastMargin></LastMargin> */}
           </ButtonContainer>
           <WardTable>
             <TotalWard>
@@ -278,7 +289,12 @@ function WardMapping() {
               <LabelArea>
                 {totalWard ? (
                   <button
-                    onClick={() => setMapSector(`Images/minimap_new/15.png`)}
+                    onClick={() => {
+                      mapSector === "" ||
+                      mapSector !== `Images/minimap_new/15.png`
+                        ? setMapSector(`Images/minimap_new/15.png`)
+                        : setMapSector("");
+                    }}
                   >
                     {t("video.vision.allLabel")}
                   </button>
@@ -334,8 +350,9 @@ function WardMapping() {
       <RightSection>
         <WardMap
           style={{
-            backgroundImage: `url(${mapSector ? mapSector : "Images/ward_map.png"
-              })`,
+            backgroundImage: `url(${
+              mapSector ? mapSector : "Images/ward_map.png"
+            })`,
           }}
         >
           {ward?.map((ward, idx) => {
@@ -348,7 +365,7 @@ function WardMapping() {
                   <Tippy // optionsx
                     duration={0}
                     delay={[100, 0]}
-                    // trigger="click"
+                    trigger="mouseenter"
                     content={
                       <WardTooltip
                         wardType={ward.firstward}
@@ -358,6 +375,9 @@ function WardMapping() {
                         team={ward.team}
                         side={ward.side}
                         date={ward.date}
+                        position={ward.position}
+                        oppteam={ward.oppteam}
+                        uniqueId={ward.uniqueid}
                       />
                     }
                     placement="top"
@@ -382,7 +402,7 @@ function WardMapping() {
                   <Tippy // options
                     duration={0}
                     delay={[100, 0]}
-                    // trigger="click"
+                    trigger="mouseenter"
                     content={
                       <WardTooltip
                         wardType={ward.secondward}
@@ -392,6 +412,9 @@ function WardMapping() {
                         team={ward.team}
                         side={ward.side}
                         date={ward.date}
+                        position={ward.position}
+                        oppteam={ward.oppteam}
+                        uniqueId={ward.uniqueid}
                       />
                     }
                     placement="top"
@@ -425,8 +448,9 @@ export default WardMapping;
 
 const LabelArea = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 13px 15px;
+  padding-left: 15px;
   height: 50.5px;
   > span {
     font-family: SpoqaHanSansNeo;
@@ -452,12 +476,11 @@ const LabelArea = styled.div`
     color: #f04545;
   }
   > button {
-    width: 87px;
+    width: 140px;
     height: 34px;
     padding: 9px 18px 8px;
     border-radius: 10px;
     margin-right: 10px;
-
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 13px;
     letter-spacing: -0.6px;
@@ -465,7 +488,6 @@ const LabelArea = styled.div`
     padding: 3px 5px;
     color: #fff;
     background-color: #484655;
-
   }
 `;
 
@@ -474,7 +496,11 @@ const NoContentTable = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  height: 169px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
   > img {
     width: 31px;
     height: 31px;
@@ -486,7 +512,7 @@ const NoContentTable = styled.div`
     letter-spacing: -0.6px;
     text-align: center;
     color: rgb(107, 105, 121);
-  }-
+  }
 `;
 
 const WardInfoWrapper = styled.div``;
@@ -505,7 +531,6 @@ const WardMappingContainer = styled.div`
 const LeftSection = styled.section`
   display: flex;
   flex-direction: column;
-  //align-items: center;
   margin-right: 22px;
 `;
 
@@ -514,10 +539,10 @@ const RightSection = styled.section``;
 const FilterContainer = styled.div`
   width: 564px;
   min-height: 264px;
-  border: solid 1px rgb(67, 63, 78);
+  /* border: solid 1px rgb(67, 63, 78); */
   background-color: #2f2d38;
   border-radius: 20px;
-  padding-top : 30px;
+  padding-top: 30px;
 
   .ward-btn-area {
     border-top: solid 1px #433f4e;
@@ -531,22 +556,21 @@ const TabContainer = styled.div`
   margin: 0 30px 30px;
 `;
 
-const TabItem = styled.button`
+const TopTabItem = styled.button`
   display: flex;
   align-items: center;
   width: auto;
   border-bottom: solid 1px #433f4e;
   white-space: nowrap;
-
   div {
+    border-radius: 10px;
     padding: 10px 15px;
   }
 
   :hover {
     div {
       padding: 10px 15px;
-      border-radius: 10px;
-      background-color : #26262C;
+      background-color: #26262c;
     }
   }
   span {
@@ -560,10 +584,22 @@ const TabItem = styled.button`
     letter-spacing: normal;
     text-align: left;
     padding-bottom: 18px;
-    border-bottom: solid 1px ${(props) => props.changeColor ? `#fff` : `#433f4e;`};
+
+    border-bottom: solid 1px ${(props) => (props.changeColor ? `#fff` : `none`)};
     color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
   }
+`;
 
+const TabItem = styled.button`
+  width: 72px;
+  border-radius: 10px;
+  background-color: ${(props) => (props.changeColor ? "#23212a" : " #3a3745")};
+  padding: 9px 15px;
+  margin-right: 5px;
+  height: 34px;
+  font-family: "Spoqa Han Sans";
+  font-size: 13px;
+  color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
 `;
 
 const FilterContents = styled.div``;
@@ -596,29 +632,27 @@ const WardMap = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  display: flex;
-  height: 61px;
+  margin: 30px 0 10px 0;
 `;
 
 const WardTable = styled.div`
-  margin-top: 20px;
   width: 564px;
-  min-height: 240px;
-  border: solid 1px #3a3745;
-  background-color: #2f2d38;
+  min-height: 330px;
+  /* border: solid 1px #3a3745; */
+  background-color: #23212a;
   border-radius: 20px;
+  position: relative;
 `;
 
 const TotalWard = styled.div`
   display: flex;
   width: 100%;
-
   justify-content: space-between;
 `;
 
 const DisplayTable = styled.table`
   width: 100%;
-  
+
   > thead > tr {
     width: 100%;
     height: 28px;
@@ -660,10 +694,11 @@ const DisplayTable = styled.table`
     }
     > .Detail {
       vertical-align: middle;
-      text-align: center;
+      text-align: right;
+      padding-right: 30px;
       width: 30%;
       > button {
-        width: 87px;
+        width: 102px;
         height: 34px;
         border-radius: 10px;
         border: solid 1px #474554;
@@ -684,7 +719,7 @@ const LineMargin = styled.div`
 `;
 
 const LastMargin = styled.div`
-  width:73%;
+  width: 73%;
   border-bottom: solid 1px #433f4e;
 `;
 

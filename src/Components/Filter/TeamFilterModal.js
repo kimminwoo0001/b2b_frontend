@@ -1,7 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import qs from "qs";
-
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { createBrowserHistory } from "history";
@@ -23,23 +21,28 @@ import {
   Year,
   SetSeason,
   CompareModal,
+  SetTeam,
+  SetModalTeam,
+  SetModalOppTeam,
 } from "../../redux/modules/filtervalue";
+import {
+  setLeagueFilter,
+  setPatchFilter,
+  setPlayerFilter,
+  setSeasonFilter,
+  setTeamFilter,
+  setYearFilter,
+} from "../../redux/modules/selectorvalue";
 import { API } from "../../Pages/config";
 import { useTranslation } from "react-i18next";
 import { useDetectOutsideClick } from "../../Pages/TeamCompare/useDetectOustsideClick";
 import axiosRequest from "../../lib/axiosRequest";
 
-const TeamFilterModal = ({
-  teamModal,
-  fetchLeagueFilter,
-  leagueFilter,
-  seasonFilter,
-  teamFilter,
-  setTeamFilter,
-}) => {
+const TeamFilterModal = () => {
   //사이드바에 있는 팀 비교 탭 모달창
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
+  const staticvalue = useSelector((state) => state.StaticValueReducer);
   const selector = useSelector((state) => state.SelectorReducer);
   const dispatch = useDispatch();
   const dropdownRef = useRef(null);
@@ -49,24 +52,39 @@ const TeamFilterModal = ({
     dropdownRef,
     false
   );
+  const pagePath = document.location.pathname;
+  const history = useHistory();
+  const isInitialMount = useRef(true);
 
   useEffect(() => {
-    setOppTeamFilter();
-  }, []);
-
-  useEffect(() => {
-    if (filters.compareModal === false) {
-      setOppTeamFilter();
+    if (!filters.compareModal) {
+      return;
     }
+    fetchingOppTeamFilter();
   }, [filters.compareModal]);
 
-  let history = useHistory();
+  // 리그 필터 fetch 해오는 함수
+  const fetchLeagueFilter = () => {
+    let leagueList = [];
+    leagueList = Object.keys(staticvalue.filterObjects).map(
+      (key) =>
+        Number(Object.keys(staticvalue.filterObjects[key])) ===
+          Number(filters.year) && key
+    );
+    dispatch(setLeagueFilter(leagueList.sort()));
+  };
+
   const handleConfirm = () => {
     if (filters.oppteam) {
       //history.push("/teamCompare");
       dispatch(CompareModal(false));
       dispatch(GetOppTeam(filters.oppteam));
       dispatch(HandleTab(2));
+      dispatch(
+        SetTeam(
+          filters.modalteam.length === 0 ? filters.team : filters.modalteam
+        )
+      );
     } else {
       alert(t("filters.noTeam"));
     }
@@ -74,28 +92,29 @@ const TeamFilterModal = ({
 
   // opp 팀 필터 fetch 함수
   const fetchingOppTeamFilter = (team) => {
-    const url = `${API}/api/filter/oppteam`;
+    const url = `${API}/lolapi/filter/oppteam`;
     const params = {
       league: filters.league,
       year: filters.year,
       season: filters.season,
       patch: filters.patch,
-      team: team,
+      team: team ? team : filters.team,
+      // team: team,
       token: user.token,
       id: user.id,
     };
-    axiosRequest(url, params, function (e) {
-      setOppTeamFilter(e.data.oppteam);
+    axiosRequest(undefined, url, params, function (e) {
+      setOppTeamFilter(e);
     });
   };
 
   return (
     <>
       <BackScreen
-        teamModal={teamModal}
+        teamModal={filters.compareModal}
         // onClick={() => setTeamModal(false)}
       ></BackScreen>
-      <TeamModalWrapper teamModal={teamModal}>
+      <TeamModalWrapper teamModal={filters.compareModal}>
         <ModalNav>
           <label>{t("filters.chooseOptionLabel")}</label>
           <img
@@ -103,12 +122,15 @@ const TeamFilterModal = ({
             alt="closeBtn"
             className="Close"
             onClick={() => {
-              dispatch(InitailizeState());
-              dispatch(MenuNum(2));
+              // dispatch(InitailizeState());
+              // dispatch(MenuNum(2));
               dispatch(CompareModal(false));
-              history.push("/team");
-              dispatch(setTeamFilter([]));
-              setOppTeamFilter([]);
+              dispatch(SetModalTeam([]));
+              dispatch(OppTeam([]));
+
+              // history.push("/team");
+              // dispatch(setTeamFilter([]));
+              // setOppTeamFilter([]);
             }}
           />
         </ModalNav>
@@ -155,7 +177,7 @@ const TeamFilterModal = ({
                     className={`menu ${isActiveLeague ? "active" : "inactive"}`}
                   >
                     <ul>
-                      {leagueFilter?.map((league, idx) => {
+                      {selector.leagueFilter?.map((league, idx) => {
                         return (
                           <div className="Wrapper" key={idx}>
                             <img
@@ -207,7 +229,7 @@ const TeamFilterModal = ({
                   <span className="Label">{t("filters.patchLabel")}</span>
                 </PatchLabels>
               ) :  */}
-              {seasonFilter?.map((season, idx) => {
+              {selector.seasonFilter?.map((season, idx) => {
                 return (
                   <SelectedPatch
                     key={idx}
@@ -292,19 +314,28 @@ const TeamFilterModal = ({
                   {t("filters.teamCompareLabel1")}
                 </SelectTeamTitle>
                 <SelectTeam isFilterSelected={filters.league.length > 0}>
-                  {teamFilter?.map((team, index) => {
+                  {selector.teamFilter?.map((team, index) => {
                     return (
                       <MapTeams
                         key={index}
                         onClick={() => {
-                          dispatch(Team(team));
+                          // dispatch(SetTeam(team));
+                          dispatch(SetModalTeam(team));
                           fetchingOppTeamFilter(team);
                           dispatch(OppTeam(""));
                         }}
-                        currentTeam={filters.team === team}
+                        currentTeam={
+                          filters.modalteam.length === 0
+                            ? filters.team === team
+                            : filters.modalteam === team
+                        }
                       >
                         <img
-                          src={`Images/TeamLogo/${team}.png`}
+                          src={
+                            team.slice(-2) === ".C"
+                              ? `Images/LCK_CL_LOGO/${team}.png`
+                              : `Images/TeamLogo/${team}.png`
+                          }
                           alt="TeamLogo"
                         ></img>
                         <div className="TeamName">{team}</div>
@@ -326,7 +357,11 @@ const TeamFilterModal = ({
                         currentTeam={filters.oppteam === team}
                       >
                         <img
-                          src={`Images/TeamLogo/${team}.png`}
+                          src={
+                            team.slice(-2) === ".C"
+                              ? `Images/LCK_CL_LOGO/${team}.png`
+                              : `Images/TeamLogo/${team}.png`
+                          }
                           alt="TeamLogo"
                         ></img>
                         <div className="TeamName">{team}</div>
@@ -373,7 +408,7 @@ const BackScreen = styled.div`
   position: fixed;
   z-index: 3;
   background-color: rgba(0, 0, 0, 1);
-  opacity: 0.7;
+  opacity: 0.9;
 `;
 
 const TeamModalWrapper = styled.div`

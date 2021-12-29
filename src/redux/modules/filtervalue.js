@@ -26,6 +26,7 @@ export const CHAMPION_ENG = "filtervalue/CHAMPION_ENG";
 export const OPP_CHAMPION_ENG = "filtervalue/OPP_CHAMPION_ENG";
 export const RESET_MAPPING = "filtervalue/RESET_MAPPING";
 export const RESET_MAPPINGTAB = "filtervalue/RESET_MAPPINGTAB";
+export const RESET_OBJECT_MAPPINGTAB = "filtervalue/RESET_OBJECT_MAPPINGTAB";
 export const GET_GAME_ID = "filtervalue/GET_GAME_ID";
 export const MENU_NUM = "filtervalue/MENU_NUM";
 export const YEAR = "filtervalue/YEAR";
@@ -35,12 +36,16 @@ export const RESET_YEAR = "filtervalue/RESET_YEAR";
 export const RESET_SEASON = "filtervalue/RESET_SEASON";
 export const RESET_TEAM = "filtervalue/RESET_TEAM";
 export const FILTER_MENU_SWITCH = "filtervalue/FILTER_MENU_SWITCH";
+export const COMPARE_MODAL = "filtervalue/COMPARE_MODAL";
 export const SET_LEAGUE = "filtervalue/SET_LEAGUE";
 export const SET_YEAR = "filtervalue/SET_YEAR";
 export const SET_SEASON = "filtervalue/SET_SEASON";
-export const COMPARE_MODAL = "filtervalue/COMPARE_MODAL";
+export const SET_TEAM = "filtervalue/SET_TEAM";
+export const SET_PLAYER = "filtervalue/SET_PLAYER";
 export const SET_PATCH = "filtervalue/SET_PATCH";
 export const SELECT_ALL_BTN = "filtervalue/SELECT_ALL_BTN";
+export const SET_MODAL_TEAM = "filtervalue/SET_MODAL_TEAM";
+export const SET_MODAL_OPPTEAM = "filtervalue/SET_MODAL_OPPTEAM";
 
 export const Reset_MapTab = (payload) => {
   return {
@@ -48,6 +53,14 @@ export const Reset_MapTab = (payload) => {
     payload,
   };
 };
+
+export const Reset_Object_MapTab = (payload) => {
+  return {
+    type: RESET_OBJECT_MAPPINGTAB,
+    payload,
+  };
+};
+
 export const Reset_Map = (payload) => {
   return {
     type: RESET_MAPPING,
@@ -306,6 +319,20 @@ export const SetSeason = (payload) => {
   };
 };
 
+export const SetTeam = (payload) => {
+  return {
+    type: SET_TEAM,
+    payload,
+  };
+};
+
+export const SetPlayer = (payload) => {
+  return {
+    type: SET_PLAYER,
+    payload,
+  };
+};
+
 export const SetPatch = (payload) => {
   return {
     type: SET_PATCH,
@@ -316,6 +343,20 @@ export const SetPatch = (payload) => {
 export const CompareModal = (payload) => {
   return {
     type: COMPARE_MODAL,
+    payload,
+  };
+};
+
+export const SetModalTeam = (payload) => {
+  return {
+    type: SET_MODAL_TEAM,
+    payload,
+  };
+};
+
+export const SetModalOppTeam = (payload) => {
+  return {
+    type: SET_MODAL_OPPTEAM,
     payload,
   };
 };
@@ -345,7 +386,8 @@ const initialState = {
   gameid: "",
   menu_num: "",
   filterMenuState: true,
-  compareModal: true,
+  modalteam: [],
+  modalOppteam: [],
 };
 
 export default function FilterReducer(state = initialState, action) {
@@ -497,6 +539,17 @@ export default function FilterReducer(state = initialState, action) {
         champion_eng: "",
         oppchampion_eng: "",
       };
+    case RESET_OBJECT_MAPPINGTAB:
+      return {
+        ...state,
+        player: "",
+        oppplayer: "",
+        oppteam: "",
+        champion: "",
+        oppchampion: "",
+        champion_eng: [],
+        oppchampion_eng: [],
+      };
     case MENU_NUM:
       return {
         ...state,
@@ -586,6 +639,16 @@ export default function FilterReducer(state = initialState, action) {
         ...state,
         season: action.payload,
       };
+    case SET_TEAM:
+      return {
+        ...state,
+        team: action.payload,
+      };
+    case SET_PLAYER:
+      return {
+        ...state,
+        player: action.payload,
+      };
     case SET_PATCH:
       return {
         ...state,
@@ -595,6 +658,18 @@ export default function FilterReducer(state = initialState, action) {
       return {
         ...state,
         compareModal: action.payload,
+      };
+
+    case SET_MODAL_TEAM:
+      return {
+        ...state,
+        modalteam: action.payload,
+      };
+
+    case SET_MODAL_OPPTEAM:
+      return {
+        ...state,
+        modalOppteam: action.payload,
       };
     default:
       return state;

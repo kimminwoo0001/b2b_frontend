@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        opacity: 0;
+      }
+
+      .cls-2 {
+        fill: #a87b60;
+      }
+    </style>
+  </defs>
+  <g id="ico-drake-mountain" transform="translate(-731 -2682)">
+    <rect id="area" class="cls-1" width="14" height="14" transform="translate(731 2682)"/>
+    <path id="Union_72" data-name="Union 72" class="cls-2" d="M10539.778-3751.014c.445-1.354,2.566-8.12,2.566-8.12l2.152,2.031v4.551l-4.212,3.721A2.079,2.079,0,0,1,10539.778-3751.014Zm-6.781-1.538v-4.551l2.153-2.031s2.121,6.766,2.566,8.12a2.079,2.079,0,0,1-.506,2.183Zm3.475-6.681v-1.2l1.611-1.568h1.329l1.61,1.568v1.2l-2.275,7.114Z" transform="translate(-9800.997 6443.999)"/>
+  </g>
+</svg>

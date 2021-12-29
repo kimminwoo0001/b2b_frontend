@@ -1,67 +1,79 @@
-import React from 'react'
+import React from "react";
 import styled from "styled-components";
 import SideBar from "../../Components/SideBar/SideBar";
 // import Filter from "../../Components/Filter/Filter";
 // import CloseFilter from "../../Components/Filter/CloseFilter";
 // import SelectFilter from "../../Components/SelectFilter/SelectFilter";
-import Filter from '../../Components/Filter/Filter';
-import CloseFilter from '../../Components/Filter/CloseFilter';
+import Filter from "../../Components/Filter/Filter";
+import CloseFilter from "../../Components/Filter/CloseFilter";
 import ErrorBoundary from "../../Components/ErrorBoundary";
 import Nav from "../../Components/Nav/Nav";
 import { useSelector } from "react-redux";
-import SelectFilter from '../../Components/SelectFilter/SelectFilter';
-import VideoTabs from '../VideoReport/VideoTabs';
+import SelectFilter from "../../Components/SelectFilter/SelectFilter";
+// import VideoTabs from '../VideoReport/VideoTabs';
+// import GameReportIndex from './Components/GameReportIndex';
+import GameReportTab from "./GameReportTab";
 
 function GameReport() {
   const filters = useSelector((state) => state.FilterReducer);
+  const gamevalue = useSelector((state) => state.GameReportReducer);
+  const checkGameId = gamevalue.fixedDataset.length === 2;
 
   return (
     <ErrorBoundary>
-      <Nav />
+      {checkGameId ? "" : <Nav />}
       <GameWrapper>
-        <SideBar />
-        <div
-          className={filters.filterMenuState ? "filter-open" : "filter-close"}
-        >
-          <Filter />
-        </div>
-        <div
-          className={filters.filterMenuState ? "filter-close" : "filter-open"}
-        >
-          <CloseFilter />
-        </div>
+        {checkGameId && filters.team !== "" && filters.team.length > 0 ? (
+          ""
+        ) : (
+          <>
+            <SideBar />
+            <div
+              className={
+                filters.filterMenuState ? "filter-open" : "filter-close"
+              }
+            >
+              <Filter />
+            </div>
+            <div
+              className={
+                filters.filterMenuState ? "filter-close" : "filter-open"
+              }
+            >
+              <CloseFilter />
+            </div>
+          </>
+        )}
         <ContentWrapper>
           {filters.team !== "" && filters.team.length > 0 ? (
-            <VideoTabs />
+            <GameReportTab />
           ) : (
             <SelectFilter />
           )}
         </ContentWrapper>
       </GameWrapper>
     </ErrorBoundary>
-
-  )
+  );
 }
 
 export default GameReport;
 
-
 const GameWrapper = styled.div`
-width: 100%;
-height: 100%;
-min-height: 100vh;
-overflow: auto;
-display: flex;
-background-color: #16151c;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  overflow: auto;
+  display: flex;
+  background-color: #000000;
+  overflow: hidden;
 
-.filter-close {
-  display: none;
-}
+  .filter-close {
+    display: none;
+  }
 
-.filter-open{
-
-}
-`
+  .filter-open {
+  }
+`;
 
 const ContentWrapper = styled.div`
   display: flex;
