@@ -134,7 +134,7 @@ function TabTop({ playerData, loading }) {
               <TableContents key={idx}>
                 <div className="RankValue">{idx + 1}</div>
                 <img
-                  src={playerData.image}
+                  src={`https://am-a.akamaihd.net/image?resize=90:&f=${playerData.image}`}
                   alt="PlayerImage"
                   className="PlayerImage"
                   width="98.7px"

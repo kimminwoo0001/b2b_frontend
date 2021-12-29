@@ -233,7 +233,7 @@ function PlayerBoard() {
       <PlayerInfoSection>
         <PlayerOverView>
           <img
-            src={info?.Image ? info?.Image : "Images/player_error_image.png"}
+            src={info?.Image ? `https://am-a.akamaihd.net/image?resize=90:&f=${info?.Image}` : "Images/player_error_image.png"}
             width="94px"
             height="74px"
             alt="PlayerIcon"

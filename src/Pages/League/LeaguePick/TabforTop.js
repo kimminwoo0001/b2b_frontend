@@ -139,7 +139,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                   <tr key={idx}>
                     <td className="ChampName">
                       <div className="ChampWrapper">
-                        <img src={data.championImage} alt="champIcon"></img>
+                        <img src={`https://am-a.akamaihd.net/image?resize=90:&f=${data.championImage}`} alt="champIcon"></img>
                         <div>
                           {lang === "ko" ? data.championKor : data.champion}
                         </div>
@@ -256,7 +256,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                   <BlueSide>
                     <ChampInfo>
                       <img
-                        src={pick?.champion.championImage}
+                        src={`https://am-a.akamaihd.net/image?resize=90:&f=${pick?.champion.championImage}`}
                         alt="champIcon"
                       ></img>
                       <div>
@@ -324,7 +324,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                         )}`}</div>
                       </div>
                       <img
-                        src={pick?.opp_champion.championImage}
+                        src={`https://am-a.akamaihd.net/image?resize=90:&f=${pick?.opp_champion.championImage}`}
                         alt="champIcon"
                       ></img>
                     </ChampInfo>
