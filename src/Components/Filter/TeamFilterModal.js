@@ -345,10 +345,10 @@ const TeamFilterModal = () => {
                 </SelectTeam>
               </TeamWrapper>
               <TeamWrapper>
-                <SelectOppTeamTitle isTeamSelected={filters.modalteam.length !== 0}>
+                <SelectOppTeamTitle isTeamSelected={filters.team.length !== 0 || filters.modalteam.length !== 0}>
                   {t("filters.teamCompareLabel2")}
                 </SelectOppTeamTitle>
-                <SelectOppTeam isTeamSelected={filters.modalteam.length !== 0}>
+                <SelectOppTeam isTeamSelected={filters.team.length !== 0 || filters.modalteam.length !== 0}>
                   {oppTeamFilter?.map((team, index) => {
                     return (
                       <MapTeams
@@ -374,7 +374,7 @@ const TeamFilterModal = () => {
           </TeamBox>
         </FilterContainer>
         <ButtonBox
-          isAllTeamSelected={filters.oppteam !== "" && filters.modalteam.length > 0}
+          isAllTeamSelected={filters.oppteam !== "" && (filters.team.length > 0 || filters.modalteam.length > 0)}
         >
           <button
             className="Selected"
