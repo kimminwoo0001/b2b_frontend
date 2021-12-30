@@ -88,6 +88,7 @@ function Sidebar() {
       path: "/teamCompare",
       image: "/Images/sidebar_newLogo/ico-teamcom.png",
       changeColor: pathName === "/teamCompare",
+      modal: true,
     },
     {
       // menus[8] 선수 비교
@@ -96,6 +97,7 @@ function Sidebar() {
       path: "/playerCompare",
       image: "/Images/sidebar_newLogo/ico-playercom.png",
       changeColor: pathName === "/playerCompare",
+      modal: true,
     },
     {
       // menus[9] 아이템 시뮬레이터

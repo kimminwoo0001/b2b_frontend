@@ -46,6 +46,8 @@ export const SET_PATCH = "filtervalue/SET_PATCH";
 export const SELECT_ALL_BTN = "filtervalue/SELECT_ALL_BTN";
 export const SET_MODAL_TEAM = "filtervalue/SET_MODAL_TEAM";
 export const SET_MODAL_OPPTEAM = "filtervalue/SET_MODAL_OPPTEAM";
+export const SET_MODAL_PLAYER = "filtervalue/SET_MODAL_PLAYER";
+export const SET_MODAL_OPPPLAYER = "filtervalue/SET_MODAL_OPPPLAYER";
 
 export const Reset_MapTab = (payload) => {
   return {
@@ -361,6 +363,20 @@ export const SetModalOppTeam = (payload) => {
   };
 };
 
+export const SetModalPlayer = (payload) => {
+  return {
+    type: SET_MODAL_PLAYER,
+    payload,
+  };
+};
+
+export const SetModalOppplayer = (payload) => {
+  return {
+    type: SET_MODAL_OPPPLAYER,
+    payload,
+  };
+};
+
 const initialState = {
   league: [],
   year: [],
@@ -388,6 +404,10 @@ const initialState = {
   filterMenuState: true,
   modalteam: [],
   modalOppteam: [],
+  modalPlayer: "",
+  modalOppplayer: "",
+
+  // compareModal: false,
 };
 
 export default function FilterReducer(state = initialState, action) {
@@ -670,6 +690,17 @@ export default function FilterReducer(state = initialState, action) {
       return {
         ...state,
         modalOppteam: action.payload,
+      };
+    case SET_MODAL_PLAYER:
+      return {
+        ...state,
+        modalplayer: action.payload,
+      };
+
+    case SET_MODAL_OPPPLAYER:
+      return {
+        ...state,
+        modalOppplayer: action.payload,
       };
     default:
       return state;

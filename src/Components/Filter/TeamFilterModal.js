@@ -75,7 +75,7 @@ const TeamFilterModal = () => {
   };
 
   const handleConfirm = () => {
-    if (filters.oppteam) {
+    if (filters.modalOppteam) {
       //history.push("/teamCompare");
       dispatch(CompareModal(false));
       dispatch(GetOppTeam(filters.oppteam));
@@ -83,6 +83,11 @@ const TeamFilterModal = () => {
       dispatch(
         SetTeam(
           filters.modalteam.length === 0 ? filters.team : filters.modalteam
+        )
+      );
+      dispatch(
+        OppTeam(
+          filters.modalOppteam.length === 0 ? filters.oppteam : filters.modalOppteam
         )
       );
     } else {
@@ -126,7 +131,10 @@ const TeamFilterModal = () => {
               // dispatch(MenuNum(2));
               dispatch(CompareModal(false));
               dispatch(SetModalTeam([]));
-              dispatch(OppTeam([]));
+              dispatch(SetModalOppTeam([]));
+
+              // dispatch(OppTeam([]));
+
 
               // history.push("/team");
               // dispatch(setTeamFilter([]));
@@ -322,7 +330,8 @@ const TeamFilterModal = () => {
                           // dispatch(SetTeam(team));
                           dispatch(SetModalTeam(team));
                           fetchingOppTeamFilter(team);
-                          dispatch(OppTeam(""));
+                          dispatch(SetModalOppTeam(""));
+                          // dispatch(OppTeam(""));
                         }}
                         currentTeam={
                           filters.modalteam.length === 0
@@ -353,8 +362,12 @@ const TeamFilterModal = () => {
                     return (
                       <MapTeams
                         key={index}
-                        onClick={() => dispatch(OppTeam(team))}
-                        currentTeam={filters.oppteam === team}
+                        onClick={() => {
+                          // dispatch(OppTeam(team))
+                          dispatch(SetModalOppTeam(team))
+                        }
+                        }
+                        currentTeam={filters.modalOppteam === team}
                       >
                         <img
                           src={
@@ -374,7 +387,7 @@ const TeamFilterModal = () => {
           </TeamBox>
         </FilterContainer>
         <ButtonBox
-          isAllTeamSelected={filters.oppteam !== "" && (filters.team.length > 0 || filters.modalteam.length > 0)}
+          isAllTeamSelected={(filters.oppteam !== "" || filters.modalOppteam.length > 0) && (filters.team.length > 0 || filters.modalteam.length > 0)}
         >
           <button
             className="Selected"

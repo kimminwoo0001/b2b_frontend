@@ -12,10 +12,10 @@ export default function DataProcess() {
     <>
       {time >= 18 && time < 20 ? (
         <DataProcessContainer>
-          <DataProcessWrapper>
+          {/* <DataProcessWrapper>
             <img src="Images/dataprocess.gif" alt="data" />
             <label>{t("filters.dataProcess")}</label>
-          </DataProcessWrapper>
+          </DataProcessWrapper> */}
         </DataProcessContainer>
       ) : (
         ""

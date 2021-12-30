@@ -20,6 +20,7 @@ import {
   SetYear,
   SetPatch,
   SetLeague,
+  OppTeam,
 } from "../../redux/modules/filtervalue";
 import {
   setLeagueFilter,
@@ -420,6 +421,7 @@ const Filter = memo(() => {
                         [nameTeam, nameSolo].includes(pagePath)
                           ? dispatch(SetLeague([league]))
                           : dispatch(League(league));
+
                       }}
                     />
                   );

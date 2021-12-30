@@ -23,6 +23,10 @@ import {
   CompareModal,
   SetPlayer,
   SetTeam,
+  SetModalTeam,
+  SetModalPlayer,
+  SetModalOppTeam,
+  SetModalOppplayer
 } from "../../redux/modules/filtervalue";
 import {
   setLeagueFilter,
@@ -75,6 +79,13 @@ function PlayerFilterModal() {
     setOppTeamFilter();
     setOppPlayerFilter();
   }, []);
+
+  useEffect(() => {
+    console.log("filters.menu_num", filters.menu_num);
+    // dispatch(CompareModal(true));
+    setOppTeamFilter([]);
+    setOppPlayerFilter([]);
+  }, [filters.compareModal])
 
   useEffect(() => {
     if (filters.team.length > 0 && prevTeam !== filters.team) {

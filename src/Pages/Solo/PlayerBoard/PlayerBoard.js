@@ -54,6 +54,7 @@ function PlayerBoard() {
     false
   );
 
+
   useEffect(() => {
     GetPlayerBoardData();
     //GetPlayerSummary();
@@ -96,7 +97,14 @@ function PlayerBoard() {
         // setLeaguePlayerTotal(Object.values(data.soloInfo.leaguePlayerTotal));
         // setUserPlayerTotal(Object.values(data.soloInfo.userPlayerTotal));
         setSbr(e.stats.sbrStats);
-        setLine(Object.values(e.stats.lineStats));
+        // val1~ 순서대로 출력
+        setLine(Object.values(Object.keys(e.stats.lineStats).sort().reduce(
+          (newObj, key) => {
+            newObj[key] = e.stats.lineStats[key];
+            return newObj;
+          },
+          {}
+        )));
         setEngage(Object.values(e.stats.engagementStats));
         setPersonality(Object.values(e.stats.personalityStats));
         setGraphDomain(e.trends);
@@ -228,6 +236,11 @@ function PlayerBoard() {
   };
   // if (loading) return <LoadingImg />;
 
+
+  useEffect(() => {
+    console.log(line);
+
+  }, [line])
   return (
     <PlayerBoardWrapper>
       <PlayerInfoSection>
