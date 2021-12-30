@@ -15,8 +15,6 @@ export default function checkRequest(status) {
     }
   };
 
-
-
   if (successStatus.includes(status)) {
     returnValue = {
       value: true,

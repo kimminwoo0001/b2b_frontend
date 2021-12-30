@@ -440,8 +440,8 @@
     "desc": {
       "copy_y": "Copy success..",
       "copy_n": "Copy fail.",
-      "email_check": "Please enter a valid email address.",
-      "login_fail": "Login Fail Wrong ID(password) or Time limit is exceeded",
+      "email_check": "Please enter a valid email address and password.",
+      "login_fail": "Login Fail : Time limit is exceeded",
       "serverError": "There is a problem with the server. Please contact the manager."
     }
   },

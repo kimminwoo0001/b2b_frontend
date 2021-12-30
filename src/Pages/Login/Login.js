@@ -17,7 +17,7 @@ import AlertModal from "../../Components/UtilityComponent/AlertModal";
 import { useTranslation } from "react-i18next";
 import axiosRequest from "../../lib/axiosRequest";
 import { API } from "../config";
-import { SetModalInfo } from "../../redux/modules/modalvalue";
+import { SetModalInfo, SetDesc, SetIsOpen } from "../../redux/modules/modalvalue";
 
 function CheckEmail(str) {
   let reg_email =
@@ -67,14 +67,16 @@ function Login() {
           }
         }, function (objStore) {
           dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-        })
+        }, 5000) // 서버 응답 없을 경우 timeout 설정 (5s)
       } else {
-        setAlertDesc(t("alert.desc.email_check"));
-        setIsOpen(true);
+        // setAlertDesc(t("alert.desc.email_check"));
+        dispatch(SetDesc(t("alert.desc.email_check")));
+        dispatch(SetIsOpen(true));
       }
     } catch (e) {
-      setAlertDesc(t("alert.desc.login_fail"));
-      setIsOpen(true);
+      // setAlertDesc(t("alert.desc.login_fail"));
+      dispatch(SetDesc(t("alert.desc.login_fail")));
+      dispatch(SetIsOpen(true));
     }
   };
 
@@ -89,7 +91,8 @@ function Login() {
 
   return (
     <>
-      <AlertModal desc={alertDesc} isOpen={isOpen} setIsOpen={setIsOpen} />
+      {/* <AlertModal desc={alertDesc} isOpen={isOpen} setIsOpen={setIsOpen} /> */}
+      <AlertModal />
       <LoginWrapper>
         <LoginContainer>
           <div className="IndexImage"></div>
