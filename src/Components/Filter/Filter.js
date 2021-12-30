@@ -183,18 +183,21 @@ const Filter = memo(() => {
 
   // 최초 선택된 리그의 시즌이 없는 리그일 경우 팝업 적용
   useEffect(() => {
-    if(filters.year.length !== 0) {
-      for (let league of filters.league) {
-        for (let year of filters.year) {
-          const ObjectKeys = Object.keys(
-            staticvalue.filterObjects[league][year]
-          );
-          if(!ObjectKeys.includes(filters.season[0])){
-            dispatch(SetDesc(t("filters.NoCommonSeasons")));
-            dispatch(SetIsOpen(true));  
+    if(pagePath === "/league" || pagePath === "/video") {
+      if(filters.year.length !== 0) {
+        for (let league of filters.league) {
+          for (let year of filters.year) {
+            const ObjectKeys = Object.keys(
+              staticvalue.filterObjects[league][year]
+            );
+            if(!ObjectKeys.includes(filters.season[0])){
+              dispatch(SetDesc(t("filters.NoCommonSeasons")));
+              dispatch(SetIsOpen(true));  
+            }
           }
         }
       }
+  
     }
   }, [filters.league])
 

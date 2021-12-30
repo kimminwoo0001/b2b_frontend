@@ -404,7 +404,7 @@ const initialState = {
   filterMenuState: true,
   modalteam: [],
   modalOppteam: [],
-  modalPlayer: "",
+  modalplayer: "",
   modalOppplayer: "",
 
   // compareModal: false,
