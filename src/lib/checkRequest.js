@@ -5,6 +5,7 @@ export default function checkRequest(status) {
   const successStatus = ['201', '200'];
   const errorStatus = '500';
   const notFoundStatus = '404';
+  const pagePath = document.location.pathname;
   let returnValue = {
     value: false,
     objStore: {
@@ -31,7 +32,8 @@ export default function checkRequest(status) {
       objStore: {
         status: "token",
         confirmFuncId: "token",
-        desc: i18next.t("alert.logout.sessionExpires"),
+        // desc: i18next.t("alert.logout.sessionExpires"),
+        desc: pagePath === "/login" ? i18next.t("alert.logout.loginFail") : i18next.t("alert.logout.sessionExpires"),
         isOpen: true
       }
     }

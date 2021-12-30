@@ -79,9 +79,8 @@ const axiosRequest = async (
         }
       })
       .catch((error) => {
-
         console.log("error test : ", error);
-        if (timeout) {
+        if (timeout === 5000) {
           alert(error);
         }
       });

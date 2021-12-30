@@ -68,6 +68,7 @@ function Login() {
         }, function (objStore) {
           dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
         }, 5000) // 서버 응답 없을 경우 timeout 설정 (5s)
+
       } else {
         // setAlertDesc(t("alert.desc.email_check"));
         dispatch(SetDesc(t("alert.desc.email_check")));

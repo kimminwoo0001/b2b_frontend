@@ -227,7 +227,7 @@
       "nodata": "No data for two weeks.",
       "avgLeague": "League",
       "playerStat": "Player",
-      "teamFight": "Team Fight Stats",
+      "teamFight": "Team Fight/Roaming/Ganking Stats",
       "tendency": "Tendency",
       "keywords": "Keywords",
       "champStat": "Champion Stats",
@@ -431,7 +431,8 @@
   },
   "alert": {
     "logout": {
-      "sessionExpires": "The session has expired and moves to the login page."
+      "sessionExpires": "The session has expired and moves to the login page.",
+      "loginFail": "No log in information. Please log in again."
     },
     "label": {
       "confirm": "Confirm",
@@ -440,7 +441,7 @@
     "desc": {
       "copy_y": "Copy success..",
       "copy_n": "Copy fail.",
-      "email_check": "Please enter a valid email address and password.",
+      "email_check": "Please enter a valid email address.",
       "login_fail": "Login Fail : Time limit is exceeded",
       "serverError": "There is a problem with the server. Please contact the manager."
     }

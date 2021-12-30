@@ -220,15 +220,15 @@
       "soloranksummaryLabel": "선택한 패치버전과 관계 없이 최근 2주간 플레이 정보만 보여줍니다.",
       "apply": "적용",
       "reset": "초기화",
-      "laneStat": "라인전 능력치",
+      "laneStat": "라인전 지표",
       "leaguePlayerInfo": "플레이한 챔피언",
       "leaguePlayerTotal": "다른 프로 선수들이 플레이한 챔피언",
       "userPlayerTotal": "천상계 솔로랭크 현황",
       "nodata": "2주간의 데이터가 없습니다.",
       "avgLeague": "리그평균",
       "playerStat": "선수 지표",
-      "teamFight": "교전 능력치",
-      "tendency": "선수 성향",
+      "teamFight": "교전/로밍/갱킹 지표",
+      "tendency": "성향 지표",
       "keywords": "선수 요약",
       "champStat": "대회 챔피언 성적",
       "champion": "챔피언",
@@ -430,7 +430,8 @@
   },
   "alert": {
     "logout": {
-      "sessionExpires": "세션이 만료되어 로그인 페이지로 이동합니다."
+      "sessionExpires": "세션이 만료되어 로그인 페이지로 이동합니다.",
+      "loginFail": "로그인 정보가 없습니다. 다시 시도해주세요."
     },
     "label": {
       "confirm": "확인",
@@ -439,7 +440,7 @@
     "desc": {
       "copy_y": "복사되었습니다.",
       "copy_n": "복사되지 않았습니다.",
-      "email_check": "올바른 이메일 주소와 비밀번호를 입력하세요.",
+      "email_check": "이메일 형식이 올바르지 않습니다.",
       "login_fail": "로그인 실패 : 시간 제한이 초과되었습니다.",
       "serverError": "서버에 문제가 생겼습니다. 관리자에게 문의해주세요."
     }
