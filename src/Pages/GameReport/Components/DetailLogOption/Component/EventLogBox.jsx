@@ -110,7 +110,7 @@ const StyledTippy = styled(Tippy)``;
 
 const LogContentBox = styled.div`
   width: 180px;
-  height: 100%;
+  height: 91%;
   margin: 10px 0 0;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -121,44 +121,4 @@ const LogContentBox = styled.div`
   }
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-`;
-
-const LogContent = styled.div`
-  width: 180px;
-  height: 76px;
-  margin: 5px 0;
-  padding: 8px 0px 8px 0px;
-  border-radius: 10px;
-  background-color: #000;
-  opacity: ${(props) => (props.isActive ? `1` : `0.3`)};
-  border: solid 2px
-    ${(props) =>
-      props.isActive && (props.team === "red" ? `#f04545` : `#0075bf`)};
-
-  .title {
-    display: flex;
-    height: 19px;
-    margin: 0 5px 4px;
-    //background-color: #f00;
-    span {
-      font-family: SpoqaHanSansNeo;
-      font-size: 15px;
-      font-weight: 500;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.15;
-      letter-spacing: normal;
-      text-align: left;
-      color: #fff;
-    }
-  }
-
-  .dot {
-    width: 6px;
-    height: 6px;
-    margin: 7px 5px 10px 2px;
-    background-color: ${(props) =>
-      props.team === "red" ? `#f04545` : `#0075bf`};
-    border-radius: 10px;
-  }
 `;

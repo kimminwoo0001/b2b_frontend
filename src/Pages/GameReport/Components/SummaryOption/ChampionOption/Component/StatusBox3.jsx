@@ -2,14 +2,7 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-
-function thousand(value) {
-  let result = "";
-  if (typeof value === "number") {
-    result = value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-  }
-  return result;
-}
+import thousand from "../../../../../../lib/thousand";
 
 const StatusBox3 = () => {
   const { t } = useTranslation();
