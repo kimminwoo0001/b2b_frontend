@@ -70,7 +70,7 @@ export default memo(KillEventBox);
 
 const LogContent = styled.div`
   width: 180px;
-  height: autopx;
+  height: auto;
   margin: 5px 0;
   padding: 8px 8px 8px 8px;
   border-radius: 10px;

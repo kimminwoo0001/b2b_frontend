@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
+import thousand from "../../../../../lib/thousand";
 
 import BlueChampBox from "./Component/BlueChampBox";
 import RedChampBox from "./Component/RedChampBox";
@@ -10,6 +12,40 @@ const testChampImg = "Teemo";
 const Detail = () => {
   const [detailTab, setDetailTab] = useState(1);
   const { t } = useTranslation();
+  const gamevalue = useSelector((state) => state.GameReportReducer);
+  const detailSet = getTotalTeamGold(detailTab);
+
+  function getTotalTeamGold(detailTab) {
+    const obj = {};
+    const reducer = (accumulator, curr) => accumulator + curr;
+
+    switch (detailTab) {
+      case 1:
+        const goldSet = gamevalue.teamGoldDataset[gamevalue.goldActiveIdx];
+        console.log("goldSet", goldSet);
+        obj.blue = goldSet.blueGold;
+        obj.red = goldSet.redGold;
+        break;
+      case 2:
+        const wardSet = gamevalue.liveDataset[
+          gamevalue.liveActiveIdx - 1 < 0 ? 0 : gamevalue.liveActiveIdx
+        ].players.map((data) => data.wardsPlaced);
+        obj.blue = wardSet.slice(0, 5).reduce(reducer);
+        obj.red = wardSet.slice(5, 10).reduce(reducer);
+        console.log("obj", obj);
+        break;
+      default:
+        const csSet = gamevalue.liveDataset[
+          gamevalue.liveActiveIdx - 1 < 0 ? 0 : gamevalue.liveActiveIdx
+        ].players.map((data) => data.cs);
+        obj.blue = csSet.slice(0, 5).reduce(reducer);
+        obj.red = csSet.slice(5, 10).reduce(reducer);
+        console.log("csSet", obj);
+        break;
+    }
+
+    return obj;
+  }
 
   return (
     <DetailContainer>
@@ -37,16 +73,20 @@ const Detail = () => {
 
         <div className="total">
           <div className="flex-box">
-            <ArrowBox isShow={true}>
+            <ArrowBox isShow={detailSet.blue > detailSet.red}>
               <img className="arrow" src="Images/ic_win-blue.svg" alt="" />
             </ArrowBox>
-            <div className="value-box blue-value">74,384</div>
+            <div className="value-box blue-value">{`${thousand(
+              detailSet.blue
+            )}`}</div>
             <ArrowBox></ArrowBox>
           </div>
           <div className="flex-box">
             <ArrowBox></ArrowBox>
-            <div className="value-box red-value">55,819</div>
-            <ArrowBox isShow={true}>
+            <div className="value-box red-value">{`${thousand(
+              detailSet.red
+            )}`}</div>
+            <ArrowBox isShow={detailSet.blue < detailSet.red}>
               <img
                 className="arrow red-arrow"
                 src="Images/ic_win-red.svg"

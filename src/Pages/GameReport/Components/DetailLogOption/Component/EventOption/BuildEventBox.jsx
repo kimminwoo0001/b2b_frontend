@@ -26,8 +26,8 @@ const BuildEventBox = ({ data, idx, isActive }) => {
     };
     result.line = subType.split("_")[0].toLowerCase();
     result.type = subType.includes("TURRET")
-      ? t("game.log.event.build.tower")
-      : t("game.log.event.build.inhibitor");
+      ? t("game.log.event.broken.tower")
+      : t("game.log.event.broken.inhibitor");
 
     switch (subType.replace(subType.split("_", 1), "")) {
       case "_OUTER_TURRET": // 1차 타워
@@ -59,15 +59,15 @@ const BuildEventBox = ({ data, idx, isActive }) => {
       </div>
       <div className="body">
         <img src={`Images/champion/${championEng}.png`} alt="champion" />
-        <div className="player-name">{player}</div>
+        <span className="player-name">{player}</span>
         <img
           src={`Images/ic_${team === 0 ? "blue" : "red"}_kill.svg`}
           alt="champion"
         />
         <img src={`Images/ico-position-${type.line}.png`} alt="monster" />
-        <div className="player-name">{`${type.build}${t(
+        <span className="player-name">{`${type.build}${t(
           "game.log.event.buildDestroyed"
-        )}`}</div>
+        )}`}</span>
       </div>
     </LogContent>
   );
@@ -77,7 +77,7 @@ export default BuildEventBox;
 
 const LogContent = styled.div`
   width: 180px;
-  height: autopx;
+  height: auto;
   margin: 5px 0;
   padding: 8px 8px 8px 8px;
   border-radius: 10px;
@@ -105,7 +105,6 @@ const LogContent = styled.div`
   }
 
   .body {
-    display: flex;
     padding-bottom: 3px;
     border-bottom: solid 1px #23212a;
     img {

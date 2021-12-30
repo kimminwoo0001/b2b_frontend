@@ -207,7 +207,7 @@ const TimeStatus = () => {
         </div>
         <div className="item-build">
           {purchasedItemBuildData.map((purchaseditemList) => {
-            console.log("purchaseditemList:", purchaseditemList);
+            //console.log("purchaseditemList:", purchaseditemList);
             return (
               <PurchasedItemBox
                 marginLeft={transferValuetoWidth(
