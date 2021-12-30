@@ -332,7 +332,8 @@
     "setSeason": "Season",
     "setPatchVersion": "Patch Version",
     "team": "Team",
-    "player": "Player"
+    "player": "Player",
+    "NoCommonSeasons": "There are no common seasons in the selected leagues. Please select seasons again."
   },
   "video": {
     "tab": {
