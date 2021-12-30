@@ -17,10 +17,14 @@ function TeamCompare() {
       <Nav />
       <TeamWrapper>
         <SideBar />
-        <div className={filters.filterMenuState ? "filter-open" : "filter-close"}>
+        <div
+          className={filters.filterMenuState ? "filter-open" : "filter-close"}
+        >
           <Filter />
         </div>
-        <div className={filters.filterMenuState ? "filter-close" : "filter-open"}>
+        <div
+          className={filters.filterMenuState ? "filter-close" : "filter-open"}
+        >
           <CloseFilter />
         </div>
         <ContentWrapper>
@@ -36,6 +40,7 @@ export default TeamCompare;
 const TeamWrapper = styled.div`
   width: 100%;
   height: 100%;
+  overflow: auto;
   min-height: 100vh;
   display: flex;
   background-color: #23212a;
@@ -44,8 +49,7 @@ const TeamWrapper = styled.div`
     display: none;
   }
 
-  .filter-open{
-
+  .filter-open {
   }
 `;
 

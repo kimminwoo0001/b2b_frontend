@@ -51,6 +51,7 @@ function WardMapping() {
   const [sector, setSector] = useState([]);
   const [totalWard, setTotalWard] = useState();
   const [mapSector, setMapSector] = useState("");
+  const [isClicked, setIsClicked] = useState(false);
 
   let firstTime = minFrom[0] * 5100;
   let secondTime = minFrom[1] * 5100;
@@ -199,33 +200,37 @@ function WardMapping() {
     <WardMappingContainer>
       <LeftSection>
         <WardMappingTabs>
-          <TabItem
+          <TopTabItem
             onClick={() => {
               setTab("team");
               handleTimeReset();
               setCompareOpen(false);
               setWard([]);
+              setTotalWard(0);
+              setMapSector("");
             }}
             changeColor={tab === "team"}
           >
             <div>
               <span>{t("video.vision.teamview")}</span>
             </div>
-          </TabItem>
+          </TopTabItem>
 
-          <TabItem
+          <TopTabItem
             onClick={() => {
               setTab("player");
               handleTimeReset();
               setCompareOpen(false);
               setWard([]);
+              setTotalWard(0);
+              setMapSector("");
             }}
             changeColor={tab === "player"}
           >
             <div>
               <span>{t("video.vision.playerview")}</span>
             </div>
-          </TabItem>
+          </TopTabItem>
           <LastMargin></LastMargin>
         </WardMappingTabs>
         <FilterContainer>
@@ -252,9 +257,7 @@ function WardMapping() {
               }}
               changeColor={side === "all"}
             >
-              <div>
-                <span>ALL</span>
-              </div>
+              <div>ALL</div>
             </TabItem>
 
             <TabItem
@@ -264,11 +267,8 @@ function WardMapping() {
               }}
               changeColor={side === "blue"}
             >
-              <div>
-                <span>BLUE</span>
-              </div>
+              <div>BLUE</div>
             </TabItem>
-
             <TabItem
               onClick={() => {
                 setSide("red");
@@ -276,11 +276,9 @@ function WardMapping() {
               }}
               changeColor={side === "red"}
             >
-              <div>
-                <span>RED</span>
-              </div>
+              <div>RED</div>
             </TabItem>
-            <LastMargin></LastMargin>
+            {/* <LastMargin></LastMargin> */}
           </ButtonContainer>
           <WardTable>
             <TotalWard>
@@ -291,7 +289,12 @@ function WardMapping() {
               <LabelArea>
                 {totalWard ? (
                   <button
-                    onClick={() => setMapSector(`Images/minimap_new/15.png`)}
+                    onClick={() => {
+                      mapSector === "" ||
+                      mapSector !== `Images/minimap_new/15.png`
+                        ? setMapSector(`Images/minimap_new/15.png`)
+                        : setMapSector("");
+                    }}
                   >
                     {t("video.vision.allLabel")}
                   </button>
@@ -445,8 +448,9 @@ export default WardMapping;
 
 const LabelArea = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 13px 15px;
+  padding-left: 15px;
   height: 50.5px;
   > span {
     font-family: SpoqaHanSansNeo;
@@ -472,12 +476,11 @@ const LabelArea = styled.div`
     color: #f04545;
   }
   > button {
-    width: 87px;
+    width: 140px;
     height: 34px;
     padding: 9px 18px 8px;
     border-radius: 10px;
     margin-right: 10px;
-
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 13px;
     letter-spacing: -0.6px;
@@ -493,7 +496,11 @@ const NoContentTable = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  height: 169px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
   > img {
     width: 31px;
     height: 31px;
@@ -524,7 +531,6 @@ const WardMappingContainer = styled.div`
 const LeftSection = styled.section`
   display: flex;
   flex-direction: column;
-  //align-items: center;
   margin-right: 22px;
 `;
 
@@ -533,7 +539,7 @@ const RightSection = styled.section``;
 const FilterContainer = styled.div`
   width: 564px;
   min-height: 264px;
-  border: solid 1px rgb(67, 63, 78);
+  /* border: solid 1px rgb(67, 63, 78); */
   background-color: #2f2d38;
   border-radius: 20px;
   padding-top: 30px;
@@ -550,21 +556,20 @@ const TabContainer = styled.div`
   margin: 0 30px 30px;
 `;
 
-const TabItem = styled.button`
+const TopTabItem = styled.button`
   display: flex;
   align-items: center;
   width: auto;
   border-bottom: solid 1px #433f4e;
   white-space: nowrap;
-
   div {
+    border-radius: 10px;
     padding: 10px 15px;
   }
 
   :hover {
     div {
       padding: 10px 15px;
-      border-radius: 10px;
       background-color: #26262c;
     }
   }
@@ -579,9 +584,22 @@ const TabItem = styled.button`
     letter-spacing: normal;
     text-align: left;
     padding-bottom: 18px;
+
     border-bottom: solid 1px ${(props) => (props.changeColor ? `#fff` : `none`)};
     color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
   }
+`;
+
+const TabItem = styled.button`
+  width: 72px;
+  border-radius: 10px;
+  background-color: ${(props) => (props.changeColor ? "#23212a" : " #3a3745")};
+  padding: 9px 15px;
+  margin-right: 5px;
+  height: 34px;
+  font-family: "Spoqa Han Sans";
+  font-size: 13px;
+  color: ${(props) => (props.changeColor ? `#fff` : `#84818e`)};
 `;
 
 const FilterContents = styled.div``;
@@ -614,23 +632,21 @@ const WardMap = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  display: flex;
-  height: 61px;
+  margin: 30px 0 10px 0;
 `;
 
 const WardTable = styled.div`
-  margin-top: 20px;
   width: 564px;
-  min-height: 240px;
-  border: solid 1px #3a3745;
-  background-color: #2f2d38;
+  min-height: 330px;
+  /* border: solid 1px #3a3745; */
+  background-color: #23212a;
   border-radius: 20px;
+  position: relative;
 `;
 
 const TotalWard = styled.div`
   display: flex;
   width: 100%;
-
   justify-content: space-between;
 `;
 
@@ -678,10 +694,11 @@ const DisplayTable = styled.table`
     }
     > .Detail {
       vertical-align: middle;
-      text-align: center;
+      text-align: right;
+      padding-right: 30px;
       width: 30%;
       > button {
-        width: 87px;
+        width: 102px;
         height: 34px;
         border-radius: 10px;
         border: solid 1px #474554;

@@ -1,7 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import qs from "qs";
-
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { createBrowserHistory } from "history";
@@ -24,6 +22,8 @@ import {
   SetSeason,
   CompareModal,
   SetTeam,
+  SetModalTeam,
+  SetModalOppTeam,
 } from "../../redux/modules/filtervalue";
 import {
   setLeagueFilter,
@@ -53,7 +53,8 @@ const TeamFilterModal = () => {
     false
   );
   const pagePath = document.location.pathname;
-  let history = useHistory();
+  const history = useHistory();
+  const isInitialMount = useRef(true);
 
   useEffect(() => {
     if (!filters.compareModal) {
@@ -79,6 +80,11 @@ const TeamFilterModal = () => {
       dispatch(CompareModal(false));
       dispatch(GetOppTeam(filters.oppteam));
       dispatch(HandleTab(2));
+      dispatch(
+        SetTeam(
+          filters.modalteam.length === 0 ? filters.team : filters.modalteam
+        )
+      );
     } else {
       alert(t("filters.noTeam"));
     }
@@ -116,12 +122,15 @@ const TeamFilterModal = () => {
             alt="closeBtn"
             className="Close"
             onClick={() => {
-              dispatch(InitailizeState());
-              dispatch(MenuNum(2));
+              // dispatch(InitailizeState());
+              // dispatch(MenuNum(2));
               dispatch(CompareModal(false));
-              history.push("/team");
-              dispatch(setTeamFilter([]));
-              setOppTeamFilter([]);
+              dispatch(SetModalTeam([]));
+              dispatch(OppTeam([]));
+
+              // history.push("/team");
+              // dispatch(setTeamFilter([]));
+              // setOppTeamFilter([]);
             }}
           />
         </ModalNav>
@@ -310,11 +319,16 @@ const TeamFilterModal = () => {
                       <MapTeams
                         key={index}
                         onClick={() => {
-                          dispatch(SetTeam(team));
+                          // dispatch(SetTeam(team));
+                          dispatch(SetModalTeam(team));
                           fetchingOppTeamFilter(team);
                           dispatch(OppTeam(""));
                         }}
-                        currentTeam={filters.team === team}
+                        currentTeam={
+                          filters.modalteam.length === 0
+                            ? filters.team === team
+                            : filters.modalteam === team
+                        }
                       >
                         <img
                           src={
@@ -331,10 +345,10 @@ const TeamFilterModal = () => {
                 </SelectTeam>
               </TeamWrapper>
               <TeamWrapper>
-                <SelectOppTeamTitle isTeamSelected={filters.team.length !== 0}>
+                <SelectOppTeamTitle isTeamSelected={filters.team.length !== 0 || filters.modalteam.length !== 0}>
                   {t("filters.teamCompareLabel2")}
                 </SelectOppTeamTitle>
-                <SelectOppTeam isTeamSelected={filters.team.length !== 0}>
+                <SelectOppTeam isTeamSelected={filters.team.length !== 0 || filters.modalteam.length !== 0}>
                   {oppTeamFilter?.map((team, index) => {
                     return (
                       <MapTeams
@@ -360,7 +374,7 @@ const TeamFilterModal = () => {
           </TeamBox>
         </FilterContainer>
         <ButtonBox
-          isAllTeamSelected={filters.oppteam !== "" && filters.team.length > 0}
+          isAllTeamSelected={filters.oppteam !== "" && (filters.team.length > 0 || filters.modalteam.length > 0)}
         >
           <button
             className="Selected"

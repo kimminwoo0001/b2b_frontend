@@ -38,6 +38,7 @@ function NormalInfo() {
   const { t } = useTranslation();
   const [data, setData] = useState();
   const [oppData, setOppData] = useState();
+  const isInitialMount = useRef(true);
 
   const [isActiveOpp, setIsActiveOpp] = useDetectOutsideClick(
     dropdownRef,
@@ -45,7 +46,11 @@ function NormalInfo() {
   );
 
   useEffect(() => {
+    // if (isInitialMount.current) {
+    //   isInitialMount.current = false;
+    // } else {
     GetComparisonStat();
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.player, filters.patch, filters.oppplayer, filters.resetchamp]);
 
@@ -260,7 +265,7 @@ function NormalInfo() {
           <img
             src={
               data?.playerInfo.Image
-                ? data?.playerInfo.Image
+                ? `https://am-a.akamaihd.net/image?resize=90:&f=${data?.playerInfo.Image}`
                 : "Images/player_error_image.png"
             }
             width="94px"
@@ -336,7 +341,7 @@ function NormalInfo() {
           <img
             src={
               oppData?.playerInfo.Image
-                ? oppData?.playerInfo.Image
+                ? `https://am-a.akamaihd.net/image?resize=90:&f=${oppData?.playerInfo.Image}`
                 : "Images/player_error_image.png"
             }
             width="94px"

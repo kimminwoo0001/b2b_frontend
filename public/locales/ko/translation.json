@@ -91,7 +91,8 @@
       "teamFight": "평균 교전 횟수",
       "yTeamFight": "첫 교전 횟수",
       "gank": "평균 첫 갱 시간",
-      "time": "시간(분)"
+      "time": "시간(분)",
+      "noData": "현재 해당 지표를 제공하지 않습니다."
     },
     "playerStat": {
       "sbrLabel": "선수 별 PR 순위",
@@ -99,7 +100,8 @@
       "winrate": "승리횟수",
       "kda": "KDA",
       "sbr": "Performance Rating",
-      "prInfo": "PR(Performance Rating)은 선수의 인게임 성적을 토대로, 다양한 지표를 복합적으로 계산해 선수의 전반적인 실력을 가늠 할 수 있는 지표입니다."
+      "prInfo": "PR(Performance Rating)은 선수의 인게임 성적을 토대로, 다양한 지표를 복합적으로 계산해 선수의 전반적인 실력을 가늠 할 수 있는 지표입니다.",
+      "noLplData": "현재 LPL 리그의 선수정보 기능은 지원되지 않습니다. "
     }
   },
   "team": {
@@ -348,7 +350,7 @@
       "count": "갯수",
       "probability": "확률",
       "option": "위 상단에서 옵션값을 설정해주세요.",
-      "details": "자세히 보기",
+      "details": "와드 영역 보기",
       "selectMin": "분 선택하기",
       "selectSec": "초 선택하기",
       "label1": "선수 설정",
@@ -364,7 +366,7 @@
       "player2": "상대 선수",
       "champ2": "상대 챔피언",
       "label3": "팀 설정",
-      "allLabel": "전체 보기",
+      "allLabel": "전체 와드 영역 보기",
       "noData": "해당 데이터가 존재하지 않습니다.",
       "noTime": "유효하지 않은 시간입니다.",
       "selectTeam": "팀을 선택해주세요.",

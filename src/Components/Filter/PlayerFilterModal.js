@@ -99,7 +99,6 @@ function PlayerFilterModal() {
   useEffect(() => {}, [filters.oppplayer]);
 
   useEffect(() => {
-    console.log("자꾸 울림");
   }, [filters.compareModal]);
 
   // 확인하기 버튼 조건
@@ -215,14 +214,14 @@ function PlayerFilterModal() {
             alt="closeBtn"
             className="Close"
             onClick={() => {
-              dispatch(InitailizeState());
-              dispatch(MenuNum(4));
+              // dispatch(InitailizeState());
+              // dispatch(MenuNum(4));
               dispatch(CompareModal(false));
-              history.push("/solo");
-              dispatch(setTeamFilter([]));
-              dispatch(setPlayerFilter([]));
-              setOppPlayerFilter([]);
-              setOppTeamFilter([]);
+              // history.push("/solo");
+              // dispatch(setTeamFilter([]));
+              // dispatch(setPlayerFilter([]));
+              // setOppPlayerFilter([]);
+              // setOppTeamFilter([]);
             }}
           />
         </ModalNav>
@@ -419,6 +418,7 @@ function PlayerFilterModal() {
                             dispatch(OppTeam([]));
                             //fetchingOppPlayerFilter(player);
                             reFetchingFilter("player");
+                            setOppPlayerFilter([]);
                           }}
                           currentTeam={filters.player === player.name}
                         >

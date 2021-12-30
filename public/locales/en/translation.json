@@ -91,7 +91,8 @@
       "teamFight": "Number of Engagements (until 15)",
       "yTeamFight": "Count",
       "gank": "Time of First Gank",
-      "time": "Time (min)"
+      "time": "Time (min)",
+      "noData": "This information is not yet supported."
     },
     "playerStat": {
       "sbrLabel": "PR Ranking",
@@ -99,7 +100,8 @@
       "winrate": "Win Rate",
       "kda": "KDA",
       "sbr": "Performance Rating ",
-      "prInfo": "PR(Performance Rating) is an index that can measure a player's overall performance by calculating various indicators in a complex manner based on the player's in-game performance."
+      "prInfo": "PR(Performance Rating) is an index that can measure a player's overall performance by calculating various indicators in a complex manner based on the player's in-game performance.",
+      "noLplData": "Player information for LPL league is not yet supported."
     }
   },
   "team": {
@@ -348,7 +350,7 @@
       "count": "Ward Count",
       "probability": "Probability",
       "option": "Select the options above",
-      "details": "Details",
+      "details": "View Ward Sector",
       "selectMin": "Select Min",
       "selectSec": "Select Sec",
       "label1": "Select",
@@ -364,7 +366,7 @@
       "player2": "Player",
       "champ2": "Champ",
       "label3": "Select",
-      "allLabel": "Show All",
+      "allLabel": "View All Wards Sectors",
       "noData": "There is no data for the given timeframe.",
       "noTime": "The time input is invalid.",
       "selectTeam": "Please choose a team.",

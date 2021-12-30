@@ -16,15 +16,15 @@ function WardTooltip({
   const [pos, setPos] = useState("");
 
   useEffect(() => {
-    if (position === "1") {
+    if (position == "1") {
       setPos("TOP");
-    } else if (position === "2") {
+    } else if (position == "2") {
       setPos("JNG");
-    } else if (position === "3") {
+    } else if (position == "3") {
       setPos("MID");
-    } else if (position === "4") {
+    } else if (position == "4") {
       setPos("BOT");
-    } else if (position === "5") {
+    } else if (position == "5") {
       setPos("SUP");
     }
   }, []);

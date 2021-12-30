@@ -220,6 +220,13 @@ function ObjectMapping() {
     }
   };
 
+  useEffect(() => {
+    setGameOpen(false);
+    setObjectOpen(false);
+    setPositionOpen(false);
+    setCompareOpen(false);
+  }, [filters.player]);
+
   return (
     <ObjectMappingContainer>
       <StepFilter>
@@ -408,6 +415,9 @@ function ObjectMapping() {
                       gameid={info.gameid}
                       position={info.position}
                       player={info.player}
+                      result={info.win}
+                      oppteam={info.opp_team}
+                      oppchampion={info.opp_champions}
                     />
                   }
                   placement="top"

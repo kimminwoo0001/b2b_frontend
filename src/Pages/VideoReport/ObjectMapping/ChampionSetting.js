@@ -136,6 +136,11 @@ function ChampionSetting({
     }
   };
 
+  useEffect(() => {
+    setChampArray([]);
+    setChampArray2([]);
+  }, [filters.player]);
+
   //
   const getTeam = () => {
     try {
