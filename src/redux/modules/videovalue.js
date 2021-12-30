@@ -179,6 +179,7 @@ const initialState = {
   loop: false,
   url: "",
   playedSeconds: 0,
+  teamGold: 0,
 };
 
 export default function GameReportReducer(state = initialState, action) {

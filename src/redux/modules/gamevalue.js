@@ -1,34 +1,37 @@
 export const INITIALIZE_GAME_STATE = "gamevalue/INITIALIZE_GAME_STATE";
+// 게임 설정
 export const SET_GAME_ID = "gamevalue/SET_GAME_ID";
-
 export const SET_TIMER = "gamevalue/SET_TIMER";
-export const SET_DETAIL_DATASET = "gamevalue/SET_DETAIL_DATASET";
 export const SET_PLATFORM_PLAYER = "gamevalue/SET_PLATFORM_PLAYER";
-
 export const SET_UNIQUE_ID = "gamevalue/SET_UNIQUE_ID";
 export const SET_OPPSIDE = "gamevalue/SET_OPPSIDE";
+export const SET_BLUE_TEAM = "gamevalue/SET_BLUE_TEAM";
+export const SET_RED_TEAM = "gamevalue/SET_RED_TEAM";
+export const SET_START_TIME = "gamevalue/SET_START_TIME";
+export const SET_GAME_TIME = "gamevalue/SET_GAME_TIME";
+
+// 데이터 셋
 export const SET_FIXED_DATASET = "gamevalue/SET_FIXED_DATASET";
 export const SET_PLAYERS_DATASET = "gamevalue/SET_PLAYERS_DATASET";
 export const SET_LOG_DATASET = "gamevalue/SET_LOG_DATASET";
-
+export const SET_DETAIL_DATASET = "gamevalue/SET_DETAIL_DATASET";
 export const SET_TEAM_GOLD_DATASET = "gamevalue/SET_TEAM_GOLD_DATASET";
 export const SET_MAPPING_DATASET = "gamevalue/SET_MAPPING_DATASET";
 export const SET_LIVE_DATASET = "gamevalue/SET_LIVE_DATASET";
 
-export const SET_BLUE_TEAM = "gamevalue/SET_BLUE_TEAM";
-export const SET_RED_TEAM = "gamevalue/SET_RED_TEAM";
-
+// 선택 
 export const SET_SELECTED_PLAYER = "gamevalue/SET_SELECTED_PLAYER";
 export const SET_SELECTED_TEAM = "gamevalue/SET_SELECTED_TEAM";
 export const SET_SELECTED_POSITION = "gamevalue/SET_SELECTED_POSITION";
 export const SET_SELECTED_PARTICIPANT = "gamevalue/SET_SELECTED_PARTICIPANT";
-export const SET_START_TIME = "gamevalue/SET_START_TIME";
-export const SET_GAME_TIME = "gamevalue/SET_GAME_TIME";
-export const SET_CHAMP_TAB = "gamevalue/SET_CHAMP_TAB";
+export const SET_CHAMP_TAB = "gamevalue/SET_CHAMP_TAB"; // 챔피언 컴포넌트 선택 탭
 
+// 활성화 인덱스
 export const SET_EVENT_LOG_ACTIVE_IDX = "gamevalue/SET_EVENT_LOG_ACTIVE_IDX";
 export const SET_STATUS_LOG_ACTIVE_IDX = "gamevalue/SET_STATUS_LOG_ACTIVE_IDX";
 export const SET_CURRENT_ITEM_IDX_ACTIVE_IDX = "gamevalue/SET_CURRENT_ITEM_IDX_ACTIVE_IDX";
+export const SET_LIVE_ACTIVE_IDX = "gamevalue/SET_LIVE_ACTIVE_IDX";
+export const SET_GOLD_ACTIVE_IDX = "gamevalue/SET_GOLD_ACTIVE_IDX";
 
 export const InitializeGameState = (payload) => {
   return {
@@ -182,6 +185,18 @@ export const SetCurrentItemIdxActiveIdx = (payload) => {
     payload,
   };
 };
+export const SetLiveActiveIdx = (payload) => {
+  return {
+    type: SET_LIVE_ACTIVE_IDX,
+    payload,
+  };
+};
+export const SetGoldActiveIdx = (payload) => {
+  return {
+    type: SET_GOLD_ACTIVE_IDX,
+    payload,
+  };
+};
 
 const initialState = {
   gameId: "",
@@ -192,7 +207,9 @@ const initialState = {
   fixedDataset: [],
   playerDataset: {},
   logDataset: {},
-  autoDataset: {},
+  teamGoldDataset: [],
+  mappingDataset: [],
+  liveDataset: [],
   blueteam: "",
   redteam: "",
   selectedTeam: 0, // 0: 블루팀, 1: 레드팀
@@ -204,9 +221,8 @@ const initialState = {
   eventLogActiveIdx: 0,
   statusLogActiveIdx: 0,
   itemActiveIdx: 0,
-  teamGoldDataset: [],
-  mappingDataset: [],
-  liveDataset: [],
+  liveActiveIdx: 0,
+  goldActiveIdx: 0
 };
 
 export default function GameReportReducer(state = initialState, action) {
@@ -339,6 +355,17 @@ export default function GameReportReducer(state = initialState, action) {
       return {
         ...state,
         itemActiveIdx: action.payload,
+      };
+    case SET_LIVE_ACTIVE_IDX:
+      return {
+        ...state,
+        liveActiveIdx: action.payload,
+      };
+    case SET_GOLD_ACTIVE_IDX:
+      console.log(action.payload);
+      return {
+        ...state,
+        goldActiveIdx: action.payload,
       };
     case INITIALIZE_GAME_STATE:
       return initialState;

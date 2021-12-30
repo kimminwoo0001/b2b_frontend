@@ -110,9 +110,10 @@ const StyledTippy = styled(Tippy)``;
 
 const LogContentBox = styled.div`
   width: 180px;
-  height: auto;
+  height: 100%;
   margin: 10px 0 0;
   overflow-y: scroll;
+  overflow-x: hidden;
 
   /* Hide scrollbar for Chrome, Safari and Opera */
   ::-webkit-scrollbar {
