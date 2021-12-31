@@ -767,6 +767,8 @@ const SelectedPatch = styled.div`
     letter-spacing: -0.55px;
     text-align: left;
     color: #fff;
+    margin-bottom: 5px;
+
   
   }
   > input[type="checkbox"] {
@@ -1017,7 +1019,7 @@ const MapTeams = styled.div`
     font-family: Poppins;
     font-size: 15px;
     text-align: left;
-    color: #84818e;
+    color: #fff;
     ${(props) =>
       props.currentTeam &&
       css`

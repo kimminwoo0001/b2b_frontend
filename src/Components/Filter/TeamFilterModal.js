@@ -644,6 +644,7 @@ const SelectedPatch = styled.div`
     letter-spacing: -0.55px;
     text-align: left;
     color: #fff;
+    margin-bottom: 5px;
   
   }
   > input[type="checkbox"] {
@@ -754,8 +755,8 @@ const PatchFilter = styled.div`
   background-color: #2f2d38;
   border-radius: 10px;
   margin: 10px;
-  padding: 5px;
-  min-height: 60px;
+  padding: 5px 10px;
+  min-height: 165px;
   width: 150px;
   max-height: 180px;
   overflow-y: scroll;
@@ -914,7 +915,7 @@ const MapTeams = styled.div`
     font-family: Poppins;
     font-size: 15px;
     text-align: left;
-    color: #84818e;
+    color: #fff;
     ${(props) =>
       props.currentTeam &&
       css`
