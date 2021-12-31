@@ -48,6 +48,10 @@ export const SET_MODAL_TEAM = "filtervalue/SET_MODAL_TEAM";
 export const SET_MODAL_OPPTEAM = "filtervalue/SET_MODAL_OPPTEAM";
 export const SET_MODAL_PLAYER = "filtervalue/SET_MODAL_PLAYER";
 export const SET_MODAL_OPPPLAYER = "filtervalue/SET_MODAL_OPPPLAYER";
+export const SET_MODAL_SEASON= "filtervalue/SET_MODAL_SEASON";
+export const SET_MODAL_PATCH = "filtervalue/SET_MODAL_PATCH";
+
+
 
 export const Reset_MapTab = (payload) => {
   return {
@@ -377,6 +381,20 @@ export const SetModalOppplayer = (payload) => {
   };
 };
 
+export const SetModalSeason = (payload) => {
+  return {
+    type: SET_MODAL_SEASON,
+    payload,
+  };
+};
+
+export const SetModalPatch = (payload) => {
+  return {
+    type: SET_MODAL_PATCH,
+    payload,
+  };
+};
+
 const initialState = {
   league: [],
   year: [],
@@ -406,6 +424,8 @@ const initialState = {
   modalOppteam: [],
   modalplayer: "",
   modalOppplayer: "",
+  modalSeason:[],
+  modalPatch:[],
 
   // compareModal: false,
 };
@@ -702,6 +722,18 @@ export default function FilterReducer(state = initialState, action) {
         ...state,
         modalOppplayer: action.payload,
       };
+
+      case SET_MODAL_SEASON:
+        return {
+          ...state,
+          modalSeason: action.payload,
+        };
+  
+      case SET_MODAL_PATCH:
+        return {
+          ...state,
+          modalPatch: action.payload,
+        };
     default:
       return state;
   }

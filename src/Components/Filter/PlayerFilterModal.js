@@ -49,6 +49,7 @@ function PlayerFilterModal() {
   const staticvalue = useSelector((state) => state.StaticValueReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const pagePath = document.location.pathname;
 
   const dropdownRef = useRef(null);
   //필터 상태값
@@ -247,8 +248,9 @@ function PlayerFilterModal() {
                 <div className="menu-container">
                   <button
                     onClick={() => {
-                      setIsActiveLeague(!isActiveLeague);
-                      fetchLeagueFilter();
+                      pagePath !== "/solo" && 
+                      setIsActiveLeague(!isActiveLeague)
+                      fetchLeagueFilter()
                     }}
                     className="menu-trigger"
                   >
@@ -270,7 +272,7 @@ function PlayerFilterModal() {
                           : t("filters.leagueLabel")}
                       </span>
                     </div>
-                    <img
+                    <ArrowIcon page={pagePath}
                       className="ArrowIcon"
                       src="Images/ico-filter-arrow.png"
                       alt="arrowIcon"
@@ -383,11 +385,42 @@ function PlayerFilterModal() {
             <TeamFilterBox>
               <SelectTeam isFilterSelected={filters.league.length > 0}>
                 <div className="SelectTitle">
-                  {t("filters.playerCompareLabel1")}
+                  {pagePath === "/solo" ? 
+                  t("filters.playerCompareLabel1"):
+                  t("filters.playerCompareLabel")  
+                  }
                 </div>
                 <GetFilterData>
                   <MyTeamBox isFilterSelected={filters.league.length > 0}>
                     <div className="Nav">{t("filters.team")}</div>
+                    {pagePath === "/solo" ? 
+                    <MapTeams>
+                    {/* {selector.teamFilter?.map((team, index) => {
+                      return (
+                        <MapTeams
+                          key={index}
+                          onClick={() => {
+                            dispatch(SetTeam(team));
+                            dispatch(OppPlayer(""));
+                            setOppTeamFilter([]);
+                            setOppPlayerFilter([]);
+                          }}
+                          currentTeam={filters.team === team}
+                        > */}
+                          <img
+                            src={
+                              filters.team.slice(-2) === ".C"
+                                ? `Images/LCK_CL_LOGO/${filters.team}.png`
+                                : `Images/TeamLogo/${filters.team}.png`
+                            }
+                            alt="TeamLogo"
+                          ></img>
+                          <div className="TeamName">{filters.team}</div>
+                        {/* </MapTeams>
+                      );
+                    })} */}
+                    </MapTeams> :
+                    <>
                     {selector.teamFilter?.map((team, index) => {
                       return (
                         <MapTeams
@@ -412,35 +445,66 @@ function PlayerFilterModal() {
                         </MapTeams>
                       );
                     })}
+                    </>
+                    }
                   </MyTeamBox>
                   <MyPlayerBox
                     isMyTeamSelected={filters.team !== ""}
                     isFilterSelected={filters.league.length > 0}
                   >
                     <div className="Nav2">{t("filters.player")}</div>
-                    {selector.playerFilter?.map((player, index) => {
-                      return (
-                        <MapTeams
-                          key={index}
-                          onClick={() => {
-                            dispatch(SetPlayer(player.name));
-                            dispatch(Position(player.position));
-                            dispatch(OppPlayer(""));
-                            dispatch(OppTeam([]));
-                            //fetchingOppPlayerFilter(player);
-                            reFetchingFilter("player");
-                            setOppPlayerFilter([]);
-                          }}
-                          currentTeam={filters.player === player.name}
-                        >
-                          <img
-                            src={`Images/ico-position-${player.position}.png`}
-                            alt="TeamLogo"
-                          ></img>
-                          <div className="TeamName">{player.name}</div>
-                        </MapTeams>
-                      );
-                    })}
+                    {pagePath === "/solo" ? 
+                     <MapTeams>
+                     {/* {selector.playerFilter?.map((player, index) => {
+                       return (
+                         <MapTeams
+                           key={index}
+                           onClick={() => {
+                             dispatch(SetPlayer(player.name));
+                             dispatch(Position(player.position));
+                             dispatch(OppPlayer(""));
+                             dispatch(OppTeam([]));
+                             //fetchingOppPlayerFilter(player);
+                             reFetchingFilter("player");
+                             setOppPlayerFilter([]);
+                           }}
+                           currentTeam={filters.player === player.name}
+                         > */}
+                           <img
+                             src={`Images/ico-position-${filters.position}.png`}
+                             alt="TeamLogo"
+                           ></img>
+                           <div className="TeamName">{filters.player}</div>
+                         {/* </MapTeams>
+                       );
+                     })} */}
+                     </MapTeams> :
+                      <>
+                      {selector.playerFilter?.map((player, index) => {
+                        return (
+                          <MapTeams
+                            key={index}
+                            onClick={() => {
+                              dispatch(SetPlayer(player.name));
+                              dispatch(Position(player.position));
+                              dispatch(OppPlayer(""));
+                              dispatch(OppTeam([]));
+                              //fetchingOppPlayerFilter(player);
+                              reFetchingFilter("player");
+                              setOppPlayerFilter([]);
+                            }}
+                            currentTeam={filters.player === player.name}
+                          >
+                            <img
+                              src={`Images/ico-position-${player.position}.png`}
+                              alt="TeamLogo"
+                            ></img>
+                            <div className="TeamName">{player.name}</div>
+                          </MapTeams>
+                        );
+                      })}
+                      </>
+                    }
                   </MyPlayerBox>
                 </GetFilterData>
               </SelectTeam>
@@ -956,6 +1020,14 @@ const OppPlayerBox = styled.div`
   }
 `;
 
+
+
+
+
+
+
+
+
 const DropDownToggle = styled.div`
   margin: 0;
   padding: 0;
@@ -985,6 +1057,7 @@ const DropDownToggle = styled.div`
     color: white;
     outline: none;
     border: none;
+
 
     .wrapper {
       display: flex;
@@ -1085,3 +1158,8 @@ const DropDownToggle = styled.div`
     }
   }
 `;
+
+const ArrowIcon = styled.img`
+      visibility: ${(props) => props.page === "/solo" ? "hidden" : "visible" }
+
+`
