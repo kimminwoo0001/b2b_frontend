@@ -643,6 +643,7 @@ const SelectedPatch = styled.div`
     font-size: 13px;
     letter-spacing: -0.55px;
     text-align: left;
+    color: #fff;
   
   }
   > input[type="checkbox"] {

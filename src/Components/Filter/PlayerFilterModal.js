@@ -318,9 +318,36 @@ function PlayerFilterModal() {
             </LeagueFilter>
             <PatchFilter>
               <label>{t("filters.setSeason")}</label>
-              {selector.seasonFilter?.map((season, idx) => {
-                return (
+              {pagePath === "/solo" ? 
+
                   <SelectedPatch
+                    // key={idx}
+                    // isChecked={filters.season.includes(season) ? true : false}
+                    // onClick={() => {
+                    //   dispatch(Season(season));
+                    // }}
+                  >
+                    {/* <input
+                      id={idx}
+                      checked={filters.season.includes(season) ? true : false}
+                      type="checkbox"
+                      readOnly
+                    ></input> */}
+                     {filters.season.map((season) => {
+                      return (
+                        <div className="Version1">{season}</div>
+
+                      )
+                    })}
+                  </SelectedPatch>
+              
+              
+              : 
+
+              <>
+                  {selector.seasonFilter?.map((season, idx) => {
+                return (
+                  <SelectedPatchReal
                     key={idx}
                     isChecked={filters.season.includes(season) ? true : false}
                     onClick={() => {
@@ -334,9 +361,11 @@ function PlayerFilterModal() {
                       readOnly
                     ></input>
                     <div className="Version">{season}</div>
-                  </SelectedPatch>
+                  </SelectedPatchReal>
                 );
               })}
+              </>
+}
             </PatchFilter>
             <PatchFilter>
               <label>{t("filters.setPatchVersion")}</label>
@@ -356,9 +385,37 @@ function PlayerFilterModal() {
                   <span className="Label">{t("filters.patchLabel")}</span>
                 </PatchLabels>
               ) : (
+                pagePath === "/solo" ?
+             
+                    <SelectedPatch
+                      // key={idx}
+                      // isChecked={filters.patch.includes(patch) ? true : false}
+                      // onClick={() => {
+                      //   dispatch(Patch(patch));
+                      //   //fetchingTeamFilter(patch);
+                      // }}
+                    >
+                      {/* <input
+                        id={idx}
+                        checked={filters.patch.includes(patch) ? true : false}
+                        type="checkbox"
+                        readOnly
+                      ></input> */}
+                     {filters.patch.map((patch) => {
+                  return (
+                    <div className="Version1">
+                    {patch === "11.6" ? "11.6 (P.O)" : patch}
+                  </div>
+  
+                  )
+                })}
+                    </SelectedPatch>
+              
+                
+                : 
                 selector.patchFilter?.map((patch, idx) => {
                   return (
-                    <SelectedPatch
+                    <SelectedPatchReal
                       key={idx}
                       isChecked={filters.patch.includes(patch) ? true : false}
                       onClick={() => {
@@ -375,7 +432,7 @@ function PlayerFilterModal() {
                       <div className="Version">
                         {patch === "11.6" ? "11.6 (P.O)" : patch}
                       </div>
-                    </SelectedPatch>
+                    </SelectedPatchReal>
                   );
                 })
               )}
@@ -684,7 +741,8 @@ const FilterHeader = styled.div`
 
 const SelectedPatch = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  /* align-items: center; */
   padding: 4.5px 12px;
   width: 100%;
   height: 25px;
@@ -701,6 +759,15 @@ const SelectedPatch = styled.div`
     font-size: 13px;
     letter-spacing: -0.55px;
     text-align: left;
+  }
+
+  > .Version1 {
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 13px;
+    letter-spacing: -0.55px;
+    text-align: left;
+    color: #fff;
+  
   }
   > input[type="checkbox"] {
     -webkit-appearance: none;
@@ -731,6 +798,58 @@ const SelectedPatch = styled.div`
     }
   }
 `;
+
+const SelectedPatchReal = styled.div`
+display: flex;
+  align-items: center;
+  padding: 4.5px 6px;
+  width: 100%;
+  height: 25px;
+  color: #84818e;
+  cursor: pointer;
+  ${(props) =>
+    props.isChecked &&
+    css`
+      color: rgb(255, 255, 255);
+    `}
+  > .Version {
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 13px;
+    letter-spacing: -0.55px;
+    text-align: left;
+  }
+
+
+  > input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background-clip: content-box;
+    border: 1.5px solid rgb(72, 70, 85);
+    border-radius: 2px;
+    background-color: transparent;
+    margin-right: 8px;
+
+    &:checked {
+      background-color: #5942ba;
+      border: #5942ba;
+      border-radius: 2px;
+      /* background: url("/Images/btn_check_on.svg") #f04545 no-repeat 2.5px 4px/5.5px
+        4.5px; */
+      background: url("/Images/btn_check_on.png") no-repeat;
+      float: right;
+    }
+
+    &:focus {
+      outline: none !important;
+    }
+  }
+`
+
 
 const LeagueFilter = styled.div`
   width: 240px;
@@ -1163,3 +1282,4 @@ const ArrowIcon = styled.img`
       visibility: ${(props) => props.page === "/solo" ? "hidden" : "visible" }
 
 `
+
