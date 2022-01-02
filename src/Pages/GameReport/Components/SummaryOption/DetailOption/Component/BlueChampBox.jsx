@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import transferValuetoWidth from "../../../../../../lib/transferValuetoWidth";
 import { useSelector, useDispatch } from "react-redux";
-const testChampImg = "Teemo";
+import thousand from "../../../../../../lib/thousand";
 
 const detailBoxWidth = 253;
 
@@ -11,21 +11,61 @@ const BlueChampBox = ({ detailTab }) => {
 
   function getStandardValue(detailTab, positionIdx) {
     const detail = gamevalue.fixedDataset[0].players[positionIdx].detail;
+    const obj = {};
+
     switch (detailTab) {
       case 1:
-        return detail.gold;
+        const golds = gamevalue.teamGoldDataset[gamevalue.goldActiveIdx].golds;
+        const maxGolds =
+          gamevalue.teamGoldDataset[gamevalue.teamGoldDataset.length - 1].golds;
+        const gold = golds[positionIdx];
+        obj.max = Math.max.apply(null, maxGolds);
+        obj.curMax = maxGolds[positionIdx];
+        obj.cur = gold;
+        break;
       case 2:
-        return detail.wardsplaced;
+        const wards =
+          gamevalue.liveDataset[
+            gamevalue.liveActiveIdx - 1 < 0 ? 0 : gamevalue.liveActiveIdx
+          ].players;
+        const ward = wards.map((data) => data.wardsPlaced);
+        const maxWard = gamevalue.fixedDataset[0].players
+          .map((data) => data.detail.wardsplaced)
+          .concat(
+            gamevalue.fixedDataset[1].players.map(
+              (data) => data.detail.wardsplaced
+            )
+          );
+        obj.max = Math.max.apply(null, maxWard);
+        obj.curMax = maxWard[positionIdx];
+        obj.cur = ward[positionIdx];
+        break;
       case 3:
-        return detail.cs;
+        const csSet =
+          gamevalue.liveDataset[
+            gamevalue.liveActiveIdx - 1 < 0 ? 0 : gamevalue.liveActiveIdx
+          ].players;
+        const cs = csSet.map((data) => data.cs);
+        const maxCs = gamevalue.fixedDataset[0].players
+          .map((data) => data.detail.cs)
+          .concat(
+            gamevalue.fixedDataset[1].players.map((data) => data.detail.cs)
+          );
+        obj.max = Math.max.apply(null, maxCs);
+        obj.curMax = maxCs[positionIdx];
+        obj.cur = cs[positionIdx];
+        console.log("obj", obj);
+        break;
       default:
         return detail.gold;
     }
+    return obj;
   }
 
   return (
     <>
       {gamevalue.fixedDataset[0].players.map((data, idx) => {
+        const detailObj = getStandardValue(detailTab, idx);
         return (
           <div className="champ-box">
             <img
@@ -34,18 +74,19 @@ const BlueChampBox = ({ detailTab }) => {
             />
             <div className="bar-box">
               <div className="value blue-text">
-                11,402<span className="max">/22,122</span>
+                {`${thousand(detailObj.cur)}`}
+                <span className="max">/{`${thousand(detailObj.max)}`}</span>
               </div>
               <Bar
                 curMax={transferValuetoWidth(
-                  90,
+                  detailObj.max,
                   detailBoxWidth,
-                  getStandardValue(detailTab, idx)
+                  detailObj.curMax
                 )}
                 cur={transferValuetoWidth(
-                  180,
+                  detailObj.max,
                   detailBoxWidth,
-                  getStandardValue(detailTab, idx)
+                  detailObj.cur
                 )}
               >
                 <div className="bar common-max"></div>
@@ -61,8 +102,6 @@ const BlueChampBox = ({ detailTab }) => {
 };
 
 export default BlueChampBox;
-
-const BlueChampContainer = styled.div``;
 
 const Bar = styled.div`
   position: relative;

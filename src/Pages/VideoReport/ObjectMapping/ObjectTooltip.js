@@ -50,12 +50,11 @@ export default ObjectTooltip;
 
 const ObjectTooltipWrapper = styled.div`
   display: flex;
-  /* flex-direction: column; */
   justify-content: center;
   align-items: center;
   padding: 10px 9px;
   min-width: 170px;
-  min-height: 70px;
+  min-height: 60px;
   border-radius: 10px;
   background-color: #433f4e;
 `;

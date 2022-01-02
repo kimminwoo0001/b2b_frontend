@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,42 +10,28 @@ const ItemTimeBox = () => {
 
   const currentItem =
     gamevalue.playerDataset[gamevalue.selectedParticipant].currentItem;
+
   const [itemIdx, setItemIdx] = useState(0);
   const [trinket, setTrinket] = useState(3340);
+  const curTrinket = currentItem.trinket ?? "";
 
-  // console.log(currentItem);
-  // console.log(curTime);gG
+  if (currentItem[0].realCount  !== 0) {
+    currentItem.unshift({
+      realCount: 0,
+      items: [],
+      trinket: 3340,
+    });
+  }
 
-  // const getItemIdx = () => {
-  //   let minusItemIdx = itemIdx === 0 ? itemIdx : itemIdx - 1;
-  //   let idx = itemIdx;
-  //   let trink = trinket;
-
-  //   if (
-  //     currentItem.length !== idx + 1 &&
-  //     currentItem[itemIdx].realCount / 2 <= curTime
-  //   ) {
-  //     idx = itemIdx + 1;
-  //     trink = currentItem[itemIdx + 1].trinket ?? trinket;
-  //   } else if (
-  //     itemIdx !== 0 &&
-  //     currentItem[minusItemIdx].realCount / 2 > curTime
-  //   ) {
-  //     trink = currentItem[minusItemIdx].trinket ?? trinket;
-  //     idx = minusItemIdx;
-  //   }
-
-  //   if (idx !== itemIdx) {
-  //     setItemIdx(idx);
-  //   }
-  //   if (trink !== trinket) {
-  //     setTrinket(currentItem[minusItemIdx].trinket ?? trinket);
-  //   }
-
-  //   // console.log("idx", idx);
-  //   // console.log("currentItem[itemIdx]", currentItem[itemIdx]);
-  //   return minusItemIdx;
-  // };
+  useEffect(() => {
+    if (curTrinket !== "" && curTrinket !== currentItem.trinket) {
+      setTrinket(curTrinket);
+    }
+    console.log(
+      "gamevalue.selectedParticipant:",
+      gamevalue.selectedParticipant
+    );
+  }, [gamevalue.selectedParticipant]);
 
   return (
     <ItemTimeContainer>

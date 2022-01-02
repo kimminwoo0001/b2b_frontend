@@ -58,6 +58,23 @@ const StatusBox1 = () => {
       gamevalue.selectedPosition
     ].info;
 
+  const videovalue = useSelector((state) => state.VideoReducer);
+
+  const getIdx = Math.floor(
+    videovalue.playedSeconds -
+      +gamevalue.startTime -
+      gamevalue.mappingDataset[0].realCount / 2
+  );
+  const realCnt =
+    getIdx < 0
+      ? 0
+      : getIdx * 2 >= gamevalue.mappingDataset.length
+      ? gamevalue.mappingDataset.length - 1
+      : getIdx * 2;
+  const mapping =
+    realCnt === -1
+      ? null
+      : gamevalue.mappingDataset[realCnt].player[gamevalue.selectedParticipant];
   return (
     <StatusContainer>
       <NameBox>{`${
@@ -67,22 +84,22 @@ const StatusBox1 = () => {
         <ChampImg champImg={info.championEng}></ChampImg>
         <SpellContainer>
           <SpellImg
-            usable={spell1}
+            usable={mapping.spell1}
             spellImg={seekSpell(info.spell1)}
           ></SpellImg>
           <SpellImg
-            usable={spell2}
+            usable={mapping.spell2}
             spellImg={seekSpell(info.spell2)}
           ></SpellImg>
         </SpellContainer>
       </FlexBox>
       <StatusBar>
-        <div className="hp">
+        <HpBox used={(100 - mapping.hp) * 0.78}>
           <div className="usable" style={{ backgroundColor: "#37b537" }}></div>
-        </div>
-        <div className="mp">
+        </HpBox>
+        <MpBox used={(100 - mapping.mp) * 0.78}>
           <div className="usable" style={{ backgroundColor: "#2b80e0" }}></div>
-        </div>
+        </MpBox>
       </StatusBar>
     </StatusContainer>
   );
@@ -145,27 +162,30 @@ const StatusBar = styled.div`
     width: 78px;
     height: 10px;
     margin: 4px 0 0 2px;
-
-    .hp {
-      width: 90px;
-      height: 10px;
-      margin: 0 0 3px;
-      padding: 0 8px 0 0;
-      border-radius: 10px;
-      background-color: #23212a;
-    }
-    .mp {
-      width: 90px;
-      height: 10px;
-      margin: 3px 0 0;
-      padding: 0 50px 0 0;
-      border-radius: 10px;
-      background-color: #23212a;
-    }
     .usable {
       height: 10px;
-      padding: 0 10px 0 5px;
+      //padding: 0 10px 0 5px;
       border-radius: 10px;
     }
   }
+`;
+
+const HpBox = styled.div`
+  width: 78px;
+  height: 10px;
+  margin: 0 0 3px;
+  padding: 0 ${(props) => props.used}px 0 0;
+  border-radius: 10px;
+  background-color: #23212a;
+  overflow: hidden;
+`;
+
+const MpBox = styled.div`
+  width: 78px;
+  height: 10px;
+  margin: 3px 0 0;
+  padding: 0 ${(props) => props.used}px 0 0;
+  border-radius: 10px;
+  background-color: #23212a;
+  overflow: hidden;
 `;

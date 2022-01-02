@@ -91,7 +91,8 @@
       "teamFight": "Number of Engagements (until 15)",
       "yTeamFight": "Count",
       "gank": "Time of First Gank",
-      "time": "Time (min)"
+      "time": "Time (min)",
+      "noData": "This information is not yet supported."
     },
     "playerStat": {
       "sbrLabel": "PR Ranking",
@@ -226,7 +227,7 @@
       "nodata": "No data for two weeks.",
       "avgLeague": "League",
       "playerStat": "Player",
-      "teamFight": "Team Fight Stats",
+      "teamFight": "Team Fight/Roaming/Ganking Stats",
       "tendency": "Tendency",
       "keywords": "Keywords",
       "champStat": "Champion Stats",
@@ -307,10 +308,10 @@
     "allChampLabel": "All Champion",
     "allChampLabel2": "All Champs Played by",
     "teamCompareLabel": "Choose a team",
-    "teamCompareLabel1": "Team of your interest",
+    "teamCompareLabel1": "Selected Team",
     "teamCompareLabel2": "Opponent team",
     "playerCompareLabel": "Choose a player",
-    "playerCompareLabel1": "Player of your interest",
+    "playerCompareLabel1": "Selected Player",
     "playerCompareLabel2": "Opponent player",
     "confirm": "Confirm",
     "close": "Close",
@@ -331,7 +332,8 @@
     "setSeason": "Season",
     "setPatchVersion": "Patch Version",
     "team": "Team",
-    "player": "Player"
+    "player": "Player",
+    "NoCommonSeasons": "There are no common seasons in the selected leagues. Please select seasons again."
   },
   "video": {
     "tab": {
@@ -430,7 +432,8 @@
   },
   "alert": {
     "logout": {
-      "sessionExpires": "The session has expired and moves to the login page."
+      "sessionExpires": "The session has expired and moves to the login page.",
+      "loginFail": "No log in information. Please log in again."
     },
     "label": {
       "confirm": "Confirm",
@@ -440,7 +443,7 @@
       "copy_y": "Copy success..",
       "copy_n": "Copy fail.",
       "email_check": "Please enter a valid email address.",
-      "login_fail": "Login Fail Wrong ID(password) or Time limit is exceeded",
+      "login_fail": "Login Fail : Time limit is exceeded",
       "serverError": "There is a problem with the server. Please contact the manager."
     }
   },

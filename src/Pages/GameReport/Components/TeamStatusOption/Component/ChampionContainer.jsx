@@ -4,13 +4,19 @@ import ChampionEventBox from "./ChampionEventBox";
 import { useSelector, useDispatch } from "react-redux";
 import { SetSelectedPlayer } from "../../../../../redux/modules/gamevalue";
 
-const ChampionContainer = ({ player, winner, participant, teamName }) => {
+const ChampionContainer = ({
+  player,
+  winner,
+  participant,
+  teamName,
+  mapping,
+}) => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const dispatch = useDispatch();
   return (
     <ChampTeamContainer
       isActive={participant === gamevalue.selectedParticipant}
-      isDeath={false}
+      isDeath={mapping.dead}
       champImg={player.info.championEng}
       onClick={() => {
         dispatch(
@@ -40,10 +46,10 @@ const ChampionContainer = ({ player, winner, participant, teamName }) => {
       </div>
       <ChampionEventBox isDeath={false} />
       <div className="champ-status-bar">
-        <HpBox used={30}>
+        <HpBox used={(100 - mapping.hp) * 0.9}>
           <div className="usable" style={{ backgroundColor: "#37b537" }}></div>
         </HpBox>
-        <MpBox used={50}>
+        <MpBox used={(100 - mapping.mp) * 0.9}>
           <div className="usable" style={{ backgroundColor: "#2b80e0" }}></div>
         </MpBox>
       </div>
@@ -88,20 +94,21 @@ const ChampTeamContainer = styled.div`
       position: relative;
 
       .img-box {
+        border-radius: 30px;
         width: 60px;
         height: 60px;
+        border: solid 2px
+        ${(props) => (props.isActive ? `#1580b6` : `rgba(0,0,0,0)`)};
         background-image: url(https://ddragon.leagueoflegends.com/cdn/11.24.1/img/champion/${(
           props
         ) => props.champImg}.png);
        background-size: 60px;
        ${(props) => props.isDeath && `mix-blend-mode: luminosity;`}
-       border-radius: 30px;
-       border: solid 2px
-        ${(props) => (props.isActive ? `#1580b6` : `rgba(0,0,0,0)`)};
      }
 
       .champ-revive-count {
-        display:  ${(props) => (props.isDeath ? "block" : "none")};
+        //display:  ${(props) => (props.isDeath ? "block" : "none")};
+        display:  none;
         width: 25px;
         height: 25px;
         position: absolute;
@@ -132,7 +139,7 @@ const ChampTeamContainer = styled.div`
    
     .usable {
       height: 10px;
-      padding: 0 10px 0 5px;
+      //padding: 0 10px 0 5px;
       border-radius: 10px;
     }
   }
@@ -162,10 +169,11 @@ const Superiority = styled.div`
   position: relative;
 
   .super-img {
+    display: ${(props) => (props.winner ? "block" : "none")};
     position: absolute;
     top: 30%;
-    ${(props) => props.winner === "blue" && `left: 10%;`}
-    ${(props) => props.winner === "red" && `right: 10%;`}
+    ${(props) => props.winner && `left: 15%;`}
+    ${(props) => props.winner && `right: 10%;`}
     width: 11px;
     height: 11px;
     margin: 5px 0 4px;

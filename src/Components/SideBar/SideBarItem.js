@@ -1,5 +1,5 @@
 import React from "react";
-import { MenuNum, InitailizeState } from "../../redux/modules/filtervalue";
+import { MenuNum, InitailizeState, CompareModal } from "../../redux/modules/filtervalue";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { SelectorInitailizeState } from "../../redux/modules/selectorvalue";
@@ -18,6 +18,7 @@ const SideBarItem = ({ menu, idx }) => {
         dispatch(SelectorInitailizeState());
         dispatch(InitializeGameState());
         dispatch(MenuNum(menu.idx));
+        menu.modal && dispatch(CompareModal(true));
       }}
       changeColor={menu.changeColor}
     >

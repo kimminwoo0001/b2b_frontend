@@ -8,7 +8,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import { HandledisablePip, HandleDuration, HandleEnablePip, HandleEnded, HandlePlaybackRateChange, HandlePlaying, HandleProgress, HandleSeekChange, HandleSeekMouseDown, HandleSeekMouseUp, HandleStop, HandleToggleControls, HandleToggleLight, HandleToggleLoop, HandleToggleMuted, HandleTogglePip, HandleVolumeChange, SetPause, SetPlay, SetPlayBackRate, SetUrl } from '../../redux/modules/videovalue';
 import secToMS from '../../lib/secToMS';
-import { SetCurrentItemIdxActiveIdx, SetEventLogActiveIdx } from '../../redux/modules/gamevalue';
+import { SetCurrentItemIdxActiveIdx, SetEventLogActiveIdx, SetLiveActiveIdx, SetGoldActiveIdx } from '../../redux/modules/gamevalue';
 
 
 const VideoPlayer = ({ video, startTime }) => {
@@ -29,9 +29,14 @@ const VideoPlayer = ({ video, startTime }) => {
   const curTime = currentTime < 0 ? 0 : currentTime;
 
   // log option
-  const eventLog = gamevalue.logDataset.event;
-  const currentItem =
+  const eventLogDataset = gamevalue.logDataset.event;
+  const currentItemDataset =
     gamevalue.playerDataset[gamevalue.selectedParticipant].currentItem;
+  const liveDataset = gamevalue.liveDataset;
+  const goldDataset = gamevalue.teamGoldDataset;
+
+  const datasets = [eventLogDataset, currentItemDataset, liveDataset, goldDataset];
+
 
   const load = url => {
     dispatch(SetUrl(url));
@@ -142,162 +147,144 @@ const VideoPlayer = ({ video, startTime }) => {
   const handleProgress = state => {
     const logIdx = gamevalue.eventLogActiveIdx;
     const itemIdx = gamevalue.itemActiveIdx;
+    const liveIdx = gamevalue.liveActiveIdx;
+    const goldIdx = gamevalue.goldActiveIdx;
+    const Idxs = [logIdx, itemIdx, liveIdx, goldIdx];
 
+    let checkDatasetIdx = 0;
+    let checkIdx = 0;
     // 총 게임 시간 넘어가면 자동으로 멈춤 
     if (state.playedSeconds > endTime) {
       dispatch(SetPause());
     }
     // 이벤트 로그 Idx
     try {
-      if (eventLog[logIdx === eventLog.length ? logIdx - 1 : logIdx].realCount / 2 < curTime) { // 현재 인덱스 보다 큰 것들 중에서 찾기
-        let eventIdx = logIdx;
-        let result = 0;
-        for (let idx of eventLog.slice(logIdx).keys()) {
-          if (
-            eventLog.length !== idx + 1 &&
-            eventLog[idx].realCount / 2 <= curTime
-          ) {
-            idx = eventIdx + 1;
-            if (eventLog[idx === eventLog.length ? idx - 1 : idx].realCount / 2 < curTime) {
-              continue;
-            }
-            if (eventLog[idx].realCount / 2 > curTime) {
-              idx = idx - 1;
-            }
-          } else if (
-            eventLog.length !== idx + 1 &&
-            eventLog[idx].realCount / 2 > curTime
-          ) {
-            idx = idx - 1;
-            if (eventLog[idx].realCount / 2 > curTime) {
-              // 더할 필요 없는 경우 브레이크 
-              break;
-            }
-          }
-          if (idx !== eventIdx) {
-            console.log("Event Idx:", idx);
-            result = idx;
-            if (idx > eventIdx) {
-              dispatch(SetEventLogActiveIdx(result));
-              console.log("result1 : ", result);
-              break;
-            }
-          }
-        }
-      } else if (eventLog[logIdx - 1 < 0 ? 0 : logIdx - 1].realCount / 2 >= curTime) {
-        let eventIdx = logIdx;
-        let result = 0;
+      Idxs.map((value, datasetIdx) => {
+        checkDatasetIdx = datasetIdx;
+        checkIdx = value;
+        let timer = datasetIdx === 2 ? curTime / 2 : curTime;
 
-        for (let idx of eventLog.slice(0, logIdx).keys()) {
-          if (
-            eventIdx - 1 >= 0 &&
-            eventLog[eventIdx].realCount / 2 > curTime
-          ) {
-            eventIdx = eventIdx - 1;
-            if (eventLog[eventIdx === 0 ? 0 : eventIdx].realCount / 2 > curTime) {
-              continue;
+        if (datasets[datasetIdx][value === datasets[datasetIdx].length ? value - 1 : value].realCount / 2 < timer) { // 현재 인덱스 보다 큰 것들 중에서 찾기
+          let eventIdx = value;
+          let result = 0;
+          for (let idx of datasets[datasetIdx].slice(value).keys()) {
+            if (
+              datasets[datasetIdx].length !== idx + 1 &&
+              datasets[datasetIdx][idx].realCount / 2 <= timer
+            ) {
+              result = idx + 1;
+              if (datasets[datasetIdx][result === datasets[datasetIdx].length ? result - 1 : result].realCount / 2 < timer) {
+                continue;
+              }
+              if (datasets[datasetIdx][result].realCount / 2 >= timer) {
+                result = result - 1;
+              }
+            } else if (
+              datasets[datasetIdx].length !== idx + 1 &&
+              datasets[datasetIdx][idx].realCount / 2 > timer
+            ) {
+              result = idx - 1;
+              if (datasets[datasetIdx][idx + 1].realCount / 2 > timer) {
+                // 더할 필요 없는 경우 브레이크 
+                break;
+              }
             }
-          } else if (
-            eventIdx - 1 >= 0 &&
-            eventLog[eventIdx].realCount / 2 > curTime
-          ) {
-            eventIdx = eventIdx === 0 ? 0 : eventIdx - 1;
-            if (eventLog[eventIdx].realCount / 2 < curTime) {
-              // 더할 필요 없는 경우 브레이크 
+            if (result !== eventIdx) {
+              console.log("Event Idx:", idx);
+              if (result > eventIdx) {
+                switch (datasetIdx) {
+                  case 0:
+                    dispatch(SetEventLogActiveIdx(result));
+                    break;
+                  case 1:
+                    dispatch(SetCurrentItemIdxActiveIdx(result));
+                    break;
+                  case 2:
+                    dispatch(SetLiveActiveIdx(result));
+                    break
+                  case 3:
+                    dispatch(SetGoldActiveIdx(result));
+                    break;
+                  default:
+                    break;
+                }
+                console.log("result1 : ", result);
+                break;
+              }
+            }
+          }
+        } else if (datasets[datasetIdx][value - 1 < 0 ? 0 : value].realCount / 2 >= timer) {
+          let eventIdx = value;
+          let result = 0;
+
+          for (let idx of datasets[datasetIdx].slice(0, value).keys()) {
+            if (
+              eventIdx - 1 >= 0 &&
+              datasets[datasetIdx][eventIdx].realCount / 2 > timer
+            ) {
+              eventIdx = eventIdx - 1;
+              if (datasets[datasetIdx][eventIdx === 0 ? 0 : eventIdx].realCount / 2 > timer) {
+                continue;
+              }
+            } else if (
+              eventIdx - 1 >= 0 &&
+              datasets[datasetIdx][eventIdx].realCount / 2 > timer
+            ) {
+              eventIdx = eventIdx === 0 ? 0 : eventIdx - 1;
+              if (datasets[datasetIdx][eventIdx].realCount / 2 < timer) {
+                // 더할 필요 없는 경우 브레이크 
+                break;
+              }
+            }
+            if (value !== eventIdx) {
+              console.log("Event Idx:", idx);
+              result = eventIdx;
+              if (value > eventIdx) {
+                switch (datasetIdx) {
+                  case 0:
+                    dispatch(SetEventLogActiveIdx(result));
+                    break;
+                  case 1:
+                    dispatch(SetCurrentItemIdxActiveIdx(result));
+                    break;
+                  case 2:
+                    dispatch(SetLiveActiveIdx(result));
+                    break
+                  case 3:
+                    dispatch(SetGoldActiveIdx(result));
+                    break;
+                  default:
+                    break;
+                }
+                console.log("result1 : ", result);
+                break;
+              }
               break;
             }
           }
-          if (logIdx !== eventIdx) {
-            console.log("Event Idx:", idx);
-            result = eventIdx;
-            if (logIdx > eventIdx) {
+          //} else if (logIdx !== 1 && datasets[datasetIdx][logIdx - 1 < 0 ? 0 : logIdx - 1].realCount / 2 < curTime) {
+        } else if (datasets[datasetIdx][1].realCount / 2 > timer) {
+          const result = 0;
+          switch (datasetIdx) {
+            case 0:
               dispatch(SetEventLogActiveIdx(result));
-              console.log("result2 : ", result);
               break;
-            }
+            case 1:
+              dispatch(SetCurrentItemIdxActiveIdx(result));
+              break;
+            case 2:
+              dispatch(SetLiveActiveIdx(result));
+              break
+            default:
+              break;
           }
         }
-      } else if (logIdx !== 1 && eventLog[logIdx - 1 < 0 ? 0 : logIdx - 1].realCount / 2 < curTime) {
-        dispatch(SetEventLogActiveIdx(0));
-      }
+      })
     } catch (e) {
-      console.log("logIdx: ", logIdx);
+      console.log("checkDatasetIdx: ", checkDatasetIdx);
+      console.log("checkIdx: ", checkIdx);
       console.log("ERROR : ", e);
     }
-    //currentItem
-    if (currentItem[itemIdx === currentItem.length ? itemIdx - 1 : itemIdx].realCount / 2 < curTime) { // 현재 인덱스 보다 큰 것들 중에서 찾기
-      let eventIdx = itemIdx;
-      let result = 0;
-      for (let idx of currentItem.slice(itemIdx).keys()) {
-        if (
-          currentItem.length !== idx + 1 &&
-          currentItem[idx].realCount / 2 <= curTime
-        ) {
-          idx = eventIdx + 1;
-          if (currentItem[idx === currentItem.length ? idx - 1 : idx].realCount / 2 < curTime) {
-            continue;
-          }
-          if (currentItem[idx].realCount / 2 > curTime) {
-            idx = idx - 1;
-          }
-        } else if (
-          currentItem.length !== idx + 1 &&
-          currentItem[idx].realCount / 2 > curTime
-        ) {
-          idx = idx - 1;
-          if (currentItem[idx].realCount / 2 > curTime) {
-            // 더할 필요 없는 경우 브레이크 
-            break;
-          }
-        }
-        if (idx !== eventIdx) {
-          //console.log("Event Idx:", idx);
-          result = idx;
-          if (idx > eventIdx) {
-            dispatch(SetCurrentItemIdxActiveIdx(result));
-            break;
-          }
-        }
-      }
-    } else if (currentItem[itemIdx - 2 < 0 ? 0 : itemIdx - 2].realCount / 2 > curTime) {
-      let eventIdx = itemIdx;
-      let result = 0;
-
-      for (let idx of currentItem.slice(0, itemIdx).keys()) {
-        if (
-          eventIdx - 1 >= 0 &&
-          currentItem[eventIdx].realCount / 2 > curTime
-        ) {
-          eventIdx = eventIdx - 1;
-          if (currentItem[eventIdx === 0 ? 0 : eventIdx].realCount / 2 > curTime) {
-            continue;
-          }
-          if (currentItem[eventIdx].realCount / 2 < curTime) {
-            eventIdx = eventIdx - 1;
-          }
-        } else if (
-          eventIdx - 1 >= 0 &&
-          currentItem[eventIdx].realCount / 2 > curTime
-        ) {
-          eventIdx = eventIdx === 0 ? 0 : eventIdx - 1;
-          if (currentItem[eventIdx].realCount / 2 < curTime) {
-            // 더할 필요 없는 경우 브레이크 
-            break;
-          }
-        }
-        if (itemIdx !== eventIdx) {
-          //console.log("Event Idx:", idx);
-          result = eventIdx;
-          if (itemIdx > eventIdx) {
-            dispatch(SetCurrentItemIdxActiveIdx(result));
-            break;
-          }
-        }
-      }
-    }
-
-
-
     if (!videovalue.seeking) {
       dispatch(HandleProgress(state))
       //this.setState(state)
