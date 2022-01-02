@@ -3,7 +3,6 @@ import styled, { css } from "styled-components";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import { API } from "../../config";
 import { useTranslation } from "react-i18next";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import {
   BarChart,
@@ -17,7 +16,6 @@ import {
   payload,
   label,
 } from "recharts";
-import qs from "qs";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
@@ -472,13 +470,17 @@ function CompareIngame() {
           </GameDataBox>
           <div className="under-line"></div>
           <GameDataBox>
-            <RedTeamData>{`${redData?.IngameStats["firstHerald"].minute.toFixed(
+            {redData?.IngameStats["firstHerald"].minute === 0
+              ? (<RedTeamData> - </RedTeamData>) :
+              (<RedTeamData>{`${redData?.IngameStats["firstHerald"].minute.toFixed(
               0
             )}${t("team.comparison.min")} ${redData?.IngameStats[
               "firstHerald"
-            ].second.toFixed(0)}${t("team.comparison.sec")}`}</RedTeamData>
+                ].second.toFixed(0)}${t("team.comparison.sec")}`}</RedTeamData>)}
             <IndexBox>
-              <LeftArrow
+              {redData?.IngameStats["firstHerald"].minute === 0 ?
+                (<LeftArrow didMyTeamWin={false}></LeftArrow>) :
+                (<LeftArrow
                 didMyTeamWin={
                   (redData?.IngameStats["firstHerald"].minute !==
                     blueData?.IngameStats["firstHerald"].minute &&
@@ -487,11 +489,15 @@ function CompareIngame() {
                   (redData?.IngameStats["firstHerald"].minute ===
                     blueData?.IngameStats["firstHerald"].minute &&
                     redData?.IngameStats["firstHerald"].second <
-                      blueData?.IngameStats["firstHerald"].second)
+                      blueData?.IngameStats["firstHerald"].second) ||
+                    (blueData?.IngameStats["firstHerald"].minute === 0 &&
+                      blueData?.IngameStats["firstHerald"].second === 0)
                 }
-              ></LeftArrow>
+                ></LeftArrow>)}
               <AverageLabel>{t("team.comparison.firstHerald")}</AverageLabel>
-              <RightArrow
+              {blueData?.IngameStats["firstHerald"].minute === 0 ?
+                (<RightArrow didOppTeamWin={false}></RightArrow>) :
+                (<RightArrow
                 didOppTeamWin={
                   (redData?.IngameStats["firstHerald"].minute !==
                     blueData?.IngameStats["firstHerald"].minute &&
@@ -500,17 +506,21 @@ function CompareIngame() {
                   (redData?.IngameStats["firstHerald"].minute ===
                     blueData?.IngameStats["firstHerald"].minute &&
                     redData?.IngameStats["firstHerald"].second >
-                      blueData?.IngameStats["firstHerald"].second)
+                      blueData?.IngameStats["firstHerald"].second) ||
+                    (redData?.IngameStats["firstHerald"].minute === 0 &&
+                      redData?.IngameStats["firstHerald"].second === 0)
                 }
-              ></RightArrow>
+                ></RightArrow>)}
             </IndexBox>
-            <BlueTeamData>{`${blueData?.IngameStats[
+            {blueData?.IngameStats["firstHerald"].minute === 0 ?
+              (<BlueTeamData> - </BlueTeamData>) :
+              (<BlueTeamData>{`${blueData?.IngameStats[
               "firstHerald"
             ].minute.toFixed(0)}${t(
               "team.comparison.min"
             )} ${blueData?.IngameStats["firstHerald"].second.toFixed(0)}${t(
               "team.comparison.sec"
-            )}`}</BlueTeamData>
+                )}`}</BlueTeamData>)}
           </GameDataBox>
           <div className="under-line"></div>
           <GameDataBox>
@@ -739,14 +749,6 @@ const RedTeamData = styled.div`
   line-height: 1.39;
   letter-spacing: normal;
   color: #fff;
-  /* ${(props) =>
-    props.changeColor
-      ? css`
-          color: #f04545;
-        `
-      : css`
-          opacity: 0.3;
-        `} */
 `;
 
 const AverageLabel = styled.div`
@@ -778,15 +780,6 @@ const BlueTeamData = styled.div`
   line-height: 1.39;
   letter-spacing: normal;
   color: #fff;
-
-  /* ${(props) =>
-    props.changeColor
-      ? css`
-          color: #f04545;
-        `
-      : css`
-          opacity: 0.3;
-        `} */
 `;
 
 // chart styling

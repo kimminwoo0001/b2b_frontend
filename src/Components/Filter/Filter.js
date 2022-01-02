@@ -20,6 +20,7 @@ import {
   SetYear,
   SetPatch,
   SetLeague,
+  OppTeam,
 } from "../../redux/modules/filtervalue";
 import {
   setLeagueFilter,
@@ -29,6 +30,9 @@ import {
   setTeamFilter,
   setYearFilter,
 } from "../../redux/modules/selectorvalue";
+
+import { SetIsOpen, SetDesc } from "../../redux/modules/modalvalue";
+import AlertModal from '../UtilityComponent/AlertModal';
 
 import styled, { css } from "styled-components";
 import { API } from "../../Pages/config";
@@ -177,6 +181,27 @@ const Filter = memo(() => {
     }
   }, [filters.patch]);
 
+  // 최초 선택된 리그의 시즌이 없는 리그일 경우 팝업 적용
+  useEffect(() => {
+    if(pagePath === "/league" || pagePath === "/video") {
+      if(filters.year.length !== 0) {
+        for (let league of filters.league) {
+          for (let year of filters.year) {
+            const ObjectKeys = Object.keys(
+              staticvalue.filterObjects[league][year]
+            );
+            if(!ObjectKeys.includes(filters.season[0])){
+              dispatch(SetDesc(t("filters.NoCommonSeasons")));
+              dispatch(SetIsOpen(true));  
+            }
+          }
+        }
+      }
+  
+    }
+  }, [filters.league])
+
+
   useEffect(() => {
     if (isComparePage) {
       fetchYearFilter();
@@ -231,6 +256,7 @@ const Filter = memo(() => {
         .filter((item, pos) => yearList.indexOf(item) === pos)
         .sort()
         .reverse();
+        // 최근 연도를 자동으로 설정
       dispatch(SetYear([recentYear[0]]));
       dispatch(setYearFilter(recentYear));
     } else {
@@ -390,6 +416,7 @@ const Filter = memo(() => {
 
   return (
     <>
+      <AlertModal />
       {pagePath === nameTeamCompare && <TeamFilterModal />}
       {pagePath === namePlayerCompare && <PlayerFilterModal />}
       <FilterWrapper>
@@ -420,6 +447,7 @@ const Filter = memo(() => {
                         [nameTeam, nameSolo].includes(pagePath)
                           ? dispatch(SetLeague([league]))
                           : dispatch(League(league));
+
                       }}
                     />
                   );

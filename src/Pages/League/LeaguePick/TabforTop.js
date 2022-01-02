@@ -101,18 +101,21 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
             <thead>
               <tr>
                 <th className="Champion">{t("league.draft.champion")}</th>
-                <th className="PickCount" onClick={() => requestSort("pick")}>
+                {/* <th className="PickCount" onClick={() => requestSort("pick")}> */}
+                <th className="PickCount">
+
                   <div className="sorting">{t("league.draft.picks")}</div>
                 </th>
-                {/* <th className="PickCount" onClick={() => requestSort("ban")}>
+                {/* <th className="PickCount" onClick={() => requestSort("ban")}> */}
+                <th className="PickCount" >
                   <div className="sorting">
                     {t("league.draft.ban")}
-                    <Sortingimage>
+                    {/* <Sortingimage>
                       <img src="Images/ico-sorting-up.png" alt="up" />
                       <img src="Images/ico-sorting-down.png" alt="down" />
-                    </Sortingimage>
+                    </Sortingimage> */}
                   </div>
-                </th> */}
+                </th>
                 <th className="BanRate" onClick={() => requestSort("pickRate")}>
                   <div className="sorting">{t("league.draft.banRate")}</div>
                 </th>
@@ -139,14 +142,14 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                   <tr key={idx}>
                     <td className="ChampName">
                       <div className="ChampWrapper">
-                        <img src={data.championImage} alt="champIcon"></img>
+                        <img src={`https://am-a.akamaihd.net/image?resize=90:&f=${data.championImage}`} alt="champIcon"></img>
                         <div>
                           {lang === "ko" ? data.championKor : data.champion}
                         </div>
                       </div>
                     </td>
                     <td className="Picks">{data.pick}</td>
-                    {/* <td className="Picks">{data.ban}</td> */}
+                    <td className="Picks">{data.ban}</td>
                     <td className="PickBan">{data.pickRate.toFixed(0)}%</td>
                     <td className="Win">{data.winrate.toFixed(0)}%</td>
                     <td className="Prob">{data.probRate.toFixed(0)}%</td>
@@ -169,10 +172,20 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
               <tr>
                 <th className="Champion">{t("league.draft.champion")}</th>
                 <th className="PickCount" onClick={() => requestSorts("pick")}>
-                  <div className="sorting">{t("league.draft.pick")}</div>
+                  <div className="sorting">{t("league.draft.pick")}
+                    <Sortingimage>
+                      <img src="Images/ico-sorting-up.png" alt="up" />
+                      <img src="Images/ico-sorting-down.png" alt="down" />
+                    </Sortingimage>
+                  </div>
                 </th>
                 <th className="BanRate" onClick={() => requestSorts("ban")}>
-                  <div className="sorting">{t("league.draft.ban")}</div>
+                  <div className="sorting">{t("league.draft.ban")}
+                    <Sortingimage>
+                      <img src="Images/ico-sorting-up.png" alt="up" />
+                      <img src="Images/ico-sorting-down.png" alt="down" />
+                    </Sortingimage>
+                  </div>
                 </th>
                 <th className="WinRate" onClick={() => requestSorts("win")}>
                   <div className="sorting">{t("league.draft.win")}</div>
@@ -256,7 +269,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                   <BlueSide>
                     <ChampInfo>
                       <img
-                        src={pick?.champion.championImage}
+                        src={`https://am-a.akamaihd.net/image?resize=90:&f=${pick?.champion.championImage}`}
                         alt="champIcon"
                       ></img>
                       <div>
@@ -324,7 +337,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                         )}`}</div>
                       </div>
                       <img
-                        src={pick?.opp_champion.championImage}
+                        src={`https://am-a.akamaihd.net/image?resize=90:&f=${pick?.opp_champion.championImage}`}
                         alt="champIcon"
                       ></img>
                     </ChampInfo>
@@ -534,6 +547,8 @@ const UniqueTable = styled.table`
     }
     > .PickCount {
       /* width: 60px; */
+  
+    
     }
     > th {
       vertical-align: middle;
@@ -608,7 +623,7 @@ const PickTable = styled.table`
     .Champion {
       text-align: left;
       padding-left: 10px;
-      width: 200px;
+      width: 160px;
     }
     > .none {
       width: 3px;
@@ -663,7 +678,7 @@ const PickTable = styled.table`
         }
       }
       > .ChampName {
-        width: 190px;
+        width: 153px;
       }
       > .Win {
         color: #f04545;

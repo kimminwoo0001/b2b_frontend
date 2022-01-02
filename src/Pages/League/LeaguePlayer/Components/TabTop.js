@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import Tippy from "@tippy.js/react";
@@ -7,14 +7,26 @@ import { useSelector } from "react-redux";
 import PRInfoTooltip from "./PRInfoTooltip";
 
 function TabTop({ playerData, loading }) {
+  console.log(playerData)
   const { t } = useTranslation();
   const lang = useSelector((state) => state.LocaleReducer);
-  const filters = useSelector((state) => state.FilterReducer);
-  if (loading) return <LoadingImg />;
+  const filters = useSelector((state) => state.FilterReducer);  
+  const [noLPLData, setNoLPLData] = useState();
 
+  const refineNoLPLData = () => {
+    setNoLPLData(playerData?.filter((player) => player.name !== "Ale"))
+  }
+
+  useEffect(() => {
+    refineNoLPLData();
+  }, [playerData])
+
+
+  if (loading) return <LoadingImg />;
   return (
     <TabContentsWrapper>
-      {filters.league.includes("LPL") ? (
+      {/* LPL 리그만 선택했을 경우 */}
+      {filters.league.length === 1 && filters.league.includes("LPL") ? (
         <NoLplData>
           <NoData>{t("league.playerStat.noLplData")}</NoData>
         </NoLplData>
@@ -35,8 +47,16 @@ function TabTop({ playerData, loading }) {
               </StyledTippy>
             </div>
           </TableNav>
+            {/* 선택한 리그에 LPL이 포함되어있을 경우 */}
+            {filters.league.length > 1 && filters.league.includes("LPL") && (
+              <TableNav>
+                <div className="NavTitle">
+                  {t("league.playerStat.noLplData")}
+                </div>
+              </TableNav>)
+            }
           {/* 받아온 선수 정보 데이터 뿌려주기 */}
-          {playerData?.map((playerData, idx) => {
+            {/* {playerData?.map((playerData, idx) => {
             return (
               <TableContents key={idx}>
                 <div className="RankValue">{idx + 1}</div>
@@ -107,7 +127,81 @@ function TabTop({ playerData, loading }) {
                 )}
               </TableContents>
             );
+          })} */}
+
+            {noLPLData?.map((playerData, idx) => {
+            return (
+              <TableContents key={idx}>
+                <div className="RankValue">{idx + 1}</div>
+                <img
+                  src={`https://am-a.akamaihd.net/image?resize=90:&f=${playerData.image}`}
+                  alt="PlayerImage"
+                  className="PlayerImage"
+                  width="98.7px"
+                  height=" 74px"
+                  onError={(e) => {
+                    e.target.src = "Images/player_error_image.png";
+                  }}
+                />
+                <div className="PlayerInfoBox">
+                  <p className="TeamValue">
+                    <img
+                      src={
+                        playerData.team.slice(-2) === ".C"
+                          ? `Images/LCK_CL_LOGO/${playerData.team}.png`
+                          : `Images/TeamLogo/${playerData.team}.png`
+                      }
+                      width="20px"
+                      height="20px"
+                      alt="teamIcon"
+                    ></img>
+                    <label>{playerData.team}</label>
+                  </p>
+                  <p className="PlayerValue">{`${playerData.player} (${
+                    lang === "ko" ? playerData.NativeName : playerData.name
+                  })`}</p>
+                </div>
+
+                <div className="ParticipateValue">
+                  <p className="ParticipateTitle">
+                    {t("league.playerStat.played")}
+                  </p>
+                  <p className="ParticipateNumber">{playerData.total}</p>
+                </div>
+                <div className="WinsValue">
+                  <p className="WinTitle">{t("league.playerStat.winrate")}</p>
+                  <p className="WinNumber">{playerData.wins}</p>
+                </div>
+                <div className="KDAValue">
+                  <p className="KDATitle">{t("league.playerStat.kda")}</p>
+                  <KDA>
+                    <span className="Kills">{playerData.kills.toFixed(1)}</span>
+                    <p className="Slash">/</p>
+                    <span className="Deaths">
+                      {playerData.deaths.toFixed(1)}
+                    </span>
+                    <p className="Slash">/</p>
+                    <span className="Support">
+                      {playerData.assists.toFixed(1)}
+                    </span>
+                    <span className="Rate">{`${playerData.kda.toFixed(
+                      2
+                    )}:1`}</span>
+                  </KDA>
+                </div>
+
+                {filters.league.indexOf("lpl") === -1 ? (
+                  <div className="SBRValue">
+                    <p className="SBRTitle">{t("league.playerStat.sbr")}</p>
+                    <p className="SBRNumber">{playerData.sbr}</p>
+                  </div>
+                ) : (
+                  <div></div>
+                )}
+              </TableContents>
+            );
           })}
+
         </>
       )}
     </TabContentsWrapper>
@@ -136,6 +230,9 @@ const TableNav = styled.div`
   border: solid 1px #23212a;
   background-color: #23212a;
   padding: 12px 0 12px 20px;
+  :first-child {
+    margin-bottom:10px;
+  }
 
   span {
     width: 15px;

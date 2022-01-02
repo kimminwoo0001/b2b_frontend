@@ -28,12 +28,12 @@ function GameReport() {
         ) : (
           <>
             <SideBar />
-            <div
+              {/* <div
               className={
                 filters.filterMenuState ? "filter-open" : "filter-close"
               }
             >
-              <Filter />
+                <Filter />
             </div>
             <div
               className={
@@ -41,16 +41,20 @@ function GameReport() {
               }
             >
               <CloseFilter />
-            </div>
+            </div> */}
           </>
         )}
         <ContentWrapper>
           {filters.team !== "" && filters.team.length > 0 ? (
             <GameReportTab />
           ) : (
-            <SelectFilter />
+              // <SelectFilter />
+              <Temporal>
+                <iframe width="1422" height="800" src="https://www.youtube.com/embed/c6e38xOmXfw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </Temporal>
           )}
         </ContentWrapper>
+
       </GameWrapper>
     </ErrorBoundary>
   );
@@ -80,4 +84,11 @@ const ContentWrapper = styled.div`
   width: 100%;
   flex-direction: column;
   padding: 0px 0;
+
 `;
+
+
+const Temporal = styled.div`
+  padding: 40px 0;
+
+`
