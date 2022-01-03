@@ -40,10 +40,13 @@ function TeamIndex() {
   const [supportTimeX, setSupportTimeX] = useState();
   const [supportTimeY, setSupportTimeY] = useState();
   const [loading, setLoading] = useState(false);
+
+
+  
   useEffect(() => {
     fetchingStatisticData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters]);
+  }, [filters.team, filters.patch,filters.league]);
 
   // 팀 전력 보고서 데이터 featch 함수
   const fetchingStatisticData = () => {

@@ -62,7 +62,7 @@ function CompareIngame() {
         dispatch(HandleTab(0));
       }  
     }
-  }, [filters.team])
+  }, [filters.team, filters.league])
 
   useEffect(() => {
     // 모달창이 닫혀있으면서 팀비교 탭인 경우에만 인게임지표 api 호출
