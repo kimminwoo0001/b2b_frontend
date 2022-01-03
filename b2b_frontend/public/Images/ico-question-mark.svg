@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15">
+  <defs>
+    <style>
+      .cls-1, .cls-4 {
+        fill: none;
+      }
+
+      .cls-1 {
+        stroke: #84818e;
+      }
+
+      .cls-2 {
+        fill: #84818e;
+        font-size: 10px;
+        font-family: NotoSansKR-Bold, Noto Sans KR;
+        font-weight: 700;
+        letter-spacing: -0.05em;
+      }
+
+      .cls-3 {
+        stroke: none;
+      }
+    </style>
+  </defs>
+  <g id="ico-question-mark" transform="translate(-313 -198)">
+    <g id="Ellipse_28" data-name="Ellipse 28" class="cls-1" transform="translate(313 198)">
+      <circle class="cls-3" cx="7.5" cy="7.5" r="7.5"/>
+      <circle class="cls-4" cx="7.5" cy="7.5" r="7"/>
+    </g>
+    <text id="_" data-name="?" class="cls-2" transform="translate(318 210)"><tspan x="0" y="0">?</tspan></text>
+  </g>
+</svg>

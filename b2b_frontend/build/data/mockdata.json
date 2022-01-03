@@ -1,0 +1,39 @@
+{
+    "items": [
+        {
+            "gameid": "1230688_25cb7e1966cbcdb5",
+            "date": "2020-06-12 16:00:00",
+            "team": "G2 Esports,MAD Lions"
+        },
+        {
+            "gameid": "1230782_069fd94ef9539d31",
+            "date": "2020-06-13 16:00:00",
+            "team": "Rogue (European Team),Misfits Gaming"
+        },
+        {
+            "gameid": "1230797_62a433187e1da609",
+            "date": "2020-06-13 18:00:00",
+            "team": "Fnatic,Team Vitality"
+        },
+        {
+            "gameid": "1230801_7a81b1dfd1a7fd2a",
+            "date": "2020-06-13 19:00:00",
+            "team": "G2 Esports,Origen"
+        },
+        {
+            "gameid": "1230869_57396a9105e996df",
+            "date": "2020-06-14 15:00:00",
+            "team": "SK Gaming,MAD Lions"
+        },
+        {
+            "gameid": "1230881_293d460694844d9d",
+            "date": "2020-06-14 17:00:00",
+            "team": "Origen,Misfits Gaming"
+        },
+        {
+            "gameid": "1230904_d2c992eef8b6a065",
+            "date": "2020-06-14 18:00:00",
+            "team": "G2 Esports,Team Vitality"
+        }
+    ]
+}
