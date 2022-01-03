@@ -70,7 +70,7 @@ function CompareIngame() {
       GetInGameData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.compareModal, filters.tab]);
+  }, [filters.compareModal, filters.tab, filters.patch]);
 
   //밴지표 전체 데이터 가져오는 함수
   const GetInGameData = () => {
