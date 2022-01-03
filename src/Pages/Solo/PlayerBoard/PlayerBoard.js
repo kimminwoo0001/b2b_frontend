@@ -98,13 +98,19 @@ function PlayerBoard() {
         // setUserPlayerTotal(Object.values(data.soloInfo.userPlayerTotal));
         setSbr(e.stats.sbrStats);
         // val1~ 순서대로 출력
-        setLine(Object.values(Object.keys(e.stats.lineStats).sort().reduce(
-          (newObj, key) => {
-            newObj[key] = e.stats.lineStats[key];
-            return newObj;
-          },
-          {}
-        )));
+      const a  = Object.keys(e.stats.lineStats);
+      let newResult = [];
+      for(let i = 0; i < a.length; i++) {
+        newResult.push(Number(a[i].substring(3)));
+      }
+    const result = newResult.sort().reduce(
+      (newObj, key) => {
+        newObj[key] = e.stats.lineStats[`val${key}`];
+        return newObj;
+      },
+      {}
+    )
+        setLine(Object.values(result));
         setEngage(Object.values(e.stats.engagementStats));
         setPersonality(Object.values(e.stats.personalityStats));
         setGraphDomain(e.trends);
