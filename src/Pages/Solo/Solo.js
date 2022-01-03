@@ -28,7 +28,7 @@ function Solo() {
           <CloseFilter />
         </div>
         <ContentWrapper>
-          {filters.player !== "" && filters.season.length > 0 ? (
+          {filters.player !== "" && filters.season.length > 0 && filters.year.length > 0? (
             <Player />
           ) : (
             <SelectFilter />

@@ -10,6 +10,7 @@ import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetec
 import {
   Champion,
   Champion_Eng,
+  FilterMenuSwitch,
   Opp_Champion,
   Opp_Champion_Eng,
   ResetChampion,
@@ -52,7 +53,7 @@ function NormalInfo() {
     GetComparisonStat();
     // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.player, filters.patch, filters.oppplayer, filters.resetchamp]);
+  }, [filters.player, filters.patch, filters.oppplayer,filters.year, filters.resetchamp]);
 
   // const resetChamp = useCallback(() => {
   //   dispatch(ResetChampion());

@@ -59,7 +59,7 @@ function PlayerBoard() {
     GetPlayerBoardData();
     //GetPlayerSummary();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.player, filters.resetchamp, filters.patch, lang]);
+  }, [filters.player, filters.resetchamp, filters.patch, lang, filters.year]);
 
   //팀 필터 fetch 함수
   const GetPlayerBoardData = () => {
