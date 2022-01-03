@@ -47,6 +47,7 @@ import FilterItem from "./FilterItem";
 import TeamFilterModal from "./TeamFilterModal";
 import PlayerFilterModal from "./PlayerFilterModal";
 import axiosRequest from "../../lib/axiosRequest";
+import { useForm } from 'react-hook-form';
 
 const Filter = memo(() => {
   const filters = useSelector((state) => state.FilterReducer);
@@ -128,6 +129,12 @@ const Filter = memo(() => {
   }, [filters.league]);
 
   useEffect(() => {
+    // 연도 해제 시 무한로딩 되는 에러 임시 해결
+    if((pagePath === "/solo" || pagePath === "/team") && filters.year.length === 0) {
+      return;
+    }
+
+
     if (JSON.stringify(year) !== JSON.stringify(filters.year)) {
       if (isComparePage) {
         fetchLeagueFilter();
