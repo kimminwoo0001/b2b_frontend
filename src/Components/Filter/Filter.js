@@ -162,6 +162,7 @@ const Filter = memo(() => {
     }
   }, [filters.season]);
 
+  // 팀보고서, 영상보고서일때 필터의 팀이 변경될 경우 첫 탭으로 이동
   useEffect(() => {
     if (JSON.stringify(team) !== JSON.stringify(filters.team)) {
       if ([nameTeam, nameVideo].includes(pagePath)) {
