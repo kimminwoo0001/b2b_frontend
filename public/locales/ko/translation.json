@@ -333,7 +333,7 @@
     "setPatchVersion": "패치버전",
     "team": "팀",
     "player": "선수",
-    "NoCommonSeasons": "선택한 리그들에 중복되는 시즌이 없습니다. 시즌을 다시 선택해주세요."
+    "NoCommonSeasons": "중복되는 시즌이 없습니다. 시즌을 다시 선택해주세요."
 
   },
   "video": {
