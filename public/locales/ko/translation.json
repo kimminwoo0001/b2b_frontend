@@ -432,7 +432,7 @@
   },
   "alert": {
     "logout": {
-      "sessionExpires": "세션이 만료되어 로그인 페이지로 이동합니다.",
+      "sessionExpires": "계정 유효 시간이 만료되어 로그인 페이지로 이동합니다.",
       "loginFail": "로그인 정보가 없습니다. 다시 시도해주세요."
     },
     "label": {
