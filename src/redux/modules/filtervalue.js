@@ -413,7 +413,7 @@ const initialState = {
   oppchampion: "",
   champion_eng: "",
   oppchampion_eng: "",
-  // tab: "",
+  tab: "",
   loading: false,
   resetchamp: "",
   click: 0,
