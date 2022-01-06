@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { Line } from "react-chartjs-2";
 import { API } from "../../config";
@@ -10,6 +10,8 @@ import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
+import {  HandleTab} from '../../../redux/modules/filtervalue';
+
 
 function mycomparator(a, b) {
   var num1 = 0;
@@ -42,6 +44,21 @@ function ComparePosition() {
   const [sup, setSup] = useState([]);
   const sortedPatch = filters.patch.sort(mycomparator);
   const dispatch = useDispatch();
+  const pagePath = document.location.pathname;
+const isInitialMount = useRef(true);
+
+
+  useEffect(() => {
+    if(isInitialMount.current) {
+      isInitialMount.current = false;
+    }else {
+      if(pagePath === "/team")  {
+        dispatch(HandleTab(0));
+      }  
+    }
+  }, [filters.team])
+
+
   useEffect(() => {
     GetPositionGraphData();
     // eslint-disable-next-line react-hooks/exhaustive-deps

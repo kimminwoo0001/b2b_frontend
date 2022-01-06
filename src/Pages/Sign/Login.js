@@ -16,8 +16,18 @@ import AlertModal from "../../Components/UtilityComponent/AlertModal";
 import { useTranslation } from "react-i18next";
 import axiosRequest from "../../lib/axiosRequest";
 import { API } from "../config";
-import { SetModalInfo } from "../../redux/modules/modalvalue";
 import checkEmail from "../../lib/checkEmail";
+import { SetModalInfo, SetDesc, SetIsOpen } from "../../redux/modules/modalvalue";
+
+function CheckEmail(str) {
+  let reg_email =
+    /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+  if (!reg_email.test(str)) {
+    return false;
+  } else {
+    return true;
+  }
+}
 
 function Login() {
   const [isOpen, setIsOpen] = useState(false);
@@ -57,16 +67,18 @@ function Login() {
             history.push("/");
           }
         }, function (objStore) {
-          //dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-          setIsOpen(true);
-        })
+          dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        }, 5000) // 서버 응답 없을 경우 timeout 설정 (5s)
+
       } else {
-        //setAlertDesc(t("alert.desc.email_check"));
-        setIsOpen(true);
+        // setAlertDesc(t("alert.desc.email_check"));
+        dispatch(SetDesc(t("alert.desc.email_check")));
+        dispatch(SetIsOpen(true));
       }
     } catch (e) {
-      //setAlertDesc(t("alert.desc.login_fail"));
-      setIsOpen(true);
+      // setAlertDesc(t("alert.desc.login_fail"));
+      dispatch(SetDesc(t("alert.desc.login_fail")));
+      dispatch(SetIsOpen(true));
     }
   };
 
@@ -86,7 +98,9 @@ function Login() {
         <LoginContainer>
           <div className="IndexImage"></div>
           <ViewContainer onSubmit={handleSubmit(onSubmit)}>
-            <div className="LoginTitle">TSB ANALYTICS</div>
+            <div className="LoginTitle">
+              <img className="logo" src="Images/logo2.png" alt="" />
+            </div>
             <input
               type="text"
               className="id"
@@ -176,7 +190,7 @@ const CopyRight = styled.div`
 const ViewContainer = styled.form`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  margin-top: 90px;
   align-items: center;
   width: 374px;
   .LoginTitle {
@@ -185,7 +199,12 @@ const ViewContainer = styled.form`
     font-weight: bold;
     text-align: center;
     color: rgb(255, 255, 255);
-    margin-bottom: 9.7px;
+    margin-bottom: 12px;
+
+    .logo {
+      width: 122px;
+      height: 20px;
+    }
   }
   .id {
     width: 224px;
@@ -203,7 +222,7 @@ const ViewContainer = styled.form`
     height: 36px;
     border-radius: 20px;
     background-color: #3a3745;
-    margin: 15px 0 15px 0;
+    margin: 14px 0 14px 0;
     font-family: Poppins;
     font-size: 13px;
     text-align: left;

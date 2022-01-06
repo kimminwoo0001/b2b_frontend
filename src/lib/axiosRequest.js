@@ -10,12 +10,14 @@ import {
   SetConfirmFuncId,
 } from "../redux/modules/modalvalue";
 
+
 const axiosRequest = async (
   method = "POST",
   url,
   paramData,
   callback,
-  failCallback
+  failCallback,
+  timeout
 ) => {
   //const dispatch = useDispatch();
   if (method === "GET") {
@@ -59,6 +61,7 @@ const axiosRequest = async (
       url: url,
       data: paramData,
       headers: { "content-type": "application/x-www-form-urlencoded" },
+      timeout: timeout,
     })
       .then((e) => {
         const check = checkRequest(e.data.status);
@@ -77,6 +80,9 @@ const axiosRequest = async (
       })
       .catch((error) => {
         console.log("error test : ", error);
+        if (timeout === 5000) {
+          alert(error);
+        }
       });
   }
 };

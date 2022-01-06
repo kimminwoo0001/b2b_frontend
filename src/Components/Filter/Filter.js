@@ -20,6 +20,7 @@ import {
   SetYear,
   SetPatch,
   SetLeague,
+  OppTeam,
 } from "../../redux/modules/filtervalue";
 import {
   setLeagueFilter,
@@ -29,6 +30,9 @@ import {
   setTeamFilter,
   setYearFilter,
 } from "../../redux/modules/selectorvalue";
+
+import { SetIsOpen, SetDesc } from "../../redux/modules/modalvalue";
+import AlertModal from '../UtilityComponent/AlertModal';
 
 import styled, { css } from "styled-components";
 import { API } from "../../Pages/config";
@@ -43,6 +47,7 @@ import FilterItem from "./FilterItem";
 import TeamFilterModal from "./TeamFilterModal";
 import PlayerFilterModal from "./PlayerFilterModal";
 import axiosRequest from "../../lib/axiosRequest";
+import { useForm } from 'react-hook-form';
 
 const Filter = memo(() => {
   const filters = useSelector((state) => state.FilterReducer);
@@ -124,6 +129,12 @@ const Filter = memo(() => {
   }, [filters.league]);
 
   useEffect(() => {
+    // 연도 해제 시 무한로딩 되는 에러 임시 해결
+    if((pagePath === "/solo" || pagePath === "/team") && filters.year.length === 0) {
+      return;
+    }
+
+
     if (JSON.stringify(year) !== JSON.stringify(filters.year)) {
       if (isComparePage) {
         fetchLeagueFilter();
@@ -151,6 +162,7 @@ const Filter = memo(() => {
     }
   }, [filters.season]);
 
+  // 팀보고서, 영상보고서일때 필터의 팀이 변경될 경우 첫 탭으로 이동
   useEffect(() => {
     if (JSON.stringify(team) !== JSON.stringify(filters.team)) {
       if ([nameTeam, nameVideo].includes(pagePath)) {
@@ -176,6 +188,27 @@ const Filter = memo(() => {
       setPatch(filters.patch);
     }
   }, [filters.patch]);
+
+  // 최초 선택된 리그의 시즌이 없는 리그일 경우 팝업 적용
+  useEffect(() => {
+    if(pagePath === "/league" || pagePath === "/video") {
+      if(filters.year.length !== 0) {
+        for (let league of filters.league) {
+          for (let year of filters.year) {
+            const ObjectKeys = Object.keys(
+              staticvalue.filterObjects[league][year]
+            );
+            if(!ObjectKeys.includes(filters.season[0])){
+              dispatch(SetDesc(t("filters.NoCommonSeasons")));
+              dispatch(SetIsOpen(true));  
+            }
+          }
+        }
+      }
+  
+    }
+  }, [filters.league])
+
 
   useEffect(() => {
     if (isComparePage) {
@@ -231,6 +264,7 @@ const Filter = memo(() => {
         .filter((item, pos) => yearList.indexOf(item) === pos)
         .sort()
         .reverse();
+        // 최근 연도를 자동으로 설정
       dispatch(SetYear([recentYear[0]]));
       dispatch(setYearFilter(recentYear));
     } else {
@@ -390,6 +424,7 @@ const Filter = memo(() => {
 
   return (
     <>
+      <AlertModal />
       {pagePath === nameTeamCompare && <TeamFilterModal />}
       {pagePath === namePlayerCompare && <PlayerFilterModal />}
       <FilterWrapper>
@@ -420,6 +455,7 @@ const Filter = memo(() => {
                         [nameTeam, nameSolo].includes(pagePath)
                           ? dispatch(SetLeague([league]))
                           : dispatch(League(league));
+
                       }}
                     />
                   );

@@ -54,11 +54,12 @@ function PlayerBoard() {
     false
   );
 
+
   useEffect(() => {
     GetPlayerBoardData();
     //GetPlayerSummary();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.player, filters.resetchamp, filters.patch, lang]);
+  }, [filters.player, filters.resetchamp, filters.patch, lang, filters.year]);
 
   //팀 필터 fetch 함수
   const GetPlayerBoardData = () => {
@@ -96,7 +97,21 @@ function PlayerBoard() {
         // setLeaguePlayerTotal(Object.values(data.soloInfo.leaguePlayerTotal));
         // setUserPlayerTotal(Object.values(data.soloInfo.userPlayerTotal));
         setSbr(e.stats.sbrStats);
-        setLine(Object.values(e.stats.lineStats));
+
+        // val1~ 순서대로 출력
+        const a  = Object.keys(e.stats.lineStats);
+        let newResult = [];
+        for(let i = 0; i < a.length; i++) {
+          newResult.push(Number(a[i].substring(3)));
+        }
+        const result = newResult.sort().reduce(
+          (newObj, key) => {
+          newObj[key] = e.stats.lineStats[`val${key}`];
+          return newObj;
+        },
+        {}
+         )
+        setLine(Object.values(result));
         setEngage(Object.values(e.stats.engagementStats));
         setPersonality(Object.values(e.stats.personalityStats));
         setGraphDomain(e.trends);
@@ -228,6 +243,11 @@ function PlayerBoard() {
   };
   // if (loading) return <LoadingImg />;
 
+
+  useEffect(() => {
+    console.log(line);
+
+  }, [line])
   return (
     <PlayerBoardWrapper>
       <PlayerInfoSection>

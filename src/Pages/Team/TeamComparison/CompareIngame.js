@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef} from "react";
 import styled, { css } from "styled-components";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import { API } from "../../config";
@@ -15,10 +15,13 @@ import {
   active,
   payload,
   label,
+
 } from "recharts";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
+import {  HandleTab
+} from '../../../redux/modules/filtervalue';
 
 function CompareIngame() {
   //팀 비교 인게임 지표
@@ -47,6 +50,19 @@ function CompareIngame() {
   const Team = filters.team;
   const OppTeam = filters.oppteam;
   const dispatch = useDispatch();
+  const pagePath = document.location.pathname;
+  const isInitialMount = useRef(true);
+
+
+  useEffect(() => {
+    if(isInitialMount.current) {
+      isInitialMount.current = false;
+    }else {
+      if(pagePath === "/team")  {
+        dispatch(HandleTab(0));
+      }  
+    }
+  }, [filters.team, filters.league])
 
   useEffect(() => {
     // 모달창이 닫혀있으면서 팀비교 탭인 경우에만 인게임지표 api 호출
@@ -54,7 +70,7 @@ function CompareIngame() {
       GetInGameData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.compareModal, filters.tab]);
+  }, [filters.compareModal, filters.tab, filters.patch]);
 
   //밴지표 전체 데이터 가져오는 함수
   const GetInGameData = () => {
