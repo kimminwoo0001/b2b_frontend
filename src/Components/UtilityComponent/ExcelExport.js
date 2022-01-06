@@ -69,6 +69,7 @@ const ExportUtil = ({ filename = "none", tableid }) => {
     const BOM = "\uFEFF"; //바이트 순서 표식
     let result = BOM;
     const table = document.getElementById(tableid);
+    const regex = /\n/gi; // 줄바꿈 제거 정규식
 
     for (let rowCnt = 0; rowCnt < table.rows.length; rowCnt++) {
       let rowData = table.rows[rowCnt].cells;
@@ -77,7 +78,7 @@ const ExportUtil = ({ filename = "none", tableid }) => {
         if (columnData == null || columnData.length === 0) {
           columnData = "".replace(/"/g, '""');
         } else {
-          columnData = columnData.toString().replace(/"/g, '""'); // escape double quotes
+          columnData = columnData.toString().replace(/"/g, '""').replace(regex, ''); // escape double quotes
         }
         console.log(result);
         result =
