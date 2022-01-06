@@ -116,16 +116,20 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                     </Sortingimage> */}
                   </div>
                 </th>
-                <th className="BanRate" onClick={() => requestSort("pickRate")}>
+                {/* <th className="BanRate" onClick={() => requestSort("pickRate")}> */}
+                <th className="BanRate">
                   <div className="sorting">{t("league.draft.banRate")}</div>
                 </th>
-                <th className="WinRate" onClick={() => requestSort("winrate")}>
+                {/* <th className="WinRate" onClick={() => requestSort("winrate")}> */}
+                <th className="WinRate">
                   <div className="sorting">{t("league.draft.winRate")}</div>
                 </th>
-                <th
+                {/* <th
                   className="ProbRate"
                   onClick={() => requestSort("probRate")}
-                >
+                > */}
+                <th
+                  className="ProbRate">
                   <div className="sorting">{t("league.draft.probRate")}</div>
                 </th>
                 <th className="none"></th>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
 import {
   CircularProgressbarWithChildren,
@@ -13,6 +13,8 @@ import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
+import { HandleTab } from "../../../redux/modules/filtervalue";
+
 
 function TeamIndex() {
   //팀 존력 보고서 팀 지표 텝
@@ -21,6 +23,8 @@ function TeamIndex() {
   const lang = useSelector((state) => state.LocaleReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const isInitialMount = useRef(true);
+  const pagePath = document.location.pathname;
 
   // 리그 평균 상태값
   const [leagueStat, setLeagueStat] = useState();
@@ -42,11 +46,23 @@ function TeamIndex() {
   const [loading, setLoading] = useState(false);
 
 
+  // 팀 전력보고서에서 최초 선택된 리그와 중복되는 시즌을 가지는 다른 리그를 선택하는 경우 무한루프 발생.
+  // 임시로 리그 변경 시 밴픽보고서로 탭 이동시킴
+  // useEffect(() => {
+  //   if(isInitialMount.current) {
+  //     isInitialMount.current = false;
+  //   }else {
+  //     if(pagePath === "/team")  {
+  //       dispatch(HandleTab(0));
+  //     }  
+  //   }
+  // }, [filters.team, filters.league])
+
   
   useEffect(() => {
     fetchingStatisticData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.team, filters.patch,filters.league]);
+  }, [filters.team, filters.patch]);
 
   // 팀 전력 보고서 데이터 featch 함수
   const fetchingStatisticData = () => {
@@ -190,13 +206,19 @@ function TeamIndex() {
                     width="13px"
                     height="13px"
                   ></img>
-                  <TeamValue changeColor={teamStats?.kill.result === false}>
-                    {`${teamStats?.kill.value.toFixed(2)}`}
-                  </TeamValue>
+                  {teamStats?.kill.value === "NaN" ? 
+                    <TeamValue changeColor={teamStats?.kill.result === false}>0 
+                    </TeamValue>  
+                    :
+                   <TeamValue changeColor={teamStats?.kill.result === false}>
+                   {`${teamStats?.kill.value.toFixed(2)}`}
+                    </TeamValue> 
+                  }
                 </div>
                 <div className="AvgData">{`${t(
                   "team.analysis.leagueAvg"
-                )} ${leagueStat?.kill.toFixed(2)}`}</div>
+                )} ${leagueStat?.kill === "NaN" ? 0 : leagueStat?.kill.toFixed(2)}`}
+                </div>
               </DisplayInfo>
             </div>
             <div className="avgGameTime">
@@ -252,13 +274,18 @@ function TeamIndex() {
                     width="13px"
                     height="13px"
                   ></img>
-                  <TeamValue changeColor={teamStats?.km.result === false}>
-                    {`${teamStats?.km.value.toFixed(2)}`}
-                  </TeamValue>
+               {teamStats?.kill.value === "NaN" ? 
+                    <TeamValue changeColor={teamStats?.km.result === false}>0 
+                    </TeamValue>  
+                    :
+                   <TeamValue changeColor={teamStats?.km.result === false}>
+                   {`${teamStats?.km.value.toFixed(2)}`}
+                    </TeamValue> 
+                  }
                 </div>
                 <div className="AvgData">{`${t(
                   "team.analysis.leagueAvg"
-                )} ${leagueStat?.km.toFixed(2)}`}</div>
+                )} ${leagueStat?.km === "NaN" ? 0 : leagueStat?.km.toFixed(2)}`}</div>
               </DisplayInfo>
             </div>
             <div className="AvgDragon">
@@ -309,7 +336,7 @@ function TeamIndex() {
             )}`}</div>
           </TeamTotalStats>
           <CircularProgressbarWithChildren
-            value={teamStats?.winRate}
+            value={teamStats?.winRate === "NaN" ? 0 : teamStats?.winRate}
             styles={buildStyles({
               strokeLinecap: "butt",
               textSize: "24px",
@@ -346,7 +373,7 @@ function TeamIndex() {
                   marginRight: " 5px",
                 }}
               >
-                {teamStats?.winRate.toFixed(1)}
+                {teamStats?.winRate === "NaN" ? 0 : teamStats?.winRate.toFixed(1)}
               </strong>
               <span
                 style={{

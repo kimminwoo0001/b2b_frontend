@@ -81,7 +81,7 @@ function BanIndex() {
   useEffect(() => {
     fetchingBanIndex();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.league, filters.team, side, filters.patch]);
+  }, [filters.team, side, filters.patch]);
 
   //밴지표 전체 데이터 가져오는 함수
   const fetchingBanIndex = () => {

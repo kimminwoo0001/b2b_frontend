@@ -382,7 +382,7 @@
     "setPatchVersion": "패치버전",
     "team": "팀",
     "player": "선수",
-    "NoCommonSeasons": "선택한 리그들에 중복되는 시즌이 없습니다. 시즌을 다시 선택해주세요."
+    "NoCommonSeasons": "중복되는 시즌이 없습니다. 시즌을 다시 선택해주세요."
 
   },
   "video": {
@@ -484,7 +484,7 @@
       "wrongSignIn": "아이디와 비밀번호를 확인해주세요."
     },
     "logout": {
-      "sessionExpires": "세션이 만료되어 로그인 페이지로 이동합니다.",
+      "sessionExpires": "계정 유효 시간이 만료되어 로그인 페이지로 이동합니다.",
       "loginFail": "로그인 정보가 없습니다. 다시 시도해주세요."
     },
     "label": {
