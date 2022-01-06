@@ -432,7 +432,7 @@
   },
   "alert": {
     "logout": {
-      "sessionExpires": "The session has expired and moves to the login page.",
+      "sessionExpires": "Your account validity time has expired and moves to the login page.",
       "loginFail": "No log in information. Please log in again."
     },
     "label": {

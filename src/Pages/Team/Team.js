@@ -34,6 +34,7 @@ function Team() {
           ) : (
             <SelectFilter />
           )}
+          
         </ContentWrapper>
       </TeamWrapper>
     </ErrorBoundary>

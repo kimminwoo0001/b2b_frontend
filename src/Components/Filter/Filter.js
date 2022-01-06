@@ -77,6 +77,8 @@ const Filter = memo(() => {
     [nameTeamCompare, namePlayerCompare].includes(pagePath) ||
     (nameTeam === pagePath && filters.tab === 2) || // 팀보고서에서 팀 비교 창
     (nameSolo === pagePath && filters.tab === 1); // 선수보고서에서 선수 비교
+
+  const isBanOrTeamIndex = (nameTeam === pagePath && filters.tab === 0) || (nameTeam === pagePath && filters.tab === 1);
   const isNeedTeam = [nameSolo, nameTeam, nameVideo, nameGameReport].includes(
     pagePath
   );
@@ -130,9 +132,9 @@ const Filter = memo(() => {
 
   useEffect(() => {
     // 연도 해제 시 무한로딩 되는 에러 임시 해결
-    if((pagePath === "/solo" || pagePath === "/team") && filters.year.length === 0) {
-      return;
-    }
+    // if((pagePath === "/solo" || pagePath === "/team") && filters.year.length === 0) {
+    //   return;
+    // }
 
 
     if (JSON.stringify(year) !== JSON.stringify(filters.year)) {
@@ -166,9 +168,11 @@ const Filter = memo(() => {
   useEffect(() => {
     if (JSON.stringify(team) !== JSON.stringify(filters.team)) {
       if ([nameTeam, nameVideo].includes(pagePath)) {
-        if (filters.team.length !== 0 && isComparePage === false) {
+        // if (filters.team.length !== 0 && isComparePage === false) {
+        if (filters.team.length !== 0 && filters.tab === "") {
           dispatch(HandleTab(0));
         }
+   
       } else {
         fetchingPlayerFilter();
       }
@@ -317,6 +321,10 @@ const Filter = memo(() => {
       dispatch(ResetSeason());
     }
     dispatch(setSeasonFilter(seasonList));
+    
+    // isBanOrTeamIndex 추가 : 팀 보고서의 밴픽 또는 팀 전력 보고서 탭에서 리그를 변경할 경우 
+    // 아예 모든 시즌이 선택되게하여 빈 테이블이 있는 화면이 보이지 않도록 함.
+    // if (isComparePage || isBanOrTeamIndex) {
     if (isComparePage) {
       dispatch(SetSeason(seasonList));
       fetchingTeamFilter();
@@ -431,7 +439,7 @@ const Filter = memo(() => {
         <FilterHeader />
         {filters.filterMenuState && (
           <>
-            {Number(filters.tab) >= 0 && (
+            {Number(filters.tab) >= 0 && filters.tab  !== "" && (
               <SelectedFilter
                 pagePath={pagePath}
                 nameSolo={nameSolo}
