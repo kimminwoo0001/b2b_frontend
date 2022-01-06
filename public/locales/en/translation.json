@@ -1,5 +1,9 @@
 {
   "title": "Hello, Nongshim Redforce!",
+  "sign": {
+    "signUp": "Sign-Up",
+    "changePW": "Forgot Password"
+  },
   "sidebar": {
     "part1": "Home",
     "part2": "League Report",
@@ -432,6 +436,9 @@
     }
   },
   "alert": {
+    "login": {
+      "wrongSignIn": "Please check your ID and password."
+    },
     "logout": {
       "sessionExpires": "Your account validity time has expired and moves to the login page.",
       "loginFail": "No log in information. Please log in again."

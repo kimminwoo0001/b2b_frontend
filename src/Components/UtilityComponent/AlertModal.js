@@ -4,7 +4,7 @@ import Modal from "react-modal";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { SetIsOpen } from "../../redux/modules/modalvalue";
+import { SetIsOpen, SetSelectedResult } from "../../redux/modules/modalvalue";
 
 const customStyles = {
   overlay: {
@@ -35,10 +35,12 @@ const AlertModal = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isOpen, desc, isSelector, confirmFuncId, cancelFuncId } = useSelector(
+  const { isOpen, desc, semiDesc, isSelector, confirmFuncId, cancelFuncId } = useSelector(
     (state) => state.ModalReducer
   );
   const pagePath = document.location.pathname;
+
+  console.log("desc:", desc);
 
   useEffect(() => {
     console.log("모달 창 useEffect");
@@ -61,7 +63,7 @@ const AlertModal = () => {
     }
 
     if (confirmFuncId) {
-      //confirmFunc();
+      dispatch(SetSelectedResult(true));
     }
   };
 
@@ -69,7 +71,7 @@ const AlertModal = () => {
     dispatch(SetIsOpen(false));
 
     if (cancelFuncId) {
-      //cancelfunc();
+      dispatch(SetSelectedResult(false));
     }
   };
 
@@ -81,7 +83,17 @@ const AlertModal = () => {
       contentLabel="Example Modal"
     >
       <ModalWrapper>
-        <ModalDetail>{desc}</ModalDetail>
+        <ModalDetail>{
+          desc?.split('\n').map((line) => {
+            return <>{line}<br /></>
+          })
+        }</ModalDetail>
+        {semiDesc.length > 0 && <ModalSemiDetail>
+          {semiDesc?.split('\n').map((line) => {
+            return <>{line}<br /></>
+          })}
+        </ModalSemiDetail>}
+
         <ModalClose>
           {isSelector ? (
             <>
@@ -109,7 +121,7 @@ const AlertModal = () => {
           )}
         </ModalClose>
       </ModalWrapper>
-    </Modal>
+    </Modal >
   );
 };
 
@@ -130,7 +142,7 @@ const ModalWrapper = styled.div`
 
 const ModalDetail = styled.div`
   width: 420px;
-  margin: 0 40px 20px;
+  margin: 0 40px 13px;
   font-family: SpoqaHanSansNeo;
   font-size: 18px;
   font-weight: normal;
@@ -142,6 +154,20 @@ const ModalDetail = styled.div`
   color: #fff;
 `;
 
+const ModalSemiDetail = styled.div`
+  width: 100%;
+  margin: 0 0 28px 0;
+  font-family: SpoqaHanSansNeo;
+  font-size: 13px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.54;
+  letter-spacing: normal;
+  text-align: center;
+  color: #84818e;
+`;
+
 const ModalClose = styled.div`
   display: flex;
   justify-content: center;
@@ -149,8 +175,8 @@ const ModalClose = styled.div`
   height: 62px;
 
   button {
-    width: 180px;
-    height: 42px;
+    width: 225px;
+    height: 60px;
     margin: 0 0px 0 0;
     padding: 0px 0px;
     border-radius: 16px;
