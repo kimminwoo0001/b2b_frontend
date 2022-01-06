@@ -131,12 +131,6 @@ const Filter = memo(() => {
   }, [filters.league]);
 
   useEffect(() => {
-    // 연도 해제 시 무한로딩 되는 에러 임시 해결
-    // if((pagePath === "/solo" || pagePath === "/team") && filters.year.length === 0) {
-    //   return;
-    // }
-
-
     if (JSON.stringify(year) !== JSON.stringify(filters.year)) {
       if (isComparePage) {
         fetchLeagueFilter();
@@ -164,7 +158,6 @@ const Filter = memo(() => {
     }
   }, [filters.season]);
 
-  // 팀보고서, 영상보고서일때 필터의 팀이 변경될 경우 첫 탭으로 이동
   useEffect(() => {
     if (JSON.stringify(team) !== JSON.stringify(filters.team)) {
       if ([nameTeam, nameVideo].includes(pagePath)) {
@@ -172,7 +165,10 @@ const Filter = memo(() => {
         if (filters.team.length !== 0 && filters.tab === "") {
           dispatch(HandleTab(0));
         }
-   
+        if (pagePath === nameTeam && filters.tab === 2) {
+          dispatch(SetDesc(t("filters.mainTeamChanged")));
+          dispatch(SetIsOpen(true));
+        }
       } else {
         fetchingPlayerFilter();
       }
@@ -297,7 +293,6 @@ const Filter = memo(() => {
           const ObjectKeys = Object.keys(
             staticvalue.filterObjects[league][year]
           );
-
           seasonList = seasonList.concat(ObjectKeys);
         }
       }
@@ -314,17 +309,21 @@ const Filter = memo(() => {
       }
       dispatch(SetSeason(updateSeason));
 
+      // 팀, 선수보고서인 경우 
+      if ([nameTeam, nameSolo].includes(pagePath)) {
+        if (filters.season.length > 0) {
+          dispatch(Season(seasonList[0]));
+        }
+      }
       if (filters.season.length === 0) {
         dispatch(Season(seasonList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
       }
+
     } else {
       dispatch(ResetSeason());
     }
     dispatch(setSeasonFilter(seasonList));
-    
-    // isBanOrTeamIndex 추가 : 팀 보고서의 밴픽 또는 팀 전력 보고서 탭에서 리그를 변경할 경우 
-    // 아예 모든 시즌이 선택되게하여 빈 테이블이 있는 화면이 보이지 않도록 함.
-    // if (isComparePage || isBanOrTeamIndex) {
+
     if (isComparePage) {
       dispatch(SetSeason(seasonList));
       fetchingTeamFilter();

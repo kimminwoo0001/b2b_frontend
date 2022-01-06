@@ -333,7 +333,8 @@
     "setPatchVersion": "Patch Version",
     "team": "Team",
     "player": "Player",
-    "NoCommonSeasons": "There are no common seasons in the selected leagues. Please select seasons again."
+    "NoCommonSeasons": "There are no common seasons in the selected leagues. Please select seasons again.",
+    "mainTeamChanged": "Main team has changed. Moves to the initial page."
   },
   "video": {
     "tab": {
