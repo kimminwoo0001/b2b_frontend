@@ -463,7 +463,7 @@ const ExportFile = styled.div`
     }
     :hover {
       background-color: ${(props) =>
-        props.changeColor ? `#5942ba` : `#484655`};
+    props.changeColor ? `#5942ba` : `#484655`};
     }
   }
 `;
