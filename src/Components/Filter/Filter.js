@@ -310,7 +310,7 @@ const Filter = memo(() => {
       dispatch(SetSeason(updateSeason));
 
       // 팀, 선수보고서인 경우 
-      if ([nameTeam, nameSolo].includes(pagePath)) {
+      if (pagePath === nameTeam) {
         if (filters.season.length > 0) {
           dispatch(Season(seasonList[0]));
         }
