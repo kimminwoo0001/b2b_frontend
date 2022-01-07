@@ -306,19 +306,15 @@ const Filter = memo(() => {
         if (seasonList.includes(season)) {
           updateSeason.push(season);
         }
+        else {
+          updateSeason = [seasonList[0]];
+        }
       }
       dispatch(SetSeason(updateSeason));
 
-      // 팀, 선수보고서인 경우 
-      if (pagePath === nameTeam) {
-        if (filters.season.length > 0) {
-          dispatch(Season(seasonList[0]));
-        }
-      }
       if (filters.season.length === 0) {
         dispatch(Season(seasonList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
       }
-
     } else {
       dispatch(ResetSeason());
     }
@@ -329,6 +325,12 @@ const Filter = memo(() => {
       fetchingTeamFilter();
     }
   };
+  // 팀이 이미 선택된 경우에 리그를 재선택하게될 때 팀 리셋하여 빈 데이터가 나오지 않게 함
+  useEffect(() => {
+    if([nameSolo, nameTeam].includes(pagePath) && filters.team.length > 0) {
+       dispatch(ResetTeam());
+      }
+  },[filters.league])
 
   const fetchingTeamFilter = () => {
     let teamList = [];
