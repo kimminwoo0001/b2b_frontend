@@ -16,6 +16,8 @@ import {
   ResetChampion,
   ResetChampion2,
   ResetOppChampion,
+  ResetTeam,
+  ResetFilter2
 } from "../../../redux/modules/filtervalue";
 import qs from "qs";
 import axiosRequest from "../../../lib/axiosRequest";
@@ -47,13 +49,10 @@ function NormalInfo() {
   );
 
   useEffect(() => {
-    // if (isInitialMount.current) {
-    //   isInitialMount.current = false;
-    // } else {
+
     GetComparisonStat();
-    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.player, filters.patch, filters.oppplayer,filters.year, filters.resetchamp]);
+  }, [filters.player, filters.patch,filters.year, filters.resetchamp]);
 
   // const resetChamp = useCallback(() => {
   //   dispatch(ResetChampion());

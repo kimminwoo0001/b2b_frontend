@@ -60,6 +60,9 @@ function Stats() {
   );
 
   useEffect(() => {
+    if(filters.oppplayer === "") {
+      return;
+    }
     GetComparisonStat();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

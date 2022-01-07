@@ -299,7 +299,8 @@
       "total": "G",
       "statLabel": "Record",
       "statLabelvs": "VS",
-      "noOppStatData": "There is no data for this match."
+      "noOppStatData": "There is no data for this match.",
+      "mainPlayerChanged" : "Main player has changed. Moves to the initial page."
     }
   },
   "filters": {

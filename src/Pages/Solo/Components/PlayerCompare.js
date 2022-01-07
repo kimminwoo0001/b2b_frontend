@@ -7,49 +7,49 @@ import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
-function PlayerCompare() {
+function PlayerCompare({data, oppData}) {
   const filters = useSelector((state) => state.FilterReducer);
   const lang = useSelector((state) => state.LocaleReducer);
   const user = useSelector((state) => state.UserReducer);
-  const [data, setData] = useState();
-  const [oppData, setOppData] = useState();
+  // const [data, setData] = useState();
+  // const [oppData, setOppData] = useState();
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    GetPerformance();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.oppplayer]);
+  // useEffect(() => {
+  //   GetPerformance();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
-  //팀 필터 fetch 함수
-  const GetPerformance = () => {
-    const url = `${API}/lolapi/player/comparisonRecord`;
-    const params = {
-      league: filters.league,
-      year: filters.year,
-      season: filters.season,
-      patch: filters.patch,
-      team: filters.team,
-      player: filters.player,
-      oppteam: filters.oppteam,
-      oppplayer: filters.oppplayer,
-      token: user.token,
-      id: user.id,
-    };
-    axiosRequest(
-      undefined,
-      url,
-      params,
-      function (e) {
-        setData(e[filters.player]);
-        setOppData(e[filters.oppplayer]);
-      },
-      function (objStore) {
-        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      }
-    );
-    // dispatch(Loading(false));
-  };
+  // //팀 필터 fetch 함수
+  // const GetPerformance = () => {
+  //   const url = `${API}/lolapi/player/comparisonRecord`;
+  //   const params = {
+  //     league: filters.league,
+  //     year: filters.year,
+  //     season: filters.season,
+  //     patch: filters.patch,
+  //     team: filters.team,
+  //     player: filters.player,
+  //     oppteam: filters.oppteam,
+  //     oppplayer: filters.oppplayer,
+  //     token: user.token,
+  //     id: user.id,
+  //   };
+  //   axiosRequest(
+  //     undefined,
+  //     url,
+  //     params,
+  //     function (e) {
+  //       setData(e[filters.player]);
+  //       setOppData(e[filters.oppplayer]);
+  //     },
+  //     function (objStore) {
+  //       dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+  //     }
+  //   );
+  //   // dispatch(Loading(false));
+  // };
 
   return (
     <PlayerCompareWrapper>

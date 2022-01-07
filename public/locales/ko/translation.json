@@ -344,7 +344,9 @@
       "total": "전",
       "statLabel": "개인전적",
       "statLabelvs": "상대전적",
-      "noOppStatData": "상대 전적 기록이 없습니다."
+      "noOppStatData": "상대 전적 기록이 없습니다.",
+      "mainPlayerChanged" : "메인 선수가 변경되어 비교 데이터가 초기화됩니다."
+
     }
   },
   "filters": {
@@ -383,7 +385,7 @@
     "team": "팀",
     "player": "선수",
     "NoCommonSeasons": "중복되는 시즌이 없습니다. 시즌을 선택해주세요.",
-    "mainTeamChanged": "선택 팀이 변경되어 비교 데이터가 초기화됩니다."
+    "mainTeamChanged": "메인 팀이 변경되어 비교 데이터가 초기화됩니다."
 
   },
   "video": {
