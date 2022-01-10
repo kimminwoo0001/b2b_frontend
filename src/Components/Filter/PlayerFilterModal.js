@@ -124,11 +124,19 @@ function PlayerFilterModal() {
 
   // 확인하기 버튼 조건
   const handleConfirm = () => {
-    if (filters.oppplayer) {
+    if (filters.modalOppplayer) {
       //history.push("/playerCompare");
       dispatch(GetOppPlayer(filters.oppplayer));
       dispatch(HandleTab(1));
       dispatch(CompareModal(false));
+      dispatch(
+        OppTeam(
+          filters.modalOppteam.length === 0 ? filters.oppteam : filters.modalOppteam
+        ))
+      dispatch(
+        OppPlayer(
+            filters.modalOppplayer === "" ? filters.oppplayer :filters.modalOppplayer
+          ))
     } else {
       alert(t("filters.noPlayer"));
     }
@@ -595,11 +603,14 @@ function PlayerFilterModal() {
                         <MapTeams
                           key={index}
                           onClick={() => {
-                            dispatch(OppTeam(team));
-                            dispatch(OppPlayer(""));
+                            // dispatch(OppTeam(team));
+                            // dispatch(OppPlayer(""));
+                            dispatch(SetModalOppTeam(team));
+                            dispatch(SetModalOppplayer(""));
                             // fetchingOppPlayerFilter(team);
                           }}
-                          currentTeam={filters.oppteam === team}
+                        currentTeam={filters.modalOppteam.length > 0 ? filters.modalOppteam === team : filters.oppteam === team}
+
                         >
                           <img
                             src={
@@ -623,8 +634,12 @@ function PlayerFilterModal() {
                       return (
                         <MapTeams
                           key={index}
-                          onClick={() => dispatch(OppPlayer(player.name))}
-                          currentTeam={filters.oppplayer === player.name}
+                          onClick={() => 
+                            // dispatch(OppPlayer(player.name))
+                            dispatch(SetModalOppplayer(player.name))
+                          }
+                          // currentTeam={filters.oppplayer === player.name}
+                        currentTeam={filters.modalOppplayer.length > 0 ? filters.modalOppplayer === player.name : filters.oppplayer === player.name}
                         >
                           <img
                             src={`Images/ico-position-${player.position}.png`}
@@ -640,7 +655,7 @@ function PlayerFilterModal() {
             </TeamFilterBox>
           </TeamBox>
         </FilterContainer>
-        <ButtonBox isOppPlayerSelected={filters.oppplayer !== ""}>
+        <ButtonBox isOppPlayerSelected={filters.oppplayer !== "" || filters.modalOppplayer !== ""}>
           <button
             className="Selected"
             onClick={() => {
