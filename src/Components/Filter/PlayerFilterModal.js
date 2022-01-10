@@ -40,6 +40,7 @@ import { API } from "../../Pages/config";
 import { useDetectOutsideClick } from "../../Pages/PlayerCompare/useDetectOustsideClick";
 import axiosRequest from "../../lib/axiosRequest";
 import { SetModalInfo } from "../../redux/modules/modalvalue";
+import { fil } from 'date-fns/locale';
 
 function PlayerFilterModal() {
   // sidebar 선수 비교 눌렀을때 뜨는 모달창
@@ -80,6 +81,14 @@ function PlayerFilterModal() {
     setOppTeamFilter();
     setOppPlayerFilter();
   }, []);
+
+  useEffect(() => {
+    if(filters.compareModal && pagePath === '/playerCompare') {
+      fetchingOppTeamFilter();
+      fetchingOppPlayerFilter();
+    }
+  }, [filters.compareModal])
+
 
   useEffect(() => {
     console.log("filters.menu_num", filters.menu_num);
@@ -302,7 +311,9 @@ function PlayerFilterModal() {
                                 league !== filters.league[0] &&
                                   dispatch(setTeamFilter([]));
                                 league !== filters.league[0] &&
-                                  setOppTeamFilter([]);
+                                setOppTeamFilter([]);
+                                dispatch(setPlayerFilter([]));
+                                setOppPlayerFilter([]);
                               }}
                               key={idx}
                             >
@@ -484,6 +495,7 @@ function PlayerFilterModal() {
                           key={index}
                           onClick={() => {
                             dispatch(SetTeam(team));
+                            dispatch(OppTeam([]));
                             dispatch(OppPlayer(""));
                             setOppTeamFilter([]);
                             setOppPlayerFilter([]);
@@ -603,7 +615,7 @@ function PlayerFilterModal() {
                     })}
                   </OppTeamBox>
                   <OppPlayerBox
-                    isOppTeamSelected={filters.oppteam !== ""}
+                    isOppTeamSelected={filters.oppteam.length > 0}
                     isFilterSelected={filters.league.length > 0}
                   >
                     <div className="Nav2">{t("filters.player")}</div>
