@@ -4,6 +4,7 @@ export const User_IP = "user/User_IP";
 export const User_Device = "user/User_Device";
 export const User_Alarm = "user/User_Alarm";
 export const User_ChargeTime = "user/User_ChargeTime";
+export const SET_IS_NEED_CHK_LOGIN = "user/SET_IS_NEED_CHK_LOGIN";
 
 export const UserToken = (payload) => {
   return {
@@ -46,8 +47,18 @@ export const UserChargeTime = (payload) => {
     payload,
   };
 };
+export const SetIsNeedChkLogin = (payload) => {
+  return {
+    type: SET_IS_NEED_CHK_LOGIN,
+    payload,
+  };
+};
 
-const initialState = "";
+
+
+const initialState = {
+  isNeedChkLogin: false
+};
 
 export default function UserReducer(state = initialState, action) {
   switch (action.type) {
@@ -63,6 +74,8 @@ export default function UserReducer(state = initialState, action) {
       return { ...state, alarm: action.payload };
     case User_ChargeTime:
       return { ...state, charge_time: action.payload };
+    case SET_IS_NEED_CHK_LOGIN:
+      return { ...state, isNeedChkLogin: action.payload };
     default:
       return state;
   }

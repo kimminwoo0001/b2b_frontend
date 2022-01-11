@@ -9,28 +9,150 @@ import {
   SetDesc,
   SetIsOpen,
   SetIsSelector,
+  SetModalInfo,
   SetSelectedResult,
   SetSemiDesc,
 } from "../../redux/modules/modalvalue";
 import { useHistory } from "react-router-dom";
+import { API } from "../config";
+import signAxiosReq from "../../lib/signAxiosReq";
+import axiosRequest from "../../lib/axiosRequest";
+import { Language } from "../../redux/modules/locale";
+import {
+  SetIsNeedChkLogin,
+  UserChargeTime,
+  UserID,
+  UserToken,
+} from "../../redux/modules/user";
 
-const CheckLogin = ({ id }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [authAlterOpen, setAuthAlterOpen] = useState(false);
+const CheckLogin = ({}) => {
+  const user = useSelector((state) => state.UserReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   let history = useHistory();
+  const signType = "IC";
 
   const { selectedResult } = useSelector((state) => state.ModalReducer);
+
+  const [emailAuthText, setEmailAuthText] = useState(""); // 이메일 보안 텍스트
+  const [authAlertOpen, setAuthAlertOpen] = useState(false);
+
+  const onChange = (e) => {
+    const { value, id } = e.target;
+    console.log("id", id);
+
+    switch (id) {
+      case "email-auth-input":
+        setEmailAuthText(value);
+        break;
+      default:
+        break;
+    }
+
+    console.log(value);
+  };
+
+  const checkMail = () => {
+    const url = `${API}/lolapi/authemailcord`;
+    const param = `email=${user.id}&type=${signType}&key=${""}`;
+    signAxiosReq(
+      url,
+      param,
+      function (success) {
+        console.log();
+        if (success) {
+          dispatch(SetIsSelector(false));
+          dispatch(SetIsOpen(true));
+          dispatch(SetDesc(t("sign.signUpContent.sendAuthDesc")));
+        }
+      },
+      function (data) {
+        dispatch(SetIsSelector(false));
+        dispatch(SetIsOpen(true));
+        dispatch(SetDesc(t("sign.checkLogin.fail")));
+      }
+    );
+  };
+
+  const checkEmailAuth = () => {
+    const url = `${API}/lolapi/authcord`;
+    const param = `authcord=${emailAuthText}&key=${""}&email=${
+      user.id
+    }&type=${signType}`;
+    console.log("param", param);
+    signAxiosReq(
+      url,
+      param,
+      function (success) {
+        console.log();
+        if (success) {
+          dispatch(SetIsSelector(false));
+          dispatch(SetIsOpen(true));
+          dispatch(SetDesc(t("sign.checkLogin.success")));
+          dispatch(SetConfirmFuncId("checkLoingSuccess"));
+          setAuthAlertOpen(false);
+        }
+      },
+      function (data) {
+        dispatch(SetIsSelector(false));
+        dispatch(SetIsOpen(true));
+        dispatch(SetDesc(t("sign.checkLogin.fail")));
+        setAuthAlertOpen(false);
+      }
+    );
+  };
 
   useEffect(() => {
     dispatch(SetSelectedResult(false));
   }, []);
 
   useEffect(() => {
-    if (selectedResult) {
-      history.push("/");
+    if (selectedResult === "checkLoingSuccess") {
       dispatch(ModalInit());
+      const param = `ids=${user.id}&password=${user.password}&type=Y`;
+      const url = `${API}/lolapi/logins`;
+      axiosRequest(
+        "POST",
+        url,
+        param,
+        function (data) {
+          const token = data;
+          if (token !== "fail") {
+            //sessionStorage.setItem("token", token.token);
+            sessionStorage.setItem("i18nextLng", token.lang);
+            //sessionStorage.setItem("id", id);
+            console.log("token:", token);
+            dispatch(Language(token.lang));
+            dispatch(UserToken(token.token));
+            dispatch(UserChargeTime(token.charge_time));
+            history.push("/");
+          }
+        },
+        function (objStore) {
+          console.log("objStore:", objStore);
+          if (objStore.message.toUpperCase() === "IC") {
+            dispatch(SetIsNeedChkLogin(true));
+            const url = `${API}/lolapi/authemailcord`;
+            const param = `email=${user.id}&type=${objStore.message}&key=${""}`;
+            signAxiosReq(
+              url,
+              param,
+              function (success) {
+                dispatch(UserID(user.id));
+                history.push("/checkLogin");
+              },
+              function (data) {
+                dispatch(SetIsSelector(false));
+                dispatch(SetIsOpen(true));
+                dispatch(SetDesc(t("sign.login.fail")));
+              }
+            );
+          } else {
+            dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+          }
+        },
+        5000
+      ); // 서버 응답 없을 경우 timeout 설정 (5s)
     }
   }, [selectedResult]);
 
@@ -54,27 +176,18 @@ const CheckLogin = ({ id }) => {
               <SetInputBox
                 width="55"
                 type="text"
-                id={"email-input"}
+                id={"email-auth-input"}
                 placeholder={t("sign.signUpContent.authPlaceholder")}
+                onChange={onChange}
               />
-              <ButtonTemp width="20">
+              <ButtonTemp width="20" onClick={checkMail}>
                 {t("sign.signUpContent.reRequest")}
               </ButtonTemp>
-              <ButtonTemp
-                width="25"
-                onClick={() => {
-                  setAuthAlterOpen(true);
-                  //----------------------
-                  dispatch(SetIsSelector(true));
-                  dispatch(SetIsOpen(true));
-                  dispatch(SetDesc(t("sign.checkLogin.success")));
-                  dispatch(SetConfirmFuncId("checkLogin"));
-                }}
-              >
+              <ButtonTemp width="25" onClick={checkEmailAuth}>
                 {t("sign.signUpContent.sendAuthConfirm")}
               </ButtonTemp>
             </div>
-            <AlertSetCode isOpen={authAlterOpen}>
+            <AlertSetCode isOpen={authAlertOpen}>
               {t("sign.signUpContent.authAlert")}
             </AlertSetCode>
           </section>
