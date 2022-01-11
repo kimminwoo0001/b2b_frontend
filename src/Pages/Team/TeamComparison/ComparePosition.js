@@ -10,7 +10,7 @@ import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
-import {  HandleTab} from '../../../redux/modules/filtervalue';
+import { HandleTab } from '../../../redux/modules/filtervalue';
 
 
 function mycomparator(a, b) {
@@ -45,16 +45,16 @@ function ComparePosition() {
   const sortedPatch = filters.patch.sort(mycomparator);
   const dispatch = useDispatch();
   const pagePath = document.location.pathname;
-const isInitialMount = useRef(true);
+  const isInitialMount = useRef(true);
 
 
   useEffect(() => {
-    if(isInitialMount.current) {
+    if (isInitialMount.current) {
       isInitialMount.current = false;
-    }else {
-      if(pagePath === "/team")  {
+    } else {
+      if (pagePath === "/team") {
         dispatch(HandleTab(0));
-      }  
+      }
     }
   }, [filters.team])
 
@@ -321,7 +321,7 @@ const isInitialMount = useRef(true);
     }),
   };
 
-  if (loading) return <LoadingImg />;
+
   return (
     <ComparePositionWrapper>
       <DisplayTeams>

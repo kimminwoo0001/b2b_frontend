@@ -1,15 +1,6 @@
 import qs from "qs";
 import axios from "axios";
 import checkRequest from "./checkRequest";
-import { createStore } from "redux";
-import persistReducer from "../redux/modules/index";
-import {
-  SetStatus,
-  SetDesc,
-  SetIsOpen,
-  SetConfirmFuncId,
-} from "../redux/modules/modalvalue";
-
 
 const axiosRequest = async (
   method = "POST",
@@ -33,12 +24,12 @@ const axiosRequest = async (
       .then((e) => {
         // 여기서도 에러를 던지면 아래의 catch로 이동된다.
         // throw Error("에러 테스트")
-        const check = checkRequest(e.data.status);
+        const check = checkRequest(e.data);
         console.log("check", check);
         if (check?.value) {
           if (callback) {
+            console.log("checkout", e);
             callback(e.data.response);
-            console.log(e);
           } else {
             console.log(check.objStore);
             // sessionStorage.clear();
@@ -52,10 +43,6 @@ const axiosRequest = async (
         console.log("error test : ", error);
       });
   } else if (method?.toUpperCase() === "POST") {
-    const headers = {
-      "Content-Type": "application/x-www-form-urlencoded",
-      token: paramData.token ?? "N",
-    };
     await axios({
       method: "post",
       url: url,
@@ -64,7 +51,8 @@ const axiosRequest = async (
       timeout: timeout,
     })
       .then((e) => {
-        const check = checkRequest(e.data.status);
+        console.log("e: ", e)
+        const check = checkRequest(e.data);
         console.log("check", check);
         if (check.value) {
           if (callback) {

@@ -11,24 +11,81 @@ import {
   SetSelectedResult,
   SetSemiDesc,
 } from "../../../redux/modules/modalvalue";
+import axiosRequest from "../../../lib/axiosRequest";
+import { API } from "../../config";
+import signAxiosReq from "../../../lib/signAxiosReq";
+import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
+import { Loading } from "../../../redux/modules/filtervalue";
 
-const SetCode = ({ id }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const SetCode = ({ id, authCode, setAuthCode, setSignType, signType }) => {
+  const filters = useSelector((state) => state.FilterReducer);
+  const [alterOpen, setAlertOpen] = useState(false);
+
+  const [doneCheckAuthCode, setDoneCheckAuthCode] = useState(false);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const setCodeFunc = () => {
+  const onChange = (e) => {
+    const { value, id } = e.target;
+    console.log("id", id);
+
+    setAuthCode(value);
+  };
+
+  const doneConfirm = () => {
     dispatch(SetIsSelector(true));
     dispatch(SetIsOpen(true));
-    dispatch(SetDesc(t("sign.setCode.authAlter")));
-    dispatch(SetSemiDesc(t("sign.setCode.authSemiAlter")));
-    dispatch(SetConfirmFuncId("signUp"));
+    dispatch(SetDesc(t(`sign.${id}.authAlert`)));
+    dispatch(SetSemiDesc(t(`sign.${id}.authSemiAlert`)));
+
+    switch (signType) {
+      case "EC":
+        dispatch(SetConfirmFuncId("signUp"));
+        break;
+      case "PC":
+        dispatch(SetConfirmFuncId("changePw"));
+        break;
+      default:
+        break;
+    }
   };
 
-  const setChangePwFunc = () => {
-    dispatch(SetSelectedResult(true));
+  const codeAuth = () => {
+    const url = `${API}/lolapi/authkey`;
+    const param = `key=${authCode}`;
+    dispatch(Loading(true));
+    signAxiosReq(
+      url,
+      param,
+      function (success) {
+        if (success) {
+          dispatch(SetIsSelector(false));
+          dispatch(SetIsOpen(true));
+          dispatch(SetDesc(t("sign.checkLogin.success")));
+          dispatch(SetSemiDesc(""));
+          dispatch(SetConfirmFuncId("checkLogin"));
+          setDoneCheckAuthCode(true);
+          setAlertOpen(false);
+        }
+        dispatch(Loading(false));
+      },
+      function (data) {
+        setAlertOpen(true);
+        dispatch(Loading(false));
+      }
+    );
   };
 
+  const Confirm = () => {
+    if (doneCheckAuthCode) {
+      doneConfirm();
+    } else {
+      dispatch(SetIsSelector(false));
+      dispatch(SetIsOpen(true));
+      dispatch(SetDesc(t("sign.setCode.authNotDone")));
+      dispatch(SetSemiDesc(""));
+    }
+  };
   return (
     <MainBox>
       <div className="logo">
@@ -48,23 +105,23 @@ const SetCode = ({ id }) => {
           width="80"
           placeholder={t("sign.setCode.limitChar")}
           id={"certification-input"}
+          onChange={onChange}
+          maxlength={16}
         />
         <CertificationButton
           onClick={() => {
-            setIsOpen(true);
+            codeAuth();
           }}
+          isActive={authCode.length === 16}
         >
           {t("sign.setCode.certification")}
         </CertificationButton>
       </div>
-      <AlertSetCode isOpen={isOpen}>{t("sign.setCode.alertCode")}</AlertSetCode>
+      <AlertSetCode isOpen={alterOpen}>
+        {t("sign.setCode.alertCode")}
+      </AlertSetCode>
       <div className="confirm2">
-        <ConfirmButton
-          onClick={() => {
-            id === "setCode" && setCodeFunc();
-            id === "changePw" && setChangePwFunc();
-          }}
-        >
+        <ConfirmButton onClick={Confirm} isActive={doneCheckAuthCode}>
           {t(`sign.${id}.authentication`)}
         </ConfirmButton>
       </div>

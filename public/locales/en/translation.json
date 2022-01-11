@@ -40,6 +40,9 @@
       "leagueStat": "League Stats",
       "playerStat": "Player Stats"
     },
+    "pick": {
+      "prNull": "AI is still in the rift"
+    },
     "schedule": {
       "today": "Today",
       "thisWeek": "This Week",
@@ -300,7 +303,7 @@
       "statLabel": "Record",
       "statLabelvs": "VS",
       "noOppStatData": "There is no data for this match.",
-      "mainPlayerChanged" : "Main player has changed. Moves to the initial page."
+      "mainPlayerChanged": "Main player has changed. Moves to the initial page."
     }
   },
   "filters": {

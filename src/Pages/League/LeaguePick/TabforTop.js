@@ -317,8 +317,10 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                         <div></div>
                       )}
                       {filters.league.indexOf("lpl") === -1 ? (
-                        <div className="DPMNumber">
-                          {pick?.champion.pr.toFixed(1)}
+                        <div className="DPMNumber">{
+                          pick?.champion.pr === null ? t("league.pick.prNull") : pick?.champion.pr.toFixed(1)
+                        }
+
                         </div>
                       ) : (
                         <div></div>
@@ -334,11 +336,10 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                             ? pick?.opp_champion.championKor
                             : pick?.opp_champion.champion}
                         </div>
-                        <div className="WinLose2">{`${
-                          pick?.opp_champion.win
-                        }${t("league.draft.w")} ${pick?.opp_champion.lose}${t(
-                          "league.draft.l"
-                        )}`}</div>
+                        <div className="WinLose2">{`${pick?.opp_champion.win
+                          }${t("league.draft.w")} ${pick?.opp_champion.lose}${t(
+                            "league.draft.l"
+                          )}`}</div>
                       </div>
                       <img
                         src={`https://am-a.akamaihd.net/image?resize=90:&f=${pick?.opp_champion.championImage}`}
@@ -371,7 +372,9 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                     <DPM>
                       {filters.league.indexOf("lpl") === -1 ? (
                         <div className="DPMNumber">
-                          {pick?.opp_champion.pr.toFixed(1)}
+                          {
+                            pick?.opp_champion.pr === null ? t("league.pick.prNull") : pick?.opp_champion.pr.toFixed(1)
+                          }
                         </div>
                       ) : (
                         <div></div>

@@ -59,7 +59,7 @@ function PlayerBoard() {
     GetPlayerBoardData();
     //GetPlayerSummary();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.player, filters.resetchamp, filters.patch,  lang]);
+  }, [filters.player, filters.resetchamp, filters.patch, lang]);
 
   //팀 필터 fetch 함수
   const GetPlayerBoardData = () => {
@@ -99,18 +99,18 @@ function PlayerBoard() {
         setSbr(e.stats.sbrStats);
 
         // val1~ 순서대로 출력
-        const a  = Object.keys(e.stats.lineStats);
+        const a = Object.keys(e.stats.lineStats);
         let newResult = [];
-        for(let i = 0; i < a.length; i++) {
+        for (let i = 0; i < a.length; i++) {
           newResult.push(Number(a[i].substring(3)));
         }
         const result = newResult.sort().reduce(
           (newObj, key) => {
-          newObj[key] = e.stats.lineStats[`val${key}`];
-          return newObj;
-        },
-        {}
-         )
+            newObj[key] = e.stats.lineStats[`val${key}`];
+            return newObj;
+          },
+          {}
+        )
         setLine(Object.values(result));
         setEngage(Object.values(e.stats.engagementStats));
         setPersonality(Object.values(e.stats.personalityStats));
@@ -241,7 +241,7 @@ function PlayerBoard() {
       },
     ],
   };
-  // if (loading) return <LoadingImg />;
+  // 
 
 
   useEffect(() => {
@@ -292,9 +292,8 @@ function PlayerBoard() {
             <div className="AttendValue">
               <span className="Wins">{`${matchInfo?.match}${t(
                 "solo.playerboard.games"
-              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${
-                matchInfo?.loss
-              }${t("solo.playerboard.lose")}`}</span>
+              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${matchInfo?.loss
+                }${t("solo.playerboard.lose")}`}</span>
               <span className="WinRate">{`${matchInfo?.winrate.toFixed(
                 1
               )}%`}</span>

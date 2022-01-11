@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled, { css } from "styled-components";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import { API } from "../../config";
@@ -20,7 +20,8 @@ import {
 import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
-import {  HandleTab
+import {
+  HandleTab
 } from '../../../redux/modules/filtervalue';
 
 function CompareIngame() {
@@ -55,12 +56,12 @@ function CompareIngame() {
 
 
   useEffect(() => {
-    if(isInitialMount.current) {
+    if (isInitialMount.current) {
       isInitialMount.current = false;
-    }else {
-      if(pagePath === "/team")  {
+    } else {
+      if (pagePath === "/team") {
         dispatch(HandleTab(0));
-      }  
+      }
     }
   }, [filters.team, filters.league])
 
@@ -214,7 +215,7 @@ function CompareIngame() {
     return null;
   };
 
-  if (loading) return <LoadingImg />;
+
   return (
     <CompareIngameWrapper>
       <ChartBox>
@@ -391,11 +392,11 @@ function CompareIngame() {
                   (redData?.IngameStats["gameTime"].minute !==
                     blueData?.IngameStats["gameTime"].minute &&
                     redData?.IngameStats["gameTime"].minute <
-                      blueData?.IngameStats["gameTime"].minute) ||
+                    blueData?.IngameStats["gameTime"].minute) ||
                   (redData?.IngameStats["gameTime"].minute ===
                     blueData?.IngameStats["gameTime"].minute &&
                     redData?.IngameStats["gameTime"].second <
-                      blueData?.IngameStats["gameTime"].second)
+                    blueData?.IngameStats["gameTime"].second)
                 }
               ></LeftArrow>
               <AverageLabel>{t("team.comparison.playTime")}</AverageLabel>
@@ -404,11 +405,11 @@ function CompareIngame() {
                   (redData?.IngameStats["gameTime"].minute !==
                     blueData?.IngameStats["gameTime"].minute &&
                     redData?.IngameStats["gameTime"].minute >
-                      blueData?.IngameStats["gameTime"].minute) ||
+                    blueData?.IngameStats["gameTime"].minute) ||
                   (redData?.IngameStats["gameTime"].minute ===
                     blueData?.IngameStats["gameTime"].minute &&
                     redData?.IngameStats["gameTime"].second >
-                      blueData?.IngameStats["gameTime"].second)
+                    blueData?.IngameStats["gameTime"].second)
                 }
               ></RightArrow>
             </IndexBox>
@@ -431,11 +432,11 @@ function CompareIngame() {
                   (redData?.IngameStats["firstDragon"].minute !==
                     blueData?.IngameStats["firstDragon"].minute &&
                     redData?.IngameStats["firstDragon"].minute <
-                      blueData?.IngameStats["firstDragon"].minute) ||
+                    blueData?.IngameStats["firstDragon"].minute) ||
                   (redData?.IngameStats["firstDragon"].minute ===
                     blueData?.IngameStats["firstDragon"].minute &&
                     redData?.IngameStats["firstDragon"].second <
-                      blueData?.IngameStats["firstDragon"].second)
+                    blueData?.IngameStats["firstDragon"].second)
                 }
               ></LeftArrow>
               <AverageLabel>{t("team.comparison.firstdragon")}</AverageLabel>
@@ -444,11 +445,11 @@ function CompareIngame() {
                   (redData?.IngameStats["firstDragon"].minute !==
                     blueData?.IngameStats["firstDragon"].minute &&
                     redData?.IngameStats["firstDragon"].minute >
-                      blueData?.IngameStats["firstDragon"].minute) ||
+                    blueData?.IngameStats["firstDragon"].minute) ||
                   (redData?.IngameStats["firstDragon"].minute ===
                     blueData?.IngameStats["firstDragon"].minute &&
                     redData?.IngameStats["firstDragon"].second >
-                      blueData?.IngameStats["firstDragon"].second)
+                    blueData?.IngameStats["firstDragon"].second)
                 }
               ></RightArrow>
             </IndexBox>
@@ -489,54 +490,54 @@ function CompareIngame() {
             {redData?.IngameStats["firstHerald"].minute === 0
               ? (<RedTeamData> - </RedTeamData>) :
               (<RedTeamData>{`${redData?.IngameStats["firstHerald"].minute.toFixed(
-              0
-            )}${t("team.comparison.min")} ${redData?.IngameStats[
-              "firstHerald"
-                ].second.toFixed(0)}${t("team.comparison.sec")}`}</RedTeamData>)}
+                0
+              )}${t("team.comparison.min")} ${redData?.IngameStats[
+                "firstHerald"
+              ].second.toFixed(0)}${t("team.comparison.sec")}`}</RedTeamData>)}
             <IndexBox>
               {redData?.IngameStats["firstHerald"].minute === 0 ?
                 (<LeftArrow didMyTeamWin={false}></LeftArrow>) :
                 (<LeftArrow
-                didMyTeamWin={
-                  (redData?.IngameStats["firstHerald"].minute !==
-                    blueData?.IngameStats["firstHerald"].minute &&
-                    redData?.IngameStats["firstHerald"].minute <
+                  didMyTeamWin={
+                    (redData?.IngameStats["firstHerald"].minute !==
+                      blueData?.IngameStats["firstHerald"].minute &&
+                      redData?.IngameStats["firstHerald"].minute <
                       blueData?.IngameStats["firstHerald"].minute) ||
-                  (redData?.IngameStats["firstHerald"].minute ===
-                    blueData?.IngameStats["firstHerald"].minute &&
-                    redData?.IngameStats["firstHerald"].second <
+                    (redData?.IngameStats["firstHerald"].minute ===
+                      blueData?.IngameStats["firstHerald"].minute &&
+                      redData?.IngameStats["firstHerald"].second <
                       blueData?.IngameStats["firstHerald"].second) ||
                     (blueData?.IngameStats["firstHerald"].minute === 0 &&
                       blueData?.IngameStats["firstHerald"].second === 0)
-                }
+                  }
                 ></LeftArrow>)}
               <AverageLabel>{t("team.comparison.firstHerald")}</AverageLabel>
               {blueData?.IngameStats["firstHerald"].minute === 0 ?
                 (<RightArrow didOppTeamWin={false}></RightArrow>) :
                 (<RightArrow
-                didOppTeamWin={
-                  (redData?.IngameStats["firstHerald"].minute !==
-                    blueData?.IngameStats["firstHerald"].minute &&
-                    redData?.IngameStats["firstHerald"].minute >
+                  didOppTeamWin={
+                    (redData?.IngameStats["firstHerald"].minute !==
+                      blueData?.IngameStats["firstHerald"].minute &&
+                      redData?.IngameStats["firstHerald"].minute >
                       blueData?.IngameStats["firstHerald"].minute) ||
-                  (redData?.IngameStats["firstHerald"].minute ===
-                    blueData?.IngameStats["firstHerald"].minute &&
-                    redData?.IngameStats["firstHerald"].second >
+                    (redData?.IngameStats["firstHerald"].minute ===
+                      blueData?.IngameStats["firstHerald"].minute &&
+                      redData?.IngameStats["firstHerald"].second >
                       blueData?.IngameStats["firstHerald"].second) ||
                     (redData?.IngameStats["firstHerald"].minute === 0 &&
                       redData?.IngameStats["firstHerald"].second === 0)
-                }
+                  }
                 ></RightArrow>)}
             </IndexBox>
             {blueData?.IngameStats["firstHerald"].minute === 0 ?
               (<BlueTeamData> - </BlueTeamData>) :
               (<BlueTeamData>{`${blueData?.IngameStats[
-              "firstHerald"
-            ].minute.toFixed(0)}${t(
-              "team.comparison.min"
-            )} ${blueData?.IngameStats["firstHerald"].second.toFixed(0)}${t(
-              "team.comparison.sec"
-                )}`}</BlueTeamData>)}
+                "firstHerald"
+              ].minute.toFixed(0)}${t(
+                "team.comparison.min"
+              )} ${blueData?.IngameStats["firstHerald"].second.toFixed(0)}${t(
+                "team.comparison.sec"
+              )}`}</BlueTeamData>)}
           </GameDataBox>
           <div className="under-line"></div>
           <GameDataBox>

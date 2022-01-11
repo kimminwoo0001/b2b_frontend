@@ -43,7 +43,7 @@ function OppStat() {
   );
 
   useEffect(() => {
-    if(filters.oppplayer === "") {
+    if (filters.oppplayer === "") {
       return;
     }
     GetComparisonStat();
@@ -142,10 +142,10 @@ function OppStat() {
     );
   };
 
-  if (loading) return <LoadingImg />;
+
   return (
     <OppStatWrapper>
-      <PlayerCompare data={player} oppData={oppPlayer}/>
+      <PlayerCompare data={player} oppData={oppPlayer} />
       {/* 개인전적을 보여주는 의미가 없어 주석처리 */}
       {/* <PlayerStatWrapper>
         <div className="records red">{`${player?.total.value}${t(
