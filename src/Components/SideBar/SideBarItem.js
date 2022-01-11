@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useState, useEffect } from "react";
 import { MenuNum, InitailizeState, CompareModal } from "../../redux/modules/filtervalue";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -6,13 +6,25 @@ import { SelectorInitailizeState } from "../../redux/modules/selectorvalue";
 import { InitializeGameState } from "../../redux/modules/gamevalue";
 import styled, { css } from "styled-components";
 
+const useTitle = (initialTitle) => {
+  const [title, setTitle] = useState(initialTitle);
+  const updateTitle = () => {
+    const htmlTitle = document.querySelector("title");
+    htmlTitle.innerText = title;
+  }
+  useEffect(updateTitle, [title]);
+  return setTitle;
+}
+
 const SideBarItem = ({ menu, idx }) => {
   const dispatch = useDispatch();
   let history = useHistory();
+  const changeTitle = useTitle(null);
 
   return (
     <MenuWrapper
       onClick={() => {
+        changeTitle(`${menu.name} - NUNU.GG`)
         history.push(menu.path);
         dispatch(InitailizeState());
         dispatch(SelectorInitailizeState());
