@@ -73,11 +73,12 @@ const HomeContents = memo(() => {
           id: user.id
         }
         axiosRequest(undefined, url, params, function (data) {
-          console.log(modal);
+          console.log(data);
           dispatch(SetFilterAllItems(data));
           dispatch(Loading(false));
         }, function (objStore) {
           dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
+          dispatch(Loading(false));
         })
       } catch (e) {
         console.log(e);
@@ -94,11 +95,11 @@ const HomeContents = memo(() => {
           .then(res => res.json())
           .then(out => dispatch(SetRunesJson(out)))
           .catch(err => console.log("Not load Rune Dataset."));
+        dispatch(Loading(false));
       } catch (e) {
         console.log(e);
         dispatch(Loading(false));
       }
-      dispatch(Loading(false));
     }
   }
 
