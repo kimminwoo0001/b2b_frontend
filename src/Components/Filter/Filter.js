@@ -21,6 +21,7 @@ import {
   SetPatch,
   SetLeague,
   OppTeam,
+  Loading,
 } from "../../redux/modules/filtervalue";
 import {
   setLeagueFilter,
@@ -421,6 +422,7 @@ const Filter = memo(() => {
 
   // 패치 필터 fetch 함수
   const fetchingPatchFilter = () => {
+    dispatch(Loading(true))
     const url = `${API}/lolapi/filter/patch`;
     const params = {
       league: filters.league,
@@ -429,12 +431,13 @@ const Filter = memo(() => {
       token: user.token,
       id: user.id,
     };
-
     axiosRequest(undefined, url, params, function (e) {
       const patchResponse = e ?? [];
-
       dispatch(setPatchFilter(patchResponse));
       dispatch(SetPatch(patchResponse));
+      dispatch(Loading(false));
+    }, function (e) {
+      dispatch(Loading(false));
     });
   };
 

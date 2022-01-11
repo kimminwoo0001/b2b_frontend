@@ -11,6 +11,7 @@ import checkRequestBase from "../../../lib/checkRequestBase";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
+import { Loading } from "../../../redux/modules/filtervalue";
 
 function LeagueStatistics() {
   //리그 통합 지수 텝
@@ -53,7 +54,7 @@ function LeagueStatistics() {
 
   // 리그통합지수 데이터 featch 함수
   const fetchingStatisticData = () => {
-    setLoading(true);
+    dispatch(Loading(true))
     const url = `${API}/lolapi/league/totalinfo`;
     const params = {
       league: filters.league,
@@ -113,12 +114,13 @@ function LeagueStatistics() {
         setTotalMatchY(TotalY);
         // console.log(supportX);
 
-        setLoading(false);
+        dispatch(Loading(false))
         console.log(supportTimeX);
         console.log(supportTimeY);
       },
       function (objStore) {
         dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        dispatch(Loading(false))
       }
     );
   };

@@ -23,6 +23,7 @@ import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import { API } from "../../config";
 import { API2 } from "../../config";
 import { API5 } from "../../config";
+import { Loading } from "../../../redux/modules/filtervalue";
 
 const TOTAL_SET = [0, 1, 2, 3, 4];
 
@@ -45,6 +46,7 @@ const EachMatch = ({ matchData, team }) => {
 
   const getGameDetailData = (gameId) => {
     try {
+      dispatch(Loading(true));
       const url = `${API5}/api/test/test2`;
       const params = {
         gameid: gameId,
@@ -61,10 +63,12 @@ const EachMatch = ({ matchData, team }) => {
             dispatch(SetMappingDataset(e?.mapping));
             dispatch(SetLiveDataset(e?.live));
             dispatch(SetTeamGoldDataset(e?.teamGold));
+            dispatch(Loading(false));
           });
         },
         function (objstore) {
           dispatch(SetModalInfo(objstore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+          dispatch(Loading(false));
         }
       );
     } catch (e) {

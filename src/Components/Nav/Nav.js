@@ -12,6 +12,7 @@ import SearchBox from "./SearchBox";
 import AlertModal from "../UtilityComponent/AlertModal";
 import axiosRequest from "./../../lib/axiosRequest"
 import NoticeDropdown from "./NoticeDropdown";
+import { Loading } from "../../redux/modules/filtervalue";
 
 function Nav() {
   // locale 값을 store에 저장된 값을 가져옴
@@ -37,9 +38,11 @@ function Nav() {
 
   // 로그아웃 함수, 로그아웃 이벤트가 발생되면 session 값을 clear하고 로그인 페이지로 이동시킴
   const handleLogOut = async () => {
+    dispatch(Loading(true))
     const url = `${API}/lolapi/logout`;
     const info = `id=${user.id}&charge_time=${user.charge_time}&lang=${lang}`;
     axiosRequest("POST", url, info, function (e) {
+      dispatch(Loading(false))
       sessionStorage.clear();
       dispatch(UserLogout());
       history.push("/login")

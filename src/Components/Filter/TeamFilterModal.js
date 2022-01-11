@@ -24,6 +24,7 @@ import {
   SetTeam,
   SetModalTeam,
   SetModalOppTeam,
+  Loading,
 } from "../../redux/modules/filtervalue";
 import {
   setLeagueFilter,
@@ -37,6 +38,7 @@ import { API } from "../../Pages/config";
 import { useTranslation } from "react-i18next";
 import { useDetectOutsideClick } from "../../Pages/TeamCompare/useDetectOustsideClick";
 import axiosRequest from "../../lib/axiosRequest";
+
 
 const TeamFilterModal = () => {
   //사이드바에 있는 팀 비교 탭 모달창
@@ -71,7 +73,7 @@ const TeamFilterModal = () => {
         // Number(Object.keys(staticvalue.filterObjects[key])) ===
         //   Number(filters.year) && key
         filters.year.filter(x => Object.keys(staticvalue.filterObjects[key]).includes(
-          x)) && key 
+          x)) && key
     ).filter((key) => key !== "LPL");
     dispatch(setLeagueFilter(leagueList.sort()));
   };
@@ -99,6 +101,7 @@ const TeamFilterModal = () => {
 
   // opp 팀 필터 fetch 함수
   const fetchingOppTeamFilter = (team) => {
+    dispatch(Loading(true))
     const url = `${API}/lolapi/filter/oppteam`;
     const params = {
       league: filters.league,
@@ -112,6 +115,7 @@ const TeamFilterModal = () => {
     };
     axiosRequest(undefined, url, params, function (e) {
       setOppTeamFilter(e);
+      dispatch(Loading(false))
     });
   };
 
