@@ -17,6 +17,9 @@
   "sign": {
     "signUp": "신규 계정등록",
     "changePW": "비밀번호 재설정",
+    "login": {
+      "fail": "로그인에 실패하였습니다."
+    },
     "setCode": {
       "subject": "등록코드 입력",
       "desc": "최초 제공된 등록코드를 입력하세요. 등록코드 1개당 계정 1개만 생성이 가능합니다.\n등록코드를 입력하여 계정등록을 완료하세요.",
@@ -25,18 +28,20 @@
       "certification": "인증하기",
       "authentication": "코드 등록",
       "alertCode": "유효하지 않은 등록코드입니다.",
-      "authAlter": "해당 등록코드로 등록된 계정이 있습니다.\n계정 등록을 계속 하시겠습니까?",
-      "authSemiAlter": "등록을 진행하면 이전 계정을 사용 할 수 없습니다."
+      "authAlert": "해당 등록코드로 등록된 계정이 있습니다.\n계정 등록을 계속 하시겠습니까?",
+      "authSemiAlert": "등록을 진행하면 이전 계정을 사용 할 수 없습니다.",
+      "authNotDone": "등록코드 인증을 완료해야 합니다."
     },
     "signUpContent": {
       "hello": "NUNU.GG에 오신 것을 환영합니다.",
       "email": "이메일",
-      "emailAlter": "이메일 형식이 일치하지 않습니다. 이메일을 다시 확인해주세요.",
+      "emailAlert": "이메일 형식이 일치하지 않습니다. 이메일을 다시 확인해주세요.",
       "sendAuthMail": "인증메일 발송",
       "emailAuthNum": "이메일 인증번호",
       "emailPlaceholder": "이메일을 입력해주세요.",
       "reRequest": "재요청",
       "sendAuthConfirm": "인증번호 제출",
+      "sendAuthDesc": "인증번호를 해당 이메일로 전송하였습니다.",
       "authPlaceholder": "인증번호를 입력해주세요.",
       "authAlert": "인증번호가 일치하지 않습니다. 다시 확인해주세요.",
       "pw": "비밀번호",
@@ -46,21 +51,29 @@
       "alertPWCheck": "비밀번호가 일치하지 않습니다.",
       "allAgree": "모두 동의",
       "agreeOfTermsOfUse": "nunu.gg 이용약관 동의 (필수)",
-      "personalInfoCalUsageAgree": "개인정보 수집 및 이용동의 (필수)"
+      "personalInfoCalUsageAgree": "개인정보 수집 및 이용동의 (필수)",
+      "needEmailAuth": "이메일 인증이 필요합니다.",
+      "needTOU": "nunu.gg 이용약관에 동의가 필요합니다.",
+      "needPICACU": "개인정보 수집 및 이용동의에 동의가 필요합니다.",
+      "confirmSuccess": "계정 생성이 완료되었습니다."
     },
     "changePw": {
       "subject": "비밀번호 변경을 위한 등록코드 입력",
       "desc": "비밀번호 변경을 위해 최초 제공된 등록코드를 입력합니다.\n등록코드를 입력하여 비밀번호를 변경하세요.",
-      "authentication": "계정 정보 변경"
+      "authentication": "계정 정보 변경",
+      "authAlert": "비밀번호 변경을 진행하시겠습니까?",
+      "authSemiAlert": "등록을 진행하면 이전 비밀번호를 사용 할 수 없습니다."
     },
     "changePwContent": {
-      "hello": "NUNU.GG 계정정보를 재설정 합니다."
+      "hello": "NUNU.GG 계정정보를 재설정 합니다.",
+      "confirmSuccess": "비밀번호 변경이 완료되었습니다."
     },
     "checkLogin": {
       "subject": "보안을 위해 이메일 인증이 필요합니다.",
       "desc": "nunu.gg는 구단의 소중한 정보를 지키기 위해 접속경로의 변경이 있을때마다\n이메일 인증을 실시합니다. 이메일 인증을 진행해주세요.",
       "emailAuth": "이메일 인증번호",
-      "success": "인증이 완료되었습니다."
+      "success": "인증이 완료되었습니다.",
+      "fail": "인증에 실패하였습니다."
     }
   },
   "nav": {
@@ -383,7 +396,6 @@
     "team": "팀",
     "player": "선수",
     "NoCommonSeasons": "중복되는 시즌이 없습니다. 시즌을 다시 선택해주세요."
-
   },
   "video": {
     "tab": {
@@ -496,7 +508,9 @@
       "copy_n": "복사되지 않았습니다.",
       "email_check": "이메일 형식이 올바르지 않습니다.",
       "login_fail": "로그인 실패 : 시간 제한이 초과되었습니다.",
-      "serverError": "서버에 문제가 생겼습니다. 관리자에게 문의해주세요."
+      "serverError": "서버에 문제가 생겼습니다. 관리자에게 문의해주세요.",
+      "questionCancel": "취소하시겠습니까?",
+      "questionContinue": "계속하시겠습니까?"
     }
   },
   "label": {

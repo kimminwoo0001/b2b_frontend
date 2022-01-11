@@ -9,6 +9,8 @@ import {
   UserIP,
   UserDevice,
   UserChargeTime,
+  SET_IS_NEED_CHK_LOGIN,
+  SetIsNeedChkLogin,
 } from "../../redux/modules/user";
 import { useHistory } from "react-router-dom";
 import { Language } from "../../redux/modules/locale";
@@ -17,17 +19,8 @@ import { useTranslation } from "react-i18next";
 import axiosRequest from "../../lib/axiosRequest";
 import { API } from "../config";
 import checkEmail from "../../lib/checkEmail";
-import { SetModalInfo, SetDesc, SetIsOpen } from "../../redux/modules/modalvalue";
-
-function CheckEmail(str) {
-  let reg_email =
-    /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-  if (!reg_email.test(str)) {
-    return false;
-  } else {
-    return true;
-  }
-}
+import { SetModalInfo, SetDesc, SetIsOpen, SetIsSelector } from "../../redux/modules/modalvalue";
+import signAxiosReq from "../../lib/signAxiosReq";
 
 function Login() {
   const [isOpen, setIsOpen] = useState(false);
@@ -48,7 +41,7 @@ function Login() {
   const onSubmit = async ({ id, password }) => {
     try {
       if (checkEmail(id)) {
-        const user = `ids=${id}&password=${password}`;
+        const user = `ids=${id}&password=${password}&type=N`;
         const url = `${API}/lolapi/logins`;
 
         axiosRequest("POST", url, user, function (data) {
@@ -57,17 +50,36 @@ function Login() {
             //sessionStorage.setItem("token", token.token);
             sessionStorage.setItem("i18nextLng", token.lang);
             //sessionStorage.setItem("id", id);
+            console.log("token:", token);
             dispatch(Language(token.lang));
             dispatch(UserID(id));
             dispatch(UserToken(token.token));
-            dispatch(UserChargeTime(token.charge_time))
-            getUserIP();
-            getUserDevice();
-            history.push("/checkLogin");
-            //history.push("/");
+            dispatch(UserChargeTime(token.charge_time));
+            history.push("/");
           }
         }, function (objStore) {
-          dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
+          console.log("objStore:", objStore);
+          if (objStore.message.toUpperCase() === "IC") {
+            dispatch(SetIsNeedChkLogin(true))
+            const url = `${API}/lolapi/authemailcord`;
+            const param = `email=${id}&type=${objStore.message}&key=${""}`;
+            signAxiosReq(
+              url,
+              param,
+              function (success) {
+                dispatch(UserID(id));
+                history.push("/checkLogin");
+              },
+              function (data) {
+                dispatch(SetIsSelector(false));
+                dispatch(SetIsOpen(true));
+                dispatch(SetDesc(t("sign.login.fail")));
+              }
+            );
+
+          } else {
+            dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
+          }
         }, 5000) // 서버 응답 없을 경우 timeout 설정 (5s)
 
       } else {

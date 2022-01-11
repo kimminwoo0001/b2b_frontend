@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SetCode from "./Component/SetCode";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,9 +8,12 @@ import EnrollAccount from "./Component/EnrollAccount";
 const SignUp = () => {
   const dispatch = useDispatch();
   const { selectedResult } = useSelector((state) => state.ModalReducer);
+  const [authCode, setAuthCode] = useState("");
+  const signType = "EC";
+  console.log("selectedResult", selectedResult);
 
   useEffect(() => {
-    dispatch(SetSelectedResult(false));
+    dispatch(SetSelectedResult(""));
   }, []);
 
   return (
@@ -18,10 +21,19 @@ const SignUp = () => {
       <SignUpWrapper>
         <img className="indexImg2" src="Images/index-login-img2.png" alt="" />
         <SignUpBox>
-          {selectedResult ? (
-            <EnrollAccount id={"signUpContent"} />
+          {selectedResult === "signUp" ? (
+            <EnrollAccount
+              id={"signUpContent"}
+              authCode={authCode}
+              signType={signType}
+            />
           ) : (
-            <SetCode id={"setCode"} />
+            <SetCode
+              id={"setCode"}
+              authCode={authCode}
+              setAuthCode={setAuthCode}
+              signType={signType}
+            />
           )}
         </SignUpBox>
       </SignUpWrapper>

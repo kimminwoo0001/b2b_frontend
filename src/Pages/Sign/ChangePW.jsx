@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import SetCode from "./Component/SetCode";
@@ -10,9 +10,11 @@ const ChangePW = () => {
   const dispatch = useDispatch();
   const { selectedResult } = useSelector((state) => state.ModalReducer);
   const { t } = useTranslation();
+  const [authCode, setAuthCode] = useState("");
+  const signType = "PC";
 
   useEffect(() => {
-    dispatch(SetSelectedResult(false));
+    dispatch(SetSelectedResult(""));
   }, []);
 
   return (
@@ -20,10 +22,19 @@ const ChangePW = () => {
       <Wrapper>
         <img className="indexImg2" src="Images/index-login-img2.png" alt="" />
         <ContentBox>
-          {selectedResult ? (
-            <EnrollAccount id={"changePwContent"} />
+          {selectedResult === "changePw" ? (
+            <EnrollAccount
+              id={"changePwContent"}
+              authCode={authCode}
+              signType={signType}
+            />
           ) : (
-            <SetCode id={"changePw"} />
+            <SetCode
+              id={"changePw"}
+              authCode={authCode}
+              setAuthCode={setAuthCode}
+              signType={signType}
+            />
           )}
         </ContentBox>
       </Wrapper>

@@ -7,6 +7,7 @@ const SetInputBox = ({
   width = "80",
   placeholder = "",
   id = "",
+  maxlength = 50,
   onChange,
 }) => {
   const { t } = useTranslation();
@@ -19,6 +20,7 @@ const SetInputBox = ({
         onChange={onChange}
         autocapitalize="off"
         className={type}
+        maxlength={maxlength}
       />
     </SearchBoxWrapper>
   );

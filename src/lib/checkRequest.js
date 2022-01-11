@@ -1,6 +1,7 @@
 import i18next from "i18next";
 
-export default function checkRequest(status) {
+export default function checkRequest(data) {
+  const { status, message } = data
   const tokenStatus = ['403', '401'];
   const successStatus = ['201', '200'];
   const errorStatus = '500';
@@ -12,6 +13,7 @@ export default function checkRequest(status) {
       status: "",
       confirmFuncId: "",
       desc: "",
+      message: message,
       isOpen: false
     }
   };
@@ -23,6 +25,7 @@ export default function checkRequest(status) {
         status: "success",
         confirmFuncId: "",
         desc: "",
+        message: message,
         isOpen: false
       }
     }
@@ -34,7 +37,8 @@ export default function checkRequest(status) {
         confirmFuncId: "token",
         // desc: i18next.t("alert.logout.sessionExpires"),
         desc: pagePath === "/login" ? i18next.t("alert.logout.loginFail") : i18next.t("alert.logout.sessionExpires"),
-        isOpen: true
+        isOpen: true,
+        message: message,
       }
     }
   } else if (errorStatus === status) {
@@ -44,7 +48,8 @@ export default function checkRequest(status) {
         status: "error",
         confirmFuncId: "",
         desc: i18next.t("alert.desc.serverError"),
-        isOpen: true
+        isOpen: true,
+        message: message,
       }
     }
   } else if (notFoundStatus === status) {
@@ -54,7 +59,8 @@ export default function checkRequest(status) {
         status: "notFound",
         confirmFuncId: "",
         desc: i18next.t("alert.desc.serverError"),
-        isOpen: true
+        isOpen: true,
+
       }
     }
   }
