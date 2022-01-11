@@ -232,13 +232,18 @@ const Filter = memo(() => {
     if (isComparePage) {
       leagueList = Object.keys(staticvalue.filterObjects).map(
         (key) =>
-          Number(Object.keys(staticvalue.filterObjects[key])) ===
-            Number(filters.year) && key
+          // Number(Object.keys(staticvalue.filterObjects[key])) ===
+          //   Number(filters.year) && key
+          filters.year.filter(x => Object.keys(staticvalue.filterObjects[key]).includes(
+            x)) && key
       );
       // 선수보고서, 영상보고서, 게임보고서일 경우 LPL,LCK CL 리그 제외
     } else if (pagesWithLimitedLeagues) {
+      // leagueList = Object.keys(staticvalue.filterObjects).filter(
+      //   (key) => key !== "LPL" && key !== "LCK CL"
+      // );
       leagueList = Object.keys(staticvalue.filterObjects).filter(
-        (key) => key !== "LPL" && key !== "LCK CL"
+        (key) => key !== "LPL" 
       );
     } else {
       leagueList = Object.keys(staticvalue.filterObjects);
