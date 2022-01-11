@@ -172,7 +172,7 @@ function BanIndex() {
     ).finally(setLoading(false));
   };
 
-  if (loading) return <LoadingImg />;
+
 
   return (
     <BanIndexWrapper>

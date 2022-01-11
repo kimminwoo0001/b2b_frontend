@@ -49,14 +49,14 @@ function NormalInfo() {
   );
 
   useEffect(() => {
-    if(filters.oppplayer === "") {
+    if (filters.oppplayer === "") {
       return;
     }
-    
+
 
     GetComparisonStat();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.oppplayer, filters.player, filters.patch,filters.year, filters.resetchamp]);
+  }, [filters.oppplayer, filters.player, filters.patch, filters.year, filters.resetchamp]);
 
   // const resetChamp = useCallback(() => {
   //   dispatch(ResetChampion());
@@ -261,7 +261,7 @@ function NormalInfo() {
       },
     },
   };
-  if (loading) return <LoadingImg />;
+
   return (
     <NormalInfoWrapper>
       <PlayerCompareWrapper>

@@ -60,7 +60,7 @@ function Stats() {
   );
 
   useEffect(() => {
-    if(filters.oppplayer === "") {
+    if (filters.oppplayer === "") {
       return;
     }
     GetComparisonStat();
@@ -295,7 +295,7 @@ function Stats() {
 
     return null;
   };
-  if (loading) return <LoadingImg />;
+
   return (
     <StatWrapper>
       <PlayerCompareWrapper>
@@ -696,7 +696,7 @@ function Stats() {
                       // strokeDasharray="4 4"
                       horizontal={false}
                       vertical={false}
-                      // horizontalPoints={[40, 80, 120, 160, 200, 240]}
+                    // horizontalPoints={[40, 80, 120, 160, 200, 240]}
                     />
                     <XAxis
                       type={"number"}
@@ -783,7 +783,7 @@ function Stats() {
                       // strokeDasharray="4 4"
                       horizontal={false}
                       vertical={false}
-                      // horizontalPoints={[25, 75, 125, 175, 225]}
+                    // horizontalPoints={[25, 75, 125, 175, 225]}
                     />
                     <XAxis
                       domain={[0, 100]}

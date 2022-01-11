@@ -29,6 +29,7 @@ import PiArea from "./Pages/PiArea/PiArea";
 import GameReport from "./Pages/GameReport/GameReport";
 import AlertModal from "./Components/UtilityComponent/AlertModal";
 import CheckLogin from "./Pages/Sign/CheckLogin";
+import Loading from "./Components/LoadingImg/LoadingImg";
 
 function Routes() {
   //const token = sessionStorage.getItem("token");
@@ -46,6 +47,7 @@ function Routes() {
   return (
     <Router>
       <AlertModal />
+      <Loading />
       <Switch>
         <PrivateRoute exact path="/" component={Home} />
         <PrivateRoute exact path="/league" component={League} />

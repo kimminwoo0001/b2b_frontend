@@ -99,6 +99,9 @@
       "leagueStat": "리그 통합 지수",
       "playerStat": "선수 정보"
     },
+    "pick": {
+      "prNull": "AI가 아직 협곡에 있습니다..."
+    },
     "schedule": {
       "today": "오늘",
       "thisWeek": "이번주",

@@ -14,8 +14,11 @@ import {
 import axiosRequest from "../../../lib/axiosRequest";
 import { API } from "../../config";
 import signAxiosReq from "../../../lib/signAxiosReq";
+import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
+import { Loading } from "../../../redux/modules/filtervalue";
 
 const SetCode = ({ id, authCode, setAuthCode, setSignType, signType }) => {
+  const filters = useSelector((state) => state.FilterReducer);
   const [alterOpen, setAlertOpen] = useState(false);
 
   const [doneCheckAuthCode, setDoneCheckAuthCode] = useState(false);
@@ -50,7 +53,7 @@ const SetCode = ({ id, authCode, setAuthCode, setSignType, signType }) => {
   const codeAuth = () => {
     const url = `${API}/lolapi/authkey`;
     const param = `key=${authCode}`;
-    console.log("param", param);
+    dispatch(Loading(true));
     signAxiosReq(
       url,
       param,
@@ -64,9 +67,11 @@ const SetCode = ({ id, authCode, setAuthCode, setSignType, signType }) => {
           setDoneCheckAuthCode(true);
           setAlertOpen(false);
         }
+        dispatch(Loading(false));
       },
       function (data) {
         setAlertOpen(true);
+        dispatch(Loading(false));
       }
     );
   };
@@ -81,7 +86,6 @@ const SetCode = ({ id, authCode, setAuthCode, setSignType, signType }) => {
       dispatch(SetSemiDesc(""));
     }
   };
-
   return (
     <MainBox>
       <div className="logo">

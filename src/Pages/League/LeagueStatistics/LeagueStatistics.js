@@ -245,7 +245,7 @@ function LeagueStatistics() {
     ],
   };
 
-  if (loading) return <LoadingImg />;
+
   return (
     <StatisticsWrapper>
       <TopBox>
@@ -279,7 +279,7 @@ function LeagueStatistics() {
           </NavBar>
           {supportTimeX === undefined || supportTimeX.length === 0 ?
             (<NoData>{t("league.leagueStat.noData")}</NoData>) :
-          <GameTimeCharts>
+            <GameTimeCharts>
               <Bar
                 data={averageSupport}
                 options={{
