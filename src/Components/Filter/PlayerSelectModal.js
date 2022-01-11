@@ -11,6 +11,7 @@ import {
   GetOppPlayer,
   ResetChampion,
   HandleTab,
+  Loading,
 } from "../../redux/modules/filtervalue";
 import axiosRequest from "../../lib/axiosRequest";
 import { SetModalInfo } from "../../redux/modules/modalvalue";
@@ -32,6 +33,7 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
   }, [openModal]);
 
   const fetchingTeamFilter = () => {
+    dispatch(Loading(true))
     const url = `${API}/lolapi/filter/oppteam`;
     const params = {
       league: filters.league,
@@ -44,12 +46,15 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
     };
     axiosRequest(undefined, url, params, function (e) {
       setOppTeam(e.oppteam);
+      dispatch(Loading(false))
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      dispatch(Loading(false))
     })
   };
 
   const fetchingPlayerFilter = (team) => {
+    dispatch(Loading(true))
     const url = `${API}/lolapi/filter/oppplayer`;
     const params = {
       league: filters.league,
@@ -63,8 +68,10 @@ function PlayerSelectModal({ openModal, setOpenModal }) {
     };
     axiosRequest(undefined, url, params, function (e) {
       setOppPlayer(e);
+      dispatch(Loading(false));
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      dispatch(Loading(false));
     })
   };
 

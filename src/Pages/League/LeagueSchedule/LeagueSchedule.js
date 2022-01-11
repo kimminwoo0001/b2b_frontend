@@ -15,6 +15,7 @@ import WeekFive from "./WeekFive";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
+import { Loading } from "../../../redux/modules/filtervalue";
 
 
 
@@ -80,6 +81,7 @@ function LeagueSchedule() {
 
   // week 데이터 featch 함수
   const fetchingWeekData = () => {
+    dispatch(Loading(true));
     const url = `${API}/lolapi/league/schedule`;
     const params = {
       league: filters.league,
@@ -103,11 +105,13 @@ function LeagueSchedule() {
           setThisWeek(0);
           setWhichWeek(0);
         }
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
       })
-    });
-  };
+    }, function (objStore) {
+      dispatch(Loading(false));
+      dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
+    }
+    );
+  }
 
   return (
     <LeagueScheduleWrapper>

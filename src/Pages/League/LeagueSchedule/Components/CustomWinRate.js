@@ -9,6 +9,7 @@ import { useDetectOutsideClick } from "../../Components/useDetectOustsideClick";
 import axiosRequest from "../../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../../redux/modules/modalvalue";
+import { Loading } from "../../../../redux/modules/filtervalue";
 
 function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
   const filters = useSelector((state) => state.FilterReducer);
@@ -33,6 +34,7 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
   const dispatch = useDispatch();
 
   const GetRoster = () => {
+    dispatch(Loading(true));
     const url = `${API}/lolapi/filter/roster`;
     const params = {
       league: filters.league,
@@ -47,12 +49,15 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
     axiosRequest(undefined, url, params, function (e) {
       setTeam1(e[el.Team1]);
       setTeam2(e[el.Team2]);
+      dispatch(Loading(false));
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      dispatch(Loading(false));
     })
   };
 
   const GetWinRate = () => {
+    dispatch(Loading(true));
     const player1 = Object.values(roster1)?.map((name) => name.name);
     const player2 = Object.values(roster2)?.map((name) => name.name);
 
@@ -69,8 +74,10 @@ function CustomWinRate({ index, toggleCustom, setCustomOpen, customOpen, el }) {
     }
     axiosRequest(undefined, url, params, function (e) {
       setWinRate(e);
+      dispatch(Loading(false));
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      dispatch(Loading(false));
     })
   };
 

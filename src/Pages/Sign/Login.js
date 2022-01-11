@@ -100,14 +100,14 @@ function Login() {
     dispatch(Loading(false));
   };
 
-  const getUserIP = async () => {
-    const res = await axios.get("https://geolocation-db.com/json/");
-    dispatch(UserIP(res.data.IPv4));
-  };
+  // const getUserIP = async () => {
+  //   const res = await axios.get("https://geolocation-db.com/json/");
+  //   dispatch(UserIP(res.data.IPv4));
+  // };
 
-  const getUserDevice = () => {
-    dispatch(UserDevice(navigator.userAgent));
-  };
+  // const getUserDevice = () => {
+  //   dispatch(UserDevice(navigator.userAgent));
+  // };
 
   return (
     <>
@@ -148,13 +148,13 @@ function Login() {
               {t("alert.login.wrongSignIn")}
             </AlertLogin>
             <SettingFlexBox>
-              <div className="left"><span onClick={() => {
+              {/* <div className="left"><span onClick={() => {
                 history.push("/signUp")
               }}>{t("sign.signUp")}</span></div>
               <div className="center"><span>|</span></div>
               <div className="right"><span onClick={() => {
                 history.push("/changePw")
-              }}>{t("sign.changePW")}</span></div>
+              }}>{t("sign.changePW")}</span></div> */}
             </SettingFlexBox>
           </ViewContainer>
         </LoginContainer>

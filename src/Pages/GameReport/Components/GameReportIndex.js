@@ -7,6 +7,7 @@ import axiosRequest from "../../../lib/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import { API } from "../../config";
 import { API2 } from "../../config";
+import { Loading } from "../../../redux/modules/filtervalue.js";
 
 const GameReportIndex = () => {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ const GameReportIndex = () => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const [indexData, setIndexData] = useState([]);
 
-  useEffect(() => {}, [gamevalue.gameId]);
+  useEffect(() => { }, [gamevalue.gameId]);
 
   useEffect(() => {
     getGameIndexData();
@@ -23,6 +24,7 @@ const GameReportIndex = () => {
 
   const getGameIndexData = () => {
     try {
+      dispatch(Loading(true));
       const url = `${API2}/lolapi/mappingfilter/game`;
       const params = {
         league: filters.league,
@@ -39,9 +41,11 @@ const GameReportIndex = () => {
         params,
         function (e) {
           setIndexData(e.game);
+          dispatch(Loading(false));
         },
         function (objstore) {
           dispatch(SetModalInfo(objstore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+          dispatch(Loading(false));
         }
       );
     } catch (e) {
