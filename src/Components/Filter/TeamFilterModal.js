@@ -75,7 +75,7 @@ const TeamFilterModal = () => {
   };
 
   const handleConfirm = () => {
-    if (filters.oppteam) {
+    if (filters.modalOppteam) {
       //history.push("/teamCompare");
       dispatch(CompareModal(false));
       dispatch(GetOppTeam(filters.oppteam));
@@ -131,7 +131,7 @@ const TeamFilterModal = () => {
               // dispatch(MenuNum(2));
               dispatch(CompareModal(false));
               // dispatch(SetModalTeam([]));
-              // dispatch(SetModalOppTeam([]));
+              dispatch(SetModalOppTeam([]));
 
               // dispatch(OppTeam([]));
 
@@ -479,11 +479,11 @@ const TeamFilterModal = () => {
                       <MapTeams
                         key={index}
                         onClick={() => {
-                          dispatch(OppTeam(team))
-                          // dispatch(SetModalOppTeam(team))
+                          // dispatch(OppTeam(team))
+                          dispatch(SetModalOppTeam(team))
                         }
                         }
-                        currentTeam={filters.oppteam === team}
+                        currentTeam={filters.modalOppteam.length > 0 ? filters.modalOppteam === team : filters.oppteam === team}
                       >
                         <img
                           src={
