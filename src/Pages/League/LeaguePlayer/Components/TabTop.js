@@ -10,7 +10,7 @@ function TabTop({ playerData, loading }) {
   console.log(playerData)
   const { t } = useTranslation();
   const lang = useSelector((state) => state.LocaleReducer);
-  const filters = useSelector((state) => state.FilterReducer);  
+  const filters = useSelector((state) => state.FilterReducer);
   const [noLPLData, setNoLPLData] = useState();
 
   const refineNoLPLData = () => {
@@ -22,7 +22,7 @@ function TabTop({ playerData, loading }) {
   }, [playerData])
 
 
-  if (loading) return <LoadingImg />;
+
   return (
     <TabContentsWrapper>
       {/* LPL 리그만 선택했을 경우 */}
@@ -47,16 +47,16 @@ function TabTop({ playerData, loading }) {
               </StyledTippy>
             </div>
           </TableNav>
-            {/* 선택한 리그에 LPL이 포함되어있을 경우 */}
-            {filters.league.length > 1 && filters.league.includes("LPL") && (
-              <TableNav>
-                <div className="NavTitle">
-                  {t("league.playerStat.noLplData")}
-                </div>
-              </TableNav>)
-            }
+          {/* 선택한 리그에 LPL이 포함되어있을 경우 */}
+          {filters.league.length > 1 && filters.league.includes("LPL") && (
+            <TableNav>
+              <div className="NavTitle">
+                {t("league.playerStat.noLplData")}
+              </div>
+            </TableNav>)
+          }
           {/* 받아온 선수 정보 데이터 뿌려주기 */}
-            {/* {playerData?.map((playerData, idx) => {
+          {/* {playerData?.map((playerData, idx) => {
             return (
               <TableContents key={idx}>
                 <div className="RankValue">{idx + 1}</div>
@@ -129,7 +129,7 @@ function TabTop({ playerData, loading }) {
             );
           })} */}
 
-            {noLPLData?.map((playerData, idx) => {
+          {noLPLData?.map((playerData, idx) => {
             return (
               <TableContents key={idx}>
                 <div className="RankValue">{idx + 1}</div>
@@ -157,9 +157,8 @@ function TabTop({ playerData, loading }) {
                     ></img>
                     <label>{playerData.team}</label>
                   </p>
-                  <p className="PlayerValue">{`${playerData.player} (${
-                    lang === "ko" ? playerData.NativeName : playerData.name
-                  })`}</p>
+                  <p className="PlayerValue">{`${playerData.player} (${lang === "ko" ? playerData.NativeName : playerData.name
+                    })`}</p>
                 </div>
 
                 <div className="ParticipateValue">

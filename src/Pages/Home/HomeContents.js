@@ -102,8 +102,6 @@ const HomeContents = memo(() => {
     }
   }
 
-  if (filters.loading) return <LoadingImg />;
-
   console.log("전역 변수 테스트", staticvalue);
   return (
     <LeagueListWrapper>

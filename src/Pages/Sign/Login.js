@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import {
   UserID,
@@ -21,8 +21,11 @@ import { API } from "../config";
 import checkEmail from "../../lib/checkEmail";
 import { SetModalInfo, SetDesc, SetIsOpen, SetIsSelector } from "../../redux/modules/modalvalue";
 import signAxiosReq from "../../lib/signAxiosReq";
+import LoadingImg from "../../Components/LoadingImg/LoadingImg";
+import { Loading } from "../../redux/modules/filtervalue";
 
 function Login() {
+  const filters = useSelector((state) => state.FilterReducer);
   const [isOpen, setIsOpen] = useState(false);
   //const [alertDesc, setAlertDesc] = useState("");
   const { handleSubmit, register } = useForm();
@@ -40,6 +43,7 @@ function Login() {
 
   const onSubmit = async ({ id, password }) => {
     try {
+      dispatch(Loading(true));
       if (checkEmail(id)) {
         const user = `ids=${id}&password=${password}&type=N`;
         const url = `${API}/lolapi/logins`;
@@ -57,9 +61,10 @@ function Login() {
             dispatch(UserChargeTime(token.charge_time));
             history.push("/");
           }
+          dispatch(Loading(false));
         }, function (objStore) {
           console.log("objStore:", objStore);
-          if (objStore.message.toUpperCase() === "IC") {
+          if (objStore.message?.toUpperCase() === "IC") {
             dispatch(SetIsNeedChkLogin(true))
             const url = `${API}/lolapi/authemailcord`;
             const param = `email=${id}&type=${objStore.message}&key=${""}`;
@@ -76,10 +81,10 @@ function Login() {
                 dispatch(SetDesc(t("sign.login.fail")));
               }
             );
-
           } else {
             dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
           }
+          dispatch(Loading(false));
         }, 5000) // 서버 응답 없을 경우 timeout 설정 (5s)
 
       } else {

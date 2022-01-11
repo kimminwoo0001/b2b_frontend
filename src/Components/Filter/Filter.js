@@ -191,21 +191,21 @@ const Filter = memo(() => {
 
   // 최초 선택된 리그의 시즌이 없는 리그일 경우 팝업 적용
   useEffect(() => {
-    if(pagePath === "/league" || pagePath === "/video") {
-      if(filters.year.length !== 0) {
+    if (pagePath === "/league" || pagePath === "/video") {
+      if (filters.year.length !== 0) {
         for (let league of filters.league) {
           for (let year of filters.year) {
             const ObjectKeys = Object.keys(
               staticvalue.filterObjects[league][year]
             );
-            if(!ObjectKeys.includes(filters.season[0])){
+            if (!ObjectKeys.includes(filters.season[0])) {
               dispatch(SetDesc(t("filters.NoCommonSeasons")));
-              dispatch(SetIsOpen(true));  
+              dispatch(SetIsOpen(true));
             }
           }
         }
       }
-  
+
     }
   }, [filters.league])
 
@@ -232,8 +232,8 @@ const Filter = memo(() => {
     if (isComparePage) {
       leagueList = Object.keys(staticvalue.filterObjects).map(
         (key) =>
-          Number(Object.keys(staticvalue.filterObjects[key])) ===
-            Number(filters.year) && key
+          filters.year.filter(x => Object.keys(staticvalue.filterObjects[key]).includes(
+            x)) && key
       );
       // 선수보고서, 영상보고서, 게임보고서일 경우 LPL,LCK CL 리그 제외
     } else if (pagesWithLimitedLeagues) {
@@ -264,7 +264,7 @@ const Filter = memo(() => {
         .filter((item, pos) => yearList.indexOf(item) === pos)
         .sort()
         .reverse();
-        // 최근 연도를 자동으로 설정
+      // 최근 연도를 자동으로 설정
       dispatch(SetYear([recentYear[0]]));
       dispatch(setYearFilter(recentYear));
     } else {
@@ -327,10 +327,10 @@ const Filter = memo(() => {
   };
   // 팀이 이미 선택된 경우에 리그를 재선택하게될 때 팀 리셋하여 빈 데이터가 나오지 않게 함
   useEffect(() => {
-    if([nameSolo, nameTeam].includes(pagePath) && filters.team.length > 0) {
-       dispatch(ResetTeam());
-      }
-  },[filters.league])
+    if ([nameSolo, nameTeam].includes(pagePath) && filters.team.length > 0) {
+      dispatch(ResetTeam());
+    }
+  }, [filters.league])
 
   const fetchingTeamFilter = () => {
     let teamList = [];
@@ -440,7 +440,7 @@ const Filter = memo(() => {
         <FilterHeader />
         {filters.filterMenuState && (
           <>
-            {Number(filters.tab) >= 0 && filters.tab  !== "" && (
+            {Number(filters.tab) >= 0 && filters.tab !== "" && (
               <SelectedFilter
                 pagePath={pagePath}
                 nameSolo={nameSolo}

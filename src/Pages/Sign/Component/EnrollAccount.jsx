@@ -18,8 +18,12 @@ import {
 } from "../../../redux/modules/modalvalue";
 import signAxiosReq from "../../../lib/signAxiosReq";
 import { API } from "../../config";
+import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
+import { Loading } from "../../../redux/modules/filtervalue";
 
 const EnrollAccount = ({ id, authCode, signType }) => {
+  const filters = useSelector((state) => state.FilterReducer);
+
   // 텍스트
   const [emailText, setEmailText] = useState(""); // 이메일 텍스트
   const [emailAuthText, setEmailAuthText] = useState(""); // 이메일 보안 텍스트
@@ -108,6 +112,7 @@ const EnrollAccount = ({ id, authCode, signType }) => {
   };
 
   const checkMail = () => {
+    dispatch(Loading(true));
     const url = `${API}/lolapi/authemailcord`;
     const param = `email=${emailText}&type=EC&key=${authCode}`;
     console.log("param", param);
@@ -119,13 +124,14 @@ const EnrollAccount = ({ id, authCode, signType }) => {
         if (success) {
           dispatch(SetIsSelector(false));
           dispatch(SetIsOpen(true));
-          dispatch(SetDesc(t("sign.checkLogin.success")));
+          dispatch(SetDesc(t("sign.signUpContent.sendAuthDesc")));
           //dispatch(SetConfirmFuncId("checkLogin"));
           //setDoneCheckEmail(true);
           setEmailAlertOpen(false);
           const time = new Date().getTime() / 1000 + 180;
           setEmailAuthSendTime(time);
         }
+        dispatch(Loading(false));
       },
       function (data) {
         dispatch(SetIsSelector(false));
@@ -134,11 +140,13 @@ const EnrollAccount = ({ id, authCode, signType }) => {
         //dispatch(SetConfirmFuncId("checkLogin"));
         //setDoneCheckEmail(false);
         setEmailAlertOpen(false);
+        dispatch(Loading(false));
       }
     );
   };
 
   const checkEmailAuth = () => {
+    dispatch(Loading(true));
     const url = `${API}/lolapi/authcord`;
     const param = `authcord=${emailAuthText}&key=${authCode}&email=${emailText}&type=${signType}`;
     console.log("param", param);
@@ -155,6 +163,7 @@ const EnrollAccount = ({ id, authCode, signType }) => {
           setDoneCheckEmailAuth(true);
           setAuthAlertOpen(false);
         }
+        dispatch(Loading(false));
       },
       function (data) {
         dispatch(SetIsSelector(false));
@@ -163,6 +172,7 @@ const EnrollAccount = ({ id, authCode, signType }) => {
         //dispatch(SetConfirmFuncId("checkLogin"));
         setDoneCheckEmailAuth(false);
         setAuthAlertOpen(false);
+        dispatch(Loading(false));
       }
     );
   };
@@ -182,7 +192,6 @@ const EnrollAccount = ({ id, authCode, signType }) => {
         desc = t("sign.signUpContent.needPICACU");
       }
     }
-
     // 신규 가입 시, 이용 약관 확인
 
     if (desc.length > 0) {
@@ -192,6 +201,7 @@ const EnrollAccount = ({ id, authCode, signType }) => {
       setDoneCheckEmailAuth(true);
       setAuthAlertOpen(false);
     } else {
+      dispatch(Loading(true));
       const url = `${API}/lolapi/userinfo`;
       const param = `email=${emailText}&password=${pwText}&key=${authCode}&type=${signType}`;
       signAxiosReq(
@@ -206,8 +216,11 @@ const EnrollAccount = ({ id, authCode, signType }) => {
             //dispatch(SetConfirmFuncId("login"));
             history.push("/login");
           }
+          dispatch(Loading(false));
         },
-        function (data) {}
+        function (data) {
+          dispatch(Loading(false));
+        }
       );
     }
   };
@@ -338,12 +351,7 @@ const EnrollAccount = ({ id, authCode, signType }) => {
         </section>
       </ContentBox>
       <ButtonBox>
-        <button
-          className="cancel"
-          onClick={() => {
-            history.push("/login");
-          }}
-        >
+        <button className="cancel" onClick={onCancel}>
           {t("alert.label.cancel")}
         </button>
         <button className="confirm" onClick={onConfirm}>
