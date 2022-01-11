@@ -97,6 +97,7 @@ function Login() {
       dispatch(SetDesc(t("alert.desc.login_fail")));
       dispatch(SetIsOpen(true));
     }
+    dispatch(Loading(false));
   };
 
   const getUserIP = async () => {
