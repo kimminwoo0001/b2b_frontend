@@ -15,17 +15,20 @@ import Utility from "./Pages/Utility/Utility";
 import ItemSimulator from "./Pages/ItemSimulator/ItemSimulator";
 import PickCalculator from "./Pages/PickCalculator/PickCalculator";
 import NotFound from "./Pages/NotFound/NotFound";
-import Login from "./Pages/Login/Login";
+import Login from "./Pages/Sign/Login";
 import TeamCompare from "./Pages/TeamCompare/TeamCompare";
 import PlayerCompare from "./Pages/PlayerCompare/PlayerCompare";
 import Video from "./Pages/VideoReport/Video";
 import Footer from "./Components/Footer/Footer";
 import MetaAnalysis from "./Pages/MetaAnalysis/MetaAnalysis";
 import MatchAnalysis from "./Pages/MatchAnalysis/MatchAnalysis";
+import SingUp from "./Pages/Sign/SignUp";
+import ChangePW from "./Pages/Sign/ChangePW";
 import { useSelector } from "react-redux";
 import PiArea from "./Pages/PiArea/PiArea";
 import GameReport from "./Pages/GameReport/GameReport";
 import AlertModal from "./Components/UtilityComponent/AlertModal";
+import CheckLogin from "./Pages/Sign/CheckLogin";
 
 function Routes() {
   //const token = sessionStorage.getItem("token");
@@ -61,6 +64,9 @@ function Routes() {
         <PrivateRoute exact path="/piArea" component={PiArea} />
         <Route exact path="/error" component={NotFound} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/checkLogin" component={CheckLogin} />
+        <Route exact path="/signUp" component={SingUp} />
+        <Route exact path="/changePW" component={ChangePW} />
       </Switch>
       <Footer />
     </Router>

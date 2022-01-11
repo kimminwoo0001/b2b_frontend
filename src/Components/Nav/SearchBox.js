@@ -38,5 +38,4 @@ const SearchBoxWrapper = styled.div`
     letter-spacing: normal;
     text-align: left;
   }
-
 `;

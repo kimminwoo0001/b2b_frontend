@@ -28,7 +28,7 @@ function GameReport() {
         ) : (
           <>
             <SideBar />
-              {/* <div
+            {/* <div
               className={
                 filters.filterMenuState ? "filter-open" : "filter-close"
               }
@@ -48,10 +48,10 @@ function GameReport() {
           {filters.team !== "" && filters.team.length > 0 ? (
             <GameReportTab />
           ) : (
-              // <SelectFilter />
-              <Temporal>
-                <iframe width="1422" height="800" src="https://www.youtube.com/embed/c6e38xOmXfw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              </Temporal>
+            // <SelectFilter />
+            <Temporal>
+              <iframe width="1422" height="800" src="https://www.youtube.com/embed/c6e38xOmXfw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </Temporal>
           )}
         </ContentWrapper>
 

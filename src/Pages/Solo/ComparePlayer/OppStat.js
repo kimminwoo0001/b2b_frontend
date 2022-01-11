@@ -43,6 +43,9 @@ function OppStat() {
   );
 
   useEffect(() => {
+    if(filters.oppplayer === "") {
+      return;
+    }
     GetComparisonStat();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.oppplayer, filters.resetchamp, filters.patch]);
@@ -142,7 +145,7 @@ function OppStat() {
   if (loading) return <LoadingImg />;
   return (
     <OppStatWrapper>
-      <PlayerCompare />
+      <PlayerCompare data={player} oppData={oppPlayer}/>
       {/* 개인전적을 보여주는 의미가 없어 주석처리 */}
       {/* <PlayerStatWrapper>
         <div className="records red">{`${player?.total.value}${t(

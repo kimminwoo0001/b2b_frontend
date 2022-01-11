@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
-    <path style="fill:none" d="M0 0h30v30H0z"/>
-    <g data-name="Group 1835">
-        <path d="M12 0a12 12 0 1 0 12 12A12 12 0 0 0 12 0z" style="fill:#1c1a23" transform="translate(3 3)"/>
-        <path data-name="Union 6" d="M8.942 9.819 5 5.877 1.058 9.819a.62.62 0 0 1-.877-.877L4.124 5 .181 1.058a.62.62 0 0 1 .877-.876L5 4.124 8.942.182a.62.62 0 0 1 .877.876L5.876 5l3.943 3.942a.62.62 0 1 1-.877.877z" transform="translate(9.501 9.5)" style="fill:#fff;stroke:#fff;stroke-width:.5px"/>
-    </g>
-</svg>

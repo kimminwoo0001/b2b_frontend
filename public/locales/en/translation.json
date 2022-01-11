@@ -1,5 +1,9 @@
 {
   "title": "Hello, Nongshim Redforce!",
+  "sign": {
+    "signUp": "Sign-Up",
+    "changePW": "Forgot Password"
+  },
   "sidebar": {
     "part1": "Home",
     "part2": "League Report",
@@ -295,7 +299,8 @@
       "total": "G",
       "statLabel": "Record",
       "statLabelvs": "VS",
-      "noOppStatData": "There is no data for this match."
+      "noOppStatData": "There is no data for this match.",
+      "mainPlayerChanged" : "Main player has changed. Moves to the initial page."
     }
   },
   "filters": {
@@ -333,7 +338,8 @@
     "setPatchVersion": "Patch Version",
     "team": "Team",
     "player": "Player",
-    "NoCommonSeasons": "There are no common seasons in the selected leagues. Please select seasons again."
+    "NoCommonSeasons": "There are no common seasons in the selected leagues. Please select seasons again.",
+    "mainTeamChanged": "Main team has changed. Moves to the initial page."
   },
   "video": {
     "tab": {
@@ -431,6 +437,9 @@
     }
   },
   "alert": {
+    "login": {
+      "wrongSignIn": "Please check your ID and password."
+    },
     "logout": {
       "sessionExpires": "Your account validity time has expired and moves to the login page.",
       "loginFail": "No log in information. Please log in again."
