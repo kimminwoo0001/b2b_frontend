@@ -72,7 +72,7 @@ function PlayerFilterModal() {
       (key) =>
       filters.year.filter(x => Object.keys(staticvalue.filterObjects[key]).includes(
         x)) && key
-    );
+    ).filter((key) => key !== "LPL");
     dispatch(setLeagueFilter(leagueList.sort()));
   };
 

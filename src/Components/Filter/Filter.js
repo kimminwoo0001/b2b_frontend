@@ -239,15 +239,14 @@ const Filter = memo(() => {
       );
       // 선수보고서, 영상보고서, 게임보고서일 경우 LPL,LCK CL 리그 제외
     } else if (pagesWithLimitedLeagues) {
-      // leagueList = Object.keys(staticvalue.filterObjects).filter(
-      //   (key) => key !== "LPL" && key !== "LCK CL"
-      // );
       leagueList = Object.keys(staticvalue.filterObjects).filter(
-        (key) => key !== "LPL" 
+        (key) => key !== "LPL" && key !== "LCK CL"
       );
     } else {
-      leagueList = Object.keys(staticvalue.filterObjects);
-      console.log("keys of static value: ", leagueList);
+      // 모든 리그에서 LPL 리그 제외
+      leagueList = Object.keys(staticvalue.filterObjects).filter(
+        (key) => key !== "LPL"
+      )
     }
     dispatch(setLeagueFilter(leagueList.sort()));
   };
@@ -484,6 +483,7 @@ const Filter = memo(() => {
                       idx={idx}
                       filterData={filters.year}
                       mapData={year}
+                      radioBtn={true}
                       clickEvent={() => {
                         dispatch(Year(year));
                       }}
