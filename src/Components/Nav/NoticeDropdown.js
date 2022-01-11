@@ -11,7 +11,7 @@ function NoticeDropdown({ alertDesc, setAlertDesc, setIsOpen }) {
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
 
   const dummyAlarm = () => {
-    setAlertDesc(t("nav.noData"));
+    setAlertDesc(t("nav.hello"));
     // setIsOpen(true);
     setIsActive(!isActive);
   };
@@ -21,7 +21,7 @@ function NoticeDropdown({ alertDesc, setAlertDesc, setIsOpen }) {
         <div className="menu-container">
           <img
             className="Alert"
-            src="Images/ico-alarm.png"
+            src="Images/ico_alaram.png"
             alt="alertIcon"
             onClick={() => dummyAlarm()}
           />
@@ -31,7 +31,9 @@ function NoticeDropdown({ alertDesc, setAlertDesc, setIsOpen }) {
           >
             <ul>
               <div className="noticeTitle">{t("nav.notice")}</div>
-              <li>{alertDesc}</li>
+              <li>{alertDesc?.split('\n').map((line) => {
+                return <>{line}<br /></>
+              })}</li>
             </ul>
           </nav>
         </div>
@@ -69,8 +71,8 @@ const DropDown = styled.div`
   .menu-trigger {
     display: flex;
     align-items: center;
-    width: 144px;
-    height: 33px;
+    //width: 144px;
+    //height: 33px;
     margin: 0px 0.7px 0 15.3px;
     padding: 5px 11px 4px;
     border-radius: 16px;
@@ -115,8 +117,9 @@ const DropDown = styled.div`
     background: #23212a;
     position: absolute;
     top: 46px;
+    right:-40px;
     border-radius: 10px;
-    width: 260px;
+    //width: 260px;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
     opacity: 0;
     visibility: hidden;
@@ -142,7 +145,8 @@ const DropDown = styled.div`
   }
 
   .menu li {
-    height: 31px;
+    //height: 31px;
+    height: auto;
     text-decoration: none;
     margin: 2px;
     padding: 6px 0px;

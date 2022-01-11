@@ -91,6 +91,14 @@ function PlayerFilterModal() {
 
 
   useEffect(() => {
+    if(filters.compareModal && pagePath === '/playerCompare') {
+      fetchingOppTeamFilter();
+      fetchingOppPlayerFilter();
+    }
+  }, [filters.compareModal])
+
+
+  useEffect(() => {
     console.log("filters.menu_num", filters.menu_num);
     // dispatch(CompareModal(true));
     setOppTeamFilter([]);

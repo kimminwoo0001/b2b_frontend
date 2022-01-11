@@ -4,7 +4,7 @@ import Modal from "react-modal";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { SetIsOpen, SetSelectedResult } from "../../redux/modules/modalvalue";
+import { SetIsOpen, SetSelectedResult, SetSemiDesc } from "../../redux/modules/modalvalue";
 
 const customStyles = {
   overlay: {
@@ -51,9 +51,16 @@ const AlertModal = () => {
 
   const activeConfirmFunc = () => {
     dispatch(SetIsOpen(false));
-
-    if (desc === t("alert.logout.sessionExpires")) {
-      history.push("/login");
+    dispatch(SetSemiDesc(""));
+    switch (confirmFuncId) {
+      case "/login":
+        history.push("/login");
+        return;
+      case "/home":
+        history.push("/");
+        return;
+      default:
+        break;
     }
 
     // 팀 비교 이후 - 다시 팀 비교 누르고 oppteam 선택 없이 창 닫았을 경우 home으로 이동
@@ -63,15 +70,16 @@ const AlertModal = () => {
     }
 
     if (confirmFuncId) {
-      dispatch(SetSelectedResult(true));
+
+      dispatch(SetSelectedResult(confirmFuncId));
     }
   };
 
   const activeCancelFunc = () => {
     dispatch(SetIsOpen(false));
-
+    dispatch(SetSemiDesc(""));
     if (cancelFuncId) {
-      dispatch(SetSelectedResult(false));
+      dispatch(SetSelectedResult(""));
     }
   };
 

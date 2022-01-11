@@ -133,7 +133,12 @@ export default function ModalReducer(state = initialState, action) {
         selectedResult: action.payload
       }
     case SET_MODAL_INFO:
-      return action.payload
+      const value = action.payload;
+      if ("semiDesc" in value === false) {
+        value.semiDesc = "";
+      }
+      console.log("SET_MODAL_INFO", value);
+      return value;
     default:
       return state;
   }

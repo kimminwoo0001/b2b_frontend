@@ -9,21 +9,47 @@ import contentTOU from "../../../lib/content/contentTOU";
 import contentPICACU from "../../../lib/content/contentPICAUA";
 import checkEmail from "../../../lib/checkEmail";
 import { number } from "prop-types";
+import {
+  SetConfirmFuncId,
+  SetDesc,
+  SetIsOpen,
+  SetIsSelector,
+  SetSemiDesc,
+} from "../../../redux/modules/modalvalue";
+import signAxiosReq from "../../../lib/signAxiosReq";
+import { API } from "../../config";
 
-const EnrollAccount = ({ id }) => {
-  const [emailText, setEmailText] = useState("");
-  const [pwText, setPwText] = useState("");
-  const [pwValidateText, setPwValidateText] = useState("");
+const EnrollAccount = ({ id, authCode, signType }) => {
+  // 텍스트
+  const [emailText, setEmailText] = useState(""); // 이메일 텍스트
+  const [emailAuthText, setEmailAuthText] = useState(""); // 이메일 보안 텍스트
+  const [pwText, setPwText] = useState(""); // 패스워드 텍스트
+  const [pwValidateText, setPwValidateText] = useState(""); // 패스워드 확인 텍스트
 
-  const [authAlterOpen, setAuthAlterOpen] = useState(false);
-  const [emailAlterOpen, setEmailAlterOpen] = useState(false);
-  const [pwAlterOpen, setPwAlterOpen] = useState(false);
-  const [validatePwAlterOpen, setValidatePwAlterOpen] = useState(false);
+  // 인증 완료
+  const [doneCheckEmailAuth, setDoneCheckEmailAuth] = useState(false); // 이메일 보안 완료 여부
+  const [pwValidation, setPwValidation] = useState(false); // 패스워드 확인 여부
+
+  // 경고
+  const [authAlertOpen, setAuthAlertOpen] = useState(false); // 이메일 인증 경고 여부
+  const [emailAlertOpen, setEmailAlertOpen] = useState(false); // 이메일 경고 여부
+  const [pwAlertOpen, setPwAlertOpen] = useState(false); // 패스워드 경고 여부
+  const [validatePwAlertOpen, setValidatePwAlertOpen] = useState(false); // 패스워드 확인 경고 여부
+
+  // 체크박스
+  const [allCheck, setAllCheck] = useState(false);
+  const [checkTOU, setCheckTOU] = useState(false);
+  const [checkPICACU, setCheckPICACU] = useState(false);
+
+  // 타이머
+  const [emailAuthSendTime, setEmailAuthSendTime] = useState();
+
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const pwRef = useRef();
   const pwValidateRef = useRef();
   const lang = sessionStorage.getItem("i18nextLng");
+
   let history = useHistory();
 
   const onChange = (e) => {
@@ -35,30 +61,163 @@ const EnrollAccount = ({ id }) => {
         setPwText(value);
         if (pwValidateText.length > 0 && pwValidateText.length > 0) {
           console.log(pwValidateText.length > 0 && pwValidateText.length > 0);
-          setPwAlterOpen(!(value === pwValidateText));
+          setPwAlertOpen(!(value === pwValidateText));
         }
         if (value.length < 8 || value.length > 16) {
-          setValidatePwAlterOpen(true);
+          setValidatePwAlertOpen(true);
+          setPwValidation(false);
         } else {
-          setValidatePwAlterOpen(false);
+          setValidatePwAlertOpen(false);
+          setPwValidation(true);
         }
         break;
       case "pw-validate-input":
         setPwValidateText(value);
         if (pwText.length > 0 && pwValidateText.length > 0) {
-          setPwAlterOpen(!(value === pwText));
+          const check = value === pwText;
+          setPwAlertOpen(!check);
+          setPwValidation(check);
+        } else {
+          setPwValidation(false);
         }
         break;
       case "email-input":
         console.log("checkEmail(value)", checkEmail(value));
         setEmailText(value);
-        setEmailAlterOpen(!checkEmail(value));
+        setEmailAlertOpen(!checkEmail(value));
+        break;
+      case "email-auth-input":
+        setEmailAuthText(value);
+        //setEmailAlertOpen(!checkEmail(value));
         break;
       default:
         break;
     }
 
     console.log(value);
+  };
+
+  const btnChange = () => {
+    if (checkPICACU && checkTOU) {
+      setCheckPICACU(false);
+      setCheckTOU(false);
+    } else {
+      setCheckPICACU(true);
+      setCheckTOU(true);
+    }
+  };
+
+  const checkMail = () => {
+    const url = `${API}/lolapi/authemailcord`;
+    const param = `email=${emailText}&type=EC&key=${authCode}`;
+    console.log("param", param);
+    signAxiosReq(
+      url,
+      param,
+      function (success) {
+        console.log();
+        if (success) {
+          dispatch(SetIsSelector(false));
+          dispatch(SetIsOpen(true));
+          dispatch(SetDesc(t("sign.checkLogin.success")));
+          //dispatch(SetConfirmFuncId("checkLogin"));
+          //setDoneCheckEmail(true);
+          setEmailAlertOpen(false);
+          const time = new Date().getTime() / 1000 + 180;
+          setEmailAuthSendTime(time);
+        }
+      },
+      function (data) {
+        dispatch(SetIsSelector(false));
+        dispatch(SetIsOpen(true));
+        dispatch(SetDesc(t("sign.checkLogin.fail")));
+        //dispatch(SetConfirmFuncId("checkLogin"));
+        //setDoneCheckEmail(false);
+        setEmailAlertOpen(false);
+      }
+    );
+  };
+
+  const checkEmailAuth = () => {
+    const url = `${API}/lolapi/authcord`;
+    const param = `authcord=${emailAuthText}&key=${authCode}&email=${emailText}&type=${signType}`;
+    console.log("param", param);
+    signAxiosReq(
+      url,
+      param,
+      function (success) {
+        console.log();
+        if (success) {
+          dispatch(SetIsSelector(false));
+          dispatch(SetIsOpen(true));
+          dispatch(SetDesc(t("sign.checkLogin.success")));
+          //dispatch(SetConfirmFuncId("checkLogin"));
+          setDoneCheckEmailAuth(true);
+          setAuthAlertOpen(false);
+        }
+      },
+      function (data) {
+        dispatch(SetIsSelector(false));
+        dispatch(SetIsOpen(true));
+        dispatch(SetDesc(t("sign.checkLogin.fail")));
+        //dispatch(SetConfirmFuncId("checkLogin"));
+        setDoneCheckEmailAuth(false);
+        setAuthAlertOpen(false);
+      }
+    );
+  };
+
+  const onConfirm = () => {
+    let desc = "";
+
+    // 이메일 / 패스워드 일치 확인
+    if (!doneCheckEmailAuth) {
+      desc = t("sign.signUpContent.needEmailAuth");
+    } else if (!pwValidation) {
+      desc = t("sign.signUpContent.alertPWCheck");
+    } else if (id === "signUpContent") {
+      if (!checkTOU) {
+        desc = t("sign.signUpContent.needTOU");
+      } else if (!checkPICACU) {
+        desc = t("sign.signUpContent.needPICACU");
+      }
+    }
+
+    // 신규 가입 시, 이용 약관 확인
+
+    if (desc.length > 0) {
+      dispatch(SetIsSelector(false));
+      dispatch(SetIsOpen(true));
+      dispatch(SetDesc(desc));
+      setDoneCheckEmailAuth(true);
+      setAuthAlertOpen(false);
+    } else {
+      const url = `${API}/lolapi/userinfo`;
+      const param = `email=${emailText}&password=${pwText}&key=${authCode}&type=${signType}`;
+      signAxiosReq(
+        url,
+        param,
+        function (success) {
+          if (success) {
+            dispatch(SetIsSelector(false));
+            dispatch(SetIsOpen(true));
+            dispatch(SetDesc(t(`sign.${id}.confirmSuccess`)));
+            dispatch(SetSemiDesc(""));
+            //dispatch(SetConfirmFuncId("login"));
+            history.push("/login");
+          }
+        },
+        function (data) {}
+      );
+    }
+  };
+
+  const onCancel = () => {
+    dispatch(SetIsSelector(true));
+    dispatch(SetIsOpen(true));
+    dispatch(SetDesc(t("alert.desc.questionCancel")));
+    dispatch(SetSemiDesc(""));
+    dispatch(SetConfirmFuncId("/login"));
   };
 
   return (
@@ -77,13 +236,13 @@ const EnrollAccount = ({ id }) => {
             placeholder={t("sign.signUpContent.emailPlaceholder")}
             onChange={onChange}
           />
-          <ButtonTemp width="25">
+          <ButtonTemp width="25" onClick={checkMail}>
             {t("sign.signUpContent.sendAuthMail")}
           </ButtonTemp>
         </div>
-        <AlterBox isOpen={emailAlterOpen}>
-          {t("sign.signUpContent.emailAlter")}
-        </AlterBox>
+        <AlertBox isOpen={emailAlertOpen}>
+          {t("sign.signUpContent.emailAlert")}
+        </AlertBox>
       </section>
       <section className="auth-num">
         <header>{t("sign.signUpContent.emailAuthNum")}</header>
@@ -91,24 +250,21 @@ const EnrollAccount = ({ id }) => {
           <SetInputBox
             width="55"
             type="text"
-            id={"email-input"}
+            id={"email-auth-input"}
             placeholder={t("sign.signUpContent.authPlaceholder")}
+            onChange={onChange}
+            timer={emailAuthSendTime}
           />
-          <ButtonTemp width="20">
+          <ButtonTemp width="20" onClick={checkMail}>
             {t("sign.signUpContent.reRequest")}
           </ButtonTemp>
-          <ButtonTemp
-            width="25"
-            onClick={() => {
-              setAuthAlterOpen(true);
-            }}
-          >
+          <ButtonTemp width="25" onClick={checkEmailAuth}>
             {t("sign.signUpContent.sendAuthConfirm")}
           </ButtonTemp>
         </div>
-        <AlterBox isOpen={authAlterOpen}>
+        <AlertBox isOpen={authAlertOpen}>
           {t("sign.signUpContent.authAlert")}
-        </AlterBox>
+        </AlertBox>
       </section>
       <section className="pw">
         <header>{t("sign.signUpContent.pw")}</header>
@@ -122,9 +278,9 @@ const EnrollAccount = ({ id }) => {
             ref={pwRef}
           />
         </div>
-        <AlterBox isOpen={validatePwAlterOpen}>
+        <AlertBox isOpen={validatePwAlertOpen}>
           {t("sign.signUpContent.alterPw")}
-        </AlterBox>
+        </AlertBox>
       </section>
       <section className="validate-pw">
         <header>{t("sign.signUpContent.validate-pw")}</header>
@@ -138,17 +294,20 @@ const EnrollAccount = ({ id }) => {
             ref={pwValidateRef}
           />
         </div>
-        <AlterBox isOpen={pwAlterOpen}>
+        <AlertBox isOpen={pwAlertOpen}>
           {t("sign.signUpContent.alertPWCheck")}
-        </AlterBox>
+        </AlertBox>
       </section>
 
       <ContentBox isShow={id === "signUpContent"}>
         <section className="all-agree">
           <CheckBox
             key={"all-agree"}
-            checked={true}
+            checked={checkTOU && checkPICACU}
             text={t("sign.signUpContent.allAgree")}
+            clickEvent={() => {
+              btnChange();
+            }}
           />
         </section>
 
@@ -157,8 +316,11 @@ const EnrollAccount = ({ id }) => {
         <section className="agree-TOU">
           <CheckBox
             key={"agree-TOU"}
-            checked={true}
+            checked={checkTOU}
             text={t("sign.signUpContent.agreeOfTermsOfUse")}
+            clickEvent={() => {
+              setCheckTOU(!checkTOU);
+            }}
           />
           <ArticleBox readOnly>{`${contentTOU(lang)}`}</ArticleBox>
         </section>
@@ -166,8 +328,11 @@ const EnrollAccount = ({ id }) => {
         <section className="agree-PICAUA">
           <CheckBox
             key={"agree-PICAUA"}
-            checked={true}
+            checked={checkPICACU}
             text={t("sign.signUpContent.personalInfoCalUsageAgree")}
+            clickEvent={() => {
+              setCheckPICACU(!checkPICACU);
+            }}
           />
           <ArticleBox readOnly>{`${contentPICACU(lang)}`}</ArticleBox>
         </section>
@@ -181,12 +346,7 @@ const EnrollAccount = ({ id }) => {
         >
           {t("alert.label.cancel")}
         </button>
-        <button
-          className="confirm"
-          onClick={() => {
-            history.push("/login");
-          }}
-        >
+        <button className="confirm" onClick={onConfirm}>
           {t("alert.label.confirm")}
         </button>
       </ButtonBox>
@@ -282,7 +442,7 @@ const ArticleBox = styled.textarea`
   scrollbar-width: none; /* Firefox */
 `;
 
-const AlterBox = styled.div`
+const AlertBox = styled.div`
   visibility: ${(props) => (props.isOpen ? "visible" : "hidden")};
   margin: 5px 0px 0 20px;
   font-family: SpoqaHanSansNeo;
