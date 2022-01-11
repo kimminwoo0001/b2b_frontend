@@ -70,8 +70,8 @@ function PlayerFilterModal() {
     let leagueList = [];
     leagueList = Object.keys(staticvalue.filterObjects).map(
       (key) =>
-        Number(Object.keys(staticvalue.filterObjects[key])) ===
-          Number(filters.year) && key
+      filters.year.filter(x => Object.keys(staticvalue.filterObjects[key]).includes(
+        x)) && key
     );
     dispatch(setLeagueFilter(leagueList.sort()));
   };
@@ -81,6 +81,14 @@ function PlayerFilterModal() {
     setOppTeamFilter();
     setOppPlayerFilter();
   }, []);
+
+  // useEffect(() => {
+  //   if(filters.compareModal && pagePath === '/playerCompare') {
+  //     fetchingOppTeamFilter();
+  //     fetchingOppPlayerFilter();
+  //   }
+  // }, [filters.compareModal])
+
 
   useEffect(() => {
     if(filters.compareModal && pagePath === '/playerCompare') {
@@ -195,14 +203,15 @@ function PlayerFilterModal() {
   };
 
   //상대 선수 필터 fetch 함수
-  const fetchingOppPlayerFilter = () => {
+  const fetchingOppPlayerFilter = (team) => {
     let url = `${API}/lolapi/filter/oppplayer`;
     let params = {
       league: filters.league,
       year: filters.year,
       season: filters.season,
       patch: filters.patch,
-      team: filters.oppteam,
+      // team: filters.oppteam,
+      team: team ? team : filters.modalOppteam,
       position: filters.position,
       token: user.token,
       id: user.id,
@@ -607,7 +616,7 @@ function PlayerFilterModal() {
                             // dispatch(OppPlayer(""));
                             dispatch(SetModalOppTeam(team));
                             dispatch(SetModalOppplayer(""));
-                            // fetchingOppPlayerFilter(team);
+                            fetchingOppPlayerFilter(team);
                           }}
                         currentTeam={filters.modalOppteam.length > 0 ? filters.modalOppteam === team : filters.oppteam === team}
 
@@ -626,7 +635,7 @@ function PlayerFilterModal() {
                     })}
                   </OppTeamBox>
                   <OppPlayerBox
-                    isOppTeamSelected={filters.oppteam.length > 0}
+                    isOppTeamSelected={(filters.oppteam.length > 0 || filters.modalOppteam.length > 0) && filters.player !== "" }
                     isFilterSelected={filters.league.length > 0}
                   >
                     <div className="Nav2">{t("filters.player")}</div>

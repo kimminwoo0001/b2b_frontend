@@ -68,6 +68,8 @@ const TeamFilterModal = () => {
     let leagueList = [];
     leagueList = Object.keys(staticvalue.filterObjects).map(
       (key) =>
+        // Number(Object.keys(staticvalue.filterObjects[key])) ===
+        //   Number(filters.year) && key
         filters.year.filter(x => Object.keys(staticvalue.filterObjects[key]).includes(
           x)) && key
     );
@@ -132,10 +134,7 @@ const TeamFilterModal = () => {
               dispatch(CompareModal(false));
               // dispatch(SetModalTeam([]));
               dispatch(SetModalOppTeam([]));
-
               // dispatch(OppTeam([]));
-
-
               // history.push("/team");
               // dispatch(setTeamFilter([]));
               // setOppTeamFilter([]);
