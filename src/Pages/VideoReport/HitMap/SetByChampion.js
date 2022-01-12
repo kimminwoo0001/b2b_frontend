@@ -1250,7 +1250,8 @@ const DropDownToggle = styled.div`
     margin: 0 8px 0 4px;
   }
   .menu {
-    background: rgb(47, 45, 56);
+    background: #23212a;
+    border-radius: 10px;
     position: absolute;
     top: 10;
     right: 1;
@@ -1264,7 +1265,8 @@ const DropDownToggle = styled.div`
   }
 
   .menu3 {
-    background: rgb(47, 45, 56);
+    background: #23212a;
+    border-radius: 10px;
     position: absolute;
     top: 10;
     right: 1;
@@ -1306,7 +1308,6 @@ const DropDownToggle = styled.div`
     text-decoration: none;
     padding: 15px 20px;
     display: block;
-    width: 140px;
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 11px;
     letter-spacing: -0.55px;
@@ -1316,6 +1317,8 @@ const DropDownToggle = styled.div`
     z-index: 9999;
     :hover {
       background-color: rgb(60, 58, 72);
+      border-radius: 20px;
+      
     }
   }
 
