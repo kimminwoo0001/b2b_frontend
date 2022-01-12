@@ -80,7 +80,7 @@ function Player() {
               <div>
                 {filters.getoppplayer && pagePath !== "/playerCompare" ? (
                   <span>
-                    {t("solo.tabs.comparison")} : {filters.getoppplayer}
+                    {t("solo.tabs.comparison")} : {filters.oppplayer}
                   </span>
                 ) : (
                   <span>{t("solo.tabs.comparison")}</span>

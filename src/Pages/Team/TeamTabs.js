@@ -12,6 +12,7 @@ import {
   CompareModal,
   HandleTab,
   ResetFilter2,
+  SetCopyFilters
 } from "../../redux/modules/filtervalue";
 import BanIndex from "./BanReport/BanIndex";
 import TeamIndex from "./TeamReport/TeamIndex";
@@ -109,6 +110,7 @@ function TeamTabs() {
                   onClick={() => {
                     // dispatch(HandleTab(2));
                     dispatch(CompareModal(true));
+                    dispatch(SetCopyFilters(filters));
                     //setOpenModal(true);
                   }}
                   changeColor={filters.tab === 2}
