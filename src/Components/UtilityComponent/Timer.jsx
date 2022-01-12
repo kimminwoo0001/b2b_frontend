@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import secToMS from "../../lib/secToMS";
 
 const Timer = ({ time, timeOutFunc }) => {
-  const [sec, setSec] = useState(time);
+  const [sec, setSec] = useState(180);
   //const value = secToMS(time);
 
   useEffect(() => {
