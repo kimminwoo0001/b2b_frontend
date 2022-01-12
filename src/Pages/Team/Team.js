@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import SideBar from "../../Components/SideBar/SideBar";
 import Filter from "../../Components/Filter/Filter";
@@ -12,6 +13,11 @@ import CloseFilter from "../../Components/Filter/CloseFilter";
 
 function Team() {
   const filters = useSelector((state) => state.FilterReducer);
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    document.title = `${t("sidebar.part3")} - NUNU.GG`
+  }, [])
 
   return (
     <ErrorBoundary>

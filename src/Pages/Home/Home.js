@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 import Nav from "../../Components/Nav/Nav";
@@ -7,6 +8,11 @@ import HomeContents from "./HomeContents";
 import ErrorBoundary from "../../Components/ErrorBoundary";
 function Home() {
   // 홈 화면 컨테이너
+  const { t } = useTranslation();
+  useEffect(() => {
+    document.title = `${t("sidebar.part1")} - NUNU.GG`
+  }, [])
+
   return (
     <ErrorBoundary>
       {console.log("홈 실행")}
