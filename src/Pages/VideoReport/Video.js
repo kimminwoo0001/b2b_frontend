@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-
 import SideBar from "../../Components/SideBar/SideBar";
 import Filter from "../../Components/Filter/Filter";
 import SelectFilter from "../../Components/SelectFilter/SelectFilter";
@@ -12,6 +12,11 @@ import CloseFilter from "../../Components/Filter/CloseFilter";
 
 function Video() {
   const filters = useSelector((state) => state.FilterReducer);
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    document.title = `${t("sidebar.part6")} - NUNU.GG`
+  }, [])
 
   return (
     <ErrorBoundary>

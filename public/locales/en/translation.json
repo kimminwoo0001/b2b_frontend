@@ -342,7 +342,8 @@
     "team": "Team",
     "player": "Player",
     "NoCommonSeasons": "There are no common seasons in the selected leagues. Please select seasons again.",
-    "mainTeamChanged": "Main team has changed. Moves to the initial page."
+    "mainTeamChanged": "Main team has changed. Moves to the initial page.",
+    "sorry": "Season of 2022 data is not yet supported because the first match of season 2022 has not been completed. We will provide the service as soon as possible."
   },
   "video": {
     "tab": {

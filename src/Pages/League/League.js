@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 import SideBar from "../../Components/SideBar/SideBar";
@@ -13,6 +14,12 @@ import CloseFilter from "../../Components/Filter/CloseFilter";
 
 function League() {
   const filters = useSelector((state) => state.FilterReducer);
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    document.title = `${t("sidebar.part2")} - NUNU.GG`
+  }, [])
+
   return (
     <ErrorBoundary>
       <Nav />

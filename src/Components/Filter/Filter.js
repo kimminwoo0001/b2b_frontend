@@ -278,8 +278,8 @@ const Filter = memo(() => {
         dispatch(ResetYear());
       } else if (filters.league.length > 0) {
         for (let league of filters.league) {
-          // const ObjectKeys = Object.keys(staticvalue.filterObjects[league]);
-          const ObjectKeys = ["2021"];
+          const ObjectKeys = Object.keys(staticvalue.filterObjects[league]);
+          // const ObjectKeys = ["2021"];
           yearList = yearList.concat(ObjectKeys);
         }
         yearList = yearList

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import SideBar from "../../Components/SideBar/SideBar";
 // import Filter from "../../Components/Filter/Filter";
@@ -19,8 +20,13 @@ import PlayerFilterModal from "../../Components/Filter/PlayerFilterModal";
 function GameReport() {
   const filters = useSelector((state) => state.FilterReducer);
   const gamevalue = useSelector((state) => state.GameReportReducer);
+  const { t } = useTranslation();
   const checkGameId = gamevalue.fixedDataset.length === 2;
   const copyvalue = useSelector((state) => state.CopyReducer);
+
+  useEffect(() => {
+    document.title = `${t("sidebar.part12")} - NUNU.GG`
+  }, [])
 
   return (
     <ErrorBoundary>

@@ -19,7 +19,6 @@ function SelectPosition({ position, setPosition }) {
     else if (value === "all") {
       setPosition(["top", "jng", "mid", "bot", "sup"]);
     }
-    console.log(position);
   };
 
   return (
@@ -157,5 +156,6 @@ const PositionButton = styled.button`
     props.isActive &&
     css`
       background-color: #23212a;
+      color: #ffffff;
     `}
 `;

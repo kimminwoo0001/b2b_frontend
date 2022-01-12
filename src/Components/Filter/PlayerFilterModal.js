@@ -39,7 +39,6 @@ import { API } from "../../Pages/config";
 import { useDetectOutsideClick } from "../../Pages/PlayerCompare/useDetectOustsideClick";
 import axiosRequest from "../../lib/axiosRequest";
 import { SetModalInfo } from "../../redux/modules/modalvalue";
-import { fil } from 'date-fns/locale';
 
 function PlayerFilterModal() {
   // sidebar 선수 비교 눌렀을때 뜨는 모달창
@@ -69,6 +68,7 @@ function PlayerFilterModal() {
   let history = useHistory();
 
   useEffect(() => {
+    document.title = `${t("sidebar.part9")} - NUNU.GG`
     fetchYearFilter();
     setOppTeamFilter([]);
     setOppPlayerFilter([]);

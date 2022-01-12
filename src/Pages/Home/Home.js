@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 import Nav from "../../Components/Nav/Nav";
@@ -12,6 +13,11 @@ import PlayerFilterModal from "../../Components/Filter/PlayerFilterModal";
 function Home() {
   // 홈 화면 컨테이너
   const copyvalue = useSelector((state) => state.CopyReducer);
+  const { t } = useTranslation();
+  useEffect(() => {
+    document.title = `${t("sidebar.part1")} - NUNU.GG`
+  }, [])
+
   return (
     <ErrorBoundary>
       {console.log("홈 실행")}
