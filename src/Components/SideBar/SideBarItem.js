@@ -1,6 +1,6 @@
 import React,{ useState, useEffect } from "react";
-import { MenuNum, InitailizeState, CompareModal } from "../../redux/modules/filtervalue";
-import { useDispatch } from "react-redux";
+import { MenuNum, InitailizeState, CompareModal, SetCopyFilters } from "../../redux/modules/filtervalue";
+import { useDispatch,useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { SelectorInitailizeState } from "../../redux/modules/selectorvalue";
 import { InitializeGameState } from "../../redux/modules/gamevalue";
@@ -20,6 +20,8 @@ const SideBarItem = ({ menu, idx }) => {
   const dispatch = useDispatch();
   let history = useHistory();
   const changeTitle = useTitle(null);
+  const filters = useSelector((state) => state.FilterReducer);
+
 
   return (
     <MenuWrapper
@@ -31,6 +33,7 @@ const SideBarItem = ({ menu, idx }) => {
         dispatch(InitializeGameState());
         dispatch(MenuNum(menu.idx));
         menu.modal && dispatch(CompareModal(true));
+        [7,8].includes(menu.idx) && dispatch(SetCopyFilters(filters));
       }}
       changeColor={menu.changeColor}
     >

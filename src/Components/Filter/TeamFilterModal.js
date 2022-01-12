@@ -25,6 +25,7 @@ import {
   SetModalTeam,
   SetModalOppTeam,
   Loading,
+  Reset_Map
 } from "../../redux/modules/filtervalue";
 import {
   setLeagueFilter,
@@ -138,6 +139,7 @@ const TeamFilterModal = () => {
               dispatch(CompareModal(false));
               // dispatch(SetModalTeam([]));
               dispatch(SetModalOppTeam([]));
+              dispatch(Reset_Map(filters.copyfilters))
               // dispatch(OppTeam([]));
               // history.push("/team");
               // dispatch(setTeamFilter([]));

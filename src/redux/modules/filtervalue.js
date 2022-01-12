@@ -50,6 +50,7 @@ export const SET_MODAL_PLAYER = "filtervalue/SET_MODAL_PLAYER";
 export const SET_MODAL_OPPPLAYER = "filtervalue/SET_MODAL_OPPPLAYER";
 export const SET_MODAL_SEASON= "filtervalue/SET_MODAL_SEASON";
 export const SET_MODAL_PATCH = "filtervalue/SET_MODAL_PATCH";
+export const SET_COPY_FILTERS = "filtervalue/SET_COPY_FILTERS";
 
 
 
@@ -395,6 +396,13 @@ export const SetModalPatch = (payload) => {
   };
 };
 
+export const SetCopyFilters = (payload) => {
+  return {
+    type: SET_COPY_FILTERS,
+    payload,
+  };
+};
+
 const initialState = {
   league: [],
   year: [],
@@ -426,6 +434,7 @@ const initialState = {
   modalOppplayer: "",
   modalSeason:[],
   modalPatch:[],
+  copyfilters: {},
 
   // compareModal: false,
 };
@@ -733,6 +742,11 @@ export default function FilterReducer(state = initialState, action) {
         return {
           ...state,
           modalPatch: action.payload,
+        };
+      case SET_COPY_FILTERS:
+        return {
+          ...state,
+          copyfilters: action.payload,
         };
     default:
       return state;

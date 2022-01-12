@@ -27,7 +27,8 @@ import {
   SetModalPlayer,
   SetModalOppTeam,
   SetModalOppplayer,
-  Loading
+  Loading,
+  ResetMap
 } from "../../redux/modules/filtervalue";
 import {
   setLeagueFilter,
