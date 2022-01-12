@@ -61,6 +61,7 @@ function SelectGame({
                 </GameNav>
                 <ShowChampion>
                   <RedSide isActive={data.side === "blue"}>
+                    <LeftSideColor color={data.side === "blue"}></LeftSideColor>
                     <img
                       src={`Images/champion/${data?.champion[0]}.png`}
                       alt="champ"
@@ -104,6 +105,7 @@ function SelectGame({
                       src={`Images/champion/${data?.oppchampion[4]}.png`}
                       alt="champ"
                     />
+                    <RightSideColor color={data.side === "blue"}></RightSideColor>
                   </BlueSide>
                 </ShowChampion>
               </Game>
@@ -266,6 +268,37 @@ const RedSide = styled.div`
       // background-image: url("Images/left-blue-gradient.png");
     `}
 `;
+
+const LeftSideColor = styled.div`
+    width: 3px;
+    height: 20px;
+    margin-right: 7px;
+
+    ${props => props.color ? css`
+    background-color: #0075bf;
+    `
+    :
+    css`
+     background-color: #f04545;
+    `
+  }
+`;
+
+const RightSideColor = styled.div`
+    width: 3px;
+    height: 20px;
+    margin-left: 7px;
+
+    ${props => props.color ? css`
+    background-color: #f04545;
+    `
+    :
+    css`
+     background-color: #0075bf;
+    `
+  }
+`;
+
 
 const VS = styled.div`
   font-family: Poppins;
