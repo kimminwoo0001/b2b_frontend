@@ -30,7 +30,8 @@
       "alertCode": "유효하지 않은 등록코드입니다.",
       "authAlert": "해당 등록코드로 등록된 계정이 있습니다.\n계정 등록을 계속 하시겠습니까?",
       "authSemiAlert": "등록을 진행하면 이전 계정을 사용 할 수 없습니다.",
-      "authNotDone": "등록코드 인증을 완료해야 합니다."
+      "authNotDone": "등록코드 인증을 완료해야 합니다.",
+      "expirationKey": "만료된 등록코드입니다.\n관리자에게 문의하세요."
     },
     "signUpContent": {
       "hello": "NUNU.GG에 오신 것을 환영합니다.",
@@ -55,7 +56,8 @@
       "needEmailAuth": "이메일 인증이 필요합니다.",
       "needTOU": "nunu.gg 이용약관에 동의가 필요합니다.",
       "needPICACU": "개인정보 수집 및 이용동의에 동의가 필요합니다.",
-      "confirmSuccess": "계정 생성이 완료되었습니다."
+      "confirmSuccess": "계정 생성이 완료되었습니다.",
+      "emailAuthTimeOut": "이메일 인증 시간이 만료되었습니다."
     },
     "changePw": {
       "subject": "비밀번호 변경을 위한 등록코드 입력",
@@ -517,7 +519,9 @@
       "login_fail": "로그인 실패 : 시간 제한이 초과되었습니다.",
       "serverError": "서버에 문제가 생겼습니다. 관리자에게 문의해주세요.",
       "questionCancel": "취소하시겠습니까?",
-      "questionContinue": "계속하시겠습니까?"
+      "questionContinue": "계속하시겠습니까?",
+      "tryLoginAgain": "이전 로그인 계정을 로그아웃 하였습니다.\n다시 로그인 바랍니다.",
+      "loginTimeOver": "계정의 사용 기간이 만료되었습니다."
     }
   },
   "label": {

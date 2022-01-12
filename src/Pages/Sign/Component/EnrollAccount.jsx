@@ -47,6 +47,7 @@ const EnrollAccount = ({ id, authCode, signType }) => {
 
   // 타이머
   const [emailAuthSendTime, setEmailAuthSendTime] = useState();
+  const [emailAuthTimeOut, setEmailAuthTimeOut] = useState(false);
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -130,6 +131,7 @@ const EnrollAccount = ({ id, authCode, signType }) => {
           setEmailAlertOpen(false);
           const time = new Date().getTime() / 1000 + 180;
           setEmailAuthSendTime(time);
+          setEmailAuthTimeOut(false);
         }
         dispatch(Loading(false));
       },
@@ -146,6 +148,12 @@ const EnrollAccount = ({ id, authCode, signType }) => {
   };
 
   const checkEmailAuth = () => {
+    if (emailAuthTimeOut) {
+      dispatch(SetIsSelector(false));
+      dispatch(SetIsOpen(true));
+      dispatch(SetDesc(t("sign.signUpContent.emailAuthTimeOut")));
+      return;
+    }
     dispatch(Loading(true));
     const url = `${API}/lolapi/authcord`;
     const param = `authcord=${emailAuthText}&key=${authCode}&email=${emailText}&type=${signType}`;
@@ -267,6 +275,7 @@ const EnrollAccount = ({ id, authCode, signType }) => {
             placeholder={t("sign.signUpContent.authPlaceholder")}
             onChange={onChange}
             timer={emailAuthSendTime}
+            timeOutFunc={setEmailAuthTimeOut}
           />
           <ButtonTemp width="20" onClick={checkMail}>
             {t("sign.signUpContent.reRequest")}

@@ -64,7 +64,9 @@ function Login() {
           dispatch(Loading(false));
         }, function (objStore) {
           console.log("objStore:", objStore);
-          if (objStore.message?.toUpperCase() === "IC") {
+          const msg = objStore.message?.toUpperCase(); // IC: 로그인 환경 변경, TA: 재로그인 요청, TO: 사용기간 지남 
+
+          if (msg === "IC") {
             dispatch(SetIsNeedChkLogin(true))
             const url = `${API}/lolapi/authemailcord`;
             const param = `email=${id}&type=${objStore.message}&key=${""}`;
@@ -81,6 +83,12 @@ function Login() {
                 dispatch(SetDesc(t("sign.login.fail")));
               }
             );
+          } else if (msg === "TA") {
+            dispatch(SetDesc(t("alert.desc.tryLoginAgain")));
+            dispatch(SetIsOpen(true));
+          } else if (msg === "TO") {
+            dispatch(SetDesc(t("alert.desc.loginTimeOver")));
+            dispatch(SetIsOpen(true));
           } else {
             dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
           }
@@ -148,13 +156,13 @@ function Login() {
               {t("alert.login.wrongSignIn")}
             </AlertLogin>
             <SettingFlexBox>
-              {/* <div className="left"><span onClick={() => {
+              <div className="left"><span onClick={() => {
                 history.push("/signUp")
               }}>{t("sign.signUp")}</span></div>
               <div className="center"><span>|</span></div>
               <div className="right"><span onClick={() => {
                 history.push("/changePw")
-              }}>{t("sign.changePW")}</span></div> */}
+              }}>{t("sign.changePW")}</span></div>
             </SettingFlexBox>
           </ViewContainer>
         </LoginContainer>
