@@ -52,6 +52,7 @@ import { useForm } from 'react-hook-form';
 
 const Filter = memo(() => {
   const filters = useSelector((state) => state.FilterReducer);
+  const copyvalue = useSelector((state) => state.CopyReducer);
   const user = useSelector((state) => state.UserReducer);
   const staticvalue = useSelector((state) => state.StaticValueReducer);
   const selector = useSelector((state) => state.SelectorReducer);
@@ -216,7 +217,7 @@ const Filter = memo(() => {
       fetchYearFilter();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.compareModal]);
+  }, [copyvalue.compareModal]);
 
   const fetchActiveFilter = () => {
     if (selector.leagueFilter?.length > 0) fetchLeagueFilter();
@@ -444,8 +445,8 @@ const Filter = memo(() => {
   return (
     <>
       <AlertModal />
-      {pagePath === nameTeamCompare && <TeamFilterModal />}
-      {pagePath === namePlayerCompare && <PlayerFilterModal />}
+      {[nameTeamCompare, nameTeam].includes(copyvalue.openFilterModal) && <TeamFilterModal />}
+      {[nameSolo, namePlayerCompare].includes(copyvalue.openFilterModal) && <PlayerFilterModal />}
       <FilterWrapper>
         <FilterHeader />
         {filters.filterMenuState && (

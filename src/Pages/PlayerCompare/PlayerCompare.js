@@ -11,7 +11,7 @@ import Filter from "../../Components/Filter/Filter";
 import CloseFilter from "../../Components/Filter/CloseFilter";
 function PlayerCompare() {
   const filters = useSelector((state) => state.FilterReducer);
-
+  const copyvalue = useSelector((state) => state.CopyReducer);
   return (
     <ErrorBoundary>
       <Nav />
@@ -28,7 +28,7 @@ function PlayerCompare() {
           <CloseFilter />
         </div>
         <ContentWrapper>
-          {filters.compareModal === false ? <Player /> : <SelectFilter />}
+          {copyvalue.compareModal === false ? <Player /> : <SelectFilter />}
         </ContentWrapper>
       </SoloWrapper>
     </ErrorBoundary>
