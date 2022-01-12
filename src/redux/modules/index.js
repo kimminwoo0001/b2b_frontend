@@ -11,6 +11,7 @@ import modalvalue from "./modalvalue";
 import gamevalue from "./gamevalue";
 import videovalue from "./videovalue";
 import signvalue from "./signvalue";
+import copyvalue from "./copyvalue"
 
 import { persistReducer } from "redux-persist";
 import storageSession from "redux-persist/lib/storage/session";
@@ -42,6 +43,7 @@ const appReducer = combineReducers({
   GameReportReducer: gamevalue,
   VideoReducer: videovalue,
   SignReducer: signvalue,
+  CopyReducer: copyvalue
 });
 
 const rootReducer = (state, action) => {

@@ -27,6 +27,7 @@ import {
 function CompareIngame() {
   //팀 비교 인게임 지표
   const filters = useSelector((state) => state.FilterReducer);
+  const copyvalue = useSelector((state) => state.CopyReducer);
   const user = useSelector((state) => state.UserReducer);
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
@@ -67,11 +68,11 @@ function CompareIngame() {
 
   useEffect(() => {
     // 모달창이 닫혀있으면서 팀비교 탭인 경우에만 인게임지표 api 호출
-    if (!filters.compareModal && filters.tab === 2) {
+    if (!copyvalue.compareModal && filters.tab === 2) {
       GetInGameData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.compareModal, filters.tab, filters.patch]);
+  }, [copyvalue.compareModal, filters.tab, filters.patch]);
 
   //밴지표 전체 데이터 가져오는 함수
   const GetInGameData = () => {
