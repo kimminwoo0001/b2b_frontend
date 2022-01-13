@@ -69,8 +69,16 @@ const SetCode = ({ id, authCode, setAuthCode, setSignType, signType }) => {
         }
         dispatch(Loading(false));
       },
-      function (data) {
-        setAlertOpen(true);
+      function (msg) {
+        if (msg === "NU") {
+          dispatch(SetIsSelector(false));
+          dispatch(SetIsOpen(true));
+          dispatch(SetDesc(t("sign.setCode.expirationKey")));
+          dispatch(SetConfirmFuncId("NU"));
+          dispatch(SetSemiDesc(""));
+        } else {
+          setAlertOpen(true);
+        }
         dispatch(Loading(false));
       }
     );
@@ -83,6 +91,7 @@ const SetCode = ({ id, authCode, setAuthCode, setSignType, signType }) => {
       dispatch(SetIsSelector(false));
       dispatch(SetIsOpen(true));
       dispatch(SetDesc(t("sign.setCode.authNotDone")));
+      dispatch(SetConfirmFuncId("authNotDone"));
       dispatch(SetSemiDesc(""));
     }
   };
@@ -109,9 +118,7 @@ const SetCode = ({ id, authCode, setAuthCode, setSignType, signType }) => {
           maxlength={16}
         />
         <CertificationButton
-          onClick={() => {
-            codeAuth();
-          }}
+          onClick={codeAuth}
           isActive={authCode.length === 16}
         >
           {t("sign.setCode.certification")}

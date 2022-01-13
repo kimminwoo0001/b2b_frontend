@@ -42,6 +42,7 @@ function NormalInfo() {
   const [data, setData] = useState();
   const [oppData, setOppData] = useState();
   const isInitialMount = useRef(true);
+  const [RadarData, setRadarData] = useState();
 
   const [isActiveOpp, setIsActiveOpp] = useDetectOutsideClick(
     dropdownRef,
@@ -90,25 +91,73 @@ function NormalInfo() {
         setData(copy);
         setOppData(copyoppData);
         //선수 데이터
-        setPlayer({
+        const player = {
           line: copy.line.toFixed(1),
           investment: copy.investment.toFixed(1),
           loss: copy.loss.toFixed(1),
-          match: copy.match.toFixed(1),
+          match: copy.match ? copy.match.toFixed(1) : 50,
           gold: copy.gold.toFixed(1),
-        });
-        //상대 선수 데이터
-        setOppPlayer({
+        }
+        const oppPlayer = {
           line: copyoppData.line.toFixed(1),
           investment: copyoppData.investment.toFixed(1),
           loss: copyoppData.loss.toFixed(1),
-          match: copyoppData.match.toFixed(1),
+          match: copyoppData.match ? copyoppData.match.toFixed(1) : 50,
           gold: copyoppData.gold.toFixed(1),
-        });
+        }
+        //상대 선수 데이터
+        setPlayer(player);
+        setOppPlayer(oppPlayer);
+        setRadarData({
+          labels: [
+            t("solo.comparison.LanePhase"),
+            t("solo.comparison.smartDmg"),
+            t("solo.comparison.smartTank"),
+            t("solo.comparison.teamfight"),
+            t("solo.comparison.growth"),
+          ],
+          datasets: [
+            {
+              label: filters.player,
+              backgroundColor: "rgba(240, 69, 69, 0.2)",
+              borderColor: "#f04545",
+              pointBackgroundColor: "rgba(240, 69, 69, 0.2)",
+              poingBorderColor: "#f04545",
+              pointHoverBackgroundColor: "#f04545",
+              pointHoverBorderColor: "rgba(240, 69, 69, 0.2)",
+              data: [
+                player?.line,
+                player?.investment,
+                player?.loss,
+                player?.match,
+                player?.gold,
+              ],
+              pointStyle: "line",
+            },
+            {
+              label: filters.oppplayer,
+              backgroundColor: "rgba(0, 117, 191, 0.2)",
+              borderColor: "#0075bf",
+              pointBackgroundColor: "rgba(0, 117, 191, 0.2)",
+              poingBorderColor: "#0075bf",
+              pointHoverBackgroundColor: "#0075bf",
+              pointHoverBorderColor: "rgba(0, 117, 191, 0.2)",
+              data: [
+                oppPlayer?.line,
+                oppPlayer?.investment,
+                oppPlayer?.loss,
+                oppPlayer?.match,
+                oppPlayer?.gold,
+              ],
+              pointStyle: "line",
+            },
+          ],
+        })
         setLoading(false);
       },
       function (objStore) {
         dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        setLoading(false);
       }
     );
   };
@@ -167,52 +216,56 @@ function NormalInfo() {
     );
   };
 
+
+
+
   // 오각형 그래프 세팅
-  const RadarData = {
-    labels: [
-      t("solo.comparison.LanePhase"),
-      t("solo.comparison.smartDmg"),
-      t("solo.comparison.smartTank"),
-      t("solo.comparison.teamfight"),
-      t("solo.comparison.growth"),
-    ],
-    datasets: [
-      {
-        label: filters.player,
-        backgroundColor: "rgba(240, 69, 69, 0.2)",
-        borderColor: "#f04545",
-        pointBackgroundColor: "rgba(240, 69, 69, 0.2)",
-        poingBorderColor: "#f04545",
-        pointHoverBackgroundColor: "#f04545",
-        pointHoverBorderColor: "rgba(240, 69, 69, 0.2)",
-        data: [
-          player?.line,
-          player?.investment,
-          player?.loss,
-          player?.match,
-          player?.gold,
-        ],
-        pointStyle: "line",
-      },
-      {
-        label: filters.oppplayer,
-        backgroundColor: "rgba(0, 117, 191, 0.2)",
-        borderColor: "#0075bf",
-        pointBackgroundColor: "rgba(0, 117, 191, 0.2)",
-        poingBorderColor: "#0075bf",
-        pointHoverBackgroundColor: "#0075bf",
-        pointHoverBorderColor: "rgba(0, 117, 191, 0.2)",
-        data: [
-          oppPlayer?.line,
-          oppPlayer?.investment,
-          oppPlayer?.loss,
-          oppPlayer?.match,
-          oppPlayer?.gold,
-        ],
-        pointStyle: "line",
-      },
-    ],
-  };
+  // const RadarData = {
+  //   labels: [
+  //     t("solo.comparison.LanePhase"),
+  //     t("solo.comparison.smartDmg"),
+  //     t("solo.comparison.smartTank"),
+  //     t("solo.comparison.teamfight"),
+  //     t("solo.comparison.growth"),
+  //   ],
+  //   datasets: [
+  //     {
+  //       label: filters.player,
+  //       backgroundColor: "rgba(240, 69, 69, 0.2)",
+  //       borderColor: "#f04545",
+  //       pointBackgroundColor: "rgba(240, 69, 69, 0.2)",
+  //       poingBorderColor: "#f04545",
+  //       pointHoverBackgroundColor: "#f04545",
+  //       pointHoverBorderColor: "rgba(240, 69, 69, 0.2)",
+  //       data: [
+  //         player?.line,
+  //         player?.investment,
+  //         player?.loss,
+  //         player?.match,
+  //         player?.gold,
+  //       ],
+  //       pointStyle: "line",
+  //     },
+  //     {
+  //       label: filters.oppplayer,
+  //       backgroundColor: "rgba(0, 117, 191, 0.2)",
+  //       borderColor: "#0075bf",
+  //       pointBackgroundColor: "rgba(0, 117, 191, 0.2)",
+  //       poingBorderColor: "#0075bf",
+  //       pointHoverBackgroundColor: "#0075bf",
+  //       pointHoverBorderColor: "rgba(0, 117, 191, 0.2)",
+  //       data: [
+  //         oppPlayer?.line,
+  //         oppPlayer?.investment,
+  //         oppPlayer?.loss,
+  //         oppPlayer?.match,
+  //         oppPlayer?.gold,
+  //       ],
+  //       pointStyle: "line",
+  //     },
+  //   ],
+  // };
+  // console.log("RadarData", RadarData);
 
   //오각형 그래프 옵션
   const options = {
@@ -523,7 +576,7 @@ function NormalInfo() {
           </DropDownContainer>
         </ChampionSettingNav> */}
         <CompareChart>
-          <Radar type="radar" data={RadarData} options={options} />
+          {RadarData && <Radar type="radar" data={RadarData} options={options} />}
         </CompareChart>
       </NormalCompare>
     </NormalInfoWrapper>

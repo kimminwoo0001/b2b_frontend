@@ -40,8 +40,6 @@ const AlertModal = () => {
   );
   const pagePath = document.location.pathname;
 
-  console.log("desc:", desc);
-
   useEffect(() => {
     console.log("모달 창 useEffect");
     if (isOpen) {

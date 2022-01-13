@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Tippy from "@tippy.js/react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
@@ -35,9 +35,6 @@ const EventLogBox = () => {
       realCount: 0,
     });
   }
-
-  console.log("eventLog", eventLog);
-
   useEffect(() => {
     console.log(gamevalue.eventLogActiveIdx);
   }, [gamevalue.eventLogActiveIdx]);

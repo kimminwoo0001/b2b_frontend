@@ -8,7 +8,6 @@ import ComparePlayer from "../Solo/ComparePlayer/ComparePlayer";
 import PlayerSelectModal from "../../Components/Filter/PlayerSelectModal";
 import { useTranslation } from "react-i18next";
 import {
-  CompareModal,
   HandleTab,
   ResetChampion,
   ResetFilter2,
@@ -16,9 +15,11 @@ import {
 import ErrorBoundary from "../../Components/ErrorBoundary";
 import HitMap from "../VideoReport/HitMap/HitMap";
 import PlayerFilterModal from "../../Components/Filter/PlayerFilterModal";
+import { CompareModal, SetCopyFilters, SetOpenFilterModal } from "../../redux/modules/copyvalue";
 
 function Player() {
   const filters = useSelector((state) => state.FilterReducer);
+  const copyvalue = useSelector((state) => state.CopyReducer);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const pagePath = document.location.pathname;
@@ -32,7 +33,6 @@ function Player() {
 
   return (
     <>
-      {filters.compareModal && <PlayerFilterModal />}
       <ErrorBoundary>
         <BoardWrapper>
           <TabContainer>
@@ -72,7 +72,9 @@ function Player() {
           </SoloReport> */}
             <TabContent
               onClick={() => {
+                dispatch(SetCopyFilters(filters));
                 dispatch(CompareModal(true));
+                pagePath === "/playerCompare" ? dispatch(SetOpenFilterModal("/playerCompare")) : dispatch(SetOpenFilterModal("/solo"));
                 // dispatch(HandleTab(1));/
               }}
               changeColor={filters.tab === 1}
@@ -80,7 +82,7 @@ function Player() {
               <div>
                 {filters.getoppplayer && pagePath !== "/playerCompare" ? (
                   <span>
-                    {t("solo.tabs.comparison")} : {filters.getoppplayer}
+                    {t("solo.tabs.comparison")} : {filters.oppplayer}
                   </span>
                 ) : (
                   <span>{t("solo.tabs.comparison")}</span>

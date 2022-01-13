@@ -39,6 +39,7 @@ function Login() {
     } else {
       sessionStorage.setItem("i18nextLng", "en");
     }
+    document.title = `NUNU.GG`
   }, []);
 
   const onSubmit = async ({ id, password }) => {
@@ -64,7 +65,9 @@ function Login() {
           dispatch(Loading(false));
         }, function (objStore) {
           console.log("objStore:", objStore);
-          if (objStore.message?.toUpperCase() === "IC") {
+          const msg = objStore.message?.toUpperCase(); // IC: 로그인 환경 변경, TA: 재로그인 요청, TO: 사용기간 지남 
+
+          if (msg === "IC") {
             dispatch(SetIsNeedChkLogin(true))
             const url = `${API}/lolapi/authemailcord`;
             const param = `email=${id}&type=${objStore.message}&key=${""}`;
@@ -74,30 +77,46 @@ function Login() {
               function (success) {
                 dispatch(UserID(id));
                 history.push("/checkLogin");
+                dispatch(Loading(false));
               },
               function (data) {
                 dispatch(SetIsSelector(false));
                 dispatch(SetIsOpen(true));
                 dispatch(SetDesc(t("sign.login.fail")));
+                dispatch(Loading(false));
               }
             );
+          } else if (msg === "TA") {
+            dispatch(SetDesc(t("alert.desc.tryLoginAgain")));
+            dispatch(SetIsOpen(true));
+            dispatch(Loading(false));
+          } else if (msg === "MK") {
+            dispatch(SetDesc(t("alert.desc.MasterKey")));
+            dispatch(SetIsOpen(true));
+            dispatch(Loading(false));
+          } else if (msg === "TO") {
+            dispatch(SetDesc(t("alert.desc.loginTimeOver")));
+            dispatch(SetIsOpen(true));
+            dispatch(Loading(false));
           } else {
             dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
+            dispatch(Loading(false));
           }
-          dispatch(Loading(false));
+
         }, 5000) // 서버 응답 없을 경우 timeout 설정 (5s)
 
       } else {
         // setAlertDesc(t("alert.desc.email_check"));
         dispatch(SetDesc(t("alert.desc.email_check")));
         dispatch(SetIsOpen(true));
+        dispatch(Loading(false));
       }
     } catch (e) {
       // setAlertDesc(t("alert.desc.login_fail"));
       dispatch(SetDesc(t("alert.desc.login_fail")));
       dispatch(SetIsOpen(true));
+      dispatch(Loading(false));
     }
-    dispatch(Loading(false));
   };
 
   // const getUserIP = async () => {
@@ -148,13 +167,13 @@ function Login() {
               {t("alert.login.wrongSignIn")}
             </AlertLogin>
             <SettingFlexBox>
-              {/* <div className="left"><span onClick={() => {
+              <div className="left"><span onClick={() => {
                 history.push("/signUp")
               }}>{t("sign.signUp")}</span></div>
               <div className="center"><span>|</span></div>
               <div className="right"><span onClick={() => {
                 history.push("/changePw")
-              }}>{t("sign.changePW")}</span></div> */}
+              }}>{t("sign.changePW")}</span></div>
             </SettingFlexBox>
           </ViewContainer>
         </LoginContainer>

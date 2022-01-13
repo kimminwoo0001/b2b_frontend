@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 function Loading() {
   const filters = useSelector((state) => state.FilterReducer);
+  
   return (
     // 전체화면 로딩 이미지
     <LoadingImage active={filters.loading}>
