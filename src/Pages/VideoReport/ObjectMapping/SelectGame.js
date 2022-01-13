@@ -62,46 +62,46 @@ function SelectGame({
                 <ShowChampion>
                   <RedSide isActive={data.side === "blue"}>
                     <LeftSideColor color={data.side === "blue"}></LeftSideColor>
-                    <img
+                    <LeftImg color={data.side === "blue"}
                       src={`Images/champion/${data?.champion[0]}.png`}
                       alt="champ"
                     />
-                    <img
+                    <LeftImg color={data.side === "blue"}
                       src={`Images/champion/${data?.champion[1]}.png`}
                       alt="champ"
                     />
-                    <img
+                    <LeftImg color={data.side === "blue"}
                       src={`Images/champion/${data?.champion[2]}.png`}
                       alt="champ"
                     />
-                    <img
+                    <LeftImg color={data.side === "blue"}
                       src={`Images/champion/${data?.champion[3]}.png`}
                       alt="champ"
                     />
-                    <img
+                    <LeftImg color={data.side === "blue"}
                       src={`Images/champion/${data?.champion[4]}.png`}
                       alt="champ"
                     />
                   </RedSide>
                   <VS>VS</VS>
                   <BlueSide isActive={data.side === "red"}>
-                    <img
+                    <RightImg color={data.side === "blue"}
                       src={`Images/champion/${data?.oppchampion[0]}.png`}
                       alt="champ"
                     />
-                    <img
+                    <RightImg color={data.side === "blue"}
                       src={`Images/champion/${data?.oppchampion[1]}.png`}
                       alt="champ"
                     />
-                    <img
+                    <RightImg color={data.side === "blue"}
                       src={`Images/champion/${data?.oppchampion[2]}.png`}
                       alt="champ"
                     />
-                    <img
+                    <RightImg color={data.side === "blue"}
                       src={`Images/champion/${data?.oppchampion[3]}.png`}
                       alt="champ"
                     />
-                    <img
+                    <RightImg color={data.side === "blue"}
                       src={`Images/champion/${data?.oppchampion[4]}.png`}
                       alt="champ"
                     />
@@ -256,12 +256,6 @@ const RedSide = styled.div`
   // background-position: left;
   width: 150px;
   height: 100%;
-  > img {
-    width: 20px;
-    height: 20px;
-    border-radius: 20px;
-    margin-right: 4px;
-  }
   ${(props) =>
     props.isActive &&
     css`
@@ -269,10 +263,26 @@ const RedSide = styled.div`
     `}
 `;
 
+const LeftImg = styled.img`
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    margin-right: 4px;
+
+    ${props => props.color ? css`
+    border: 1px solid #0075bf;
+    `
+    :
+    css`
+     border: 1px solid #f04545;
+    `
+  }
+`;
+
 const LeftSideColor = styled.div`
     width: 3px;
     height: 20px;
-    margin-right: 7px;
+    margin-right: 5px;
 
     ${props => props.color ? css`
     background-color: #0075bf;
@@ -287,7 +297,7 @@ const LeftSideColor = styled.div`
 const RightSideColor = styled.div`
     width: 3px;
     height: 20px;
-    margin-left: 7px;
+    margin-left: 5px;
 
     ${props => props.color ? css`
     background-color: #f04545;
@@ -328,4 +338,21 @@ const BlueSide = styled.div`
     css`
       // background-image: url("Images/right-blue-gradient.png");
     `}
+`;
+
+const RightImg = styled.img`
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    margin-right: 4px;
+
+    ${props => props.color ? css`
+    border: 1px solid #f04545;;
+    `
+    :
+    css`
+     border: 1px solid #0075bf;
+     
+    `
+  }
 `;
