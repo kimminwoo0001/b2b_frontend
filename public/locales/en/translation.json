@@ -18,6 +18,70 @@
     "part11": "Team WR Calculator",
     "part12": "Game Report"
   },
+  "sign": {
+    "signUp": "Sign up",
+    "changePW": "Reset Password",
+    "login": {
+      "fail": "Failed to login."
+    },
+    "setCode": {
+      "subject": "Enter registration code",
+      "desc": "Only one account can be created per registration code. \n Complete signup by entering registration code.",
+      "alert": "If there was an account using the same registration code, that account will be no longer available.",
+      "limitChar": "Enter 16-digit registration code",
+      "certification": "Verify",
+      "authentication": "Confirm",
+      "alertCode": "Invalid registration code.",
+      "authAlert": "There is an old account using the same registration code. \n Will you continue?",
+      "authSemiAlert": "If you continue the process, the old account will be no longer available.",
+      "authNotDone": "Verify the registration code.",
+      "expirationKey": "Expired registration code. \nPlease contact the manager."
+    },
+    "signUpContent": {
+      "hello": "Welcome!",
+      "email": "Email",
+      "emailAlert": "Email format is invalid.",
+      "sendAuthMail": "Verify email address",
+      "emailAuthNum": "Verification code",
+      "emailPlaceholder": "Enter your email",
+      "reRequest": "Resend",
+      "sendAuthConfirm": "Verify",
+      "sendAuthDesc": "Verification code has been sent.",
+      "authPlaceholder": "Enter verification code.",
+      "authAlert": "Invalid verification code",
+      "pw": "Password",
+      "alterPw": "At least 8 characters & less than 17 characters",
+      "pwPlaceholder": "At least 8 characters & less than 17 characters. Must contain letters, numbers and special cases.",
+      "validate-pw": "Confirm password",
+      "alertPWCheck": "Password confirmation does not match.",
+      "allAgree": "Accept all",
+      "agreeOfTermsOfUse": "Accept NUNU.GG Terms of Use",
+      "personalInfoCalUsageAgree": "Accept Privacy Policy.",
+      "needEmailAuth": "Email verification required.",
+      "needTOU": "You must accept NUNU.GG Terms of Use to proceed.",
+      "needPICACU": "You must accept Privacy Policy to proceed.",
+      "confirmSuccess": "Account has been created.",
+      "emailAuthTimeOut": "The authentication time has expired."
+    },
+    "changePw": {
+      "subject": "Change password",
+      "desc": "Enter initially provided registration code. \nChange password by entering registration code.",
+      "authentication": "Change account info",
+      "authAlert": "Will you proceed to change password?",
+      "authSemiAlert": "If you proceed, the old password will no longer be available."
+    },
+    "changePwContent": {
+      "hello": "Change NUNU.GG account info.",
+      "confirmSuccess": "Password change is complete."
+    },
+    "checkLogin": {
+      "subject": "Email verification is required.",
+      "desc": "NUNU.GG requires email verification whenever it detects new device to prevent data breach. \n Please verify your email.",
+      "emailAuth": "Verification code.",
+      "success": "Verification complete.",
+      "fail": "Invalid verification."
+    }
+  },
   "nav": {
     "login": "Log In",
     "logout": "Log Out",

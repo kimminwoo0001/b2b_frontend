@@ -28,7 +28,7 @@ function PlayerCompare() {
           <CloseFilter />
         </div>
         <ContentWrapper>
-          {copyvalue.compareModal === false ? <Player /> : <SelectFilter />}
+          {filters.player !== "" ? <Player /> : <SelectFilter />}
         </ContentWrapper>
       </SoloWrapper>
     </ErrorBoundary>
