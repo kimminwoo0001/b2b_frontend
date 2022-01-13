@@ -33,7 +33,6 @@ function Player() {
 
   return (
     <>
-      {copyvalue.compareModal && <PlayerFilterModal />}
       <ErrorBoundary>
         <BoardWrapper>
           <TabContainer>

@@ -76,23 +76,32 @@ function Login() {
               function (success) {
                 dispatch(UserID(id));
                 history.push("/checkLogin");
+                dispatch(Loading(false));
               },
               function (data) {
                 dispatch(SetIsSelector(false));
                 dispatch(SetIsOpen(true));
                 dispatch(SetDesc(t("sign.login.fail")));
+                dispatch(Loading(false));
               }
             );
           } else if (msg === "TA") {
             dispatch(SetDesc(t("alert.desc.tryLoginAgain")));
             dispatch(SetIsOpen(true));
+            dispatch(Loading(false));
+          } else if (msg === "MK") {
+            dispatch(SetDesc(t("alert.desc.MasterKey")));
+            dispatch(SetIsOpen(true));
+            dispatch(Loading(false));
           } else if (msg === "TO") {
             dispatch(SetDesc(t("alert.desc.loginTimeOver")));
             dispatch(SetIsOpen(true));
+            dispatch(Loading(false));
           } else {
             dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
+            dispatch(Loading(false));
           }
-          dispatch(Loading(false));
+
         }, 5000) // 서버 응답 없을 경우 timeout 설정 (5s)
 
       } else {
@@ -105,7 +114,6 @@ function Login() {
       dispatch(SetDesc(t("alert.desc.login_fail")));
       dispatch(SetIsOpen(true));
     }
-    dispatch(Loading(false));
   };
 
   // const getUserIP = async () => {
