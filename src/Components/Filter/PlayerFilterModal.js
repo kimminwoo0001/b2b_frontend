@@ -127,7 +127,7 @@ function PlayerFilterModal() {
       (key) =>
         filters.year.filter(x => Object.keys(staticvalue.filterObjects[key]).includes(
           x)) && key
-    ).filter((key) => key !== "LPL");
+    ).filter((key) => ["LPL", "LCK CL"].includes(key) === false);
     dispatch(setLeagueFilter(leagueList.sort()));
   };
 
@@ -140,7 +140,7 @@ function PlayerFilterModal() {
     ) {
       yearList.push(
         //Object.keys(Object.values(staticvalue.filterObjects)[i])[0]
-        "2022"
+        "2021"
       );
     }
     const recentYear = yearList

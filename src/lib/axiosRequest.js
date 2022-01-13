@@ -67,9 +67,10 @@ const axiosRequest = async (
         }
       })
       .catch((error) => {
-        console.log("error test : ", error);
+        const errMsg = `error: ${error}\nurl: ${url}\nparamData: ${paramData}`
+        console.log(errMsg);
         if (timeout === 5000) {
-          alert(error);
+          alert(errMsg);
         }
       });
   }

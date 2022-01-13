@@ -39,6 +39,7 @@ function Login() {
     } else {
       sessionStorage.setItem("i18nextLng", "en");
     }
+    document.title = `NUNU.GG`
   }, []);
 
   const onSubmit = async ({ id, password }) => {
@@ -108,11 +109,13 @@ function Login() {
         // setAlertDesc(t("alert.desc.email_check"));
         dispatch(SetDesc(t("alert.desc.email_check")));
         dispatch(SetIsOpen(true));
+        dispatch(Loading(false));
       }
     } catch (e) {
       // setAlertDesc(t("alert.desc.login_fail"));
       dispatch(SetDesc(t("alert.desc.login_fail")));
       dispatch(SetIsOpen(true));
+      dispatch(Loading(false));
     }
   };
 
