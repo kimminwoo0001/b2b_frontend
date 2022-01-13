@@ -254,26 +254,10 @@ const Filter = memo(() => {
   };
 
   const fetchYearFilter = () => {
-    let yearList = [];
     if (isComparePage) {
-      let yearList = [];
-      for (
-        let i = 0;
-        i < Object.values(staticvalue.filterObjects).length;
-        i++
-      ) {
-        yearList.push(
-          Object.keys(Object.values(staticvalue.filterObjects)[i])[0]
-        );
-      }
-      const recentYear = yearList
-        .filter((item, pos) => yearList.indexOf(item) === pos)
-        .sort()
-        .reverse();
-      // 최근 연도를 자동으로 설정
-      dispatch(SetYear([recentYear[0]]));
-      dispatch(setYearFilter(recentYear));
+      return;
     } else {
+      let yearList = [];
       if (filters.league.length === 0) {
         dispatch(ResetYear());
       } else if (filters.league.length > 0) {
@@ -292,6 +276,8 @@ const Filter = memo(() => {
 
       dispatch(setYearFilter(yearList));
     }
+
+
   };
 
   const fetchSeasonFilter = () => {
@@ -423,23 +409,25 @@ const Filter = memo(() => {
 
   // 패치 필터 fetch 함수
   const fetchingPatchFilter = () => {
-    dispatch(Loading(true))
-    const url = `${API}/lolapi/filter/patch`;
-    const params = {
-      league: filters.league,
-      year: filters.year,
-      season: filters.season,
-      token: user.token,
-      id: user.id,
-    };
-    axiosRequest(undefined, url, params, function (e) {
-      const patchResponse = e ?? [];
-      dispatch(setPatchFilter(patchResponse));
-      dispatch(SetPatch(patchResponse));
-      dispatch(Loading(false));
-    }, function (e) {
-      dispatch(Loading(false));
-    });
+    if (filters.league.length > 0 && filters.year.length > 0 && filters.season.length > 0) {
+      dispatch(Loading(true))
+      const url = `${API}/lolapi/filter/patch`;
+      const params = {
+        league: filters.league,
+        year: filters.year,
+        season: filters.season,
+        token: user.token,
+        id: user.id,
+      };
+      axiosRequest(undefined, url, params, function (e) {
+        const patchResponse = e ?? [];
+        dispatch(setPatchFilter(patchResponse));
+        dispatch(SetPatch(patchResponse));
+        dispatch(Loading(false));
+      }, function (e) {
+        dispatch(Loading(false));
+      });
+    }
   };
 
   return (

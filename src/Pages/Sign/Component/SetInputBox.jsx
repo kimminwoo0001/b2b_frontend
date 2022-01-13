@@ -25,6 +25,7 @@ const SetInputBox = ({
         autocapitalize="off"
         className={type}
         maxlength={maxlength}
+        autocomplete="off"
       />
       {timer > 0 && <Timer time={timer} timeOutFunc={timeOutFunc} />}
     </SearchBoxWrapper>

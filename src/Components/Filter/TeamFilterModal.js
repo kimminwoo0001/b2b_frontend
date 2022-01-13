@@ -113,7 +113,7 @@ const TeamFilterModal = () => {
     ) {
       yearList.push(
         //Object.keys(Object.values(staticvalue.filterObjects)[i])[0]
-        "2021"
+        "2022"
       );
     }
     const recentYear = yearList
