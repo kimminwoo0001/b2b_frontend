@@ -9,19 +9,19 @@ import TeamComparison from "./TeamComparison/TeamComparison";
 
 import TeamSelectModal from "./TeamComparison/TeamSelectModal";
 import {
-  CompareModal,
   HandleTab,
-  ResetFilter2,
-  SetCopyFilters
+  ResetFilter2
 } from "../../redux/modules/filtervalue";
 import BanIndex from "./BanReport/BanIndex";
 import TeamIndex from "./TeamReport/TeamIndex";
 import TeamFilterModal from "../../Components/Filter/TeamFilterModal";
+import { CompareModal, SetCopyFilters, SetOpenFilterModal } from "../../redux/modules/copyvalue";
 
 function TeamTabs() {
   //팀 보고서 탭
   //ex) 밴픽 보고서, 팀 전력보고서 , 팀비교
   const filters = useSelector((state) => state.FilterReducer);
+  const copyvalue = useSelector((state) => state.CopyReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -40,10 +40,7 @@ function TeamTabs() {
   };
 
   useEffect(() => {
-    if (pagePath === "/team") {
-      return;
-    }
-    dispatch(CompareModal(true));
+
   }, []);
 
   return (
@@ -51,7 +48,6 @@ function TeamTabs() {
       {true && (
         <>
           {/* {filters.tab === 2 && <TeamFilterModal />} */}
-          {filters.compareModal === true && <TeamFilterModal />}
 
           <TeamTabsWrapper>
             <TabContainer>
@@ -89,7 +85,7 @@ function TeamTabs() {
               )}
 
               {pagePath !== "/teamCompare" &&
-              filters.league.indexOf("lpl") === -1 ? (
+                filters.league.indexOf("lpl") === -1 ? (
                 <TabItem
                   onClick={() => {
                     dispatch(HandleTab(1));
@@ -109,8 +105,10 @@ function TeamTabs() {
                 <TabItem
                   onClick={() => {
                     // dispatch(HandleTab(2));
-                    dispatch(CompareModal(true));
                     dispatch(SetCopyFilters(filters));
+                    dispatch(CompareModal(true));
+
+                    pagePath === "/teamCompare" ? dispatch(SetOpenFilterModal("/teamCompare")) : dispatch(SetOpenFilterModal("/team"))
                     //setOpenModal(true);
                   }}
                   changeColor={filters.tab === 2}

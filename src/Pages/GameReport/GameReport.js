@@ -14,12 +14,15 @@ import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 // import VideoTabs from '../VideoReport/VideoTabs';
 // import GameReportIndex from './Components/GameReportIndex';
 import GameReportTab from "./GameReportTab";
+import TeamFilterModal from "../../Components/Filter/TeamFilterModal";
+import PlayerFilterModal from "../../Components/Filter/PlayerFilterModal";
 
 function GameReport() {
   const filters = useSelector((state) => state.FilterReducer);
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const { t } = useTranslation();
   const checkGameId = gamevalue.fixedDataset.length === 2;
+  const copyvalue = useSelector((state) => state.CopyReducer);
 
   useEffect(() => {
     document.title = `${t("sidebar.part12")} - NUNU.GG`
@@ -27,11 +30,13 @@ function GameReport() {
 
   return (
     <ErrorBoundary>
+      {copyvalue?.openFilterModal === "/teamCompare" && <TeamFilterModal />}
+      {copyvalue?.openFilterModal === "/playerCompare" && <PlayerFilterModal />}
       {checkGameId ? "" : <Nav />}
       <GameWrapper>
         {checkGameId && filters.team !== "" && filters.team.length > 0 ? "" :
           <>
-          <SideBar />
+            <SideBar />
             {/* <div
             className={filters.filterMenuState ? "filter-open" : "filter-close"}
           >
@@ -42,15 +47,15 @@ function GameReport() {
           >
             <CloseFilter />
           </div> */}
-        </>}
+          </>}
         <ContentWrapper>
           {filters.team !== "" && filters.team.length > 0 ? (
             <GameReportTab />
           ) : (
-              // <SelectFilter />
-              <Temporal>
-                <iframe width="1422" height="800" src="https://www.youtube.com/embed/c6e38xOmXfw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              </Temporal>
+            // <SelectFilter />
+            <Temporal>
+              <iframe width="1422" height="800" src="https://www.youtube.com/embed/c6e38xOmXfw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </Temporal>
           )}
         </ContentWrapper>
       </GameWrapper>

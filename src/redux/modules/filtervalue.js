@@ -36,7 +36,7 @@ export const RESET_YEAR = "filtervalue/RESET_YEAR";
 export const RESET_SEASON = "filtervalue/RESET_SEASON";
 export const RESET_TEAM = "filtervalue/RESET_TEAM";
 export const FILTER_MENU_SWITCH = "filtervalue/FILTER_MENU_SWITCH";
-export const COMPARE_MODAL = "filtervalue/COMPARE_MODAL";
+
 export const SET_LEAGUE = "filtervalue/SET_LEAGUE";
 export const SET_YEAR = "filtervalue/SET_YEAR";
 export const SET_SEASON = "filtervalue/SET_SEASON";
@@ -44,13 +44,7 @@ export const SET_TEAM = "filtervalue/SET_TEAM";
 export const SET_PLAYER = "filtervalue/SET_PLAYER";
 export const SET_PATCH = "filtervalue/SET_PATCH";
 export const SELECT_ALL_BTN = "filtervalue/SELECT_ALL_BTN";
-export const SET_MODAL_TEAM = "filtervalue/SET_MODAL_TEAM";
-export const SET_MODAL_OPPTEAM = "filtervalue/SET_MODAL_OPPTEAM";
-export const SET_MODAL_PLAYER = "filtervalue/SET_MODAL_PLAYER";
-export const SET_MODAL_OPPPLAYER = "filtervalue/SET_MODAL_OPPPLAYER";
-export const SET_MODAL_SEASON= "filtervalue/SET_MODAL_SEASON";
-export const SET_MODAL_PATCH = "filtervalue/SET_MODAL_PATCH";
-export const SET_COPY_FILTERS = "filtervalue/SET_COPY_FILTERS";
+
 
 
 
@@ -347,62 +341,6 @@ export const SetPatch = (payload) => {
   };
 };
 
-export const CompareModal = (payload) => {
-  return {
-    type: COMPARE_MODAL,
-    payload,
-  };
-};
-
-export const SetModalTeam = (payload) => {
-  return {
-    type: SET_MODAL_TEAM,
-    payload,
-  };
-};
-
-export const SetModalOppTeam = (payload) => {
-  return {
-    type: SET_MODAL_OPPTEAM,
-    payload,
-  };
-};
-
-export const SetModalPlayer = (payload) => {
-  return {
-    type: SET_MODAL_PLAYER,
-    payload,
-  };
-};
-
-export const SetModalOppplayer = (payload) => {
-  return {
-    type: SET_MODAL_OPPPLAYER,
-    payload,
-  };
-};
-
-export const SetModalSeason = (payload) => {
-  return {
-    type: SET_MODAL_SEASON,
-    payload,
-  };
-};
-
-export const SetModalPatch = (payload) => {
-  return {
-    type: SET_MODAL_PATCH,
-    payload,
-  };
-};
-
-export const SetCopyFilters = (payload) => {
-  return {
-    type: SET_COPY_FILTERS,
-    payload,
-  };
-};
-
 const initialState = {
   league: [],
   year: [],
@@ -428,15 +366,6 @@ const initialState = {
   gameid: "",
   menu_num: "",
   filterMenuState: true,
-  modalteam: [],
-  modalOppteam: [],
-  modalplayer: "",
-  modalOppplayer: "",
-  modalSeason:[],
-  modalPatch:[],
-  copyfilters: {},
-
-  // compareModal: false,
 };
 
 export default function FilterReducer(state = initialState, action) {
@@ -703,51 +632,6 @@ export default function FilterReducer(state = initialState, action) {
         ...state,
         patch: action.payload,
       };
-    case COMPARE_MODAL:
-      return {
-        ...state,
-        compareModal: action.payload,
-      };
-
-    case SET_MODAL_TEAM:
-      return {
-        ...state,
-        modalteam: action.payload,
-      };
-
-    case SET_MODAL_OPPTEAM:
-      return {
-        ...state,
-        modalOppteam: action.payload,
-      };
-    case SET_MODAL_PLAYER:
-      return {
-        ...state,
-        modalplayer: action.payload,
-      };
-
-    case SET_MODAL_OPPPLAYER:
-      return {
-        ...state,
-        modalOppplayer: action.payload,
-      };
-
-      case SET_MODAL_SEASON:
-        return {
-          ...state,
-          modalSeason: action.payload,
-        };
-  
-      case SET_MODAL_PATCH:
-        return {
-          ...state,
-          modalPatch: action.payload,
-        };
-      case SET_COPY_FILTERS:
-        return {
-          ...state,
-          copyfilters: action.payload,
-        };
     default:
       return state;
   }

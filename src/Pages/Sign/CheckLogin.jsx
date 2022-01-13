@@ -37,6 +37,10 @@ const CheckLogin = ({}) => {
   const [emailAuthText, setEmailAuthText] = useState(""); // 이메일 보안 텍스트
   const [authAlertOpen, setAuthAlertOpen] = useState(false);
 
+  // 타이머
+  const [emailAuthSendTime, setEmailAuthSendTime] = useState();
+  const [emailAuthTimeOut, setEmailAuthTimeOut] = useState(false);
+
   const onChange = (e) => {
     const { value, id } = e.target;
     console.log("id", id);
@@ -70,11 +74,20 @@ const CheckLogin = ({}) => {
         dispatch(SetIsSelector(false));
         dispatch(SetIsOpen(true));
         dispatch(SetDesc(t("sign.checkLogin.fail")));
+        const time = new Date().getTime() / 1000 + 180;
+        setEmailAuthSendTime(time);
+        setEmailAuthTimeOut(false);
       }
     );
   };
 
   const checkEmailAuth = () => {
+    if (emailAuthTimeOut) {
+      dispatch(SetIsSelector(false));
+      dispatch(SetIsOpen(true));
+      dispatch(SetDesc(t("sign.signUpContent.emailAuthTimeOut")));
+      return;
+    }
     const url = `${API}/lolapi/authcord`;
     const param = `authcord=${emailAuthText}&key=${""}&email=${
       user.id
@@ -104,6 +117,8 @@ const CheckLogin = ({}) => {
 
   useEffect(() => {
     dispatch(SetSelectedResult(false));
+    const time = new Date().getTime() / 1000 + 180;
+    setEmailAuthSendTime(time);
   }, []);
 
   useEffect(() => {
@@ -179,6 +194,8 @@ const CheckLogin = ({}) => {
                 id={"email-auth-input"}
                 placeholder={t("sign.signUpContent.authPlaceholder")}
                 onChange={onChange}
+                timer={emailAuthSendTime}
+                timeOutFunc={setEmailAuthTimeOut}
               />
               <ButtonTemp width="20" onClick={checkMail}>
                 {t("sign.signUpContent.reRequest")}

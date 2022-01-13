@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, memo } from "react";
 import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
+import Timer from "../../../Components/UtilityComponent/Timer";
 
 const SetInputBox = ({
   type = "text",
@@ -9,8 +10,11 @@ const SetInputBox = ({
   id = "",
   maxlength = 50,
   onChange,
+  timer = 0,
+  timeOutFunc,
 }) => {
   const { t } = useTranslation();
+
   return (
     <SearchBoxWrapper width={width}>
       <input
@@ -22,6 +26,7 @@ const SetInputBox = ({
         className={type}
         maxlength={maxlength}
       />
+      {timer > 0 && <Timer time={timer} timeOutFunc={timeOutFunc} />}
     </SearchBoxWrapper>
   );
 };

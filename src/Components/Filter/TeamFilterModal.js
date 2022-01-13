@@ -4,46 +4,39 @@ import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { createBrowserHistory } from "history";
 import {
-  Patch,
-  InitailizeState,
-  League,
-  Team,
-  OppTeam,
-  ConvertedLeague,
-  GetOppTeam,
-  HandleTab,
-  ResetFilter,
-  PatchFull,
-  MenuNum,
-  SetLeague,
-  Season,
-  ResetSeason,
-  Year,
-  SetSeason,
-  CompareModal,
-  SetTeam,
-  SetModalTeam,
-  SetModalOppTeam,
-  Loading,
-  Reset_Map
-} from "../../redux/modules/filtervalue";
+  CopyPatch as Patch,
+  CopyOppTeam as OppTeam,
+  CopyGetOppTeam as GetOppTeam,
+  CopySetLeague as SetLeague,
+  CopySeason as Season,
+  CopySetTeam as SetTeam,
+  CopySetModalOppTeam as SetModalOppTeam,
+  CopySetYear as SetYear,
+  InitalCopy,
+  CopySetSeason as SetSeason,
+  CopyResetSeason as ResetSeason,
+  CopyResetTeam as ResetTeam,
+  CopySetPatch as SetPatch,
+  CompareModal
+} from "../../redux/modules/copyvalue";
+
 import {
   setLeagueFilter,
-  setPatchFilter,
-  setPlayerFilter,
   setSeasonFilter,
   setTeamFilter,
   setYearFilter,
+  setPatchFilter
 } from "../../redux/modules/selectorvalue";
 import { API } from "../../Pages/config";
 import { useTranslation } from "react-i18next";
 import { useDetectOutsideClick } from "../../Pages/TeamCompare/useDetectOustsideClick";
 import axiosRequest from "../../lib/axiosRequest";
+import { HandleTab, Loading, MenuNum, Reset_Map } from "../../redux/modules/filtervalue";
 
 
 const TeamFilterModal = () => {
   //사이드바에 있는 팀 비교 탭 모달창
-  const filters = useSelector((state) => state.FilterReducer);
+  const filters = useSelector((state) => state.CopyReducer); // Copy 리듀서
   const user = useSelector((state) => state.UserReducer);
   const staticvalue = useSelector((state) => state.StaticValueReducer);
   const selector = useSelector((state) => state.SelectorReducer);
@@ -59,6 +52,15 @@ const TeamFilterModal = () => {
   const history = useHistory();
   const isInitialMount = useRef(true);
 
+  const [league, setLeague] = useState(filters.league);
+  const [year, setYear] = useState(filters.year);
+  const [season, setSeason] = useState(filters.season);
+
+  useEffect(() => {
+    fetchYearFilter();
+    setOppTeamFilter();
+  }, [])
+
   useEffect(() => {
     document.title = `${t("sidebar.part8")} - NUNU.GG`
   }, [])
@@ -69,6 +71,25 @@ const TeamFilterModal = () => {
     }
     fetchingOppTeamFilter();
   }, [filters.compareModal]);
+
+  useEffect(() => {
+    if (JSON.stringify(league) !== JSON.stringify(filters.league)) {
+      fetchSeasonFilter();
+      setLeague(filters.league);
+    }
+  }, [filters.league])
+
+  useEffect(() => {
+    if (JSON.stringify(season) !== JSON.stringify(filters.season)) {
+      if (filters.year.length > 0) {
+        fetchingTeamFilter();
+        fetchingPatchFilter();
+        setSeason(filters.season);
+      }
+    }
+  }, [filters.season])
+
+
 
   // 리그 필터 fetch 해오는 함수
   const fetchLeagueFilter = () => {
@@ -83,26 +104,87 @@ const TeamFilterModal = () => {
     dispatch(setLeagueFilter(leagueList.sort()));
   };
 
-  const handleConfirm = () => {
-    if (filters.modalOppteam) {
-      //history.push("/teamCompare");
-      dispatch(CompareModal(false));
-      dispatch(GetOppTeam(filters.oppteam));
-      dispatch(HandleTab(2));
-      dispatch(
-        SetTeam(
-          filters.modalteam.length === 0 ? filters.team : filters.modalteam
-        )
+  const fetchYearFilter = () => {
+    let yearList = [];
+    for (
+      let i = 0;
+      i < Object.values(staticvalue.filterObjects).length;
+      i++
+    ) {
+      yearList.push(
+        //Object.keys(Object.values(staticvalue.filterObjects)[i])[0]
+        "2021"
       );
-      dispatch(
-        OppTeam(
-          filters.modalOppteam.length === 0 ? filters.oppteam : filters.modalOppteam
-        )
-      );
-    } else {
-      alert(t("filters.noTeam"));
     }
+    const recentYear = yearList
+      .filter((item, pos) => yearList.indexOf(item) === pos)
+      .sort()
+      .reverse();
+    // 최근 연도를 자동으로 설정
+    dispatch(SetYear([recentYear[0]]));
+    dispatch(setYearFilter(recentYear));
+  }
+
+
+  const fetchSeasonFilter = () => {
+    let seasonList = [];
+    if (filters.year.length !== 0) {
+      for (let league of filters.league) {
+        for (let year of filters.year) {
+          const ObjectKeys = Object.keys(
+            staticvalue.filterObjects[league][year]
+          );
+          seasonList = seasonList.concat(ObjectKeys);
+        }
+      }
+      seasonList = seasonList.filter(
+        (item, pos) => seasonList.indexOf(item) === pos
+      );
+      console.log("sortedSeasonList", seasonList);
+
+      let updateSeason = [];
+      for (const season of filters.season) {
+        if (seasonList.includes(season)) {
+          updateSeason.push(season);
+        }
+        else {
+          updateSeason = [seasonList[0]];
+        }
+      }
+      dispatch(SetSeason(updateSeason));
+
+      if (filters.season.length === 0) {
+        dispatch(Season(seasonList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
+      }
+    } else {
+      dispatch(ResetSeason());
+    }
+    dispatch(setSeasonFilter(seasonList));
+    dispatch(SetSeason(seasonList));
   };
+
+  const fetchingTeamFilter = () => {
+    let teamList = [];
+    if (filters.season.length !== 0) {
+      for (let league of filters.league) {
+        for (let year of filters.year) {
+          for (let season of filters.season) {
+            const seasonData = staticvalue.filterObjects[league][year][season];
+            if (seasonData) {
+              const ObjectKeys = Object.keys(seasonData);
+              teamList = teamList.concat(ObjectKeys);
+            }
+          }
+        }
+      }
+      teamList = teamList.filter((item, pos) => teamList.indexOf(item) === pos);
+    } else {
+      dispatch(ResetTeam());
+    }
+    dispatch(setTeamFilter(teamList));
+  };
+
+
 
   // opp 팀 필터 fetch 함수
   const fetchingOppTeamFilter = (team) => {
@@ -124,6 +206,52 @@ const TeamFilterModal = () => {
     });
   };
 
+  const fetchingPatchFilter = () => {
+    dispatch(Loading(true))
+    const url = `${API}/lolapi/filter/patch`;
+    const params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      token: user.token,
+      id: user.id,
+    };
+    axiosRequest(undefined, url, params, function (e) {
+      const patchResponse = e ?? [];
+      dispatch(setPatchFilter(patchResponse));
+      dispatch(SetPatch(patchResponse));
+      dispatch(Loading(false));
+    }, function (e) {
+      dispatch(Loading(false));
+    });
+  };
+
+  const handleConfirm = () => {
+    if (filters.team && filters.oppteam) {
+      //history.push("/teamCompare");
+      history.push(filters.openFilterModal)
+      dispatch(CompareModal(false));
+      dispatch(GetOppTeam(filters.oppteam));
+      dispatch(
+        SetTeam(
+          filters.team
+        )
+      );
+      dispatch(
+        OppTeam(
+          filters.oppteam
+        )
+      );
+      dispatch(Reset_Map(filters))
+      dispatch(InitalCopy())
+      dispatch(MenuNum(7))
+      dispatch(HandleTab(2));
+    } else {
+      alert(t("filters.noTeam"));
+    }
+  };
+
+
   return (
     <>
       <BackScreen
@@ -141,9 +269,8 @@ const TeamFilterModal = () => {
               // dispatch(InitailizeState());
               // dispatch(MenuNum(2));
               dispatch(CompareModal(false));
-              // dispatch(SetModalTeam([]));
-              dispatch(SetModalOppTeam([]));
-              dispatch(Reset_Map(filters.copyfilters))
+              //dispatch(Reset_Map(copyvalue))
+              dispatch(InitalCopy());
               // dispatch(OppTeam([]));
               // history.push("/team");
               // dispatch(setTeamFilter([]));
@@ -162,8 +289,7 @@ const TeamFilterModal = () => {
                 <div className="menu-container">
                   <button
                     onClick={() => {
-                      pagePath === "/teamCompare" &&
-                        setIsActiveLeague(!isActiveLeague);
+                      setIsActiveLeague(!isActiveLeague);
                       fetchLeagueFilter();
                     }}
                     className="menu-trigger"
@@ -247,36 +373,7 @@ const TeamFilterModal = () => {
                   <span className="Label">{t("filters.patchLabel")}</span>
                 </PatchLabels>
               ) :  */}
-              {pagePath === "/team" ?
-                // team
-                <SelectedPatch
-                // key={idx}
-                // draggable="true"
-                // onDragStart={(event) => {
-                //   handleMouseEvent(event);
-                // }}
-                // onMouseUp={(event) => {
-                //   handleMouseEvent(event);
-                // }}
-                // isChecked={filters.season.includes(season) ? true : false}
-                // onClick={() => {
-                //   dispatch(Season(season));
-                // }}
-                >
-                  {/* <input
-                      
-                      checked={filters.season.includes(season) ? true : false}
-                      type="checkbox"
-                      readOnly
-                    ></input> */}
-                  {filters.season.map((season) => {
-                    return (
-                      <div className="Version1">{season}</div>
-
-                    )
-                  })}
-                </SelectedPatch>
-                :
+              {
                 <>
 
                   {selector.seasonFilter?.map((season, idx) => {
@@ -307,7 +404,6 @@ const TeamFilterModal = () => {
                     );
                   })}
                 </>
-
               }
             </PatchFilter>
             <PatchFilter>
@@ -328,69 +424,36 @@ const TeamFilterModal = () => {
                   <span className="Label">{t("filters.patchLabel")}</span>
                 </PatchLabels>
               ) : (
-                pagePath === "/team" ?
-                  <SelectedPatch
-                  // key={idx}
-                  // // draggable="true"
-                  // // onDragStart={(event) => {
-                  // //   handleMouseEvent(event);
-                  // // }}
-                  // // onMouseUp={(event) => {
-                  // //   handleMouseEvent(event);
-                  // // }}
-                  // isChecked={filters.patch.includes(patch) ? true : false}
-                  // onClick={() => {
-                  //   dispatch(Patch(patch));
-                  //   //fetchingTeamFilter(patch);
-                  //   console.log(filters.league);
-                  // }}
-                  >
-                    {/* <input
-                  checked={filters.patch.includes(filters.patch) ? true : false}
-                  type="checkbox"
-                  readOnly
-                ></input> */}
-                    {filters.patch.map((patch) => {
-                      return (
-                        <div className="Version1">
-                          {patch === "11.6" ? "11.6 (P.O)" : patch}
-                        </div>
-
-                      )
-                    })}
-                  </SelectedPatch>
-                  :
-
-                  selector.patchFilter?.map((patch, idx) => {
-                    return (
-                      <SelectedPatchReal
-                        key={idx}
-                        // draggable="true"
-                        // onDragStart={(event) => {
-                        //   handleMouseEvent(event);
-                        // }}
-                        // onMouseUp={(event) => {
-                        //   handleMouseEvent(event);
-                        // }}
-                        isChecked={filters.patch.includes(patch) ? true : false}
-                        onClick={() => {
-                          dispatch(Patch(patch));
-                          //fetchingTeamFilter(patch);
-                          console.log(filters.league);
-                        }}
-                      >
-                        <input
-                          id={idx}
-                          checked={filters.patch.includes(patch) ? true : false}
-                          type="checkbox"
-                          readOnly
-                        ></input>
-                        <div className="Version">
-                          {patch === "11.6" ? "11.6 (P.O)" : patch}
-                        </div>
-                      </SelectedPatchReal>
-                    );
-                  })
+                selector.patchFilter?.map((patch, idx) => {
+                  return (
+                    <SelectedPatchReal
+                      key={idx}
+                      // draggable="true"
+                      // onDragStart={(event) => {
+                      //   handleMouseEvent(event);
+                      // }}
+                      // onMouseUp={(event) => {
+                      //   handleMouseEvent(event);
+                      // }}
+                      isChecked={filters.patch.includes(patch) ? true : false}
+                      onClick={() => {
+                        dispatch(Patch(patch));
+                        //fetchingTeamFilter(patch);
+                        console.log(filters.league);
+                      }}
+                    >
+                      <input
+                        id={idx}
+                        checked={filters.patch.includes(patch) ? true : false}
+                        type="checkbox"
+                        readOnly
+                      ></input>
+                      <div className="Version">
+                        {patch === "11.6" ? "11.6 (P.O)" : patch}
+                      </div>
+                    </SelectedPatchReal>
+                  );
+                })
               )
 
 
@@ -408,40 +471,7 @@ const TeamFilterModal = () => {
                   }
                 </SelectTeamTitle>
                 <SelectTeam isFilterSelected={filters.league.length > 0}>
-                  {pagePath === "/team" ?
-                    <MapTeams>
-                      {/* {selector.teamFilter?.map((team, index) => {
-                              return (
-                                <MapTeams
-                                  key={index}
-                                  onClick={() => {
-                                    dispatch(SetTeam(team));
-                                    // dispatch(SetModalTeam(team));
-                                    fetchingOppTeamFilter(team);
-                                    dispatch(SetModalOppTeam(""));
-                                    // dispatch(OppTeam(""));
-                                  }}
-                                  // currentTeam={
-                                  //   filters.modalteam.length === 0
-                                  //     ? filters.team === team
-                                  //     : filters.modalteam === team
-                                  // }
-                                  currentTeam={filters.team === team}
-          
-                                > */}
-                      <img
-                        src={
-                          filters.team.slice(-2) === ".C"
-                            ? `Images/LCK_CL_LOGO/${filters.team}.png`
-                            : `Images/TeamLogo/${filters.team}.png`
-                        }
-                        alt="TeamLogo"
-                      ></img>
-                      <div className="TeamName">{filters.team}</div>
-                      {/* </MapTeams>
-                              );
-                            })} */}
-                    </MapTeams> :
+                  {
                     <>
                       {selector.teamFilter?.map((team, index) => {
                         return (
@@ -449,16 +479,9 @@ const TeamFilterModal = () => {
                             key={index}
                             onClick={() => {
                               dispatch(SetTeam(team));
-                              // dispatch(SetModalTeam(team));
                               fetchingOppTeamFilter(team);
-                              dispatch(SetModalOppTeam(""));
-                              // dispatch(OppTeam(""));
+                              dispatch(OppTeam(""));
                             }}
-                            // currentTeam={
-                            //   filters.modalteam.length === 0
-                            //     ? filters.team === team
-                            //     : filters.modalteam === team
-                            // }
                             currentTeam={filters.team === team}
 
                           >
@@ -479,20 +502,18 @@ const TeamFilterModal = () => {
                 </SelectTeam>
               </TeamWrapper>
               <TeamWrapper>
-                <SelectOppTeamTitle isTeamSelected={filters.team.length !== 0 || filters.modalteam.length !== 0}>
+                <SelectOppTeamTitle isTeamSelected={filters.team.length !== 0}>
                   {t("filters.teamCompareLabel2")}
                 </SelectOppTeamTitle>
-                <SelectOppTeam isTeamSelected={filters.team.length !== 0 || filters.modalteam.length !== 0}>
+                <SelectOppTeam isTeamSelected={filters.team.length !== 0}>
                   {oppTeamFilter?.map((team, index) => {
                     return (
                       <MapTeams
                         key={index}
                         onClick={() => {
-                          // dispatch(OppTeam(team))
-                          dispatch(SetModalOppTeam(team))
-                        }
-                        }
-                        currentTeam={filters.modalOppteam.length > 0 ? filters.modalOppteam === team : filters.oppteam === team}
+                          dispatch(OppTeam(team));
+                        }}
+                        currentTeam={filters.oppteam === team}
                       >
                         <img
                           src={
@@ -512,7 +533,7 @@ const TeamFilterModal = () => {
           </TeamBox>
         </FilterContainer>
         <ButtonBox
-          isAllTeamSelected={(filters.oppteam !== "" || filters.modalOppteam.length > 0) && (filters.team.length > 0 || filters.modalteam.length > 0)}
+          isAllTeamSelected={filters.oppteam !== "" && filters.team.length > 0}
         >
           <button
             className="Selected"

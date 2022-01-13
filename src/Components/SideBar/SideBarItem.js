@@ -1,10 +1,11 @@
-import React,{ useState, useEffect } from "react";
-import { MenuNum, InitailizeState, CompareModal, SetCopyFilters } from "../../redux/modules/filtervalue";
-import { useDispatch,useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { MenuNum, InitailizeState } from "../../redux/modules/filtervalue";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { SelectorInitailizeState } from "../../redux/modules/selectorvalue";
 import { InitializeGameState } from "../../redux/modules/gamevalue";
 import styled, { css } from "styled-components";
+import { CompareModal, CopyFvInit, SetCopyFilters, SetOpenFilterModal } from "../../redux/modules/copyvalue";
 
 const useTitle = (initialTitle) => {
   const [title, setTitle] = useState(initialTitle);
@@ -27,13 +28,17 @@ const SideBarItem = ({ menu, idx }) => {
     <MenuWrapper
       onClick={() => {
         changeTitle(`${menu.name} - NUNU.GG`)
-        history.push(menu.path);
-        dispatch(InitailizeState());
         dispatch(SelectorInitailizeState());
         dispatch(InitializeGameState());
-        dispatch(MenuNum(menu.idx));
-        menu.modal && dispatch(CompareModal(true));
-        [7,8].includes(menu.idx) && dispatch(SetCopyFilters(filters));
+        if (menu.modal) {
+          dispatch(CopyFvInit());
+          dispatch(SetOpenFilterModal(menu.path))
+          dispatch(CompareModal(true));
+        } else {
+          dispatch(InitailizeState());
+          dispatch(MenuNum(menu.idx));
+          history.push(menu.path);
+        }
       }}
       changeColor={menu.changeColor}
     >
@@ -68,7 +73,7 @@ const MenuWrapper = styled.div`
   }
   :hover {
     background-color: ${(props) =>
-      props.changeColor ? "#5942ba" : "rgba(255, 255, 255, 0.1)"};
+    props.changeColor ? "#5942ba" : "rgba(255, 255, 255, 0.1)"};
     margin: 13px 0 12px;
     padding: 9px 9px 9px 14px;
     border-radius: 16px;
