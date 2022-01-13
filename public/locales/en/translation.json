@@ -338,6 +338,7 @@
     "setFilter": "Filter",
     "setLeague": "League",
     "setSeason": "Season",
+    "setYear": "Year",
     "setPatchVersion": "Patch Version",
     "team": "Team",
     "player": "Player",

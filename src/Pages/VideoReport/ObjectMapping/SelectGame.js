@@ -267,8 +267,7 @@ const LeftImg = styled.img`
     width: 20px;
     height: 20px;
     border-radius: 20px;
-    margin-right: 4px;
-
+    margin-left: 4px;
     ${props => props.color ? css`
     border: 1px solid #0075bf;
     `
@@ -327,12 +326,7 @@ const BlueSide = styled.div`
   // background-position: right;
   width: 150px;
   height: 100%;
-  > img {
-    width: 20px;
-    height: 20px;
-    border-radius: 20px;
-    margin-left: 4px;
-  }
+  
   ${(props) =>
     props.isActive &&
     css`
