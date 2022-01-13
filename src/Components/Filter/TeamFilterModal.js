@@ -652,8 +652,9 @@ export default TeamFilterModal;
 
 const FilterContainer = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   border-radius: 20px;
+  margin-top:30px;
 `;
 
 const BackScreen = styled.div`
@@ -727,6 +728,7 @@ const FilterWrapper = styled.div`
   width: 240px;
   background-color: #23212a;
   border-bottom-left-radius: 20px;
+  margin-right:20px;
 `;
 
 const FilterHeader = styled.div`
@@ -919,7 +921,7 @@ const YearFilter = styled.div`
   border-radius: 10px;
   margin: 0 5px;
   padding: 5px 10px;
-  max-height: 112px;
+  min-height: 112px;
   width: 240px;
   overflow-y: scroll;
   &::-webkit-scrollbar {
@@ -1094,7 +1096,11 @@ const ButtonBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 83px;
+  /* height: 83px; */
+  width:666px;
+  position: absolute;
+  bottom: 20px;
+  left:20px;
   .Selected {
     width: 100%;
     height: 60px;

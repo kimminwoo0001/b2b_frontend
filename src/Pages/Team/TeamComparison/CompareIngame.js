@@ -121,6 +121,7 @@ function CompareIngame() {
           Object.assign(gankData[i], gankData2[i]);
           setGank(gankData);
         }
+        console.log(gank);
         //첫 서포팅 데이터 min, max, stepsize값
         let supTicks = "";
         if (
@@ -232,7 +233,10 @@ function CompareIngame() {
               <p className="Y">Y {t("team.comparison.gankCount")}</p>
             </div>
           </NavBar>
-          <CompareTeamStat>
+            {console.log(gankDomain?.firstGankList[0].gankCount)}
+          {gankDomain?.firstGankList[0].gankCount === "NULL"? 
+            <NoData>{t("league.leagueStat.noData2")}</NoData> : 
+            <CompareTeamStat>
             <BarChart
               width={520}
               height={250}
@@ -273,6 +277,7 @@ function CompareIngame() {
               <Bar dataKey="y2" name={OppTeam} fill="#005489" barSize={28} />
             </BarChart>
           </CompareTeamStat>
+}
         </FirstGankChart>
         <LineSupportChart>
           <NavBar>
@@ -589,6 +594,9 @@ function CompareIngame() {
             )}${t("team.comparison.times")}`}</BlueTeamData>
           </GameDataBox>
           <div className="under-line"></div>
+          {redData?.IngameStats["timeOfFirstGank"] === "NULL" ? 
+          "" :
+          <>
           <GameDataBox>
             <RedTeamData>{`${redData?.IngameStats[
               "timeOfFirstGank"
@@ -609,9 +617,14 @@ function CompareIngame() {
             )} ${blueData?.IngameStats["timeOfFirstGank"].second.toFixed(0)}${t(
               "team.comparison.sec"
             )}`}</BlueTeamData>
-          </GameDataBox>
+          </GameDataBox> 
           <div className="under-line"></div>
-          <GameDataBox>
+          </>
+          } 
+          {redData?.IngameStats[
+              "numberOfTeamFight"
+            ].winRate === "NULL" ?"" : 
+            <GameDataBox>
             <RedTeamData>{`${redData?.IngameStats[
               "numberOfTeamFight"
             ].winRate.toFixed(1)}${t("team.comparison.times")}`}</RedTeamData>
@@ -624,6 +637,8 @@ function CompareIngame() {
               "numberOfTeamFight"
             ].winRate.toFixed(1)}${t("team.comparison.times")}`}</BlueTeamData>
           </GameDataBox>
+            }
+   
         </CompareStats>
       </CompareDisplay>
     </CompareIngameWrapper>
@@ -815,6 +830,7 @@ const FirstGankChart = styled.div`
   background-color: rgb(47, 45, 56);
   border-radius: 20px;
   margin-bottom: 15px;
+  position: relative;
 `;
 
 const LineSupportChart = styled.div`
@@ -910,4 +926,17 @@ const IndexBox = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 209px;
+`;
+
+const NoData = styled.div`
+background-color: #2f2d38;
+color: #fff;
+width: 530px;
+text-align: center;
+position: absolute;
+left: 50%;
+top: 60%;
+transform: translate(-50%, -50%);
+
+
 `;
