@@ -118,8 +118,10 @@ function TeamIndex() {
           const supportY = [];
           setSupportTimeData(e.supportedTime);
           e.supportedTime.supportedTimeList.forEach((support) => {
-            supportX.push(support.position);
-            supportY.push(support.value);
+            if (support.value !== "NULL") {
+              supportX.push(support.position);
+              supportY.push(support.value);
+            }
           });
 
           setSupportTimeX(supportX);
@@ -423,7 +425,7 @@ function TeamIndex() {
               </DisplayInfo>
             </div>
             <div className="AvgFirstGank">
-              {teamStats?.timeOfFirstGank === 'NULL' ?
+              {teamStats?.timeOfFirstGank.minute === "NULL" && teamStats?.timeOfFirstGank.second === "NULL" ?
                <NoData>{t("league.leagueStat.noData2")}</NoData> :
                <>
                <img
@@ -498,7 +500,7 @@ function TeamIndex() {
               </DisplayInfo>
             </div>
             <div className="AvgCombat">
-            {teamStats?.numberOfTeamFight === "NULL" ?
+              {teamStats?.numberOfTeamFight.winRate === "NULL" ?
                <NoData>{t("league.leagueStat.noData2")}</NoData> :
                <>
               <img
@@ -675,6 +677,8 @@ function TeamIndex() {
               <p className="Y">Y {t("team.analysis.ySupportTime")}</p>
             </div>
           </NavBar>
+          {supportTimeY && supportTimeY.length === 0 ?
+            <NoData>{t("league.leagueStat.noData2")}</NoData> : 
           <GameTimeCharts>
             <Bar
               data={averageSupport}
@@ -724,6 +728,7 @@ function TeamIndex() {
               }}
             />
           </GameTimeCharts>
+          }
         </AvgSupportTime>
       </GraphContainer>
     </TeamIndexWrapper>
@@ -1088,6 +1093,7 @@ const AvgSupportTime = styled.div`
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
   border-radius: 20px;
+  position: relative;
 `;
 
 const NavBar = styled.div`
@@ -1160,6 +1166,8 @@ const NoData = styled.div`
 background-color: #2f2d38;
 color: #fff;
 width: auto;
+font-size: 13px;
+white-space: nowrap;
 text-align: center;
 position: absolute;
 left: 50%;

@@ -18,6 +18,7 @@ export const COPY_SET_SEASON = "copyvalue/COPY_SET_SEASON";
 export const COPY_RESET_SEASON = "copyvalue/COPY_RESET_SEASON";
 export const COPY_SET_YEAR = "copyvalue/COPY_SET_YEAR";
 export const COPY_RESET_TEAM = "copyvalue/COPY_RESET_TEAM";
+export const COPY_RESET_YEAR = "copyvalue/COPY_RESET_YEAR";
 export const COPY_SET_PATCH = "copyvalue/COPY_SET_PATCH";
 export const COPY_GET_OPP_PLAYER = "copyvalue/COPY_GET_OPP_PLAYER";
 export const COPY_OPP_PLAYER = "copyvalue/COPY_OPP_PLAYER";
@@ -114,6 +115,12 @@ export const CopySetSeason = (payload) => {
 export const CopyResetSeason = () => {
   return {
     type: COPY_RESET_SEASON,
+  };
+};
+
+export const CopyResetYear = () => {
+  return {
+    type: COPY_RESET_YEAR,
   };
 };
 
@@ -306,6 +313,11 @@ export default function CopyReducer(state = initialState, action) {
         patch: [],
         player: "",
         patchfilter: [],
+      };
+    case COPY_RESET_YEAR:
+      return {
+        ...state,
+        year: [],
       };
     case COPY_SET_YEAR:
       return {

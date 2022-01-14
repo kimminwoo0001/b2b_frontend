@@ -544,6 +544,7 @@ function PlayerBoard() {
                 <tbody>
                   {engage?.map((title, idx) => {
                     return (
+                      title.data === "NULL" ? "" : 
                       <MapStat key={idx}>
                         <Tippy // options
                           duration={0}

@@ -594,7 +594,8 @@ function CompareIngame() {
             )}${t("team.comparison.times")}`}</BlueTeamData>
           </GameDataBox>
           <div className="under-line"></div>
-          {redData?.IngameStats["timeOfFirstGank"] === "NULL" ? 
+          {redData?.IngameStats["timeOfFirstGank"].minute === "NULL"
+            && redData?.IngameStats["timeOfFirstGank"].second === "NULL" ? 
           "" :
           <>
           <GameDataBox>
@@ -623,7 +624,7 @@ function CompareIngame() {
           } 
           {redData?.IngameStats[
               "numberOfTeamFight"
-            ].winRate === "NULL" ?"" : 
+          ].winRate === "NULL" ? "" : 
             <GameDataBox>
             <RedTeamData>{`${redData?.IngameStats[
               "numberOfTeamFight"

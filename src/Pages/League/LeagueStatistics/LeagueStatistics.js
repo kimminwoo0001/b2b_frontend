@@ -288,7 +288,7 @@ function LeagueStatistics() {
             </div>
           </NavBar>
           {supportTimeY && supportTimeY.length === 0 ?
-            <NoData>{t("league.leagueStat.noData")}</NoData> : 
+            <NoData>{t("league.leagueStat.noData2")}</NoData> : 
             <GameTimeCharts>
               <Bar
                 data={averageSupport}

@@ -64,10 +64,10 @@ const AlertModal = () => {
     }
 
     // 팀 비교 이후 - 다시 팀 비교 누르고 oppteam 선택 없이 창 닫았을 경우 home으로 이동
-    if (desc === t("alert.desc.serverError")) {
-      if (pagePath === "/team" || pagePath === "/teamCompare")
-        history.push("/");
-    }
+    // if (desc === t("alert.desc.serverError")) {
+    //   if (pagePath === "/team" || pagePath === "/teamCompare")
+    //     history.push("/");
+    // }
 
     if (confirmFuncId) {
 
