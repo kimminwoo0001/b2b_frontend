@@ -480,7 +480,8 @@ const Filter = memo(() => {
                       mapData={year}
                       radioBtn={true}
                       clickEvent={() => {
-                        dispatch(Year(year));
+                        // dispatch(Year(year));
+                        dispatch(SetYear([year]));
                       }}
                     />
                   );
