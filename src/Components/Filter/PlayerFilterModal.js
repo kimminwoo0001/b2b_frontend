@@ -140,7 +140,7 @@ function PlayerFilterModal() {
     ) {
       yearList.push(
         //Object.keys(Object.values(staticvalue.filterObjects)[i])[0]
-        "2022"
+        "2022", "2021"
       );
     }
     const recentYear = yearList
@@ -148,7 +148,7 @@ function PlayerFilterModal() {
       .sort()
       .reverse();
     // 최근 연도를 자동으로 설정
-    dispatch(SetYear([recentYear[0]]));
+    // dispatch(SetYear([recentYear[0]]));
     dispatch(setYearFilter(recentYear));
   }
 
@@ -452,6 +452,60 @@ function PlayerFilterModal() {
                 </div>
               </DropDownToggle>
             </LeagueFilter>
+            <YearFilter>
+              <label>{t("filters.setYear")}</label>
+              {!selector.yearFilter ? (
+                <PatchLabels>
+                  <img
+                    className="ChampIconImg"
+                    width="14px"
+                    height="14px"
+                    src={
+                      filters.year !== ""
+                        ? `Images/ico-filter-version.png`
+                        : "Images/ico-filter-none.png"
+                    }
+                    alt="champIcon"
+                  />
+                  <span className="Label">{t("filters.patchLabel")}</span>
+                </PatchLabels>
+              ) : (
+                selector.yearFilter?.map((year, idx) => {
+                  return (
+                    <SelectedYear
+                      radioBtn={true}
+                      key={idx}
+                      // draggable="true"
+                      // onDragStart={(event) => {
+                      //   handleMouseEvent(event);
+                      // }}
+                      // onMouseUp={(event) => {
+                      //   handleMouseEvent(event);
+                      // }}
+                      isChecked={filters.year.includes(year) ? true : false}
+                      onClick={() => {
+                        // dispatch(Patch(patch));
+                        // dispatch(Year(year))
+                        dispatch(SetYear([year]));
+                        //fetchingTeamFilter(patch);
+                      }}
+                    >
+                      <input
+                        id={idx}
+                        checked={filters.year.includes(year) ? true : false}
+                        type="checkbox"
+                        readOnly
+                      ></input>
+                      <div className="Version">
+                        {/* {patch === "11.6" ? "11.6 (P.O)" : patch} */}
+                        {year}
+                      </div>
+                    </SelectedYear>
+                  );
+                })
+              )
+              }
+            </YearFilter>
             <PatchFilter>
               <label>{t("filters.setSeason")}</label>
               {
@@ -705,7 +759,7 @@ const BackScreen = styled.div`
 const PlayerModalWrapper = styled.div`
   display: ${(props) => (props.playerModal ? "block" : "none")};
   width: 706px;
-  min-height: 666px;
+  min-height: 720px;
   background-color: #23212a;
   top: 50%;
   left: 50%;
@@ -893,7 +947,8 @@ display: flex;
 
 const LeagueFilter = styled.div`
   width: 240px;
-  margin: 17px 10px 10px 10px;
+  height: 67px;
+  margin: 15px 15px 10px 5px;
   padding: 5px;
   border-radius: 10px;
   background-color: #2f2d38;
@@ -916,11 +971,10 @@ const PatchFilter = styled.div`
   align-items: flex-start;
   background-color: #2f2d38;
   border-radius: 10px;
-  margin: 10px;
-  padding: 5px;
-  min-height: 60px;
+  margin: 10px 5px;
+  padding: 5px 10px;
+  max-height: 146px;
   width: 240px;
-  height: 180px;
 
   overflow-y: scroll;
   &::-webkit-scrollbar {
@@ -946,6 +1000,103 @@ const PatchFilter = styled.div`
     color: #fff;
   }
 `;
+
+
+const YearFilter = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #2f2d38;
+  border-radius: 10px;
+  margin: 0 5px;
+  padding: 5px 10px;
+  min-height: 112px;
+  width: 240px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #434050;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin: 5px;
+  }
+
+  label {
+    height: 15px;
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    margin: 7px 0 5px 7px;
+    font-size: 14px;
+    line-height: 1.36;
+    text-align: left;
+    color: #fff;
+  }
+`;
+
+const SelectedYear = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 4.5px 6px;
+  width: 100%;
+  height: 25px;
+  color: #84818e;
+  cursor: pointer;
+  ${(props) =>
+    props.isChecked &&
+    css`
+      color: rgb(255, 255, 255);
+    `}
+  > .Version {
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 13px;
+    letter-spacing: -0.55px;
+    text-align: left;
+  }
+
+
+  > input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    /* background-clip: content-box;
+    border: 1.5px solid rgb(72, 70, 85);
+    border-radius: 2px;
+    background-color: transparent;
+    margin-right: 8px; */
+
+    
+    background-clip: content-box;
+    background: ${(props) =>
+    props.radioBtn
+      ? `url("/Images/btn_radio_off.svg")`
+      : `url("/Images/btn_check_off.svg")`}
+      no-repeat;
+    margin-right: 8px;
+
+    &:checked {
+      background-color: #5942ba;
+      border: #5942ba;
+      border-radius: 2px;
+      background: ${(props) =>
+    props.radioBtn
+      ? `url("/Images/btn_radio_on.svg")`
+      : `url("/Images/btn_check_on.svg")`}
+        no-repeat;
+      float: right;
+    }
+
+    &:focus {
+      outline: none !important;
+    }
+  }
+`
 
 const TeamFilterBox = styled.div`
   display: flex;
@@ -1078,7 +1229,7 @@ const GetFilterData = styled.div`
 
 const MyTeamBox = styled.div`
   width: 193px;
-  height: 218px;
+  height: 246px;
   background-color: #2f2d38;
   margin-right: 15px;
   margin-bottom: 15px;
@@ -1103,7 +1254,7 @@ const MyTeamBox = styled.div`
 
 const MyPlayerBox = styled.div`
   width: 193px;
-  height: 218px;
+  height: 246px;
   /* max-height: 218px; */
   /* border-right: 1px solid #3a3745; */
   background-color: #2f2d38;
@@ -1130,7 +1281,7 @@ const MyPlayerBox = styled.div`
 
 const OppTeamBox = styled.div`
   width: 193px;
-  height: 218px;
+  height: 246px;
   background-color: #2f2d38;
   margin-right: 15px;
   margin-bottom: 15px;
@@ -1156,7 +1307,7 @@ const OppTeamBox = styled.div`
 
 const OppPlayerBox = styled.div`
   width: 193px;
-  height: 218px;
+  height: 246px;
   background-color: #2f2d38;
   margin-right: 15px;
   border-radius: 20px;

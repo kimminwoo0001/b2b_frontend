@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { createBrowserHistory } from "history";
 import {
   CopyYear as Year,
   CopyPatch as Patch,
@@ -58,8 +57,12 @@ const TeamFilterModal = () => {
   const [season, setSeason] = useState(filters.season);
 
   useEffect(() => {
-    fetchYearFilter();
-    setOppTeamFilter();
+    if(filters.openFilterModal !== "/teamCompare") {
+      fetchYearFilter();
+      setOppTeamFilter();
+    }else {
+      fetchLeagueFilter();
+    }
   }, [])
 
   useEffect(() => {
@@ -75,10 +78,19 @@ const TeamFilterModal = () => {
 
   useEffect(() => {
     if (JSON.stringify(league) !== JSON.stringify(filters.league)) {
+      if(filters.openFilterModal === "/teamCompare") {
+        fetchYearFilter();
+      }
       fetchSeasonFilter();
       setLeague(filters.league);
     }
   }, [filters.league])
+
+
+  useEffect(() => {
+    if (JSON.stringify(year) !== JSON.stringify(filters.year)) {
+    }
+  }, [filters.year])
 
   useEffect(() => {
     if (JSON.stringify(season) !== JSON.stringify(filters.season)) {
@@ -293,9 +305,10 @@ const TeamFilterModal = () => {
                 <div className="menu-container">
                   <button
                     onClick={() => {
-                      if (pagePath !== "/team") 
-                      setIsActiveLeague(!isActiveLeague);
-                      fetchLeagueFilter();
+                      if (filters.openFilterModal === "/teamCompare") {
+                        setIsActiveLeague(!isActiveLeague);
+                        fetchLeagueFilter();                       
+                      }
                     }}
                     className="menu-trigger"
                   >
@@ -921,7 +934,7 @@ const YearFilter = styled.div`
   border-radius: 10px;
   margin: 0 5px;
   padding: 5px 10px;
-  min-height: 112px;
+  max-height: 112px;
   width: 240px;
   overflow-y: scroll;
   &::-webkit-scrollbar {
