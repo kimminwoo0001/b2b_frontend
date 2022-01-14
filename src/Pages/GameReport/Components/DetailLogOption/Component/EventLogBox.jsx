@@ -23,11 +23,26 @@ const typeCase = (type, data, isActive) => {
 
 const EventLogBox = () => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
+  const logBoxRef = useRef();
+  const [boxWidth, setBoxWidth] = useState();
+  const [boxHeight, setBoxHeight] = useState();
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const eventLog = gamevalue.logDataset.event;
+
+  // This function calculates width and height of the list
+  const getListSize = () => {
+    const newWidth = logBoxRef.current.clientWidth;
+    setBoxWidth(newWidth);
+
+    const newHeight = logBoxRef.current.clientHeight;
+    setBoxHeight(newHeight);
+
+    console.log("newWidth:", newWidth);
+    console.log("newHigth:", newHeight);
+  };
 
   if (eventLog[0].type !== "NONE") {
     eventLog.unshift({
@@ -35,6 +50,11 @@ const EventLogBox = () => {
       realCount: 0,
     });
   }
+
+  useEffect(() => {
+    window.addEventListener("resize", getListSize);
+  }, []);
+
   useEffect(() => {
     console.log(gamevalue.eventLogActiveIdx);
   }, [gamevalue.eventLogActiveIdx]);
@@ -58,7 +78,7 @@ const EventLogBox = () => {
           </StyledTippy>
         </div>
       </LogTitle>
-      <LogContentBox>
+      <LogContentBox ref={logBoxRef}>
         {eventLog.map((data, idx, arr) => {
           return typeCase(data.type, data, idx === gamevalue.eventLogActiveIdx);
         })}

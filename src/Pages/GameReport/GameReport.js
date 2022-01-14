@@ -37,16 +37,38 @@ function GameReport() {
         {checkGameId && filters.team !== "" && filters.team.length > 0 ? "" :
           <>
             <SideBar />
-            {/* <div
-            className={filters.filterMenuState ? "filter-open" : "filter-close"}
-          >
-            <Filter />
-          </div>
-          <div
-            className={filters.filterMenuState ? "filter-close" : "filter-open"}
-          >
-            <CloseFilter />
-          </div> */}
+            <div
+              className={filters.filterMenuState ? "filter-open" : "filter-close"}
+            >
+              <Filter />
+            </div>
+            <div
+              className={filters.filterMenuState ? "filter-close" : "filter-open"}
+            >
+              <CloseFilter />
+            </div>
+          </>}
+        <ContentWrapper>
+          {filters.team !== "" && filters.team.length > 0 ? (
+            <GameReportTab />
+          ) : (
+            <SelectFilter />
+          )}
+        </ContentWrapper>
+      </GameWrapper>
+    </ErrorBoundary>
+  );
+}
+
+/* 데모 컴포넌트
+ <ErrorBoundary>
+      {checkGameId ? "" : <Nav />}
+      {copyvalue?.openFilterModal === "/teamCompare" && <TeamFilterModal />}
+      {copyvalue?.openFilterModal === "/playerCompare" && <PlayerFilterModal />}
+      <GameWrapper>
+        {checkGameId && filters.team !== "" && filters.team.length > 0 ? "" :
+          <>
+            <SideBar />
           </>}
         <ContentWrapper>
           {filters.team !== "" && filters.team.length > 0 ? (
@@ -60,8 +82,8 @@ function GameReport() {
         </ContentWrapper>
       </GameWrapper>
     </ErrorBoundary>
-  );
-}
+ 
+*/
 
 /* 개발 중인 컴포넌트
 <GameWrapper>
