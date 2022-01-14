@@ -162,7 +162,7 @@ const ModalDetail = styled.div`
 
 const ModalSemiDetail = styled.div`
   width: 100%;
-  margin: 0 0 28px 0;
+  margin: 0 0 0px 0;
   font-family: SpoqaHanSansNeo;
   font-size: 13px;
   font-weight: normal;
@@ -179,6 +179,7 @@ const ModalClose = styled.div`
   justify-content: center;
   align-items: center;
   height: 62px;
+  margin-top: 30px;
 
   button {
     width: 225px;
