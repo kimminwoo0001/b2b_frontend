@@ -38,7 +38,7 @@ const StatusBox4 = () => {
       }
     }
 
-    console.log("arrImgAddr", arrImgAddr);
+    //console.log("arrImgAddr", arrImgAddr);
     return arrImgAddr;
   }
 

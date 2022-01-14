@@ -168,6 +168,7 @@ const VideoPlayer = ({ video, startTime }) => {
           let eventIdx = value;
           let result = 0;
           for (let idx of datasets[datasetIdx].slice(value).keys()) {
+            idx += checkIdx;
             if (
               datasets[datasetIdx].length !== idx + 1 &&
               datasets[datasetIdx][idx].realCount / 2 <= timer

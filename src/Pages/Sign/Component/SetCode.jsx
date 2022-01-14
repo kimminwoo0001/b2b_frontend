@@ -36,7 +36,7 @@ const SetCode = ({ id, authCode, setAuthCode, setSignType, signType }) => {
     dispatch(SetIsSelector(true));
     dispatch(SetIsOpen(true));
     dispatch(SetDesc(t(`sign.${id}.authAlert`)));
-    dispatch(SetSemiDesc(t(`sign.${id}.authSemiAlert`)));
+    id === "setCode" && dispatch(SetSemiDesc(t(`sign.${id}.authSemiAlert`)));
 
     switch (signType) {
       case "EC":

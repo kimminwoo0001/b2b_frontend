@@ -3,19 +3,40 @@ import Tippy from "@tippy.js/react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
+import {
+  Link,
+  DirectLink,
+  Element,
+  Events,
+  animateScroll as scroll,
+  scrollSpy,
+  scroller,
+} from "react-scroll";
 import GameReportToolTip from "../../Common/GameReportToolTip";
 import KillEventBox from "./EventOption/KillEventBox";
 import MonsterEventBox from "./EventOption/MonsterEventBox";
 import BuildEventBox from "./EventOption/BuildEventBox";
 
-const typeCase = (type, data, isActive) => {
+const typeCase = (type, data, isActive, idx) => {
   switch (type) {
     case "CHAMPION_KILL":
-      return <KillEventBox data={data} isActive={isActive} />;
+      return (
+        <Element name={`event-log-${idx}`} className="element">
+          <KillEventBox data={data} isActive={isActive} />
+        </Element>
+      );
     case "ELITE_MONSTER_KILL":
-      return <MonsterEventBox data={data} isActive={isActive} />;
+      return (
+        <Element name={`event-log-${idx}`} className="element">
+          <MonsterEventBox data={data} isActive={isActive} />
+        </Element>
+      );
     case "BUILDING_KILL":
-      return <BuildEventBox data={data} isActive={isActive} />;
+      return (
+        <Element name={`event-log-${idx}`} className="element">
+          <BuildEventBox data={data} isActive={isActive} />
+        </Element>
+      );
     default:
       return;
   }
@@ -24,8 +45,7 @@ const typeCase = (type, data, isActive) => {
 const EventLogBox = () => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const logBoxRef = useRef();
-  const [boxWidth, setBoxWidth] = useState();
-  const [boxHeight, setBoxHeight] = useState();
+  const [scrollHeight, setScrollHeight] = useState();
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -34,14 +54,8 @@ const EventLogBox = () => {
 
   // This function calculates width and height of the list
   const getListSize = () => {
-    const newWidth = logBoxRef.current.clientWidth;
-    setBoxWidth(newWidth);
-
-    const newHeight = logBoxRef.current.clientHeight;
-    setBoxHeight(newHeight);
-
-    console.log("newWidth:", newWidth);
-    console.log("newHigth:", newHeight);
+    const newHeight = logBoxRef.current.scrollHeight;
+    setScrollHeight(newHeight);
   };
 
   if (eventLog[0].type !== "NONE") {
@@ -52,11 +66,30 @@ const EventLogBox = () => {
   }
 
   useEffect(() => {
-    window.addEventListener("resize", getListSize);
+    getListSize();
   }, []);
+
+  const autoMoveScroll = (idx) => {
+    if (idx > 0) {
+      scroller.scrollTo(`event-log-${idx}`, {
+        duration: 500,
+        delay: 0,
+        smooth: "easeInOutQuart",
+        containerId: "eventLogContentBox",
+      });
+    } else {
+      scroll.scrollToTop({
+        duration: 500,
+        delay: 0,
+        smooth: "easeInOutQuart",
+        containerId: "eventLogContentBox",
+      });
+    }
+  };
 
   useEffect(() => {
     console.log(gamevalue.eventLogActiveIdx);
+    autoMoveScroll(gamevalue.eventLogActiveIdx);
   }, [gamevalue.eventLogActiveIdx]);
 
   return (
@@ -78,9 +111,14 @@ const EventLogBox = () => {
           </StyledTippy>
         </div>
       </LogTitle>
-      <LogContentBox ref={logBoxRef}>
+      <LogContentBox ref={logBoxRef} id={"eventLogContentBox"}>
         {eventLog.map((data, idx, arr) => {
-          return typeCase(data.type, data, idx === gamevalue.eventLogActiveIdx);
+          return typeCase(
+            data.type,
+            data,
+            idx === gamevalue.eventLogActiveIdx,
+            idx
+          );
         })}
       </LogContentBox>
     </LogDetailContainer>
