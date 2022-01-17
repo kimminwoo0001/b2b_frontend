@@ -414,6 +414,7 @@ const DropDown = styled.div`
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
+    z-index:9999;
   }
 
   .menu ul {

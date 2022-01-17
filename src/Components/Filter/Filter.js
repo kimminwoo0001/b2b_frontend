@@ -264,15 +264,16 @@ const Filter = memo(() => {
         for (let league of filters.league) {
           const ObjectKeys = Object.keys(staticvalue.filterObjects[league]);
           // const ObjectKeys = ["2021"];
-          yearList = yearList.concat(ObjectKeys);
+          // yearList = yearList.concat(ObjectKeys);
+          yearList = ObjectKeys;
         }
-        yearList = yearList
-          .filter((item, pos) => yearList.indexOf(item) === pos)
-          .sort()
-          .reverse();
+        // yearList = yearList
+        //   .filter((item, pos) => yearList.indexOf(item) === pos)
+        //   .sort()
+        //   .reverse();
         dispatch(Year(yearList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
       }
-      yearList.map(data => { console.log("yeartLiost", data) })
+      // yearList.map(data => { console.log("yeartLiost", data) })
 
       dispatch(setYearFilter(yearList));
     }
@@ -298,12 +299,12 @@ const Filter = memo(() => {
 
       let updateSeason = [];
       for (const season of filters.season) {
-        if (seasonList.includes(season)) {
-          updateSeason.push(season);
-        }
-        else {
+        // if (seasonList.includes(season)) {
+        //   updateSeason.push(season);
+        // }
+        // else {
           updateSeason = [seasonList[0]];
-        }
+        // }
       }
       dispatch(SetSeason(updateSeason));
 
