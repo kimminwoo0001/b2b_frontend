@@ -104,6 +104,7 @@ function TeamIndex() {
               : firstGank?.firstGankMax + (5 - (firstGank?.firstGankMax % 5));
           firstGank.firstGankRow = firstGank.firstGankMax / 5;
           setGankCount(e.firstGank);
+          e.firstGank.firstGankList !== "NULL" &&
           e.firstGank.firstGankList.forEach((game) => {
             gameX.push(game.position);
             gameY.push(game.value);
@@ -117,8 +118,10 @@ function TeamIndex() {
           const supportY = [];
           setSupportTimeData(e.supportedTime);
           e.supportedTime.supportedTimeList.forEach((support) => {
-            supportX.push(support.position);
-            supportY.push(support.value);
+            if (support.value !== "NULL") {
+              supportX.push(support.position);
+              supportY.push(support.value);
+            }
           });
 
           setSupportTimeX(supportX);
@@ -422,39 +425,43 @@ function TeamIndex() {
               </DisplayInfo>
             </div>
             <div className="AvgFirstGank">
-              <img
-                className="MainIcon"
-                src="Images/ico-team-dash-gank.png"
-                alt="Icon"
-              ></img>
-              <DisplayInfo>
-                <div className="SubTitle">{t("team.analysis.gank")}</div>
-                <div className="CalcData">
-                  <img
-                    src={
-                      teamStats?.timeOfFirstGank.result === true
-                        ? "Images/ico-teamreport-num-up.svg"
-                        : "Images/ico-teamreport-num-down.svg"
-                    }
-                    alt="arrowIcon"
-                    width="13px"
-                    height="13px"
-                  ></img>
-                  <TeamValue
-                    changeColor={teamStats?.timeOfFirstGank.result === false}
-                  >
-                    {`${teamStats?.timeOfFirstGank.minute}${t(
-                      "team.analysis.min"
-                    )} ${teamStats?.timeOfFirstGank.second}${t(
-                      "team.analysis.sec"
-                    )}`}
-                  </TeamValue>
-                </div>
-                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${leagueStat?.timeOfFirstGank.minute
-                  }${t("team.analysis.min")} ${leagueStat?.timeOfFirstGank.second
-                  }${t("team.analysis.sec")}`}</div>
-              </DisplayInfo>
-            </div>
+              {teamStats?.timeOfFirstGank.minute === "NULL" && teamStats?.timeOfFirstGank.second === "NULL" ?
+               <NoData>{t("league.leagueStat.noData2")}</NoData> :
+               <>
+               <img
+               className="MainIcon"
+               src="Images/ico-team-dash-gank.png"
+               alt="Icon"
+             ></img>
+             <DisplayInfo>
+               <div className="SubTitle">{t("team.analysis.gank")}</div>
+               <div className="CalcData">
+                 <img
+                   src={
+                     teamStats?.timeOfFirstGank.result === true
+                       ? "Images/ico-teamreport-num-up.svg"
+                       : "Images/ico-teamreport-num-down.svg"
+                   }
+                   alt="arrowIcon"
+                   width="13px"
+                   height="13px"
+                 ></img>
+                 <TeamValue
+                   changeColor={teamStats?.timeOfFirstGank.result === false}
+                 >
+                   {`${teamStats?.timeOfFirstGank.minute}${t(
+                     "team.analysis.min"
+                   )} ${teamStats?.timeOfFirstGank.second}${t(
+                     "team.analysis.sec"
+                   )}`}
+                 </TeamValue>
+               </div>
+               <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${leagueStat?.timeOfFirstGank.minute
+                 }${t("team.analysis.min")} ${leagueStat?.timeOfFirstGank.second
+                 }${t("team.analysis.sec")}`}</div>
+             </DisplayInfo>
+             </>}
+           </div>
           </div>
           <div className="SecondBox">
             <div className="FirstBaron">
@@ -493,6 +500,9 @@ function TeamIndex() {
               </DisplayInfo>
             </div>
             <div className="AvgCombat">
+              {teamStats?.numberOfTeamFight.winRate === "NULL" ?
+               <NoData>{t("league.leagueStat.noData2")}</NoData> :
+               <>
               <img
                 className="MainIcon"
                 src="Images/ico-team-dash-fight.png"
@@ -521,8 +531,11 @@ function TeamIndex() {
                   "team.analysis.leagueAvg"
                 )} ${leagueStat?.winRate.toFixed(2)}`}</div>
               </DisplayInfo>
-            </div>
+              </>
+}
+            </div>               
           </div>
+                
         </ContentsBoxTwo>
       </DisplayWithIcon>
       <TeamSBRTable>
@@ -593,6 +606,10 @@ function TeamIndex() {
               <p className="Y">Y {t("team.analysis.gankCount")}</p>
             </div>
           </NavBar>
+          {console.log(gankCount)}
+          {gankCount?.firstGankList === "NULL" ?
+            <NoData>{t("league.leagueStat.noData2")}</NoData>
+            : 
           <GameTimeCharts>
             <Bar
               data={firstGankTime}
@@ -646,6 +663,7 @@ function TeamIndex() {
               }}
             />
           </GameTimeCharts>
+}
         </FirstGankLine>
         <AvgSupportTime>
           <NavBar>
@@ -659,6 +677,8 @@ function TeamIndex() {
               <p className="Y">Y {t("team.analysis.ySupportTime")}</p>
             </div>
           </NavBar>
+          {supportTimeY && supportTimeY.length === 0 ?
+            <NoData>{t("league.leagueStat.noData2")}</NoData> : 
           <GameTimeCharts>
             <Bar
               data={averageSupport}
@@ -708,6 +728,7 @@ function TeamIndex() {
               }}
             />
           </GameTimeCharts>
+          }
         </AvgSupportTime>
       </GraphContainer>
     </TeamIndexWrapper>
@@ -913,6 +934,7 @@ const ContentsBoxTwo = styled.div`
     }
   }
   .AvgFirstGank {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -949,6 +971,7 @@ const ContentsBoxTwo = styled.div`
     border: solid 1px #3a3745;
     background-color: #2f2d38;
     border-radius: 20px;
+    position: relative;
     .MainIcon {
       margin-right: 18px;
     }
@@ -1061,6 +1084,7 @@ const FirstGankLine = styled.div`
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
   border-radius: 20px;
+  position: relative;
 `;
 
 const AvgSupportTime = styled.div`
@@ -1069,6 +1093,7 @@ const AvgSupportTime = styled.div`
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
   border-radius: 20px;
+  position: relative;
 `;
 
 const NavBar = styled.div`
@@ -1135,4 +1160,17 @@ const TeamValue = styled.div`
     css`
       color: #0084d8;
     `}
+`;
+
+const NoData = styled.div`
+background-color: #2f2d38;
+color: #fff;
+width: auto;
+font-size: 13px;
+white-space: nowrap;
+text-align: center;
+position: absolute;
+left: 50%;
+top: 60%;
+transform: translate(-50%, -50%);
 `;

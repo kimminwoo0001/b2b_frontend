@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import WardPlayerFilter from "./WardPlayerFilter";
 import WardTeamFilter from "./WardTeamFilter";
 import Tippy from "@tippy.js/react";
-import { Reset_MapTab } from "../../../redux/modules/filtervalue";
+import { Reset_MapTab, HandleTab } from "../../../redux/modules/filtervalue";
 import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
 import { API } from "../../config";
@@ -55,6 +55,7 @@ function WardMapping() {
 
   let firstTime = minFrom[0] * 5100;
   let secondTime = minFrom[1] * 5100;
+
 
   const handleTimeReset = () => {
     // setMinFrom(t("video.vision.selectMin"));
