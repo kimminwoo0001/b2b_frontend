@@ -261,6 +261,7 @@ const Filter = memo(() => {
       if (filters.league.length === 0) {
         dispatch(ResetYear());
       } else if (filters.league.length > 0) {
+
         for (let league of filters.league) {
           const ObjectKeys = Object.keys(staticvalue.filterObjects[league]);
           // const ObjectKeys = ["2021"];
@@ -277,9 +278,9 @@ const Filter = memo(() => {
 
       dispatch(setYearFilter(yearList));
     }
-
-
   };
+
+
 
   const fetchSeasonFilter = () => {
     let seasonList = [];

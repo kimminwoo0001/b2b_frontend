@@ -110,11 +110,13 @@ function CompareIngame() {
         }
 
         //첫 갱크 데이터 가져와서 x,y로 나눠서 배열로 만듬
-        const gankData = e[Team]?.firstGank.firstGankList?.map((gank) => {
+        const gankData = e[Team]?.firstGank.firstGankList !== "NULL"
+          && e[Team]?.firstGank.firstGankList?.map((gank) => {
           return { x: gank.position, y1: gank.gankCount };
         });
 
-        const gankData2 = e[OppTeam]?.firstGank.firstGankList?.map((gank) => {
+        const gankData2 = e[OppTeam]?.firstGank.firstGankList !== "NULL"
+          && e[OppTeam]?.firstGank.firstGankList?.map((gank) => {
           return { x: gank.position, y2: gank.gankCount };
         });
         for (let i = 0; i < gankData.length; i++) {
@@ -136,19 +138,24 @@ function CompareIngame() {
         }
 
         //첫 서포팅 데이터 가져와서 x,y로 나눠서 배열로 만듬
-        const supData = e[Team]?.supportedTime.supportedTimeList?.map((sup) => {
+        const supData = e[Team]?.supportedTime.supportedTimeList !== "NULL"
+          && e[Team]?.supportedTime.supportedTimeList?.map((sup) => {
           return { x: sup.position, y1: sup.value };
-        });
-        const supData2 = e[OppTeam]?.supportedTime.supportedTimeList.map(
+          }
+          );
+        const supData2 = e[OppTeam]?.supportedTime.supportedTimeList !== "NULL"
+          && e[OppTeam]?.supportedTime.supportedTimeList.map(
           (sup) => {
             return { x: sup.position, y2: sup.value };
           }
         );
+        console.log(supData);
         for (let i = 0; i < supData.length; i++) {
           Object.assign(supData[i], supData2[i]);
           setSupport(supData);
         }
         hanldleTicks(gankTicks, supTicks);
+
         //Team, OppTeam을 나눠서 데이터를 저장함
         setRedData(e[Team]);
         setBlueData(e[OppTeam]);
@@ -234,7 +241,7 @@ function CompareIngame() {
             </div>
           </NavBar>
             {console.log(gankDomain?.firstGankList[0].gankCount)}
-          {gankDomain?.firstGankList[0].gankCount === "NULL"? 
+          {gankDomain?.firstGankList === "NULL" ? 
             <NoData>{t("league.leagueStat.noData2")}</NoData> : 
             <CompareTeamStat>
             <BarChart
@@ -291,6 +298,8 @@ function CompareIngame() {
               <p className="Y">Y {t("team.comparison.supportTime")}</p>
             </div>
           </NavBar>
+          {supportDomain?.supportedTimeList === "NULL" ?
+            <NoData>{t("league.leagueStat.noData2")}</NoData> : 
           <CompareTeamStat>
             <BarChart
               width={520}
@@ -334,6 +343,7 @@ function CompareIngame() {
               <Bar dataKey="y2" name={OppTeam} fill="#005489" barSize={28} />
             </BarChart>
           </CompareTeamStat>
+          }
         </LineSupportChart>
       </ChartBox>
       <CompareDisplay>
@@ -593,11 +603,11 @@ function CompareIngame() {
               1
             )}${t("team.comparison.times")}`}</BlueTeamData>
           </GameDataBox>
-          <div className="under-line"></div>
-          {redData?.IngameStats["timeOfFirstGank"].minute === "NULL"
-            && redData?.IngameStats["timeOfFirstGank"].second === "NULL" ? 
+
+          {redData?.IngameStats["timeOfFirstGank"].second === -1 ? 
           "" :
           <>
+              <div className="under-line"></div>
           <GameDataBox>
             <RedTeamData>{`${redData?.IngameStats[
               "timeOfFirstGank"
@@ -624,7 +634,7 @@ function CompareIngame() {
           } 
           {redData?.IngameStats[
               "numberOfTeamFight"
-          ].winRate === "NULL" ? "" : 
+          ].winRate === -1 ? "" : 
             <GameDataBox>
             <RedTeamData>{`${redData?.IngameStats[
               "numberOfTeamFight"
@@ -840,6 +850,7 @@ const LineSupportChart = styled.div`
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
   border-radius: 20px;
+  position: relative;
 `;
 
 const NavBar = styled.div`
@@ -938,6 +949,4 @@ position: absolute;
 left: 50%;
 top: 60%;
 transform: translate(-50%, -50%);
-
-
 `;
