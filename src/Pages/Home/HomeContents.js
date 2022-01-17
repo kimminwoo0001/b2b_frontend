@@ -93,6 +93,8 @@ const HomeContents = memo(() => {
         console.log(e);
         dispatch(Loading(false));
       }
+    } else {
+      setDoneFilter(true);
     }
   };
 
@@ -109,6 +111,8 @@ const HomeContents = memo(() => {
         console.log(e);
         //dispatch(Loading(false));
       }
+    } else {
+      setDoneRune(true);
     }
   }
 

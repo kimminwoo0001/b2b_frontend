@@ -57,7 +57,7 @@ const StatusLogBox = () => {
 
   const autoMoveScroll = (idx) => {
     if (idx > 0) {
-      scroller.scrollTo(`event-log-${idx}`, {
+      scroller.scrollTo(`status-log-${idx}`, {
         duration: 500,
         delay: 0,
         smooth: "easeInOutQuart",
