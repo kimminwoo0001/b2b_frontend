@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import secToMS from "../../../../../../lib/secToMS";
 
-const GankingStatusBox = ({ gankingData, idx, isActive }) => {
+const GankingRoamingStatusBox = ({ gankingData, idx, isActive, id }) => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const GankingStatusBox = ({ gankingData, idx, isActive }) => {
 
   function getBuildType(dest) {
     let result = {
-      type: t("game.log.status.gank.title"),
+      type: t(`game.log.status.${id}.title`),
       line: "",
     };
 
@@ -60,15 +60,13 @@ const GankingStatusBox = ({ gankingData, idx, isActive }) => {
           alt="champion"
         />
         <img src={`Images/ico-position-${type.line}.png`} alt="line" />
-        <span className="player-name">{`${t(
-          "game.log.status.gank.desc"
-        )}`}</span>
+        <span className="player-name">{t(`game.log.status.${id}.desc`)}</span>
       </div>
     </LogContent>
   );
 };
 
-export default GankingStatusBox;
+export default GankingRoamingStatusBox;
 
 const LogContent = styled.div`
   width: 180px;

@@ -576,9 +576,13 @@
       "status": {
         "subject": "상태 로그",
         "tooltipInfo": "게임시간 15분 이후 상태로그는 아직 지원하지 않습니다.",
-        "gank": {
+        "ganking": {
           "title": "갱킹",
           "desc": "에 갱킹을 시도합니다."
+        },
+        "roaming": {
+          "title": "로밍",
+          "desc": "에 로밍을 시도합니다."
         }
       },
       "detail": {

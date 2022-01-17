@@ -45,17 +45,11 @@ const typeCase = (type, data, isActive, idx) => {
 const EventLogBox = () => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const logBoxRef = useRef();
-  const [scrollHeight, setScrollHeight] = useState();
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const eventLog = gamevalue.logDataset.event;
-
-  const getListSize = () => {
-    const newHeight = logBoxRef.current.scrollHeight;
-    setScrollHeight(newHeight);
-  };
 
   if (eventLog[0].type !== "NONE") {
     eventLog.unshift({
@@ -64,9 +58,7 @@ const EventLogBox = () => {
     });
   }
 
-  useEffect(() => {
-    getListSize();
-  }, []);
+
 
   const autoMoveScroll = (idx) => {
     if (idx > 0) {

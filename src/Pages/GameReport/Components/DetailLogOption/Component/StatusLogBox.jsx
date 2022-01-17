@@ -7,7 +7,7 @@ import GameReportToolTip from "../../Common/GameReportToolTip";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Element, animateScroll as scroll, scroller } from "react-scroll";
-import GankingStatusBox from "./StatusOption/GankingStatusBox";
+import GankingRoamingStatusBox from "./StatusOption/GankingRoamingStatusBox";
 import RoamingStatusBox from "./StatusOption/RoamingStatusBox";
 import DiveStatusBox from "./StatusOption/DiveStatusBox";
 import StarterStatusBox from "./StatusOption/StarterStatusBox";
@@ -16,16 +16,24 @@ const typeCase = (type, data, isActive, idx) => {
   switch (type) {
     case "Ganking":
       return (
-        <Element name={`event-log-${idx}`} className="element">
-          <GankingStatusBox gankingData={data} isActive={isActive} />
+        <Element name={`status-log-${idx}`} className="element">
+          <GankingRoamingStatusBox
+            gankingData={data}
+            isActive={isActive}
+            id={type.toLowerCase()}
+          />
         </Element>
       );
-    // case "Roaming":
-    //   return (
-    //     <Element name={`event-log-${idx}`} className="element">
-    //       <RoamingStatusBox data={data} isActive={isActive} />
-    //     </Element>
-    //   );
+    case "Roaming":
+      return (
+        <Element name={`status-log-${idx}`} className="element">
+          <GankingRoamingStatusBox
+            gankingData={data}
+            isActive={isActive}
+            id={type.toLowerCase()}
+          />
+        </Element>
+      );
     default:
       return;
   }
@@ -34,17 +42,11 @@ const typeCase = (type, data, isActive, idx) => {
 const StatusLogBox = () => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const logBoxRef = useRef();
-  const [scrollHeight, setScrollHeight] = useState();
 
   const statusLog = gamevalue.statusLogDataset;
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
-  const getListSize = () => {
-    const newHeight = logBoxRef.current.scrollHeight;
-    setScrollHeight(newHeight);
-  };
 
   if (statusLog[0].type !== "NONE") {
     statusLog.unshift({
@@ -53,9 +55,28 @@ const StatusLogBox = () => {
     });
   }
 
+  const autoMoveScroll = (idx) => {
+    if (idx > 0) {
+      scroller.scrollTo(`event-log-${idx}`, {
+        duration: 500,
+        delay: 0,
+        smooth: "easeInOutQuart",
+        containerId: "statusLogContentBox",
+      });
+    } else {
+      scroll.scrollToTop({
+        duration: 500,
+        delay: 0,
+        smooth: "easeInOutQuart",
+        containerId: "statusLogContentBox",
+      });
+    }
+  };
+
   useEffect(() => {
-    getListSize();
-  }, []);
+    console.log(gamevalue.eventLogActiveIdx);
+    autoMoveScroll(gamevalue.eventLogActiveIdx);
+  }, [gamevalue.eventLogActiveIdx]);
 
   return (
     <LogDetailContainer>
@@ -77,7 +98,7 @@ const StatusLogBox = () => {
           return typeCase(
             data.type,
             data,
-            idx === gamevalue.eventLogActiveIdx,
+            idx === gamevalue.statusLogActiveIdx,
             idx
           );
         })}

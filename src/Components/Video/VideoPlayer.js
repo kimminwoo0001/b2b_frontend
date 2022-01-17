@@ -150,7 +150,8 @@ const VideoPlayer = ({ video, startTime }) => {
     const itemIdx = gamevalue.itemActiveIdx;
     const liveIdx = gamevalue.liveActiveIdx;
     const goldIdx = gamevalue.goldActiveIdx;
-    const Idxs = [logIdx, itemIdx, liveIdx, goldIdx];
+    const statusLogIdx = gamevalue.statusLogActiveIdx;
+    const Idxs = [logIdx, itemIdx, liveIdx, goldIdx, statusLogIdx];
 
     let checkDatasetIdx = 0;
     let checkIdx = 0;
