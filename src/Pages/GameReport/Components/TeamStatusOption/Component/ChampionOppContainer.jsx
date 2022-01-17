@@ -81,6 +81,9 @@ const ChampOppTeamContainer = styled.div`
     letter-spacing: normal;
     text-align: right;
     color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .champ-pic-box {

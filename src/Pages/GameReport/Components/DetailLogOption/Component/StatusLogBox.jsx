@@ -74,9 +74,9 @@ const StatusLogBox = () => {
   };
 
   useEffect(() => {
-    console.log(gamevalue.eventLogActiveIdx);
-    autoMoveScroll(gamevalue.eventLogActiveIdx);
-  }, [gamevalue.eventLogActiveIdx]);
+    console.log(gamevalue.statusLogActiveIdx);
+    autoMoveScroll(gamevalue.statusLogActiveIdx);
+  }, [gamevalue.statusLogActiveIdx]);
 
   return (
     <LogDetailContainer>
