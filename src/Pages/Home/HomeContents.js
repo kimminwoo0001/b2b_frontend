@@ -20,6 +20,11 @@ const HomeContents = memo(() => {
   const user = useSelector((state) => state.UserReducer);
   const modal = useSelector((state) => state.ModalReducer)
 
+  // check
+  const [doneHome, setDoneHome] = useState(false);
+  const [doneFilter, setDoneFilter] = useState(false);
+  const [doneRune, setDoneRune] = useState(false);
+
   const { t } = useTranslation();
   let history = useHistory();
   const dispatch = useDispatch();
@@ -33,16 +38,22 @@ const HomeContents = memo(() => {
   // const [vcsData, setVcsData] = useState([]);
 
   useEffect(() => {
+    dispatch(Loading(true));
     fetchHomeData();
-    fetchFilterData();
     fetchRunesObject();
+    fetchFilterData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (doneHome === true && doneFilter === true && doneRune === true) {
+      dispatch(Loading(false));
+    }
+  }, [doneHome, doneFilter, doneRune])
 
   // 홈 데이터 fetch 해오는 함수
 
   const fetchHomeData = () => {
-    dispatch(Loading(true));
     console.log(user);
     try {
       const url = `${API}/lolapi/home/home`;
@@ -52,20 +63,18 @@ const HomeContents = memo(() => {
       axiosRequest(undefined, url, params, function (data) {
         console.log("modal", modal);
         setLeagueDataset(data);
-        dispatch(Loading(false));
+        setDoneHome(true);
       }, function (objStore) {
         dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
       })
       //
     } catch (e) {
       console.log(e);
-      dispatch(Loading(false));
     }
   };
 
   const fetchFilterData = () => {
     if (staticvalue.filterObjects === null) {
-      dispatch(Loading(true));
       try {
         const url = `${API}/lolapi/filter/filterCall`;
         const params = {
@@ -75,7 +84,7 @@ const HomeContents = memo(() => {
         axiosRequest(undefined, url, params, function (data) {
           console.log(data);
           dispatch(SetFilterAllItems(data));
-          dispatch(Loading(false));
+          setDoneFilter(true);
         }, function (objStore) {
           dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
           dispatch(Loading(false));
@@ -89,16 +98,16 @@ const HomeContents = memo(() => {
 
   const fetchRunesObject = () => {
     if (staticvalue.runesObjects === null) {
-      dispatch(Loading(true));
       try {
         fetch(`https://ddragon.leagueoflegends.com/cdn/${recentVersion}/data/ko_KR/runesReforged.json`)
           .then(res => res.json())
           .then(out => dispatch(SetRunesJson(out)))
+          .then(e => setDoneRune(true))
           .catch(err => console.log("Not load Rune Dataset."));
-        dispatch(Loading(false));
+        //dispatch(Loading(false));
       } catch (e) {
         console.log(e);
-        dispatch(Loading(false));
+        //dispatch(Loading(false));
       }
     }
   }

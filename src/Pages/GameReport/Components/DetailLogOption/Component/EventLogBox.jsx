@@ -52,7 +52,6 @@ const EventLogBox = () => {
 
   const eventLog = gamevalue.logDataset.event;
 
-  // This function calculates width and height of the list
   const getListSize = () => {
     const newHeight = logBoxRef.current.scrollHeight;
     setScrollHeight(newHeight);

@@ -16,6 +16,7 @@ import {
   SetMappingDataset,
   SetLiveDataset,
   SetTeamGoldDataset,
+  SetStatusLogDataset,
 } from "../../../redux/modules/gamevalue";
 import { SetVodUrl } from "../../../redux/modules/videovalue";
 import axiosRequest from "../../../lib/axiosRequest";
@@ -63,6 +64,7 @@ const EachMatch = ({ matchData, team }) => {
             dispatch(SetMappingDataset(e?.mapping));
             dispatch(SetLiveDataset(e?.live));
             dispatch(SetTeamGoldDataset(e?.teamGold));
+            dispatch(SetStatusLogDataset(e?.actionLog));
             dispatch(Loading(false));
           });
         },

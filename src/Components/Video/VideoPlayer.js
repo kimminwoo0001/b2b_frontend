@@ -8,7 +8,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import { HandledisablePip, HandleDuration, HandleEnablePip, HandleEnded, HandlePlaybackRateChange, HandlePlaying, HandleProgress, HandleSeekChange, HandleSeekMouseDown, HandleSeekMouseUp, HandleStop, HandleToggleControls, HandleToggleLight, HandleToggleLoop, HandleToggleMuted, HandleTogglePip, HandleVolumeChange, SetPause, SetPlay, SetPlayBackRate, SetUrl } from '../../redux/modules/videovalue';
 import secToMS from '../../lib/secToMS';
-import { SetCurrentItemIdxActiveIdx, SetEventLogActiveIdx, SetLiveActiveIdx, SetGoldActiveIdx } from '../../redux/modules/gamevalue';
+import { SetCurrentItemIdxActiveIdx, SetEventLogActiveIdx, SetLiveActiveIdx, SetGoldActiveIdx, SetStatusLogActiveIdx } from '../../redux/modules/gamevalue';
 
 
 const VideoPlayer = ({ video, startTime }) => {
@@ -34,8 +34,9 @@ const VideoPlayer = ({ video, startTime }) => {
     gamevalue.playerDataset[gamevalue.selectedParticipant].currentItem;
   const liveDataset = gamevalue.liveDataset;
   const goldDataset = gamevalue.teamGoldDataset;
+  const statusLogDataset = gamevalue.statusLogDataset;
 
-  const datasets = [eventLogDataset, currentItemDataset, liveDataset, goldDataset];
+  const datasets = [eventLogDataset, currentItemDataset, liveDataset, goldDataset, statusLogDataset];
 
 
   const load = url => {
@@ -206,6 +207,9 @@ const VideoPlayer = ({ video, startTime }) => {
                   case 3:
                     dispatch(SetGoldActiveIdx(result));
                     break;
+                  case 4:
+                    dispatch(SetStatusLogActiveIdx(result));
+                    break;
                   default:
                     break;
                 }
@@ -254,6 +258,9 @@ const VideoPlayer = ({ video, startTime }) => {
                   case 3:
                     dispatch(SetGoldActiveIdx(result));
                     break;
+                  case 4:
+                    dispatch(SetStatusLogActiveIdx(result));
+                    break;
                   default:
                     break;
                 }
@@ -276,6 +283,12 @@ const VideoPlayer = ({ video, startTime }) => {
             case 2:
               dispatch(SetLiveActiveIdx(result));
               break
+            case 3:
+              dispatch(SetGoldActiveIdx(result));
+              break;
+            case 4:
+              dispatch(SetStatusLogActiveIdx(result));
+              break;
             default:
               break;
           }
