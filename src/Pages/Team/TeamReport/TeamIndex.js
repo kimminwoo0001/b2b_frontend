@@ -430,7 +430,7 @@ function TeamIndex() {
                src="Images/ico-team-dash-gank.png"
                alt="Icon"
              ></img>
-              <DisplayInfoAvgFirstGank>
+              <DisplayInfo>
                <div className="SubTitle">{t("team.analysis.gank")}</div>
                 {teamStats?.timeOfFirstGank.minute === "NULL" && teamStats?.timeOfFirstGank.second === "NULL" ?
                   <NoData2>{t("league.leagueStat.noData2")}</NoData2> :
@@ -461,7 +461,7 @@ function TeamIndex() {
                  }${t("team.analysis.sec")}`}</div>
                   </>
                 }
-              </DisplayInfoAvgFirstGank>
+              </DisplayInfo>
            </div>
           </div>
           <div className="SecondBox">
@@ -1167,7 +1167,7 @@ const NoData = styled.div`
 background-color: #2f2d38;
 color: #fff;
 width: auto;
-font-size: 14px;
+font-size: 13px;
 white-space: nowrap;
 text-align: center;
 position: absolute;
@@ -1183,40 +1183,7 @@ width: 80px;
 font-size: 10px;
 text-align: center;
 position: absolute;
-left: 60%;
+left: 62%;
 top: 70%;
 transform: translate(-50%, -50%);
 `;
-
-
-const DisplayInfoAvgFirstGank = styled.div`
-display: flex;
-.SubTitle {
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
-    color: #84818e;
-    margin-bottom: 8px;
-  }
-  .CalcData {
-    display: flex;
-    font-family: Poppins;
-    font-size: 20px;
-    font-weight: bold;
-    color: #f04545;
-    margin-bottom: 6px;
-    img {
-      width: 13px;
-      height: 13px;
-      object-fit: contain;
-      margin-right: 8px;
-      margin-top: 3px;
-    }
-  }
-  .AvgData {
-    margin-top: 4px;
-    font-family: NotoSansKR, Apple SD Gothic Neo;
-    font-size: 13px;
-    color: #ffffff;
-  }
-`
-  ;
