@@ -8,7 +8,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import { HandledisablePip, HandleDuration, HandleEnablePip, HandleEnded, HandlePlaybackRateChange, HandlePlaying, HandleProgress, HandleSeekChange, HandleSeekMouseDown, HandleSeekMouseUp, HandleStop, HandleToggleControls, HandleToggleLight, HandleToggleLoop, HandleToggleMuted, HandleTogglePip, HandleVolumeChange, SetPause, SetPlay, SetPlayBackRate, SetUrl } from '../../redux/modules/videovalue';
 import secToMS from '../../lib/secToMS';
-import { SetCurrentItemIdxActiveIdx, SetEventLogActiveIdx, SetLiveActiveIdx, SetGoldActiveIdx, SetStatusLogActiveIdx } from '../../redux/modules/gamevalue';
+import { SetCurrentItemIdxActiveIdx, SetEventLogActiveIdx, SetLiveActiveIdx, SetGoldActiveIdx, SetStatusLogActiveIdx, SetSeekTime } from '../../redux/modules/gamevalue';
 
 
 const VideoPlayer = ({ video, startTime }) => {
@@ -37,6 +37,12 @@ const VideoPlayer = ({ video, startTime }) => {
   const statusLogDataset = gamevalue.statusLogDataset;
 
   const datasets = [eventLogDataset, currentItemDataset, liveDataset, goldDataset, statusLogDataset];
+
+  useEffect(() => {
+    if (gamevalue.seekTime > 0) {
+      handleSeekTime();
+    }
+  }, [gamevalue.seekTime])
 
 
   const load = url => {
@@ -135,6 +141,15 @@ const VideoPlayer = ({ video, startTime }) => {
     dispatch(HandleSeekChange(movePlayed))
     dispatch(HandleSeekMouseUp())
     player.seekTo(movePlayed)
+  }
+
+  const handleSeekTime = () => {
+    handleSeekMouseDown();
+    const movePlayed = (parseFloat(+gamevalue.startTime) + +gamevalue.seekTime) / videovalue.duration;
+    dispatch(HandleSeekChange(movePlayed))
+    dispatch(HandleSeekMouseUp())
+    player.seekTo(movePlayed)
+    dispatch(SetSeekTime(0));
   }
 
   const handleSeekMouseUp = e => {
@@ -317,6 +332,10 @@ const VideoPlayer = ({ video, startTime }) => {
     //this.setState({ duration })
   }
 
+  const handleOnSeek = (e) => {
+    console.log('onSeek', e)
+  }
+
   const ref = newPlayer => {
     player = newPlayer;
   }
@@ -349,7 +368,7 @@ const VideoPlayer = ({ video, startTime }) => {
         onPause={handlePause}
         onBuffer={() => console.log('onBuffer')}
         onPlaybackRateChange={handleOnPlaybackRateChange}
-        onSeek={e => console.log('onSeek', e)}
+        onSeek={handleOnSeek}
         onEnded={handleEnded}
         onError={e => console.log('onError', e)}
         onProgress={handleProgress}

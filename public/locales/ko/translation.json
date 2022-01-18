@@ -583,6 +583,17 @@
         "roaming": {
           "title": "로밍",
           "desc": "에 로밍을 시도합니다."
+        },
+        "teamfight": {
+          "title": "교전"
+        },
+        "invade": {
+          "title": "인베이드"
+        },
+        "teleport": {
+          "title": "텔레포트",
+          "particicle": "이(가)",
+          "desc": "텔레포트를 사용합니다."
         }
       },
       "detail": {

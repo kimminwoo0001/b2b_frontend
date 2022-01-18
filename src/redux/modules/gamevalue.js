@@ -19,7 +19,7 @@ export const SET_TEAM_GOLD_DATASET = "gamevalue/SET_TEAM_GOLD_DATASET";
 export const SET_MAPPING_DATASET = "gamevalue/SET_MAPPING_DATASET";
 export const SET_LIVE_DATASET = "gamevalue/SET_LIVE_DATASET";
 export const SET_STATUS_LOG_DATASET = "gamevalue/SET_STATUS_LOG_DATASET";
-
+export const SET_PLAYERS_STATUS_DATASET = "gamevalue/SET_PLAYERS_STATUS_DATASET";
 
 // 선택 
 export const SET_SELECTED_PLAYER = "gamevalue/SET_SELECTED_PLAYER";
@@ -34,6 +34,9 @@ export const SET_STATUS_LOG_ACTIVE_IDX = "gamevalue/SET_STATUS_LOG_ACTIVE_IDX";
 export const SET_CURRENT_ITEM_IDX_ACTIVE_IDX = "gamevalue/SET_CURRENT_ITEM_IDX_ACTIVE_IDX";
 export const SET_LIVE_ACTIVE_IDX = "gamevalue/SET_LIVE_ACTIVE_IDX";
 export const SET_GOLD_ACTIVE_IDX = "gamevalue/SET_GOLD_ACTIVE_IDX";
+
+// 이동 시간
+export const SET_SEEK_TIME = "gamevalue/SET_SEEK_TIME";
 
 export const InitializeGameState = (payload) => {
   return {
@@ -205,6 +208,18 @@ export const SetStatusLogDataset = (payload) => {
     payload,
   };
 };
+export const SetSeekTime = (payload) => {
+  return {
+    type: SET_SEEK_TIME,
+    payload,
+  };
+};
+export const SetPlayersStatusDataset = (payload) => {
+  return {
+    type: SET_PLAYERS_STATUS_DATASET,
+    payload,
+  };
+};
 
 const initialState = {
   gameId: "",
@@ -219,6 +234,7 @@ const initialState = {
   teamGoldDataset: [],
   mappingDataset: [],
   liveDataset: [],
+  playersStatusDataset: [],
   blueteam: "",
   redteam: "",
   selectedTeam: 0, // 0: 블루팀, 1: 레드팀
@@ -231,7 +247,8 @@ const initialState = {
   statusLogActiveIdx: 0,
   itemActiveIdx: 0,
   liveActiveIdx: 0,
-  goldActiveIdx: 0
+  goldActiveIdx: 0,
+  seekTime: 0,
 };
 
 export default function GameReportReducer(state = initialState, action) {
@@ -371,16 +388,24 @@ export default function GameReportReducer(state = initialState, action) {
         liveActiveIdx: action.payload,
       };
     case SET_GOLD_ACTIVE_IDX:
-      console.log(action.payload);
       return {
         ...state,
         goldActiveIdx: action.payload,
       };
     case SET_STATUS_LOG_DATASET:
-      console.log(action.payload);
       return {
         ...state,
         statusLogDataset: action.payload,
+      };
+    case SET_SEEK_TIME:
+      return {
+        ...state,
+        seekTime: action.payload,
+      };
+    case SET_PLAYERS_STATUS_DATASET:
+      return {
+        ...state,
+        playersStatusDataset: action.payload,
       };
     case INITIALIZE_GAME_STATE:
       return initialState;
