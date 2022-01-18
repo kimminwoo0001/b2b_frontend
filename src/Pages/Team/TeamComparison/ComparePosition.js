@@ -733,10 +733,10 @@ const DisplayTeams = styled.div`
     display: flex;
     align-items: center;
     font-family: SpoqaHanSansNeo;
-    width: 215px;
+    width: auto;
     margin: 0 0px 0 0px;
     div {
-      width: 215px;
+      width: auto;
       height: 19px;
       margin: 30px 0px 28px 0;
       font-family: SpoqaHanSansNeo;
