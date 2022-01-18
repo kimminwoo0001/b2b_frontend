@@ -425,16 +425,16 @@ function TeamIndex() {
               </DisplayInfo>
             </div>
             <div className="AvgFirstGank">
-              {teamStats?.timeOfFirstGank.minute === "NULL" && teamStats?.timeOfFirstGank.second === "NULL" ?
-               <NoData>{t("league.leagueStat.noData2")}</NoData> :
-               <>
                <img
                className="MainIcon"
                src="Images/ico-team-dash-gank.png"
                alt="Icon"
              ></img>
-             <DisplayInfo>
+              <DisplayInfoAvgFirstGank>
                <div className="SubTitle">{t("team.analysis.gank")}</div>
+                {teamStats?.timeOfFirstGank.minute === "NULL" && teamStats?.timeOfFirstGank.second === "NULL" ?
+                  <NoData2>{t("league.leagueStat.noData2")}</NoData2> :
+                  <>
                <div className="CalcData">
                  <img
                    src={
@@ -459,8 +459,9 @@ function TeamIndex() {
                <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${leagueStat?.timeOfFirstGank.minute
                  }${t("team.analysis.min")} ${leagueStat?.timeOfFirstGank.second
                  }${t("team.analysis.sec")}`}</div>
-             </DisplayInfo>
-             </>}
+                  </>
+                }
+              </DisplayInfoAvgFirstGank>
            </div>
           </div>
           <div className="SecondBox">
@@ -500,9 +501,6 @@ function TeamIndex() {
               </DisplayInfo>
             </div>
             <div className="AvgCombat">
-              {teamStats?.numberOfTeamFight.winRate === "NULL" ?
-               <NoData>{t("league.leagueStat.noData2")}</NoData> :
-               <>
               <img
                 className="MainIcon"
                 src="Images/ico-team-dash-fight.png"
@@ -510,6 +508,9 @@ function TeamIndex() {
               ></img>
               <DisplayInfo>
                 <div className="SubTitle">{t("team.analysis.teamfight")}</div>
+                {teamStats?.numberOfTeamFight.winRate === "NULL" ?
+                  <NoData2>{t("league.leagueStat.noData2")}</NoData2> :
+                  <>
                 <div className="CalcData">
                   <img
                     src={
@@ -529,10 +530,10 @@ function TeamIndex() {
                 </div>
                 <div className="AvgData">{`${t(
                   "team.analysis.leagueAvg"
-                )} ${leagueStat?.winRate.toFixed(2)}`}</div>
+                    )} ${leagueStat?.winRate.toFixed(2)}`}</div>
+                  </>
+                }
               </DisplayInfo>
-              </>
-}
             </div>               
           </div>
                 
@@ -1166,7 +1167,7 @@ const NoData = styled.div`
 background-color: #2f2d38;
 color: #fff;
 width: auto;
-font-size: 13px;
+font-size: 14px;
 white-space: nowrap;
 text-align: center;
 position: absolute;
@@ -1174,3 +1175,48 @@ left: 50%;
 top: 60%;
 transform: translate(-50%, -50%);
 `;
+
+const NoData2 = styled.div`
+background-color: #2f2d38;
+color: #fff;
+width: 80px;
+font-size: 10px;
+text-align: center;
+position: absolute;
+left: 60%;
+top: 70%;
+transform: translate(-50%, -50%);
+`;
+
+
+const DisplayInfoAvgFirstGank = styled.div`
+display: flex;
+.SubTitle {
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 13px;
+    color: #84818e;
+    margin-bottom: 8px;
+  }
+  .CalcData {
+    display: flex;
+    font-family: Poppins;
+    font-size: 20px;
+    font-weight: bold;
+    color: #f04545;
+    margin-bottom: 6px;
+    img {
+      width: 13px;
+      height: 13px;
+      object-fit: contain;
+      margin-right: 8px;
+      margin-top: 3px;
+    }
+  }
+  .AvgData {
+    margin-top: 4px;
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 13px;
+    color: #ffffff;
+  }
+`
+  ;
