@@ -95,14 +95,14 @@ function NormalInfo() {
           line: copy.line.toFixed(1),
           investment: copy.investment.toFixed(1),
           loss: copy.loss.toFixed(1),
-          match: copy.match ? copy.match.toFixed(1) : 50,
+          match: copy.match !== "NULL" ? copy.match.toFixed(1) : 50,
           gold: copy.gold.toFixed(1),
         }
         const oppPlayer = {
           line: copyoppData.line.toFixed(1),
           investment: copyoppData.investment.toFixed(1),
           loss: copyoppData.loss.toFixed(1),
-          match: copyoppData.match ? copyoppData.match.toFixed(1) : 50,
+          match: copyoppData.match !== "NULL" ? copyoppData.match.toFixed(1) : 50,
           gold: copyoppData.gold.toFixed(1),
         }
         //상대 선수 데이터

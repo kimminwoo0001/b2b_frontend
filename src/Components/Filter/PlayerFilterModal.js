@@ -75,7 +75,7 @@ function PlayerFilterModal() {
     setOppPlayerFilter([]);
     dispatch(OppPlayer(""));
     dispatch(OppTeam([]));
-  }, []);
+  }, [filters.compareModal]);
 
   // useEffect(() => {
   //   if (filters.compareModal) {

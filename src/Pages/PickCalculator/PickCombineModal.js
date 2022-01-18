@@ -207,7 +207,7 @@ function PickCombineModal({ openModal, setOpenModal }) {
                   return (
                     <MapTeams
                       key={index}
-                      onClick={() => dispatch(Player(player))}
+                      // onClick={() => dispatch(Player(player))}
                       currentTeam={filters.player === player}
                     >
                       <img src="Images/HomeLogo/DRX.png" alt="TeamLogo"></img>
@@ -227,7 +227,7 @@ function PickCombineModal({ openModal, setOpenModal }) {
                   return (
                     <MapTeams
                       key={index}
-                      onClick={() => dispatch(Player(player))}
+                      // onClick={() => dispatch(Player(player))}
                       currentTeam={filters.player === player}
                     >
                       <img src="Images/HomeLogo/DRX.png" alt="TeamLogo"></img>

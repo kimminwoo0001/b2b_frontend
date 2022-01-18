@@ -388,6 +388,9 @@ const Filter = memo(() => {
   //플레이어 필터 fetch 함수
   const fetchingPlayerFilter = () => {
     let players = [];
+    if (isComparePage === false) {
+
+
     if (filters.team.length !== 0 && isNeedTeam) {
       let playerList = [];
       for (let league of filters.league) {
@@ -442,6 +445,7 @@ const Filter = memo(() => {
       dispatch(ResetPlayer());
     }
     dispatch(setPlayerFilter(players));
+    }
   };
 
   // 패치 필터 fetch 함수
@@ -482,6 +486,8 @@ const Filter = memo(() => {
                 nameSolo={nameSolo}
                 nameTeam={nameTeam}
                 nameVideo={nameVideo}
+                nameTeamCompare={nameTeamCompare}
+                namePlayerCompare={namePlayerCompare}
               />
             )}
             <FilterGroup>
