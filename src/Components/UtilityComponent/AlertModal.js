@@ -62,10 +62,10 @@ const AlertModal = () => {
     }
 
     // 팀 비교 이후 - 다시 팀 비교 누르고 oppteam 선택 없이 창 닫았을 경우 home으로 이동
-    if (desc === t("alert.desc.serverError")) {
-      if (pagePath === "/team" || pagePath === "/teamCompare")
-        history.push("/");
-    }
+    // if (desc === t("alert.desc.serverError")) {
+    //   if (pagePath === "/team" || pagePath === "/teamCompare")
+    //     history.push("/");
+    // }
 
     if (confirmFuncId) {
 
@@ -162,7 +162,7 @@ const ModalDetail = styled.div`
 
 const ModalSemiDetail = styled.div`
   width: 100%;
-  margin: 0 0 28px 0;
+  margin: 0 0 0px 0;
   font-family: SpoqaHanSansNeo;
   font-size: 13px;
   font-weight: normal;
@@ -179,6 +179,7 @@ const ModalClose = styled.div`
   justify-content: center;
   align-items: center;
   height: 62px;
+  margin-top: 30px;
 
   button {
     width: 225px;

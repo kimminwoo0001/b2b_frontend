@@ -101,7 +101,10 @@ function Stats() {
         setData(e?.player);
         setOppData(e?.oppPlayer);
         //라인전 능력치 비교 그래프 데이터 가공
-        const lineData = Object.values(e?.player.LineStat)?.map((line) => {
+        const playerFilteredData = Object.values(e?.player.LineStat)?.filter((line) =>
+          line.value !== "NULL"
+        )
+        const lineData = playerFilteredData.map((line) => {
           return {
             x1: line.percent.toFixed(1),
             y: lang === "ko" ? line.name : line.eng,
@@ -110,7 +113,10 @@ function Stats() {
           };
         });
 
-        const lineData2 = Object.values(e?.oppPlayer.LineStat)?.map((line) => {
+        const oppplayerFilteredData = Object.values(e?.player.LineStat)?.filter((line) =>
+          line.value !== "NULL"
+        )
+        const lineData2 = oppplayerFilteredData.map((line) => {
           return {
             x2: line.percent.toFixed(1),
             y: lang === "ko" ? line.name : line.eng,
@@ -125,7 +131,9 @@ function Stats() {
         }
         console.log(Object.values(lineData));
         //교전 능력치 비교 그래프 데이터 가공
-        const matchData = Object.values(e?.player.MatchStat)?.map((match) => {
+
+        const playerMatchData = Object.values(e?.player.MatchStat)?.filter((match) => match.value !== "NULL");
+        const matchData = playerMatchData.map((match) => {
           return {
             x1: match.percent.toFixed(1),
             y: lang === "ko" ? match.name : match.eng,
@@ -134,7 +142,8 @@ function Stats() {
           };
         });
 
-        const matchData2 = Object.values(e?.oppPlayer.MatchStat)?.map(
+        const oppplayerMatchData = Object.values(e?.oppPlayer.MatchStat)?.filter((match) => match.value !== "NULL");
+        const matchData2 = oppplayerMatchData.map(
           (match) => {
             return {
               x2: match.percent.toFixed(1),
@@ -565,20 +574,26 @@ function Stats() {
                       {lang === "ko" ? stat?.name : stat?.eng}
                     </div>
                     <div className="SimpleValues">
-                      <RedPlayer
-                        changeColor={stat?.data1 < stat?.data0}
-                      >{`${stat?.data0.toFixed(1)}`}</RedPlayer>
-                      <img
-                        src={
-                          stat?.data1 > stat?.data0
-                            ? "Images/ico-compare-right-arrow.png"
-                            : "Images/ico-compare-left-arrow.png"
-                        }
-                        alt="arrowIcon"
-                      />
-                      <BluePlayer
-                        changeColor={stat?.data1 > stat?.data0}
-                      >{`${stat?.data1.toFixed(1)}`}</BluePlayer>
+                      {stat?.data0 === "NULL" && stat?.data1 === "NULL" ?
+                        <NoData>{t("league.leagueStat.noData2")}</NoData>
+                        :
+                        <>
+                          <RedPlayer
+                            changeColor={stat?.data1 < stat?.data0}
+                          >{`${stat?.data0.toFixed(1)}`}</RedPlayer>
+                          <img
+                            src={
+                              stat?.data1 > stat?.data0
+                                ? "Images/ico-compare-right-arrow.png"
+                                : "Images/ico-compare-left-arrow.png"
+                            }
+                            alt="arrowIcon"
+                          />
+                          <BluePlayer
+                            changeColor={stat?.data1 > stat?.data0}
+                          >{`${stat?.data1.toFixed(1)}`}</BluePlayer>
+                        </>
+                      }
                     </div>
                   </SimpleBox>
                 );
@@ -589,6 +604,10 @@ function Stats() {
                       {lang === "ko" ? stat?.name : stat?.eng}
                     </div>
                     <div className="SimpleValues">
+                      {stat?.data0 === "NULL" && stat?.data1 === "NULL" ?
+                        <NoData>{t("league.leagueStat.noData2")}</NoData>
+                        :
+                        <>
                       <RedPlayer
                         changeColor={stat?.data1 < stat?.data0}
                       >{`${stat?.data0.toFixed(1)}`}</RedPlayer>
@@ -603,6 +622,8 @@ function Stats() {
                       <BluePlayer
                         changeColor={stat?.data1 > stat?.data0}
                       >{`${stat?.data1.toFixed(1)}`}</BluePlayer>
+                        </>
+                      }
                     </div>
                   </SimpleBox4>
                 );
@@ -613,6 +634,10 @@ function Stats() {
                       {lang === "ko" ? stat?.name : stat?.eng}
                     </div>
                     <div className="SimpleValues">
+                      {stat?.data0 === "NULL" && stat?.data1 === "NULL" ?
+                        <NoData>{t("league.leagueStat.noData2")}</NoData>
+                        :
+                        <>
                       <RedPlayer
                         changeColor={stat?.data1 < stat?.data0}
                       >{`${stat?.data0.toFixed(1)}`}</RedPlayer>
@@ -627,6 +652,8 @@ function Stats() {
                       <BluePlayer
                         changeColor={stat?.data1 > stat?.data0}
                       >{`${stat?.data1.toFixed(1)}`}</BluePlayer>
+                        </>
+                      }
                     </div>
                   </SimpleBox5>
                 );
@@ -637,6 +664,10 @@ function Stats() {
                       {lang === "ko" ? stat?.name : stat?.eng}
                     </div>
                     <div className="SimpleValues">
+                      {stat?.data0 === "NULL" && stat?.data1 === "NULL" ?
+                        <NoData>{t("league.leagueStat.noData2")}</NoData>
+                        :
+                        <>
                       <RedPlayer
                         changeColor={stat?.data1 < stat?.data0}
                       >{`${stat?.data0.toFixed(1)}`}</RedPlayer>
@@ -651,6 +682,8 @@ function Stats() {
                       <BluePlayer
                         changeColor={stat?.data1 > stat?.data0}
                       >{`${stat?.data1.toFixed(1)}`}</BluePlayer>
+                        </>
+                      }
                     </div>
                   </SimpleBox6>
                 );
@@ -1131,6 +1164,7 @@ const SimpleBox = styled.div`
     justify-content: center;
     height: 51.5px;
     width: 100%;
+    position: relative;
   }
 `;
 const RedPlayer = styled.div`
@@ -1441,4 +1475,18 @@ const DropDown = styled.div`
       background-color: rgb(60, 58, 72);
     }
   }
+`;
+const NoData = styled.div`
+background-color: #2f2d38;
+color: #fff;
+width: auto;
+white-space: nowrap;
+font-size: 13px;
+text-align: center;
+position: absolute;
+left: 50%;
+top: 50%;
+transform: translate(-50%, -50%);
+
+
 `;

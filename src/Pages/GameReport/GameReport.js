@@ -38,15 +38,40 @@ function GameReport() {
           <>
             <SideBar />
             {/* <div
-            className={filters.filterMenuState ? "filter-open" : "filter-close"}
-          >
-            <Filter />
-          </div>
-          <div
-            className={filters.filterMenuState ? "filter-close" : "filter-open"}
-          >
-            <CloseFilter />
-          </div> */}
+              className={filters.filterMenuState ? "filter-open" : "filter-close"}
+            >
+              <Filter />
+            </div>
+            <div
+              className={filters.filterMenuState ? "filter-close" : "filter-open"}
+            >
+              <CloseFilter />
+            </div> */}
+          </>}
+        <ContentWrapper>
+          {filters.team !== "" && filters.team.length > 0 ? (
+            <GameReportTab />
+          ) : (
+              // <SelectFilter />
+              <Temporal>
+                <iframe width="1422" height="800" src="https://www.youtube.com/embed/c6e38xOmXfw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </Temporal>
+          )}
+        </ContentWrapper>
+      </GameWrapper>
+    </ErrorBoundary>
+  );
+}
+
+/* 데모 컴포넌트
+ <ErrorBoundary>
+      {checkGameId ? "" : <Nav />}
+      {copyvalue?.openFilterModal === "/teamCompare" && <TeamFilterModal />}
+      {copyvalue?.openFilterModal === "/playerCompare" && <PlayerFilterModal />}
+      <GameWrapper>
+        {checkGameId && filters.team !== "" && filters.team.length > 0 ? "" :
+          <>
+            <SideBar />
           </>}
         <ContentWrapper>
           {filters.team !== "" && filters.team.length > 0 ? (
@@ -60,8 +85,8 @@ function GameReport() {
         </ContentWrapper>
       </GameWrapper>
     </ErrorBoundary>
-  );
-}
+ 
+*/
 
 /* 개발 중인 컴포넌트
 <GameWrapper>

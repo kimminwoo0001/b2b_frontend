@@ -39,6 +39,7 @@
     "react-router-dom": "^5.2.0",
     "react-router-redux": "^4.0.8",
     "react-scripts": "4.0.2",
+    "react-scroll": "^1.8.4",
     "react-sticky": "^6.0.3",
     "react-tippy": "^1.4.0",
     "react-vis": "^1.11.7",

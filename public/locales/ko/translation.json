@@ -160,7 +160,8 @@
       "yTeamFight": "첫 교전 횟수",
       "gank": "평균 첫 갱 시간",
       "time": "시간(분)",
-      "noData": "현재 해당 지표를 제공하지 않습니다."
+      "noData": "현재 해당 지표를 제공하지 않습니다.",
+      "noData2": "AI가 아직 협곡에 있습니다."
     },
     "playerStat": {
       "sbrLabel": "선수 별 PR 순위",
@@ -399,6 +400,7 @@
     "setFilter": "필터 설정",
     "setLeague": "리그",
     "setSeason": "시즌",
+    "setYear": "연도",
     "setPatchVersion": "패치버전",
     "team": "팀",
     "player": "선수",
@@ -573,7 +575,15 @@
       },
       "status": {
         "subject": "상태 로그",
-        "tooltipInfo": "게임시간 15분 이후 상태로그는 아직 지원하지 않습니다."
+        "tooltipInfo": "게임시간 15분 이후 상태로그는 아직 지원하지 않습니다.",
+        "ganking": {
+          "title": "갱킹",
+          "desc": "에 갱킹을 시도합니다."
+        },
+        "roaming": {
+          "title": "로밍",
+          "desc": "에 로밍을 시도합니다."
+        }
       },
       "detail": {
         "subject": "디테일 로그"

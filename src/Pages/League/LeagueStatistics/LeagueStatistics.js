@@ -93,16 +93,22 @@ function LeagueStatistics() {
           gameY.push(game.gamelength.toFixed(1));
         });
         e.avgSupportedTime.data.forEach((support) => {
-          supportX.push(support.position);
-          supportY.push(support.supported_time.toFixed(1));
+          if (support.supported_time !== "NULL") {
+            supportX.push(support.position);
+            supportY.push(support.supported_time.toFixed(1));
+          }
         });
         e.avgFirstGang.data.forEach((gank) => {
-          GankX.push(gank.patch);
-          GankY.push(gank.first_gang_time.toFixed(1));
+          if (gank.first_gang_time !== "NULL") {
+            GankX.push(gank.patch);
+            GankY.push(gank.first_gang_time.toFixed(1));
+          }
         });
         e.avgMatchTotal.data.forEach((match) => {
-          TotalX.push(match.patch);
-          TotalY.push(match.match_total.toFixed(1));
+          if (match.match_total !== "NULL") {
+            TotalX.push(match.patch);
+            TotalY.push(match.match_total.toFixed(1));
+          }
         });
         setGameLengthX(gameX);
         setGameLengthY(gameY);
@@ -112,11 +118,13 @@ function LeagueStatistics() {
         setFirstGankY(GankY);
         setTotalMatchX(TotalX);
         setTotalMatchY(TotalY);
-        // console.log(supportX);
+        console.log(firstGankY);
+        console.log(TotalY);
+
 
         dispatch(Loading(false))
-        console.log(supportTimeX);
-        console.log(supportTimeY);
+        console.log(firstGankY);
+        console.log(totalMatchY);
       },
       function (objStore) {
         dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -279,8 +287,8 @@ function LeagueStatistics() {
               <p className="Y">Y {t("league.leagueStat.yPressure")}</p>
             </div>
           </NavBar>
-          {supportTimeX === undefined || supportTimeX.length === 0 ?
-            (<NoData>{t("league.leagueStat.noData")}</NoData>) :
+          {supportTimeY && supportTimeY.length === 0 ?
+            <NoData>{t("league.leagueStat.noData2")}</NoData> : 
             <GameTimeCharts>
               <Bar
                 data={averageSupport}
@@ -331,7 +339,8 @@ function LeagueStatistics() {
                   },
                 }}
               />
-            </GameTimeCharts>}
+            </GameTimeCharts>
+          }
         </SupportCounts>
       </TopBox>
       <BottomBox>
@@ -347,6 +356,8 @@ function LeagueStatistics() {
               <p className="Y">Y {t("league.leagueStat.teamFight")}</p>
             </div>
           </NavBar>
+          {totalMatchY && totalMatchY.length === 0 ?
+            <NoData>{t("league.leagueStat.noData2")}</NoData> :
           <GameTimeCharts>
             {console.log("firstFight:", firstFight)}
             {console.log("totalMatchData:", totalMatchData)}
@@ -398,7 +409,9 @@ function LeagueStatistics() {
                 },
               }}
             />
+            }
           </GameTimeCharts>
+          }
         </FirstEncounter>
         <FirstGank>
           <NavBar>
@@ -410,6 +423,9 @@ function LeagueStatistics() {
               <p className="Y">Y {t("league.leagueStat.time")}</p>
             </div>
           </NavBar>
+          {firstGankY && firstGankY.length === 0 ?
+            <NoData>{t("league.leagueStat.noData2")}</NoData>
+            : 
           <GameTimeCharts>
             <Line
               data={averageGank}
@@ -459,7 +475,9 @@ function LeagueStatistics() {
                 },
               }}
             />
+            }
           </GameTimeCharts>
+          }
         </FirstGank>
       </BottomBox>
     </StatisticsWrapper>
@@ -509,6 +527,7 @@ const FirstEncounter = styled.div`
   background-color: rgb(47, 45, 56);
   margin-right: 22px;
   border-radius: 20px;
+  position: relative;
 `;
 
 const FirstGank = styled.div`
@@ -517,6 +536,7 @@ const FirstGank = styled.div`
   border: solid 1px rgb(58, 55, 69);
   background-color: rgb(47, 45, 56);
   border-radius: 20px;
+  position: relative;
 `;
 
 const NavBar = styled.div`

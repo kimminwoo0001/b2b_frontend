@@ -660,63 +660,66 @@ function OppStat() {
                 </OppComparedValue>
               </div>
             </DisplayValue>
+              {player?.match_parti.value === "NULL" && player?.match_parti.value2 === "NULL" ? "" :
             <DisplayValue>
-              <div className="Wrapper">
-                <PlayerValue
-                  color={
-                    player?.match_parti.result === true ? "true" : undefined
-                  }
-                >{`${player?.match_parti.value.toFixed(1)} %`}</PlayerValue>
-                <ComparedValue
-                  color={
-                    player?.match_parti.result === true ? "true" : undefined
-                  }
-                >
-                  (
-                  <img
-                    src={
-                      player?.match_parti.result
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down-wh.png"
-                    }
-                    alt="icon"
-                  />
-                  <div>{`${Math.abs(player?.match_parti.value2).toFixed(
-                    1
-                  )} %p`}</div>
-                  )
-                </ComparedValue>
-              </div>
-              <div className="ValueTitle">
-                {t("solo.comparison.fightParti")}
-              </div>
-              <div className="Wrapper">
-                <OppValue
-                  color={
-                    oppPlayer?.match_parti.result === true ? "true" : undefined
-                  }
-                >{`${oppPlayer?.match_parti.value.toFixed(1)} %`}</OppValue>
-                <OppComparedValue
-                  color={
-                    oppPlayer?.match_parti.result === true ? "true" : undefined
-                  }
-                >
-                  (
-                  <img
-                    src={
-                      oppPlayer?.match_parti.result
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down-wh.png"
-                    }
-                    alt="icon"
-                  />
-                  <div>{`${Math.abs(oppPlayer?.match_parti.value2).toFixed(
-                    1
-                  )} %p`}</div>
-                  )
-                </OppComparedValue>
-              </div>
-            </DisplayValue>
+                  <div className="Wrapper">
+                    <PlayerValue
+                      color={
+                        player?.match_parti.result === true ? "true" : undefined
+                      }
+                    >{`${player?.match_parti.value.toFixed(1)} %`}</PlayerValue>
+                    <ComparedValue
+                      color={
+                        player?.match_parti.result === true ? "true" : undefined
+                      }
+                    >
+                      (
+                      <img
+                        src={
+                          player?.match_parti.result
+                            ? "Images/ico-teamreport-num-up.png"
+                            : "Images/ico-teamreport-num-down-wh.png"
+                        }
+                        alt="icon"
+                      />
+                      <div>{`${Math.abs(player?.match_parti.value2).toFixed(
+                        1
+                      )} %p`}</div>
+                      )
+                    </ComparedValue>
+                  </div>
+                  <div className="ValueTitle">
+                    {t("solo.comparison.fightParti")}
+                  </div>
+                  <div className="Wrapper">
+                    <OppValue
+                      color={
+                        oppPlayer?.match_parti.result === true ? "true" : undefined
+                      }
+                    >{`${oppPlayer?.match_parti.value.toFixed(1)} %`}</OppValue>
+                    <OppComparedValue
+                      color={
+                        oppPlayer?.match_parti.result === true ? "true" : undefined
+                      }
+                    >
+                      (
+                      <img
+                        src={
+                          oppPlayer?.match_parti.result
+                            ? "Images/ico-teamreport-num-up.png"
+                            : "Images/ico-teamreport-num-down-wh.png"
+                        }
+                        alt="icon"
+                      />
+                      <div>{`${Math.abs(oppPlayer?.match_parti.value2).toFixed(
+                        1
+                      )} %p`}</div>
+                      )
+                    </OppComparedValue>
+                  </div>
+                </DisplayValue>
+              }
+
             <DisplayValue>
               <div className="Wrapper">
                 <PlayerValue
@@ -759,6 +762,7 @@ function OppStat() {
                 </OppComparedValue>
               </div>
             </DisplayValue>
+              {player?.match.value === "NULL" && player?.match.value2 === "NULL" ? "" :
             <DisplayValue>
               <div className="Wrapper">
                 <PlayerValue
@@ -810,6 +814,7 @@ function OppStat() {
                 </OppComparedValue>
               </div>
             </DisplayValue>
+              }
           </ComapreValue>
         )}
       </OppStatContents>

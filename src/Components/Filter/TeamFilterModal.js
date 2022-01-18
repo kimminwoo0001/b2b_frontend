@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { createBrowserHistory } from "history";
 import {
+  CopyResetYear as ResetYear,
+  CopyYear as Year,
   CopyPatch as Patch,
   CopyOppTeam as OppTeam,
   CopyGetOppTeam as GetOppTeam,
@@ -56,8 +57,8 @@ const TeamFilterModal = () => {
   const [year, setYear] = useState(filters.year);
   const [season, setSeason] = useState(filters.season);
 
+
   useEffect(() => {
-    fetchYearFilter();
     setOppTeamFilter();
   }, [])
 
@@ -72,13 +73,19 @@ const TeamFilterModal = () => {
     fetchingOppTeamFilter();
   }, [filters.compareModal]);
 
+  // 리그가 바뀌면 연도, 시즌 필터 호출
   useEffect(() => {
     if (JSON.stringify(league) !== JSON.stringify(filters.league)) {
-      fetchSeasonFilter();
+      fetchYearFilter();
       setLeague(filters.league);
     }
   }, [filters.league])
 
+  useEffect(() => {
+    fetchSeasonFilter();
+  }, [filters.year])
+
+  // 시즌이 바뀌면 패치 필터 호출
   useEffect(() => {
     if (JSON.stringify(season) !== JSON.stringify(filters.season)) {
       if (filters.year.length > 0) {
@@ -88,6 +95,13 @@ const TeamFilterModal = () => {
       }
     }
   }, [filters.season])
+
+  useEffect(() => {
+    if (filters.openFilterModal !== "/teamCompare") {
+      fetchingOppTeamFilter();
+    }
+    setOppTeamFilter();
+  }, [filters.patch])
 
 
 
@@ -101,29 +115,43 @@ const TeamFilterModal = () => {
         filters.year.filter(x => Object.keys(staticvalue.filterObjects[key]).includes(
           x)) && key
     ).filter((key) => key !== "LPL");
+
+
+    if (filters.year[0] === "2022") {
+      leagueList = Object.keys(staticvalue.filterObjects).filter(
+        (key) => key !== "MSI" && key !== "WC" && key !== "LPL"
+      );
+    }
     dispatch(setLeagueFilter(leagueList.sort()));
   };
 
+
+
   const fetchYearFilter = () => {
     let yearList = [];
-    for (
-      let i = 0;
-      i < Object.values(staticvalue.filterObjects).length;
-      i++
-    ) {
-      yearList.push(
-        //Object.keys(Object.values(staticvalue.filterObjects)[i])[0]
-        "2021"
-      );
+    if (filters.league.length === 0) {
+      dispatch(ResetYear());
+    } 
+    if (filters.league.length > 0) {
+      for (let league of filters.league) {
+        const ObjectKeys = Object.keys(staticvalue.filterObjects[league]);
+        // const ObjectKeys = ["2021"];
+        // yearList = yearList.concat(ObjectKeys);
+        yearList = ObjectKeys;
+
+      }
+      // yearList = yearList
+      //   .filter((item, pos) => yearList.indexOf(item) === pos)
+      //   .sort()
+      //   .reverse();
+      dispatch(Year(yearList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
     }
-    const recentYear = yearList
-      .filter((item, pos) => yearList.indexOf(item) === pos)
-      .sort()
-      .reverse();
-    // 최근 연도를 자동으로 설정
-    dispatch(SetYear([recentYear[0]]));
-    dispatch(setYearFilter(recentYear));
-  }
+    // yearList.map(data => { console.log("yeartLiost", data) })
+
+    dispatch(setYearFilter(yearList));
+
+  };
+
 
 
   const fetchSeasonFilter = () => {
@@ -289,12 +317,15 @@ const TeamFilterModal = () => {
                 <div className="menu-container">
                   <button
                     onClick={() => {
-                      setIsActiveLeague(!isActiveLeague);
-                      fetchLeagueFilter();
+                      if (filters.openFilterModal === "/teamCompare") {
+                        setIsActiveLeague(!isActiveLeague);
+                        fetchLeagueFilter();                       
+                      }
                     }}
+                    disabled={filters.openFilterModal === "/team"}
                     className="menu-trigger"
                   >
-                    <img
+                    {/* <img
                       className="ChampIconImg"
                       width="14px"
                       height="14px"
@@ -304,13 +335,13 @@ const TeamFilterModal = () => {
                           : "Images/ico-filter-none.png"
                       }
                       alt="champIcon"
-                    />
+                    /> */}
                     <span className="Label">
                       {filters.league.length === 1
                         ? filters.league
                         : t("filters.leagueLabel")}
                     </span>
-                    <ArrowIcon page={pagePath}
+                    <ArrowIcon page={filters.openFilterModal}
                       className="ArrowIcon"
                       src="Images/ico-filter-arrow.png"
                       alt="arrowIcon"
@@ -355,6 +386,60 @@ const TeamFilterModal = () => {
                 </div>
               </DropDownToggle>
             </LeagueFilter>
+            <YearFilter>
+              <label>{t("filters.setYear")}</label>
+              {!selector.yearFilter ? (
+                <PatchLabels>
+                  <img
+                    className="ChampIconImg"
+                    width="14px"
+                    height="14px"
+                    src={
+                      filters.year !== ""
+                        ? `Images/ico-filter-version.png`
+                        : "Images/ico-filter-none.png"
+                    }
+                    alt="champIcon"
+                  />
+                  <span className="Label">{t("filters.patchLabel")}</span>
+                </PatchLabels>
+              ) : (
+                selector.yearFilter?.map((year, idx) => {
+                  return (
+                    <SelectedYear
+                      radioBtn={true}
+                      key={idx}
+                      // draggable="true"
+                      // onDragStart={(event) => {
+                      //   handleMouseEvent(event);
+                      // }}
+                      // onMouseUp={(event) => {
+                      //   handleMouseEvent(event);
+                      // }}
+                      isChecked={filters.year.includes(year) ? true : false}
+                      onClick={() => {
+                        // dispatch(Patch(patch));
+                        // dispatch(Year(year))
+                        dispatch(SetYear([year]));
+                        //fetchingTeamFilter(patch);
+                      }}
+                    >
+                      <input
+                        id={idx}
+                        checked={filters.year.includes(year) ? true : false}
+                        type="checkbox"
+                        readOnly
+                      ></input>
+                      <div className="Version">
+                        {/* {patch === "11.6" ? "11.6 (P.O)" : patch} */}
+                        {year}
+                      </div>
+                    </SelectedYear>
+                  );
+                })
+              )
+              }
+            </YearFilter>
             <PatchFilter>
               <label>{t("filters.setSeason")}</label>
               {/* {seasonFilter.length === 0 ? (
@@ -454,10 +539,7 @@ const TeamFilterModal = () => {
                     </SelectedPatchReal>
                   );
                 })
-              )
-
-
-
+                )
               }
             </PatchFilter>
           </FilterWrapper>
@@ -465,13 +547,56 @@ const TeamFilterModal = () => {
             <TeamFilterBox>
               <TeamWrapper>
                 <SelectTeamTitle isFilterSelected={filters.league.length > 0}>
-                  {pagePath === "/team" ?
+                  {filters.openFilterModal === "/team" ?
                     t("filters.teamCompareLabel1") :
                     t("filters.teamCompareLabel")
                   }
                 </SelectTeamTitle>
                 <SelectTeam isFilterSelected={filters.league.length > 0}>
-                  {
+                  {filters.openFilterModal === "/team" ?
+
+
+                    (
+                      // <>
+                      //   {selector.teamFilter?.map((team, index) => {
+                      //     return (
+                      //       <MapTeams
+                      //         key={index}
+                      //         onClick={() => {
+                      //           // dispatch(SetTeam(team));
+                      //           // fetchingOppTeamFilter(team);
+                      //           // dispatch(OppTeam(""));
+                      //         }}
+                      //         currentTeam={filters.team === team}
+
+                      //       >
+                      //         <img
+                      //           src={
+                      //             team.slice(-2) === ".C"
+                      //               ? `Images/LCK_CL_LOGO/${team}.png`
+                      //               : `Images/TeamLogo/${team}.png`
+                      //           }
+                      //           alt="TeamLogo"
+                      //         ></img>
+                      //         <div className="TeamName">{team}</div>
+                      //       </MapTeams>
+                      //     );
+                      //   })}
+                      // </>
+                      <MapTeams>
+                        <img
+                          src={
+                            filters.team.slice(-2) === ".C"
+                              ? `Images/LCK_CL_LOGO/${filters.team}.png`
+                              : `Images/TeamLogo/${filters.team}.png`
+                          }
+                          alt="TeamLogo"
+                        ></img>
+                        <div className="TeamName">{filters.team}</div>
+                      </MapTeams>
+                    )
+                    :
+                    (
                     <>
                       {selector.teamFilter?.map((team, index) => {
                         return (
@@ -498,6 +623,7 @@ const TeamFilterModal = () => {
                         );
                       })}
                     </>
+                    )
                   }
                 </SelectTeam>
               </TeamWrapper>
@@ -553,9 +679,9 @@ export default TeamFilterModal;
 
 const FilterContainer = styled.div`
   display: flex;
+  justify-content: center;
   border-radius: 20px;
-  padding-top: 20px;
-  padding-left: 14px;
+  margin-top:30px;
 `;
 
 const BackScreen = styled.div`
@@ -573,8 +699,8 @@ const BackScreen = styled.div`
 const TeamModalWrapper = styled.div`
   border-radius: 20px;
   display: ${(props) => (props.teamModal ? "block" : "none")};
-  width: 616px;
-  /* min-height: 636px; */
+  width: 706px;
+  min-height: 720px;
   background-color: #23212a;
   top: 50%;
   left: 50%;
@@ -626,9 +752,10 @@ const PatchLabels = styled.div`
 `;
 
 const FilterWrapper = styled.div`
-  width: 175px;
+  width: 240px;
   background-color: #23212a;
   border-bottom-left-radius: 20px;
+  margin-right:20px;
 `;
 
 const FilterHeader = styled.div`
@@ -761,9 +888,9 @@ display: flex;
   }
 `
 const LeagueFilter = styled.div`
-  width: 150px;
-  height: 61px;
-  margin: 17px 10px 10px 10px;
+  width: 240px;
+  height: 67px;
+  margin: 15px 15px 10px 5px;
   padding: 5px;
   border-radius: 10px;
   background-color: #2f2d38;
@@ -784,11 +911,11 @@ const PatchFilter = styled.div`
   align-items: flex-start;
   background-color: #2f2d38;
   border-radius: 10px;
-  margin: 10px;
+  margin: 10px 5px;
   padding: 5px 10px;
-  min-height: 165px;
-  width: 150px;
-  max-height: 180px;
+  /* min-height: 146px; */
+  width: 240px;
+  max-height: 146px;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     width: 4px;
@@ -805,13 +932,110 @@ const PatchFilter = styled.div`
   label {
     height: 15px;
     font-family: NotoSansKR, Apple SD Gothic Neo;
-    margin: 7px 0 3px 10px;
+    margin: 7px 0 5px 7px;
     font-size: 14px;
     line-height: 1.36;
     text-align: left;
     color: #fff;
   }
 `;
+
+const YearFilter = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #2f2d38;
+  border-radius: 10px;
+  margin: 0 5px;
+  padding: 5px 10px;
+  max-height: 112px;
+  width: 240px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #434050;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin: 5px;
+  }
+
+  label {
+    height: 15px;
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    margin: 7px 0 5px 7px;
+    font-size: 14px;
+    line-height: 1.36;
+    text-align: left;
+    color: #fff;
+  }
+`;
+
+
+const SelectedYear = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 4.5px 6px;
+  width: 100%;
+  height: 25px;
+  color: #84818e;
+  cursor: pointer;
+  ${(props) =>
+    props.isChecked &&
+    css`
+      color: rgb(255, 255, 255);
+    `}
+  > .Version {
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 13px;
+    letter-spacing: -0.55px;
+    text-align: left;
+  }
+
+
+  > input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    /* background-clip: content-box;
+    border: 1.5px solid rgb(72, 70, 85);
+    border-radius: 2px;
+    background-color: transparent;
+    margin-right: 8px; */
+
+    
+    background-clip: content-box;
+    background: ${(props) =>
+    props.radioBtn
+      ? `url("/Images/btn_radio_off.svg")`
+      : `url("/Images/btn_check_off.svg")`}
+      no-repeat;
+    margin-right: 8px;
+
+    &:checked {
+      background-color: #5942ba;
+      border: #5942ba;
+      border-radius: 2px;
+      background: ${(props) =>
+    props.radioBtn
+      ? `url("/Images/btn_radio_on.svg")`
+      : `url("/Images/btn_check_on.svg")`}
+        no-repeat;
+      float: right;
+    }
+
+    &:focus {
+      outline: none !important;
+    }
+  }
+`
 
 const TeamFilterBox = styled.div`
   display: flex;
@@ -825,7 +1049,7 @@ const TeamWrapper = styled.div`
 
 const SelectTeam = styled.div`
   width: 193px;
-  height: 420px;
+  height: 501px;
   background-color: #2f2d38;
   margin-right: 15px;
   border-radius: 20px;
@@ -847,7 +1071,7 @@ const SelectTeam = styled.div`
 
 const SelectOppTeam = styled.div`
   width: 193px;
-  height: 420px;
+  height: 501px;
   background-color: #2f2d38;
   border-radius: 20px;
   padding: 10px;
@@ -870,7 +1094,7 @@ const SelectOppTeam = styled.div`
 const SelectTeamTitle = styled.div`
   display: flex;
   align-items: center;
-  padding: 0px 0 0 15px;
+  /* padding: 0px 0 0 15px; */
   height: 48px;
   font-family: NotoSansKR, Apple SD Gothic Neo;
   font-size: 15px;
@@ -884,7 +1108,7 @@ const SelectTeamTitle = styled.div`
 const SelectOppTeamTitle = styled.div`
   display: flex;
   align-items: center;
-  padding: 0px 0 0 15px;
+  /* padding: 0px 0 0 15px; */
   height: 48px;
   font-family: NotoSansKR, Apple SD Gothic Neo;
   font-size: 15px;
@@ -899,7 +1123,11 @@ const ButtonBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 83px;
+  /* height: 83px; */
+  width:666px;
+  position: absolute;
+  bottom: 20px;
+  left:20px;
   .Selected {
     width: 100%;
     height: 60px;
@@ -981,12 +1209,12 @@ const DropDownToggle = styled.div`
   .menu-trigger {
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    margin: 5px 0;
+    justify-content: space-between;
+    margin: 5px;
     height: 25px;
     background-color: #2f2d38;
     font-size: 13px;
-    width: 160px;
+    width: 240px;
     color: white;
     outline: none;
     border: none;
@@ -1038,7 +1266,7 @@ const DropDownToggle = styled.div`
     background: rgb(47, 45, 56);
     position: absolute;
     top: 28px;
-    width: 145px;
+    width: 240px;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
     opacity: 0;
     visibility: hidden;
@@ -1092,6 +1320,7 @@ const DropDownToggle = styled.div`
 `;
 
 const ArrowIcon = styled.img`
-      visibility: ${(props) => props.page === "/teamCompare" ? "visible" : "hidden"}
+      visibility: ${(props) => props.page === "/teamCompare" ? "visible" : "hidden"};
+      text-align: right;
 
 `
