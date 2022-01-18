@@ -168,9 +168,6 @@ function PlayerFilterModal() {
       (key) =>
         filters.year.filter(x => Object.keys(staticvalue.filterObjects[key]).includes(
           x)) && key
-<<<<<<< HEAD
-    ).filter((key) => ["LPL", "LCK CL"].includes(key) === false);
-=======
     ).filter((key) => key !== "LPL");
 
     if (filters.year[0] === "2022") {
@@ -178,7 +175,6 @@ function PlayerFilterModal() {
         (key) => key !== "MSI" && key !== "WC" && key !== "LPL"
       );
     }
->>>>>>> dev_ai
     dispatch(setLeagueFilter(leagueList.sort()));
   };
 
