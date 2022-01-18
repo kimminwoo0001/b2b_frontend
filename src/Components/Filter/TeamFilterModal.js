@@ -57,58 +57,6 @@ const TeamFilterModal = () => {
   const [year, setYear] = useState(filters.year);
   const [season, setSeason] = useState(filters.season);
 
-  // useEffect(() => {
-  //   if(filters.openFilterModal !== "/teamCompare") {
-  //     fetchYearFilter();
-  //     setOppTeamFilter();
-  //   }else {
-  //     fetchLeagueFilter();
-  //   }
-  // }, [])
-
-  // useEffect(() => {
-  //   document.title = `${t("sidebar.part8")} - NUNU.GG`
-  // }, [])
-
-  // useEffect(() => {
-  //   if (!filters.compareModal) {
-  //     return;
-  //   }
-  //   fetchingOppTeamFilter();
-  // }, [filters.compareModal]);
-
-  // useEffect(() => {
-  //   if (JSON.stringify(league) !== JSON.stringify(filters.league)) {
-  //     if(filters.openFilterModal === "/teamCompare") {
-  //       fetchYearFilter();
-  //     }
-  //     fetchSeasonFilter();
-  //     setLeague(filters.league);
-  //   }
-  // }, [filters.league])
-
-
-  // useEffect(() => {
-  //   if (JSON.stringify(year) !== JSON.stringify(filters.year)) {
-  //   }
-  // }, [filters.year])
-
-  // useEffect(() => {
-  //   if (JSON.stringify(season) !== JSON.stringify(filters.season)) {
-  //     if (filters.year.length > 0) {
-  //       fetchingTeamFilter();
-  //       fetchingPatchFilter();
-  //       setSeason(filters.season);
-  //     }
-  //   }
-  // }, [filters.season])
-
-
-  // useEffect(() => {
-  //   fetchSeasonFilter();
-  //   fetchingPatchFilter();
-  // }, [filters.year])
-
 
   useEffect(() => {
     setOppTeamFilter();
@@ -167,29 +115,15 @@ const TeamFilterModal = () => {
         filters.year.filter(x => Object.keys(staticvalue.filterObjects[key]).includes(
           x)) && key
     ).filter((key) => key !== "LPL");
+
+
+    if (filters.year[0] === "2022") {
+      leagueList = Object.keys(staticvalue.filterObjects).filter(
+        (key) => key !== "MSI" && key !== "WC" && key !== "LPL"
+      );
+    }
     dispatch(setLeagueFilter(leagueList.sort()));
   };
-
-  // const fetchYearFilter = () => {
-  //   let yearList = [];
-  //   for (
-  //     let i = 0;
-  //     i < Object.values(staticvalue.filterObjects).length;
-  //     i++
-  //   ) {
-  //     yearList.push(
-  //       // Object.keys(Object.values(staticvalue.filterObjects)[i])[0]
-  //       "2022", "2021"
-  //     );
-  //   }
-  //   const recentYear = yearList
-  //     .filter((item, pos) => yearList.indexOf(item) === pos)
-  //     .sort()
-  //     .reverse();
-  //   // 최근 연도를 자동으로 설정
-  //   // dispatch(SetYear([recentYear[0]]));
-  //   dispatch(setYearFilter(recentYear));
-  // }
 
 
 
@@ -202,15 +136,17 @@ const TeamFilterModal = () => {
       for (let league of filters.league) {
         const ObjectKeys = Object.keys(staticvalue.filterObjects[league]);
         // const ObjectKeys = ["2021"];
-        yearList = yearList.concat(ObjectKeys);
+        // yearList = yearList.concat(ObjectKeys);
+        yearList = ObjectKeys;
+
       }
-      yearList = yearList
-        .filter((item, pos) => yearList.indexOf(item) === pos)
-        .sort()
-        .reverse();
+      // yearList = yearList
+      //   .filter((item, pos) => yearList.indexOf(item) === pos)
+      //   .sort()
+      //   .reverse();
       dispatch(Year(yearList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
     }
-    yearList.map(data => { console.log("yeartLiost", data) })
+    // yearList.map(data => { console.log("yeartLiost", data) })
 
     dispatch(setYearFilter(yearList));
 
