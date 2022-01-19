@@ -4,7 +4,9 @@ export const SET_OPEN_FILTER_MODAL = "copyvalue/SET_OPEN_FILTER_MODAL";
 export const COMPARE_MODAL = "copyvalue/COMPARE_MODAL";
 
 // flitervalue copy
+export const COPY_YEAR = "copyvalue/COPY_YEAR";
 export const COPY_PATCH = "copyvalue/COPY_PATCH";
+
 export const COPY_OPP_TEAM = "copyvalue/COPY_OPP_TEAM";
 export const COPY_GET_OPPTEAM = "copyvalue/COPY_GET_OPPTEAM";
 export const COPY_HANDLE_TAB = "copyvalue/COPY_HANDLE_TAB";
@@ -16,6 +18,7 @@ export const COPY_SET_SEASON = "copyvalue/COPY_SET_SEASON";
 export const COPY_RESET_SEASON = "copyvalue/COPY_RESET_SEASON";
 export const COPY_SET_YEAR = "copyvalue/COPY_SET_YEAR";
 export const COPY_RESET_TEAM = "copyvalue/COPY_RESET_TEAM";
+export const COPY_RESET_YEAR = "copyvalue/COPY_RESET_YEAR";
 export const COPY_SET_PATCH = "copyvalue/COPY_SET_PATCH";
 export const COPY_GET_OPP_PLAYER = "copyvalue/COPY_GET_OPP_PLAYER";
 export const COPY_OPP_PLAYER = "copyvalue/COPY_OPP_PLAYER";
@@ -43,6 +46,13 @@ export const SetOpenFilterModal = (payload) => {
 export const CompareModal = (payload) => {
   return {
     type: COMPARE_MODAL,
+    payload,
+  };
+};
+
+export const CopyYear = (payload) => {
+  return {
+    type: COPY_YEAR,
     payload,
   };
 };
@@ -105,6 +115,12 @@ export const CopySetSeason = (payload) => {
 export const CopyResetSeason = () => {
   return {
     type: COPY_RESET_SEASON,
+  };
+};
+
+export const CopyResetYear = () => {
+  return {
+    type: COPY_RESET_YEAR,
   };
 };
 
@@ -219,6 +235,22 @@ export default function CopyReducer(state = initialState, action) {
         ...state,
         compareModal: action.payload,
       };
+
+    case COPY_YEAR:
+      if (state.year.length === 0) {
+        return { ...state, year: [action.payload] };
+      }
+      if (state.year.find((e) => e === action.payload)) {
+        return {
+          ...state,
+          year: state.year.filter((e) => e !== action.payload),
+        };
+      }
+      return {
+        ...state,
+        year: [...state.year.filter((e) => e !== ""), action.payload],
+      };
+
     case COPY_PATCH:
       if (state.patch.length === 0) {
         return { ...state, patch: [action.payload] };
@@ -281,6 +313,11 @@ export default function CopyReducer(state = initialState, action) {
         patch: [],
         player: "",
         patchfilter: [],
+      };
+    case COPY_RESET_YEAR:
+      return {
+        ...state,
+        year: [],
       };
     case COPY_SET_YEAR:
       return {

@@ -111,7 +111,22 @@ function PlayerBoard() {
           },
           {}
         )
+
+        // 라인전 지표 
+
         setLine(Object.values(result));
+
+        console.log(Object.values(result))
+        let filterNullLineStat = [];
+        for (let i = 0; i < Object.values(result).length; i++) {
+          filterNullLineStat.push(Object.values(result).filter((value) => {
+            // value.data !== "NULL"
+            console.log(value.data)
+
+          }))
+        }
+        console.log(filterNullLineStat);
+
         setEngage(Object.values(e.stats.engagementStats));
         setPersonality(Object.values(e.stats.personalityStats));
         setGraphDomain(e.trends);
@@ -466,7 +481,9 @@ function PlayerBoard() {
                 </thead>
                 <tbody>
                   {line?.map((title, idx) => {
+                    console.log("title", title);
                     return (
+                      title.data === "NULL" ? "" : 
                       <MapStat key={idx}>
                         <Tippy // options
                           duration={0}
@@ -500,7 +517,9 @@ function PlayerBoard() {
                           changeColor={title.leaguedata > title.data}
                         >
                           {/* {title.toFixed(1)}*/}
-                          {title.data.toFixed(1)}
+                            {
+                              title.data.toFixed(1)
+                            }
                         </PlayerValue>
                       </MapStat>
                     );
@@ -525,6 +544,7 @@ function PlayerBoard() {
                 <tbody>
                   {engage?.map((title, idx) => {
                     return (
+                      title.data === "NULL" ? "" : 
                       <MapStat key={idx}>
                         <Tippy // options
                           duration={0}
@@ -583,6 +603,7 @@ function PlayerBoard() {
                 <tbody>
                   {personality?.map((title, idx) => {
                     return (
+                      title.data === 'NULL' ? "" :
                       <MapStat key={idx}>
                         <Tippy // options
                           duration={0}

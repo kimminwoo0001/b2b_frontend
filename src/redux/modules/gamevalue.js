@@ -18,6 +18,8 @@ export const SET_DETAIL_DATASET = "gamevalue/SET_DETAIL_DATASET";
 export const SET_TEAM_GOLD_DATASET = "gamevalue/SET_TEAM_GOLD_DATASET";
 export const SET_MAPPING_DATASET = "gamevalue/SET_MAPPING_DATASET";
 export const SET_LIVE_DATASET = "gamevalue/SET_LIVE_DATASET";
+export const SET_STATUS_LOG_DATASET = "gamevalue/SET_STATUS_LOG_DATASET";
+
 
 // 선택 
 export const SET_SELECTED_PLAYER = "gamevalue/SET_SELECTED_PLAYER";
@@ -197,6 +199,12 @@ export const SetGoldActiveIdx = (payload) => {
     payload,
   };
 };
+export const SetStatusLogDataset = (payload) => {
+  return {
+    type: SET_STATUS_LOG_DATASET,
+    payload,
+  };
+};
 
 const initialState = {
   gameId: "",
@@ -207,6 +215,7 @@ const initialState = {
   fixedDataset: [],
   playerDataset: {},
   logDataset: {},
+  statusLogDataset: {},
   teamGoldDataset: [],
   mappingDataset: [],
   liveDataset: [],
@@ -366,6 +375,12 @@ export default function GameReportReducer(state = initialState, action) {
       return {
         ...state,
         goldActiveIdx: action.payload,
+      };
+    case SET_STATUS_LOG_DATASET:
+      console.log(action.payload);
+      return {
+        ...state,
+        statusLogDataset: action.payload,
       };
     case INITIALIZE_GAME_STATE:
       return initialState;

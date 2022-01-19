@@ -40,6 +40,10 @@ function Login() {
       sessionStorage.setItem("i18nextLng", "en");
     }
     document.title = `NUNU.GG`
+
+    if (filters.loading) {
+      dispatch(Loading(false));
+    }
   }, []);
 
   const onSubmit = async ({ id, password }) => {

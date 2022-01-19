@@ -1,14 +1,83 @@
-import React from "react";
+import React, { useRef } from "react";
 import Tippy from "@tippy.js/react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 import GameReportToolTip from "../../Common/GameReportToolTip";
+import { useState } from "react";
+import { useEffect } from "react";
+import { Element, animateScroll as scroll, scroller } from "react-scroll";
+import GankingRoamingStatusBox from "./StatusOption/GankingRoamingStatusBox";
+import RoamingStatusBox from "./StatusOption/RoamingStatusBox";
+import DiveStatusBox from "./StatusOption/DiveStatusBox";
+import StarterStatusBox from "./StatusOption/StarterStatusBox";
+
+const typeCase = (type, data, isActive, idx) => {
+  switch (type) {
+    case "Ganking":
+      return (
+        <Element name={`status-log-${idx}`} className="element">
+          <GankingRoamingStatusBox
+            gankingData={data}
+            isActive={isActive}
+            id={type.toLowerCase()}
+          />
+        </Element>
+      );
+    case "Roaming":
+      return (
+        <Element name={`status-log-${idx}`} className="element">
+          <GankingRoamingStatusBox
+            gankingData={data}
+            isActive={isActive}
+            id={type.toLowerCase()}
+          />
+        </Element>
+      );
+    default:
+      return;
+  }
+};
 
 const StatusLogBox = () => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
+  const logBoxRef = useRef();
+
+  const statusLog = gamevalue.statusLogDataset;
+
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
+  if (statusLog[0].type !== "NONE") {
+    statusLog.unshift({
+      type: "NONE",
+      realCount: 0,
+    });
+  }
+
+  const autoMoveScroll = (idx) => {
+    if (idx > 0) {
+      scroller.scrollTo(`status-log-${idx}`, {
+        duration: 500,
+        delay: 0,
+        smooth: "easeInOutQuart",
+        containerId: "statusLogContentBox",
+      });
+    } else {
+      scroll.scrollToTop({
+        duration: 500,
+        delay: 0,
+        smooth: "easeInOutQuart",
+        containerId: "statusLogContentBox",
+      });
+    }
+  };
+
+  useEffect(() => {
+    console.log(gamevalue.eventLogActiveIdx);
+    autoMoveScroll(gamevalue.eventLogActiveIdx);
+  }, [gamevalue.eventLogActiveIdx]);
+
   return (
     <LogDetailContainer>
       <LogTitle>
@@ -24,10 +93,15 @@ const StatusLogBox = () => {
           <img src={"Images/ico-question-mark.svg"} alt="question" />
         </StyledTippy>
       </LogTitle>
-      <LogContentBox>
-        <LogContent isActive={false} team={"blue"}></LogContent>
-        <LogContent isActive={true} team={"blue"}></LogContent>
-        <LogContent isActive={false} team={"blue"}></LogContent>
+      <LogContentBox ref={logBoxRef} id={"statusLogContentBox"}>
+        {statusLog.map((data, idx, arr) => {
+          return typeCase(
+            data.type,
+            data,
+            idx === gamevalue.statusLogActiveIdx,
+            idx
+          );
+        })}
       </LogContentBox>
     </LogDetailContainer>
   );
@@ -73,9 +147,17 @@ const StyledTippy = styled(Tippy)``;
 
 const LogContentBox = styled.div`
   width: 180px;
-  height: 289px; // auto
-  overflow-y: hidden;
+  height: 91%;
   margin: 10px 0 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 `;
 
 const LogContent = styled.div`

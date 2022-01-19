@@ -164,7 +164,8 @@
       "yTeamFight": "Count",
       "gank": "Time of First Gank",
       "time": "Time (min)",
-      "noData": "This information is not yet supported."
+      "noData": "This information is not yet supported.",
+      "noData2": "AI is still in the canyon."
     },
     "playerStat": {
       "sbrLabel": "PR Ranking",
@@ -403,6 +404,7 @@
     "setFilter": "Filter",
     "setLeague": "League",
     "setSeason": "Season",
+    "setYear": "Year",
     "setPatchVersion": "Patch Version",
     "team": "Team",
     "player": "Player",

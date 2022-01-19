@@ -17,8 +17,8 @@ const StatusBox3 = () => {
       .players;
   const selectedNo = gamevalue.selectedParticipant;
   const oppSelectedNo = selectedNo > 4 ? selectedNo - 5 : selectedNo + 5;
-  console.log("liveData", liveData);
-  console.log("totalDetail", totalDetail);
+  //console.log("liveData", liveData);
+  //console.log("totalDetail", totalDetail);
 
   return (
     <ChampStatContainer>
