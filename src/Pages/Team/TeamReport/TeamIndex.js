@@ -1167,7 +1167,7 @@ const NoData = styled.div`
 background-color: #2f2d38;
 color: #fff;
 width: auto;
-font-size: 13px;
+font-size: 16px;
 white-space: nowrap;
 text-align: center;
 position: absolute;

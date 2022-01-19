@@ -184,6 +184,10 @@ const Filter = memo(() => {
           dispatch(SetDesc(t("filters.mainTeamChanged")));
           dispatch(SetIsOpen(true));
         }
+        // if (pagePath === nameSolo && filters.tab === 1) {
+        //   dispatch(SetDesc(t("filters.comparison.mainPlayerChanged")));
+        //   dispatch(SetIsOpen(true));
+        // }
       } else {
         fetchingPlayerFilter();
       }
@@ -562,6 +566,9 @@ const Filter = memo(() => {
                         radioBtn={true}
                         clickEvent={() => {
                           dispatch(Team(team));
+                          if (pagePath === nameSolo) {
+                            dispatch(HandleTab(0));
+                          }
                         }}
                       />
                     );

@@ -333,7 +333,7 @@ function Stats() {
         <div className="NameContainer">
           <span className="NickName">
             {lang === "ko"
-              ? data?.playerInfo.NativeName
+              ? data?.playerInfo.NativeName.replace("&amp;nbsp;", " ")
               : data?.playerInfo.Name}
           </span>
           <span className="RealName">{data?.playerInfo.ID}</span>
@@ -372,7 +372,7 @@ function Stats() {
         <div className="NameContainerBlue">
           <span className="NickName">
             {lang === "ko"
-              ? oppData?.playerInfo.NativeName
+              ? oppData?.playerInfo.NativeName.replace("&amp;nbsp;", " ")
               : oppData?.playerInfo.Name}
           </span>
           <span className="RealName">{oppData?.playerInfo.ID}</span>

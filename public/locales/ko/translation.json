@@ -365,7 +365,7 @@
       "statLabel": "개인전적",
       "statLabelvs": "상대전적",
       "noOppStatData": "상대 전적 기록이 없습니다.",
-      "mainPlayerChanged": "메인 선수가 변경되어 비교 데이터가 초기화됩니다."
+      "mainPlayerChanged": "메인 팀 또는 선수가 변경되어 비교 데이터가 초기화됩니다."
     }
   },
   "filters": {
