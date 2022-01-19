@@ -90,6 +90,18 @@ const StatusLogBox = () => {
             </div>
           </Element>
         );
+      case "teleport":
+        return (
+          <Element name={`status-log-${idx}`} className="element">
+            <div className="click-div" onClick={() => onClick(data.realCount)}>
+              <TeleportStatusBox
+                TPData={data}
+                isActive={isActive}
+                id={type.toLowerCase()}
+              />
+            </div>
+          </Element>
+        );
       default:
         return;
     }
