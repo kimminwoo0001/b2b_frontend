@@ -113,10 +113,14 @@ const NavWrapper = styled.div`
   padding: 12px 25px 0 0;
   background-color: #16151c;
   border-bottom: 1px solid #484655;
-  display: table;
+  display: flex;
+  position: relative;
   .nav-left {
     display: table-cell;
     vertical-align: middle;
+    width: auto;
+    position: absolute;
+    left: 0;
     .logo {
       width: 158px;
       height: 37px;
@@ -130,11 +134,14 @@ const NavWrapper = styled.div`
   }
 
   .nav-mid {
-    display: table-cell;
+    position: absolute;
+    left: 43%;
+    top: 40%;
   }
 
   .nav-right {
-    display: table-cell;
+    position: absolute;
+    right: 1%;
   }
 `;
 const ContentsWrapper = styled.div`
