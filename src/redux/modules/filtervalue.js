@@ -420,6 +420,7 @@ export default function FilterReducer(state = initialState, action) {
     case OPP_TEAM:
       return { ...state, oppteam: action.payload };
     case PLAYER:
+      console.log("PLAYER", PLAYER)
       if (state.player === action.payload) {
         return { ...state, player: "" };
       } else {

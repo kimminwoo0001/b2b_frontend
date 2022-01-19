@@ -168,30 +168,16 @@ function PlayerFilterModal() {
       (key) =>
         filters.year.filter(x => Object.keys(staticvalue.filterObjects[key]).includes(
           x)) && key
-    ).filter((key) => ["LPL", "LCK CL"].includes(key) === false);
+    ).filter((key) => key !== "LPL");
+
+    if (filters.year[0] === "2022") {
+      leagueList = Object.keys(staticvalue.filterObjects).filter(
+        (key) => key !== "MSI" && key !== "WC" && key !== "LPL"
+      );
+    }
     dispatch(setLeagueFilter(leagueList.sort()));
   };
 
-  // const fetchYearFilter = () => {
-  //   let yearList = [];
-  //   for (
-  //     let i = 0;
-  //     i < Object.values(staticvalue.filterObjects).length;
-  //     i++
-  //   ) {
-  //     yearList.push(
-  //       //Object.keys(Object.values(staticvalue.filterObjects)[i])[0]
-  //       "2022", "2021"
-  //     );
-  //   }
-  //   const recentYear = yearList
-  //     .filter((item, pos) => yearList.indexOf(item) === pos)
-  //     .sort()
-  //     .reverse();
-  //   // 최근 연도를 자동으로 설정
-  //   // dispatch(SetYear([recentYear[0]]));
-  //   dispatch(setYearFilter(recentYear));
-  // }
 
   const fetchYearFilter = () => {
     let yearList = [];
@@ -202,15 +188,17 @@ function PlayerFilterModal() {
       for (let league of filters.league) {
         const ObjectKeys = Object.keys(staticvalue.filterObjects[league]);
         // const ObjectKeys = ["2021"];
-        yearList = yearList.concat(ObjectKeys);
+        // yearList = yearList.concat(ObjectKeys);
+        yearList = ObjectKeys;
+
       }
-      yearList = yearList
-        .filter((item, pos) => yearList.indexOf(item) === pos)
-        .sort()
-        .reverse();
+      // yearList = yearList
+      //   .filter((item, pos) => yearList.indexOf(item) === pos)
+      //   .sort()
+      //   .reverse();
       dispatch(Year(yearList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
     }
-    yearList.map(data => { console.log("yeartLiost", data) })
+    // yearList.map(data => { console.log("yeartLiost", data) })
 
     dispatch(setYearFilter(yearList));
 

@@ -90,6 +90,12 @@ const Filter = memo(() => {
     nameSolo,
   ].includes(pagePath);
 
+  const pagesWithLimitedLeagues2 = [
+    nameLeague,
+    nameGameReport,
+    nameSolo,
+  ].includes(pagePath);
+
   const dropdownRef = useRef(null);
   const [isActiveLeague, setIsActiveLeague] = useDetectOutsideClick(
     dropdownRef,
@@ -132,6 +138,7 @@ const Filter = memo(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.league]);
 
+
   useEffect(() => {
     if (JSON.stringify(year) !== JSON.stringify(filters.year)) {
       if (isComparePage) {
@@ -140,6 +147,12 @@ const Filter = memo(() => {
         fetchSeasonFilter();
         setYear(filters.year);
       }
+    }
+  }, [filters.year]);
+
+  useEffect(() => {
+    if (JSON.stringify(year) !== JSON.stringify(filters.year)) {
+      fetchLeagueFilter();
     }
   }, [filters.year]);
 
@@ -240,18 +253,32 @@ const Filter = memo(() => {
             x)) && key
       );
       // 선수보고서, 영상보고서, 게임보고서일 경우 LPL,LCK CL 리그 제외
-    } else if (pagesWithLimitedLeagues) {
-      leagueList = Object.keys(staticvalue.filterObjects).filter(
-        (key) => key !== "LPL" && key !== "LCK CL"
-      );
     } else {
       // 모든 리그에서 LPL 리그 제외
       leagueList = Object.keys(staticvalue.filterObjects).filter(
         (key) => key !== "LPL"
       )
     }
+
+    if (filters.year[0] === "2022") {
+      leagueList = Object.keys(staticvalue.filterObjects).filter(
+        (key) => key !== "MSI" && key !== "WC" && key !== "LPL"
+      );
+    }
+    if (pagesWithLimitedLeagues) {
+      leagueList = Object.keys(staticvalue.filterObjects).filter(
+        (key) => key !== "LPL" && key !== "LCK CL"
+      );
+    }
+    if (pagesWithLimitedLeagues && filters.year[0] === "2022") {
+      leagueList = Object.keys(staticvalue.filterObjects).filter(
+        (key) => key !== "LPL" && key !== "LCK CL" && key !== "MSI" && key !== "WC"
+      );
+    }
+
     dispatch(setLeagueFilter(leagueList.sort()));
   };
+
 
   const fetchYearFilter = () => {
     if (isComparePage) {
@@ -261,24 +288,34 @@ const Filter = memo(() => {
       if (filters.league.length === 0) {
         dispatch(ResetYear());
       } else if (filters.league.length > 0) {
+        let count = 0;
         for (let league of filters.league) {
           const ObjectKeys = Object.keys(staticvalue.filterObjects[league]);
-          //const ObjectKeys = ["2021"];
-          yearList = yearList.concat(ObjectKeys);
+          // const ObjectKeys = ["2021"];
+          // yearList = yearList.concat(ObjectKeys);
+          if (ObjectKeys.length === 1) {
+            count++;
+          }
         }
-        yearList = yearList
-          .filter((item, pos) => yearList.indexOf(item) === pos)
-          .sort()
-          .reverse();
+        if (count >= 1) {
+          yearList = ["2021"];
+        } else {
+          yearList = ["2021", "2022"];
+        }
+
+        // yearList = yearList
+        //   .filter((item, pos) => yearList.indexOf(item) === pos)
+        //   .sort()
+        //   .reverse();
         dispatch(Year(yearList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
       }
-      yearList.map(data => { console.log("yeartLiost", data) })
+      // yearList.map(data => { console.log("yeartLiost", data) })
 
       dispatch(setYearFilter(yearList));
     }
-
-
   };
+
+
 
   const fetchSeasonFilter = () => {
     let seasonList = [];
@@ -298,12 +335,12 @@ const Filter = memo(() => {
 
       let updateSeason = [];
       for (const season of filters.season) {
-        if (seasonList.includes(season)) {
-          updateSeason.push(season);
-        }
-        else {
+        // if (seasonList.includes(season)) {
+        //   updateSeason.push(season);
+        // }
+        // else {
           updateSeason = [seasonList[0]];
-        }
+        // }
       }
       dispatch(SetSeason(updateSeason));
 
@@ -351,6 +388,9 @@ const Filter = memo(() => {
   //플레이어 필터 fetch 함수
   const fetchingPlayerFilter = () => {
     let players = [];
+    if (isComparePage === false) {
+
+
     if (filters.team.length !== 0 && isNeedTeam) {
       let playerList = [];
       for (let league of filters.league) {
@@ -405,6 +445,7 @@ const Filter = memo(() => {
       dispatch(ResetPlayer());
     }
     dispatch(setPlayerFilter(players));
+    }
   };
 
   // 패치 필터 fetch 함수
@@ -445,6 +486,8 @@ const Filter = memo(() => {
                 nameSolo={nameSolo}
                 nameTeam={nameTeam}
                 nameVideo={nameVideo}
+                nameTeamCompare={nameTeamCompare}
+                namePlayerCompare={namePlayerCompare}
               />
             )}
             <FilterGroup>
