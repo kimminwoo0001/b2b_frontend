@@ -7,7 +7,10 @@ const CloseFilter = memo(() => {
   const filters = useSelector((state) => state.FilterReducer);
   return (
     <FilterWrapper>
-      <FilterHeader />
+      {filters.openFilterModal === "/teamCompare" && filters.oppteam.length > 0 && filters.compareModal ||
+        filters.openFilterModal === "/playerCompare" && filters.oppplayer !== "" && filters.compareModal
+        ? "" :
+        <FilterHeader />}
     </FilterWrapper>
   );
 });

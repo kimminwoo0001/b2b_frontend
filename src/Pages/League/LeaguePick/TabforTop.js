@@ -103,7 +103,6 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                 <th className="Champion">{t("league.draft.champion")}</th>
                 {/* <th className="PickCount" onClick={() => requestSort("pick")}> */}
                 <th className="PickCount">
-
                   <div className="sorting">{t("league.draft.picks")}</div>
                 </th>
                 {/* <th className="PickCount" onClick={() => requestSort("ban")}> */}
@@ -596,7 +595,7 @@ const UniqueTable = styled.table`
         margin: 0 13px 0 10px;
       }
       > .ChampName {
-        /* width: 140px; */
+        width: auto;
         vertical-align: middle;
         text-align: left;
         > .champ {
@@ -682,6 +681,11 @@ const PickTable = styled.table`
           height: 26px;
           border-radius: 20px;
           margin: 0 13px 0 10px;
+        }
+        div {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       }
       > .ChampName {
@@ -1025,17 +1029,20 @@ const UniqueNavBar = styled.tr`
 
 const UniqueMappingPicks = styled.tr`
   font-family: NotoSansKR, Apple SD Gothic Neo;
-
   font-size: 12px;
   color: #ffffff;
   width: 100%;
   height: 28px;
   border: 1px solid rgb(58, 55, 69);
+   span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+   }
 `;
 
 const TierTable = styled.table`
   width: 100%;
-
   thead > tr {
     display: table;
     table-layout: fixed;

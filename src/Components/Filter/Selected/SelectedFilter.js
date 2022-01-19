@@ -45,7 +45,7 @@ const SelectedFilter = memo(({ pagePath, nameSolo, nameTeam, nameVideo, namePlay
       {[nameSolo, namePlayerCompare].includes(pagePath) && <SelectedArea>
         <header><label className={filters.player.length === 0 && "not-selected"}>{t("label.player")}</label></header>
         <section>
-          {/* {filters.player.length > 0 && <SelectedData data={filters.player} deleteBtn={() => { dispatch(Player(filters.player)); }} />} */}
+          {filters.player.length > 0 && <SelectedData data={filters.player} deleteBtn={() => { dispatch(Player(filters.player)); }} />}
         </section>
       </SelectedArea>}
       <SelectedArea>

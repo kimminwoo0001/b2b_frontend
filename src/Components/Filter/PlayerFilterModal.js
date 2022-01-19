@@ -124,7 +124,13 @@ function PlayerFilterModal() {
 
 
   useEffect(() => {
-    fetchSeasonFilter();
+    if (JSON.stringify(year) !== JSON.stringify(filters.year)) {
+      // fetchLeagueFilter();
+      fetchSeasonFilter();
+      setYear(filters.year)
+    } else {
+      fetchSeasonFilter();
+    }
   }, [filters.year])
 
 
@@ -196,7 +202,7 @@ function PlayerFilterModal() {
       //   .filter((item, pos) => yearList.indexOf(item) === pos)
       //   .sort()
       //   .reverse();
-      dispatch(Year(yearList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
+      dispatch(SetYear([yearList[0]])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
     }
     // yearList.map(data => { console.log("yeartLiost", data) })
 
@@ -515,61 +521,63 @@ function PlayerFilterModal() {
                 </div>
               </DropDownToggle>
             </LeagueFilter>
-            <YearFilter>
-              <label>{t("filters.setYear")}</label>
-              {!selector.yearFilter ? (
-                <PatchLabels>
-                  <img
-                    className="ChampIconImg"
-                    width="14px"
-                    height="14px"
-                    src={
-                      filters.year !== ""
-                        ? `Images/ico-filter-version.png`
-                        : "Images/ico-filter-none.png"
-                    }
-                    alt="champIcon"
-                  />
-                  <span className="Label">{t("filters.patchLabel")}</span>
-                </PatchLabels>
-              ) : (
-                selector.yearFilter?.map((year, idx) => {
-                  return (
-                    <SelectedYear
-                      radioBtn={true}
-                      key={idx}
-                      // draggable="true"
-                      // onDragStart={(event) => {
-                      //   handleMouseEvent(event);
-                      // }}
-                      // onMouseUp={(event) => {
-                      //   handleMouseEvent(event);
-                      // }}
-                      isChecked={filters.year.includes(year) ? true : false}
-                      onClick={() => {
-                        // dispatch(Patch(patch));
-                        // dispatch(Year(year))
-                        dispatch(SetYear([year]));
-                        //fetchingTeamFilter(patch);
-                      }}
-                    >
-                      <input
-                        id={idx}
-                        checked={filters.year.includes(year) ? true : false}
-                        type="checkbox"
-                        readOnly
-                      ></input>
-                      <div className="Version">
-                        {/* {patch === "11.6" ? "11.6 (P.O)" : patch} */}
-                        {year}
-                      </div>
-                    </SelectedYear>
-                  );
-                })
-              )
-              }
-            </YearFilter>
-            <PatchFilter>
+            {filters.openFilterModal !== "/playerCompare" ? "" :
+              <YearFilter>
+                <label>{t("filters.setYear")}</label>
+                {!selector.yearFilter ? (
+                  <PatchLabels>
+                    <img
+                      className="ChampIconImg"
+                      width="14px"
+                      height="14px"
+                      src={
+                        filters.year !== ""
+                          ? `Images/ico-filter-version.png`
+                          : "Images/ico-filter-none.png"
+                      }
+                      alt="champIcon"
+                    />
+                    <span className="Label">{t("filters.patchLabel")}</span>
+                  </PatchLabels>
+                ) : (
+                  selector.yearFilter?.map((year, idx) => {
+                    return (
+                      <SelectedYear
+                        radioBtn={true}
+                        key={idx}
+                        // draggable="true"
+                        // onDragStart={(event) => {
+                        //   handleMouseEvent(event);
+                        // }}
+                        // onMouseUp={(event) => {
+                        //   handleMouseEvent(event);
+                        // }}
+                        isChecked={filters.year.includes(year) ? true : false}
+                        onClick={() => {
+                          // dispatch(Patch(patch));
+                          // dispatch(Year(year))
+                          dispatch(SetYear([year]));
+                          //fetchingTeamFilter(patch);
+                        }}
+                      >
+                        <input
+                          id={idx}
+                          checked={filters.year.includes(year) ? true : false}
+                          type="checkbox"
+                          readOnly
+                        ></input>
+                        <div className="Version">
+                          {/* {patch === "11.6" ? "11.6 (P.O)" : patch} */}
+                          {year}
+                        </div>
+                      </SelectedYear>
+                    );
+                  })
+                )
+                }
+              </YearFilter>
+            }
+            <PatchFilter path={filters.openFilterModal}>
               <label>{t("filters.setSeason")}</label>
               {
                 <>
@@ -595,7 +603,7 @@ function PlayerFilterModal() {
                 </>
               }
             </PatchFilter>
-            <PatchFilter>
+            <PatchFilter path={filters.openFilterModal}>
               <label>{t("filters.setPatchVersion")}</label>
               {!selector.patchFilter ? (
                 <PatchLabels>
@@ -822,9 +830,8 @@ export default PlayerFilterModal;
 
 const FilterContainer = styled.div`
   display: flex;
-  /* border-bottom: 1px solid #484655; */
-  padding-top: 15px;
-  padding-left: 10px;
+  padding-top: 20px;
+  padding-left: 15px;
 `;
 
 const BackScreen = styled.div`
@@ -900,7 +907,7 @@ const FilterWrapper = styled.div`
 `;
 
 const FilterHeader = styled.div`
-  margin-left: 10px;
+  /* margin-left: 10px; */
   label {
     /* width: 24px; */
     height: 15px;
@@ -1056,7 +1063,7 @@ const PatchFilter = styled.div`
   border-radius: 10px;
   margin: 10px 5px;
   padding: 5px 10px;
-  max-height: 146px;
+  max-height:  ${props => props.path === "/solo" ? "240px" : "155px"};
   width: 240px;
 
   overflow-y: scroll;
@@ -1316,10 +1323,10 @@ const GetFilterData = styled.div`
 
 const MyTeamBox = styled.div`
   width: 193px;
-  height: 246px;
+  height: 245px;
   background-color: #2f2d38;
   margin-right: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   border-radius: 20px;
   padding: 15px;
   font-size: 14px;
@@ -1341,7 +1348,7 @@ const MyTeamBox = styled.div`
 
 const MyPlayerBox = styled.div`
   width: 193px;
-  height: 246px;
+  height: 245px;
   /* max-height: 218px; */
   /* border-right: 1px solid #3a3745; */
   background-color: #2f2d38;
@@ -1368,10 +1375,10 @@ const MyPlayerBox = styled.div`
 
 const OppTeamBox = styled.div`
   width: 193px;
-  height: 246px;
+  height: 245px;
   background-color: #2f2d38;
   margin-right: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   border-radius: 20px;
   padding: 15px;
   font-size: 14px;
@@ -1394,7 +1401,7 @@ const OppTeamBox = styled.div`
 
 const OppPlayerBox = styled.div`
   width: 193px;
-  height: 246px;
+  height: 245px;
   background-color: #2f2d38;
   margin-right: 15px;
   border-radius: 20px;
