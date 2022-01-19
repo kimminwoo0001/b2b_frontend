@@ -22,6 +22,7 @@ const TimeLine = ({ fullTime = 1800 }) => {
 
   return (
     <TimeLineContainer>
+      <div className="dev">TimeLine 개발 중</div>
       <TimeLineDataContainer>
         <div className="title">{t("game.summary.timeline.roming")}</div>
         <TimeLine15Box width={transferValuetoWidth(fullTime, fullWidth, 900)}>
@@ -90,6 +91,23 @@ const TimeLineContainer = styled.div`
   margin: 0px 0 px;
   padding: 17px 27px 0 5px;
   opacity: 1;
+  position: relative;
+
+  .dev {
+    position: absolute;
+    font-family: SpoqaHanSansNeo;
+    font-size: 20px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.3;
+    letter-spacing: normal;
+    text-align: center;
+    color: #fff;
+    top: 47%;
+    left: 42%;
+    background-color: #000;
+  }
 `;
 
 const TimeLineDataContainer = styled.div`
@@ -97,6 +115,7 @@ const TimeLineDataContainer = styled.div`
   height: 17px;
   margin: 4px 0 4px 5px;
   display: flex;
+  opacity: 0.3;
 
   .title {
     width: 58px;
@@ -156,7 +175,7 @@ const TimeLineGoldContainer = styled.div`
   display: flex;
   height: 51px;
   margin: 5px 0 9px 2px;
-  background-color: #912345;
+  //background-color: #912345;
 `;
 
 const TimeLineTimeLine = styled.div`
