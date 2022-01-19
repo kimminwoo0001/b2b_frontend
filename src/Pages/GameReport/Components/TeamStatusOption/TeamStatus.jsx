@@ -1,15 +1,12 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import ChampionContainer from "./Component/ChampionContainer";
-import ChampionOppContainer from "./Component/ChampionOppContainer";
-import GoldGap from "./Component/GoldGap";
 import TeamStatusNav from "./Component/TeamStatusNav";
 import ChampionLiuneBox from "./Component/ChampionLineBox";
 
 const TeamStatus = () => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
-  console.log("TeamStatus", gamevalue);
+  //console.log("TeamStatus", gamevalue);
 
   return (
     <ChamStatusContainer>

@@ -31,13 +31,11 @@ function GameReport() {
   return (
     <ErrorBoundary>
       {checkGameId ? "" : <Nav />}
-      {copyvalue?.openFilterModal === "/teamCompare" && <TeamFilterModal />}
-      {copyvalue?.openFilterModal === "/playerCompare" && <PlayerFilterModal />}
       <GameWrapper>
         {checkGameId && filters.team !== "" && filters.team.length > 0 ? "" :
           <>
             <SideBar />
-            {/* <div
+            <div
               className={filters.filterMenuState ? "filter-open" : "filter-close"}
             >
               <Filter />
@@ -46,16 +44,13 @@ function GameReport() {
               className={filters.filterMenuState ? "filter-close" : "filter-open"}
             >
               <CloseFilter />
-            </div> */}
+            </div>
           </>}
         <ContentWrapper>
           {filters.team !== "" && filters.team.length > 0 ? (
             <GameReportTab />
           ) : (
-              // <SelectFilter />
-              <Temporal>
-                <iframe width="1422" height="800" src="https://www.youtube.com/embed/c6e38xOmXfw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              </Temporal>
+            <SelectFilter />
           )}
         </ContentWrapper>
       </GameWrapper>

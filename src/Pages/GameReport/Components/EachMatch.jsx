@@ -21,16 +21,23 @@ import {
 } from "../../../redux/modules/gamevalue";
 import { SetVodUrl } from "../../../redux/modules/videovalue";
 import axiosRequest from "../../../lib/axiosRequest";
-import { SetModalInfo } from "../../../redux/modules/modalvalue";
+import {
+  SetDesc,
+  SetIsOpen,
+  SetIsSelector,
+  SetModalInfo,
+} from "../../../redux/modules/modalvalue";
 import { API } from "../../config";
 import { API2 } from "../../config";
 import { API5 } from "../../config";
 import { Loading } from "../../../redux/modules/filtervalue";
+import { useTranslation } from "react-i18next";
 
 const TOTAL_SET = [0, 1, 2, 3, 4];
 
 const EachMatch = ({ matchData, team }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const {
     date,
     game,
@@ -58,17 +65,31 @@ const EachMatch = ({ matchData, team }) => {
         url,
         params,
         function (e) {
-          batch(() => {
-            dispatch(SetFixedDataset(e?.infos));
-            dispatch(SetPlayersDataset(e?.players));
-            dispatch(SetLogDataset(e?.log));
-            dispatch(SetMappingDataset(e?.mapping));
-            dispatch(SetLiveDataset(e?.live));
-            dispatch(SetTeamGoldDataset(e?.teamGold));
-            dispatch(SetStatusLogDataset(e?.actionLog));
-            dispatch(SetPlayersStatusDataset(e?.status));
-            dispatch(Loading(false));
-          });
+          let isDone = true;
+          for (const [key, value] of Object.entries(e)) {
+            if (value.length === 0) {
+              console.log("None key", key);
+              isDone = false;
+              dispatch(SetIsSelector(false));
+              dispatch(SetIsOpen(true));
+              dispatch(SetDesc(t("game.eachMatch.noneData")));
+              dispatch(Loading(false));
+              break;
+            }
+          }
+          if (isDone) {
+            batch(() => {
+              dispatch(SetFixedDataset(e?.infos));
+              dispatch(SetPlayersDataset(e?.players));
+              dispatch(SetLogDataset(e?.log));
+              dispatch(SetMappingDataset(e?.mapping));
+              dispatch(SetLiveDataset(e?.live));
+              dispatch(SetTeamGoldDataset(e?.teamGold));
+              dispatch(SetStatusLogDataset(e?.actionLog));
+              dispatch(SetPlayersStatusDataset(e?.status));
+              dispatch(Loading(false));
+            });
+          }
         },
         function (objstore) {
           dispatch(SetModalInfo(objstore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용

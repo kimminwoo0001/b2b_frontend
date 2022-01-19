@@ -1,16 +1,22 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import styled, { css } from "styled-components";
+import secToMS from "../../../../../../lib/secToMS";
 
 const StatusBox2 = () => {
-  const [spell1, setSpell1] = useState(false);
-  const [spell2, setSpell2] = useState(false);
+  const gamevalue = useSelector((state) => state.GameReportReducer);
 
   return (
     <StatusContainer>
       <FlexBox>
         <StatusDesc>
-          <StatusTime>05:32</StatusTime>
-          <StatusText>인베이드 중</StatusText>
+          <StatusTime>
+            {gamevalue.selectedStatusTime > 0 &&
+              secToMS(gamevalue.selectedStatusTime)}
+          </StatusTime>
+          <StatusText>{gamevalue.selectedStatusText}</StatusText>
         </StatusDesc>
       </FlexBox>
       <ChampStatContainer></ChampStatContainer>
@@ -79,5 +85,5 @@ const ChampStatContainer = styled.div`
   width: 119px;
   height: 41px;
   margin: 0px 20px 15.5px 0px;
-  background-color: #f0f;
+  background-color: #000;
 `;

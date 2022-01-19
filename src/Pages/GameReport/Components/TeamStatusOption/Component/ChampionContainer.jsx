@@ -10,6 +10,10 @@ const ChampionContainer = ({
   participant,
   teamName,
   mapping,
+  status,
+  time,
+  isMax,
+  playerStatusTime,
 }) => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const dispatch = useDispatch();
@@ -44,7 +48,14 @@ const ChampionContainer = ({
           />
         </Superiority>
       </div>
-      <ChampionEventBox isDeath={false} />
+      <ChampionEventBox
+        isDeath={false}
+        status={status}
+        time={time}
+        isMax={isMax}
+        participant={participant}
+        playerStatusTime={playerStatusTime}
+      />
       <div className="champ-status-bar">
         <HpBox used={(100 - mapping.hp) * 0.9}>
           <div className="usable" style={{ backgroundColor: "#37b537" }}></div>
@@ -112,6 +123,7 @@ const ChampTeamContainer = styled.div`
       .champ-revive-count {
         //display:  ${(props) => (props.isDeath ? "block" : "none")};
         display:  none;
+        ${(props) => (props.isDeath ? `opacity: 1` : `opacity: 0`)};
         width: 25px;
         height: 25px;
         position: absolute;
@@ -135,9 +147,9 @@ const ChampTeamContainer = styled.div`
 
   .champ-status-bar {
     ${(props) => props.isDeath && `opacity: 0.3;`}
-    width: 90px;
+    width: 100%;
     height: 23px;
-    margin: 6px 0 0 2px;
+    margin: 6px 0px 0 0px;
 
    
     .usable {
@@ -149,7 +161,7 @@ const ChampTeamContainer = styled.div`
 `;
 
 const HpBox = styled.div`
-  width: 90px;
+  width: 100%;
   height: 10px;
   margin: 0 0 3px;
   padding: 0 ${(props) => props.used}px 0 0;
@@ -158,7 +170,7 @@ const HpBox = styled.div`
 `;
 
 const MpBox = styled.div`
-  width: 90px;
+  width: 100%;
   height: 10px;
   margin: 3px 0 0;
   padding: 0 ${(props) => props.used}px 0 0;

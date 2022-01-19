@@ -543,6 +543,9 @@
     "sup": "서포터"
   },
   "game": {
+    "eachMatch": {
+      "noneData": "죄송합니다.\n해당 경기 데이터가 존재하지 않습니다."
+    },
     "log": {
       "event": {
         "subject": "이벤트 로그",
@@ -634,7 +637,27 @@
         "tower": "타워",
         "herald&baron": "전령,바론",
         "dragon": "용",
-        "tooltipInfo": "게임시간 15분 이후 데이터는 아직 지원하지 않습니다."
+        "tooltipInfo": "게임시간 15분 이후 데이터는 아직 지원하지 않습니다.",
+        "InLane": ""
+      }
+    },
+    "teamStatus": {
+      "player": {
+        "Ambush": "부쉬에 숨음",
+        "Diving": "다이브",
+        "TowerHugging": "타워 허깅",
+        "OppTowerPushing": "타워 푸쉬",
+        "Ganking": "갱킹",
+        "Dealt": "딜 교환",
+        "Dealing": "딜 교환",
+        "MovingToLane": "라인 복귀",
+        "Roaming": "로밍",
+        "Jungling": "정글링",
+        "CounterJungling": "카운터 정글",
+        "Dead": "죽음",
+        "TeleportToLane": "텔레포트",
+        "TeleportToOther": "텔레포트",
+        "InLane": ""
       }
     }
   }

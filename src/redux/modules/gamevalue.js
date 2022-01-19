@@ -21,12 +21,16 @@ export const SET_LIVE_DATASET = "gamevalue/SET_LIVE_DATASET";
 export const SET_STATUS_LOG_DATASET = "gamevalue/SET_STATUS_LOG_DATASET";
 export const SET_PLAYERS_STATUS_DATASET = "gamevalue/SET_PLAYERS_STATUS_DATASET";
 
+
 // 선택 
 export const SET_SELECTED_PLAYER = "gamevalue/SET_SELECTED_PLAYER";
 export const SET_SELECTED_TEAM = "gamevalue/SET_SELECTED_TEAM";
 export const SET_SELECTED_POSITION = "gamevalue/SET_SELECTED_POSITION";
 export const SET_SELECTED_PARTICIPANT = "gamevalue/SET_SELECTED_PARTICIPANT";
 export const SET_CHAMP_TAB = "gamevalue/SET_CHAMP_TAB"; // 챔피언 컴포넌트 선택 탭
+export const SET_SELETED_STATUS_TIME = "gamevalue/SET_SELETED_STATUS_TIME";
+export const SET_SELETED_STATUS_TYPE = "gamevalue/SET_SELETED_STATUS_TYPE";
+export const SET_SELETED_STATUS_TEXT = "gamevalue/SET_SELETED_STATUS_TEXT";
 
 // 활성화 인덱스
 export const SET_EVENT_LOG_ACTIVE_IDX = "gamevalue/SET_EVENT_LOG_ACTIVE_IDX";
@@ -220,6 +224,24 @@ export const SetPlayersStatusDataset = (payload) => {
     payload,
   };
 };
+export const SetSeletedStatusTime = (payload) => {
+  return {
+    type: SET_SELETED_STATUS_TIME,
+    payload,
+  };
+};
+export const SetSeletedStatusType = (payload) => {
+  return {
+    type: SET_SELETED_STATUS_TYPE,
+    payload,
+  };
+};
+export const SetSeletedStatusText = (payload) => {
+  return {
+    type: SET_SELETED_STATUS_TEXT,
+    payload,
+  };
+};
 
 const initialState = {
   gameId: "",
@@ -249,6 +271,9 @@ const initialState = {
   liveActiveIdx: 0,
   goldActiveIdx: 0,
   seekTime: 0,
+  selectedStatusTime: 0,
+  selectedStatusType: "",
+  selectedStatusText: ""
 };
 
 export default function GameReportReducer(state = initialState, action) {
@@ -406,6 +431,21 @@ export default function GameReportReducer(state = initialState, action) {
       return {
         ...state,
         playersStatusDataset: action.payload,
+      };
+    case SET_SELETED_STATUS_TIME:
+      return {
+        ...state,
+        selectedStatusTime: action.payload,
+      };
+    case SET_SELETED_STATUS_TYPE:
+      return {
+        ...state,
+        selectedStatusType: action.payload,
+      };
+    case SET_SELETED_STATUS_TEXT:
+      return {
+        ...state,
+        selectedStatusText: action.payload,
       };
     case INITIALIZE_GAME_STATE:
       return initialState;
