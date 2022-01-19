@@ -77,12 +77,19 @@ const TeamFilterModal = () => {
   useEffect(() => {
     if (JSON.stringify(league) !== JSON.stringify(filters.league)) {
       fetchYearFilter();
+      fetchingPatchFilter();
       setLeague(filters.league);
     }
   }, [filters.league])
 
   useEffect(() => {
-    fetchSeasonFilter();
+    if (JSON.stringify(year) !== JSON.stringify(filters.year)) {
+      // fetchLeagueFilter();
+      fetchSeasonFilter();
+      setYear(filters.year)
+    } else {
+      fetchSeasonFilter();
+    }
   }, [filters.year])
 
   // 시즌이 바뀌면 패치 필터 호출
@@ -102,6 +109,7 @@ const TeamFilterModal = () => {
     }
     setOppTeamFilter();
   }, [filters.patch])
+
 
 
 
@@ -130,7 +138,7 @@ const TeamFilterModal = () => {
   const fetchYearFilter = () => {
     let yearList = [];
     if (filters.league.length === 0) {
-      dispatch(ResetYear());
+      // dispatch(ResetYear());
     } 
     if (filters.league.length > 0) {
       for (let league of filters.league) {
@@ -140,11 +148,12 @@ const TeamFilterModal = () => {
         yearList = ObjectKeys;
 
       }
+      console.log("yearList:", yearList)
       // yearList = yearList
       //   .filter((item, pos) => yearList.indexOf(item) === pos)
       //   .sort()
       //   .reverse();
-      dispatch(Year(yearList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
+      dispatch(SetYear([yearList[0]])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
     }
     // yearList.map(data => { console.log("yeartLiost", data) })
 
@@ -1049,7 +1058,7 @@ const TeamWrapper = styled.div`
 
 const SelectTeam = styled.div`
   width: 193px;
-  height: 501px;
+  height: 480px;
   background-color: #2f2d38;
   margin-right: 15px;
   border-radius: 20px;
@@ -1071,7 +1080,7 @@ const SelectTeam = styled.div`
 
 const SelectOppTeam = styled.div`
   width: 193px;
-  height: 501px;
+  height: 480px;
   background-color: #2f2d38;
   border-radius: 20px;
   padding: 10px;

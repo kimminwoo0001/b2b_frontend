@@ -124,7 +124,13 @@ function PlayerFilterModal() {
 
 
   useEffect(() => {
-    fetchSeasonFilter();
+    if (JSON.stringify(year) !== JSON.stringify(filters.year)) {
+      // fetchLeagueFilter();
+      fetchSeasonFilter();
+      setYear(filters.year)
+    } else {
+      fetchSeasonFilter();
+    }
   }, [filters.year])
 
 
@@ -196,7 +202,7 @@ function PlayerFilterModal() {
       //   .filter((item, pos) => yearList.indexOf(item) === pos)
       //   .sort()
       //   .reverse();
-      dispatch(Year(yearList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
+      dispatch(SetYear([yearList[0]])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
     }
     // yearList.map(data => { console.log("yeartLiost", data) })
 
