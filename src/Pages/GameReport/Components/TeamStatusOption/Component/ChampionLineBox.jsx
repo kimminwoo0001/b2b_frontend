@@ -40,8 +40,9 @@ const ChampionLiuneBox = ({ position }) => {
   const arrPosition = ["top", "jng", "mid", "ad", "sup"];
   let timer = Math.floor(videovalue.playedSeconds - +gamevalue.startTime);
   const playerStatusMax = gamevalue.playersStatusDataset.length - 1;
-  timer = timer > 0 ? (timer < playerStatusMax ? timer : playerStatusMax) : 0;
-  const isMax = timer === playerStatusMax;
+  timer =
+    timer > 0 ? (timer < playerStatusMax ? timer * 2 : playerStatusMax) : 0;
+  const isMax = timer > playerStatusMax;
 
   return (
     <ChampLineContainer>
@@ -52,11 +53,11 @@ const ChampionLiuneBox = ({ position }) => {
         mapping={gamevalue.mappingDataset[realCnt].player[position]}
         winner={Math.abs(goldgap) >= 300 && goldgap > 0}
         status={
-          timer === "MAX"
+          isMax
             ? gamevalue.playersStatusDataset[playerStatusMax].players[position]
             : gamevalue.playersStatusDataset[timer].players[position]
         }
-        time={timer ? timer : 0}
+        time={timer ? timer / 2 : 0}
         isMax={isMax}
         playerStatusTime={gamevalue.playerStatusTime}
       />
@@ -67,13 +68,13 @@ const ChampionLiuneBox = ({ position }) => {
         mapping={gamevalue.mappingDataset[realCnt].player[position + 5]}
         winner={Math.abs(goldgap) >= 300 && goldgap < 0}
         status={
-          timer === "MAX"
+          isMax
             ? gamevalue.playersStatusDataset[playerStatusMax].players[
                 position + 5
               ]
             : gamevalue.playersStatusDataset[timer].players[position + 5]
         }
-        time={timer ? timer : 0}
+        time={timer ? timer / 2 : 0}
         isMax={isMax}
         playerStatusTime={gamevalue.playerStatusTime}
       />

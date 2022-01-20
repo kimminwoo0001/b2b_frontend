@@ -7,6 +7,7 @@ import TimeBar from "../Common/TimeBar";
 import TimeBarTitle from "../Common/TimeBarTitle";
 import Tippy from "@tippy.js/react";
 import GameReportToolTip from "../Common/GameReportToolTip";
+import TimeLineValue from "./Component/TimeLineValue";
 
 const romingSuccessTime = [
   { team: 1, time: 500 },
@@ -18,6 +19,7 @@ const romingSuccessTime = [
 
 const TimeLine = ({ fullTime = 1800 }) => {
   const { t } = useTranslation();
+  const gamevalue = useSelector((state) => state.GameReportReducer);
   const fullWidth = 623;
 
   return (
@@ -31,7 +33,7 @@ const TimeLine = ({ fullTime = 1800 }) => {
               <TimeLineValue
                 team={data.team}
                 move={transferValuetoWidth(fullTime, fullWidth, data.time)}
-              ></TimeLineValue>
+              />
             );
           })}
         </TimeLine15Box>
@@ -142,14 +144,6 @@ const TimeLine15Box = styled.div`
   background-color: #433f4e;
   margin: 0 0 0 10px;
   position: relative;
-`;
-
-const TimeLineValue = styled.div`
-  width: 1px;
-  height: 20px;
-  background-color: ${(props) => (props.team === 1 ? "#0075bf" : "#f04545")};
-  margin: 0 0 0 ${(props) => props.move}px;
-  position: absolute;
 `;
 
 const TimeLine15OutBox = styled.div`
