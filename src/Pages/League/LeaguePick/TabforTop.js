@@ -129,7 +129,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                 > */}
                 <th
                   className="ProbRate">
-                  <div className="sorting">{t("league.draft.probRate")}</div>
+                  <div className="sorting">{t("league.draft.adjWr")}</div>
                 </th>
                 <th className="none"></th>
               </tr>

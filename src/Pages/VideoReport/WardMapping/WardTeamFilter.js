@@ -200,6 +200,7 @@ const SliderContainer = styled.div`
   }
   span [class^="PrivateValueLabel-label"] {
     margin: 0px;
+    white-space: nowrap;
     padding: 0;
     font-family: Poppins;
     font-size: 12px;

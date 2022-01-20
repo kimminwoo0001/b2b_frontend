@@ -47,6 +47,7 @@ function SelectPosition({ position, setPosition }) {
             backgroundPosition: "center",
           }}
           isActive={position.find((e) => e === "top") && position.length !== 5}
+          position={position === "top"}
         ></PositionButton>
         <PositionButton
           type="button"
@@ -59,6 +60,7 @@ function SelectPosition({ position, setPosition }) {
             backgroundPosition: "center",
           }}
           isActive={position.find((e) => e === "jng") && position.length !== 5}
+          position={position === "jng"}
         ></PositionButton>
         <PositionButton
           type="button"
@@ -71,6 +73,7 @@ function SelectPosition({ position, setPosition }) {
             backgroundPosition: "center",
           }}
           isActive={position.find((e) => e === "mid") && position.length !== 5}
+          position={position === "mid"}
         ></PositionButton>
         <PositionButton
           type="button"
@@ -83,6 +86,7 @@ function SelectPosition({ position, setPosition }) {
             backgroundPosition: "center",
           }}
           isActive={position.find((e) => e === "bot") && position.length !== 5}
+          position={position === "bot"}
         ></PositionButton>
         <PositionButton
           type="button"
@@ -95,6 +99,7 @@ function SelectPosition({ position, setPosition }) {
             backgroundPosition: "center",
           }}
           isActive={position.find((e) => e === "sup") && position.length !== 5}
+          position={position === "sup"}
         ></PositionButton>
       </PositionButtons>
     </SelectPositionContainer>
@@ -158,4 +163,6 @@ const PositionButton = styled.button`
       background-color: #23212a;
       color: #ffffff;
     `}
+
+
 `;

@@ -694,6 +694,8 @@ export default ComparePosition;
 const ComparePositionWrapper = styled.div``;
 
 const DisplayTeams = styled.div`
+display: flex;
+justify-content: center;
   width: 100%;
   background-color: #16151a;
   position: relative;
@@ -761,7 +763,8 @@ const DisplayTeams = styled.div`
   .TeamTwo {
     display: flex;
     font-family: SpoqaHanSansNeo;
-    width: 215px;
+    width: auto;
+
     margin: 0 0px 0 0px;
     div {
       width: 215px;

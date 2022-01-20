@@ -570,7 +570,7 @@ function TeamIndex() {
                   </td>
                   <td className="SummonerInfo">{sbr.player}</td>
                   <td className="PlayerInfo">
-                    {lang === "ko" ? sbr.nativeName : sbr.name}
+                    {lang === "ko" ? sbr.nativeName.replace("&amp;nbsp;", " ") : sbr.name}
                   </td>
                   <td className="AttendInfo">{sbr.gamesPlayed}</td>
                   <td className="WinCountInfo">{sbr.win}</td>
