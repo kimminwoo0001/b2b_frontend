@@ -89,6 +89,8 @@ const EachMatch = ({ matchData, team }) => {
               dispatch(SetPlayersStatusDataset(e?.status));
               dispatch(Loading(false));
             });
+
+            
           }
         },
         function (objstore) {
