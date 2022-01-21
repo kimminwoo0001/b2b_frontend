@@ -108,6 +108,7 @@ const StatusLogBox = () => {
   };
 
   const onClick = (time) => {
+    console.log("time", time);
     dispatch(SetSeekTime(time / 2));
   };
 

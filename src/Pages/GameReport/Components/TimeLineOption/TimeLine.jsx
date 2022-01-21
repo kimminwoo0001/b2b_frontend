@@ -17,16 +17,25 @@ const romingSuccessTime = [
   { team: 1, time: 715 },
 ];
 
-const TimeLine = ({ fullTime = 1800 }) => {
+const TimeLine = () => {
   const { t } = useTranslation();
-  const gamevalue = useSelector((state) => state.GameReportReducer);
+  const { timeLineDataset, gameTime: fullTime } = useSelector(
+    (state) => state.GameReportReducer
+  );
+  const teamfightSet = timeLineDataset.timefight;
+  const bluekillsSet = timeLineDataset.blueKills;
+  const redkillsSet = timeLineDataset.redKills;
+  const towerDestroySet = timeLineDataset.buildDestroy;
+  const objectSet = timeLineDataset.objectKill;
+  const dragonSet = timeLineDataset.dragonKill;
+
   const fullWidth = 623;
 
   return (
     <TimeLineContainer>
-      <div className="dev">TimeLine 개발 중</div>
+      {/* <div className="dev">TimeLine 개발 중</div> */}
       <TimeLineDataContainer>
-        <div className="title">{t("game.summary.timeline.roming")}</div>
+        {/* <div className="title">{t("game.summary.timeline.roming")}</div>
         <TimeLine15Box width={transferValuetoWidth(fullTime, fullWidth, 900)}>
           {romingSuccessTime.map((data) => {
             return (
@@ -39,40 +48,125 @@ const TimeLine = ({ fullTime = 1800 }) => {
         </TimeLine15Box>
         <TimeLine15OutBox
           width={transferValuetoWidth(fullTime, fullWidth, 900)}
-        ></TimeLine15OutBox>
+        ></TimeLine15OutBox> */}
       </TimeLineDataContainer>
       <TimeLineDataContainer>
-        <div className="title">{t("game.summary.timeline.ganking")}</div>
+        {/* <div className="title">{t("game.summary.timeline.ganking")}</div>
         <TimeLine15Box
           width={transferValuetoWidth(fullTime, fullWidth, 900)}
         ></TimeLine15Box>
         <TimeLine15OutBox
           width={transferValuetoWidth(fullTime, fullWidth, 900)}
-        ></TimeLine15OutBox>
+        ></TimeLine15OutBox> */}
       </TimeLineDataContainer>
       <TimeLineDataContainer>
         <div className="title">{t("game.summary.timeline.fight")}</div>
-        <TimeLineFullBox></TimeLineFullBox>
+        <TimeLineFullBox>
+          {teamfightSet.map((data) => {
+            return (
+              <TimeLineValue
+                move={transferValuetoWidth(
+                  fullTime,
+                  fullWidth,
+                  data.realCount / 2
+                )}
+                time={data.realCount}
+              />
+            );
+          })}
+        </TimeLineFullBox>
       </TimeLineDataContainer>
       <TimeLineDataContainer>
         <div className="title">{t("game.summary.timeline.blue-kill")}</div>
-        <TimeLineFullBox></TimeLineFullBox>
+        <TimeLineFullBox>
+          {bluekillsSet.map((data) => {
+            return (
+              <TimeLineValue
+                team={1}
+                move={transferValuetoWidth(
+                  fullTime,
+                  fullWidth,
+                  data.realCount / 2
+                )}
+                time={data.realCount}
+              />
+            );
+          })}
+        </TimeLineFullBox>
       </TimeLineDataContainer>
       <TimeLineDataContainer>
         <div className="title">{t("game.summary.timeline.red-kill")}</div>
-        <TimeLineFullBox></TimeLineFullBox>
+        <TimeLineFullBox>
+          {redkillsSet.map((data) => {
+            return (
+              <TimeLineValue
+                team={0}
+                move={transferValuetoWidth(
+                  fullTime,
+                  fullWidth,
+                  data.realCount / 2
+                )}
+                time={data.realCount}
+              />
+            );
+          })}
+        </TimeLineFullBox>
       </TimeLineDataContainer>
       <TimeLineDataContainer>
         <div className="title">{t("game.summary.timeline.tower")}</div>
-        <TimeLineFullBox></TimeLineFullBox>
+        <TimeLineFullBox>
+          {towerDestroySet.map((data) => {
+            return (
+              <TimeLineValue
+                team={data.participantid > 5 ? 0 : 1}
+                move={transferValuetoWidth(
+                  fullTime,
+                  fullWidth,
+                  data.realCount / 2
+                )}
+                time={data.realCount}
+              />
+            );
+          })}
+        </TimeLineFullBox>
       </TimeLineDataContainer>
       <TimeLineDataContainer>
         <div className="title">{t("game.summary.timeline.herald&baron")}</div>
-        <TimeLineFullBox></TimeLineFullBox>
+        <TimeLineFullBox>
+          {objectSet.map((data) => {
+            return (
+              <TimeLineValue
+                team={data.participantid > 5 ? 0 : 1}
+                move={transferValuetoWidth(
+                  fullTime,
+                  fullWidth,
+                  data.realCount / 2
+                )}
+                monster={data.subType}
+                time={data.realCount}
+              />
+            );
+          })}
+        </TimeLineFullBox>
       </TimeLineDataContainer>
       <TimeLineDataContainer>
         <div className="title">{t("game.summary.timeline.dragon")}</div>
-        <TimeLineFullBox></TimeLineFullBox>
+        <TimeLineFullBox>
+          {dragonSet.map((data) => {
+            return (
+              <TimeLineValue
+                team={data.participantid > 5 ? 0 : 1}
+                move={transferValuetoWidth(
+                  fullTime,
+                  fullWidth,
+                  data.realCount / 2
+                )}
+                monster={data.subType}
+                time={data.realCount}
+              />
+            );
+          })}
+        </TimeLineFullBox>
       </TimeLineDataContainer>
       <TimeLineGoldContainer></TimeLineGoldContainer>
       <TimeLineDataContainer>
@@ -117,7 +211,7 @@ const TimeLineDataContainer = styled.div`
   height: 17px;
   margin: 4px 0 4px 5px;
   display: flex;
-  opacity: 0.3;
+  //opacity: 0.3;
 
   .title {
     width: 58px;
