@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
 import {
+  Loading,
   Champion,
   Champion_Eng,
   FilterMenuSwitch,
@@ -65,7 +66,8 @@ function NormalInfo() {
   // }, [dispatch]);
 
   const GetComparisonStat = () => {
-    setLoading(true);
+    // setLoading(true);
+    dispatch(Loading(true));
     const url = `${API}/lolapi/player/comparison`;
     const params = {
       league: filters.league,
@@ -153,11 +155,15 @@ function NormalInfo() {
             },
           ],
         })
-        setLoading(false);
+        // setLoading(false);
+        dispatch(Loading(false));
+
       },
       function (objStore) {
         dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
-        setLoading(false);
+        // setLoading(false);
+        dispatch(Loading(false));
+
       }
     );
   };

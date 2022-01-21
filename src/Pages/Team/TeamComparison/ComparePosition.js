@@ -695,7 +695,7 @@ const ComparePositionWrapper = styled.div``;
 
 const DisplayTeams = styled.div`
 display: flex;
-justify-content: center;
+/* justify-content: center; */
   width: 100%;
   background-color: #16151a;
   position: relative;

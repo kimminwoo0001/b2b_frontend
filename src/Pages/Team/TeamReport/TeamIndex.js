@@ -13,7 +13,7 @@ import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
-import { HandleTab } from "../../../redux/modules/filtervalue";
+import { HandleTab, Loading } from "../../../redux/modules/filtervalue";
 
 
 function TeamIndex() {
@@ -66,7 +66,7 @@ function TeamIndex() {
 
   // 팀 전력 보고서 데이터 featch 함수
   const fetchingStatisticData = () => {
-    setLoading(true);
+    dispatch(Loading(true))
     try {
       let url = `${API}/lolapi/team/analysis`;
       let params = {
@@ -126,7 +126,8 @@ function TeamIndex() {
 
           setSupportTimeX(supportX);
           setSupportTimeY(supportY);
-          setLoading(false);
+          dispatch(Loading(false));
+
         },
         function (objStore) {
           dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용

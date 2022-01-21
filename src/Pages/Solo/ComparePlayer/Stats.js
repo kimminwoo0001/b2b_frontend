@@ -29,6 +29,7 @@ import {
   ResetChampion,
   ResetChampion2,
   ResetOppChampion,
+  Loading,
 } from "../../../redux/modules/filtervalue";
 import axiosRequest from "../../../lib/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
@@ -76,7 +77,8 @@ function Stats() {
 
   //팀 필터 fetch 함수
   const GetComparisonStat = () => {
-    setLoading(true);
+    // setLoading(true);
+    dispatch(Loading(true));
     console.log("시작", loading);
     const url = `${API}/lolapi/player/comparisonStat`;
     const params = {
@@ -167,8 +169,8 @@ function Stats() {
           // setOppMatch(Object.values(response?.data.oppPlayer.MatchStat));
           setStatData(Object.values(e?.tendencyStat));
         }
-        setLoading(false);
-        console.log("종료", loading);
+        // setLoading(false);
+        dispatch(Loading(false));
       },
       function (objStore) {
         dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
