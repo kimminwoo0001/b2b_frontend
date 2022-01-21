@@ -18,6 +18,7 @@ import {
   SetTeamGoldDataset,
   SetStatusLogDataset,
   SetPlayersStatusDataset,
+  SetTimeLineDataset,
 } from "../../../redux/modules/gamevalue";
 import { SetVodUrl } from "../../../redux/modules/videovalue";
 import axiosRequest from "../../../lib/axiosRequest";
@@ -78,6 +79,35 @@ const EachMatch = ({ matchData, team }) => {
             }
           }
           if (isDone) {
+            const timefight = e.actionLog.filter((e) => e.type === "matchLog");
+            const blueKills = e.log.event.filter(
+              (e) => e.type === "CHAMPION_KILL" && e.participantid < 6
+            );
+            const redKills = e.log.event.filter(
+              (e) => e.type === "CHAMPION_KILL" && e.participantid > 5
+            );
+            const buildDestroy = e.log.event.filter(
+              (e) => e.type === "BUILDING_KILL"
+            );
+            const objectKill = e.log.event.filter(
+              (e) =>
+                e.type === "ELITE_MONSTER_KILL" &&
+                ["RIFTHERALD", "BARON_NASHOR"].includes(e.subType)
+            );
+            const dragonKill = e.log.event.filter(
+              (e) =>
+                e.type === "ELITE_MONSTER_KILL" && e.subType.includes("DRAGON")
+            );
+
+            const timeLineSet = {
+              timefight,
+              blueKills,
+              redKills,
+              buildDestroy,
+              objectKill,
+              dragonKill,
+            };
+
             batch(() => {
               dispatch(SetFixedDataset(e?.infos));
               dispatch(SetPlayersDataset(e?.players));
@@ -87,6 +117,7 @@ const EachMatch = ({ matchData, team }) => {
               dispatch(SetTeamGoldDataset(e?.teamGold));
               dispatch(SetStatusLogDataset(e?.actionLog));
               dispatch(SetPlayersStatusDataset(e?.status));
+              dispatch(SetTimeLineDataset(timeLineSet));
               dispatch(Loading(false));
             });
 

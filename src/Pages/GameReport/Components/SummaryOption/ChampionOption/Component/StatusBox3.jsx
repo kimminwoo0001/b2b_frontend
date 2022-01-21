@@ -17,8 +17,19 @@ const StatusBox3 = () => {
       .players;
   const selectedNo = gamevalue.selectedParticipant;
   const oppSelectedNo = selectedNo > 4 ? selectedNo - 5 : selectedNo + 5;
-  //console.log("liveData", liveData);
-  //console.log("totalDetail", totalDetail);
+  const blueKills = liveData
+    .slice(0, 5)
+    .map((e) => e.kills)
+    .reduce((pre, cur) => pre + cur);
+
+  const redKills = 0;
+  liveData
+    .slice(5, 10)
+    .map((e) => e.kills)
+    .reduce((pre, cur) => pre + cur);
+  const killAsist = liveData[selectedNo].kills + liveData[selectedNo].assists;
+
+  //console.log("killAsist", killAsist);
 
   return (
     <ChampStatContainer>
@@ -37,7 +48,11 @@ const StatusBox3 = () => {
         </div>
         <div className="performance-box">
           <div className="title">{t("game.summary.champion.kill-point")}</div>
-          <div className="content">{`${"수정"}%`}</div>
+          <div className="content">{`${Math.floor(
+            (killAsist > 0
+              ? killAsist / (selectedNo > 4 ? redKills : blueKills)
+              : killAsist) * 100
+          )}%`}</div>
           <div className="all-content">{`${"수정"}%`}</div>
         </div>
         <div className="performance-box">

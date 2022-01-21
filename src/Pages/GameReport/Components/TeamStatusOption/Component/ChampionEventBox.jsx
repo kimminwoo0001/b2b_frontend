@@ -38,9 +38,9 @@ const ChampionEventBox = ({
   }, []);
 
   const setSelectedStatus = (time, type, text) => {
-    console.log(time, type, text);
+    //console.log(time, type, text);
     if (gamevalue.selectedStatusType !== type) {
-      console.log("input text:", text);
+      //console.log("input text:", text);
       dispatch(SetSeletedStatusTime(time));
       dispatch(SetSeletedStatusType(type));
       dispatch(SetSeletedStatusText(text));
@@ -79,7 +79,7 @@ const ChampionEventBox = ({
       }
     }
     if (gamevalue.selectedParticipant === participant) {
-      console.log("Event", event);
+      //console.log("Event", event);
       setSelectedStatus(event.time, event.type, event.text);
     }
   };

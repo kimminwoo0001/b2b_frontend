@@ -20,6 +20,7 @@ export const SET_MAPPING_DATASET = "gamevalue/SET_MAPPING_DATASET";
 export const SET_LIVE_DATASET = "gamevalue/SET_LIVE_DATASET";
 export const SET_STATUS_LOG_DATASET = "gamevalue/SET_STATUS_LOG_DATASET";
 export const SET_PLAYERS_STATUS_DATASET = "gamevalue/SET_PLAYERS_STATUS_DATASET";
+export const SET_TIMELINE_DATASET = "gamevalue/SET_TIMELINE_DATASET";
 
 
 // 선택 
@@ -242,6 +243,12 @@ export const SetSeletedStatusText = (payload) => {
     payload,
   };
 };
+export const SetTimeLineDataset = (payload) => {
+  return {
+    type: SET_TIMELINE_DATASET,
+    payload,
+  };
+};
 
 const initialState = {
   gameId: "",
@@ -257,6 +264,7 @@ const initialState = {
   mappingDataset: [],
   liveDataset: [],
   playersStatusDataset: [],
+  timeLineDataset: {},
   blueteam: "",
   redteam: "",
   selectedTeam: 0, // 0: 블루팀, 1: 레드팀
@@ -446,6 +454,11 @@ export default function GameReportReducer(state = initialState, action) {
       return {
         ...state,
         selectedStatusText: action.payload,
+      };
+    case SET_TIMELINE_DATASET:
+      return {
+        ...state,
+        timeLineDataset: action.payload,
       };
     case INITIALIZE_GAME_STATE:
       return initialState;
