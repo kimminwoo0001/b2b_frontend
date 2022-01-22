@@ -43,7 +43,7 @@ function TeamIndex() {
   const [supportTimeData, setSupportTimeData] = useState();
   const [supportTimeX, setSupportTimeX] = useState();
   const [supportTimeY, setSupportTimeY] = useState();
-  const [loading, setLoading] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
 
   // 팀 전력보고서에서 최초 선택된 리그와 중복되는 시즌을 가지는 다른 리그를 선택하는 경우 무한루프 발생.
@@ -127,6 +127,7 @@ function TeamIndex() {
           setSupportTimeX(supportX);
           setSupportTimeY(supportY);
           dispatch(Loading(false));
+          setIsActive(true);
 
         },
         function (objStore) {
@@ -171,6 +172,10 @@ function TeamIndex() {
       },
     ],
   };
+
+
+  if(!isActive) return <></>; 
+
 
   return (
     <TeamIndexWrapper>

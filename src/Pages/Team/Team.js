@@ -29,15 +29,15 @@ function Team() {
 
         (<>
         <div
-          className={filters.filterMenuState ? "filter-open" : "filter-close"}
+          // className={filters.filterMenuState ? "filter-open" : "filter-close"}
         >
           <Filter />
         </div>
-        <div
+        {/* <div
           className={filters.filterMenuState ? "filter-close" : "filter-open"}
         >
           <CloseFilter />
-        </div>
+        </div> */}
         </>
         )
 

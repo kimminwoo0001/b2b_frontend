@@ -33,11 +33,11 @@ function PlayerCompare() {
         >
           <Filter />
         </div>
-        <div
+       {/* <div
           className={filters.filterMenuState ? "filter-close" : "filter-open"}
         >
           <CloseFilter />
-        </div>
+        </div> */}
           </>
         }
         <ContentWrapper>

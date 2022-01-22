@@ -49,6 +49,8 @@ function CompareIngame() {
   const [supportDomain, setSupportDomain] = useState();
   //y 축
   const [supportTicks, setSupportTicks] = useState();
+  const [isActive, setIsActive] = useState(false);
+
 
   const Team = filters.team;
   const OppTeam = filters.oppteam;
@@ -162,11 +164,11 @@ function CompareIngame() {
         setRedData(e[Team]);
         setBlueData(e[OppTeam]);
         dispatch(Loading(false))
+        setIsActive(true);
       },
       function (objStore) {
         dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
       }
-    ).finally(dispatch(Loading(false))
     );
   };
 
@@ -227,6 +229,9 @@ function CompareIngame() {
 
     return null;
   };
+
+  if(!isActive) return <></>; 
+
 
 
   return (
