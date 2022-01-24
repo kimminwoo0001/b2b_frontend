@@ -19,17 +19,19 @@ import { useTranslation } from "react-i18next";
 import axiosRequest from "../../lib/axiosRequest";
 import { API } from "../config";
 import checkEmail from "../../lib/checkEmail";
-import { SetModalInfo, SetDesc, SetIsOpen, SetIsSelector } from "../../redux/modules/modalvalue";
+import { SetModalInfo, SetDesc, SetIsOpen, SetIsSelector, SetConfirmFuncId } from "../../redux/modules/modalvalue";
 import signAxiosReq from "../../lib/signAxiosReq";
 import LoadingImg from "../../Components/LoadingImg/LoadingImg";
 import { Loading } from "../../redux/modules/filtervalue";
 
 function Login() {
   const filters = useSelector((state) => state.FilterReducer);
+  const { selectedResult } = useSelector((state) => state.ModalReducer);
   const [isOpen, setIsOpen] = useState(false);
   //const [alertDesc, setAlertDesc] = useState("");
   const { handleSubmit, register } = useForm();
   const dispatch = useDispatch();
+  const [info, setInfo] = useState({ id: "", password: "" })
   let history = useHistory();
   const { t } = useTranslation();
 
@@ -46,12 +48,19 @@ function Login() {
     }
   }, []);
 
+  useEffect(() => {
+    if (selectedResult === "tryLoginAgain") {
+      onSubmit(info);
+    }
+  }, [selectedResult])
+
   const onSubmit = async ({ id, password }) => {
     try {
       dispatch(Loading(true));
       if (checkEmail(id)) {
         const user = `ids=${id}&password=${password}&type=N`;
         const url = `${API}/lolapi/logins`;
+        setInfo({ id: "", password: "" })
 
         axiosRequest("POST", url, user, function (data) {
           const token = data;
@@ -94,6 +103,8 @@ function Login() {
             dispatch(SetDesc(t("alert.desc.tryLoginAgain")));
             dispatch(SetIsOpen(true));
             dispatch(Loading(false));
+            setInfo({ id, password })
+            dispatch(SetConfirmFuncId("tryLoginAgain"))
           } else if (msg === "MK") {
             dispatch(SetDesc(t("alert.desc.MasterKey")));
             dispatch(SetIsOpen(true));

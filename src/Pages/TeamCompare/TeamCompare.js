@@ -9,24 +9,39 @@ import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 import ErrorBoundary from "../../Components/ErrorBoundary";
 import Filter from "../../Components/Filter/Filter";
 import CloseFilter from "../../Components/Filter/CloseFilter";
+import TeamFilterModal from "../../Components/Filter/TeamFilterModal";
+import PlayerFilterModal from "../../Components/Filter/PlayerFilterModal";
+
 function TeamCompare() {
   const filters = useSelector((state) => state.FilterReducer);
+  const copyvalue = useSelector((state) => state.CopyReducer);
 
   return (
     <ErrorBoundary>
+      {copyvalue?.openFilterModal === "/teamCompare" && <TeamFilterModal />}
+      {copyvalue?.openFilterModal === "/playerCompare" && <PlayerFilterModal />}
+
       <Nav />
       <TeamWrapper>
         <SideBar />
-        <div
+        {filters.openFilterModal === "/teamCompare" && filters.oppteam.length > 0 && filters.compareModal ?
+          (
+            <CloseFilter />
+          ) : (
+            <>
+              <div
           className={filters.filterMenuState ? "filter-open" : "filter-close"}
         >
           <Filter />
         </div>
-        <div
+       {/* <div
           className={filters.filterMenuState ? "filter-close" : "filter-open"}
         >
           <CloseFilter />
-        </div>
+        </div> */}
+            </>
+          )
+        }
         <ContentWrapper>
           {filters.team !== "" ? <TeamTabs /> : <SelectFilter />}
         </ContentWrapper>

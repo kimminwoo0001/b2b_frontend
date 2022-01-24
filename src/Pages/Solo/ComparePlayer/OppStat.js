@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import qs from "qs";
 import {
+  Loading,
   Champion,
   Champion_Eng,
   Opp_Champion,
@@ -26,6 +27,7 @@ function OppStat() {
   const { t } = useTranslation();
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const [loading, setLoading] = useState(false);
+  const [noData, setNoData] = useState(null);
   const { filters, lang, user } = useSelector((state) => ({
     filters: state.FilterReducer,
     lang: state.LocaleReducer,
@@ -52,7 +54,8 @@ function OppStat() {
 
   //팀 필터 fetch 함수
   const GetComparisonStat = () => {
-    setLoading(true);
+    // setLoading(true);
+    dispatch(Loading(true));
     const url = `${API}/lolapi/player/comparisonRecord`;
     const params = {
       league: filters.league,
@@ -69,11 +72,17 @@ function OppStat() {
       id: user.id,
     };
     axiosRequest(undefined, url, params, function (e) {
-      setPlayer(e[filters.player]);
-      setOppPlayer(e[filters.oppplayer]);
+      if (e === "no data") {
+        setNoData(true);
+      } else {
+        setPlayer(e[filters.player]);
+        setOppPlayer(e[filters.oppplayer]);
+      }
     }).finally(
       (e) => {
-        setLoading(false);
+        // setLoading(false);
+        dispatch(Loading(false));
+
       },
       function (objStore) {
         dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -311,12 +320,16 @@ function OppStat() {
             </button>
           </DropDownContainer>
         </ChampionSettingNav> */}
-        {player === undefined ? (
+        {
+          // noData ? (
+          //   <ComapreValue>
+          //     <NoData>{t("solo.comparison.noOppStatData")}</NoData>
+          //   </ComapreValue>
+          // ) :
+          (
           <ComapreValue>
-            <NoData>{t("solo.comparison.noOppStatData")}</NoData>
-          </ComapreValue>
-        ) : (
-          <ComapreValue>
+              {noData ? <NoData>{t("solo.comparison.noOppStatData")}</NoData> :
+                <>
             <DisplayValue>
               <div className="Wrapper">
                 <PlayerValue>
@@ -814,6 +827,8 @@ function OppStat() {
                 </OppComparedValue>
               </div>
             </DisplayValue>
+              }
+                </>
               }
           </ComapreValue>
         )}

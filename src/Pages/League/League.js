@@ -26,15 +26,15 @@ function League() {
       <LeagueWrapper>
         <SideBar />
         <div
-          className={filters.filterMenuState ? "filter-open" : "filter-close"}
+          // className={filters.filterMenuState ? "filter-open" : "filter-close"}
         >
           <Filter />
         </div>
-        <div
+       {/* <div
           className={filters.filterMenuState ? "filter-close" : "filter-open"}
         >
           <CloseFilter />
-        </div>
+        </div> */}
         <ContentWrapper>
           {/* season 값이 있으면 데이터를 보여주고 아니면 selectFilter화면을 보여주도록 */}
           {filters.season.length !== 0 ? <LeagueTab /> : <SelectFilter />}

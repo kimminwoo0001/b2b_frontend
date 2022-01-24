@@ -134,7 +134,7 @@
       "picks": "픽",
       "banRate": "픽밴률",
       "winRate": "승률",
-      "probRate": "조정 승률",
+      "adjWr": "조정 승률",
       "kp": "킬관여",
       "result": "승패",
       "opponent": "상대 챔피언",
@@ -365,7 +365,7 @@
       "statLabel": "개인전적",
       "statLabelvs": "상대전적",
       "noOppStatData": "상대 전적 기록이 없습니다.",
-      "mainPlayerChanged": "메인 선수가 변경되어 비교 데이터가 초기화됩니다."
+      "mainPlayerChanged": "메인 팀 또는 선수가 변경되어 비교 데이터가 초기화됩니다."
     }
   },
   "filters": {
@@ -508,7 +508,8 @@
     },
     "logout": {
       "sessionExpires": "계정 유효 시간이 만료되어 로그인 페이지로 이동합니다.",
-      "loginFail": "로그인 정보가 없습니다. 다시 시도해주세요."
+      "loginFail": "로그인 정보가 없습니다. 다시 시도해주세요.",
+      "duplication": "중복 로그인이 확인되어 로그아웃합니다."
     },
     "label": {
       "confirm": "확인",

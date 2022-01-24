@@ -9,24 +9,37 @@ import Player from "../Solo/Player";
 import ErrorBoundary from "../../Components/ErrorBoundary";
 import Filter from "../../Components/Filter/Filter";
 import CloseFilter from "../../Components/Filter/CloseFilter";
+import TeamFilterModal from "../../Components/Filter/TeamFilterModal";
+import PlayerFilterModal from "../../Components/Filter/PlayerFilterModal";
+
 function PlayerCompare() {
   const filters = useSelector((state) => state.FilterReducer);
   const copyvalue = useSelector((state) => state.CopyReducer);
   return (
     <ErrorBoundary>
+      {copyvalue?.openFilterModal === "/teamCompare" && <TeamFilterModal />}
+      {copyvalue?.openFilterModal === "/playerCompare" && <PlayerFilterModal />}
+
       <Nav />
       <SoloWrapper>
         <SideBar />
+        {filters.openFilterModal === "/playerCompare" && filters.oppplayer !== "" && filters.compareModal ?
+          (
+            <CloseFilter />
+          ) :
+          <>
         <div
           className={filters.filterMenuState ? "filter-open" : "filter-close"}
         >
           <Filter />
         </div>
-        <div
+       {/* <div
           className={filters.filterMenuState ? "filter-close" : "filter-open"}
         >
           <CloseFilter />
-        </div>
+        </div> */}
+          </>
+        }
         <ContentWrapper>
           {filters.player !== "" ? <Player /> : <SelectFilter />}
         </ContentWrapper>
@@ -38,12 +51,11 @@ function PlayerCompare() {
 export default PlayerCompare;
 
 const SoloWrapper = styled.div`
-  width: 100%;
-  min-height: 100vh;
   height: 100%;
   overflow: auto;
+  min-height: 100vh;
   display: flex;
-  background-color: #16151a;
+  background-color: #23212a;
 
   .filter-close {
     display: none;
@@ -56,6 +68,6 @@ const SoloWrapper = styled.div`
 const ContentWrapper = styled.div`
   display: flex;
   width: 100%;
-
   flex-direction: column;
+  background-color: #16151a;
 `;
