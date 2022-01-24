@@ -19,7 +19,7 @@ import { useTranslation } from "react-i18next";
 import axiosRequest from "../../lib/axiosRequest";
 import { API } from "../config";
 import checkEmail from "../../lib/checkEmail";
-import { SetModalInfo, SetDesc, SetIsOpen, SetIsSelector } from "../../redux/modules/modalvalue";
+import { SetModalInfo, SetDesc, SetIsOpen, SetIsSelector, SetConfirmFuncId } from "../../redux/modules/modalvalue";
 import signAxiosReq from "../../lib/signAxiosReq";
 import LoadingImg from "../../Components/LoadingImg/LoadingImg";
 import { Loading } from "../../redux/modules/filtervalue";
@@ -94,6 +94,7 @@ function Login() {
             dispatch(SetDesc(t("alert.desc.tryLoginAgain")));
             dispatch(SetIsOpen(true));
             dispatch(Loading(false));
+            dispatch(SetConfirmFuncId("tryLoginAgain"))
           } else if (msg === "MK") {
             dispatch(SetDesc(t("alert.desc.MasterKey")));
             dispatch(SetIsOpen(true));
