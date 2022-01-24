@@ -30,6 +30,8 @@ import GameReport from "./Pages/GameReport/GameReport";
 import AlertModal from "./Components/UtilityComponent/AlertModal";
 import CheckLogin from "./Pages/Sign/CheckLogin";
 import Loading from "./Components/LoadingImg/LoadingImg";
+import ChannelService from "./Components/UtilityComponent/ChannelService";
+
 
 function Routes() {
   //const token = sessionStorage.getItem("token");
@@ -43,6 +45,10 @@ function Routes() {
       }
     />
   );
+
+  ChannelService.boot({
+    "pluginKey": "7cc25793-4246-4495-80e9-97a59767ef03" //please fill with your plugin key
+  });
 
   return (
     <Router>
@@ -70,6 +76,7 @@ function Routes() {
         <Route exact path="/signUp" component={SingUp} />
         <Route exact path="/changePW" component={ChangePW} />
       </Switch>
+
       <Footer />
     </Router>
   );

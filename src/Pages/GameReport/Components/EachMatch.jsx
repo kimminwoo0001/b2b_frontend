@@ -78,6 +78,7 @@ const EachMatch = ({ matchData, team }) => {
               break;
             }
           }
+
           if (isDone) {
             const timefight = e.actionLog.filter((e) => e.type === "matchLog");
             const blueKills = e.log.event.filter(
@@ -120,8 +121,6 @@ const EachMatch = ({ matchData, team }) => {
               dispatch(SetTimeLineDataset(timeLineSet));
               dispatch(Loading(false));
             });
-
-            
           }
         },
         function (objstore) {
