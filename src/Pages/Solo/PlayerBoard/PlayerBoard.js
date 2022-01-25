@@ -233,9 +233,9 @@ function PlayerBoard() {
     labels: match?.x,
     datasets: [
       {
-        fill: false,
+        fill: true,
         lineTension: 0,
-        backgroundColor: "#f14444",
+        backgroundColor: "#314444",
         borderColor: "#f14444",
         borderWidth: 2,
         data: match?.y,
@@ -483,45 +483,45 @@ function PlayerBoard() {
                   {line?.map((title, idx) => {
                     console.log("title", title);
                     return (
-                      title.data === "NULL" ? "" : 
-                      <MapStat key={idx}>
-                        <Tippy // options
-                          duration={0}
-                          delay={[300, 0]}
-                          content={
-                            <BoardToolTip
-                              title={lang === "ko" ? title.name : title.eng}
-                            />
-                          }
-                          placement="top"
-                        >
-                          <td className="StatNum">
-                            {lang === "ko" ? title.name : title.eng}
-                          </td>
-                        </Tippy>
-                        <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
-                        <td className="Icon">
-                          <img
-                            src={
-                              title.leaguedata <= title.data
-                                ? "Images/ico-point-high.png"
-                                : "Images/ico-point-low-blue.png"
+                      title.data === "NULL" ? "" :
+                        <MapStat key={idx}>
+                          <Tippy // options
+                            duration={0}
+                            delay={[300, 0]}
+                            content={
+                              <BoardToolTip
+                                title={lang === "ko" ? title.name : title.eng}
+                              />
                             }
-                            width="17px"
-                            height="11px"
-                            alt="pointIcon"
-                          ></img>
-                        </td>
-                        <PlayerValue
-                          className="playerValue"
-                          changeColor={title.leaguedata > title.data}
-                        >
-                          {/* {title.toFixed(1)}*/}
+                            placement="top"
+                          >
+                            <td className="StatNum">
+                              {lang === "ko" ? title.name : title.eng}
+                            </td>
+                          </Tippy>
+                          <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
+                          <td className="Icon">
+                            <img
+                              src={
+                                title.leaguedata <= title.data
+                                  ? "Images/ico-point-high.png"
+                                  : "Images/ico-point-low-blue.png"
+                              }
+                              width="17px"
+                              height="11px"
+                              alt="pointIcon"
+                            ></img>
+                          </td>
+                          <PlayerValue
+                            className="playerValue"
+                            changeColor={title.leaguedata > title.data}
+                          >
+                            {/* {title.toFixed(1)}*/}
                             {
                               title.data.toFixed(1)
                             }
-                        </PlayerValue>
-                      </MapStat>
+                          </PlayerValue>
+                        </MapStat>
                     );
                   })}
                 </tbody>
@@ -544,43 +544,43 @@ function PlayerBoard() {
                 <tbody>
                   {engage?.map((title, idx) => {
                     return (
-                      title.data === "NULL" ? "" : 
-                      <MapStat key={idx}>
-                        <Tippy // options
-                          duration={0}
-                          delay={[300, 0]}
-                          content={
-                            <BoardToolTip
-                              title={lang === "ko" ? title.name : title.eng}
-                            />
-                          }
-                          placement="top"
-                        >
-                          <td className="StatNum">
-                            {lang === "ko" ? title.name : title.eng}
-                          </td>
-                        </Tippy>
-                        <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
-                        <td className="Icon">
-                          <img
-                            src={
-                              title.leaguedata <= title.data
-                                ? "Images/ico-point-high.png"
-                                : "Images/ico-point-low-blue.png"
+                      title.data === "NULL" ? "" :
+                        <MapStat key={idx}>
+                          <Tippy // options
+                            duration={0}
+                            delay={[300, 0]}
+                            content={
+                              <BoardToolTip
+                                title={lang === "ko" ? title.name : title.eng}
+                              />
                             }
-                            width="17px"
-                            height="11px"
-                            alt="pointIcon"
-                          ></img>
-                        </td>
-                        <PlayerValue
-                          className="playerValue"
-                          changeColor={title.leaguedata > title.data}
-                        >
-                          {/* {title.toFixed(1)} */}
-                          {title.data.toFixed(1)}
-                        </PlayerValue>
-                      </MapStat>
+                            placement="top"
+                          >
+                            <td className="StatNum">
+                              {lang === "ko" ? title.name : title.eng}
+                            </td>
+                          </Tippy>
+                          <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
+                          <td className="Icon">
+                            <img
+                              src={
+                                title.leaguedata <= title.data
+                                  ? "Images/ico-point-high.png"
+                                  : "Images/ico-point-low-blue.png"
+                              }
+                              width="17px"
+                              height="11px"
+                              alt="pointIcon"
+                            ></img>
+                          </td>
+                          <PlayerValue
+                            className="playerValue"
+                            changeColor={title.leaguedata > title.data}
+                          >
+                            {/* {title.toFixed(1)} */}
+                            {title.data.toFixed(1)}
+                          </PlayerValue>
+                        </MapStat>
                     );
                   })}
                 </tbody>
@@ -604,42 +604,42 @@ function PlayerBoard() {
                   {personality?.map((title, idx) => {
                     return (
                       title.data === 'NULL' ? "" :
-                      <MapStat key={idx}>
-                        <Tippy // options
-                          duration={0}
-                          delay={[300, 0]}
-                          content={
-                            <BoardToolTip
-                              title={lang === "ko" ? title.name : title.eng}
-                            />
-                          }
-                          placement="top"
-                        >
-                          <td className="StatNum">
-                            {lang === "ko" ? title.name : title.eng}
-                          </td>
-                        </Tippy>
-
-                        <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
-                        <td className="Icon">
-                          <img
-                            src={
-                              title.leaguedata <= title.data
-                                ? "Images/ico-point-high.png"
-                                : "Images/ico-point-low-blue.png"
+                        <MapStat key={idx}>
+                          <Tippy // options
+                            duration={0}
+                            delay={[300, 0]}
+                            content={
+                              <BoardToolTip
+                                title={lang === "ko" ? title.name : title.eng}
+                              />
                             }
-                            width="17px"
-                            height="11px"
-                            alt="pointIcon"
-                          ></img>
-                        </td>
-                        <PlayerValue
-                          className="playerValue"
-                          changeColor={title.leaguedata > title.data}
-                        >
-                          {title.data.toFixed(1)}
-                        </PlayerValue>
-                      </MapStat>
+                            placement="top"
+                          >
+                            <td className="StatNum">
+                              {lang === "ko" ? title.name : title.eng}
+                            </td>
+                          </Tippy>
+
+                          <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
+                          <td className="Icon">
+                            <img
+                              src={
+                                title.leaguedata <= title.data
+                                  ? "Images/ico-point-high.png"
+                                  : "Images/ico-point-low-blue.png"
+                              }
+                              width="17px"
+                              height="11px"
+                              alt="pointIcon"
+                            ></img>
+                          </td>
+                          <PlayerValue
+                            className="playerValue"
+                            changeColor={title.leaguedata > title.data}
+                          >
+                            {title.data.toFixed(1)}
+                          </PlayerValue>
+                        </MapStat>
                     );
                   })}
                 </tbody>

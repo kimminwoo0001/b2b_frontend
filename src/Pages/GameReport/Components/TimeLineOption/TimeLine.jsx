@@ -8,6 +8,7 @@ import TimeBarTitle from "../Common/TimeBarTitle";
 import Tippy from "@tippy.js/react";
 import GameReportToolTip from "../Common/GameReportToolTip";
 import TimeLineValue from "./Component/TimeLineValue";
+import TimeLineTeamGold from "./Component/TimeLineTeamGold";
 
 const romingSuccessTime = [
   { team: 1, time: 500 },
@@ -168,7 +169,7 @@ const TimeLine = () => {
           })}
         </TimeLineFullBox>
       </TimeLineDataContainer>
-      <TimeLineGoldContainer></TimeLineGoldContainer>
+      <TimeLineTeamGold />
       <TimeLineDataContainer>
         <TimeBarTitle />
         <div className="time-bar">
