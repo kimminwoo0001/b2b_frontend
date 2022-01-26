@@ -105,7 +105,7 @@ const EventLogBox = () => {
                 tooltipInfo={t("game.log.event.tooltipInfo")}
               />
             }
-            placement="bottom"
+            placement="top"
           >
             <img src={"Images/ico-question-mark.svg"} alt="question" />
           </StyledTippy>

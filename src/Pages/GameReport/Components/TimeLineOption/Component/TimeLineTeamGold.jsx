@@ -4,18 +4,28 @@ import { useDispatch, useSelector } from "react-redux";
 import TimeLineTeamGoldLabel from "./TimeLineTeamGoldLabel";
 import { Line } from "react-chartjs-2";
 
+//=> up(ctx, "#0075bf") || down(ctx, "#f04545")
+
 const TimeLineTeamGold = () => {
   const { timeLineDataset } = useSelector((state) => state.GameReportReducer);
 
   const TeamGoldChart = {
+    labels: timeLineDataset?.teamGold_x,
     datasets: [
       {
-        fill: true,
+        fill: false,
         lineTension: 0,
-        backgroundColor: "#314444",
-        borderColor: "#f14444",
-        borderWidth: 2,
-        data: timeLineDataset?.y,
+        backgroundColor: "rgba(0,0,0,0)",
+        borderColor: "#84818e",
+        borderWidth: 0.5,
+        pointRadius: 1,
+        data: timeLineDataset?.teamGold_y,
+        segment: {
+          borderColor: function (ctx) {
+            console.log("ctx", ctx);
+            return ctx.p0.parsed.y >= 0 ? "#0075bf" : "#f04545";
+          },
+        },
       },
     ],
   };
@@ -24,18 +34,20 @@ const TimeLineTeamGold = () => {
     <TimeLineGoldContainer>
       <TimeLineTeamGoldLabel />
       <GoldDataBox>
-        {/* <Line
-          data={MatchChart}
+        <Line
+          data={TeamGoldChart}
           options={{
             tooltips: {
               intersect: false,
               backgroundColor: "#1d1d1d",
-              titleFontSize: 12,
-              bodyFontSize: 10,
-              displayColors: true,
+              titleFontSize: 11,
+              bodyFontSize: 11,
+              displayColors: false,
               boxWidth: 2,
               boxHeight: 2,
               cornerRadius: 10,
+              yAlign: "center",
+              // position: "top",
             },
             legend: {
               display: false,
@@ -49,29 +61,30 @@ const TimeLineTeamGold = () => {
                 {
                   ticks: {
                     fontColor: "#84818e",
-                    fontSize: 15,
+                    fontSize: 0.5,
                   },
-                  gridLines: { color: "rgb(47, 45, 56)" },
+                  gridLines: { color: "rgba(47, 45, 56,0)" },
                   offset: true,
+                  display: false,
                 },
               ],
               yAxes: [
                 {
                   ticks: {
-                    stepSize: graphDomain?.matchGraph["row"],
-                    fontColor: "#84818e",
-                    fontSize: 15,
-                    min: graphDomain?.matchGraph["min"],
-                    max: graphDomain?.matchGraph["max"],
+                    //stepSize: 1,
+                    fontColor: "rgba(0,0,0,0)",
+                    fontSize: 0,
+                    mix: timeLineDataset?.teamGold_max,
+                    min: -timeLineDataset?.teamGold_max,
                   },
                   gridLines: {
-                    color: "rgb(58, 55, 69)",
+                    color: "rgba(58, 55, 69,0)",
                   },
                 },
               ],
             },
           }}
-        /> */}
+        />
       </GoldDataBox>
     </TimeLineGoldContainer>
   );
@@ -96,8 +109,6 @@ const TimeLineGoldContainer = styled.div`
     line-height: 1.3;
     letter-spacing: normal;
     text-align: right;
-    color: #fff;
-    //background-color: #fff;
   }
 `;
 
@@ -105,6 +116,10 @@ const GoldDataBox = styled.div`
   width: 623px;
   height: 100%;
   border-radius: 3px;
-  background-color: #433f4e;
-  margin: 0 0 0 10px;
+  margin: 0 0 0 0px;
+
+  .chartjs-render-monitor {
+    // position: relative;
+    z-index: 9999;
+  }
 `;

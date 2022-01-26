@@ -630,8 +630,8 @@
         "cs": "CS"
       },
       "timeline": {
-        "roming": "로밍성공",
-        "ganking": "갱킹성공",
+        "roming": "로밍",
+        "ganking": "갱킹",
         "fight": "교전",
         "blue-kill": "블루킬",
         "red-kill": "레드킬",

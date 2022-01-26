@@ -33,11 +33,13 @@ import { API2 } from "../../config";
 import { API5 } from "../../config";
 import { Loading } from "../../../redux/modules/filtervalue";
 import { useTranslation } from "react-i18next";
+import secToMS from "../../../lib/secToMS";
 
 const TOTAL_SET = [0, 1, 2, 3, 4];
 
 const EachMatch = ({ matchData, team }) => {
   const dispatch = useDispatch();
+
   const { t } = useTranslation();
   const {
     date,
@@ -54,7 +56,7 @@ const EachMatch = ({ matchData, team }) => {
     oppside,
   } = matchData;
 
-  const getGameDetailData = (gameId) => {
+  const getGameDetailData = (gameId, gameFullTime) => {
     try {
       dispatch(Loading(true));
       const url = `${API5}/api/test/test2`;
@@ -79,6 +81,8 @@ const EachMatch = ({ matchData, team }) => {
             }
           }
           if (isDone) {
+            const roming = e.actionLog.filter((e) => e.type === "Roaming");
+            const ganking = e.actionLog.filter((e) => e.type === "Ganking");
             const timefight = e.actionLog.filter((e) => e.type === "matchLog");
             const blueKills = e.log.event.filter(
               (e) => e.type === "CHAMPION_KILL" && e.participantid < 6
@@ -98,12 +102,34 @@ const EachMatch = ({ matchData, team }) => {
               (e) =>
                 e.type === "ELITE_MONSTER_KILL" && e.subType.includes("DRAGON")
             );
-            const teamGold_y = e.teamGold.map(
-              (gold) => gold.blueGold - gold.redGold
-            );
-            const teamGold_x = e.teamGold.map((gold) => gold.realCount);
+
+            let tg_rc_idx = 0;
+            let teamGold_x = [];
+            let teamGold_y = [];
+            let teamGold_max = 0;
+
+            for (let i = 0; i < gameFullTime; i++) {
+              teamGold_x.push(secToMS(i));
+              if (
+                e.teamGold.length > tg_rc_idx &&
+                i === e.teamGold[tg_rc_idx].realCount
+              ) {
+                let e_tg = e.teamGold[tg_rc_idx];
+                let e_tg_gold = e_tg.blueGold - e_tg.redGold;
+
+                teamGold_y.push(e_tg_gold);
+                if (teamGold_max < Math.abs(e_tg_gold)) {
+                  teamGold_max = Math.abs(e_tg_gold);
+                }
+                tg_rc_idx += 1;
+              } else {
+                teamGold_y.push(undefined);
+              }
+            }
 
             const timeLineSet = {
+              roming,
+              ganking,
               timefight,
               blueKills,
               redKills,
@@ -112,6 +138,7 @@ const EachMatch = ({ matchData, team }) => {
               dragonKill,
               teamGold_x,
               teamGold_y,
+              teamGold_max,
             };
 
             batch(() => {
@@ -190,7 +217,7 @@ const EachMatch = ({ matchData, team }) => {
                       (oppside[game] === "red" ? oppteam : team).toUpperCase()
                     )
                   );
-                  getGameDetailData(gameid[game]);
+                  getGameDetailData(gameid[game], gamelength[game] / 2 ?? 0);
                 }}
               >
                 {idx + 1}
