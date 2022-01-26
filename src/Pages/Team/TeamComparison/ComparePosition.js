@@ -64,7 +64,7 @@ function ComparePosition() {
   useEffect(() => {
     GetPositionGraphData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.tab]);
+  }, [filters.tab, filters.oppteam]);
 
   //그래프 컬러 값
   const color = [

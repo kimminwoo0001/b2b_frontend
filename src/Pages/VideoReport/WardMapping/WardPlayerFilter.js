@@ -736,6 +736,18 @@ const SliderContainer = styled.div`
     letter-spacing: normal;
     transform: rotate(0deg) !important;
   }
+  span [class^="jss"] {
+    margin: 0px;
+    padding: 0;
+    font-family: SpoqaHanSansNeo;
+    font-size: 12px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.33;
+    letter-spacing: normal;
+    transform: rotate(0deg) !important;
+  }
 `;
 
 const WardPlayerFilterContainer = styled.div``;
