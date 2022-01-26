@@ -44,6 +44,7 @@ function NormalInfo() {
   const [oppData, setOppData] = useState();
   const isInitialMount = useRef(true);
   const [RadarData, setRadarData] = useState();
+  const [isAllFetchDone, setIsAllFetchDone] = useState(false);
 
   const [isActiveOpp, setIsActiveOpp] = useDetectOutsideClick(
     dropdownRef,
@@ -157,6 +158,7 @@ function NormalInfo() {
         })
         // setLoading(false);
         dispatch(Loading(false));
+        setIsAllFetchDone(true);
 
       },
       function (objStore) {
@@ -320,6 +322,9 @@ function NormalInfo() {
       },
     },
   };
+
+
+  if (!isAllFetchDone) return <></>;
 
   return (
     <NormalInfoWrapper>

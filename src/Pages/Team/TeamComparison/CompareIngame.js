@@ -163,7 +163,7 @@ function CompareIngame() {
         //Team, OppTeam을 나눠서 데이터를 저장함
         setRedData(e[Team]);
         setBlueData(e[OppTeam]);
-        dispatch(Loading(false))
+        dispatch(Loading(false));
         setIsActive(true);
       },
       function (objStore) {

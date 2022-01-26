@@ -43,6 +43,8 @@ function OppStat() {
     dropdownRef,
     false
   );
+  const [isAllFetchDone, setIsAllFetchDone] = useState(false);
+
 
   useEffect(() => {
     if (filters.oppplayer === "") {
@@ -82,6 +84,7 @@ function OppStat() {
       (e) => {
         // setLoading(false);
         dispatch(Loading(false));
+        setIsAllFetchDone(true);
 
       },
       function (objStore) {
@@ -150,6 +153,8 @@ function OppStat() {
       }
     );
   };
+
+  if (!isAllFetchDone) return <></>;
 
 
   return (

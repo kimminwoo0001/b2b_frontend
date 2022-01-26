@@ -60,6 +60,9 @@ function Stats() {
     false
   );
 
+  const [isAllFetchDone, setIsAllFetchDone] = useState(false);
+
+
   useEffect(() => {
     if (filters.oppplayer === "") {
       return;
@@ -171,6 +174,7 @@ function Stats() {
         }
         // setLoading(false);
         dispatch(Loading(false));
+        setIsAllFetchDone(true);
       },
       function (objStore) {
         dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -306,6 +310,8 @@ function Stats() {
 
     return null;
   };
+
+  if (!isAllFetchDone) return <></>;
 
   return (
     <StatWrapper>
