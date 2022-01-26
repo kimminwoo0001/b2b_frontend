@@ -98,9 +98,10 @@ const EachMatch = ({ matchData, team }) => {
               (e) =>
                 e.type === "ELITE_MONSTER_KILL" && e.subType.includes("DRAGON")
             );
-            const teamGold = e.teamGold.map(
+            const teamGold_y = e.teamGold.map(
               (gold) => gold.blueGold - gold.redGold
             );
+            const teamGold_x = e.teamGold.map((gold) => gold.realCount);
 
             const timeLineSet = {
               timefight,
@@ -109,7 +110,8 @@ const EachMatch = ({ matchData, team }) => {
               buildDestroy,
               objectKill,
               dragonKill,
-              teamGold,
+              teamGold_x,
+              teamGold_y,
             };
 
             batch(() => {

@@ -18,7 +18,7 @@ const TimeLineTeamGoldLabel = () => {
   return (
     <TeamGoldBox>
       <div className="title blue">{thousandGold(goldSet.blueGold)}</div>
-      <div className="title">
+      <div className="title gap">
         {thousandGold(goldSet.blueGold - goldSet.redGold)}
       </div>
       <div className="title red">{thousandGold(goldSet.redGold)}</div>
@@ -39,12 +39,14 @@ const TeamGoldBox = styled.div`
     line-height: 1.3;
     letter-spacing: normal;
     text-align: right;
-    color: #fff;
-    //background-color: #fff;
   }
 
   .blue {
     color: #0075bf;
+  }
+
+  .gap {
+    color: #fff;
   }
 
   .red {

@@ -5,8 +5,7 @@ import TimeLineTeamGoldLabel from "./TimeLineTeamGoldLabel";
 import { Line } from "react-chartjs-2";
 
 const TimeLineTeamGold = () => {
-  const gamevalue = useSelector((state) => state.GameReportReducer);
-  
+  const { timeLineDataset } = useSelector((state) => state.GameReportReducer);
 
   const TeamGoldChart = {
     datasets: [
@@ -16,7 +15,7 @@ const TimeLineTeamGold = () => {
         backgroundColor: "#314444",
         borderColor: "#f14444",
         borderWidth: 2,
-        // data: match?.y,
+        data: timeLineDataset?.y,
       },
     ],
   };
