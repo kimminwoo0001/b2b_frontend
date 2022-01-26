@@ -2,14 +2,78 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import TimeLineTeamGoldLabel from "./TimeLineTeamGoldLabel";
+import { Line } from "react-chartjs-2";
 
 const TimeLineTeamGold = () => {
-  const { teamGoldDataset } = useSelector((state) => state.GameReportReducer);
+  const gamevalue = useSelector((state) => state.GameReportReducer);
+  
+
+  const TeamGoldChart = {
+    datasets: [
+      {
+        fill: true,
+        lineTension: 0,
+        backgroundColor: "#314444",
+        borderColor: "#f14444",
+        borderWidth: 2,
+        // data: match?.y,
+      },
+    ],
+  };
 
   return (
     <TimeLineGoldContainer>
       <TimeLineTeamGoldLabel />
-      <GoldDataBox></GoldDataBox>
+      <GoldDataBox>
+        {/* <Line
+          data={MatchChart}
+          options={{
+            tooltips: {
+              intersect: false,
+              backgroundColor: "#1d1d1d",
+              titleFontSize: 12,
+              bodyFontSize: 10,
+              displayColors: true,
+              boxWidth: 2,
+              boxHeight: 2,
+              cornerRadius: 10,
+            },
+            legend: {
+              display: false,
+            },
+            hover: {
+              animationDuration: 100,
+            },
+            maintainAspectRatio: false,
+            scales: {
+              xAxes: [
+                {
+                  ticks: {
+                    fontColor: "#84818e",
+                    fontSize: 15,
+                  },
+                  gridLines: { color: "rgb(47, 45, 56)" },
+                  offset: true,
+                },
+              ],
+              yAxes: [
+                {
+                  ticks: {
+                    stepSize: graphDomain?.matchGraph["row"],
+                    fontColor: "#84818e",
+                    fontSize: 15,
+                    min: graphDomain?.matchGraph["min"],
+                    max: graphDomain?.matchGraph["max"],
+                  },
+                  gridLines: {
+                    color: "rgb(58, 55, 69)",
+                  },
+                },
+              ],
+            },
+          }}
+        /> */}
+      </GoldDataBox>
     </TimeLineGoldContainer>
   );
 };
