@@ -83,6 +83,11 @@ const TeamFilterModal = () => {
   }, [filters.league])
 
   useEffect(() => {
+    if (filters.year.includes("2022") && filters.team === "AF"
+      || filters.year.includes("2021") && filters.team === "KDF") {
+      alert("팀명이 변경되어 데이터가 없습니다.")
+      return;
+    }
     if (JSON.stringify(year) !== JSON.stringify(filters.year)) {
       // fetchLeagueFilter();
       fetchSeasonFilter();
@@ -107,6 +112,7 @@ const TeamFilterModal = () => {
     if (filters.openFilterModal !== "/teamCompare") {
       fetchingOppTeamFilter();
     }
+
     setOppTeamFilter();
   }, [filters.patch])
 
