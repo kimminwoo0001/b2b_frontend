@@ -57,17 +57,19 @@ export default SideBarItem;
 const MenuWrapper = styled.div`
   display: flex;
   align-items: center;
-  width: 180px;
+  width: 190px;
   height: 42px;
   text-align: center;
   margin: 13px 0 12px;
-  padding: 9px 9px 9px 14px;
+  padding: 9px 5px 9px 9px;
   cursor: pointer;
   .Name {
     font-family: SpoqaHanSansNeo;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
-    line-height: 24px;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
     letter-spacing: normal;
     text-align: left;
     color: #fff;
@@ -76,17 +78,17 @@ const MenuWrapper = styled.div`
     background-color: ${(props) =>
     props.changeColor ? "#5942ba" : "rgba(255, 255, 255, 0.1)"};
     margin: 13px 0 12px;
-    padding: 9px 9px 9px 14px;
+    padding: 9px 5px 9px 9px;
     border-radius: 16px;
   }
 
   ${(props) =>
     props.changeColor &&
     css`
-      width: 180px;
+      width: 190px;
       height: 42px;
-      margin: 13px 0 12px 0;
-      padding: 9px 9px 9px 14px;
+      margin: 13px 0 12px;
+      padding: 9px 5px 9px 9px;
       border-radius: 16px;
       background-color: #5942ba;
     `}

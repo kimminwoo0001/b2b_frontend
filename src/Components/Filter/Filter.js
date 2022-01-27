@@ -353,7 +353,7 @@ const Filter = memo(() => {
         //   updateSeason.push(season);
         // }
         // else {
-          updateSeason = [seasonList[0]];
+        updateSeason = [seasonList[0]];
         // }
       }
       dispatch(SetSeason(updateSeason));
@@ -404,6 +404,7 @@ const Filter = memo(() => {
     let players = [];
     if (isComparePage === false) {
 
+<<<<<<< HEAD
     if (filters.team.length !== 0 && isNeedTeam) {
       let playerList = [];
       for (let league of filters.league) {
@@ -415,49 +416,63 @@ const Filter = memo(() => {
                 const ObjectKeys = Object.values(seasonData[filters.team]);
                 console.log("ObjectKeys", ObjectKeys);
                 playerList = playerList.concat(ObjectKeys);
+=======
+
+      if (filters.team.length !== 0 && isNeedTeam) {
+        let playerList = [];
+        for (let league of filters.league) {
+          for (let year of filters.year) {
+            for (let season of filters.season) {
+              const seasonData = staticvalue.filterObjects[league][year][season];
+              if (seasonData) {
+                if (seasonData[filters.team]) {
+                  const ObjectKeys = Object.values(seasonData[filters.team]);
+                  console.log("ObjectKeys", ObjectKeys);
+                  playerList = playerList.concat(ObjectKeys);
+                }
+>>>>>>> 5a2ebdc28b78cbb375a0f928f92d7efe54ede3b9
               }
             }
           }
         }
-      }
-      playerList = playerList
-        .filter((item, pos) => playerList.indexOf(item) === pos)
-        .sort();
+        playerList = playerList
+          .filter((item, pos) => playerList.indexOf(item) === pos)
+          .sort();
 
-      for (let i = 0; i < playerList.length; i++) {
-        const name = playerList[i].split("#")[1];
-        const position = playerList[i].split("#")[0];
-        if (position === "1") {
-          players[i] = {
-            position: "top",
-            name: name,
-          };
-        } else if (position === "2") {
-          players[i] = {
-            position: "jng",
-            name: name,
-          };
-        } else if (position === "3") {
-          players[i] = {
-            position: "mid",
-            name: name,
-          };
-        } else if (position === "4") {
-          players[i] = {
-            position: "bot",
-            name: name,
-          };
-        } else if (position === "5") {
-          players[i] = {
-            position: "sup",
-            name: name,
-          };
+        for (let i = 0; i < playerList.length; i++) {
+          const name = playerList[i].split("#")[1];
+          const position = playerList[i].split("#")[0];
+          if (position === "1") {
+            players[i] = {
+              position: "top",
+              name: name,
+            };
+          } else if (position === "2") {
+            players[i] = {
+              position: "jng",
+              name: name,
+            };
+          } else if (position === "3") {
+            players[i] = {
+              position: "mid",
+              name: name,
+            };
+          } else if (position === "4") {
+            players[i] = {
+              position: "bot",
+              name: name,
+            };
+          } else if (position === "5") {
+            players[i] = {
+              position: "sup",
+              name: name,
+            };
+          }
         }
+      } else {
+        dispatch(ResetPlayer());
       }
-    } else {
-      dispatch(ResetPlayer());
-    }
-    dispatch(setPlayerFilter(players));
+      dispatch(setPlayerFilter(players));
     }
   };
 
@@ -490,6 +505,7 @@ const Filter = memo(() => {
       <AlertModal />
       {[nameTeamCompare, nameTeam].includes(copyvalue.openFilterModal) && <TeamFilterModal />}
       {[nameSolo, namePlayerCompare].includes(copyvalue.openFilterModal) && <PlayerFilterModal />}
+<<<<<<< HEAD
       {!filters.filterMenuState ? <CloseFilter /> : 
       <FilterWrapper>
       <FilterHeader />
@@ -506,6 +522,45 @@ const Filter = memo(() => {
             />
           )}
           <FilterGroup>
+=======
+      {!filters.filterMenuState ? <CloseFilter /> :
+        <FilterWrapper>
+          <FilterHeader />
+          {filters.filterMenuState && (
+            <>
+              {Number(filters.tab) >= 0 && filters.tab !== "" && (
+                <SelectedFilter
+                  pagePath={pagePath}
+                  nameSolo={nameSolo}
+                  nameTeam={nameTeam}
+                  nameVideo={nameVideo}
+                  nameTeamCompare={nameTeamCompare}
+                  namePlayerCompare={namePlayerCompare}
+                />
+              )}
+              <FilterGroup>
+                <FilterItem
+                  title={t("label.league")}
+                  isHaveFilter={selector.leagueFilter.length > 0 ? true : false}
+                  multiFilter={selector.leagueFilter?.map((league, idx) => {
+                    return (
+                      <MultiSelectCb
+                        idx={idx}
+                        filterData={filters.league}
+                        mapData={league}
+                        radioBtn={[nameTeam, nameSolo].includes(pagePath)}
+                        pngPath={`ico-league-${league.toLowerCase()}`}
+                        clickEvent={() => {
+                          [nameTeam, nameSolo].includes(pagePath)
+                            ? dispatch(SetLeague([league]))
+                            : dispatch(League(league));
+
+                        }}
+                      />
+                    );
+                  })}
+                />
+>>>>>>> 5a2ebdc28b78cbb375a0f928f92d7efe54ede3b9
                 <FilterItem
                   title={t("label.year")}
                   isHaveFilter={selector.yearFilter.length > 0 ? true : false}
@@ -524,6 +579,7 @@ const Filter = memo(() => {
                     );
                   })}
                 />
+<<<<<<< HEAD
                 <FilterItem
               title={t("label.league")}
               isHaveFilter={selector.leagueFilter.length > 0 ? true : false}
@@ -629,8 +685,96 @@ const Filter = memo(() => {
         </>
       )}
     </FilterWrapper>
+=======
+
+                <FilterItem
+                  title={t("label.season")}
+                  isHaveFilter={selector.seasonFilter.length > 0 ? true : false}
+                  multiFilter={selector.seasonFilter?.map((season, idx) => {
+                    return (
+                      <MultiSelectCb
+                        idx={idx}
+                        filterData={filters.season}
+                        mapData={season}
+                        clickEvent={() => {
+                          dispatch(Season(season));
+                        }}
+                      />
+                    );
+                  })}
+                />
+
+                {isNeedTeam && (
+                  <FilterItem
+                    title={t("label.team")}
+                    isHaveFilter={selector.teamFilter.length > 0 ? true : false}
+                    multiFilter={selector.teamFilter?.map((team, idx) => {
+                      return (
+                        <MultiSelectCb
+                          idx={idx}
+                          filterData={filters.team}
+                          mapData={team}
+                          pngPath={`TeamLogo/${team}`}
+                          radioBtn={true}
+                          clickEvent={() => {
+                            dispatch(Team(team));
+                            if (pagePath === nameSolo) {
+                              dispatch(HandleTab(0));
+                            }
+                          }}
+                        />
+                      );
+                    })}
+                  />
+                )}
+                {pagePath === nameSolo && (
+                  <FilterItem
+                    title={t("label.player")}
+                    isHaveFilter={selector.playerFilter.length > 0 ? true : false}
+                    multiFilter={selector.playerFilter?.map((player, idx) => {
+                      return (
+                        <MultiSelectCb
+                          idx={idx}
+                          filterData={filters.player}
+                          mapData={player.name}
+                          pngPath={`ico-position-${player.position}`}
+                          radioBtn={true}
+                          clickEvent={() => {
+                            dispatch(Player(player.name));
+                            dispatch(Position(player.position));
+                            dispatch(ResetChampion());
+                            dispatch(ResetFilter2());
+                            setIsActivePlayer(!isActivePlayer);
+                            dispatch(HandleTab(0));
+                          }}
+                        />
+                      );
+                    })}
+                  />
+                )}
+                <FilterItem
+                  title={t("label.patchVersion")}
+                  isHaveFilter={selector.patchFilter.length > 0 ? true : false}
+                  multiFilter={selector.patchFilter?.map((patch, idx) => {
+                    return (
+                      <MultiSelectCb
+                        idx={idx}
+                        filterData={filters.patch}
+                        mapData={patch}
+                        clickEvent={() => {
+                          dispatch(Patch(patch));
+                        }}
+                      />
+                    );
+                  })}
+                />
+              </FilterGroup>
+            </>
+          )}
+        </FilterWrapper>
+>>>>>>> 5a2ebdc28b78cbb375a0f928f92d7efe54ede3b9
       }
-      
+
     </>
   );
 });
@@ -643,11 +787,13 @@ const FilterWrapper = styled.div`
   height: 100%;
   max-height: 2000px;
   padding: 28px 0 0;
+  margin-left: 10px;
   overflow-y: scroll;
   overflow-x: hidden;
   &::-webkit-scrollbar {
     width: 4px;
   }
+  
   &::-webkit-scrollbar-thumb {
     background-color: #434050;
     border-radius: 10px;
