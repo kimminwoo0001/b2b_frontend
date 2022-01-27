@@ -134,7 +134,6 @@ const Filter = memo(() => {
       fetchSeasonFilter();
     }
 
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.league]);
 
@@ -166,6 +165,8 @@ const Filter = memo(() => {
         dispatch(ResetTeam());
         setSeason(filters.season);
       }
+    } else {
+      fetchingPatchFilter();
     }
   }, [filters.season]);
 

@@ -30,7 +30,7 @@ const SideBarItem = ({ menu, idx }) => {
         changeTitle(`${menu.name} - NUNU.GG`)
         dispatch(SelectorInitailizeState());
         dispatch(InitializeGameState());
-        dispatch(InitailizeState());
+        // dispatch(InitailizeState());
         if (menu.modal) {
           dispatch(CopyFvInit());
           dispatch(SetOpenFilterModal(menu.path))
