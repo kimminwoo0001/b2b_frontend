@@ -10,7 +10,7 @@ import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
-import { HandleTab } from '../../../redux/modules/filtervalue';
+import { Loading, HandleTab } from '../../../redux/modules/filtervalue';
 
 
 function mycomparator(a, b) {
@@ -46,6 +46,8 @@ function ComparePosition() {
   const dispatch = useDispatch();
   const pagePath = document.location.pathname;
   const isInitialMount = useRef(true);
+  const [isActive, setIsActive] = useState(false);
+
 
 
   useEffect(() => {
@@ -62,7 +64,7 @@ function ComparePosition() {
   useEffect(() => {
     GetPositionGraphData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters]);
+  }, [filters.tab, filters.oppteam]);
 
   //그래프 컬러 값
   const color = [
@@ -76,7 +78,8 @@ function ComparePosition() {
 
   //포지션 그래프 fetch 함수
   const GetPositionGraphData = () => {
-    setLoading(true);
+    // setLoading(true);
+    dispatch(Loading(true));
     const url = `${API}/lolapi/team/comparison`;
     const params = {
       league: filters.league,
@@ -97,6 +100,7 @@ function ComparePosition() {
           team: e.teamName,
           oppteam: e.oppteamName,
         });
+
         //top데이터 받아와서 그래프에 넣기 위해 가공하는 과정
         const topData = [];
         const topArray = [];
@@ -115,10 +119,11 @@ function ComparePosition() {
               }
             }
             topData.push(topValues);
-          },
-          function (objStore) {
-            dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
           }
+          // ,
+          // function (objStore) {
+          //   dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+          // }
         );
 
         for (let i = 0; i < topData.length; i++) {
@@ -236,11 +241,13 @@ function ComparePosition() {
           });
         }
         setSup(supArray);
+        dispatch(Loading(false));
+        setIsActive(true);
       },
       function (objStore) {
         dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
       }
-    ).finally(setLoading(false));
+    );
   };
 
   //그래프 세팅
@@ -320,6 +327,8 @@ function ComparePosition() {
       };
     }),
   };
+
+  if (!isActive) return <></>; 
 
 
   return (
@@ -694,6 +703,8 @@ export default ComparePosition;
 const ComparePositionWrapper = styled.div``;
 
 const DisplayTeams = styled.div`
+display: flex;
+/* justify-content: center; */
   width: 100%;
   background-color: #16151a;
   position: relative;
@@ -761,7 +772,8 @@ const DisplayTeams = styled.div`
   .TeamTwo {
     display: flex;
     font-family: SpoqaHanSansNeo;
-    width: 215px;
+    width: auto;
+
     margin: 0 0px 0 0px;
     div {
       width: 215px;

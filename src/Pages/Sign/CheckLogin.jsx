@@ -68,15 +68,15 @@ const CheckLogin = ({}) => {
           dispatch(SetIsSelector(false));
           dispatch(SetIsOpen(true));
           dispatch(SetDesc(t("sign.signUpContent.sendAuthDesc")));
+          const time = new Date().getTime() / 1000 + 180;
+          setEmailAuthSendTime(time);
+          setEmailAuthTimeOut(false);
         }
       },
       function (data) {
         dispatch(SetIsSelector(false));
         dispatch(SetIsOpen(true));
         dispatch(SetDesc(t("sign.checkLogin.fail")));
-        const time = new Date().getTime() / 1000 + 180;
-        setEmailAuthSendTime(time);
-        setEmailAuthTimeOut(false);
       }
     );
   };

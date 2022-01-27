@@ -10,13 +10,13 @@
     "part3": "Team Report",
     "part4": "Meta Analysis",
     "part5": "Player Report",
-    "part6": "Visual Report",
+    "part6": "Ward & Route Analysis",
     "part7": "Match Analysis",
     "part8": "Compare Teams",
     "part9": "Compare Players",
     "part10": "Item Simulator",
     "part11": "Team WR Calculator",
-    "part12": "Game Report"
+    "part12": "League game Analysis"
   },
   "sign": {
     "signUp": "Sign up",
@@ -138,7 +138,7 @@
       "picks": "Pick",
       "banRate": "P/B Rate",
       "winRate": "Win Rate",
-      "probRate": "Prob. Rate",
+      "adjWr": "Adj. WR",
       "kp": "KP%",
       "result": "Result",
       "opponent": "Opponent",
@@ -169,8 +169,8 @@
     },
     "playerStat": {
       "sbrLabel": "PR Ranking",
-      "played": "Game Played",
-      "winrate": "Win Rate",
+      "played": "Games Played",
+      "winrate": "Wins",
       "kda": "KDA",
       "sbr": "Performance Rating ",
       "prInfo": "PR(Performance Rating) is an index that can measure a player's overall performance by calculating various indicators in a complex manner based on the player's in-game performance.",
@@ -524,7 +524,10 @@
       "copy_n": "Copy fail.",
       "email_check": "Please enter a valid email address.",
       "login_fail": "Login Fail : Time limit is exceeded",
-      "serverError": "There is a problem with the server. Please contact the manager."
+      "serverError": "There is a problem with the server. Please contact the manager.",
+      "tryLoginAgain": "You have logged out of your previous login account.\nPlease log in again.",
+      "loginTimeOver": "Your account has expired.",
+      "MasterKey": "Key authentication is required."
     }
   },
   "label": {

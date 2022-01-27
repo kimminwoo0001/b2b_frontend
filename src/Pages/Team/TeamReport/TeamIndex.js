@@ -13,7 +13,7 @@ import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
-import { HandleTab } from "../../../redux/modules/filtervalue";
+import { HandleTab, Loading } from "../../../redux/modules/filtervalue";
 
 
 function TeamIndex() {
@@ -43,7 +43,7 @@ function TeamIndex() {
   const [supportTimeData, setSupportTimeData] = useState();
   const [supportTimeX, setSupportTimeX] = useState();
   const [supportTimeY, setSupportTimeY] = useState();
-  const [loading, setLoading] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
 
   // 팀 전력보고서에서 최초 선택된 리그와 중복되는 시즌을 가지는 다른 리그를 선택하는 경우 무한루프 발생.
@@ -66,7 +66,7 @@ function TeamIndex() {
 
   // 팀 전력 보고서 데이터 featch 함수
   const fetchingStatisticData = () => {
-    setLoading(true);
+    dispatch(Loading(true))
     try {
       let url = `${API}/lolapi/team/analysis`;
       let params = {
@@ -126,7 +126,9 @@ function TeamIndex() {
 
           setSupportTimeX(supportX);
           setSupportTimeY(supportY);
-          setLoading(false);
+          dispatch(Loading(false));
+          setIsActive(true);
+
         },
         function (objStore) {
           dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -170,6 +172,10 @@ function TeamIndex() {
       },
     ],
   };
+
+
+  if(!isActive) return <></>; 
+
 
   return (
     <TeamIndexWrapper>
@@ -570,7 +576,7 @@ function TeamIndex() {
                   </td>
                   <td className="SummonerInfo">{sbr.player}</td>
                   <td className="PlayerInfo">
-                    {lang === "ko" ? sbr.nativeName : sbr.name}
+                    {lang === "ko" ? sbr.nativeName.replace("&amp;nbsp;", " ") : sbr.name}
                   </td>
                   <td className="AttendInfo">{sbr.gamesPlayed}</td>
                   <td className="WinCountInfo">{sbr.win}</td>

@@ -28,16 +28,16 @@ function PlayerCompare() {
             <CloseFilter />
           ) :
           <>
-        <div
-          className={filters.filterMenuState ? "filter-open" : "filter-close"}
-        >
-          <Filter />
-        </div>
-        <div
+            <div
+              className={filters.filterMenuState ? "filter-open" : "filter-close"}
+            >
+              <Filter />
+            </div>
+            {/* <div
           className={filters.filterMenuState ? "filter-close" : "filter-open"}
         >
           <CloseFilter />
-        </div>
+        </div> */}
           </>
         }
         <ContentWrapper>
@@ -55,7 +55,7 @@ const SoloWrapper = styled.div`
   overflow: auto;
   min-height: 100vh;
   display: flex;
-  background-color: #23212a;
+  background-color: #16151c;
 
   .filter-close {
     display: none;

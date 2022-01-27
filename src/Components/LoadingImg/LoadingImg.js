@@ -19,10 +19,11 @@ const LoadingImage = styled.div`
   display: ${props => props.active ? "flex" : "none"};
   position: absolute;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.75);
+  z-index: 1;
   img {
     width: 50px;
     height: 50px;

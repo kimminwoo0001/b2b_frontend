@@ -30,15 +30,15 @@ function TeamCompare() {
           ) : (
             <>
               <div
-          className={filters.filterMenuState ? "filter-open" : "filter-close"}
-        >
-          <Filter />
-        </div>
-        <div
+                className={filters.filterMenuState ? "filter-open" : "filter-close"}
+              >
+                <Filter />
+              </div>
+              {/* <div
           className={filters.filterMenuState ? "filter-close" : "filter-open"}
         >
           <CloseFilter />
-        </div>
+        </div> */}
             </>
           )
         }
@@ -58,7 +58,7 @@ const TeamWrapper = styled.div`
   overflow: auto;
   min-height: 100vh;
   display: flex;
-  background-color: #23212a;
+  background-color: #16151a;
 
   .filter-close {
     display: none;
