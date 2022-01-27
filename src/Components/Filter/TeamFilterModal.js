@@ -86,6 +86,8 @@ const TeamFilterModal = () => {
       fetchSeasonFilter();
       fetchingPatchFilter();
       setLeague(filters.league);
+    } else {
+      fetchingPatchFilter();
     }
   }, [filters.league])
 
@@ -119,6 +121,9 @@ const TeamFilterModal = () => {
         fetchingPatchFilter();
         setSeason(filters.season);
       }
+    } else {
+      fetchingTeamFilter();
+
     }
   }, [filters.season])
 
