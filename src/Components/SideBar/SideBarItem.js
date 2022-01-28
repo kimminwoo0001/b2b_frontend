@@ -44,9 +44,9 @@ const SideBarItem = ({ menu, idx }) => {
     >
       <MenuImg src={menu.image} alt="menu" />
       <div className="Name">{menu.name}</div>
-      {/* {menu.version && menu.version === "beta" && (
+      {menu.version && menu.version === "beta" && (
         <Beta src="Images/icon_beta.png" alt="beta" />
-      )} */}
+      )}
     </MenuWrapper>
   );
 };
