@@ -662,6 +662,15 @@
         "TeleportToOther": "텔레포트",
         "InLane": "라인전"
       }
+    },
+    "banPick": {
+      "firstPick": {
+        "top": "탑 선픽",
+        "jng": "정글 선픽",
+        "mid": "미드 선픽",
+        "ad": "원딜 선픽",
+        "sup": "서폿 선픽"
+      }
     }
   }
 }
