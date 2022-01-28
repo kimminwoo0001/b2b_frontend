@@ -58,6 +58,7 @@ const LogContent = styled.div`
   background-color: #000;
   opacity: ${(props) => (props.isActive ? `1` : `0.3`)};
   border: solid 2px #5942ba;
+  cursor: pointer;
 
   .title {
     display: flex;

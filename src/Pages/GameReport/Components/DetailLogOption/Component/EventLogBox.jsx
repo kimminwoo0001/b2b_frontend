@@ -89,7 +89,7 @@ const EventLogBox = () => {
   };
 
   const onClick = (time) => {
-    dispatch(SetSeekTime(time / 2 + 4));
+    dispatch(SetSeekTime(time / 2));
   };
 
   return (

@@ -47,7 +47,7 @@ const StatusContainer = styled.div`
 `;
 
 const DetailChampTimeLine = styled.div`
-  width: ${(props) => (props.itemBuild ? "397px" : "100%")};
+  width: ${(props) => (props.itemBuild ? "417px" : "100%")};
   height: 19px;
   display: flex;
   padding-left: ${(props) => (props.itemBuild ? "0" : "10")}px;
