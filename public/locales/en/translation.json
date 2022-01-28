@@ -10,13 +10,13 @@
     "part3": "Team Report",
     "part4": "Meta Analysis",
     "part5": "Player Report",
-    "part6": "Ward & Route Analysis",
+    "part6": "Ward & Pathing",
     "part7": "Match Analysis",
     "part8": "Compare Teams",
     "part9": "Compare Players",
     "part10": "Item Simulator",
     "part11": "Team WR Calculator",
-    "part12": "League game Analysis"
+    "part12": "League Game Analysis"
   },
   "sign": {
     "signUp": "Sign up",
@@ -408,13 +408,13 @@
     "setPatchVersion": "Patch Version",
     "team": "Team",
     "player": "Player",
-    "NoCommonSeasons": "There are no common seasons in the selected leagues. Please select seasons again.",
+    "NoCommonSeasons": "Please select seasons again.",
     "mainTeamChanged": "Main team has changed. Moves to the initial page.",
     "sorry": "The game data for the 2022 season has been updated."
   },
   "video": {
     "tab": {
-      "ward": "Vision",
+      "ward": "Ward",
       "object": "Object Pathing",
       "games": "Game Pathing",
       "heatmap": "Heatmap"
@@ -422,7 +422,7 @@
     "vision": {
       "teamview": "Team-wide View",
       "playerview": "Player View",
-      "checkWard": "Check Vision",
+      "checkWard": "Confirm",
       "totalWard": "Total Wards Placed",
       "area": "Area",
       "count": "Ward Count",

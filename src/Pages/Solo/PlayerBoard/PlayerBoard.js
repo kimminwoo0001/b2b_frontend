@@ -240,13 +240,7 @@ function PlayerBoard() {
       },
     ],
   };
-  // 
 
-
-  useEffect(() => {
-    console.log(line);
-
-  }, [line])
   return (
     <PlayerBoardWrapper>
       <PlayerInfoSection>
@@ -467,7 +461,9 @@ function PlayerBoard() {
                   {line?.map((title, idx) => {
                     console.log("title", title);
                     return (
-                      title.data === "NULL" ? "" : 
+                      title.data === "NULL"
+                        || title.name === "갱 성공률 (%)" && filters.year.includes("2022") ?
+                        "" : 
                       <MapStat key={idx}>
                         <Tippy // options
                           duration={0}
