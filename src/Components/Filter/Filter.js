@@ -90,12 +90,6 @@ const Filter = memo(() => {
     nameSolo,
   ].includes(pagePath);
 
-  const pagesWithLimitedLeagues2 = [
-    nameLeague,
-    nameGameReport,
-    nameSolo,
-  ].includes(pagePath);
-
   const dropdownRef = useRef(null);
   const [isActiveLeague, setIsActiveLeague] = useDetectOutsideClick(
     dropdownRef,
@@ -113,63 +107,66 @@ const Filter = memo(() => {
   // 페이지 오픈 시, 리그 데이터를 받아오도록 추가.
   useEffect(() => {
     if (isComparePage === false) {
-      fetchLeagueFilter();
+      fetchYearFilter();
+      // fetchLeagueFilter();
     }
   }, []);
 
   useEffect(() => {
-    if (isComparePage === false && selector.leagueFilter.length === 0) {
-      fetchLeagueFilter();
+    if (isComparePage === false && selector.yearFilter.length === 0) {
+      fetchYearFilter();
     }
-  }, [selector.leagueFilter]);
+  }, [selector.yearFilter]);
+
 
   useEffect(() => {
     if (JSON.stringify(league) !== JSON.stringify(filters.league)) {
       if (isComparePage) {
         fetchSeasonFilter();
       } else {
-        fetchYearFilter();
-        fetchActiveFilter();
+        // fetchYearFilter();
+        fetchSeasonFilter();
         fetchingPatchFilter();
+        fetchActiveFilter();
       }
       setLeague(filters.league);
+    } else {
+      fetchSeasonFilter();
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.league]);
 
-
   useEffect(() => {
     if (JSON.stringify(year) !== JSON.stringify(filters.year)) {
       if (isComparePage) {
-        fetchLeagueFilter();
+        // fetchLeagueFilter();
       } else {
-        fetchSeasonFilter();
+        dispatch(SetLeague([]));
+        dispatch(SetSeason([]));
+        fetchLeagueFilter();
         setYear(filters.year);
       }
     }
   }, [filters.year]);
 
   useEffect(() => {
-    if (JSON.stringify(year) !== JSON.stringify(filters.year)) {
-      fetchLeagueFilter();
-    }
-  }, [filters.year]);
-
-  useEffect(() => {
     if (JSON.stringify(season) !== JSON.stringify(filters.season)) {
       if (filters.year.length > 0) {
+        fetchingPatchFilter();
+
         if ([nameLeague].includes(pagePath)) {
           dispatch(HandleTab(1));
         } else {
           fetchingTeamFilter();
         }
-        fetchingPatchFilter();
       }
       if (isComparePage === false) {
         dispatch(ResetTeam());
         setSeason(filters.season);
       }
+    } else {
+      fetchingPatchFilter();
     }
   }, [filters.season]);
 
@@ -184,10 +181,10 @@ const Filter = memo(() => {
           dispatch(SetDesc(t("filters.mainTeamChanged")));
           dispatch(SetIsOpen(true));
         }
-        // if (pagePath === nameSolo && filters.tab === 1) {
-        //   dispatch(SetDesc(t("filters.comparison.mainPlayerChanged")));
-        //   dispatch(SetIsOpen(true));
-        // }
+        if (pagePath === nameSolo && filters.tab === 1) {
+          dispatch(SetDesc(t("filters.comparison.mainPlayerChanged")));
+          dispatch(SetIsOpen(true));
+        }
       } else {
         fetchingPlayerFilter();
       }
@@ -210,24 +207,27 @@ const Filter = memo(() => {
 
   // 최초 선택된 리그의 시즌이 없는 리그일 경우 팝업 적용
   useEffect(() => {
+
     if (pagePath === "/league" || pagePath === "/video") {
-      if (filters.year.length !== 0) {
-        for (let league of filters.league) {
-          for (let year of filters.year) {
-            const ObjectKeys = Object.keys(
-              staticvalue.filterObjects[league][year]
-            );
-            if (!ObjectKeys.includes(filters.season[0])) {
-              dispatch(SetDesc(t("filters.NoCommonSeasons")));
-              dispatch(SetIsOpen(true));
+      if (filters.season.length !== 0) {
+        if (filters.year.length !== 0) {
+          for (let league of filters.league) {
+            for (let year of filters.year) {
+              const ObjectKeys = Object.keys(
+                staticvalue.filterObjects[league][year]
+              );
+              if (filters.season[0] && !ObjectKeys.includes(filters.season[0])) {
+                dispatch(SetDesc(t("filters.NoCommonSeasons")));
+                dispatch(SetIsOpen(true));
+              }
             }
           }
         }
+
       }
 
     }
   }, [filters.league])
-
 
   useEffect(() => {
     if (isComparePage) {
@@ -237,8 +237,8 @@ const Filter = memo(() => {
   }, [copyvalue.compareModal]);
 
   const fetchActiveFilter = () => {
-    if (selector.leagueFilter?.length > 0) fetchLeagueFilter();
-    if (selector.yearFilter?.length > 0) fetchYearFilter();
+    // if (selector.leagueFilter?.length > 0) fetchLeagueFilter();
+    // if (selector.yearFilter?.length > 0) fetchYearFilter();
     if (selector.seasonFilter?.length > 0) fetchSeasonFilter();
     if (selector.teamFilter?.length > 0) fetchingTeamFilter();
     if (selector.playerFilter?.length > 0) fetchingPlayerFilter();
@@ -258,6 +258,10 @@ const Filter = memo(() => {
       );
       // 선수보고서, 영상보고서, 게임보고서일 경우 LPL,LCK CL 리그 제외
     } else {
+      //  연도가 설정되지 않으면 호출되지않음
+      if (filters.year.length === 0) {
+        return;
+      }
       // 모든 리그에서 LPL 리그 제외
       leagueList = Object.keys(staticvalue.filterObjects).filter(
         (key) => key !== "LPL"
@@ -280,18 +284,24 @@ const Filter = memo(() => {
       );
     }
 
+    leagueList.sort();
+    if ([nameTeam, nameSolo].includes(pagePath)) {
+      dispatch(SetLeague([leagueList[0]]))
+    } else {
+      dispatch(League(leagueList[0]))
+    }
+
     dispatch(setLeagueFilter(leagueList.sort()));
   };
-
 
   const fetchYearFilter = () => {
     if (isComparePage) {
       return;
     } else {
       let yearList = [];
-      if (filters.league.length === 0) {
-        dispatch(ResetYear());
-      } else if (filters.league.length > 0) {
+      // if (filters.league.length === 0) {
+      //   dispatch(ResetYear());
+      // } else if (filters.league.length > 0) {
         let count = 0;
         for (let league of filters.league) {
           const ObjectKeys = Object.keys(staticvalue.filterObjects[league]);
@@ -307,25 +317,25 @@ const Filter = memo(() => {
           yearList = ["2021", "2022"];
         }
 
-        // yearList = yearList
-        //   .filter((item, pos) => yearList.indexOf(item) === pos)
-        //   .sort()
-        //   .reverse();
+      yearList = yearList
+        .filter((item, pos) => yearList.indexOf(item) === pos)
+        .sort()
+        .reverse();
+      if (filters.year.length !== 0) {
         dispatch(Year(yearList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
       }
+      // }
       // yearList.map(data => { console.log("yeartLiost", data) })
 
       dispatch(setYearFilter(yearList));
     }
   };
 
-
-
   const fetchSeasonFilter = () => {
     let seasonList = [];
     if (filters.year.length !== 0) {
-      for (let league of filters.league) {
-        for (let year of filters.year) {
+      for (let year of filters.year) {
+        for (let league of filters.league) {
           const ObjectKeys = Object.keys(
             staticvalue.filterObjects[league][year]
           );
@@ -454,7 +464,7 @@ const Filter = memo(() => {
 
   // 패치 필터 fetch 함수
   const fetchingPatchFilter = () => {
-    if (filters.league.length > 0 && filters.year.length > 0 && filters.season.length > 0) {
+    if (filters.season.length > 0) {
       dispatch(Loading(true))
       const url = `${API}/lolapi/filter/patch`;
       const params = {
@@ -475,10 +485,7 @@ const Filter = memo(() => {
     }
   };
 
-
-
   return (
-
 
     <>
       <AlertModal />
@@ -501,27 +508,6 @@ const Filter = memo(() => {
               )}
               <FilterGroup>
                 <FilterItem
-                  title={t("label.league")}
-                  isHaveFilter={selector.leagueFilter.length > 0 ? true : false}
-                  multiFilter={selector.leagueFilter?.map((league, idx) => {
-                    return (
-                      <MultiSelectCb
-                        idx={idx}
-                        filterData={filters.league}
-                        mapData={league}
-                        radioBtn={[nameTeam, nameSolo].includes(pagePath)}
-                        pngPath={`ico-league-${league.toLowerCase()}`}
-                        clickEvent={() => {
-                          [nameTeam, nameSolo].includes(pagePath)
-                            ? dispatch(SetLeague([league]))
-                            : dispatch(League(league));
-
-                        }}
-                      />
-                    );
-                  })}
-                />
-                <FilterItem
                   title={t("label.year")}
                   isHaveFilter={selector.yearFilter.length > 0 ? true : false}
                   multiFilter={selector.yearFilter?.map((year, idx) => {
@@ -539,91 +525,110 @@ const Filter = memo(() => {
                     );
                   })}
                 />
-
                 <FilterItem
-                  title={t("label.season")}
-                  isHaveFilter={selector.seasonFilter.length > 0 ? true : false}
-                  multiFilter={selector.seasonFilter?.map((season, idx) => {
-                    return (
-                      <MultiSelectCb
-                        idx={idx}
-                        filterData={filters.season}
-                        mapData={season}
-                        clickEvent={() => {
-                          dispatch(Season(season));
-                        }}
-                      />
-                    );
-                  })}
-                />
+              title={t("label.league")}
+              isHaveFilter={selector.leagueFilter.length > 0 ? true : false}
+              multiFilter={selector.leagueFilter?.map((league, idx) => {
+                return (
+                  <MultiSelectCb
+                    idx={idx}
+                    filterData={filters.league}
+                    mapData={league}
+                    radioBtn={[nameTeam, nameSolo].includes(pagePath)}
+                    pngPath={`ico-league-${league.toLowerCase()}`}
+                    clickEvent={() => {
+                      [nameTeam, nameSolo].includes(pagePath)
+                        ? dispatch(SetLeague([league]))
+                        : dispatch(League(league));
 
-                {isNeedTeam && (
-                  <FilterItem
-                    title={t("label.team")}
-                    isHaveFilter={selector.teamFilter.length > 0 ? true : false}
-                    multiFilter={selector.teamFilter?.map((team, idx) => {
-                      return (
-                        <MultiSelectCb
-                          idx={idx}
-                          filterData={filters.team}
-                          mapData={team}
-                          pngPath={`TeamLogo/${team}`}
-                          radioBtn={true}
-                          clickEvent={() => {
-                            dispatch(Team(team));
-                            if (pagePath === nameSolo) {
-                              dispatch(HandleTab(0));
-                            }
-                          }}
-                        />
-                      );
-                    })}
+                    }}
                   />
-                )}
-                {pagePath === nameSolo && (
-                  <FilterItem
-                    title={t("label.player")}
-                    isHaveFilter={selector.playerFilter.length > 0 ? true : false}
-                    multiFilter={selector.playerFilter?.map((player, idx) => {
-                      return (
-                        <MultiSelectCb
-                          idx={idx}
-                          filterData={filters.player}
-                          mapData={player.name}
-                          pngPath={`ico-position-${player.position}`}
-                          radioBtn={true}
-                          clickEvent={() => {
-                            dispatch(Player(player.name));
-                            dispatch(Position(player.position));
-                            dispatch(ResetChampion());
-                            dispatch(ResetFilter2());
-                            setIsActivePlayer(!isActivePlayer);
-                            dispatch(HandleTab(0));
-                          }}
-                        />
-                      );
-                    })}
-                  />
-                )}
-                <FilterItem
-                  title={t("label.patchVersion")}
-                  isHaveFilter={selector.patchFilter.length > 0 ? true : false}
-                  multiFilter={selector.patchFilter?.map((patch, idx) => {
-                    return (
-                      <MultiSelectCb
-                        idx={idx}
-                        filterData={filters.patch}
-                        mapData={patch}
-                        clickEvent={() => {
-                          dispatch(Patch(patch));
-                        }}
-                      />
-                    );
-                  })}
+                );
+              })}
                 />
-              </FilterGroup>
-            </>
-          )}
+            <FilterItem
+              title={t("label.season")}
+              isHaveFilter={selector.seasonFilter.length > 0 ? true : false}
+              multiFilter={selector.seasonFilter?.map((season, idx) => {
+                return (
+                  <MultiSelectCb
+                    idx={idx}
+                    filterData={filters.season}
+                    mapData={season}
+                    clickEvent={() => {
+                      dispatch(Season(season));
+                    }}
+                  />
+                );
+              })}
+                />
+            {isNeedTeam && (
+              <FilterItem
+                title={t("label.team")}
+                isHaveFilter={selector.teamFilter.length > 0 ? true : false}
+                multiFilter={selector.teamFilter?.map((team, idx) => {
+                  return (
+                    <MultiSelectCb
+                      idx={idx}
+                      filterData={filters.team}
+                      mapData={team}
+                      pngPath={`TeamLogo/${team}`}
+                      radioBtn={true}
+                      clickEvent={() => {
+                        dispatch(Team(team));
+                        if (pagePath === nameSolo) {
+                          dispatch(HandleTab(0));
+                        }
+                      }}
+                    />
+                  );
+                })}
+              />
+            )}
+            {pagePath === nameSolo && (
+              <FilterItem
+                title={t("label.player")}
+                isHaveFilter={selector.playerFilter.length > 0 ? true : false}
+                multiFilter={selector.playerFilter?.map((player, idx) => {
+                  return (
+                    <MultiSelectCb
+                      idx={idx}
+                      filterData={filters.player}
+                      mapData={player.name}
+                      pngPath={`ico-position-${player.position}`}
+                      radioBtn={true}
+                      clickEvent={() => {
+                        dispatch(Player(player.name));
+                        dispatch(Position(player.position));
+                        dispatch(ResetChampion());
+                        dispatch(ResetFilter2());
+                        setIsActivePlayer(!isActivePlayer);
+                        dispatch(HandleTab(0));
+                      }}
+                    />
+                  );
+                })}
+              />
+            )}
+            <FilterItem
+              title={t("label.patchVersion")}
+              isHaveFilter={selector.patchFilter.length > 0 ? true : false}
+              multiFilter={selector.patchFilter?.map((patch, idx) => {
+                return (
+                  <MultiSelectCb
+                    idx={idx}
+                    filterData={filters.patch}
+                    mapData={patch}
+                    clickEvent={() => {
+                      dispatch(Patch(patch));
+                    }}
+                  />
+                );
+              })}
+            />
+          </FilterGroup>
+        </>
+      )}
         </FilterWrapper>
       }
 
