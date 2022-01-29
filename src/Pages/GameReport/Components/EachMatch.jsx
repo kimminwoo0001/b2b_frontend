@@ -1,6 +1,7 @@
 import React, { memo, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch, batch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   SetBlueTeam,
   SetDetailDataSet,
@@ -31,7 +32,7 @@ import {
 import { API } from "../../config";
 import { API2 } from "../../config";
 import { API5 } from "../../config";
-import { Loading } from "../../../redux/modules/filtervalue";
+import { Loading, SetTeam } from "../../../redux/modules/filtervalue";
 import { useTranslation } from "react-i18next";
 import secToMS from "../../../lib/secToMS";
 
@@ -39,7 +40,7 @@ const TOTAL_SET = [0, 1, 2, 3, 4];
 
 const EachMatch = ({ matchData, team }) => {
   const dispatch = useDispatch();
-
+  let history = useHistory();
   const { t } = useTranslation();
   const {
     date,
@@ -55,6 +56,8 @@ const EachMatch = ({ matchData, team }) => {
     oppteamresult,
     oppside,
   } = matchData;
+
+  
 
   const getGameDetailData = (gameId, gameFullTime) => {
     try {
@@ -141,18 +144,23 @@ const EachMatch = ({ matchData, team }) => {
               teamGold_max,
             };
 
-            batch(() => {
-              dispatch(SetFixedDataset(e?.infos));
-              dispatch(SetPlayersDataset(e?.players));
-              dispatch(SetLogDataset(e?.log));
-              dispatch(SetMappingDataset(e?.mapping));
-              dispatch(SetLiveDataset(e?.live));
-              dispatch(SetTeamGoldDataset(e?.teamGold));
-              dispatch(SetStatusLogDataset(e?.actionLog));
-              dispatch(SetPlayersStatusDataset(e?.status));
-              dispatch(SetTimeLineDataset(timeLineSet));
-              dispatch(Loading(false));
-            });
+            if (e?.infos.length === 2) {
+              batch(() => {
+                dispatch(SetFixedDataset(e?.infos));
+                dispatch(SetPlayersDataset(e?.players));
+                dispatch(SetLogDataset(e?.log));
+                dispatch(SetMappingDataset(e?.mapping));
+                dispatch(SetLiveDataset(e?.live));
+                dispatch(SetTeamGoldDataset(e?.teamGold));
+                dispatch(SetStatusLogDataset(e?.actionLog));
+                dispatch(SetPlayersStatusDataset(e?.status));
+                dispatch(SetTimeLineDataset(timeLineSet));
+                history.push("/gameReportDetail");
+              });
+            } else {
+              dispatch(SetModalInfo());
+            }
+            dispatch(Loading(false));
           }
         },
         function (objstore) {

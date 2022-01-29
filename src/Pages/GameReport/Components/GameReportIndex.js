@@ -55,20 +55,11 @@ const GameReportIndex = () => {
 
   return (
     <GameReportIndexWrapper>
-      {gamevalue.fixedDataset.length === 2 ? (
-        <GameReportDetail
-          videoId={gamevalue.gameId}
-          platform={gamevalue.platform}
-        />
-      ) : (
-        <>
-          {indexData?.map((match, idx) => {
-            return (
-              <EachMatch matchData={match} team={filters.team} key={idx} />
-            );
-          })}
-        </>
-      )}
+      {indexData?.map((match, idx) => {
+        return (
+          <EachMatch matchData={match} team={filters.team} key={idx} />
+        );
+      })}
     </GameReportIndexWrapper>
   );
 };

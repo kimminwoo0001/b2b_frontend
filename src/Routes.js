@@ -30,6 +30,7 @@ import GameReport from "./Pages/GameReport/GameReport";
 import AlertModal from "./Components/UtilityComponent/AlertModal";
 import CheckLogin from "./Pages/Sign/CheckLogin";
 import Loading from "./Components/LoadingImg/LoadingImg";
+import GameReportDetail from "./Pages/GameReport/Components/GameReportDetail";
 
 function Routes() {
   //const token = sessionStorage.getItem("token");
@@ -57,6 +58,7 @@ function Routes() {
         <PrivateRoute exact path="/solo" component={Solo} />
         <PrivateRoute exact path="/video" component={Video} />
         <PrivateRoute exact path="/gameReport" component={GameReport} />
+        <PrivateRoute exact path="/gameReportDetail" component={GameReportDetail} />
         <PrivateRoute exact path="/utility" component={Utility} />
         <PrivateRoute exact path="/simulator" component={ItemSimulator} />
         <PrivateRoute exact path="/calculator" component={PickCalculator} />
