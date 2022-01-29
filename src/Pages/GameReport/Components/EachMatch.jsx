@@ -57,8 +57,6 @@ const EachMatch = ({ matchData, team }) => {
     oppside,
   } = matchData;
 
-  
-
   const getGameDetailData = (gameId, gameFullTime) => {
     try {
       dispatch(Loading(true));
@@ -84,67 +82,70 @@ const EachMatch = ({ matchData, team }) => {
             }
           }
           if (isDone) {
-            const roming = e.actionLog.filter((e) => e.type === "Roaming");
-            const ganking = e.actionLog.filter((e) => e.type === "Ganking");
-            const timefight = e.actionLog.filter((e) => e.type === "matchLog");
-            const blueKills = e.log.event.filter(
-              (e) => e.type === "CHAMPION_KILL" && e.participantid < 6
-            );
-            const redKills = e.log.event.filter(
-              (e) => e.type === "CHAMPION_KILL" && e.participantid > 5
-            );
-            const buildDestroy = e.log.event.filter(
-              (e) => e.type === "BUILDING_KILL"
-            );
-            const objectKill = e.log.event.filter(
-              (e) =>
-                e.type === "ELITE_MONSTER_KILL" &&
-                ["RIFTHERALD", "BARON_NASHOR"].includes(e.subType)
-            );
-            const dragonKill = e.log.event.filter(
-              (e) =>
-                e.type === "ELITE_MONSTER_KILL" && e.subType.includes("DRAGON")
-            );
-
-            let tg_rc_idx = 0;
-            let teamGold_x = [];
-            let teamGold_y = [];
-            let teamGold_max = 0;
-
-            for (let i = 0; i < gameFullTime; i++) {
-              teamGold_x.push(secToMS(i));
-              if (
-                e.teamGold.length > tg_rc_idx &&
-                i === e.teamGold[tg_rc_idx].realCount
-              ) {
-                let e_tg = e.teamGold[tg_rc_idx];
-                let e_tg_gold = e_tg.blueGold - e_tg.redGold;
-
-                teamGold_y.push(e_tg_gold);
-                if (teamGold_max < Math.abs(e_tg_gold)) {
-                  teamGold_max = Math.abs(e_tg_gold);
-                }
-                tg_rc_idx += 1;
-              } else {
-                teamGold_y.push(undefined);
-              }
-            }
-
-            const timeLineSet = {
-              roming,
-              ganking,
-              timefight,
-              blueKills,
-              redKills,
-              buildDestroy,
-              objectKill,
-              dragonKill,
-              teamGold_x,
-              teamGold_y,
-              teamGold_max,
-            };
-
             if (e?.infos.length === 2) {
+              const roming = e.actionLog.filter((e) => e.type === "Roaming");
+              const ganking = e.actionLog.filter((e) => e.type === "Ganking");
+              const timefight = e.actionLog.filter(
+                (e) => e.type === "matchLog"
+              );
+              const blueKills = e.log.event.filter(
+                (e) => e.type === "CHAMPION_KILL" && e.participantid < 6
+              );
+              const redKills = e.log.event.filter(
+                (e) => e.type === "CHAMPION_KILL" && e.participantid > 5
+              );
+              const buildDestroy = e.log.event.filter(
+                (e) => e.type === "BUILDING_KILL"
+              );
+              const objectKill = e.log.event.filter(
+                (e) =>
+                  e.type === "ELITE_MONSTER_KILL" &&
+                  ["RIFTHERALD", "BARON_NASHOR"].includes(e.subType)
+              );
+              const dragonKill = e.log.event.filter(
+                (e) =>
+                  e.type === "ELITE_MONSTER_KILL" &&
+                  e.subType.includes("DRAGON")
+              );
+
+              let tg_rc_idx = 0;
+              let teamGold_x = [];
+              let teamGold_y = [];
+              let teamGold_max = 0;
+
+              for (let i = 0; i < gameFullTime; i++) {
+                teamGold_x.push(secToMS(i));
+                if (
+                  e.teamGold.length > tg_rc_idx &&
+                  i === e.teamGold[tg_rc_idx].realCount
+                ) {
+                  let e_tg = e.teamGold[tg_rc_idx];
+                  let e_tg_gold = e_tg.blueGold - e_tg.redGold;
+
+                  teamGold_y.push(e_tg_gold);
+                  if (teamGold_max < Math.abs(e_tg_gold)) {
+                    teamGold_max = Math.abs(e_tg_gold);
+                  }
+                  tg_rc_idx += 1;
+                } else {
+                  teamGold_y.push(undefined);
+                }
+              }
+
+              const timeLineSet = {
+                roming,
+                ganking,
+                timefight,
+                blueKills,
+                redKills,
+                buildDestroy,
+                objectKill,
+                dragonKill,
+                teamGold_x,
+                teamGold_y,
+                teamGold_max,
+              };
+
               batch(() => {
                 dispatch(SetFixedDataset(e?.infos));
                 dispatch(SetPlayersDataset(e?.players));
@@ -158,7 +159,9 @@ const EachMatch = ({ matchData, team }) => {
                 history.push("/gameReportDetail");
               });
             } else {
-              dispatch(SetModalInfo());
+              dispatch(SetIsSelector(false));
+              dispatch(SetIsOpen(true));
+              dispatch(SetDesc(t("game.eachMatch.noneData")));
             }
             dispatch(Loading(false));
           }
