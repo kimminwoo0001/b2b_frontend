@@ -13,18 +13,18 @@ const SelectedFilter = memo(({ pagePath, nameSolo, nameTeam, nameVideo, namePlay
   return (
     <SelectedFilters>
       <SelectedArea>
-        <header><label className={filters.league.length === 0 && "not-selected"}>{t("label.league")}</label></header>
-        <section>
-          {filters.league.length > 0 && filters.league?.map((data) => {
-            return <SelectedData data={data} deleteBtn={() => { dispatch(League(data)); }} />
-          })}
-        </section>
-      </SelectedArea>
-      <SelectedArea>
         <header><label className={filters.year.length === 0 && "not-selected"}>{t("label.year")}</label></header>
         <section>
           {filters.year.length > 0 && filters.year?.map((data) => {
             return <SelectedData data={data} deleteBtn={() => { dispatch(Year(data)); }} />
+          })}
+        </section>
+      </SelectedArea>
+      <SelectedArea>
+        <header><label className={filters.league.length === 0 && "not-selected"}>{t("label.league")}</label></header>
+        <section>
+          {filters.league.length > 0 && filters.league?.map((data) => {
+            return <SelectedData data={data} deleteBtn={() => { dispatch(League(data)); }} />
           })}
         </section>
       </SelectedArea>
@@ -45,7 +45,7 @@ const SelectedFilter = memo(({ pagePath, nameSolo, nameTeam, nameVideo, namePlay
       {[nameSolo, namePlayerCompare].includes(pagePath) && <SelectedArea>
         <header><label className={filters.player.length === 0 && "not-selected"}>{t("label.player")}</label></header>
         <section>
-          {/* {filters.player.length > 0 && <SelectedData data={filters.player} deleteBtn={() => { dispatch(Player(filters.player)); }} />} */}
+          {filters.player.length > 0 && <SelectedData data={filters.player} deleteBtn={() => { dispatch(Player(filters.player)); }} />}
         </section>
       </SelectedArea>}
       <SelectedArea>

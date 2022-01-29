@@ -16,41 +16,6 @@ function PlayerCompare({data, oppData}) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   GetPerformance();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
-  // //팀 필터 fetch 함수
-  // const GetPerformance = () => {
-  //   const url = `${API}/lolapi/player/comparisonRecord`;
-  //   const params = {
-  //     league: filters.league,
-  //     year: filters.year,
-  //     season: filters.season,
-  //     patch: filters.patch,
-  //     team: filters.team,
-  //     player: filters.player,
-  //     oppteam: filters.oppteam,
-  //     oppplayer: filters.oppplayer,
-  //     token: user.token,
-  //     id: user.id,
-  //   };
-  //   axiosRequest(
-  //     undefined,
-  //     url,
-  //     params,
-  //     function (e) {
-  //       setData(e[filters.player]);
-  //       setOppData(e[filters.oppplayer]);
-  //     },
-  //     function (objStore) {
-  //       dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
-  //     }
-  //   );
-  //   // dispatch(Loading(false));
-  // };
-
   return (
     <PlayerCompareWrapper>
       <div className="RedSidePlayer">
@@ -77,7 +42,7 @@ function PlayerCompare({data, oppData}) {
       />
       <div className="NameContainer">
         <span className="NickName">
-          {lang === "ko" ? data?.playerInfo.NativeName : data?.playerInfo.Name}
+          {lang === "ko" ? data?.playerInfo.NativeName.replace("&amp;nbsp;", " ") : data?.playerInfo.Name}
         </span>
         <span className="RealName">{data?.playerInfo.ID}</span>
       </div>
@@ -105,7 +70,7 @@ function PlayerCompare({data, oppData}) {
       <div className="NameContainerBlue">
         <span className="NickName">
           {lang === "ko"
-            ? oppData?.playerInfo.NativeName
+            ? oppData?.playerInfo.NativeName.replace("&amp;nbsp;", " ")
             : oppData?.playerInfo.Name}
         </span>
         <span className="RealName">{oppData?.playerInfo.ID}</span>

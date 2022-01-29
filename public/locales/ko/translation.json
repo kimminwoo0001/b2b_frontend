@@ -6,13 +6,15 @@
     "part3": "팀 보고서",
     "part4": "메타 분석",
     "part5": "선수 보고서",
-    "part6": "영상 보고서",
+    "part6": "와드&동선 분석",
     "part7": "매치 분석",
     "part8": "팀 비교",
     "part9": "선수 비교",
     "part10": "아이템 시뮬레이터",
     "part11": "픽 조합 계산기",
-    "part12": "게임 보고서"
+    "part12": "대회 경기 분석",
+    "part13": "솔로 랭크",
+    "part14": "아이템 계산기"
   },
   "sign": {
     "signUp": "신규 계정등록",
@@ -134,7 +136,7 @@
       "picks": "픽",
       "banRate": "픽밴률",
       "winRate": "승률",
-      "probRate": "조정 승률",
+      "adjWr": "조정 승률",
       "kp": "킬관여",
       "result": "승패",
       "opponent": "상대 챔피언",
@@ -365,7 +367,7 @@
       "statLabel": "개인전적",
       "statLabelvs": "상대전적",
       "noOppStatData": "상대 전적 기록이 없습니다.",
-      "mainPlayerChanged": "메인 선수가 변경되어 비교 데이터가 초기화됩니다."
+      "mainPlayerChanged": "메인 팀 또는 선수가 변경되어 비교 데이터가 초기화됩니다."
     }
   },
   "filters": {
@@ -508,7 +510,8 @@
     },
     "logout": {
       "sessionExpires": "계정 유효 시간이 만료되어 로그인 페이지로 이동합니다.",
-      "loginFail": "로그인 정보가 없습니다. 다시 시도해주세요."
+      "loginFail": "로그인 정보가 없습니다. 다시 시도해주세요.",
+      "duplication": "중복 로그인이 확인되어 로그아웃합니다."
     },
     "label": {
       "confirm": "확인",
@@ -522,7 +525,7 @@
       "serverError": "서버에 문제가 생겼습니다. 관리자에게 문의해주세요.",
       "questionCancel": "취소하시겠습니까?",
       "questionContinue": "계속하시겠습니까?",
-      "tryLoginAgain": "이전 로그인 계정을 로그아웃 하였습니다.\n다시 로그인 바랍니다.",
+      "tryLoginAgain": "이전 로그인 계정을 로그아웃 하였습니다.",
       "loginTimeOver": "계정의 사용 기간이 만료되었습니다.",
       "MasterKey": "키 인증이 필요합니다."
     }
@@ -544,7 +547,7 @@
   },
   "game": {
     "eachMatch": {
-      "noneData": "죄송합니다.\n해당 경기 데이터가 존재하지 않습니다."
+      "noneData": "해당 경기 데이터가 존재하지 않아 확인할 수 없습니다."
     },
     "log": {
       "event": {
@@ -629,8 +632,8 @@
         "cs": "CS"
       },
       "timeline": {
-        "roming": "로밍성공",
-        "ganking": "갱킹성공",
+        "roming": "로밍",
+        "ganking": "갱킹",
         "fight": "교전",
         "blue-kill": "블루킬",
         "red-kill": "레드킬",
@@ -658,6 +661,15 @@
         "TeleportToLane": "텔레포트",
         "TeleportToOther": "텔레포트",
         "InLane": "라인전"
+      }
+    },
+    "banPick": {
+      "firstPick": {
+        "top": "탑 선픽",
+        "jng": "정글 선픽",
+        "mid": "미드 선픽",
+        "ad": "원딜 선픽",
+        "sup": "서폿 선픽"
       }
     }
   }

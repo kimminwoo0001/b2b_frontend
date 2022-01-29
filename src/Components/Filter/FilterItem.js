@@ -124,9 +124,9 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
         </Header>
         <div className={viewSwitch ? "open-filter-item" : "close-filter-item"}>
           {/* 전체선택 */}
-          {![nameTeam, nameSolo].includes(pagePath) &&
+          {![nameTeam, nameSolo].includes(pagePath) && filters.year.length > 0 && 
             (title === t("label.league") ||
-              (title === t("label.season") && filters.year.length > 0)) && (
+              (title === t("label.season") && filters.league.length > 0)) && (
               <div className="div-select-all">
                 <SelectAll onClick={handleCheckboxClick} isChecked={checked}>
                   <input type="checkbox" checked={checked} />

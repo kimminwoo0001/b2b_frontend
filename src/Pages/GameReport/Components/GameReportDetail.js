@@ -8,32 +8,45 @@ import TeamStatus from "./TeamStatusOption/TeamStatus";
 import TimeLine from "./TimeLineOption/TimeLine";
 import Summary from "./SummaryOption/Summary";
 import VideoPlayer from "../../../Components/Video/VideoPlayer";
+import ErrorBoundary from "../../../Components/ErrorBoundary";
 
 const GameReportDetail = () => {
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   return (
-    <GameReportDetailContainer>
-      <DetailLog />
-      <TeamStatus />
+    <ErrorBoundary>
+      <GameWrapper>
+        <GameReportIndexWrapper>
+          <GameReportDetailContainer>
+            <DetailLog />
+            <TeamStatus />
 
-      <BlockContainer>
-        <FlexContainer>
-          <VideoContainer>
-            <VideoPlayer />
-          </VideoContainer>
-        </FlexContainer>
-        <FlexContainer>
-          <Summary />
-          <TimeLine />
-          {/* <MapContainer></MapContainer> */}
-        </FlexContainer>
-      </BlockContainer>
-    </GameReportDetailContainer>
+            <BlockContainer>
+              <FlexContainer>
+                <VideoContainer>
+                  <VideoPlayer />
+                </VideoContainer>
+              </FlexContainer>
+              <FlexContainer>
+                <Summary />
+                <TimeLine />
+                {/* <MapContainer></MapContainer> */}
+              </FlexContainer>
+            </BlockContainer>
+          </GameReportDetailContainer>
+        </GameReportIndexWrapper>
+      </GameWrapper>
+    </ErrorBoundary>
   );
 };
 
 export default memo(GameReportDetail);
+
+const GameReportIndexWrapper = styled.main`
+  padding-top: 60px;
+  padding-left: 60px;
+  font-family: "Spoqa Han Sans";
+`;
 
 const GameReportDetailContainer = styled.div`
   width: 1920px;
@@ -52,4 +65,29 @@ const FlexContainer = styled.div`
 const VideoContainer = styled.div`
   width: 1440px;
   height: 800px;
+`;
+
+const GameWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  overflow: auto;
+  display: flex;
+  background-color: #000000;
+  overflow: hidden;
+
+  .filter-close {
+    display: none;
+  }
+
+  .filter-open {
+  }
+`;
+
+const ContentWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: 0px 0;
+
 `;

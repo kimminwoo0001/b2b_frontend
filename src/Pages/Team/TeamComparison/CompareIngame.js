@@ -21,6 +21,7 @@ import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import {
+  Loading,
   HandleTab
 } from '../../../redux/modules/filtervalue';
 
@@ -48,6 +49,8 @@ function CompareIngame() {
   const [supportDomain, setSupportDomain] = useState();
   //y 축
   const [supportTicks, setSupportTicks] = useState();
+  const [isActive, setIsActive] = useState(false);
+
 
   const Team = filters.team;
   const OppTeam = filters.oppteam;
@@ -76,7 +79,8 @@ function CompareIngame() {
 
   //밴지표 전체 데이터 가져오는 함수
   const GetInGameData = () => {
-    setLoading(true);
+    // setLoading(true)
+    dispatch(Loading(true));
     const url = `${API}/lolapi/team/comparisonPi`;
     const params = {
       league: filters.league,
@@ -159,11 +163,13 @@ function CompareIngame() {
         //Team, OppTeam을 나눠서 데이터를 저장함
         setRedData(e[Team]);
         setBlueData(e[OppTeam]);
+        dispatch(Loading(false));
+        setIsActive(true);
       },
       function (objStore) {
         dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
       }
-    ).finally(setLoading(false));
+    );
   };
 
   //그래프 y 축 max값 받아오는거 비교해서 더 높은것으로 출력 해주는 함수
@@ -223,6 +229,9 @@ function CompareIngame() {
 
     return null;
   };
+
+  if(!isActive) return <></>; 
+
 
 
   return (

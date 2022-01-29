@@ -8,6 +8,7 @@ import TimeBarTitle from "../Common/TimeBarTitle";
 import Tippy from "@tippy.js/react";
 import GameReportToolTip from "../Common/GameReportToolTip";
 import TimeLineValue from "./Component/TimeLineValue";
+import TimeLineTeamGold from "./Component/TimeLineTeamGold";
 
 const romingSuccessTime = [
   { team: 1, time: 500 },
@@ -28,6 +29,8 @@ const TimeLine = () => {
   const towerDestroySet = timeLineDataset.buildDestroy;
   const objectSet = timeLineDataset.objectKill;
   const dragonSet = timeLineDataset.dragonKill;
+  const romingSet = timeLineDataset.roming;
+  const gankingSet = timeLineDataset.ganking;
 
   const fullWidth = 623;
 
@@ -35,29 +38,80 @@ const TimeLine = () => {
     <TimeLineContainer>
       {/* <div className="dev">TimeLine 개발 중</div> */}
       <TimeLineDataContainer>
-        {/* <div className="title">{t("game.summary.timeline.roming")}</div>
+        <div className="title">{t("game.summary.timeline.roming")}</div>
         <TimeLine15Box width={transferValuetoWidth(fullTime, fullWidth, 900)}>
-          {romingSuccessTime.map((data) => {
+          {romingSet.map((data) => {
             return (
               <TimeLineValue
-                team={data.team}
-                move={transferValuetoWidth(fullTime, fullWidth, data.time)}
+                team={data.data.participant > 5 ? 0 : 1}
+                move={transferValuetoWidth(
+                  fullTime,
+                  fullWidth,
+                  data.realCount / 2
+                )}
+                time={data.realCount}
               />
             );
           })}
         </TimeLine15Box>
         <TimeLine15OutBox
           width={transferValuetoWidth(fullTime, fullWidth, 900)}
-        ></TimeLine15OutBox> */}
+        >
+          <StyledTippy
+            duration={0}
+            delay={[100, 0]}
+            content={
+              <GameReportToolTip
+                tooltipInfo={t("game.log.event.tooltipInfo")}
+              />
+            }
+            placement="top"
+          >
+            <img
+              className="tip"
+              src={"Images/ico-question-mark.svg"}
+              alt="question"
+            />
+          </StyledTippy>
+        </TimeLine15OutBox>
       </TimeLineDataContainer>
       <TimeLineDataContainer>
-        {/* <div className="title">{t("game.summary.timeline.ganking")}</div>
-        <TimeLine15Box
-          width={transferValuetoWidth(fullTime, fullWidth, 900)}
-        ></TimeLine15Box>
+        <div className="title">{t("game.summary.timeline.ganking")}</div>
+        <TimeLine15Box width={transferValuetoWidth(fullTime, fullWidth, 900)}>
+          {gankingSet.map((data) => {
+            return (
+              <TimeLineValue
+                team={data.data.participant > 5 ? 0 : 1}
+                move={transferValuetoWidth(
+                  fullTime,
+                  fullWidth,
+                  data.realCount / 2
+                )}
+                time={data.realCount}
+              />
+            );
+          })}
+        </TimeLine15Box>
         <TimeLine15OutBox
           width={transferValuetoWidth(fullTime, fullWidth, 900)}
-        ></TimeLine15OutBox> */}
+        >
+          <StyledTippy
+            duration={0}
+            delay={[100, 0]}
+            content={
+              <GameReportToolTip
+                tooltipInfo={t("game.log.event.tooltipInfo")}
+              />
+            }
+            placement="top"
+          >
+            <img
+              className="tip"
+              src={"Images/ico-question-mark.svg"}
+              alt="question"
+            />
+          </StyledTippy>
+        </TimeLine15OutBox>
       </TimeLineDataContainer>
       <TimeLineDataContainer>
         <div className="title">{t("game.summary.timeline.fight")}</div>
@@ -168,7 +222,7 @@ const TimeLine = () => {
           })}
         </TimeLineFullBox>
       </TimeLineDataContainer>
-      <TimeLineGoldContainer></TimeLineGoldContainer>
+      <TimeLineTeamGold />
       <TimeLineDataContainer>
         <TimeBarTitle />
         <div className="time-bar">
@@ -247,6 +301,12 @@ const TimeLine15OutBox = styled.div`
   padding: 0 0 0 0;
   border-radius: 0 3px 3px 0;
   background-color: #222;
+  position: relative;
+  .tip {
+    position: absolute;
+    right: ${(props) => (623 - props.width - 15) / 2}px;
+    bottom: ${(20 - 15) / 2}px;
+  }
 `;
 
 const TimeLineFullBox = styled.div`

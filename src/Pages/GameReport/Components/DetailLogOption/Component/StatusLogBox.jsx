@@ -9,7 +9,6 @@ import { useEffect } from "react";
 import { Element, animateScroll as scroll, scroller } from "react-scroll";
 import GankingRoamingStatusBox from "./StatusOption/GankingRoamingStatusBox";
 import TeamFightStatusBox from "./StatusOption/TeamFightStatusBox";
-import DiveStatusBox from "./StatusOption/DiveStatusBox";
 import TeleportStatusBox from "./StatusOption/TeleportStatusBox";
 import { SetSeekTime } from "../../../../../redux/modules/gamevalue";
 

@@ -89,7 +89,7 @@ const EventLogBox = () => {
   };
 
   const onClick = (time) => {
-    dispatch(SetSeekTime(time / 2 + 4));
+    dispatch(SetSeekTime(time / 2));
   };
 
   return (
@@ -105,7 +105,7 @@ const EventLogBox = () => {
                 tooltipInfo={t("game.log.event.tooltipInfo")}
               />
             }
-            placement="bottom"
+            placement="top"
           >
             <img src={"Images/ico-question-mark.svg"} alt="question" />
           </StyledTippy>

@@ -125,6 +125,7 @@ const DropDown = styled.div`
     visibility: hidden;
     transform: translateY(-20px);
     transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+    z-index:9999;
   }
 
   .menu.active {
