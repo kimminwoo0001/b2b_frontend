@@ -57,10 +57,6 @@ function Routes() {
         // "CUSTOM_VALUE_2": "VALUE_2"
       }
     });
-  } else {
-    ChannelService.boot({
-      "pluginKey": "7cc25793-4246-4495-80e9-97a59767ef03" //please fill with your plugin key
-    });
   }
 
 
