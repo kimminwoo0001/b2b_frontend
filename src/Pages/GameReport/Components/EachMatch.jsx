@@ -114,20 +114,6 @@ const EachMatch = ({ matchData, team }) => {
               let teamGold_y = [];
               let teamGold_max = 0;
 
-<<<<<<< HEAD
-            batch(() => {
-              dispatch(SetFixedDataset(e?.infos));
-              dispatch(SetPlayersDataset(e?.players));
-              dispatch(SetLogDataset(e?.log));
-              dispatch(SetMappingDataset(e?.mapping));
-              dispatch(SetLiveDataset(e?.live));
-              dispatch(SetTeamGoldDataset(e?.teamGold));
-              dispatch(SetStatusLogDataset(e?.actionLog));
-              dispatch(SetPlayersStatusDataset(e?.status));
-              dispatch(SetTimeLineDataset(timeLineSet));
-              dispatch(Loading(false));
-            });
-=======
               for (let i = 0; i < gameFullTime; i++) {
                 teamGold_x.push(secToMS(i));
                 if (
@@ -179,7 +165,6 @@ const EachMatch = ({ matchData, team }) => {
               dispatch(SetDesc(t("game.eachMatch.noneData")));
             }
             dispatch(Loading(false));
->>>>>>> dev_hosting
           }
         },
         function (objstore) {

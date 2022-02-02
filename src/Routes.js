@@ -30,12 +30,8 @@ import GameReport from "./Pages/GameReport/GameReport";
 import AlertModal from "./Components/UtilityComponent/AlertModal";
 import CheckLogin from "./Pages/Sign/CheckLogin";
 import Loading from "./Components/LoadingImg/LoadingImg";
-<<<<<<< HEAD
 import ChannelService from "./Components/UtilityComponent/ChannelService";
-
-=======
 import GameReportDetail from "./Pages/GameReport/Components/GameReportDetail";
->>>>>>> dev_hosting
 
 function Routes() {
   //const token = sessionStorage.getItem("token");
@@ -50,9 +46,23 @@ function Routes() {
     />
   );
 
-  ChannelService.boot({
-    "pluginKey": "7cc25793-4246-4495-80e9-97a59767ef03" //please fill with your plugin key
-  });
+  if (user.id) {
+    ChannelService.boot({
+      "pluginKey": "7cc25793-4246-4495-80e9-97a59767ef03", //please fill with your plugin key
+      "memberId": user.id, //fill with user id
+      "profile": {
+        "name": user.id, //fill with user name
+        // "mobileNumber": "YOUR_USER_MOBILE_NUMBER", //fill with user phone number
+        // "CUSTOM_VALUE_1": "VALUE_1", //any other custom meta data
+        // "CUSTOM_VALUE_2": "VALUE_2"
+      }
+    });
+  } else {
+    ChannelService.boot({
+      "pluginKey": "7cc25793-4246-4495-80e9-97a59767ef03" //please fill with your plugin key
+    });
+  }
+
 
   return (
     <Router>
