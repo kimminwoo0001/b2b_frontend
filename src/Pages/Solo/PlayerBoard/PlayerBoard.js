@@ -596,7 +596,7 @@ function PlayerBoard() {
                           placement="top"
                         >
                           <td className="StatNum">
-                            {lang === "ko" ? title.name : title.eng}
+                              {lang === "ko" ? title.name === "첫 텔레포트 사용 시간 (초)" ? "첫 텔레포트 시간 (초)" : title.name : title.eng}
                           </td>
                         </Tippy>
 

@@ -587,19 +587,21 @@ function Stats() {
                         :
                         <>
                           <RedPlayer
-                            changeColor={stat?.data1 < stat?.data0}
-                          >{`${stat?.data0.toFixed(1)}`}</RedPlayer>
+                            changeColor={stat?.data1 === "NULL" || stat?.data1 < stat?.data0}
+                          >{`${stat?.data0 !== "NULL" ? stat?.data0.toFixed(1) : "-"}`}</RedPlayer>
                           <img
                             src={
-                              stat?.data1 > stat?.data0
-                                ? "Images/ico-compare-right-arrow.png"
-                                : "Images/ico-compare-left-arrow.png"
+                              stat?.data0 === "NULL" ? "Images/ico-compare-right-arrow.png" :
+                                stat?.data1 === "NULL" ? "Images/ico-compare-left-arrow.png" :
+                                  stat?.data1 > stat?.data0
+                                    ? "Images/ico-compare-right-arrow.png"
+                                    : "Images/ico-compare-left-arrow.png"
                             }
                             alt="arrowIcon"
                           />
                           <BluePlayer
-                            changeColor={stat?.data1 > stat?.data0}
-                          >{`${stat?.data1.toFixed(1)}`}</BluePlayer>
+                            changeColor={stat?.data0 === "NULL" || stat?.data1 > stat?.data0}
+                          >{`${stat?.data1 !== "NULL" ? stat?.data1.toFixed(1) : "-"}`}</BluePlayer>
                         </>
                       }
                     </div>
@@ -617,19 +619,21 @@ function Stats() {
                         :
                         <>
                       <RedPlayer
-                        changeColor={stat?.data1 < stat?.data0}
-                      >{`${stat?.data0.toFixed(1)}`}</RedPlayer>
+                            changeColor={stat?.data1 === "NULL" || stat?.data1 < stat?.data0}
+                          >{`${stat?.data0 !== "NULL" ? stat?.data0.toFixed(1) : "-"}`}</RedPlayer>
                       <img
                         src={
-                          stat?.data1 > stat?.data0
-                            ? "Images/ico-compare-right-arrow.png"
-                            : "Images/ico-compare-left-arrow.png"
+                              stat?.data0 === "NULL" ? "Images/ico-compare-right-arrow.png" :
+                                stat?.data1 === "NULL" ? "Images/ico-compare-left-arrow.png" :
+                                  stat?.data1 > stat?.data0
+                                    ? "Images/ico-compare-right-arrow.png"
+                                    : "Images/ico-compare-left-arrow.png"
                         }
                         alt="arrowIcon"
                       />
                       <BluePlayer
-                        changeColor={stat?.data1 > stat?.data0}
-                      >{`${stat?.data1.toFixed(1)}`}</BluePlayer>
+                            changeColor={stat?.data0 === "NULL" || stat?.data1 > stat?.data0}
+                          >{`${stat?.data1 !== "NULL" ? stat?.data1.toFixed(1) : "-"}`}</BluePlayer>
                         </>
                       }
                     </div>
@@ -647,19 +651,21 @@ function Stats() {
                         :
                         <>
                       <RedPlayer
-                        changeColor={stat?.data1 < stat?.data0}
-                      >{`${stat?.data0.toFixed(1)}`}</RedPlayer>
+                            changeColor={stat?.data1 === "NULL" || stat?.data1 < stat?.data0}
+                          >{`${stat?.data0 !== "NULL" ? stat?.data0.toFixed(1) : "-"}`}</RedPlayer>
                       <img
                         src={
-                          stat?.data1 > stat?.data0
-                            ? "Images/ico-compare-right-arrow.png"
-                            : "Images/ico-compare-left-arrow.png"
+                              stat?.data0 === "NULL" ? "Images/ico-compare-right-arrow.png" :
+                                stat?.data1 === "NULL" ? "Images/ico-compare-left-arrow.png" :
+                                  stat?.data1 > stat?.data0
+                                    ? "Images/ico-compare-right-arrow.png"
+                                    : "Images/ico-compare-left-arrow.png"
                         }
                         alt="arrowIcon"
                       />
                       <BluePlayer
-                        changeColor={stat?.data1 > stat?.data0}
-                      >{`${stat?.data1.toFixed(1)}`}</BluePlayer>
+                            changeColor={stat?.data0 === "NULL" || stat?.data1 > stat?.data0}
+                          >{`${stat?.data1 !== "NULL" ? stat?.data1.toFixed(1) : "-"}`}</BluePlayer>
                         </>
                       }
                     </div>
@@ -677,19 +683,21 @@ function Stats() {
                         :
                         <>
                       <RedPlayer
-                        changeColor={stat?.data1 < stat?.data0}
-                      >{`${stat?.data0.toFixed(1)}`}</RedPlayer>
+                            changeColor={stat?.data1 === "NULL" || stat?.data1 < stat?.data0}
+                          >{`${stat?.data0 !== "NULL" ? stat?.data0.toFixed(1) : "-"}`}</RedPlayer>
                       <img
                         src={
-                          stat?.data1 > stat?.data0
-                            ? "Images/ico-compare-right-arrow.png"
-                            : "Images/ico-compare-left-arrow.png"
+                              stat?.data0 === "NULL" ? "Images/ico-compare-right-arrow.png" :
+                                stat?.data1 === "NULL" ? "Images/ico-compare-left-arrow.png" :
+                                  stat?.data1 > stat?.data0
+                                    ? "Images/ico-compare-right-arrow.png"
+                                    : "Images/ico-compare-left-arrow.png"
                         }
                         alt="arrowIcon"
                       />
                       <BluePlayer
-                        changeColor={stat?.data1 > stat?.data0}
-                      >{`${stat?.data1.toFixed(1)}`}</BluePlayer>
+                            changeColor={stat?.data0 === "NULL" || stat?.data1 > stat?.data0}
+                          >{`${stat?.data1 !== "NULL" ? stat?.data1.toFixed(1) : "-"}`}</BluePlayer>
                         </>
                       }
                     </div>
