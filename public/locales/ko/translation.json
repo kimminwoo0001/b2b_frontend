@@ -320,7 +320,9 @@
       "lose": "패",
       "ageLabel": "세",
       "place": "위",
-      "noEnoughMatch": "출전 경기 부족"
+      "noEnoughMatch": "출전 경기 부족",
+      "min": "분",
+      "sec": "초"
     },
     "comparison": {
       "overview": "기본정보",
