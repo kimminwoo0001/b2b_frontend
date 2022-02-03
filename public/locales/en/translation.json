@@ -324,7 +324,9 @@
       "lose": "L",
       "ageLabel": "",
       "place": "",
-      "noEnoughMatch": "No enough matches."
+      "noEnoughMatch": "No enough matches.",
+      "min": "m",
+      "sec": "s"
     },
     "comparison": {
       "overview": "Overview",

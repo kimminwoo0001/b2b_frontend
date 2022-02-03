@@ -170,7 +170,9 @@ function Stats() {
           // setOppLineStat(Object.values(response?.data.oppPlayer.LineStat));
           // setMatch(Object.values(response?.data.player.MatchStat));
           // setOppMatch(Object.values(response?.data.oppPlayer.MatchStat));
-          setStatData(Object.values(e?.tendencyStat));
+          // setStatData(Object.values(e?.tendencyStat));
+          setStatData(e?.tendencyStat2);
+
         }
         // setLoading(false);
         dispatch(Loading(false));
@@ -652,7 +654,7 @@ function Stats() {
                         <>
                       <RedPlayer
                             changeColor={stat?.data1 === "NULL" || stat?.data1 < stat?.data0}
-                          >{`${stat?.data0 !== "NULL" ? stat?.data0.toFixed(1) : "-"}`}</RedPlayer>
+                          >{`${stat?.data0 && stat?.data0 !== "NULL" ? stat?.data0.toFixed(1) : "-"}`}</RedPlayer>
                       <img
                         src={
                               stat?.data0 === "NULL" ? "Images/ico-compare-right-arrow.png" :
@@ -665,7 +667,7 @@ function Stats() {
                       />
                       <BluePlayer
                             changeColor={stat?.data0 === "NULL" || stat?.data1 > stat?.data0}
-                          >{`${stat?.data1 !== "NULL" ? stat?.data1.toFixed(1) : "-"}`}</BluePlayer>
+                          >{`${stat?.data1 && stat?.data1 !== "NULL" ? stat?.data1.toFixed(1) : "-"}`}</BluePlayer>
                         </>
                       }
                     </div>

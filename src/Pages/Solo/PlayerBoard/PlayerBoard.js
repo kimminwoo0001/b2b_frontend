@@ -20,6 +20,7 @@ import axiosRequest from "../../../lib/axiosRequest";
 import ExcelExport from "../../../Components/UtilityComponent/ExcelExport";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import orderStats from "../../../lib/orderStats";
+import addZero from '../../../lib/addZero';
 
 function PlayerBoard() {
   //선수 보고서 => 선수 상황판
@@ -56,6 +57,13 @@ function PlayerBoard() {
   );
 
 
+  const secToMin = (sec) => {
+    let mm = addZero(Math.floor(sec / 60));
+    let ss = addZero(Math.floor(sec % 60));
+
+    return `${mm}${t("solo.playerboard.min")} ${ss}${t("solo.playerboard.sec")}`;
+  }
+
   useEffect(() => {
     GetPlayerBoardData();
     //GetPlayerSummary();
@@ -84,13 +92,6 @@ function PlayerBoard() {
       url,
       params,
       function (e) {
-        //const data = e.data;
-        // var arrNumber = [0, 0, 0, 0, 0, 0, 0];
-
-        // for (var i = 0; i < 7; i++) {
-        //   arrNumber[i] = data.stats.lineStats[`val${i}`];
-        // }
-
         setInfo(e.info);
         setCarrer(e.records.careerrecords);
         setChampRecord(Object.values(e.records.championrecords));
@@ -99,19 +100,12 @@ function PlayerBoard() {
         // setUserPlayerTotal(Object.values(data.soloInfo.userPlayerTotal));
         setSbr(e.stats.sbrStats);
 
-        // val1~ 순서대로 출력
-
         // 라인전 지표 
-        const lineResult = orderStats(e.stats.lineStats)
-        setLine(Object.values(lineResult));
-
+        setLine(e.stats.lineStats2)
         // 교전/로밍/갱킹 지표
-        const engageResult = orderStats(e.stats.engagementStats)
-        setEngage(Object.values(engageResult));
-
+        setEngage(e.stats.engagementStats2);
         // 성향 지표
-        const personalityResult = orderStats(e.stats.personalityStats)
-        setPersonality(Object.values(personalityResult));
+        setPersonality(e.stats.personalityStats2);
 
         setGraphDomain(e.trends);
         setMatchInfo(e.stats.matchStats);
@@ -300,7 +294,7 @@ function PlayerBoard() {
             <div className="PerformanceValue">
               <SbrStat>{sbr?.sbrAvg.toFixed(1)}</SbrStat>
               <SbrPrice isChampNotSelected={filters.champion !== ""}>
-                {sbr?.price > 0 ? " / " + sbr?.price + "위" : "출전 경기 부족"}
+                {sbr?.price > 0 ? " / " + sbr?.price + "위" : "/출전 경기 부족"}
               </SbrPrice>
             </div>
           </div>
@@ -596,11 +590,14 @@ function PlayerBoard() {
                           placement="top"
                         >
                           <td className="StatNum">
-                              {lang === "ko" ? title.name === "첫 텔레포트 사용 시간 (초)" ? "첫 텔레포트 시간 (초)" : title.name : title.eng}
+                              {lang === "ko" ? title.name === "첫 텔레포트 사용 시간 (초)"
+                                ? "첫 텔레포트 시간" : title.name : title.eng === "First Teleport Time (sec)"
+                                ? "First Teleport Time" : title.eng}
                           </td>
                         </Tippy>
-
-                        <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
+                          <LeagueValue>{title.name === "첫 텔레포트 사용 시간 (초)" ?
+                            secToMin(title.leaguedata.toFixed(1))
+                            : title.leaguedata.toFixed(1)}</LeagueValue>
                         <td className="Icon">
                           <img
                             src={
@@ -617,7 +614,9 @@ function PlayerBoard() {
                           className="playerValue"
                           changeColor={title.leaguedata > title.data}
                         >
-                          {title.data.toFixed(1)}
+                            {title.name === "첫 텔레포트 사용 시간 (초)" ?
+                              secToMin(title.data.toFixed(1))
+                              : title.data.toFixed(1)}
                         </PlayerValue>
                       </MapStat>
                     );
