@@ -61,7 +61,7 @@ function PlayerBoard() {
     let mm = addZero(Math.floor(sec / 60));
     let ss = addZero(Math.floor(sec % 60));
 
-    return `${mm}m ${ss}s`;
+    return `${mm}${t("solo.playerboard.min")} ${ss}${t("solo.playerboard.sec")}`;
   }
 
   useEffect(() => {
@@ -491,7 +491,6 @@ function PlayerBoard() {
                           className="playerValue"
                           changeColor={title.leaguedata > title.data}
                         >
-                          {/* {title.toFixed(1)}*/}
                             {
                               title.name === "솔로킬" || title.name.includes("횟수")
                               ? title.data.toFixed(2) : title.data.toFixed(1)
@@ -554,7 +553,6 @@ function PlayerBoard() {
                           className="playerValue"
                           changeColor={title.leaguedata > title.data}
                         >
-                          {/* {title.toFixed(1)} */}
                           {title.name.includes("빈도")
                           ? title.data.toFixed(2) : title.data.toFixed(1)}
                         </PlayerValue>

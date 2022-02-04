@@ -13,7 +13,6 @@ import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import timeFormat from "../../../lib/timeFormat";
 import axiosRequest from "../../../lib/axiosRequest";
-import { style } from "dom-helpers";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 const WardSlider = withStyles({
@@ -36,6 +35,35 @@ const WardSlider = withStyles({
   valueLabel: {
     left: "calc(-50%)",
     top: -30,
+    // class^="PrivateValueLabel-circle" 타임스탬프 배경 스타일링 
+    "& > span": {
+      minWidth: 50,
+      height: 23,
+      transform: "rotate(0deg) translateX(-35%) translateY(5px)",
+      borderRadius: 3,
+      "&::before" : {
+        content: "",
+        position: "absolute",
+        display: "block",
+        width: 0,
+        left: 50,
+        bottom: 10,
+        border: "15px solid transparent",
+        borderBottom: 0,
+        borderTop: "7px solid #5942ba",
+        transform: "translate(-50%, calc(100% + 5px))",
+      }
+  },
+  // class^="PrivateValueLabel-label" 타임스탬프 내부 스타일링
+    "& > span > span": {
+      margin: 0,
+      whiteSpace: "nowrap",
+      padding: 0,
+      fontFamily: "Poppins",
+      fontSize: 12,
+      fontWeight: "bold",
+      transform: "rotate(0deg) !important"
+  }
   },
   track: {
     height: 6,
@@ -948,7 +976,8 @@ function SetByChampion({ minFrom, setMinFrom }) {
 export default SetByChampion;
 
 const SliderContainer = styled.div`
-  span [class^="PrivateValueLabel-circle"] {
+
+  /* span [class^="PrivateValueLabel-circle"] {
     min-width: 50px;
     height: 23px;
     transform: rotate(0deg) translateX(-35%) translateY(5px);
@@ -1007,7 +1036,7 @@ span [class^="jss50"] {
     font-size: 12px;
     font-weight: bold;
     transform: rotate(0deg) !important;
-  }
+  } */
 
 `;
 
