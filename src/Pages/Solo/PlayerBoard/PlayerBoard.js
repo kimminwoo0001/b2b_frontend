@@ -61,7 +61,7 @@ function PlayerBoard() {
     let mm = addZero(Math.floor(sec / 60));
     let ss = addZero(Math.floor(sec % 60));
 
-    return `${mm}${t("solo.playerboard.min")} ${ss}${t("solo.playerboard.sec")}`;
+    return `${mm}m ${ss}s`;
   }
 
   useEffect(() => {
