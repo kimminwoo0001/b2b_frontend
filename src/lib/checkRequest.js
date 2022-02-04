@@ -47,7 +47,7 @@ export default function checkRequest(data) {
       value: false,
       objStore: {
         status: "token",
-        confirmFuncId: "token",
+        confirmFuncId: pagePath === "/login" ? "token" : "/login",
         // desc: i18next.t("alert.logout.sessionExpires"),
         desc: pagePath === "/login" ? i18next.t("alert.logout.loginFail") : i18next.t("alert.logout.sessionExpires"),
         isOpen: true,
