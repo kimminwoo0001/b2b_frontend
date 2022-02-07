@@ -91,7 +91,7 @@ function SelectObject({ setPeriod, period, setPositionOpen }) {
             </Period>
           </Labels>
         </WhichTerm>
-        <WhichTerm
+        {/* <WhichTerm
           onClick={() => setPeriod("firstreturn")}
           changeColor={period === "firstreturn"}
         >
@@ -111,7 +111,7 @@ function SelectObject({ setPeriod, period, setPositionOpen }) {
               {t("video.object.return2")}
             </Period>
           </Labels>
-        </WhichTerm>
+        </WhichTerm> */}
       </SelectTerm>
     </SelectObjectContainer>
   );
