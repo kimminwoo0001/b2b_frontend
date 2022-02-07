@@ -22,6 +22,8 @@ import {
   SetIsNeedChkLogin,
   UserChargeTime,
   UserID,
+  UserName,
+  UserTeamName,
   UserToken,
 } from "../../redux/modules/user";
 
@@ -140,6 +142,8 @@ const CheckLogin = ({}) => {
             dispatch(Language(token.lang));
             dispatch(UserToken(token.token));
             dispatch(UserChargeTime(token.charge_time));
+            dispatch(UserName(token.name));
+            dispatch(UserTeamName(token.teamName));
             history.push("/");
           }
         },

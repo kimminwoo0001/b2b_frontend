@@ -11,6 +11,8 @@ import {
   UserChargeTime,
   SET_IS_NEED_CHK_LOGIN,
   SetIsNeedChkLogin,
+  UserName,
+  UserTeamName,
 } from "../../redux/modules/user";
 import { useHistory } from "react-router-dom";
 import { Language } from "../../redux/modules/locale";
@@ -71,8 +73,10 @@ function Login() {
             console.log("token:", token);
             dispatch(Language(token.lang));
             dispatch(UserID(id));
+            dispatch(UserTeamName(token.teamName));
             dispatch(UserToken(token.token));
             dispatch(UserChargeTime(token.charge_time));
+            dispatch(UserName(token.name))
             history.push("/");
           }
           dispatch(Loading(false));

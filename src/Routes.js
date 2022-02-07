@@ -51,7 +51,9 @@ function Routes() {
       "pluginKey": "7cc25793-4246-4495-80e9-97a59767ef03", //please fill with your plugin key
       "memberId": user.id, //fill with user id
       "profile": {
-        "name": user.id, //fill with user name
+        "name": user.name, //fill with user name
+        "teamName": user.teamName ?? "Developer",
+        "email": user.id,
         // "mobileNumber": "YOUR_USER_MOBILE_NUMBER", //fill with user phone number
         // "CUSTOM_VALUE_1": "VALUE_1", //any other custom meta data
         // "CUSTOM_VALUE_2": "VALUE_2"
