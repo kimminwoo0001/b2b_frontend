@@ -13,7 +13,7 @@ import qs from "qs";
 import WardTooltip from "./WardTooltip";
 import axiosRequest from "../../../lib/axiosRequest";
 import { duration } from "@material-ui/core";
-import { SetModalInfo } from "../../../redux/modules/modalvalue";
+import { SetDesc, SetIsOpen, SetIsSelector, SetModalInfo } from "../../../redux/modules/modalvalue";
 
 const sectorName = {
   0: 1,
@@ -157,7 +157,9 @@ function WardMapping() {
             });
             setSector(arrSum);
           } else {
-            alert(t("video.vision.noData"));
+            dispatch(SetIsSelector(false));
+            dispatch(SetIsOpen(true));
+            dispatch(SetDesc(t("video.vision.noData")));
             setTotalWard(0);
             setSector([]);
           }
@@ -175,30 +177,42 @@ function WardMapping() {
   const handleWardClick = () => {
     if (tab === "team") {
       if (!filters.team) {
-        alert(t("video.vision.selectTeam"));
+        dispatch(SetIsSelector(false));
+        dispatch(SetIsOpen(true));
+        dispatch(SetDesc(t("video.vision.selectTeam")));
         return;
       }
       if (secondTime - firstTime <= 0) {
-        alert(t("video.vision.noTime"));
+        dispatch(SetIsSelector(false));
+        dispatch(SetIsOpen(true));
+        dispatch(SetDesc(t("video.vision.noTime")));
         return;
       } else {
         fetchingWardData("all");
       }
     } else {
       if (!filters.team) {
-        alert(t("video.vision.selectTeam"));
+        dispatch(SetIsSelector(false));
+        dispatch(SetIsOpen(true));
+        dispatch(SetDesc(t("video.vision.selectTeam")));
         return;
       }
       if (!filters.player) {
-        alert(t("video.vision.selectPlayer"));
+        dispatch(SetIsSelector(false));
+        dispatch(SetIsOpen(true));
+        dispatch(SetDesc(t("video.vision.selectPlayer")));
         return;
       }
       if (!filters.champion_eng) {
-        alert(t("video.vision.selectChamp"));
+        dispatch(SetIsSelector(false));
+        dispatch(SetIsOpen(true));
+        dispatch(SetDesc(t("video.vision.selectChamp")));
         return;
       }
       if (secondTime - firstTime <= 0) {
-        alert(t("video.vision.noTime"));
+        dispatch(SetIsSelector(false));
+        dispatch(SetIsOpen(true));
+        dispatch(SetDesc(t("video.vision.noTime")));
         return;
       } else {
         fetchingWardData("all");
