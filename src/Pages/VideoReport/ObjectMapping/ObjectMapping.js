@@ -15,7 +15,7 @@ import ObjectTooltip from "./ObjectTooltip";
 import addZero from "../../../lib/addZero";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
-import { SetModalInfo } from "../../../redux/modules/modalvalue";
+import { SetDesc, SetIsOpen, SetIsSelector, SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function useInterval(callback) {
   const savedCallback = useRef();
@@ -111,14 +111,21 @@ function ObjectMapping() {
         params,
         function (e) {
           const dto = e;
-          setMinTime(
-            dto?.position[0].realCount ? dto?.position[0].realCount : 0
-          );
-          setMaxTime(dto.position.length - 1);
-          setCurrentPos(dto.position);
-          setChampInfo(dto.info);
-          setPlay(true);
-          console.log(dto.position);
+          if (dto.position.length !== 0) {
+            setMinTime(
+              dto?.position[0].realCount ? dto?.position[0].realCount : 0
+            );
+            setMaxTime(dto.position.length - 1);
+            setCurrentPos(dto.position);
+            setChampInfo(dto.info);
+            setPlay(true);
+            console.log(dto.position);
+          } else {
+            dispatch(SetIsSelector(false));
+            dispatch(SetIsOpen(true));
+            dispatch(SetDesc(t("video.vision.noData")));
+          }
+
         },
         function (objStore) {
           dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
