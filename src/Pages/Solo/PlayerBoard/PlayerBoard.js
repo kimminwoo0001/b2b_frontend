@@ -473,7 +473,8 @@ function PlayerBoard() {
                             {lang === "ko" ? title.name : title.eng}
                           </td>
                         </Tippy>
-                        <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
+                        <LeagueValue>{title.name === "솔로킬" || title.name.includes("횟수")
+                        ? title.leaguedata.toFixed(2) : title.leaguedata.toFixed(1)}</LeagueValue>
                         <td className="Icon">
                           <img
                             src={
@@ -490,9 +491,9 @@ function PlayerBoard() {
                           className="playerValue"
                           changeColor={title.leaguedata > title.data}
                         >
-                          {/* {title.toFixed(1)}*/}
                             {
-                              title.data.toFixed(1)
+                              title.name === "솔로킬" || title.name.includes("횟수")
+                              ? title.data.toFixed(2) : title.data.toFixed(1)
                             }
                         </PlayerValue>
                       </MapStat>
@@ -534,7 +535,8 @@ function PlayerBoard() {
                             {lang === "ko" ? title.name : title.eng}
                           </td>
                         </Tippy>
-                        <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
+                        <LeagueValue>{title.name.includes("빈도")
+                        ? title.leaguedata.toFixed(2) : title.leaguedata.toFixed(1)}</LeagueValue>
                         <td className="Icon">
                           <img
                             src={
@@ -551,8 +553,8 @@ function PlayerBoard() {
                           className="playerValue"
                           changeColor={title.leaguedata > title.data}
                         >
-                          {/* {title.toFixed(1)} */}
-                          {title.data.toFixed(1)}
+                          {title.name.includes("빈도")
+                          ? title.data.toFixed(2) : title.data.toFixed(1)}
                         </PlayerValue>
                       </MapStat>
                     );
@@ -597,7 +599,7 @@ function PlayerBoard() {
                         </Tippy>
                           <LeagueValue>{title.name === "첫 텔레포트 사용 시간 (초)" ?
                             secToMin(title.leaguedata.toFixed(1))
-                            : title.leaguedata.toFixed(1)}</LeagueValue>
+                            : title.name === "텔레포트 선제 사용빈도" || title.name === "교전 참여 횟수" ? title.leaguedata.toFixed(2) : title.leaguedata.toFixed(1)}</LeagueValue>
                         <td className="Icon">
                           <img
                             src={
@@ -616,7 +618,7 @@ function PlayerBoard() {
                         >
                             {title.name === "첫 텔레포트 사용 시간 (초)" ?
                               secToMin(title.data.toFixed(1))
-                              : title.data.toFixed(1)}
+                              : title.name === "텔레포트 선제 사용빈도"|| title.name === "교전 참여 횟수" ? title.data.toFixed(2) : title.data.toFixed(1)}
                         </PlayerValue>
                       </MapStat>
                     );
