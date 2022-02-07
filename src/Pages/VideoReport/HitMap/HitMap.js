@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -34,6 +34,11 @@ function HitMap() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   //히트맵 데이터 fetch 함수
+
+  useEffect(() => {
+    getThreeMinBlue({});
+    getEightMinBlue({});
+  }, [filters.team])
 
   const fetchingHeatMapData = () => {
     const { team, player, champion_eng, oppteam, oppplayer, oppchampion_eng } =
@@ -283,8 +288,8 @@ function HitMap() {
                   ? true
                   : false
                 : tab === "champion"
-                ? filters.champion_eng && filters.oppchampion_eng
-                : false
+                  ? filters.champion_eng && filters.oppchampion_eng
+                  : false
             }
           >
             {t("video.heatmap.apply")}

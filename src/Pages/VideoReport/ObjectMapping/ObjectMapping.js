@@ -227,6 +227,30 @@ function ObjectMapping() {
     setCompareOpen(false);
   }, [filters.player]);
 
+  useEffect(() => {
+    setCurrentPos()
+    setChampInfo();
+    //Range 핸들링 상태값
+    setRange(0);
+    setMinTime();
+    setMaxTime();
+    setPlay(false);
+    setFast(false);
+    setPause(false);
+    // 토글 버튼 상태값
+    setCustomOpen(true);
+    setGameOpen(false);
+    setObjectOpen(false);
+    setPositionOpen(false);
+    setCompareOpen(false);
+    // query string 상태값
+    setGameData([]);
+    setSide("all");
+    setPeriod("all");
+    setPosition(["top", "jng", "mid", "bot", "sup"]);
+    setGameSelect([]);
+  }, [filters.team])
+
   return (
     <ObjectMappingContainer>
       <StepFilter>

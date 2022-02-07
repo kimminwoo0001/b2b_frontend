@@ -41,7 +41,7 @@ const WardSlider = withStyles({
       height: 23,
       transform: "rotate(0deg) translateX(-35%) translateY(5px)",
       borderRadius: 3,
-      "&::before" : {
+      "&::before": {
         content: "",
         position: "absolute",
         display: "block",
@@ -53,8 +53,8 @@ const WardSlider = withStyles({
         borderTop: "7px solid #5942ba",
         transform: "translate(-50%, calc(100% + 5px))",
       }
-  },
-  // class^="PrivateValueLabel-label" 타임스탬프 내부 스타일링
+    },
+    // class^="PrivateValueLabel-label" 타임스탬프 내부 스타일링
     "& > span > span": {
       margin: 0,
       whiteSpace: "nowrap",
@@ -63,7 +63,7 @@ const WardSlider = withStyles({
       fontSize: 12,
       fontWeight: "bold",
       transform: "rotate(0deg) !important"
-  }
+    }
   },
   track: {
     height: 6,
@@ -149,6 +149,12 @@ function SetByChampion({ minFrom, setMinFrom }) {
       };
     }, [ref, isActive5, filters, champArray2]);
   }
+
+  useEffect(() => {
+    setFilterData({});
+    setChampArray([]);
+    setChampArray2([]);
+  }, [filters.team])
 
   const pushChampion = (champion) => {
     if (
@@ -645,9 +651,8 @@ function SetByChampion({ minFrom, setMinFrom }) {
                     {filterData?.champion ? (
                       <nav
                         ref={wrapperRef}
-                        className={`menu3 ${
-                          isActive2.current ? "active" : "inactive"
-                        }`}
+                        className={`menu3 ${isActive2.current ? "active" : "inactive"
+                          }`}
                       >
                         <ul>
                           <Menu3li
@@ -666,7 +671,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                             <input
                               checked={
                                 filterData?.champion?.length ===
-                                champArray.length
+                                  champArray.length
                                   ? true
                                   : false
                               }
@@ -873,9 +878,8 @@ function SetByChampion({ minFrom, setMinFrom }) {
                     {filterData?.oppchampion ? (
                       <nav
                         ref={wrapperRef2}
-                        className={`menu3 ${
-                          isActive5.current ? "active" : "inactive"
-                        }`}
+                        className={`menu3 ${isActive5.current ? "active" : "inactive"
+                          }`}
                       >
                         <ul>
                           <Menu3li
@@ -895,7 +899,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
                             <input
                               checked={
                                 filterData?.oppchampion?.length ===
-                                champArray2.length
+                                  champArray2.length
                                   ? true
                                   : false
                               }
@@ -960,7 +964,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
               aria-labelledby="range-slider"
               getAriaValueText={timeFormat.hitmap}
               valueLabelFormat={timeFormat.hitmap}
-              // ValueLabelComponent={ValueLabelComponent}
+            // ValueLabelComponent={ValueLabelComponent}
             />
           </SliderContainer>
           <DefaultTime>
@@ -1268,7 +1272,7 @@ const DropDownToggle = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: ${(props) =>
-      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
+    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
     width: 140px;
   }
 
@@ -1282,7 +1286,7 @@ const DropDownToggle = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: ${(props) =>
-      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
+    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
     width: 124px;
     /* ::first-letter {
       color: #f04545;
