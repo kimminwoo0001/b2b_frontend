@@ -46,7 +46,7 @@ function Routes() {
     />
   );
 
-  if (user.id) {
+  if (user.id && user.name) {
     ChannelService.boot({
       "pluginKey": "7cc25793-4246-4495-80e9-97a59767ef03", //please fill with your plugin key
       "memberId": user.id, //fill with user id
