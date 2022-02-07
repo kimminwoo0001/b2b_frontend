@@ -153,11 +153,11 @@ function HitMap() {
                 console.log("Dead");
               } else {
                 let x =
-                  ((Number(dto.player[i].x1) + Number(dto.player[i].x2)) / 2) *
-                  1.824;
+                  Math.floor(((Number(dto.player[i].x1) + Number(dto.player[i].x2)) / 2) *
+                    1.824);
                 let y =
-                  ((Number(dto.player[i].y1) + Number(dto.player[i].y2)) / 2) *
-                  1.824;
+                  Math.floor(((Number(dto.player[i].y1) + Number(dto.player[i].y2)) / 2) *
+                    1.824);
                 data.push({ x: x, y: y, value: 0.5 });
               }
             }
@@ -204,11 +204,11 @@ function HitMap() {
               console.log("Dead");
             } else {
               let x =
-                ((Number(dto.player[i].x1) + Number(dto.player[i].x2)) / 2) *
-                1.824;
+                Math.floor(((Number(dto.player[i].x1) + Number(dto.player[i].x2)) / 2) *
+                  1.824);
               let y =
-                ((Number(dto.player[i].y1) + Number(dto.player[i].y2)) / 2) *
-                1.824;
+                Math.floor(((Number(dto.player[i].y1) + Number(dto.player[i].y2)) / 2) *
+                  1.824);
               data.push({ x: x.toFixed(0), y: y.toFixed(0), value: 0.5 });
             }
           }

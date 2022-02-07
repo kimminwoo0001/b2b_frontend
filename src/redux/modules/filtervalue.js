@@ -378,10 +378,10 @@ const initialState = {
   getoppplayer: "",
   // champion: "",
   champion: [],
-  oppchampion: "",
+  oppchampion: [],
   // champion_eng: "",
   champion_eng: [],
-  oppchampion_eng: "",
+  oppchampion_eng: [],
   tab: "",
   loading: false,
   resetchamp: "",
@@ -537,9 +537,9 @@ export default function FilterReducer(state = initialState, action) {
         oppplayer: "",
         oppteam: "",
         champion: [],
-        oppchampion: "",
+        oppchampion: [],
         champion_eng: [],
-        oppchampion_eng: "",
+        oppchampion_eng: [],
       };
     case RESET_OBJECT_MAPPINGTAB:
       return {
