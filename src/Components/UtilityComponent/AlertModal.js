@@ -14,6 +14,7 @@ const customStyles = {
     right: 0,
     bottom: 0,
     backgroundColor: "rgba(0, 0, 0, 0.75)",
+    zIndex: 1
   },
   content: {
     top: "50%",

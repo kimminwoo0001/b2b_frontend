@@ -38,6 +38,7 @@ const WardSlider = withStyles({
     // class^="PrivateValueLabel-circle" 타임스탬프 배경 스타일링 
     "& > span": {
       minWidth: 50,
+      zIndex: 0,
       height: 23,
       transform: "rotate(0deg) translateX(-35%) translateY(5px)",
       borderRadius: 3,

@@ -41,7 +41,7 @@ const WardSlider = withStyles({
       height: 23,
       transform: "rotate(0deg) translateX(-35%) translateY(5px)",
       borderRadius: 3,
-      "&::before" : {
+      "&::before": {
         content: "",
         position: "absolute",
         display: "block",
@@ -53,8 +53,8 @@ const WardSlider = withStyles({
         borderTop: "7px solid #5942ba",
         transform: "translate(-50%, calc(100% + 5px))",
       }
-  },
-  // class^="PrivateValueLabel-label" 타임스탬프 내부 스타일링
+    },
+    // class^="PrivateValueLabel-label" 타임스탬프 내부 스타일링
     "& > span > span": {
       margin: 0,
       whiteSpace: "nowrap",
@@ -63,7 +63,7 @@ const WardSlider = withStyles({
       fontSize: 12,
       fontWeight: "bold",
       transform: "rotate(0deg) !important"
-  }
+    }
   },
   track: {
     height: 6,
@@ -194,7 +194,7 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
             aria-labelledby="range-slider"
             // getAriaValueText={valuetext}
             valueLabelFormat={timeFormat.ward}
-            // ValueLabelComponent={ValueLabelComponent}
+          // ValueLabelComponent={ValueLabelComponent}
           />
         </SliderContainer>
 
