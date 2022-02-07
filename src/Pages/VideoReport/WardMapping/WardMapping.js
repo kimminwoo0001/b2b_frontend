@@ -56,6 +56,14 @@ function WardMapping() {
   let firstTime = minFrom[0] * 5100;
   let secondTime = minFrom[1] * 5100;
 
+  useEffect(() => {
+    setWard([]);
+    setSector([]);
+    setTotalWard();
+    setMapSector("");
+    setIsClicked(false);
+  }, [filters.team])
+
 
   const handleTimeReset = () => {
     // setMinFrom(t("video.vision.selectMin"));
@@ -293,7 +301,7 @@ function WardMapping() {
                   <button
                     onClick={() => {
                       mapSector === "" ||
-                      mapSector !== `Images/minimap_new/15.png`
+                        mapSector !== `Images/minimap_new/15.png`
                         ? setMapSector(`Images/minimap_new/15.png`)
                         : setMapSector("");
                     }}
@@ -352,9 +360,8 @@ function WardMapping() {
       <RightSection>
         <WardMap
           style={{
-            backgroundImage: `url(${
-              mapSector ? mapSector : "Images/ward_map.png"
-            })`,
+            backgroundImage: `url(${mapSector ? mapSector : "Images/ward_map.png"
+              })`,
           }}
         >
           {ward?.map((ward, idx) => {

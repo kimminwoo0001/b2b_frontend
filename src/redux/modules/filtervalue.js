@@ -536,9 +536,9 @@ export default function FilterReducer(state = initialState, action) {
         player: "",
         oppplayer: "",
         oppteam: "",
-        champion: "",
+        champion: [],
         oppchampion: "",
-        champion_eng: "",
+        champion_eng: [],
         oppchampion_eng: "",
       };
     case RESET_OBJECT_MAPPINGTAB:

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import styled, { css } from "styled-components";
@@ -41,7 +41,7 @@ const WardSlider = withStyles({
       height: 23,
       transform: "rotate(0deg) translateX(-35%) translateY(5px)",
       borderRadius: 3,
-      "&::before" : {
+      "&::before": {
         content: "",
         position: "absolute",
         display: "block",
@@ -53,8 +53,8 @@ const WardSlider = withStyles({
         borderTop: "7px solid #5942ba",
         transform: "translate(-50%, calc(100% + 5px))",
       }
-  },
-  // class^="PrivateValueLabel-label" 타임스탬프 내부 스타일링
+    },
+    // class^="PrivateValueLabel-label" 타임스탬프 내부 스타일링
     "& > span > span": {
       margin: 0,
       whiteSpace: "nowrap",
@@ -63,7 +63,7 @@ const WardSlider = withStyles({
       fontSize: 12,
       fontWeight: "bold",
       transform: "rotate(0deg) !important"
-  }
+    }
   },
   track: {
     height: 6,
@@ -97,6 +97,10 @@ function WardPlayerFilter({
   const [filterData, setFilterData] = useState({});
   const [champArray, setChampArray] = useState([]);
   const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    setChampArray([])
+  }, [filters.team])
 
 
   const clickChampionConfirm = () => {
@@ -855,7 +859,7 @@ function WardPlayerFilter({
             aria-labelledby="range-slider"
             getAriaValueText={timeFormat.ward}
             valueLabelFormat={timeFormat.ward}
-            // ValueLabelComponent={ValueLabelComponent}
+          // ValueLabelComponent={ValueLabelComponent}
           />
         </SliderContainer>
         <DefaultTime>
@@ -1152,7 +1156,7 @@ const DropDownToggle = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: ${(props) =>
-      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
+    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
     width: 142px;
   }
 
@@ -1166,7 +1170,7 @@ const DropDownToggle = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: ${(props) =>
-      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
+    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255, 0.3)`};
     width: 183px;
   }
 
