@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import styled, { css } from "styled-components";
 import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
-import { Reset_Map } from "../../../redux/modules/filtervalue";
+import { Reset_Map, Champion, SetChampion } from "../../../redux/modules/filtervalue";
 import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
 import { API } from "../../config";
@@ -90,10 +90,43 @@ function WardPlayerFilter({
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const [isActive1, setIsActive1] = useDetectOutsideClick(dropdownRef, false);
   const [isActive2, setIsActive2] = useDetectOutsideClick(dropdownRef, false);
+  // const isActive2 = useRef(false);
   const [isActive3, setIsActive3] = useDetectOutsideClick(dropdownRef, false);
   const [isActive4, setIsActive4] = useDetectOutsideClick(dropdownRef, false);
   const [isActive5, setIsActive5] = useDetectOutsideClick(dropdownRef, false);
   const [filterData, setFilterData] = useState({});
+  const [champArray, setChampArray] = useState([]);
+  const wrapperRef = useRef(null);
+
+
+  const clickChampionConfirm = () => {
+    setIsActive2(false);
+    // isActive2.current = false;
+    // setGameSelect([]);
+    // setGameOpen(true);
+    // setChampArray([]);
+    dispatch(SetChampion(champArray))
+    // getGame();
+    dispatch(
+      Reset_Map({
+        ...filters,
+        menu_num: filters.menu_num,
+        tab: filters.tab,
+        convertleague: filters.convertleague,
+        league: filters.league,
+        year: filters.year,
+        season: filters.season,
+        patch: filters.patch,
+
+        team: filters.team,
+        player: filters.player,
+        champion_eng: champArray,
+        oppteam: "",
+        oppplayer: "",
+        oppchampion_eng: "",
+      })
+    );
+  };
 
   const handleChange = (event, newValue) => {
     setMinFrom(newValue);
@@ -127,6 +160,28 @@ function WardPlayerFilter({
     }
   };
 
+
+  const pushChampion = (champion) => {
+    if (
+      champArray.find((e) => e === champion) &&
+      champion !== "all" &&
+      champion !== "none"
+    ) {
+      setChampArray(champArray.filter((e) => e !== champion));
+    } else if (
+      champArray.length >= 0 &&
+      champion !== "all" &&
+      champion !== "none"
+    ) {
+      setChampArray([...champArray.filter((e) => e !== ""), champion]);
+    } else if (champion === "all" && champion !== "none") {
+      setChampArray(filterData?.champion);
+    } else if (champion === "none") {
+      setChampArray([]);
+    }
+  };
+
+
   // mappingfilter/player response 가공
   const refinePlayerData = (data) => {
     let refined = [];
@@ -135,6 +190,9 @@ function WardPlayerFilter({
     }
     return refined;
   };
+
+
+
 
   const getPlayer = () => {
     try {
@@ -407,6 +465,7 @@ function WardPlayerFilter({
                         <li
                           key={idx}
                           onClick={() => {
+                            setChampArray([]);
                             dispatch(
                               Reset_Map({
                                 menu_num: filters.menu_num,
@@ -438,28 +497,104 @@ function WardPlayerFilter({
             </DropDownToggle>
             <DropDownToggle
               className="container"
-              changeColor={filters.champion_eng.length > 0}
+              changeColor={champArray.length > 0}
             >
               <div className="menu-container2">
                 <button
                   onClick={() => {
                     setIsActive2(!isActive2);
+                    // isActive2.current = false;
                     getChampion();
                   }}
                   className="menu-trigger2"
                 >
-                  <span className="Label2">
+                  {champArray && champArray.length !== 0 ? (
+                    <span className="Label3">
+                      <span className="champLength">
+                        {`${champArray.length} `}
+                      </span>
+                      {` ${t("video.object.champ")}`}
+                    </span>
+                  ) : (
+                    <span className="Label3">
+                      {t("video.object.selectChamp")}
+                    </span>
+                  )}
+                  {/* <span className="Label2">
                     {filters.champion_eng !== ""
                       ? filters.champion_eng
                       : t("video.vision.champ")}
-                  </span>
+                  </span> */}
                   <img
                     className="ArrowIcon"
                     src="Images/select-arrow.png"
                     alt="arrowIcon"
                   />
                 </button>
-                <nav
+
+                {/* 챔피언 중복선택 추가 */}
+                {filterData?.champion ? (
+                  <nav
+                    ref={dropdownRef}
+                    className={`menu3 ${isActive2 ? "active" : "inactive"}`}
+                  >
+                    <ul>
+                      <Menu3li
+                        onClick={() =>
+                          pushChampion(
+                            filterData?.champion?.length === champArray.length
+                              ? "none"
+                              : "all"
+                          )
+                        }
+                        isChecked={
+                          filterData?.champion?.length === champArray.length
+                        }
+                      >
+                        <input
+                          checked={
+                            filterData?.champion?.length === champArray.length
+                              ? true
+                              : false
+                          }
+                          type="checkbox"
+                          readOnly
+                        ></input>
+                        Select All
+                      </Menu3li>
+                      <div className="hr-line"></div>
+                      {filterData?.champion?.map((champion, idx) => {
+                        return (
+                          <Menu3li
+                            key={idx}
+                            onClick={() => pushChampion(champion)}
+                            isChecked={champArray.includes(champion)}
+                          >
+                            <input
+                              checked={
+                                champArray.includes(champion) ? true : false
+                              }
+                              type="checkbox"
+                              readOnly
+                            ></input>
+                            {champion}
+                          </Menu3li>
+                        );
+                      })}
+                      <button
+                        onClick={() => {
+                          clickChampionConfirm();
+                        }}
+                      >
+                        {t("video.object.confirm")}
+                      </button>
+                    </ul>
+                  </nav>
+                ) : (
+                  ""
+                )}
+                {/*  */}
+                {/* <nav
                   ref={dropdownRef}
                   className={`menu2 ${isActive2 ? "active" : "inactive"}`}
                 >
@@ -495,7 +630,7 @@ function WardPlayerFilter({
                       );
                     })}
                   </ul>
-                </nav>
+                </nav> */}
               </div>
             </DropDownToggle>
           </DropDownBox>
@@ -688,7 +823,7 @@ function WardPlayerFilter({
               </div>
             </DropDownToggle>
           </DropDownBox2>
-          <CompareButton onClick={() => setCompareOpen(!compareOpen)}>
+          {/* <CompareButton onClick={() => setCompareOpen(!compareOpen)}>
             <span>
               {compareOpen === true
                 ? t("video.vision.compare2")
@@ -702,7 +837,7 @@ function WardPlayerFilter({
               }
               alt="arrow"
             />
-          </CompareButton>
+          </CompareButton> */}
         </FilterBox>
       </Steps>
       <Steps>
@@ -936,6 +1071,9 @@ const DropDownToggle = styled.div`
   .menu-container {
   }
 
+  .menu-container2 {
+    position: relative;
+  }
   .menu-trigger {
     display: flex;
     align-items: center;
@@ -1032,6 +1170,23 @@ const DropDownToggle = styled.div`
     width: 183px;
   }
 
+  .Label3 {
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 12px;
+    letter-spacing: -0.6px;
+    text-align: left;
+    color: ${(props) => (props.changeColor ? `rgb(255, 255, 255)` : `#84818e`)};
+    width: 183px;
+    /* ::first-letter {
+      color: #f04545;
+    } */
+  }
+
+  .champLength {
+    color: #f04545;
+  }
+
+
   .Wrapper {
     display: flex;
     align-items: center;
@@ -1079,6 +1234,22 @@ const DropDownToggle = styled.div`
     z-index: 10;
   }
 
+  .menu3 {
+    background: #23212a;
+    border-radius: 10px;
+    position: absolute;
+    top: 10;
+    right: 1;
+    width: 183px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+    z-index: 10;
+  }
+
+
   .menu.active {
     opacity: 5;
     visibility: visible;
@@ -1087,6 +1258,13 @@ const DropDownToggle = styled.div`
   }
 
   .menu2.active {
+    opacity: 5;
+    visibility: visible;
+    transform: translateY(0);
+    z-index: 10111;
+  }
+
+  .menu3.active {
     opacity: 5;
     visibility: visible;
     transform: translateY(0);
@@ -1104,6 +1282,13 @@ const DropDownToggle = styled.div`
     list-style: none;
     padding: 0;
     margin: 0;
+    z-index: 99990;
+  }
+
+  .menu3 ul {
+    list-style: none;
+    padding: 0;
+    margin: 0px 8px;
     z-index: 99990;
   }
 
@@ -1145,4 +1330,98 @@ const DropDownToggle = styled.div`
       border-radius: 20px;
     }
   }
+
+  .menu3 button {
+    text-decoration: none;
+    display: block;
+    margin: 10px auto;
+    width: 164px;
+    height: 30px;
+    border-radius: 10px;
+    background-color: #5942ba;
+    font-family: SpoqaHanSansNeo;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    z-index: 9999;
+    // :hover {
+    //   background-color: rgb(60, 58, 72);
+  }
+
+
+
+  .hr-line {
+    width: 100%;
+    border-bottom: solid 1px rgb(67, 63, 78);
+    margin: 5px 0 7px;
+  }
+
+`;
+
+
+
+const Menu3li = styled.li`
+  margin-top: 4px;
+  text-decoration: none;
+  padding: 3px 5px;
+  display: flex;
+  width: 100%;
+  font-family: SpoqaHanSansNeo;
+  font-size: 13px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.75;
+  letter-spacing: normal;
+  text-align: left;
+  color: #fff;
+  cursor: pointer;
+  z-index: 9999;
+  
+
+  ${(props) =>
+    props.isChecked &&
+    css`
+      color: rgb(255, 255, 255);
+      background-color: rgba(22, 21, 28, 0.5);
+      border-radius: 10px;
+    `}
+  >  input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+
+    background-clip: content-box;
+    background: url("/Images/btn_check_off.svg") no-repeat;
+    margin-right: 8px;
+
+    &:checked {
+      background-color: #5942ba;
+      border: #5942ba;
+      border-radius: 2px;
+      background: url("/Images/btn_check_on.svg") no-repeat;
+      float: right;
+    }
+
+    &:focus {
+      outline: none !important;
+    }
+  }
+  :hover {
+    border-radius: 10px;
+    background-color: #3a3745;
+  }
+  
+
+  
 `;

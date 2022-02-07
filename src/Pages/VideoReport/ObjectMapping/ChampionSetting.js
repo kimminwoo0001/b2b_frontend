@@ -1402,7 +1402,7 @@ const Menu3li = styled.li`
     border-radius: 10px;
     background-color: #3a3745;
   }
-  }
+  
 
   
 `;
