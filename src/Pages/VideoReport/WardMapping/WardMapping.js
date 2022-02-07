@@ -77,7 +77,7 @@ function WardMapping() {
       />
     ),
   };
-
+  console.log(filters.championArray);
   //맵핑 데이터 fetch 함수
   const fetchingWardData = (wardside) => {
     try {
@@ -91,6 +91,7 @@ function WardMapping() {
         team: filters.team,
         player: filters.player,
         champion: filters.champion_eng,
+        // champion: filters.champion,
         compare: compareOpen ? "on" : "off",
         oppteam: filters.oppteam,
         oppplayer: filters.oppplayer,

@@ -44,6 +44,10 @@ export const SET_TEAM = "filtervalue/SET_TEAM";
 export const SET_PLAYER = "filtervalue/SET_PLAYER";
 export const SET_PATCH = "filtervalue/SET_PATCH";
 export const SELECT_ALL_BTN = "filtervalue/SELECT_ALL_BTN";
+export const SET_CHAMPIONS = "filtervalue/SET_CHAMPIONS";
+export const SET_CHAMPIONS_ENG = "filtervalue/SET_CHAMPIONS_ENG";
+
+
 
 
 
@@ -75,6 +79,8 @@ export const Champion = (champion) => {
     payload: champion,
   };
 };
+
+
 export const Opp_Champion = (champion) => {
   return {
     type: OPP_CHAMPION,
@@ -341,6 +347,21 @@ export const SetPatch = (payload) => {
   };
 };
 
+
+export const SetChampion = (payload) => {
+  return {
+    type: SET_CHAMPIONS,
+    payload,
+  };
+};
+
+export const SetChampionEng = (payload) => {
+  return {
+    type: SET_CHAMPIONS_ENG,
+    payload,
+  };
+};
+
 const initialState = {
   league: [],
   year: [],
@@ -355,9 +376,11 @@ const initialState = {
   position: "",
   getoppteam: "",
   getoppplayer: "",
-  champion: "",
+  // champion: "",
+  champion: [],
   oppchampion: "",
-  champion_eng: "",
+  // champion_eng: "",
+  champion_eng: [],
   oppchampion_eng: "",
   tab: "",
   loading: false,
@@ -632,6 +655,16 @@ export default function FilterReducer(state = initialState, action) {
       return {
         ...state,
         patch: action.payload,
+      };
+    case SET_CHAMPIONS:
+      return {
+        ...state,
+        champion: action.payload,
+      };
+    case SET_CHAMPIONS_ENG:
+      return {
+        ...state,
+        champion_eng: action.payload,
       };
     default:
       return state;
