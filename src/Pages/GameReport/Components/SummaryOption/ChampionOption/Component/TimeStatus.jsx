@@ -41,10 +41,14 @@ const TimeStatus = () => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const skillData =
+  const skillDataSet =
     gamevalue.fixedDataset[gamevalue.selectedTeam].players[
       gamevalue.selectedPosition
     ].info.skills;
+
+  const skillData = skillDataSet.filter((el, idx) => {
+    return skillDataSet.indexOf(el) === idx;
+  });
   const skillBuildData = getSkillSet(
     gamevalue.playerDataset[gamevalue.selectedParticipant].skill,
     gamevalue.gameTime

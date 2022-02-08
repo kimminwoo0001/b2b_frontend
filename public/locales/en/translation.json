@@ -10,13 +10,15 @@
     "part3": "Team Report",
     "part4": "Meta Analysis",
     "part5": "Player Report",
-    "part6": "Visual Report",
+    "part6": "Ward & Route Analysis",
     "part7": "Match Analysis",
     "part8": "Compare Teams",
     "part9": "Compare Players",
     "part10": "Item Simulator",
     "part11": "Team WR Calculator",
-    "part12": "Game Report"
+    "part12": "League game Analysis",
+    "part13": "Solo Rank",
+    "part14": "Item Calculator"
   },
   "sign": {
     "signUp": "Sign up",
@@ -87,7 +89,8 @@
     "logout": "Log Out",
     "confirm": "Confirm",
     "notice": "Notice",
-    "noData": "No new notifications"
+    "noData": "No new notifications",
+    "hello": "Hello.\nThe game data for the 2022 season has been updated.\nthank you."
   },
   "home": {
     "rank": "Rank",
@@ -137,7 +140,7 @@
       "picks": "Pick",
       "banRate": "P/B Rate",
       "winRate": "Win Rate",
-      "probRate": "Prob. Rate",
+      "adjWr": "Adj. WR",
       "kp": "KP%",
       "result": "Result",
       "opponent": "Opponent",
@@ -168,8 +171,8 @@
     },
     "playerStat": {
       "sbrLabel": "PR Ranking",
-      "played": "Game Played",
-      "winrate": "Win Rate",
+      "played": "Games Played",
+      "winrate": "Wins",
       "kda": "KDA",
       "sbr": "Performance Rating ",
       "prInfo": "PR(Performance Rating) is an index that can measure a player's overall performance by calculating various indicators in a complex manner based on the player's in-game performance.",
@@ -409,7 +412,7 @@
     "player": "Player",
     "NoCommonSeasons": "There are no common seasons in the selected leagues. Please select seasons again.",
     "mainTeamChanged": "Main team has changed. Moves to the initial page.",
-    "sorry": "Season of 2022 data is not yet supported because the first match of season 2022 has not been completed. We will provide the service as soon as possible."
+    "sorry": "The game data for the 2022 season has been updated."
   },
   "video": {
     "tab": {
@@ -523,7 +526,10 @@
       "copy_n": "Copy fail.",
       "email_check": "Please enter a valid email address.",
       "login_fail": "Login Fail : Time limit is exceeded",
-      "serverError": "There is a problem with the server. Please contact the manager."
+      "serverError": "There is a problem with the server. Please contact the manager.",
+      "tryLoginAgain": "You have logged out of your previous login account.\nPlease log in again.",
+      "loginTimeOver": "Your account has expired.",
+      "MasterKey": "Key authentication is required."
     }
   },
   "label": {
@@ -542,6 +548,9 @@
     "sup": "SUP"
   },
   "game": {
+    "eachMatch": {
+      "noneData": "The game data does not exist, so it cannot be verified."
+    },
     "log": {
       "event": {
         "subject": "Event Log",

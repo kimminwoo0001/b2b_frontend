@@ -85,6 +85,7 @@ const LogContent = styled.div`
   opacity: ${(props) => (props.isActive ? `1` : `0.3`)};
   border: solid 2px
     ${(props) => props.isActive && (props.team === 1 ? `#f04545` : `#0075bf`)};
+  cursor: pointer;
 
   .title {
     display: flex;
@@ -105,8 +106,8 @@ const LogContent = styled.div`
   }
 
   .body {
-    padding-bottom: 3px;
-    border-bottom: solid 1px #23212a;
+    padding-bottom: 0px;
+    //border-bottom: solid 1px #23212a;
     img {
       width: 15px;
       height: 15px;

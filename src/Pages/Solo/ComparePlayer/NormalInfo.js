@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
 import {
+  Loading,
   Champion,
   Champion_Eng,
   FilterMenuSwitch,
@@ -43,6 +44,7 @@ function NormalInfo() {
   const [oppData, setOppData] = useState();
   const isInitialMount = useRef(true);
   const [RadarData, setRadarData] = useState();
+  const [isAllFetchDone, setIsAllFetchDone] = useState(false);
 
   const [isActiveOpp, setIsActiveOpp] = useDetectOutsideClick(
     dropdownRef,
@@ -65,7 +67,8 @@ function NormalInfo() {
   // }, [dispatch]);
 
   const GetComparisonStat = () => {
-    setLoading(true);
+    // setLoading(true);
+    dispatch(Loading(true));
     const url = `${API}/lolapi/player/comparison`;
     const params = {
       league: filters.league,
@@ -95,14 +98,14 @@ function NormalInfo() {
           line: copy.line.toFixed(1),
           investment: copy.investment.toFixed(1),
           loss: copy.loss.toFixed(1),
-          match: copy.match ? copy.match.toFixed(1) : 50,
+          match: copy.match !== "NULL" ? copy.match.toFixed(1) : 50,
           gold: copy.gold.toFixed(1),
         }
         const oppPlayer = {
           line: copyoppData.line.toFixed(1),
           investment: copyoppData.investment.toFixed(1),
           loss: copyoppData.loss.toFixed(1),
-          match: copyoppData.match ? copyoppData.match.toFixed(1) : 50,
+          match: copyoppData.match !== "NULL" ? copyoppData.match.toFixed(1) : 50,
           gold: copyoppData.gold.toFixed(1),
         }
         //상대 선수 데이터
@@ -153,11 +156,16 @@ function NormalInfo() {
             },
           ],
         })
-        setLoading(false);
+        // setLoading(false);
+        dispatch(Loading(false));
+        setIsAllFetchDone(true);
+
       },
       function (objStore) {
         dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
-        setLoading(false);
+        // setLoading(false);
+        dispatch(Loading(false));
+
       }
     );
   };
@@ -315,6 +323,9 @@ function NormalInfo() {
     },
   };
 
+
+  if (!isAllFetchDone) return <></>;
+
   return (
     <NormalInfoWrapper>
       <PlayerCompareWrapper>
@@ -343,7 +354,7 @@ function NormalInfo() {
         <div className="NameContainer">
           <span className="NickName">
             {lang === "ko"
-              ? data?.playerInfo.NativeName
+              ? data?.playerInfo.NativeName.replace("&amp;nbsp;", " ")
               : data?.playerInfo.Name}
           </span>
           <span className="RealName">{data?.playerInfo.ID}</span>
@@ -382,7 +393,7 @@ function NormalInfo() {
         <div className="NameContainerBlue">
           <span className="NickName">
             {lang === "ko"
-              ? oppData?.playerInfo.NativeName
+              ? oppData?.playerInfo.NativeName.replace("&amp;nbsp;", " ")
               : oppData?.playerInfo.Name}
           </span>
           <span className="RealName">{oppData?.playerInfo.ID}</span>

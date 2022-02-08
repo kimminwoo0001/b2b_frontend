@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import Tippy from "@tippy.js/react";
+import { useHistory } from "react-router-dom";
 import GameReportToolTip from "../Common/GameReportToolTip";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,6 +13,7 @@ const DetailLog = () => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  let history = useHistory();
 
   return (
     <LogContainer>
@@ -19,6 +21,7 @@ const DetailLog = () => {
         <img
           onClick={() => {
             dispatch(InitializeGameState());
+            history.push("/gameReport");
           }}
           src={"Images/ic_close_bk_30.svg"}
           alt="close"

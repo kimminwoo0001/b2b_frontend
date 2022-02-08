@@ -13,7 +13,7 @@ import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
-import { HandleTab } from "../../../redux/modules/filtervalue";
+import { HandleTab, Loading } from "../../../redux/modules/filtervalue";
 
 
 function TeamIndex() {
@@ -43,7 +43,7 @@ function TeamIndex() {
   const [supportTimeData, setSupportTimeData] = useState();
   const [supportTimeX, setSupportTimeX] = useState();
   const [supportTimeY, setSupportTimeY] = useState();
-  const [loading, setLoading] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
 
   // 팀 전력보고서에서 최초 선택된 리그와 중복되는 시즌을 가지는 다른 리그를 선택하는 경우 무한루프 발생.
@@ -66,7 +66,7 @@ function TeamIndex() {
 
   // 팀 전력 보고서 데이터 featch 함수
   const fetchingStatisticData = () => {
-    setLoading(true);
+    dispatch(Loading(true))
     try {
       let url = `${API}/lolapi/team/analysis`;
       let params = {
@@ -126,7 +126,9 @@ function TeamIndex() {
 
           setSupportTimeX(supportX);
           setSupportTimeY(supportY);
-          setLoading(false);
+          dispatch(Loading(false));
+          setIsActive(true);
+
         },
         function (objStore) {
           dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -170,6 +172,10 @@ function TeamIndex() {
       },
     ],
   };
+
+
+  if(!isActive) return <></>; 
+
 
   return (
     <TeamIndexWrapper>
@@ -430,7 +436,7 @@ function TeamIndex() {
                src="Images/ico-team-dash-gank.png"
                alt="Icon"
              ></img>
-              <DisplayInfo>
+              <DisplayInfoFirstGank>
                <div className="SubTitle">{t("team.analysis.gank")}</div>
                 {teamStats?.timeOfFirstGank.minute === "NULL" && teamStats?.timeOfFirstGank.second === "NULL" ?
                   <NoData2>{t("league.leagueStat.noData2")}</NoData2> :
@@ -461,7 +467,7 @@ function TeamIndex() {
                  }${t("team.analysis.sec")}`}</div>
                   </>
                 }
-              </DisplayInfo>
+              </DisplayInfoFirstGank>
            </div>
           </div>
           <div className="SecondBox">
@@ -506,7 +512,7 @@ function TeamIndex() {
                 src="Images/ico-team-dash-fight.png"
                 alt="Icon"
               ></img>
-              <DisplayInfo>
+              <DisplayInfoNumOfFight>
                 <div className="SubTitle">{t("team.analysis.teamfight")}</div>
                 {teamStats?.numberOfTeamFight.winRate === "NULL" ?
                   <NoData2>{t("league.leagueStat.noData2")}</NoData2> :
@@ -533,7 +539,7 @@ function TeamIndex() {
                     )} ${leagueStat?.winRate.toFixed(2)}`}</div>
                   </>
                 }
-              </DisplayInfo>
+              </DisplayInfoNumOfFight>
             </div>               
           </div>
                 
@@ -570,7 +576,7 @@ function TeamIndex() {
                   </td>
                   <td className="SummonerInfo">{sbr.player}</td>
                   <td className="PlayerInfo">
-                    {lang === "ko" ? sbr.nativeName : sbr.name}
+                    {lang === "ko" ? sbr.nativeName.replace("&amp;nbsp;", " ") : sbr.name}
                   </td>
                   <td className="AttendInfo">{sbr.gamesPlayed}</td>
                   <td className="WinCountInfo">{sbr.win}</td>
@@ -901,6 +907,68 @@ const DisplayInfo = styled.div`
   }
 `;
 
+const DisplayInfoFirstGank = styled.div`
+
+  .SubTitle {
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 13px;
+    color: #84818e;
+    margin-bottom: 8px;
+  }
+  .CalcData {
+    display: flex;
+    font-family: Poppins;
+    font-size: 20px;
+    font-weight: bold;
+    color: #f04545;
+    margin-bottom: 6px;
+    img {
+      width: 13px;
+      height: 13px;
+      object-fit: contain;
+      margin-right: 8px;
+      margin-top: 3px;
+    }
+  }
+  .AvgData {
+    margin-top: 4px;
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 13px;
+    color: #ffffff;
+  }
+`;
+
+
+const DisplayInfoNumOfFight = styled.div`
+  .SubTitle {
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 13px;
+    color: #84818e;
+    margin-bottom: 8px;
+  }
+  .CalcData {
+    display: flex;
+    font-family: Poppins;
+    font-size: 20px;
+    font-weight: bold;
+    color: #f04545;
+    margin-bottom: 6px;
+    img {
+      width: 13px;
+      height: 13px;
+      object-fit: contain;
+      margin-right: 8px;
+      margin-top: 3px;
+    }
+  }
+  .AvgData {
+    margin-top: 4px;
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 13px;
+    color: #ffffff;
+  }
+`;
+
 const TeamWinRateGraph = styled.div`
   width: 130px;
   height: 130px;
@@ -938,12 +1006,14 @@ const ContentsBoxTwo = styled.div`
     position: relative;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     width: 202px;
     height: 88px;
     border: solid 1px #3a3745;
     background-color: #2f2d38;
     border-radius: 20px;
+    padding-top: 15px;
+
     .MainIcon {
       margin-right: 18px;
     }
@@ -966,7 +1036,8 @@ const ContentsBoxTwo = styled.div`
   .AvgCombat {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    padding-top: 20px;
     width: 202px;
     height: 88px;
     border: solid 1px #3a3745;
@@ -1167,7 +1238,7 @@ const NoData = styled.div`
 background-color: #2f2d38;
 color: #fff;
 width: auto;
-font-size: 13px;
+font-size: 16px;
 white-space: nowrap;
 text-align: center;
 position: absolute;
@@ -1180,7 +1251,7 @@ const NoData2 = styled.div`
 background-color: #2f2d38;
 color: #fff;
 width: 80px;
-font-size: 10px;
+font-size: 12px;
 text-align: center;
 position: absolute;
 left: 62%;

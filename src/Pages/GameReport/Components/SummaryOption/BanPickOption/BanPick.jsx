@@ -1,12 +1,14 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const BanPick = () => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const banObject = gamevalue.fixedDataset[0].BanPick.bans.concat(
     gamevalue.fixedDataset[1].BanPick.bans
   );
+  const { t } = useTranslation();
 
   const bluePick = gamevalue.fixedDataset[0].BanPick.picks;
   const redPick = gamevalue.fixedDataset[1].BanPick.picks;
@@ -23,6 +25,34 @@ const BanPick = () => {
     bluePick[4],
     redPick[4]
   );
+
+  function getFpickLabel(fpick) {
+    switch (fpick) {
+      case 1:
+        return t("game.banPick.firstPick.top");
+      case 2:
+        return t("game.banPick.firstPick.jng");
+      case 3:
+        return t("game.banPick.firstPick.mid");
+      case 4:
+        return t("game.banPick.firstPick.ad");
+      case 5:
+        return t("game.banPick.firstPick.sup");
+      default:
+        return;
+    }
+  }
+
+  [...Array(5)].forEach((e, i) => {
+    for (let j = 0; pickObject.length; j++) {
+      if (pickObject[j].position === i + 1) {
+        pickObject[j] = { ...pickObject[j], fpick: i + 1 };
+        break;
+      }
+    }
+  });
+
+  console.log(pickObject);
 
   const phase1Champion = pickObject.slice(0, 6);
   const phase2Champion = pickObject.slice(6, 10);
@@ -61,7 +91,17 @@ const BanPick = () => {
               return (
                 <PickChampion>
                   {data.team === 100 && (
-                    <img src={`Images/champion/${data.champion}.png`} alt="" />
+                    <>
+                      <img
+                        src={`Images/champion/${data.champion}.png`}
+                        alt=""
+                      />
+                      {data.fpick && (
+                        <div className="first-pick blue">
+                          {getFpickLabel(data.fpick)}
+                        </div>
+                      )}
+                    </>
                   )}
                 </PickChampion>
               );
@@ -80,7 +120,17 @@ const BanPick = () => {
               return (
                 <PickChampion>
                   {data.team === 200 && (
-                    <img src={`Images/champion/${data.champion}.png`} alt="" />
+                    <>
+                      <img
+                        src={`Images/champion/${data.champion}.png`}
+                        alt=""
+                      />
+                      {data.fpick && (
+                        <div className="first-pick red">
+                          {getFpickLabel(data.fpick)}
+                        </div>
+                      )}
+                    </>
                   )}
                 </PickChampion>
               );
@@ -123,7 +173,17 @@ const BanPick = () => {
               return (
                 <PickChampion>
                   {data.team === 100 && (
-                    <img src={`Images/champion/${data.champion}.png`} alt="" />
+                    <>
+                      <img
+                        src={`Images/champion/${data.champion}.png`}
+                        alt=""
+                      />
+                      {data.fpick && (
+                        <div className="first-pick blue">
+                          {getFpickLabel(data.fpick)}
+                        </div>
+                      )}
+                    </>
                   )}
                 </PickChampion>
               );
@@ -135,7 +195,17 @@ const BanPick = () => {
               return (
                 <PickChampion>
                   {data.team === 200 && (
-                    <img src={`Images/champion/${data.champion}.png`} alt="" />
+                    <>
+                      <img
+                        src={`Images/champion/${data.champion}.png`}
+                        alt=""
+                      />
+                      {data.fpick && (
+                        <div className="first-pick red">
+                          {getFpickLabel(data.fpick)}
+                        </div>
+                      )}
+                    </>
                   )}
                 </PickChampion>
               );
@@ -258,8 +328,39 @@ const PickChampion = styled.div`
   width: 45px;
   height: 45px;
   margin: 0px 2px 0;
-
+  position: relative;
   img {
-    border-radius: 3px;
+    border-radius: 50px;
+  }
+  .first-pick {
+    position: absolute;
+    width: 49px;
+    height: 15px;
+    margin: 0px 0 0;
+
+    //padding: 2px 5px;
+    border-radius: 10px;
+
+    font-family: SpoqaHanSansNeo;
+    font-size: 10px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #fff;
+
+    left: -1px;
+  }
+
+  .red {
+    background-color: #f04545;
+    top: 34px;
+  }
+
+  .blue {
+    background-color: #0075bf;
+    top: -3px;
   }
 `;

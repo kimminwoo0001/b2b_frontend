@@ -6,13 +6,15 @@
     "part3": "팀 보고서",
     "part4": "메타 분석",
     "part5": "선수 보고서",
-    "part6": "영상 보고서",
+    "part6": "와드&동선 분석",
     "part7": "매치 분석",
     "part8": "팀 비교",
     "part9": "선수 비교",
     "part10": "아이템 시뮬레이터",
     "part11": "픽 조합 계산기",
-    "part12": "게임 보고서"
+    "part12": "대회 경기 분석",
+    "part13": "솔로 랭크",
+    "part14": "아이템 계산기"
   },
   "sign": {
     "signUp": "신규 계정등록",
@@ -84,7 +86,7 @@
     "confirm": "확인",
     "notice": "알림",
     "noData": "새로운 알림이 없습니다.",
-    "hello": "안녕하세요. 팀 스노우볼 입니다. \n많은 리그가 22년도 시즌이 개막하였습니다. \nnunu.gg 에서는 모든 팀의 1주차 데이터를 \n수집해야 정상적으로 리그와 팀 그리고 \n선수들의 정보를 정확하게 제공 할 수 있습니다. \n22년도 시즌의 데이터를 기다리고 계실텐데 \n빠르게 데이터공급을 하지 못해 죄송합니다. \n여러 리그에서 1주차 경기를 진행하고 \n데이터가 업데이트 되는대로 빠르게 22년도 \n시즌 서비스를 제공하도록 하겠습니다. \n불편을 드려 죄송합니다."
+    "hello": "안녕하세요. nunu.gg 운영진입니다.\n22년도 시즌데이터가 업데이트 되었습니다.\n감사합니다."
   },
   "home": {
     "rank": "순위",
@@ -134,7 +136,7 @@
       "picks": "픽",
       "banRate": "픽밴률",
       "winRate": "승률",
-      "probRate": "조정 승률",
+      "adjWr": "조정 승률",
       "kp": "킬관여",
       "result": "승패",
       "opponent": "상대 챔피언",
@@ -365,7 +367,7 @@
       "statLabel": "개인전적",
       "statLabelvs": "상대전적",
       "noOppStatData": "상대 전적 기록이 없습니다.",
-      "mainPlayerChanged": "메인 선수가 변경되어 비교 데이터가 초기화됩니다."
+      "mainPlayerChanged": "메인 팀 또는 선수가 변경되어 비교 데이터가 초기화됩니다."
     }
   },
   "filters": {
@@ -406,7 +408,7 @@
     "player": "선수",
     "NoCommonSeasons": "중복되는 시즌이 없습니다. 시즌을 선택해주세요.",
     "mainTeamChanged": "메인 팀이 변경되어 비교 데이터가 초기화됩니다.",
-    "sorry": "22시즌의 1주차 경기가 완료되지 않아 아직 22시즌 데이터를 지원하지 않습니다. 빠른시간 안에 서비스를 제공하도록 하겠습니다."
+    "sorry": "22년도 시즌데이터가 업데이트 되었습니다."
   },
   "video": {
     "tab": {
@@ -508,7 +510,8 @@
     },
     "logout": {
       "sessionExpires": "계정 유효 시간이 만료되어 로그인 페이지로 이동합니다.",
-      "loginFail": "로그인 정보가 없습니다. 다시 시도해주세요."
+      "loginFail": "로그인 정보가 없습니다. 다시 시도해주세요.",
+      "duplication": "중복 로그인이 확인되어 로그아웃합니다."
     },
     "label": {
       "confirm": "확인",
@@ -522,7 +525,7 @@
       "serverError": "서버에 문제가 생겼습니다. 관리자에게 문의해주세요.",
       "questionCancel": "취소하시겠습니까?",
       "questionContinue": "계속하시겠습니까?",
-      "tryLoginAgain": "이전 로그인 계정을 로그아웃 하였습니다.\n다시 로그인 바랍니다.",
+      "tryLoginAgain": "이전 로그인 계정을 로그아웃 하였습니다.",
       "loginTimeOver": "계정의 사용 기간이 만료되었습니다.",
       "MasterKey": "키 인증이 필요합니다."
     }
@@ -543,6 +546,9 @@
     "sup": "서포터"
   },
   "game": {
+    "eachMatch": {
+      "noneData": "해당 경기 데이터가 존재하지 않아 확인할 수 없습니다."
+    },
     "log": {
       "event": {
         "subject": "이벤트 로그",
@@ -583,6 +589,17 @@
         "roaming": {
           "title": "로밍",
           "desc": "에 로밍을 시도합니다."
+        },
+        "teamfight": {
+          "title": "교전"
+        },
+        "invade": {
+          "title": "인베이드"
+        },
+        "teleport": {
+          "title": "텔레포트",
+          "particicle": "이(가)",
+          "desc": "텔레포트를 사용합니다."
         }
       },
       "detail": {
@@ -615,15 +632,44 @@
         "cs": "CS"
       },
       "timeline": {
-        "roming": "로밍성공",
-        "ganking": "갱킹성공",
+        "roming": "로밍",
+        "ganking": "갱킹",
         "fight": "교전",
         "blue-kill": "블루킬",
         "red-kill": "레드킬",
         "tower": "타워",
         "herald&baron": "전령,바론",
         "dragon": "용",
-        "tooltipInfo": "게임시간 15분 이후 데이터는 아직 지원하지 않습니다."
+        "tooltipInfo": "게임시간 15분 이후 데이터는 아직 지원하지 않습니다.",
+        "InLane": ""
+      }
+    },
+    "teamStatus": {
+      "player": {
+        "Ambush": "부쉬에 숨음",
+        "Diving": "다이브",
+        "TowerHugging": "타워 허깅",
+        "OppTowerPushing": "타워 푸쉬",
+        "Ganking": "갱킹",
+        "Dealt": "딜 교환",
+        "Dealing": "딜 교환",
+        "MovingToLane": "라인 복귀",
+        "Roaming": "로밍",
+        "Jungling": "정글링",
+        "CounterJungling": "카운터 정글",
+        "Dead": "죽음",
+        "TeleportToLane": "텔레포트",
+        "TeleportToOther": "텔레포트",
+        "InLane": "라인전"
+      }
+    },
+    "banPick": {
+      "firstPick": {
+        "top": "탑 선픽",
+        "jng": "정글 선픽",
+        "mid": "미드 선픽",
+        "ad": "원딜 선픽",
+        "sup": "서폿 선픽"
       }
     }
   }

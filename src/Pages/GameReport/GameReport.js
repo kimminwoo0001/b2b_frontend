@@ -9,13 +9,16 @@ import Filter from "../../Components/Filter/Filter";
 import CloseFilter from "../../Components/Filter/CloseFilter";
 import ErrorBoundary from "../../Components/ErrorBoundary";
 import Nav from "../../Components/Nav/Nav";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch, batch } from "react-redux";
 import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 // import VideoTabs from '../VideoReport/VideoTabs';
 // import GameReportIndex from './Components/GameReportIndex';
 import GameReportTab from "./GameReportTab";
 import TeamFilterModal from "../../Components/Filter/TeamFilterModal";
 import PlayerFilterModal from "../../Components/Filter/PlayerFilterModal";
+import { InitializeGameState, SetGameId } from "../../redux/modules/gamevalue";
+import { SetTeam } from "../../redux/modules/filtervalue";
+
 
 function GameReport() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -23,16 +26,16 @@ function GameReport() {
   const { t } = useTranslation();
   const checkGameId = gamevalue.fixedDataset.length === 2;
   const copyvalue = useSelector((state) => state.CopyReducer);
+  const dispatch = useDispatch();
+  document.title = `${t("sidebar.part12")} - NUNU.GG`
 
   useEffect(() => {
-    document.title = `${t("sidebar.part12")} - NUNU.GG`
+    dispatch(InitializeGameState());
   }, [])
 
   return (
     <ErrorBoundary>
       {checkGameId ? "" : <Nav />}
-      {copyvalue?.openFilterModal === "/teamCompare" && <TeamFilterModal />}
-      {copyvalue?.openFilterModal === "/playerCompare" && <PlayerFilterModal />}
       <GameWrapper>
         {checkGameId && filters.team !== "" && filters.team.length > 0 ? "" :
           <>

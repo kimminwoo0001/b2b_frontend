@@ -1,6 +1,8 @@
 export const USER_TOKEN = "user/USER_TOKEN";
 export const USER_ID = "user/USER_ID";
 export const User_IP = "user/User_IP";
+export const User_Name = "user/User_Name";
+export const User_TeamName = "user/User_TeamName";
 export const User_Device = "user/User_Device";
 export const User_Alarm = "user/User_Alarm";
 export const User_ChargeTime = "user/User_ChargeTime";
@@ -23,6 +25,18 @@ export const UserID = (payload) => {
 export const UserIP = (payload) => {
   return {
     type: User_IP,
+    payload,
+  };
+};
+export const UserName = (payload) => {
+  return {
+    type: User_Name,
+    payload,
+  };
+};
+export const UserTeamName = (payload) => {
+  return {
+    type: User_TeamName,
     payload,
   };
 };
@@ -74,6 +88,10 @@ export default function UserReducer(state = initialState, action) {
       return { ...state, alarm: action.payload };
     case User_ChargeTime:
       return { ...state, charge_time: action.payload };
+    case User_Name:
+      return { ...state, name: action.payload };
+    case User_TeamName:
+      return { ...state, teamName: action.payload };
     case SET_IS_NEED_CHK_LOGIN:
       return { ...state, isNeedChkLogin: action.payload };
     default:

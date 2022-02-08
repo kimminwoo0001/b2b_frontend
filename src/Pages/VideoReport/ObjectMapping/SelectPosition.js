@@ -1,6 +1,8 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
+
+
 function SelectPosition({ position, setPosition }) {
   //오브젝트별 동선 => 포지션 설정
   const { t } = useTranslation();
@@ -21,6 +23,7 @@ function SelectPosition({ position, setPosition }) {
     }
   };
 
+
   return (
     <SelectPositionContainer>
       <InfoNav>
@@ -28,80 +31,23 @@ function SelectPosition({ position, setPosition }) {
         <span>{t("video.object.position")}</span>
       </InfoNav>
       <PositionButtons>
-        <PositionButton
-          type="button"
-          value="all"
-          onClick={pushPosition}
-          isActive={position.length === 5}
-        >
-          All
-        </PositionButton>
-        <PositionButton
-          type="button"
-          value="top"
-          onClick={pushPosition}
-          style={{
-            backgroundImage: `url(${"Images/ico-position-top.png"})`,
-            backgroundSize: "18px 18px",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-          }}
-          isActive={position.find((e) => e === "top") && position.length !== 5}
-        ></PositionButton>
-        <PositionButton
-          type="button"
-          value="jng"
-          onClick={pushPosition}
-          style={{
-            backgroundImage: `url(${"Images/ico-position-jng.png"})`,
-            backgroundSize: "18px 18px",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-          }}
-          isActive={position.find((e) => e === "jng") && position.length !== 5}
-        ></PositionButton>
-        <PositionButton
-          type="button"
-          value="mid"
-          onClick={pushPosition}
-          style={{
-            backgroundImage: `url(${"Images/ico-position-mid.png"})`,
-            backgroundSize: "18px 18px",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-          }}
-          isActive={position.find((e) => e === "mid") && position.length !== 5}
-        ></PositionButton>
-        <PositionButton
-          type="button"
-          value="bot"
-          onClick={pushPosition}
-          style={{
-            backgroundImage: `url(${"Images/ico-position-bot.png"})`,
-            backgroundSize: "18px 18px",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-          }}
-          isActive={position.find((e) => e === "bot") && position.length !== 5}
-        ></PositionButton>
-        <PositionButton
-          type="button"
-          value="sup"
-          onClick={pushPosition}
-          style={{
-            backgroundImage: `url(${"Images/ico-position-sup.png"})`,
-            backgroundSize: "18px 18px",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-          }}
-          isActive={position.find((e) => e === "sup") && position.length !== 5}
-        ></PositionButton>
+        {POSITION.map((pos, idx) => {
+          return (
+            <PositionButton 
+              isActive={position.length === 5}
+              value={pos} isClicked={pos === "all" ? position.legnth === 5 :
+                position.find((e) => e === pos) && position.length !== 5} position={pos} onClick={pushPosition}>
+              {`${pos === "all" ? `All` : ""}`}</PositionButton>
+          )
+        })}
       </PositionButtons>
     </SelectPositionContainer>
   );
 }
 
 export default SelectPosition;
+
+const POSITION = ["all", "top", "jng", "mid", "bot", "sup"]
 
 const SelectPositionContainer = styled.div`
   margin-bottom: 30px;
@@ -128,14 +74,15 @@ const PositionButtons = styled.div`
   display: flex;
 `;
 
+
 const PositionButton = styled.button`
+  background-image: url(${ props => props.isClicked ? `Images/${props.position}-sel.png` : `Images/${props.position}.png` });
   display: flex;
   align-items: center;
   justify-content: center;
   width: 50px;
   height: 50px;
   border-radius: 10px;
-
   background-color:#3a3745;
   margin-right: 5px;
   cursor: pointer;
@@ -148,14 +95,12 @@ const PositionButton = styled.button`
   :hover {
     opacity: 0.9;
   }
-  > img {
-    width: 18px;
-    height: 18px;
-  }
+
   ${(props) =>
-    props.isActive &&
+  props.isActive &&
     css`
       background-color: #23212a;
       color: #ffffff;
     `}
+
 `;

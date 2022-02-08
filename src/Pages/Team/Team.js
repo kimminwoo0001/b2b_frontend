@@ -10,9 +10,11 @@ import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 import ErrorBoundary from "../../Components/ErrorBoundary";
 import Nav from "../../Components/Nav/Nav";
 import CloseFilter from "../../Components/Filter/CloseFilter";
+import { CopyYear } from "../../redux/modules/copyvalue";
 
 function Team() {
   const filters = useSelector((state) => state.FilterReducer);
+  const copy = useSelector((state) => state.CopyReducer);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -24,16 +26,21 @@ function Team() {
       <Nav />
       <TeamWrapper>
         <SideBar />
+
+        (<>
         <div
-          className={filters.filterMenuState ? "filter-open" : "filter-close"}
+          // className={filters.filterMenuState ? "filter-open" : "filter-close"}
         >
           <Filter />
         </div>
-        <div
+        {/* <div
           className={filters.filterMenuState ? "filter-close" : "filter-open"}
         >
           <CloseFilter />
-        </div>
+        </div> */}
+        </>
+        )
+
         <ContentWrapper>
           {filters.team !== "" && filters.team.length > 0 && filters.year.length > 0  && filters.patch.length > 0? (
             <TeamTabs />

@@ -34,7 +34,6 @@ import { useDetectOutsideClick } from "../../Pages/TeamCompare/useDetectOustside
 import axiosRequest from "../../lib/axiosRequest";
 import { HandleTab, Loading, MenuNum, Reset_Map } from "../../redux/modules/filtervalue";
 
-
 const TeamFilterModal = () => {
   //사이드바에 있는 팀 비교 탭 모달창
   const filters = useSelector((state) => state.CopyReducer); // Copy 리듀서
@@ -57,10 +56,17 @@ const TeamFilterModal = () => {
   const [year, setYear] = useState(filters.year);
   const [season, setSeason] = useState(filters.season);
 
-
   useEffect(() => {
     setOppTeamFilter();
   }, [])
+
+
+  useEffect(() => {
+    if (filters.openFilterModal === "/teamCompare" && selector.yearFilter.length === 0) {
+      fetchYearFilter();
+    }
+  }, [selector.yearFilter]);
+
 
   useEffect(() => {
     document.title = `${t("sidebar.part8")} - NUNU.GG`
@@ -76,13 +82,35 @@ const TeamFilterModal = () => {
   // 리그가 바뀌면 연도, 시즌 필터 호출
   useEffect(() => {
     if (JSON.stringify(league) !== JSON.stringify(filters.league)) {
-      fetchYearFilter();
+      // fetchYearFilter();
+      fetchSeasonFilter();
+      fetchingPatchFilter();
       setLeague(filters.league);
+    } else {
+      fetchingPatchFilter();
     }
   }, [filters.league])
 
   useEffect(() => {
-    fetchSeasonFilter();
+    if (filters.year.includes("2022") && filters.team === "AF"
+      || filters.year.includes("2021") && filters.team === "KDF") {
+      alert("팀명이 변경되어 데이터가 없습니다.")
+      return;
+    }
+    if (JSON.stringify(year) !== JSON.stringify(filters.year)) {
+      if (filters.openFilterModal === "/teamCompare") {
+        dispatch(SetLeague([]));
+        dispatch(SetSeason([]));
+        fetchLeagueFilter();
+        setYear(filters.year);
+      } else {
+      // fetchLeagueFilter();
+      fetchSeasonFilter();
+      setYear(filters.year)
+      }
+    } else {
+      fetchSeasonFilter();
+    }
   }, [filters.year])
 
   // 시즌이 바뀌면 패치 필터 호출
@@ -93,6 +121,9 @@ const TeamFilterModal = () => {
         fetchingPatchFilter();
         setSeason(filters.season);
       }
+    } else {
+      fetchingTeamFilter();
+
     }
   }, [filters.season])
 
@@ -100,10 +131,9 @@ const TeamFilterModal = () => {
     if (filters.openFilterModal !== "/teamCompare") {
       fetchingOppTeamFilter();
     }
+
     setOppTeamFilter();
   }, [filters.patch])
-
-
 
   // 리그 필터 fetch 해오는 함수
   const fetchLeagueFilter = () => {
@@ -116,7 +146,6 @@ const TeamFilterModal = () => {
           x)) && key
     ).filter((key) => key !== "LPL");
 
-
     if (filters.year[0] === "2022") {
       leagueList = Object.keys(staticvalue.filterObjects).filter(
         (key) => key !== "MSI" && key !== "WC" && key !== "LPL"
@@ -125,34 +154,65 @@ const TeamFilterModal = () => {
     dispatch(setLeagueFilter(leagueList.sort()));
   };
 
+  // const fetchYearFilter = () => {
+  //   let yearList = [];
+  //   if (filters.league.length === 0) {
+  //     // dispatch(ResetYear());
+  //   }
+  //   if (filters.league.length > 0) {
+  //     for (let league of filters.league) {
+  //       const ObjectKeys = Object.keys(staticvalue.filterObjects[league]);
+  //       // const ObjectKeys = ["2021"];
+  //       // yearList = yearList.concat(ObjectKeys);
+  //       yearList = ObjectKeys;
 
+  //     }
+  //     console.log("yearList:", yearList)
+  //     // yearList = yearList
+  //     //   .filter((item, pos) => yearList.indexOf(item) === pos)
+  //     //   .sort()
+  //     //   .reverse();
+  //     dispatch(SetYear([yearList[0]])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
+  //   }
+  //   // yearList.map(data => { console.log("yeartLiost", data) })
+
+  //   dispatch(setYearFilter(yearList));
+
+  // };
 
   const fetchYearFilter = () => {
     let yearList = [];
-    if (filters.league.length === 0) {
-      dispatch(ResetYear());
-    } 
-    if (filters.league.length > 0) {
-      for (let league of filters.league) {
-        const ObjectKeys = Object.keys(staticvalue.filterObjects[league]);
-        // const ObjectKeys = ["2021"];
-        // yearList = yearList.concat(ObjectKeys);
-        yearList = ObjectKeys;
-
+    // if (filters.league.length === 0) {
+    //   dispatch(ResetYear());
+    // } else if (filters.league.length > 0) {
+    let count = 0;
+    for (let league of filters.league) {
+      const ObjectKeys = Object.keys(staticvalue.filterObjects[league]);
+          // const ObjectKeys = ["2021"];
+          // yearList = yearList.concat(ObjectKeys);
+      if (ObjectKeys.length === 1) {
+        count++;
       }
-      // yearList = yearList
-      //   .filter((item, pos) => yearList.indexOf(item) === pos)
-      //   .sort()
-      //   .reverse();
+    }
+    if (count >= 1) {
+      yearList = ["2021"];
+    } else {
+      yearList = ["2021", "2022"];
+    }
+
+    yearList = yearList
+      .filter((item, pos) => yearList.indexOf(item) === pos)
+      .sort()
+      .reverse();
+    if (filters.year.length !== 0) {
       dispatch(Year(yearList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
     }
-    // yearList.map(data => { console.log("yeartLiost", data) })
+      // }
+      // yearList.map(data => { console.log("yeartLiost", data) })
 
     dispatch(setYearFilter(yearList));
 
   };
-
-
 
   const fetchSeasonFilter = () => {
     let seasonList = [];
@@ -211,8 +271,6 @@ const TeamFilterModal = () => {
     }
     dispatch(setTeamFilter(teamList));
   };
-
-
 
   // opp 팀 필터 fetch 함수
   const fetchingOppTeamFilter = (team) => {
@@ -279,7 +337,6 @@ const TeamFilterModal = () => {
     }
   };
 
-
   return (
     <>
       <BackScreen
@@ -311,7 +368,56 @@ const TeamFilterModal = () => {
             <FilterHeader>
               <label>{t("filters.setFilter")}</label>
             </FilterHeader>
-            <LeagueFilter>
+            {filters.openFilterModal === "/teamCompare" ?
+              <>
+                <ModalYearFilter>
+                  <label>{t("filters.setYear")}</label>
+                  {!selector.yearFilter ? (
+                    <PatchLabels>
+                      <img
+                        className="ChampIconImg"
+                        width="14px"
+                        height="14px"
+                        src={
+                          filters.year !== ""
+                            ? `Images/ico-filter-version.png`
+                            : "Images/ico-filter-none.png"
+                        }
+                        alt="champIcon"
+                      />
+                      <span className="Label">{t("filters.patchLabel")}</span>
+                    </PatchLabels>
+                  ) : (
+                    selector.yearFilter?.map((year, idx) => {
+                      return (
+                        <SelectedYear
+                          radioBtn={true}
+                          key={idx}
+                          isChecked={filters.year.includes(year) ? true : false}
+                          onClick={() => {
+                            // dispatch(Patch(patch));
+                            // dispatch(Year(year))
+                            dispatch(SetYear([year]));
+                            //fetchingTeamFilter(patch);
+                          }}
+                        >
+                          <input
+                            id={idx}
+                            checked={filters.year.includes(year) ? true : false}
+                            type="checkbox"
+                            readOnly
+                          ></input>
+                          <div className="Version">
+                            {/* {patch === "11.6" ? "11.6 (P.O)" : patch} */}
+                            {year}
+                          </div>
+                        </SelectedYear>
+                      );
+                    })
+                  )
+                  }
+                </ModalYearFilter>
+                <ModalLeagueFilter>
               <label>{t("filters.setLeague")}</label>
               <DropDownToggle>
                 <div className="menu-container">
@@ -325,17 +431,73 @@ const TeamFilterModal = () => {
                     disabled={filters.openFilterModal === "/team"}
                     className="menu-trigger"
                   >
-                    {/* <img
-                      className="ChampIconImg"
-                      width="14px"
-                      height="14px"
-                      src={
-                        filters.league.length === 1
-                          ? `Images/ico-league-${filters.league[0].toLowerCase()}.png`
-                          : "Images/ico-filter-none.png"
-                      }
-                      alt="champIcon"
-                    /> */}
+                        <span className="Label">
+                          {filters.league.length === 1
+                            ? filters.league
+                            : t("filters.leagueLabel")}
+                        </span>
+                        <ArrowIcon page={filters.openFilterModal}
+                          className="ArrowIcon"
+                          src="Images/ico-filter-arrow.png"
+                          alt="arrowIcon"
+                        />
+                      </button>
+                      <nav
+                        ref={dropdownRef}
+                        className={`menu ${isActiveLeague ? "active" : "inactive"}`}
+                      >
+                        <ul>
+                          {selector.leagueFilter?.map((league, idx) => {
+                            return (
+                              <div className="Wrapper" key={idx}>
+                                <img
+                                  className="ChampIconImg"
+                                  width="14px"
+                                  height="14px"
+                                  src={`Images/ico-league-${league.toLowerCase()}.png`}
+                                  alt="champIcon"
+                                />
+                                <li
+                                  onClick={() => {
+                                    dispatch(SetLeague([league]));
+                                    setIsActiveLeague(!isActiveLeague);
+                                    //fetchingPatchFilter(league);
+                                    // dispatch(ResetFilter(league));
+                                    // dispatch(ConvertedLeague(league));
+                                    league !== filters.league[0] &&
+                                      dispatch(setTeamFilter([]));
+                                    league !== filters.league[0] &&
+                                      setOppTeamFilter([]);
+                                  }}
+                                  key={idx}
+                                >
+                                  {league}
+                                </li>
+                              </div>
+                            );
+                          })}
+                        </ul>
+                      </nav>
+                    </div>
+                  </DropDownToggle>
+                </ModalLeagueFilter>
+
+              </> :
+              <>
+                <LeagueFilter>
+                  <label>{t("filters.setLeague")}</label>
+                  <DropDownToggle>
+                    <div className="menu-container">
+                      <button
+                        onClick={() => {
+                          if (filters.openFilterModal === "/teamCompare") {
+                            setIsActiveLeague(!isActiveLeague);
+                            fetchLeagueFilter();
+                          }
+                        }}
+                        disabled={filters.openFilterModal === "/team"}
+                        className="menu-trigger"
+                      >
                     <span className="Label">
                       {filters.league.length === 1
                         ? filters.league
@@ -409,13 +571,6 @@ const TeamFilterModal = () => {
                     <SelectedYear
                       radioBtn={true}
                       key={idx}
-                      // draggable="true"
-                      // onDragStart={(event) => {
-                      //   handleMouseEvent(event);
-                      // }}
-                      // onMouseUp={(event) => {
-                      //   handleMouseEvent(event);
-                      // }}
                       isChecked={filters.year.includes(year) ? true : false}
                       onClick={() => {
                         // dispatch(Patch(patch));
@@ -440,6 +595,9 @@ const TeamFilterModal = () => {
               )
               }
             </YearFilter>
+              </>
+            }
+
             <PatchFilter>
               <label>{t("filters.setSeason")}</label>
               {/* {seasonFilter.length === 0 ? (
@@ -466,13 +624,6 @@ const TeamFilterModal = () => {
                     return (
                       <SelectedPatchReal
                         key={idx}
-                        // draggable="true"
-                        // onDragStart={(event) => {
-                        //   handleMouseEvent(event);
-                        // }}
-                        // onMouseUp={(event) => {
-                        //   handleMouseEvent(event);
-                        // }}
                         isChecked={filters.season.includes(season) ? true : false}
                         onClick={() => {
                           dispatch(Season(season));
@@ -513,13 +664,6 @@ const TeamFilterModal = () => {
                   return (
                     <SelectedPatchReal
                       key={idx}
-                      // draggable="true"
-                      // onDragStart={(event) => {
-                      //   handleMouseEvent(event);
-                      // }}
-                      // onMouseUp={(event) => {
-                      //   handleMouseEvent(event);
-                      // }}
                       isChecked={filters.patch.includes(patch) ? true : false}
                       onClick={() => {
                         dispatch(Patch(patch));
@@ -554,7 +698,6 @@ const TeamFilterModal = () => {
                 </SelectTeamTitle>
                 <SelectTeam isFilterSelected={filters.league.length > 0}>
                   {filters.openFilterModal === "/team" ?
-
 
                     (
                       // <>
@@ -834,8 +977,6 @@ const SelectedPatch = styled.div`
   }
 `;
 
-
-
 const SelectedPatchReal = styled.div`
 
 display: flex;
@@ -856,7 +997,6 @@ display: flex;
     letter-spacing: -0.55px;
     text-align: left;
   }
-
 
   > input[type="checkbox"] {
     -webkit-appearance: none;
@@ -904,6 +1044,25 @@ const LeagueFilter = styled.div`
     color: #fff;
   }
 `;
+
+const ModalLeagueFilter = styled.div`
+  width: 240px;
+  height: 67px;
+  margin: 0 5px;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: #2f2d38;
+  label {
+    height: 15px;
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    margin: 7px 0 3px 10px;
+    font-size: 14px;
+    line-height: 1.36;
+    text-align: left;
+    color: #fff;
+  }
+`;
+
 
 const PatchFilter = styled.div`
   display: flex;
@@ -975,6 +1134,41 @@ const YearFilter = styled.div`
 `;
 
 
+const ModalYearFilter = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #2f2d38;
+  border-radius: 10px;
+  margin: 15px 15px 10px 5px;
+  padding: 5px 10px;
+  max-height: 112px;
+  width: 240px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #434050;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin: 5px;
+  }
+
+  label {
+    height: 15px;
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    margin: 7px 0 5px 7px;
+    font-size: 14px;
+    line-height: 1.36;
+    text-align: left;
+    color: #fff;
+  }
+`;
+
+
 const SelectedYear = styled.div`
   display: flex;
   align-items: center;
@@ -994,7 +1188,6 @@ const SelectedYear = styled.div`
     letter-spacing: -0.55px;
     text-align: left;
   }
-
 
   > input[type="checkbox"] {
     -webkit-appearance: none;
@@ -1049,7 +1242,7 @@ const TeamWrapper = styled.div`
 
 const SelectTeam = styled.div`
   width: 193px;
-  height: 501px;
+  height: 480px;
   background-color: #2f2d38;
   margin-right: 15px;
   border-radius: 20px;
@@ -1071,7 +1264,7 @@ const SelectTeam = styled.div`
 
 const SelectOppTeam = styled.div`
   width: 193px;
-  height: 501px;
+  height: 480px;
   background-color: #2f2d38;
   border-radius: 20px;
   padding: 10px;
@@ -1324,3 +1517,4 @@ const ArrowIcon = styled.img`
       text-align: right;
 
 `
+

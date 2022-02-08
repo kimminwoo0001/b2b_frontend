@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import SelectedData from './SelectedData';
 import { League, Year, Season, Team, Player, Patch } from '../../../redux/modules/filtervalue';
 
-const SelectedFilter = memo(({ pagePath, nameSolo, nameTeam, nameVideo }) => {
+const SelectedFilter = memo(({ pagePath, nameSolo, nameTeam, nameVideo, namePlayerCompare }) => {
   const filters = useSelector((state) => state.FilterReducer);
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -13,18 +13,18 @@ const SelectedFilter = memo(({ pagePath, nameSolo, nameTeam, nameVideo }) => {
   return (
     <SelectedFilters>
       <SelectedArea>
-        <header><label className={filters.league.length === 0 && "not-selected"}>{t("label.league")}</label></header>
-        <section>
-          {filters.league.length > 0 && filters.league?.map((data) => {
-            return <SelectedData data={data} deleteBtn={() => { dispatch(League(data)); }} />
-          })}
-        </section>
-      </SelectedArea>
-      <SelectedArea>
         <header><label className={filters.year.length === 0 && "not-selected"}>{t("label.year")}</label></header>
         <section>
           {filters.year.length > 0 && filters.year?.map((data) => {
             return <SelectedData data={data} deleteBtn={() => { dispatch(Year(data)); }} />
+          })}
+        </section>
+      </SelectedArea>
+      <SelectedArea>
+        <header><label className={filters.league.length === 0 && "not-selected"}>{t("label.league")}</label></header>
+        <section>
+          {filters.league.length > 0 && filters.league?.map((data) => {
+            return <SelectedData data={data} deleteBtn={() => { dispatch(League(data)); }} />
           })}
         </section>
       </SelectedArea>
@@ -42,7 +42,7 @@ const SelectedFilter = memo(({ pagePath, nameSolo, nameTeam, nameVideo }) => {
           {filters.team.length > 0 && <SelectedData data={filters.team} deleteBtn={() => { dispatch(Team(filters.team)); }} />}
         </section>
       </SelectedArea>}
-      {pagePath === nameSolo && <SelectedArea>
+      {[nameSolo, namePlayerCompare].includes(pagePath) && <SelectedArea>
         <header><label className={filters.player.length === 0 && "not-selected"}>{t("label.player")}</label></header>
         <section>
           {filters.player.length > 0 && <SelectedData data={filters.player} deleteBtn={() => { dispatch(Player(filters.player)); }} />}

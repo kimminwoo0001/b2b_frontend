@@ -4,6 +4,7 @@ export default function checkRequest(data) {
   const { status, message } = data
   const tokenStatus = ['403', '401'];
   const successStatus = ['201', '200'];
+  const dupliStatus = '406';
   const errorStatus = '500';
   const notFoundStatus = '404';
   const pagePath = document.location.pathname;
@@ -29,12 +30,24 @@ export default function checkRequest(data) {
         isOpen: false
       }
     }
+  } else if (dupliStatus === status) {
+    returnValue = {
+      value: false,
+      objStore: {
+        status: "duplication",
+        confirmFuncId: "/login",
+        // desc: i18next.t("alert.logout.sessionExpires"),
+        desc: i18next.t("alert.logout.duplication"),
+        isOpen: true,
+        message: message,
+      }
+    }
   } else if (tokenStatus.includes(status)) {
     returnValue = {
       value: false,
       objStore: {
         status: "token",
-        confirmFuncId: "token",
+        confirmFuncId: pagePath === "/login" ? "token" : "/login",
         // desc: i18next.t("alert.logout.sessionExpires"),
         desc: pagePath === "/login" ? i18next.t("alert.logout.loginFail") : i18next.t("alert.logout.sessionExpires"),
         isOpen: true,
