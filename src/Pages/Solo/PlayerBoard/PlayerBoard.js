@@ -83,13 +83,6 @@ function PlayerBoard() {
       url,
       params,
       function (e) {
-        //const data = e.data;
-        // var arrNumber = [0, 0, 0, 0, 0, 0, 0];
-
-        // for (var i = 0; i < 7; i++) {
-        //   arrNumber[i] = data.stats.lineStats[`val${i}`];
-        // }
-
         setInfo(e.info);
         setCarrer(e.records.careerrecords);
         setChampRecord(Object.values(e.records.championrecords));
@@ -98,37 +91,10 @@ function PlayerBoard() {
         // setUserPlayerTotal(Object.values(data.soloInfo.userPlayerTotal));
         setSbr(e.stats.sbrStats);
 
-        // val1~ 순서대로 출력
-        const a = Object.keys(e.stats.lineStats);
-        let newResult = [];
-        for (let i = 0; i < a.length; i++) {
-          newResult.push(Number(a[i].substring(3)));
-        }
-        const result = newResult.sort().reduce(
-          (newObj, key) => {
-            newObj[key] = e.stats.lineStats[`val${key}`];
-            return newObj;
-          },
-          {}
-        )
-
         // 라인전 지표 
-
-        setLine(Object.values(result));
-
-        console.log(Object.values(result))
-        let filterNullLineStat = [];
-        for (let i = 0; i < Object.values(result).length; i++) {
-          filterNullLineStat.push(Object.values(result).filter((value) => {
-            // value.data !== "NULL"
-            console.log(value.data)
-
-          }))
-        }
-        console.log(filterNullLineStat);
-
-        setEngage(Object.values(e.stats.engagementStats));
-        setPersonality(Object.values(e.stats.personalityStats));
+        setLine(e.stats.lineStats);
+        setEngage(e.stats.engagementStats);
+        setPersonality(e.stats.personalityStats);
         setGraphDomain(e.trends);
         setMatchInfo(e.stats.matchStats);
         //match graph data conversion
