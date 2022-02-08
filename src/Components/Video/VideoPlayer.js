@@ -8,7 +8,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import { HandledisablePip, HandleDuration, HandleEnablePip, HandleEnded, HandlePlaybackRateChange, HandlePlaying, HandleProgress, HandleSeekChange, HandleSeekMouseDown, HandleSeekMouseUp, HandleStop, HandleToggleControls, HandleToggleLight, HandleToggleLoop, HandleToggleMuted, HandleTogglePip, HandleVolumeChange, SetPause, SetPlay, SetPlayBackRate, SetUrl } from '../../redux/modules/videovalue';
 import secToMS from '../../lib/secToMS';
-import { SetCurrentItemIdxActiveIdx, SetEventLogActiveIdx, SetLiveActiveIdx, SetGoldActiveIdx, SetStatusLogActiveIdx } from '../../redux/modules/gamevalue';
+import { SetCurrentItemIdxActiveIdx, SetEventLogActiveIdx, SetLiveActiveIdx, SetGoldActiveIdx, SetStatusLogActiveIdx, SetSeekTime } from '../../redux/modules/gamevalue';
 
 
 const VideoPlayer = ({ video, startTime }) => {
@@ -37,6 +37,12 @@ const VideoPlayer = ({ video, startTime }) => {
   const statusLogDataset = gamevalue.statusLogDataset;
 
   const datasets = [eventLogDataset, currentItemDataset, liveDataset, goldDataset, statusLogDataset];
+
+  useEffect(() => {
+    if (gamevalue.seekTime > 0) {
+      handleSeekTime();
+    }
+  }, [gamevalue.seekTime])
 
 
   const load = url => {
@@ -137,6 +143,15 @@ const VideoPlayer = ({ video, startTime }) => {
     player.seekTo(movePlayed)
   }
 
+  const handleSeekTime = () => {
+    handleSeekMouseDown();
+    const movePlayed = (parseFloat(+gamevalue.startTime) + +gamevalue.seekTime) / videovalue.duration;
+    dispatch(HandleSeekChange(movePlayed))
+    dispatch(HandleSeekMouseUp())
+    player.seekTo(movePlayed)
+    dispatch(SetSeekTime(0));
+  }
+
   const handleSeekMouseUp = e => {
     dispatch(HandleSeekMouseUp())
     //this.setState({ seeking: false })
@@ -152,6 +167,7 @@ const VideoPlayer = ({ video, startTime }) => {
     const goldIdx = gamevalue.goldActiveIdx;
     const statusLogIdx = gamevalue.statusLogActiveIdx;
     const Idxs = [logIdx, itemIdx, liveIdx, goldIdx, statusLogIdx];
+    const NotHalfSec = [2, 3]
 
     let checkDatasetIdx = 0;
     let checkIdx = 0;
@@ -164,7 +180,7 @@ const VideoPlayer = ({ video, startTime }) => {
       Idxs.map((value, datasetIdx) => {
         checkDatasetIdx = datasetIdx;
         checkIdx = value;
-        let timer = datasetIdx === 2 ? curTime / 2 : curTime;
+        let timer = NotHalfSec.includes(datasetIdx) ? curTime / 2 : curTime;
 
         if (datasets[datasetIdx][value === datasets[datasetIdx].length ? value - 1 : value].realCount / 2 < timer) { // 현재 인덱스 보다 큰 것들 중에서 찾기
           let eventIdx = value;
@@ -193,7 +209,7 @@ const VideoPlayer = ({ video, startTime }) => {
               }
             }
             if (result !== eventIdx) {
-              console.log("Event Idx:", idx);
+              //console.log("Event Idx:", idx);
               if (result > eventIdx) {
                 switch (datasetIdx) {
                   case 0:
@@ -214,7 +230,7 @@ const VideoPlayer = ({ video, startTime }) => {
                   default:
                     break;
                 }
-                console.log("result1 : ", result);
+                //console.log("result1 : ", result);
                 break;
               }
             }
@@ -243,7 +259,7 @@ const VideoPlayer = ({ video, startTime }) => {
               }
             }
             if (value !== eventIdx) {
-              console.log("Event Idx:", idx);
+              //console.log("Event Idx:", idx);
               result = eventIdx;
               if (value > eventIdx) {
                 switch (datasetIdx) {
@@ -265,7 +281,7 @@ const VideoPlayer = ({ video, startTime }) => {
                   default:
                     break;
                 }
-                console.log("result1 : ", result);
+                //console.log("result1 : ", result);
                 break;
               }
               break;
@@ -317,6 +333,10 @@ const VideoPlayer = ({ video, startTime }) => {
     //this.setState({ duration })
   }
 
+  const handleOnSeek = (e) => {
+    console.log('onSeek', e)
+  }
+
   const ref = newPlayer => {
     player = newPlayer;
   }
@@ -349,7 +369,7 @@ const VideoPlayer = ({ video, startTime }) => {
         onPause={handlePause}
         onBuffer={() => console.log('onBuffer')}
         onPlaybackRateChange={handleOnPlaybackRateChange}
-        onSeek={e => console.log('onSeek', e)}
+        onSeek={handleOnSeek}
         onEnded={handleEnded}
         onError={e => console.log('onError', e)}
         onProgress={handleProgress}

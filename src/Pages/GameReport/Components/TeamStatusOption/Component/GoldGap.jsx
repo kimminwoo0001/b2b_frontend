@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 function thousandGold(gold) {
   let result = gold;
-  if (gold > 1000) {
+  if (gold >= 1000) {
     result = Math.floor(gold / 100) / 10 + "k";
   }
   return result;

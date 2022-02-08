@@ -37,10 +37,13 @@ const ChampionLiuneBox = ({ position }) => {
   }
 
   const goldgap = goldData.golds[position] - goldData.golds[position + 5];
-
-  //console.log("goldData", goldData);
-
   const arrPosition = ["top", "jng", "mid", "ad", "sup"];
+  let timer = Math.floor(videovalue.playedSeconds - +gamevalue.startTime);
+  const playerStatusMax = gamevalue.playersStatusDataset.length - 1;
+  timer =
+    timer > 0 ? (timer < playerStatusMax ? timer * 2 : playerStatusMax) : 0;
+  const isMax = timer > playerStatusMax;
+
   return (
     <ChampLineContainer>
       <ChampionContainer
@@ -49,6 +52,14 @@ const ChampionLiuneBox = ({ position }) => {
         teamName={gamevalue.blueteam}
         mapping={gamevalue.mappingDataset[realCnt].player[position]}
         winner={Math.abs(goldgap) >= 300 && goldgap > 0}
+        status={
+          isMax
+            ? gamevalue.playersStatusDataset[playerStatusMax].players[position]
+            : gamevalue.playersStatusDataset[timer].players[position]
+        }
+        time={timer ? timer / 2 : 0}
+        isMax={isMax}
+        playerStatusTime={gamevalue.playerStatusTime}
       />
       <ChampionOppContainer
         player={gamevalue.fixedDataset[1].players[position]}
@@ -56,6 +67,16 @@ const ChampionLiuneBox = ({ position }) => {
         teamName={gamevalue.redteam}
         mapping={gamevalue.mappingDataset[realCnt].player[position + 5]}
         winner={Math.abs(goldgap) >= 300 && goldgap < 0}
+        status={
+          isMax
+            ? gamevalue.playersStatusDataset[playerStatusMax].players[
+                position + 5
+              ]
+            : gamevalue.playersStatusDataset[timer].players[position + 5]
+        }
+        time={timer ? timer / 2 : 0}
+        isMax={isMax}
+        playerStatusTime={gamevalue.playerStatusTime}
       />
       <img
         className="position"

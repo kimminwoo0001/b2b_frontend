@@ -12,7 +12,9 @@
     "part9": "선수 비교",
     "part10": "아이템 시뮬레이터",
     "part11": "픽 조합 계산기",
-    "part12": "대회 경기 분석"
+    "part12": "대회 경기 분석",
+    "part13": "솔로 랭크",
+    "part14": "아이템 계산기"
   },
   "sign": {
     "signUp": "신규 계정등록",
@@ -546,6 +548,9 @@
     "sup": "서포터"
   },
   "game": {
+    "eachMatch": {
+      "noneData": "해당 경기 데이터가 존재하지 않아 확인할 수 없습니다."
+    },
     "log": {
       "event": {
         "subject": "이벤트 로그",
@@ -586,6 +591,17 @@
         "roaming": {
           "title": "로밍",
           "desc": "에 로밍을 시도합니다."
+        },
+        "teamfight": {
+          "title": "교전"
+        },
+        "invade": {
+          "title": "인베이드"
+        },
+        "teleport": {
+          "title": "텔레포트",
+          "particicle": "이(가)",
+          "desc": "텔레포트를 사용합니다."
         }
       },
       "detail": {
@@ -618,15 +634,44 @@
         "cs": "CS"
       },
       "timeline": {
-        "roming": "로밍성공",
-        "ganking": "갱킹성공",
+        "roming": "로밍",
+        "ganking": "갱킹",
         "fight": "교전",
         "blue-kill": "블루킬",
         "red-kill": "레드킬",
         "tower": "타워",
         "herald&baron": "전령,바론",
         "dragon": "용",
-        "tooltipInfo": "게임시간 15분 이후 데이터는 아직 지원하지 않습니다."
+        "tooltipInfo": "게임시간 15분 이후 데이터는 아직 지원하지 않습니다.",
+        "InLane": ""
+      }
+    },
+    "teamStatus": {
+      "player": {
+        "Ambush": "부쉬에 숨음",
+        "Diving": "다이브",
+        "TowerHugging": "타워 허깅",
+        "OppTowerPushing": "타워 푸쉬",
+        "Ganking": "갱킹",
+        "Dealt": "딜 교환",
+        "Dealing": "딜 교환",
+        "MovingToLane": "라인 복귀",
+        "Roaming": "로밍",
+        "Jungling": "정글링",
+        "CounterJungling": "카운터 정글",
+        "Dead": "죽음",
+        "TeleportToLane": "텔레포트",
+        "TeleportToOther": "텔레포트",
+        "InLane": "라인전"
+      }
+    },
+    "banPick": {
+      "firstPick": {
+        "top": "탑 선픽",
+        "jng": "정글 선픽",
+        "mid": "미드 선픽",
+        "ad": "원딜 선픽",
+        "sup": "서폿 선픽"
       }
     }
   }

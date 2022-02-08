@@ -8,36 +8,9 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Element, animateScroll as scroll, scroller } from "react-scroll";
 import GankingRoamingStatusBox from "./StatusOption/GankingRoamingStatusBox";
-import RoamingStatusBox from "./StatusOption/RoamingStatusBox";
-import DiveStatusBox from "./StatusOption/DiveStatusBox";
-import StarterStatusBox from "./StatusOption/StarterStatusBox";
-
-const typeCase = (type, data, isActive, idx) => {
-  switch (type) {
-    case "Ganking":
-      return (
-        <Element name={`status-log-${idx}`} className="element">
-          <GankingRoamingStatusBox
-            gankingData={data}
-            isActive={isActive}
-            id={type.toLowerCase()}
-          />
-        </Element>
-      );
-    case "Roaming":
-      return (
-        <Element name={`status-log-${idx}`} className="element">
-          <GankingRoamingStatusBox
-            gankingData={data}
-            isActive={isActive}
-            id={type.toLowerCase()}
-          />
-        </Element>
-      );
-    default:
-      return;
-  }
-};
+import TeamFightStatusBox from "./StatusOption/TeamFightStatusBox";
+import TeleportStatusBox from "./StatusOption/TeleportStatusBox";
+import { SetSeekTime } from "../../../../../redux/modules/gamevalue";
 
 const StatusLogBox = () => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
@@ -56,8 +29,8 @@ const StatusLogBox = () => {
   }
 
   const autoMoveScroll = (idx) => {
-    if (idx > 0) {
-      scroller.scrollTo(`status-log-${idx}`, {
+    if (idx > 1) {
+      scroller.scrollTo(`status-log-${idx - 2}`, {
         duration: 500,
         delay: 0,
         smooth: "easeInOutQuart",
@@ -74,9 +47,69 @@ const StatusLogBox = () => {
   };
 
   useEffect(() => {
-    console.log(gamevalue.eventLogActiveIdx);
-    autoMoveScroll(gamevalue.eventLogActiveIdx);
-  }, [gamevalue.eventLogActiveIdx]);
+    console.log(gamevalue.statusLogActiveIdx);
+    autoMoveScroll(gamevalue.statusLogActiveIdx);
+  }, [gamevalue.statusLogActiveIdx]);
+
+  const typeCase = (type, data, isActive, idx) => {
+    switch (type) {
+      case "Ganking":
+        return (
+          <Element name={`status-log-${idx}`} className="element">
+            <div className="click-div" onClick={() => onClick(data.realCount)}>
+              <GankingRoamingStatusBox
+                gankingData={data}
+                isActive={isActive}
+                id={type.toLowerCase()}
+              />
+            </div>
+          </Element>
+        );
+      case "Roaming":
+        return (
+          <Element name={`status-log-${idx}`} className="element">
+            <div className="click-div" onClick={() => onClick(data.realCount)}>
+              <GankingRoamingStatusBox
+                gankingData={data}
+                isActive={isActive}
+                id={type.toLowerCase()}
+              />
+            </div>
+          </Element>
+        );
+      case "matchLog":
+        return (
+          <Element name={`status-log-${idx}`} className="element">
+            <div className="click-div" onClick={() => onClick(data.realCount)}>
+              <TeamFightStatusBox
+                TFdata={data}
+                isActive={isActive}
+                id={type.toLowerCase()}
+              />
+            </div>
+          </Element>
+        );
+      case "teleport":
+        return (
+          <Element name={`status-log-${idx}`} className="element">
+            <div className="click-div" onClick={() => onClick(data.realCount)}>
+              <TeleportStatusBox
+                TPData={data}
+                isActive={isActive}
+                id={type.toLowerCase()}
+              />
+            </div>
+          </Element>
+        );
+      default:
+        return;
+    }
+  };
+
+  const onClick = (time) => {
+    console.log("time", time);
+    dispatch(SetSeekTime(time / 2));
+  };
 
   return (
     <LogDetailContainer>

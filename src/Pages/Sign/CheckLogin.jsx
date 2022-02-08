@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
 import SetInputBox from "./Component/SetInputBox";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, batch } from "react-redux";
 import {
   ModalInit,
   SetConfirmFuncId,
@@ -22,6 +22,8 @@ import {
   SetIsNeedChkLogin,
   UserChargeTime,
   UserID,
+  UserName,
+  UserTeamName,
   UserToken,
 } from "../../redux/modules/user";
 
@@ -137,10 +139,14 @@ const CheckLogin = ({}) => {
             sessionStorage.setItem("i18nextLng", token.lang);
             //sessionStorage.setItem("id", id);
             console.log("token:", token);
-            dispatch(Language(token.lang));
-            dispatch(UserToken(token.token));
-            dispatch(UserChargeTime(token.charge_time));
-            history.push("/");
+            batch(() => {
+              dispatch(Language(token.lang));
+              dispatch(UserToken(token.token));
+              dispatch(UserChargeTime(token.charge_time));
+              dispatch(UserName(token.name));
+              dispatch(UserTeamName(token.teamName));
+              history.push("/");
+            });
           }
         },
         function (objStore) {
