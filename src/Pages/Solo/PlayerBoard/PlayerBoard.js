@@ -840,7 +840,7 @@ function PlayerBoard() {
                       <td>
                         <div className="ChampName">
                           <img
-                            src={`Images/champion/${data.championEn}.png`}
+                            src={`https://am-a.akamaihd.net/image?resize=90:&f=${data.championImage}`}
                             alt="ChampImage"
                           />
                           <div>
@@ -1812,9 +1812,6 @@ const DropDownContainer = styled.div`
     width: 130px;
     margin: 0 10px;
     white-space: nowrap;
-  }
-
-  .menu-trigger img {
   }
 
   .menu {

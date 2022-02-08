@@ -723,7 +723,8 @@ function TeamIndex() {
                         stepSize: supportTimeData?.supportingTimeRow,
                         fontColor: "#84818e",
                         fontSize: 15,
-                        min: supportTimeData?.supportingTimeMin,
+                        // min: supportTimeData?.supportingTimeMin,
+                        min: 0,
                         max: supportTimeData?.supportingTimeMax,
                       },
                       gridLines: {
