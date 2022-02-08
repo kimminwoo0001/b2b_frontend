@@ -6,7 +6,8 @@ import { GlobalStyles } from "./Styles/GlobalStyles";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
-import rootReducer from "./redux/modules";
+import { createStateSyncMiddleware, initStateWithPrevTab } from 'redux-state-sync';
+import persistReducer from "./redux/modules";
 import createSagaMiddleware from "redux-saga";
 import ErrorBoundary from "./Components/ErrorBoundary";
 import "./i18n";
@@ -16,12 +17,15 @@ import { PersistGate } from "redux-persist/integration/react";
 // import AlertModal from "./Components/UtilityComponent/AlertModal";
 
 const sagaMiddleware = createSagaMiddleware();
+const stateSyncMiddleware = createStateSyncMiddleware({});
+const middleware = (sagaMiddleware, stateSyncMiddleware);
 const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(sagaMiddleware))
+  persistReducer,
+  composeWithDevTools(applyMiddleware(middleware))
 );
 
 const persistor = persistStore(store);
+initStateWithPrevTab(store);
 
 // export const history = syncHistoryWithStore(createBrowserHistory, store);
 

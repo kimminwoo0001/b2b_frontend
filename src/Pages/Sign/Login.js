@@ -28,6 +28,7 @@ import { Loading } from "../../redux/modules/filtervalue";
 
 function Login() {
   const filters = useSelector((state) => state.FilterReducer);
+  const user = useSelector((state) => state.UserReducer);
   const { selectedResult } = useSelector((state) => state.ModalReducer);
   const [isOpen, setIsOpen] = useState(false);
   //const [alertDesc, setAlertDesc] = useState("");
