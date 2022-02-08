@@ -1,4 +1,6 @@
-import React, { Suspense } from "react";
+/** @jsxImportSource @emotion/react */
+import { jsx, ThemeProvider } from "@emotion/react";
+import { Suspense } from "react";
 import ReactDOM from "react-dom";
 import Routes from "./Routes";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -23,6 +25,12 @@ const store = createStore(
 
 const persistor = persistStore(store);
 
+const theme = {
+  colors: {
+    primary: "blue",
+  },
+};
+
 // export const history = syncHistoryWithStore(createBrowserHistory, store);
 
 ReactDOM.render(
@@ -32,9 +40,11 @@ ReactDOM.render(
         <Provider store={store}>
           {/* <AlertModal />/ */}
           <PersistGate persistor={persistor}>
-            <Routes />
-            <GlobalFonts />
-            <GlobalStyles />
+            <ThemeProvider theme={theme}>
+              <Routes />
+              <GlobalFonts />
+              <GlobalStyles />
+            </ThemeProvider>
           </PersistGate>
         </Provider>
       </Suspense>
