@@ -17,8 +17,26 @@ const StatusBox3 = () => {
       .players;
   const selectedNo = gamevalue.selectedParticipant;
   const oppSelectedNo = selectedNo > 4 ? selectedNo - 5 : selectedNo + 5;
-  //console.log("liveData", liveData);
-  //console.log("totalDetail", totalDetail);
+  const blueKills = liveData
+    .slice(0, 5)
+    .map((e) => e.kills)
+    .reduce((pre, cur) => pre + cur);
+
+  const redKills = liveData
+    .slice(5, 10)
+    .map((e) => e.kills)
+    .reduce((pre, cur) => pre + cur);
+  const killAsist = liveData[selectedNo].kills + liveData[selectedNo].assists;
+  const teamKill = selectedNo > 4 ? redKills : blueKills;
+  const kp = killAsist === 0 ? 0 : (killAsist / teamKill) * 100;
+
+  const totalKillAsist = totalDetail.kills + totalDetail.assists;
+  const totalTeamKill = gamevalue.fixedDataset[gamevalue.selectedTeam].players
+    .map((e) => e.detail.kills)
+    .reduce((pre, cur) => pre + cur);
+
+  console.log("killAsist", killAsist);
+  console.log("teamKill", teamKill);
 
   return (
     <ChampStatContainer>
@@ -37,8 +55,10 @@ const StatusBox3 = () => {
         </div>
         <div className="performance-box">
           <div className="title">{t("game.summary.champion.kill-point")}</div>
-          <div className="content">{`${"수정"}%`}</div>
-          <div className="all-content">{`${"수정"}%`}</div>
+          <div className="content">{`${Math.floor(kp)}%`}</div>
+          <div className="all-content">{`${Math.floor(
+            (totalKillAsist / totalTeamKill) * 100
+          )}%`}</div>
         </div>
         <div className="performance-box">
           <div className="title">{t("game.summary.champion.placed-ward")}</div>
@@ -57,7 +77,9 @@ const StatusBox3 = () => {
         <div className="gold-box">
           <div className="title">{t("game.summary.champion.cur-gold")}</div>
           {/* <div className="content">{`${thousand(367)}G`}</div> */}
-          <div className="content">{`수정G`}</div>
+          <div className="content">{`${thousand(
+            liveData[selectedNo].CurrentGold
+          )}G`}</div>
         </div>
         <div className="gold-box">
           <div className="title">{t("game.summary.champion.total-gold")}</div>

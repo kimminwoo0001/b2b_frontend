@@ -1,6 +1,7 @@
 import React, { memo, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch, batch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   SetBlueTeam,
   SetDetailDataSet,
@@ -17,19 +18,30 @@ import {
   SetLiveDataset,
   SetTeamGoldDataset,
   SetStatusLogDataset,
+  SetPlayersStatusDataset,
+  SetTimeLineDataset,
 } from "../../../redux/modules/gamevalue";
 import { SetVodUrl } from "../../../redux/modules/videovalue";
 import axiosRequest from "../../../lib/axiosRequest";
-import { SetModalInfo } from "../../../redux/modules/modalvalue";
+import {
+  SetDesc,
+  SetIsOpen,
+  SetIsSelector,
+  SetModalInfo,
+} from "../../../redux/modules/modalvalue";
 import { API } from "../../config";
 import { API2 } from "../../config";
 import { API5 } from "../../config";
-import { Loading } from "../../../redux/modules/filtervalue";
+import { Loading, SetTeam } from "../../../redux/modules/filtervalue";
+import { useTranslation } from "react-i18next";
+import secToMS from "../../../lib/secToMS";
 
 const TOTAL_SET = [0, 1, 2, 3, 4];
 
 const EachMatch = ({ matchData, team }) => {
   const dispatch = useDispatch();
+  let history = useHistory();
+  const { t } = useTranslation();
   const {
     date,
     game,
@@ -45,7 +57,7 @@ const EachMatch = ({ matchData, team }) => {
     oppside,
   } = matchData;
 
-  const getGameDetailData = (gameId) => {
+  const getGameDetailData = (gameId, gameFullTime) => {
     try {
       dispatch(Loading(true));
       const url = `${API5}/api/test/test2`;
@@ -57,16 +69,103 @@ const EachMatch = ({ matchData, team }) => {
         url,
         params,
         function (e) {
-          batch(() => {
-            dispatch(SetFixedDataset(e?.infos));
-            dispatch(SetPlayersDataset(e?.players));
-            dispatch(SetLogDataset(e?.log));
-            dispatch(SetMappingDataset(e?.mapping));
-            dispatch(SetLiveDataset(e?.live));
-            dispatch(SetTeamGoldDataset(e?.teamGold));
-            dispatch(SetStatusLogDataset(e?.actionLog));
+          let isDone = true;
+          for (const [key, value] of Object.entries(e)) {
+            if (value.length === 0) {
+              console.log("None key", key);
+              isDone = false;
+              dispatch(SetIsSelector(false));
+              dispatch(SetIsOpen(true));
+              dispatch(SetDesc(t("game.eachMatch.noneData")));
+              dispatch(Loading(false));
+              break;
+            }
+          }
+
+          if (isDone) {
+            if (e?.infos.length === 2) {
+              const roming = e.actionLog.filter((e) => e.type === "Roaming");
+              const ganking = e.actionLog.filter((e) => e.type === "Ganking");
+              const timefight = e.actionLog.filter(
+                (e) => e.type === "matchLog"
+              );
+              const blueKills = e.log.event.filter(
+                (e) => e.type === "CHAMPION_KILL" && e.participantid < 6
+              );
+              const redKills = e.log.event.filter(
+                (e) => e.type === "CHAMPION_KILL" && e.participantid > 5
+              );
+              const buildDestroy = e.log.event.filter(
+                (e) => e.type === "BUILDING_KILL"
+              );
+              const objectKill = e.log.event.filter(
+                (e) =>
+                  e.type === "ELITE_MONSTER_KILL" &&
+                  ["RIFTHERALD", "BARON_NASHOR"].includes(e.subType)
+              );
+              const dragonKill = e.log.event.filter(
+                (e) =>
+                  e.type === "ELITE_MONSTER_KILL" &&
+                  e.subType.includes("DRAGON")
+              );
+
+              let tg_rc_idx = 0;
+              let teamGold_x = [];
+              let teamGold_y = [];
+              let teamGold_max = 0;
+
+              for (let i = 0; i < gameFullTime; i++) {
+                teamGold_x.push(secToMS(i));
+                if (
+                  e.teamGold.length > tg_rc_idx &&
+                  i === e.teamGold[tg_rc_idx].realCount
+                ) {
+                  let e_tg = e.teamGold[tg_rc_idx];
+                  let e_tg_gold = e_tg.blueGold - e_tg.redGold;
+
+                  teamGold_y.push(e_tg_gold);
+                  if (teamGold_max < Math.abs(e_tg_gold)) {
+                    teamGold_max = Math.abs(e_tg_gold);
+                  }
+                  tg_rc_idx += 1;
+                } else {
+                  teamGold_y.push(undefined);
+                }
+              }
+
+              const timeLineSet = {
+                roming,
+                ganking,
+                timefight,
+                blueKills,
+                redKills,
+                buildDestroy,
+                objectKill,
+                dragonKill,
+                teamGold_x,
+                teamGold_y,
+                teamGold_max,
+              };
+
+              batch(() => {
+                dispatch(SetFixedDataset(e?.infos));
+                dispatch(SetPlayersDataset(e?.players));
+                dispatch(SetLogDataset(e?.log));
+                dispatch(SetMappingDataset(e?.mapping));
+                dispatch(SetLiveDataset(e?.live));
+                dispatch(SetTeamGoldDataset(e?.teamGold));
+                dispatch(SetStatusLogDataset(e?.actionLog));
+                dispatch(SetPlayersStatusDataset(e?.status));
+                dispatch(SetTimeLineDataset(timeLineSet));
+                history.push("/gameReportDetail");
+              });
+            } else {
+              dispatch(SetIsSelector(false));
+              dispatch(SetIsOpen(true));
+              dispatch(SetDesc(t("game.eachMatch.noneData")));
+            }
             dispatch(Loading(false));
-          });
+          }
         },
         function (objstore) {
           dispatch(SetModalInfo(objstore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -130,7 +229,7 @@ const EachMatch = ({ matchData, team }) => {
                       (oppside[game] === "red" ? oppteam : team).toUpperCase()
                     )
                   );
-                  getGameDetailData(gameid[game]);
+                  getGameDetailData(gameid[game], gamelength[game] / 2 ?? 0);
                 }}
               >
                 {idx + 1}

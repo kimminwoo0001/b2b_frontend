@@ -4,12 +4,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import secToMS from "../../../../../../lib/secToMS";
 
-const RoamingStatusBox = ({ gankingData, idx, isActive }) => {
+const TeleportStatusBox = ({ TPData, idx, isActive, id }) => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const time = secToMS(Math.floor(gankingData.realCount / 2));
-  const data = gankingData.data;
+  const time = secToMS(Math.floor(TPData.realCount / 2));
+  const data = TPData.data;
 
   const team = data.participant < 6 ? 0 : 1;
   const info =
@@ -18,57 +18,29 @@ const RoamingStatusBox = ({ gankingData, idx, isActive }) => {
     ].info;
   const player = info.player;
   const championEng = info.championEng;
-  const type = getBuildType(data.dest);
-
-  function getBuildType(dest) {
-    let result = {
-      type: t("game.log.status.roming.title"),
-      line: "",
-    };
-
-    switch (dest) {
-      case 1:
-        result.line = "top";
-        break;
-      case 2:
-        result.line = "jng";
-        break;
-      case 3:
-        result.line = "mid";
-        break;
-      case 4:
-        result.line = "bot";
-        break;
-      default:
-        break;
-    }
-
-    return result;
-  }
+  const title = t(`game.log.status.teleport.title`);
 
   return (
     <LogContent isActive={isActive} team={team}>
       <div className="title">
         <div className="dot"></div>
-        <span>{`${time} ${type.type}`}</span>
+        <span>{`${time} ${title}`}</span>
       </div>
       <div className="body">
         <img src={`Images/champion/${championEng}.png`} alt="champion" />
-        <span className="player-name">{player}</span>
-        <img
-          src={`Images/ic_${team === 0 ? "blue" : "red"}_kill.svg`}
-          alt="champion"
-        />
-        <img src={`Images/ico-position-${type.line}.png`} alt="line" />
-        <span className="player-name">{`${t(
-          "game.log.status.roming.desc"
-        )}`}</span>
+        <span className="player-name">
+          {`${player} ${t("game.log.status.teleport.particicle")}`}
+        </span>
+        <img src={`Images/SummonerTeleport.png`} alt="teleport" />
+        <span className="player-name">
+          {t(`game.log.status.teleport.desc`)}
+        </span>
       </div>
     </LogContent>
   );
 };
 
-export default RoamingStatusBox;
+export default TeleportStatusBox;
 
 const LogContent = styled.div`
   width: 180px;
@@ -80,6 +52,7 @@ const LogContent = styled.div`
   opacity: ${(props) => (props.isActive ? `1` : `0.3`)};
   border: solid 2px
     ${(props) => props.isActive && (props.team === 1 ? `#f04545` : `#0075bf`)};
+  cursor: pointer;
 
   .title {
     display: flex;
@@ -100,8 +73,8 @@ const LogContent = styled.div`
   }
 
   .body {
-    padding-bottom: 3px;
-    border-bottom: solid 1px #23212a;
+    padding-bottom: 0px;
+    //border-bottom: solid 1px #23212a;
     img {
       width: 15px;
       height: 15px;
