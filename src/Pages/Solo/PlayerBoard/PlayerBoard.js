@@ -101,11 +101,11 @@ function PlayerBoard() {
         setSbr(e.stats.sbrStats);
 
         // 라인전 지표 
-        setLine(e.stats.lineStats2)
+        setLine(e.stats.lineStats)
         // 교전/로밍/갱킹 지표
-        setEngage(e.stats.engagementStats2);
+        setEngage(e.stats.engagementStats);
         // 성향 지표
-        setPersonality(e.stats.personalityStats2);
+        setPersonality(e.stats.personalityStats);
 
         setGraphDomain(e.trends);
         setMatchInfo(e.stats.matchStats);
