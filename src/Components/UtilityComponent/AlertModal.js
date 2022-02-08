@@ -5,6 +5,10 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { SetIsOpen, SetSelectedResult, SetSemiDesc } from "../../redux/modules/modalvalue";
+import { API } from "../../Pages/config";
+import axiosRequest from "../../lib/axiosRequest";
+import { Loading } from "../../redux/modules/filtervalue";
+import { UserLogout } from "../../redux/modules";
 
 const customStyles = {
   overlay: {
@@ -32,6 +36,8 @@ const customStyles = {
 };
 
 const AlertModal = () => {
+  const user = useSelector((state) => state.UserReducer);
+  const lang = useSelector((state) => state.LocaleReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -52,7 +58,14 @@ const AlertModal = () => {
     dispatch(SetSemiDesc(""));
     switch (confirmFuncId) {
       case "/login":
-        history.push("/login");
+        const url = `${API}}/lolapi/logout`;
+        const info = `id=${user.id}&charge_time=${user.charge_time}&lang=${lang}`;
+        axiosRequest("POST", url, info, function (e) {
+        });
+        dispatch(Loading(false))
+        sessionStorage.clear();
+        dispatch(UserLogout());
+        history.push("/login")
         return;
       case "/home":
         history.push("/");

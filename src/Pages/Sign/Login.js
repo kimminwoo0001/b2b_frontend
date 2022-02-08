@@ -38,6 +38,8 @@ function Login() {
   let history = useHistory();
   const { t } = useTranslation();
 
+  console.log(user)
+
   useEffect(() => {
     if (navigator.language.includes("ko")) {
       sessionStorage.setItem("i18nextLng", "ko");
@@ -49,10 +51,18 @@ function Login() {
     if (filters.loading) {
       dispatch(Loading(false));
     }
+
+
   }, []);
 
   useEffect(() => {
-    if (selectedResult === "tryLoginAgain") {
+    if (user.token && user.token.length > 0) {
+      history.push("/");
+    }
+  }, [user.token])
+
+  useEffect(() => {
+    if (selectedResult === "tryLoginAgain" && info.id !== "") {
       onSubmit(info);
     }
   }, [selectedResult])

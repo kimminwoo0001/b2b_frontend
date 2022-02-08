@@ -17,11 +17,12 @@ import { PersistGate } from "redux-persist/integration/react";
 // import AlertModal from "./Components/UtilityComponent/AlertModal";
 
 const sagaMiddleware = createSagaMiddleware();
-const stateSyncMiddleware = createStateSyncMiddleware({});
-const middleware = (sagaMiddleware, stateSyncMiddleware);
+const stateSyncMiddleware = createStateSyncMiddleware({
+  blacklist: ["persist/PERSIST", "persist/REHYDRATE"]
+});
 const store = createStore(
   persistReducer,
-  composeWithDevTools(applyMiddleware(middleware))
+  composeWithDevTools(applyMiddleware(sagaMiddleware, stateSyncMiddleware))
 );
 
 const persistor = persistStore(store);
