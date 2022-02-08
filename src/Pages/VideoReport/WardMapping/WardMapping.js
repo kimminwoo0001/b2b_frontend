@@ -239,7 +239,6 @@ function WardMapping() {
               <span>{t("video.vision.teamview")}</span>
             </div>
           </TopTabItem>
-
           <TopTabItem
             onClick={() => {
               setTab("player");

@@ -20,7 +20,7 @@
   },
   "sign": {
     "signUp": "Sign up",
-    "changePW": "Reset Password",
+    "changePW": "Change Password",
     "login": {
       "fail": "Failed to login."
     },
