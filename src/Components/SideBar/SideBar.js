@@ -124,6 +124,24 @@ function Sidebar() {
       changeColor: pathName === "/gameReport",
       version: "beta",
     },
+    {
+      // menus[12] 솔로 랭크
+      idx: 12,
+      name: t("sidebar.part13"),
+      path: "/soloRank",
+      image: "/Images/sidebar_newLogo/ico_solorank.svg",
+      changeColor: pathName === "/soloRank",
+      version: "beta",
+    },
+    {
+      // menus[13] 아이템 계산기
+      idx: 13,
+      name: t("sidebar.part14"),
+      path: "/itemCalculator",
+      image: "/Images/sidebar_newLogo/ico_ calculate.svg",
+      changeColor: pathName === "/itemCalculator",
+      version: "beta",
+    },
   ];
 
   // sidebar 에서 사용되는 menus를 순차적으로 추가.

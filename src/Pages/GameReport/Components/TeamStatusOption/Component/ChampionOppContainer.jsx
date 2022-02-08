@@ -10,6 +10,10 @@ const ChampionOppContainer = ({
   participant,
   teamName,
   mapping,
+  status,
+  time,
+  isMax,
+  playerStatusTime,
 }) => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const dispatch = useDispatch();
@@ -44,7 +48,15 @@ const ChampionOppContainer = ({
           <div className="champ-revive-count">8</div>
         </div>
       </div>
-      <ChampionEventBox isDeath={true} isOpp={true} />
+      <ChampionEventBox
+        isDeath={mapping.dead}
+        isOpp={true}
+        status={status}
+        time={time}
+        isMax={isMax}
+        participant={participant}
+        playerStatusTime={playerStatusTime}
+      />
       <div className="champ-status-bar">
         <HpBox used={(100 - mapping.hp) * 0.9}>
           <div className="usable" style={{ backgroundColor: "#37b537" }}></div>
@@ -65,8 +77,7 @@ const ChampOppTeamContainer = styled.div`
   padding: 15px 11px 20px 10px;
   border-radius: 10px;
   box-sizing: border-box;
-  border: solid 2px ${(props) =>
-    props.isActive ? `#f04545` : `rgba(0,0,0,0)`};
+  border: solid 2px ${(props) => (props.isActive ? `#f04545` : `rgba(0,0,0,0)`)};
   background-color: #23212a;
 
   .name {
@@ -81,34 +92,34 @@ const ChampOppTeamContainer = styled.div`
     letter-spacing: normal;
     text-align: right;
     color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .champ-pic-box {
     display: flex;
     margin: 8px 0 0 0;
-    }
 
     .champ-pic {
       width: 60px;
       height: 60px;
-      margin: 0px 0px 0px;
+      margin: 0px 0px;
       object-fit: contain;
-
       position: relative;
-     
+
       .img-box {
+        border-radius: 30px;
         width: 60px;
         height: 60px;
-        border-radius: 30px;
-       border: solid 2px
-        ${(props) => (props.isActive ? `#f04545` : `rgba(0,0,0,0)`)};
+        border: solid 2px
+          ${(props) => (props.isActive ? `#f04545` : `rgba(0,0,0,0)`)};
         background-image: url(https://ddragon.leagueoflegends.com/cdn/11.24.1/img/champion/${(
           props
         ) => props.champImg}.png);
-       background-size: 60px;
-       ${(props) => props.isDeath && `mix-blend-mode: luminosity;`}
-       
-     }
+        background-size: 60px;
+        ${(props) => props.isDeath && `mix-blend-mode: luminosity;`}
+      }
 
       .champ-revive-count {
         //display:  ${(props) => (props.isDeath ? "block" : "none")};
@@ -133,51 +144,9 @@ const ChampOppTeamContainer = styled.div`
     }
   }
 
-  .champ-evnet-box {
-    ${(props) => props.isDeath && `opacity: 0.3;`}
-    margin: 10px 0 6px 2px;
-    width: 100%;
-    height: 28px;
-    display: flex;
-    .desc {
-      width: 58px;
-      height: 28px;
-      .time {
-        font-family: SpoqaHanSansNeo;
-        font-size: 10px;
-        font-weight: 300;
-        font-stretch: normal;
-        font-style: normal;
-        line-height: 1;
-        letter-spacing: normal;
-        text-align: right;
-        color: #fff;
-      }
-      .status {
-        font-family: SpoqaHanSansNeo;
-        font-size: 12px;
-        font-weight: normal;
-        font-stretch: normal;
-        font-style: normal;
-        line-height: 1.5;
-        letter-spacing: normal;
-        text-align: right;
-        color: #fff;
-      }
-    }
-    .event-img {
-      visibility: hidden;
-      margin-right: 2px;
-      width: 28px;
-      height: 28px;
-      object-fit: contain;
-      background-color: #fff;
-    }
-  }
-
   .champ-status-bar {
     ${(props) => props.isDeath && `opacity: 0.3;`}
-    width: 90px;
+    width: 100%;
     height: 23px;
     margin: 6px 0 0 2px;
     .usable {
@@ -189,7 +158,7 @@ const ChampOppTeamContainer = styled.div`
 `;
 
 const HpBox = styled.div`
-  width: 90px;
+  width: 100%;
   height: 10px;
   margin: 0 0 3px;
   padding: 0 0 0 ${(props) => props.used}px;
@@ -199,7 +168,7 @@ const HpBox = styled.div`
 `;
 
 const MpBox = styled.div`
-  width: 90px;
+  width: 100%;
   height: 10px;
   margin: 3px 0 0;
   padding: 0 0 0 ${(props) => props.used}px;

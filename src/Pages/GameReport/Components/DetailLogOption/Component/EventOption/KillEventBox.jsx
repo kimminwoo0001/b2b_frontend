@@ -34,7 +34,11 @@ const KillEventBox = ({ data, idx, isActive }) => {
     });
 
   return (
-    <LogContent isActive={isActive} team={team}>
+    <LogContent
+      isActive={isActive}
+      team={team}
+      isAssist={assistList.length > 0}
+    >
       <div className="title">
         <div className="dot"></div>
         <span>{`${time} ${type}`}</span>
@@ -78,6 +82,7 @@ const LogContent = styled.div`
   opacity: ${(props) => (props.isActive ? `1` : `0.3`)};
   border: solid 2px
     ${(props) => props.isActive && (props.team === 1 ? `#f04545` : `#0075bf`)};
+  cursor: pointer;
 
   .title {
     display: flex;
@@ -99,8 +104,16 @@ const LogContent = styled.div`
 
   .body {
     display: flex;
-    padding-bottom: 3px;
-    border-bottom: solid 1px #23212a;
+    ${(props) =>
+      props.isAssist
+        ? css`
+            padding-bottom: 3px;
+            border-bottom: solid 1px #23212a;
+          `
+        : css`
+            padding-bottom: 0px;
+          `}
+
     img {
       width: 15px;
       height: 15px;

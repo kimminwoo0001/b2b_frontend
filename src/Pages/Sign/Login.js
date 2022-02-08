@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, batch } from "react-redux";
 import { useForm } from "react-hook-form";
 import {
   UserID,
@@ -11,6 +11,8 @@ import {
   UserChargeTime,
   SET_IS_NEED_CHK_LOGIN,
   SetIsNeedChkLogin,
+  UserName,
+  UserTeamName,
 } from "../../redux/modules/user";
 import { useHistory } from "react-router-dom";
 import { Language } from "../../redux/modules/locale";
@@ -69,11 +71,15 @@ function Login() {
             sessionStorage.setItem("i18nextLng", token.lang);
             //sessionStorage.setItem("id", id);
             console.log("token:", token);
-            dispatch(Language(token.lang));
-            dispatch(UserID(id));
-            dispatch(UserToken(token.token));
-            dispatch(UserChargeTime(token.charge_time));
-            history.push("/");
+            batch(() => {
+              dispatch(Language(token.lang));
+              dispatch(UserID(id));
+              dispatch(UserTeamName(token.teamName));
+              dispatch(UserToken(token.token));
+              dispatch(UserChargeTime(token.charge_time));
+              dispatch(UserName(token.name))
+              history.push("/");
+            })
           }
           dispatch(Loading(false));
         }, function (objStore) {

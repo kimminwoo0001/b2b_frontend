@@ -16,31 +16,7 @@ import GameReportToolTip from "../../Common/GameReportToolTip";
 import KillEventBox from "./EventOption/KillEventBox";
 import MonsterEventBox from "./EventOption/MonsterEventBox";
 import BuildEventBox from "./EventOption/BuildEventBox";
-
-const typeCase = (type, data, isActive, idx) => {
-  switch (type) {
-    case "CHAMPION_KILL":
-      return (
-        <Element name={`event-log-${idx}`} className="element">
-          <KillEventBox data={data} isActive={isActive} />
-        </Element>
-      );
-    case "ELITE_MONSTER_KILL":
-      return (
-        <Element name={`event-log-${idx}`} className="element">
-          <MonsterEventBox data={data} isActive={isActive} />
-        </Element>
-      );
-    case "BUILDING_KILL":
-      return (
-        <Element name={`event-log-${idx}`} className="element">
-          <BuildEventBox data={data} isActive={isActive} />
-        </Element>
-      );
-    default:
-      return;
-  }
-};
+import { SetSeekTime } from "../../../../../redux/modules/gamevalue";
 
 const EventLogBox = () => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
@@ -58,11 +34,9 @@ const EventLogBox = () => {
     });
   }
 
-
-
   const autoMoveScroll = (idx) => {
-    if (idx > 0) {
-      scroller.scrollTo(`event-log-${idx}`, {
+    if (idx > 1) {
+      scroller.scrollTo(`event-log-${idx - 2}`, {
         duration: 500,
         delay: 0,
         smooth: "easeInOutQuart",
@@ -83,6 +57,41 @@ const EventLogBox = () => {
     autoMoveScroll(gamevalue.eventLogActiveIdx);
   }, [gamevalue.eventLogActiveIdx]);
 
+  const typeCase = (type, data, isActive, idx) => {
+    switch (type) {
+      case "CHAMPION_KILL":
+        return (
+          <Element name={`event-log-${idx}`} className="element">
+            <div className="click-div" onClick={() => onClick(data.realCount)}>
+              <KillEventBox data={data} isActive={isActive} />
+            </div>
+          </Element>
+        );
+      case "ELITE_MONSTER_KILL":
+        return (
+          <Element name={`event-log-${idx}`} className="element">
+            <div className="click-div" onClick={() => onClick(data.realCount)}>
+              <MonsterEventBox data={data} isActive={isActive} />
+            </div>
+          </Element>
+        );
+      case "BUILDING_KILL":
+        return (
+          <Element name={`event-log-${idx}`} className="element">
+            <div className="click-div" onClick={() => onClick(data.realCount)}>
+              <BuildEventBox data={data} isActive={isActive} />
+            </div>
+          </Element>
+        );
+      default:
+        return;
+    }
+  };
+
+  const onClick = (time) => {
+    dispatch(SetSeekTime(time / 2));
+  };
+
   return (
     <LogDetailContainer>
       <LogTitle>
@@ -96,7 +105,7 @@ const EventLogBox = () => {
                 tooltipInfo={t("game.log.event.tooltipInfo")}
               />
             }
-            placement="bottom"
+            placement="top"
           >
             <img src={"Images/ico-question-mark.svg"} alt="question" />
           </StyledTippy>

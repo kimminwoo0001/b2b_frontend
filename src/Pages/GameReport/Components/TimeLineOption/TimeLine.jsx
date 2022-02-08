@@ -7,6 +7,8 @@ import TimeBar from "../Common/TimeBar";
 import TimeBarTitle from "../Common/TimeBarTitle";
 import Tippy from "@tippy.js/react";
 import GameReportToolTip from "../Common/GameReportToolTip";
+import TimeLineValue from "./Component/TimeLineValue";
+import TimeLineTeamGold from "./Component/TimeLineTeamGold";
 
 const romingSuccessTime = [
   { team: 1, time: 500 },
@@ -16,62 +18,211 @@ const romingSuccessTime = [
   { team: 1, time: 715 },
 ];
 
-const TimeLine = ({ fullTime = 1800 }) => {
+const TimeLine = () => {
   const { t } = useTranslation();
+  const { timeLineDataset, gameTime: fullTime } = useSelector(
+    (state) => state.GameReportReducer
+  );
+  const teamfightSet = timeLineDataset.timefight;
+  const bluekillsSet = timeLineDataset.blueKills;
+  const redkillsSet = timeLineDataset.redKills;
+  const towerDestroySet = timeLineDataset.buildDestroy;
+  const objectSet = timeLineDataset.objectKill;
+  const dragonSet = timeLineDataset.dragonKill;
+  const romingSet = timeLineDataset.roming;
+  const gankingSet = timeLineDataset.ganking;
+
   const fullWidth = 623;
 
   return (
     <TimeLineContainer>
+      {/* <div className="dev">TimeLine 개발 중</div> */}
       <TimeLineDataContainer>
         <div className="title">{t("game.summary.timeline.roming")}</div>
         <TimeLine15Box width={transferValuetoWidth(fullTime, fullWidth, 900)}>
-          {romingSuccessTime.map((data) => {
+          {romingSet.map((data) => {
             return (
               <TimeLineValue
-                team={data.team}
-                move={transferValuetoWidth(fullTime, fullWidth, data.time)}
-              ></TimeLineValue>
+                team={data.data.participant > 5 ? 0 : 1}
+                move={transferValuetoWidth(
+                  fullTime,
+                  fullWidth,
+                  data.realCount / 2
+                )}
+                time={data.realCount}
+              />
             );
           })}
         </TimeLine15Box>
         <TimeLine15OutBox
           width={transferValuetoWidth(fullTime, fullWidth, 900)}
-        ></TimeLine15OutBox>
+        >
+          <StyledTippy
+            duration={0}
+            delay={[100, 0]}
+            content={
+              <GameReportToolTip
+                tooltipInfo={t("game.log.event.tooltipInfo")}
+              />
+            }
+            placement="top"
+          >
+            <img
+              className="tip"
+              src={"Images/ico-question-mark.svg"}
+              alt="question"
+            />
+          </StyledTippy>
+        </TimeLine15OutBox>
       </TimeLineDataContainer>
       <TimeLineDataContainer>
         <div className="title">{t("game.summary.timeline.ganking")}</div>
-        <TimeLine15Box
-          width={transferValuetoWidth(fullTime, fullWidth, 900)}
-        ></TimeLine15Box>
+        <TimeLine15Box width={transferValuetoWidth(fullTime, fullWidth, 900)}>
+          {gankingSet.map((data) => {
+            return (
+              <TimeLineValue
+                team={data.data.participant > 5 ? 0 : 1}
+                move={transferValuetoWidth(
+                  fullTime,
+                  fullWidth,
+                  data.realCount / 2
+                )}
+                time={data.realCount}
+              />
+            );
+          })}
+        </TimeLine15Box>
         <TimeLine15OutBox
           width={transferValuetoWidth(fullTime, fullWidth, 900)}
-        ></TimeLine15OutBox>
+        >
+          <StyledTippy
+            duration={0}
+            delay={[100, 0]}
+            content={
+              <GameReportToolTip
+                tooltipInfo={t("game.log.event.tooltipInfo")}
+              />
+            }
+            placement="top"
+          >
+            <img
+              className="tip"
+              src={"Images/ico-question-mark.svg"}
+              alt="question"
+            />
+          </StyledTippy>
+        </TimeLine15OutBox>
       </TimeLineDataContainer>
       <TimeLineDataContainer>
         <div className="title">{t("game.summary.timeline.fight")}</div>
-        <TimeLineFullBox></TimeLineFullBox>
+        <TimeLineFullBox>
+          {teamfightSet.map((data) => {
+            return (
+              <TimeLineValue
+                move={transferValuetoWidth(
+                  fullTime,
+                  fullWidth,
+                  data.realCount / 2
+                )}
+                time={data.realCount}
+              />
+            );
+          })}
+        </TimeLineFullBox>
       </TimeLineDataContainer>
       <TimeLineDataContainer>
         <div className="title">{t("game.summary.timeline.blue-kill")}</div>
-        <TimeLineFullBox></TimeLineFullBox>
+        <TimeLineFullBox>
+          {bluekillsSet.map((data) => {
+            return (
+              <TimeLineValue
+                team={1}
+                move={transferValuetoWidth(
+                  fullTime,
+                  fullWidth,
+                  data.realCount / 2
+                )}
+                time={data.realCount}
+              />
+            );
+          })}
+        </TimeLineFullBox>
       </TimeLineDataContainer>
       <TimeLineDataContainer>
         <div className="title">{t("game.summary.timeline.red-kill")}</div>
-        <TimeLineFullBox></TimeLineFullBox>
+        <TimeLineFullBox>
+          {redkillsSet.map((data) => {
+            return (
+              <TimeLineValue
+                team={0}
+                move={transferValuetoWidth(
+                  fullTime,
+                  fullWidth,
+                  data.realCount / 2
+                )}
+                time={data.realCount}
+              />
+            );
+          })}
+        </TimeLineFullBox>
       </TimeLineDataContainer>
       <TimeLineDataContainer>
         <div className="title">{t("game.summary.timeline.tower")}</div>
-        <TimeLineFullBox></TimeLineFullBox>
+        <TimeLineFullBox>
+          {towerDestroySet.map((data) => {
+            return (
+              <TimeLineValue
+                team={data.participantid > 5 ? 0 : 1}
+                move={transferValuetoWidth(
+                  fullTime,
+                  fullWidth,
+                  data.realCount / 2
+                )}
+                time={data.realCount}
+              />
+            );
+          })}
+        </TimeLineFullBox>
       </TimeLineDataContainer>
       <TimeLineDataContainer>
         <div className="title">{t("game.summary.timeline.herald&baron")}</div>
-        <TimeLineFullBox></TimeLineFullBox>
+        <TimeLineFullBox>
+          {objectSet.map((data) => {
+            return (
+              <TimeLineValue
+                team={data.participantid > 5 ? 0 : 1}
+                move={transferValuetoWidth(
+                  fullTime,
+                  fullWidth,
+                  data.realCount / 2
+                )}
+                monster={data.subType}
+                time={data.realCount}
+              />
+            );
+          })}
+        </TimeLineFullBox>
       </TimeLineDataContainer>
       <TimeLineDataContainer>
         <div className="title">{t("game.summary.timeline.dragon")}</div>
-        <TimeLineFullBox></TimeLineFullBox>
+        <TimeLineFullBox>
+          {dragonSet.map((data) => {
+            return (
+              <TimeLineValue
+                team={data.participantid > 5 ? 0 : 1}
+                move={transferValuetoWidth(
+                  fullTime,
+                  fullWidth,
+                  data.realCount / 2
+                )}
+                monster={data.subType}
+                time={data.realCount}
+              />
+            );
+          })}
+        </TimeLineFullBox>
       </TimeLineDataContainer>
-      <TimeLineGoldContainer></TimeLineGoldContainer>
+      <TimeLineTeamGold />
       <TimeLineDataContainer>
         <TimeBarTitle />
         <div className="time-bar">
@@ -90,6 +241,23 @@ const TimeLineContainer = styled.div`
   margin: 0px 0 px;
   padding: 17px 27px 0 5px;
   opacity: 1;
+  position: relative;
+
+  .dev {
+    position: absolute;
+    font-family: SpoqaHanSansNeo;
+    font-size: 20px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.3;
+    letter-spacing: normal;
+    text-align: center;
+    color: #fff;
+    top: 47%;
+    left: 42%;
+    background-color: #000;
+  }
 `;
 
 const TimeLineDataContainer = styled.div`
@@ -97,6 +265,7 @@ const TimeLineDataContainer = styled.div`
   height: 17px;
   margin: 4px 0 4px 5px;
   display: flex;
+  //opacity: 0.3;
 
   .title {
     width: 58px;
@@ -125,14 +294,6 @@ const TimeLine15Box = styled.div`
   position: relative;
 `;
 
-const TimeLineValue = styled.div`
-  width: 1px;
-  height: 20px;
-  background-color: ${(props) => (props.team === 1 ? "#0075bf" : "#f04545")};
-  margin: 0 0 0 ${(props) => props.move}px;
-  position: absolute;
-`;
-
 const TimeLine15OutBox = styled.div`
   width: ${(props) => 623 - props.width}px;
   height: 20px;
@@ -140,6 +301,12 @@ const TimeLine15OutBox = styled.div`
   padding: 0 0 0 0;
   border-radius: 0 3px 3px 0;
   background-color: #222;
+  position: relative;
+  .tip {
+    position: absolute;
+    right: ${(props) => (623 - props.width - 15) / 2}px;
+    bottom: ${(20 - 15) / 2}px;
+  }
 `;
 
 const TimeLineFullBox = styled.div`
@@ -156,7 +323,7 @@ const TimeLineGoldContainer = styled.div`
   display: flex;
   height: 51px;
   margin: 5px 0 9px 2px;
-  background-color: #912345;
+  //background-color: #912345;
 `;
 
 const TimeLineTimeLine = styled.div`

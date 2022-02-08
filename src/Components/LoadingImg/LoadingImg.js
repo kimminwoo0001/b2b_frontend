@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 function Loading() {
   const filters = useSelector((state) => state.FilterReducer);
-  
+
   return (
     // 전체화면 로딩 이미지
     <LoadingImage active={filters.loading}>
@@ -17,7 +17,7 @@ export default Loading;
 
 const LoadingImage = styled.div`
   display: ${props => props.active ? "flex" : "none"};
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   justify-content: center;

@@ -4,69 +4,50 @@ import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import secToMS from "../../../../../../lib/secToMS";
 
-const GankingRoamingStatusBox = ({ gankingData, idx, isActive, id }) => {
+const TeamFightStatusBox = ({ TFdata, id, idx, isActive }) => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const time = secToMS(Math.floor(gankingData.realCount / 2));
-  const data = gankingData.data;
+  const time = secToMS(Math.floor(TFdata.realCount / 2));
+  const data = TFdata.data;
 
-  const team = data.participant < 6 ? 0 : 1;
-  const info =
-    gamevalue.fixedDataset[team].players[
-      team === 0 ? data.participant - 1 : data.participant - 6
-    ].info;
-  const player = info.player;
-  const championEng = info.championEng;
-  const type = getBuildType(data.dest);
-
-  function getBuildType(dest) {
-    let result = {
-      type: t(`game.log.status.${id}.title`),
-      line: "",
-    };
-
-    switch (dest) {
-      case 1:
-        result.line = "top";
-        break;
-      case 2:
-        result.line = "jng";
-        break;
-      case 3:
-        result.line = "mid";
-        break;
-      case 4:
-        result.line = "bot";
-        break;
-      default:
-        break;
-    }
-
-    return result;
-  }
+  const blueTeam = data.partis
+    .filter((e) => e <= 5)
+    .map((e) => gamevalue.fixedDataset[0].players[+e - 1].info);
+  const redTeam = data.partis
+    .filter((e) => e > 5)
+    .map((e) => gamevalue.fixedDataset[0].players[+e - 6].info);
+  const title = t(`game.log.status.teamfight.title`);
 
   return (
-    <LogContent isActive={isActive} team={team}>
+    <LogContent isActive={isActive}>
       <div className="title">
         <div className="dot"></div>
-        <span>{`${time} ${type.type}`}</span>
+        <span>{`${time} ${title}`}</span>
       </div>
       <div className="body">
-        <img src={`Images/champion/${championEng}.png`} alt="champion" />
-        <span className="player-name">{player}</span>
-        <img
-          src={`Images/ic_${team === 0 ? "blue" : "red"}_kill.svg`}
-          alt="champion"
-        />
-        <img src={`Images/ico-position-${type.line}.png`} alt="line" />
-        <span className="player-name">{t(`game.log.status.${id}.desc`)}</span>
+        {blueTeam.map((e) => {
+          return (
+            <img src={`Images/champion/${e.championEng}.png`} alt="champion" />
+          );
+        })}
+
+        {/* <span className="player-name">{player}</span> */}
+        <img src={`Images/ic_engagement.svg`} alt="champion" />
+        {redTeam.map((e) => {
+          return (
+            <img src={`Images/champion/${e.championEng}.png`} alt="champion" />
+          );
+        })}
+        {/* <span className="player-name">{`${t(
+          "game.log.status.roming.desc"
+        )}`}</span> */}
       </div>
     </LogContent>
   );
 };
 
-export default GankingRoamingStatusBox;
+export default TeamFightStatusBox;
 
 const LogContent = styled.div`
   width: 180px;
@@ -76,8 +57,7 @@ const LogContent = styled.div`
   border-radius: 10px;
   background-color: #000;
   opacity: ${(props) => (props.isActive ? `1` : `0.3`)};
-  border: solid 2px
-    ${(props) => props.isActive && (props.team === 1 ? `#f04545` : `#0075bf`)};
+  border: solid 2px #5942ba;
   cursor: pointer;
 
   .title {

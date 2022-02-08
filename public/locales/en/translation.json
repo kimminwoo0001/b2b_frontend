@@ -548,6 +548,9 @@
     "sup": "SUP"
   },
   "game": {
+    "eachMatch": {
+      "noneData": "The game data does not exist, so it cannot be verified."
+    },
     "log": {
       "event": {
         "subject": "Event Log",
