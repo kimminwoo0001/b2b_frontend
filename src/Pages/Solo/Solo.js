@@ -25,17 +25,17 @@ function Solo() {
       <SoloWrapper>
         <SideBar />
         <div
-          // className={filters.filterMenuState ? "filter-open" : "filter-close"}
+        // className={filters.filterMenuState ? "filter-open" : "filter-close"}
         >
           <Filter />
         </div>
-       {/* <div
+        {/* <div
           className={filters.filterMenuState ? "filter-close" : "filter-open"}
         >
           <CloseFilter />
         </div> */}
         <ContentWrapper>
-          {filters.player !== "" && filters.season.length > 0 && filters.year.length > 0? (
+          {filters.player !== "" && filters.season.length > 0 && filters.year.length > 0 ? (
             <Player />
           ) : (
             <SelectFilter />

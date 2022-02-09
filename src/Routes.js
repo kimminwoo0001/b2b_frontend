@@ -54,6 +54,7 @@ function Routes() {
         "name": user.name, //fill with user name
         "teamName": user.teamName ?? "Developer",
         "email": user.id,
+        "lastPage": window.location.pathname,
         // "mobileNumber": "YOUR_USER_MOBILE_NUMBER", //fill with user phone number
         // "CUSTOM_VALUE_1": "VALUE_1", //any other custom meta data
         // "CUSTOM_VALUE_2": "VALUE_2"

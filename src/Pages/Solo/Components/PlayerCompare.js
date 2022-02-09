@@ -7,7 +7,7 @@ import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
-function PlayerCompare({data, oppData}) {
+function PlayerCompare({ data, oppData }) {
   const filters = useSelector((state) => state.FilterReducer);
   const lang = useSelector((state) => state.LocaleReducer);
   const user = useSelector((state) => state.UserReducer);
