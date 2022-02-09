@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
 import styled, { css } from "styled-components";
 import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
 import { Reset_Map, Champion, SetChampion } from "../../../redux/modules/filtervalue";
@@ -8,7 +7,6 @@ import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
 import { API } from "../../config";
 
-import qs from "qs";
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import timeFormat from "../../../lib/timeFormat";
@@ -875,65 +873,6 @@ function WardPlayerFilter({
 export default WardPlayerFilter;
 
 const SliderContainer = styled.div`
-// local
-  /* span [class^="PrivateValueLabel-circle"] {
-    min-width: 50px;
-    height: 23px;
-    transform: rotate(0deg) translateX(-35%) translateY(5px);
-    border-radius: 10%;
-    ::before {
-      content: "";
-      position: absolute;
-      display: block;
-      width: 0px;
-      left: 50%;
-      bottom: 10;
-      border: 15px solid transparent;
-      border-bottom: 0;
-      border-top: 7px solid #5942ba;
-      transform: translate(-50%, calc(100% + 5px));
-    }
-  }
-  span [class^="PrivateValueLabel-label"] {
-    margin: 0px;
-    padding: 0;
-    font-family: SpoqaHanSansNeo;
-    font-size: 12px;
-    font-weight: bold;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 2.33;
-    letter-spacing: normal;
-    transform: rotate(0deg) !important;
-  }
-// nunu.gg 
-span [class^="jss21"] {
-    min-width: 50px;
-    height: 23px;
-    transform: rotate(0deg) translateX(-35%) translateY(5px);
-    border-radius: 10%;
-    ::before {
-      content: "";
-      position: absolute;
-      display: block;
-      width: 0px;
-      left: 50%;
-      bottom: 10;
-      border: 15px solid transparent;
-      border-bottom: 0;
-      border-top: 7px solid #5942ba;
-      transform: translate(-50%, calc(100% + 5px));
-    }
-  }
-  span [class^="jss22"] {
-    margin: 0px;
-    white-space: nowrap;
-    padding: 0;
-    font-family: Poppins;
-    font-size: 12px;
-    font-weight: bold;
-    transform: rotate(0deg) !important;
-  } */
 `;
 
 const WardPlayerFilterContainer = styled.div``;

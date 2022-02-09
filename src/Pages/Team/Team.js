@@ -26,8 +26,7 @@ function Team() {
       <Nav />
       <TeamWrapper>
         <SideBar />
-
-        (<>
+        <>
         <div
           // className={filters.filterMenuState ? "filter-open" : "filter-close"}
         >
@@ -39,15 +38,12 @@ function Team() {
           <CloseFilter />
         </div> */}
         </>
-        )
-
         <ContentWrapper>
           {filters.team !== "" && filters.team.length > 0 && filters.year.length > 0  && filters.patch.length > 0? (
             <TeamTabs />
           ) : (
             <SelectFilter />
           )}
-          
         </ContentWrapper>
       </TeamWrapper>
     </ErrorBoundary>

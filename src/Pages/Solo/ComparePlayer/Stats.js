@@ -107,7 +107,7 @@ function Stats() {
         setOppData(e?.oppPlayer);
 
         //라인전 능력치 비교 그래프 데이터 가공
-        const playerFilteredData = e?.player.LineStat2?.filter((line) =>
+        const playerFilteredData = e?.player.LineStat?.filter((line) =>
           line.value !== "NULL"
         )
         const lineData = playerFilteredData.map((line) => {
@@ -119,7 +119,7 @@ function Stats() {
           };
         });
 
-        const oppplayerFilteredData = e?.oppPlayer.LineStat2?.filter((line) =>
+        const oppplayerFilteredData = e?.oppPlayer.LineStat?.filter((line) =>
           line.value !== "NULL"
         )
         const lineData2 = oppplayerFilteredData.map((line) => {
@@ -139,7 +139,7 @@ function Stats() {
 
         //교전 능력치 비교 그래프 데이터 가공
 
-        const playerMatchData = e?.player.MatchStat2?.filter((match) => match.value !== "NULL");
+        const playerMatchData = e?.player.MatchStat?.filter((match) => match.value !== "NULL");
         const matchData = playerMatchData.map((match) => {
           return {
             x1: match.percent.toFixed(1),
@@ -149,7 +149,7 @@ function Stats() {
           };
         });
 
-        const oppplayerMatchData = e?.oppPlayer.MatchStat2?.filter((match) => match.value !== "NULL");
+        const oppplayerMatchData = e?.oppPlayer.MatchStat?.filter((match) => match.value !== "NULL");
         const matchData2 = oppplayerMatchData.map(
           (match) => {
             return {
@@ -173,7 +173,7 @@ function Stats() {
           // setMatch(Object.values(response?.data.player.MatchStat));
           // setOppMatch(Object.values(response?.data.oppPlayer.MatchStat));
           // setStatData(Object.values(e?.tendencyStat));
-          setStatData(e?.tendencyStat2);
+          setStatData(e?.tendencyStat);
 
         }
         // setLoading(false);
