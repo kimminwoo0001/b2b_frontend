@@ -27,11 +27,14 @@ function GameReport() {
   const checkGameId = gamevalue.fixedDataset.length === 2;
   const copyvalue = useSelector((state) => state.CopyReducer);
   const dispatch = useDispatch();
-  document.title = `${t("sidebar.part12")} - NUNU.GG`
 
   useEffect(() => {
     dispatch(InitializeGameState());
   }, [])
+
+  if (document.title !== `${t("sidebar.part12")} - NUNU.GG`) {
+    document.title = `${t("sidebar.part12")} - NUNU.GG`
+  }
 
   return (
     <ErrorBoundary>

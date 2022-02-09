@@ -67,11 +67,6 @@ const TeamFilterModal = () => {
     }
   }, [selector.yearFilter]);
 
-
-  useEffect(() => {
-    document.title = `${t("sidebar.part8")} - NUNU.GG`
-  }, [])
-
   useEffect(() => {
     if (!filters.compareModal) {
       return;
