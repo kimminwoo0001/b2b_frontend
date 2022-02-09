@@ -2,150 +2,58 @@
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
 import { useState } from "react";
-import Radio from "../../../Components/Ui/Radio";
-import Checkbox from "../../../Components/Ui/Checkbox";
 import { typoStyle } from "../../../Styles/ui";
 
 const JungleMap = () => {
-  const [filterData, setFilterData] = useState({
-    year: 2021,
-    league: { all: false, LCK: true, LCKCL: false, LCS: false },
-  });
-
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-
-    if (type === "radio") {
-      setFilterData({ ...filterData, [name]: value });
-    }
-
-    if (type === "checkbox") {
-      if (value === "all") {
-        setFilterData((prev) => {
-          const newData = { ...prev };
-          for (let key in newData[name]) {
-            newData[name][key] = checked;
-          }
-          return newData;
-        });
-      } else {
-        setFilterData({
-          ...filterData,
-          [name]: { ...filterData[name], [value]: checked },
-        });
-      }
-    }
-  };
-
   return (
-    <SFilterContainer>
-      {/* 연도 */}
-      <SRow>
-        <STitle>연도</STitle>
-        <SFilterGroup>
-          <Radio
-            name="year"
-            value={2021}
-            onChange={handleChange}
-            checked={filterData.year === "2021"}
-          >
-            2021
-          </Radio>
-          <Radio
-            name="year"
-            value={2022}
-            onChange={handleChange}
-            checked={filterData.year === "2022"}
-          >
-            2022
-          </Radio>
-        </SFilterGroup>
-      </SRow>
+    <SContainer>
+      <STab>
+        <li>경기별 정글동선</li>
+        <li>정글링 비교</li>
+      </STab>
+      <SFilter />
 
-      {/* 리그 */}
-      <SRow>
-        <STitle>리그</STitle>
-        <SFilterGroup>
-          <SCheckboxAll
-            onChange={handleChange}
-            name="league"
-            value="all"
-            checked={filterData.league.all}
-          >
-            전체선택
-          </SCheckboxAll>
-          <Checkbox
-            onChange={handleChange}
-            name="league"
-            value="LCK"
-            checked={filterData.league.LCK}
-          >
-            LCK
-          </Checkbox>
-          <Checkbox
-            onChange={handleChange}
-            name="league"
-            value="LCKCL"
-            checked={filterData.league.LCKCL}
-          >
-            LCK CL
-          </Checkbox>
-          <Checkbox
-            onChange={handleChange}
-            name="league"
-            value="LCS"
-            checked={filterData.league.LCS}
-          >
-            LCS
-          </Checkbox>
-          <Checkbox
-            onChange={handleChange}
-            name="league"
-            value="LEC"
-            disabled
-            checked={filterData.league.LEC}
-          >
-            LEC
-          </Checkbox>
-        </SFilterGroup>
-      </SRow>
-    </SFilterContainer>
+      <SContents>
+        <SSelector></SSelector>
+        <SMap></SMap>
+      </SContents>
+    </SContainer>
   );
 };
 
-const SFilterContainer = styled.section`
-  width: 1096px;
+const SContainer = styled.section`
+  width: 1110px;
+  border: 4px solid red;
   ${typoStyle.contents}
 `;
-const SRow = styled.div`
+
+const STab = styled.ul`
   display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-`;
-const STitle = styled.div`
-  flex: 1;
+  width: full;
+  height: 62px;
+  border: 2px solid blue;
+  margin-bottom: 20px;
 `;
 
-const SCheckboxAll = styled(Checkbox)``;
+const SFilter = styled.div`
+  height: 348px;
+  border: 2px solid green;
+  margin-bottom: 30px;
+`;
 
-const SFilterGroup = styled.div`
+const SContents = styled.div`
   display: flex;
-  align-items: center;
-  width: 1004px;
-  height: 44px;
-  ${typoStyle.contents}
+  border: 2px solid gold;
+`;
+const SSelector = styled.div`
+  border: 1px solid crimson;
+  width: 376px;
+  height: 1115px;
+`;
 
-  border-radius: 10px;
-  background-color: ${(props) => props.theme.colors.bg_box};
-  padding-left: 15px;
-
-  label {
-    margin-right: 22px;
-  }
-
-  ${SCheckboxAll} {
-    margin-right: 36px;
-  }
+const SMap = styled.div`
+  flex: 1 0;
+  border: 1px solid dodgerblue;
 `;
 
 export default JungleMap;
