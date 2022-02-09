@@ -1,59 +1,92 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
-import { useState } from "react";
-import { typoStyle } from "../../../Styles/ui";
+import { useTab } from "../../../Hooks";
+import { testStyle, transitionStyle, typoStyle } from "../../../Styles/ui";
+
+import Compare from "./screens/Compare";
+import Sequence from "./screens/Sequence";
+
+// subtab data
+const JungleTab = [
+  { title: "경기별 정글동선", component: <Sequence /> },
+  { title: "정글링 비교", component: <Compare /> },
+];
 
 
 const JungleMap = () => {
+  const { currentIndex, currentTab, setIndex } = useTab(0, JungleTab);
+
+  console.log(currentTab);
   return (
     <SContainer>
       <STab>
-        <li>경기별 정글동선</li>
-        <li>정글링 비교</li>
+        {JungleTab.map((tab, index) => (
+          <STabItem
+            key={tab.title}
+            className={index === currentIndex ? "is-active" : ""}
+            onClick={() => setIndex(index)}
+          >
+            {tab.title}
+          </STabItem>
+        ))}
       </STab>
-      <SFilter />
-      <SContents>
-        <SSelector></SSelector>
-        <SMap></SMap>
-      </SContents>
+      <SContents>{currentTab.component}</SContents>
     </SContainer>
   );
 };
 
 const SContainer = styled.section`
   width: 1110px;
-  border: 4px solid red;
   ${typoStyle.contents}
+  ${testStyle.border1}
 `;
 
 const STab = styled.ul`
   display: flex;
-  width: full;
+  width: 100%;
   height: 62px;
-  border: 2px solid blue;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border_light};
   margin-bottom: 20px;
 `;
 
-const SFilter = styled.div`
-  height: 348px;
-  border: 2px solid green;
-  margin-bottom: 30px;
+const STabItem = styled.li`
+  position: relative;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  opacity: 0.3;
+
+  ${typoStyle.body}
+  ${transitionStyle.opacity};
+
+  &::after {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    content: "";
+    width: 120px;
+    height: 1px;
+    background: ${({ theme }) => theme.colors.text};
+    opacity: 0;
+    ${transitionStyle.opacity};
+  }
+
+  &.is-active {
+    opacity: 1;
+
+    &::after {
+      opacity: 1;
+    }
+  }
 `;
 
 const SContents = styled.div`
   display: flex;
-  border: 2px solid gold;
-`;
-const SSelector = styled.div`
-  border: 1px solid crimson;
-  width: 376px;
-  height: 1115px;
-`;
-
-const SMap = styled.div`
-  flex: 1 0;
-  border: 1px solid dodgerblue;
+  ${testStyle.border2}
 `;
 
 export default JungleMap;
