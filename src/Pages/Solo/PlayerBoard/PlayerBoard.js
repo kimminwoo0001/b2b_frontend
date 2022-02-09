@@ -84,13 +84,6 @@ function PlayerBoard() {
       url,
       params,
       function (e) {
-        //const data = e.data;
-        // var arrNumber = [0, 0, 0, 0, 0, 0, 0];
-
-        // for (var i = 0; i < 7; i++) {
-        //   arrNumber[i] = data.stats.lineStats[`val${i}`];
-        // }
-
         setInfo(e.info);
         setCarrer(e.records.careerrecords);
         setChampRecord(Object.values(e.records.championrecords));
@@ -99,20 +92,10 @@ function PlayerBoard() {
         // setUserPlayerTotal(Object.values(data.soloInfo.userPlayerTotal));
         setSbr(e.stats.sbrStats);
 
-        // val1~ 순서대로 출력
-
         // 라인전 지표 
-        const lineResult = orderStats(e.stats.lineStats)
-        setLine(Object.values(lineResult));
-
-        // 교전/로밍/갱킹 지표
-        const engageResult = orderStats(e.stats.engagementStats)
-        setEngage(Object.values(engageResult));
-
-        // 성향 지표
-        const personalityResult = orderStats(e.stats.personalityStats)
-        setPersonality(Object.values(personalityResult));
-
+        setLine(e.stats.lineStats);
+        setEngage(e.stats.engagementStats);
+        setPersonality(e.stats.personalityStats);
         setGraphDomain(e.trends);
         setMatchInfo(e.stats.matchStats);
         //match graph data conversion
