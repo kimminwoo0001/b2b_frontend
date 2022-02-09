@@ -25,6 +25,7 @@ import { SetModalInfo, SetDesc, SetIsOpen, SetIsSelector, SetConfirmFuncId } fro
 import signAxiosReq from "../../lib/signAxiosReq";
 import LoadingImg from "../../Components/LoadingImg/LoadingImg";
 import { Loading } from "../../redux/modules/filtervalue";
+import getCookie from "../../lib/getCookie";
 
 function Login() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -50,6 +51,24 @@ function Login() {
 
     if (filters.loading) {
       dispatch(Loading(false));
+    }
+
+
+
+    const cookieToken = getCookie("user-token");
+
+
+
+    if (cookieToken && cookieToken !== "undefined") {
+      batch(() => {
+        dispatch(Language(sessionStorage.getItem("i18nextLng")));
+        dispatch(UserID(getCookie("user-id")));
+        dispatch(UserTeamName(getCookie("user-teamName")));
+        dispatch(UserToken(getCookie("user-token")));
+        dispatch(UserChargeTime(getCookie("user-charge_time")));
+        dispatch(UserName(getCookie("user-name")));
+        history.push("/");
+      })
     }
 
 
