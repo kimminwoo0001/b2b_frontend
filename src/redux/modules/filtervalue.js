@@ -44,6 +44,7 @@ export const SET_TEAM = "filtervalue/SET_TEAM";
 export const SET_PLAYER = "filtervalue/SET_PLAYER";
 export const SET_PATCH = "filtervalue/SET_PATCH";
 export const SELECT_ALL_BTN = "filtervalue/SELECT_ALL_BTN";
+export const RESET_WARD_PATHING_TAB = "filtervalue/RESET_WARD_PATHING_TAB";
 
 
 
@@ -341,6 +342,13 @@ export const SetPatch = (payload) => {
   };
 };
 
+export const ResetWardPathingTab = (payload) => {
+  return {
+    type: RESET_WARD_PATHING_TAB,
+    payload,
+  }
+}
+
 const initialState = {
   league: [],
   year: [],
@@ -632,6 +640,27 @@ export default function FilterReducer(state = initialState, action) {
       return {
         ...state,
         patch: action.payload,
+      };
+
+    case RESET_WARD_PATHING_TAB:
+      return {
+        ...state,
+        league: [],
+        year: [],
+        season: [],
+        team: [],
+        patch: [],
+        patchfilter: [],
+        player: "",
+        oppplayer: "",
+        oppteam: "",
+        position: "",
+        getoppteam: "",
+        getoppplayer: "",
+        champion: "",
+        oppchampion: "",
+        champion_eng: "",
+        oppchampion_eng: "",
       };
     default:
       return state;

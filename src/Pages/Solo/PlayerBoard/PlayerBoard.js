@@ -102,17 +102,16 @@ function PlayerBoard() {
         // val1~ 순서대로 출력
 
         // 라인전 지표 
-        const lineResult = orderStats(e.stats.lineStats)
-        setLine(Object.values(lineResult));
+        // const lineResult = orderStats(e.stats.lineStats)
+        setLine(e.stats.lineStats);
 
         // 교전/로밍/갱킹 지표
-        const engageResult = orderStats(e.stats.engagementStats)
-        setEngage(Object.values(engageResult));
+        // const engageResult = orderStats(e.stats.engagementStats)
+        setEngage(e.stats.engagementStats);
 
         // 성향 지표
-        const personalityResult = orderStats(e.stats.personalityStats)
-        setPersonality(Object.values(personalityResult));
-
+        // const personalityResult = orderStats(e.stats.personalityStats)
+        setPersonality(e.stats.personalityStats);
         setGraphDomain(e.trends);
         setMatchInfo(e.stats.matchStats);
         //match graph data conversion

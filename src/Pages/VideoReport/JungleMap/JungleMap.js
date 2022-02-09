@@ -4,6 +4,7 @@ import styled from "@emotion/styled/macro";
 import { useState } from "react";
 import { typoStyle } from "../../../Styles/ui";
 
+
 const JungleMap = () => {
   return (
     <SContainer>
@@ -12,7 +13,6 @@ const JungleMap = () => {
         <li>정글링 비교</li>
       </STab>
       <SFilter />
-
       <SContents>
         <SSelector></SSelector>
         <SMap></SMap>

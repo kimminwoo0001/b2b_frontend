@@ -1,12 +1,56 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
-import { useState } from "react";
-import Radio from "../../../Components/Ui/Radio";
-import Checkbox from "../../../Components/Ui/Checkbox";
-import { typoStyle } from "../../../Styles/ui";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  League,
+  Year,
+  Season,
+  Team,
+  Player,
+  Patch,
+  ResetYear,
+  ResetSeason,
+  ResetTeam,
+  ResetPlayer,
+  Position,
+  ResetChampion,
+  HandleTab,
+  ResetFilter2,
+  PatchFull,
+  SetSeason,
+  SetYear,
+  SetPatch,
+  SetLeague,
+  OppTeam,
+  Loading,
+} from "../../../../redux/modules/filtervalue";
+import {
+  setLeagueFilter,
+  setPatchFilter,
+  setPlayerFilter,
+  setSeasonFilter,
+  setTeamFilter,
+  setYearFilter,
+} from "../../../../redux/modules/selectorvalue";
+
+
+import Radio from "../../../../Components/Ui/Radio";
+import Checkbox from '../../../../Components/Ui/Checkbox'
+import { typoStyle } from "../../../../Styles/ui";
+import { useTranslation } from "react-i18next";
+
+
 
 const JungleFilter = () => {
+  const filters = useSelector((state) => state.FilterReducer);
+  const staticvalue = useSelector((state) => state.StaticValueReducer);
+  const selector = useSelector((state) => state.SelectorReducer);
+
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+
   const [filterData, setFilterData] = useState({
     year: 2021,
     league: { all: false, LCK: true, LCKCL: false, LCS: false },
@@ -37,31 +81,58 @@ const JungleFilter = () => {
     }
   };
 
+  const fetchYearFilter = () => {
+    let yearList = [];
+    let count = 0;
+    for (let league of filters.league) {
+      const ObjectKeys = Object.keys(staticvalue.filterObjects[league]);
+      if (ObjectKeys.length === 1) {
+        count++;
+      }
+    }
+    if (count >= 1) {
+      yearList = ["2021"];
+    } else {
+      yearList = ["2021", "2022"];
+    }
+
+    yearList = yearList
+      .filter((item, pos) => yearList.indexOf(item) === pos)
+      .sort()
+    // .reverse();
+
+    if (filters.year.length !== 0) {
+      dispatch(Year(yearList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
+    }
+    dispatch(setYearFilter(yearList));
+  };
+
+  useEffect(() => {
+    fetchYearFilter();
+  }, [])
+
+
   return (
     <SFilterContainer>
       {/* 연도 */}
       <SRow>
         <STitle>연도</STitle>
         <SFilterGroup>
-          <Radio
-            name="year"
-            value={2021}
-            onChange={handleChange}
-            checked={filterData.year === "2021"}
-          >
-            2021
-          </Radio>
-          <Radio
-            name="year"
-            value={2022}
-            onChange={handleChange}
-            checked={filterData.year === "2022"}
-          >
-            2022
-          </Radio>
+          {selector.yearFilter.map((year) => {
+            return (
+              <Radio
+                name="year"
+                value={2021}
+                onChange={handleChange}
+                onClick={() => { dispatch(SetYear([year])); }}
+                checked={filterData.year === "2021"}
+              >
+                {year}
+              </Radio>
+            )
+          })}
         </SFilterGroup>
       </SRow>
-
       {/* 리그 */}
       <SRow>
         <STitle>리그</STitle>
@@ -109,6 +180,49 @@ const JungleFilter = () => {
           </Checkbox>
         </SFilterGroup>
       </SRow>
+      {/* 시즌 */}
+      <SRow>
+        <STitle>시즌</STitle>
+        <SFilterGroup>
+          <SCheckboxAll
+            onChange={handleChange}
+            name="league"
+            value="all"
+            checked={filterData.league.all}
+          >
+            전체선택
+          </SCheckboxAll>
+        </SFilterGroup>
+      </SRow>
+      {/* 팀 */}
+      <SRow>
+        <STitle>팀</STitle>
+        <SFilterGroup>
+          <SCheckboxAll
+            onChange={handleChange}
+            name="league"
+            value="all"
+            checked={filterData.league.all}
+          >
+            전체선택
+          </SCheckboxAll>
+        </SFilterGroup>
+      </SRow>
+      {/* 패치 */}
+      <SRow>
+        <STitle>패치</STitle>
+        <SFilterGroup>
+          <SCheckboxAll
+            onChange={handleChange}
+            name="league"
+            value="all"
+            checked={filterData.league.all}
+          >
+            전체선택
+          </SCheckboxAll>
+        </SFilterGroup>
+      </SRow>
+      {/* 선택된 필터 배치*/}
     </SFilterContainer>
   );
 };

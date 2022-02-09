@@ -236,6 +236,13 @@ const Filter = memo(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [copyvalue.compareModal]);
 
+  // 팀이 이미 선택된 경우에 리그를 재선택하게될 때 팀 리셋하여 빈 데이터가 나오지 않게 함
+  useEffect(() => {
+    if ([nameSolo, nameTeam].includes(pagePath) && filters.team.length > 0) {
+      dispatch(ResetTeam());
+    }
+  }, [filters.league])
+
   const fetchActiveFilter = () => {
     // if (selector.leagueFilter?.length > 0) fetchLeagueFilter();
     // if (selector.yearFilter?.length > 0) fetchYearFilter();
@@ -371,12 +378,6 @@ const Filter = memo(() => {
       fetchingTeamFilter();
     }
   };
-  // 팀이 이미 선택된 경우에 리그를 재선택하게될 때 팀 리셋하여 빈 데이터가 나오지 않게 함
-  useEffect(() => {
-    if ([nameSolo, nameTeam].includes(pagePath) && filters.team.length > 0) {
-      dispatch(ResetTeam());
-    }
-  }, [filters.league])
 
   const fetchingTeamFilter = () => {
     let teamList = [];

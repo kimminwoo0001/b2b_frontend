@@ -1,7 +1,10 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
+import { SelectorInitailizeState } from "../../redux/modules/selectorvalue";
 import {
+  InitailizeState,
+  ResetWardPathingTab,
   HandleTab,
   Reset_MapTab,
   Reset_Object_MapTab,
@@ -14,6 +17,7 @@ import JungleMap from "./JungleMap/JungleMap";
 import { useTranslation } from "react-i18next";
 
 function VideoTabs() {
+
   const filters = useSelector((state) => state.FilterReducer);
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -86,6 +90,11 @@ function VideoTabs() {
             onClick={() => {
               dispatch(HandleTab(4));
               dispatch(Reset_MapTab());
+              dispatch(ResetWardPathingTab());
+              dispatch(SelectorInitailizeState());
+              // dispatch(InitializeGameState());
+              // dispatch(InitailizeState());
+
             }}
             changeColor={filters.tab === 4}
           >
