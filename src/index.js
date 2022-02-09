@@ -1,4 +1,7 @@
-import React, { Suspense } from "react";
+/** @jsxImportSource @emotion/react */
+import { jsx, ThemeProvider } from "@emotion/react";
+
+import { Suspense } from "react";
 import ReactDOM from "react-dom";
 import Routes from "./Routes";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -13,6 +16,9 @@ import "./i18n";
 import { GlobalFonts } from "./Styles/fonts/fonts";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
+
+// ui
+import Theme from "./Styles/Theme";
 // import AlertModal from "./Components/UtilityComponent/AlertModal";
 
 const sagaMiddleware = createSagaMiddleware();
@@ -22,7 +28,6 @@ const store = createStore(
 );
 
 const persistor = persistStore(store);
-
 // export const history = syncHistoryWithStore(createBrowserHistory, store);
 
 ReactDOM.render(
@@ -32,9 +37,11 @@ ReactDOM.render(
         <Provider store={store}>
           {/* <AlertModal />/ */}
           <PersistGate persistor={persistor}>
-            <Routes />
-            <GlobalFonts />
-            <GlobalStyles />
+            <ThemeProvider theme={Theme}>
+              <Routes />
+              <GlobalFonts />
+              <GlobalStyles />
+            </ThemeProvider>
           </PersistGate>
         </Provider>
       </Suspense>

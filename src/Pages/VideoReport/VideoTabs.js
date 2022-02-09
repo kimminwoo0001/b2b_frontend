@@ -10,6 +10,7 @@ import WardMapping from "./WardMapping/WardMapping";
 import ObjectMapping from "./ObjectMapping/ObjectMapping";
 import GameMapping from "./GameMapping/GameMapping";
 import HitMap from "./HitMap/HitMap";
+import JungleMap from "./JungleMap/JungleMap";
 import { useTranslation } from "react-i18next";
 
 function VideoTabs() {
@@ -31,6 +32,7 @@ function VideoTabs() {
     1: <ObjectMapping />,
     2: <GameMapping />,
     3: <HitMap />,
+    4: <JungleMap />,
   };
 
   return (
@@ -86,6 +88,18 @@ function VideoTabs() {
           >
             <div>
               <span>{t("video.tab.heatmap")}</span>
+            </div>
+          </TabContent>
+          {/* 정글동선 탭 */}
+          <TabContent
+            onClick={() => {
+              dispatch(HandleTab(4));
+              dispatch(Reset_MapTab());
+            }}
+            changeColor={filters.tab === 4}
+          >
+            <div>
+              <span>{t("video.tab.jungle")}</span>
             </div>
           </TabContent>
         </TabContainer>
