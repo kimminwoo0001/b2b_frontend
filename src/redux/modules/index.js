@@ -15,7 +15,6 @@ import copyvalue from "./copyvalue"
 
 import { persistReducer } from "redux-persist";
 import storageSession from "redux-persist/lib/storage/session";
-import { withReduxStateSync } from 'redux-state-sync';
 
 // 세션 스토리지에 whitelist에 있는 Redux를 저장.
 const persistConfig = {
@@ -54,4 +53,4 @@ const rootReducer = (state, action) => {
   return appReducer(state, action);
 };
 
-export default withReduxStateSync(persistReducer(persistConfig, rootReducer));
+export default persistReducer(persistConfig, rootReducer);
