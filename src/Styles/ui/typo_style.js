@@ -24,6 +24,12 @@ const typoStyle = {
     font-weight: 400;
     color: ${theme.colors.text};
   `,
+  contents_md: css`
+    font-family: "Spoqa Han Sans";
+    font-size: 15px;
+    font-weight: 500;
+    color: ${theme.colors.text};
+  `,
   contents_title: css`
     font-size: 16px;
     font-family: "Spoqa Han Sans";
