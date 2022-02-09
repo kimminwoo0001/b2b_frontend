@@ -415,7 +415,8 @@
       "ward": "와드 매핑",
       "object": "오브젝트별 동선",
       "games": "경기별 동선",
-      "heatmap": "히트맵"
+      "heatmap": "히트맵",
+      "jungle": "정글 동선"
     },
     "vision": {
       "teamview": "팀 기준으로 보기",
