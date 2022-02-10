@@ -38,6 +38,8 @@ function VideoTabs() {
             onClick={() => {
               dispatch(HandleTab(0));
               dispatch(Reset_MapTab());
+              dispatch(ResetWardPathingTab());
+              dispatch(SelectorInitailizeState());
             }}
             changeColor={filters.tab === 0}
           >
@@ -50,6 +52,8 @@ function VideoTabs() {
               dispatch(HandleTab(1));
               dispatch(Reset_MapTab());
               dispatch(Reset_Object_MapTab());
+              dispatch(ResetWardPathingTab());
+              dispatch(SelectorInitailizeState());
             }}
             changeColor={filters.tab === 1}
           >
@@ -78,6 +82,8 @@ function VideoTabs() {
             onClick={() => {
               dispatch(HandleTab(3));
               dispatch(Reset_MapTab());
+              dispatch(ResetWardPathingTab());
+              dispatch(SelectorInitailizeState());
             }}
             changeColor={filters.tab === 3}
           >

@@ -2,12 +2,14 @@
 import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 import { testStyle } from "../../../../Styles/ui";
+import JungleFilter from '../components/JungleFilter';
 
 const Sequence = () => {
   return (
     <SContainer>
-      <SFilterContainer>필터가 들어가요!</SFilterContainer>
-
+      {/* <SFilterContainer> */}
+        <JungleFilter />
+      {/* </SFilterContainer> */}
       <SFitlerContents>
         <SSelector>셀럭터가 들어가요!</SSelector>
         <SMap>맵이 들어가요!</SMap>

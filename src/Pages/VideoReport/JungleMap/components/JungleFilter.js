@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   League,
@@ -42,12 +42,12 @@ import { typoStyle } from "../../../../Styles/ui";
 import { useTranslation } from "react-i18next";
 
 
-
 const JungleFilter = () => {
   const filters = useSelector((state) => state.FilterReducer);
   const staticvalue = useSelector((state) => state.StaticValueReducer);
   const selector = useSelector((state) => state.SelectorReducer);
-
+  const [checkedList, setCheckedLists] = useState([]);
+  
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -81,6 +81,20 @@ const JungleFilter = () => {
     }
   };
 
+  // 개별 체크 클릭 시 발생하는 함수
+  const onCheckedElement = useCallback(
+  (checked, item) => {
+    if (checked) {
+    setCheckedLists([...checkedList, item]);
+    } else {
+    setCheckedLists(checkedList.filter((el) => el !== item));
+  }
+},
+  [checkedList]
+  );
+;
+
+
   const fetchYearFilter = () => {
     let yearList = [];
     let count = 0;
@@ -101,15 +115,30 @@ const JungleFilter = () => {
       .sort()
     // .reverse();
 
-    if (filters.year.length !== 0) {
-      dispatch(Year(yearList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
-    }
+    // if (filters.year.length !== 0) {
+    //   dispatch(Year(yearList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
+    // }
     dispatch(setYearFilter(yearList));
+  };
+
+  const fetchLeagueFilter = () => {
+    let leagueList = [];
+    console.log(staticvalue.filterObjects)
+    leagueList = Object.keys(staticvalue.filterObjects).filter((league) => league !== "LPL").sort();
+    dispatch(League(leagueList[0]));
+    dispatch(setLeagueFilter(leagueList.sort()));
   };
 
   useEffect(() => {
     fetchYearFilter();
   }, [])
+
+  useEffect(() => {
+    if(filters.year.length === 0) {
+      return;
+    }
+    fetchLeagueFilter();
+  },[filters.year])
 
 
   return (
@@ -119,13 +148,14 @@ const JungleFilter = () => {
         <STitle>연도</STitle>
         <SFilterGroup>
           {selector.yearFilter.map((year) => {
+            console.log(filters.year)
             return (
               <Radio
                 name="year"
-                value={2021}
-                onChange={handleChange}
-                onClick={() => { dispatch(SetYear([year])); }}
-                checked={filterData.year === "2021"}
+                value="year"
+                // onChange={handleChange}
+                onClick={() => { dispatch(SetYear([year]))}}
+                checked={filters.year.includes(year)}
               >
                 {year}
               </Radio>
@@ -145,39 +175,20 @@ const JungleFilter = () => {
           >
             전체선택
           </SCheckboxAll>
-          <Checkbox
-            onChange={handleChange}
-            name="league"
-            value="LCK"
-            checked={filterData.league.LCK}
-          >
-            LCK
-          </Checkbox>
-          <Checkbox
-            onChange={handleChange}
-            name="league"
-            value="LCKCL"
-            checked={filterData.league.LCKCL}
-          >
-            LCK CL
-          </Checkbox>
-          <Checkbox
-            onChange={handleChange}
-            name="league"
-            value="LCS"
-            checked={filterData.league.LCS}
-          >
-            LCS
-          </Checkbox>
-          <Checkbox
-            onChange={handleChange}
-            name="league"
-            value="LEC"
-            disabled
-            checked={filterData.league.LEC}
-          >
-            LEC
-          </Checkbox>
+          {selector.leagueFilter?.map((league) => {
+            return (
+              <Checkbox
+              // onChange={handleChange}
+              onChange={(e) => onCheckedElement(e.target.checked, league)}
+              name="league"
+              value="league"
+              checked={filters.league.includes(league)}
+              onClick={() => {dispatch(League(league))}}
+            >
+              {league}
+            </Checkbox>
+            )
+          })}
         </SFilterGroup>
       </SRow>
       {/* 시즌 */}
