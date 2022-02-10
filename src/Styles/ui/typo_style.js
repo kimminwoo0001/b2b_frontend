@@ -109,6 +109,14 @@ const typoStyle = {
     letter-spacing: -0.55px;
     color: ${theme.colors.text};
   `,
+
+  /* table */
+  table_head: css`
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+
+    color: #817e8b;
+  `,
 };
 
 export default typoStyle;
