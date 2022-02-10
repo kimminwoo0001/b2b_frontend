@@ -16,9 +16,9 @@ function League() {
   const filters = useSelector((state) => state.FilterReducer);
   const { t } = useTranslation();
 
-  useEffect(() => {
+  if (document.title !== `${t("sidebar.part2")} - NUNU.GG`) {
     document.title = `${t("sidebar.part2")} - NUNU.GG`
-  }, [])
+  }
 
   return (
     <ErrorBoundary>
@@ -26,11 +26,11 @@ function League() {
       <LeagueWrapper>
         <SideBar />
         <div
-          // className={filters.filterMenuState ? "filter-open" : "filter-close"}
+        // className={filters.filterMenuState ? "filter-open" : "filter-close"}
         >
           <Filter />
         </div>
-       {/* <div
+        {/* <div
           className={filters.filterMenuState ? "filter-close" : "filter-open"}
         >
           <CloseFilter />

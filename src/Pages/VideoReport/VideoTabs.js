@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { SelectorInitailizeState } from "../../redux/modules/selectorvalue";
@@ -19,8 +19,17 @@ import { useTranslation } from "react-i18next";
 function VideoTabs() {
 
   const filters = useSelector((state) => state.FilterReducer);
+  const [team, setTeam] = useState("")
   const dispatch = useDispatch();
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (team !== filters.team) {
+      setTeam(filters.team);
+      dispatch(Reset_MapTab());
+      dispatch(Reset_Object_MapTab());
+    }
+  }, [filters.team])
 
   const VideoTab = {
     0: <WardMapping />,

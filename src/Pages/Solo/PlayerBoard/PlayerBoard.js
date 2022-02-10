@@ -20,6 +20,7 @@ import axiosRequest from "../../../lib/axiosRequest";
 import ExcelExport from "../../../Components/UtilityComponent/ExcelExport";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import orderStats from "../../../lib/orderStats";
+import addZero from '../../../lib/addZero';
 
 function PlayerBoard() {
   //선수 보고서 => 선수 상황판
@@ -56,6 +57,13 @@ function PlayerBoard() {
   );
 
 
+  const secToMin = (sec) => {
+    let mm = addZero(Math.floor(sec / 60));
+    let ss = addZero(Math.floor(sec % 60));
+
+    return `${mm}${t("solo.playerboard.min")} ${ss}${t("solo.playerboard.sec")}`;
+  }
+
   useEffect(() => {
     GetPlayerBoardData();
     //GetPlayerSummary();
@@ -84,13 +92,6 @@ function PlayerBoard() {
       url,
       params,
       function (e) {
-        //const data = e.data;
-        // var arrNumber = [0, 0, 0, 0, 0, 0, 0];
-
-        // for (var i = 0; i < 7; i++) {
-        //   arrNumber[i] = data.stats.lineStats[`val${i}`];
-        // }
-
         setInfo(e.info);
         setCarrer(e.records.careerrecords);
         setChampRecord(Object.values(e.records.championrecords));
@@ -98,8 +99,6 @@ function PlayerBoard() {
         // setLeaguePlayerTotal(Object.values(data.soloInfo.leaguePlayerTotal));
         // setUserPlayerTotal(Object.values(data.soloInfo.userPlayerTotal));
         setSbr(e.stats.sbrStats);
-
-        // val1~ 순서대로 출력
 
         // 라인전 지표 
         // const lineResult = orderStats(e.stats.lineStats)
@@ -239,13 +238,7 @@ function PlayerBoard() {
       },
     ],
   };
-  // 
 
-
-  useEffect(() => {
-    console.log(line);
-
-  }, [line])
   return (
     <PlayerBoardWrapper>
       <PlayerInfoSection>
@@ -305,7 +298,7 @@ function PlayerBoard() {
             <div className="PerformanceValue">
               <SbrStat>{sbr?.sbrAvg.toFixed(1)}</SbrStat>
               <SbrPrice isChampNotSelected={filters.champion !== ""}>
-                {sbr?.price > 0 ? " / " + sbr?.price + "위" : "출전 경기 부족"}
+                {sbr?.price > 0 ? " / " + sbr?.price + "위" : "/출전 경기 부족"}
               </SbrPrice>
             </div>
           </div>
@@ -466,7 +459,9 @@ function PlayerBoard() {
                   {line?.map((title, idx) => {
                     console.log("title", title);
                     return (
-                      title.data === "NULL" ? "" :
+                      title.data === "NULL"
+                        || title.name === "갱 성공률 (%)" && filters.year.includes("2022") ?
+                        "" :
                         <MapStat key={idx}>
                           <Tippy // options
                             duration={0}
@@ -482,7 +477,8 @@ function PlayerBoard() {
                               {lang === "ko" ? title.name : title.eng}
                             </td>
                           </Tippy>
-                          <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
+                          <LeagueValue>{title.name === "솔로킬" || title.name.includes("횟수")
+                            ? title.leaguedata.toFixed(2) : title.leaguedata.toFixed(1)}</LeagueValue>
                           <td className="Icon">
                             <img
                               src={
@@ -499,9 +495,9 @@ function PlayerBoard() {
                             className="playerValue"
                             changeColor={title.leaguedata > title.data}
                           >
-                            {/* {title.toFixed(1)}*/}
                             {
-                              title.data.toFixed(1)
+                              title.name === "솔로킬" || title.name.includes("횟수")
+                                ? title.data.toFixed(2) : title.data.toFixed(1)
                             }
                           </PlayerValue>
                         </MapStat>
@@ -543,7 +539,8 @@ function PlayerBoard() {
                               {lang === "ko" ? title.name : title.eng}
                             </td>
                           </Tippy>
-                          <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
+                          <LeagueValue>{title.name.includes("빈도")
+                            ? title.leaguedata.toFixed(2) : title.leaguedata.toFixed(1)}</LeagueValue>
                           <td className="Icon">
                             <img
                               src={
@@ -560,8 +557,8 @@ function PlayerBoard() {
                             className="playerValue"
                             changeColor={title.leaguedata > title.data}
                           >
-                            {/* {title.toFixed(1)} */}
-                            {title.data.toFixed(1)}
+                            {title.name.includes("빈도")
+                              ? title.data.toFixed(2) : title.data.toFixed(1)}
                           </PlayerValue>
                         </MapStat>
                     );
@@ -599,11 +596,14 @@ function PlayerBoard() {
                             placement="top"
                           >
                             <td className="StatNum">
-                              {lang === "ko" ? title.name : title.eng}
+                              {lang === "ko" ? title.name === "첫 텔레포트 사용 시간 (초)"
+                                ? "첫 텔레포트 시간" : title.name : title.eng === "First Teleport Time (sec)"
+                                ? "First Teleport Time" : title.eng}
                             </td>
                           </Tippy>
-
-                          <LeagueValue>{title.leaguedata.toFixed(1)}</LeagueValue>
+                          <LeagueValue>{title.name === "첫 텔레포트 사용 시간 (초)" ?
+                            secToMin(title.leaguedata.toFixed(1))
+                            : title.name === "텔레포트 선제 사용빈도" || title.name === "교전 참여 횟수" ? title.leaguedata.toFixed(2) : title.leaguedata.toFixed(1)}</LeagueValue>
                           <td className="Icon">
                             <img
                               src={
@@ -620,7 +620,9 @@ function PlayerBoard() {
                             className="playerValue"
                             changeColor={title.leaguedata > title.data}
                           >
-                            {title.data.toFixed(1)}
+                            {title.name === "첫 텔레포트 사용 시간 (초)" ?
+                              secToMin(title.data.toFixed(1))
+                              : title.name === "텔레포트 선제 사용빈도" || title.name === "교전 참여 횟수" ? title.data.toFixed(2) : title.data.toFixed(1)}
                           </PlayerValue>
                         </MapStat>
                     );
@@ -842,7 +844,7 @@ function PlayerBoard() {
                       <td>
                         <div className="ChampName">
                           <img
-                            src={`Images/champion/${data.championEn}.png`}
+                            src={`https://am-a.akamaihd.net/image?resize=90:&f=${data.championImage}`}
                             alt="ChampImage"
                           />
                           <div>
@@ -1814,9 +1816,6 @@ const DropDownContainer = styled.div`
     width: 130px;
     margin: 0 10px;
     white-space: nowrap;
-  }
-
-  .menu-trigger img {
   }
 
   .menu {

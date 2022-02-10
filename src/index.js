@@ -9,7 +9,7 @@ import { GlobalStyles } from "./Styles/GlobalStyles";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
-import rootReducer from "./redux/modules";
+import persistReducer from "./redux/modules";
 import createSagaMiddleware from "redux-saga";
 import ErrorBoundary from "./Components/ErrorBoundary";
 import "./i18n";
@@ -23,7 +23,7 @@ import Theme from "./Styles/Theme";
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
-  rootReducer,
+  persistReducer,
   composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
 

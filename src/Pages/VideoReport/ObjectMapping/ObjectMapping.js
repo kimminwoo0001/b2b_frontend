@@ -15,7 +15,7 @@ import ObjectTooltip from "./ObjectTooltip";
 import addZero from "../../../lib/addZero";
 import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
-import { SetModalInfo } from "../../../redux/modules/modalvalue";
+import { SetDesc, SetIsOpen, SetIsSelector, SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function useInterval(callback) {
   const savedCallback = useRef();
@@ -111,14 +111,21 @@ function ObjectMapping() {
         params,
         function (e) {
           const dto = e;
-          setMinTime(
-            dto?.position[0].realCount ? dto?.position[0].realCount : 0
-          );
-          setMaxTime(dto.position.length - 1);
-          setCurrentPos(dto.position);
-          setChampInfo(dto.info);
-          setPlay(true);
-          console.log(dto.position);
+          if (dto.position.length !== 0) {
+            setMinTime(
+              dto?.position[0].realCount ? dto?.position[0].realCount : 0
+            );
+            setMaxTime(dto.position.length - 1);
+            setCurrentPos(dto.position);
+            setChampInfo(dto.info);
+            setPlay(true);
+            console.log(dto.position);
+          } else {
+            dispatch(SetIsSelector(false));
+            dispatch(SetIsOpen(true));
+            dispatch(SetDesc(t("video.vision.noData")));
+          }
+
         },
         function (objStore) {
           dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -226,6 +233,30 @@ function ObjectMapping() {
     setPositionOpen(false);
     setCompareOpen(false);
   }, [filters.player]);
+
+  useEffect(() => {
+    setCurrentPos()
+    setChampInfo();
+    //Range 핸들링 상태값
+    setRange(0);
+    setMinTime();
+    setMaxTime();
+    setPlay(false);
+    setFast(false);
+    setPause(false);
+    // 토글 버튼 상태값
+    setCustomOpen(true);
+    setGameOpen(false);
+    setObjectOpen(false);
+    setPositionOpen(false);
+    setCompareOpen(false);
+    // query string 상태값
+    setGameData([]);
+    setSide("all");
+    setPeriod("all");
+    setPosition(["top", "jng", "mid", "bot", "sup"]);
+    setGameSelect([]);
+  }, [filters.team])
 
   return (
     <ObjectMappingContainer>
@@ -376,11 +407,11 @@ function ObjectMapping() {
                   ) {
                     if (
                       Number(currentPos[range]?.player[i].x1) -
-                        Number(currentPos[range]?.player[i].x2) !==
-                        0 &&
+                      Number(currentPos[range]?.player[i].x2) !==
+                      0 &&
                       Number(currentPos[range]?.player[i].y1) -
-                        Number(currentPos[range]?.player[i].y2) !==
-                        0
+                      Number(currentPos[range]?.player[i].y2) !==
+                      0
                     ) {
                       x =
                         ((Number(currentPos[range]?.player[i].x1) +
@@ -465,15 +496,18 @@ function ObjectMapping() {
             <span className="current">
               {range
                 ? `${addZero(
-                    Math.floor((range + minTime) / 2 / 60)
-                  )} : ${addZero(Math.floor(((range + minTime) / 2) % 60))}`
+                  Math.floor((range + minTime) / 2 / 60)
+                )} : ${addZero(Math.floor(((range + minTime) / 2) % 60))}`
                 : "00 : 00"}
             </span>
             <p>/</p>
             {maxTime ? (
-              <span className="max">{`${addZero(
-                Math.floor((maxTime + minTime) / 2 / 60)
-              )} : ${addZero(((maxTime + minTime) / 2) % 60)}`}</span>
+              <span className="max">{
+                //   `${addZero(
+                //   Math.floor((maxTime + minTime) / 2 / 60)
+                // )} : ${addZero(((maxTime + minTime) / 2) % 60)}`
+                `${period === 'all' ? '15 : 00' : '01 : 30'}`
+              }</span>
             ) : (
               <span className="max">{`00 : 00`}</span>
             )}
@@ -600,18 +634,18 @@ const StepTitle = styled.nav`
     > .step {
       font-weight: normal;
       color: ${(props) =>
-        props.changeColor ? `rgb(132, 129, 142)` : `rgba(132, 129, 142,0.3)`};
+    props.changeColor ? `rgb(132, 129, 142)` : `rgba(132, 129, 142,0.3)`};
       margin-right: 5px;
     }
     > .subtitle {
       color: ${(props) =>
-        props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
+    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
     }
   }
   img {
     content: url("Images/ico-arrow-down.svg");
     transform: ${(props) =>
-      props.changeColor ? `rotate(0deg);` : `rotate(180deg);`};
+    props.changeColor ? `rotate(0deg);` : `rotate(180deg);`};
     opacity: ${(props) => (props.changeColor ? `1` : `0.3`)};
     margin-right: 10px;
     margin-bottom: 10px;

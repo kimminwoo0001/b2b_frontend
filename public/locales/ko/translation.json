@@ -322,7 +322,9 @@
       "lose": "패",
       "ageLabel": "세",
       "place": "위",
-      "noEnoughMatch": "출전 경기 부족"
+      "noEnoughMatch": "출전 경기 부족",
+      "min": "분",
+      "sec": "초"
     },
     "comparison": {
       "overview": "기본정보",
@@ -406,7 +408,7 @@
     "setPatchVersion": "패치버전",
     "team": "팀",
     "player": "선수",
-    "NoCommonSeasons": "중복되는 시즌이 없습니다. 시즌을 선택해주세요.",
+    "NoCommonSeasons": "시즌을 다시 선택해주세요.",
     "mainTeamChanged": "메인 팀이 변경되어 비교 데이터가 초기화됩니다.",
     "sorry": "22년도 시즌데이터가 업데이트 되었습니다."
   },
@@ -476,7 +478,7 @@
       "herald": "첫번째 전령",
       "herald2": "획득 전 1분 30초",
       "return": "첫번째 귀환",
-      "return2": "귀환 후 1분",
+      "return2": "귀환 후 1분 30초",
       "position": "포지션을 선택하시면 관련 된 모든 동선이 보여집니다.",
       "confirm": "선택완료",
       "selectChamp": "챔피언 선택"

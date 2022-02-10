@@ -13,10 +13,12 @@ import CloseFilter from "../../Components/Filter/CloseFilter";
 function Video() {
   const filters = useSelector((state) => state.FilterReducer);
   const { t } = useTranslation();
-
-  useEffect(() => {
+  if (document.title !== `${t("sidebar.part6")} - NUNU.GG`) {
     document.title = `${t("sidebar.part6")} - NUNU.GG`
-  }, [])
+  }
+  useEffect(() => {
+    console.log("ay")
+  }, [filters.team])
 
   return (
     <ErrorBoundary>
@@ -24,12 +26,12 @@ function Video() {
       <VideoWrapper>
         <SideBar />
         <div
-          // className={filters.filterMenuState ? "filter-open" : "filter-close"}
+        // className={filters.filterMenuState ? "filter-open" : "filter-close"}
         >
           {filters.tab === 4 ? "" : <Filter />}
 
         </div>
-       {/* <div
+        {/* <div
           className={filters.filterMenuState ? "filter-close" : "filter-open"}
         >
           <CloseFilter />

@@ -233,7 +233,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                     <td className="ChampName">
                       <div className="NameWrapper">
                         <img
-                          src={`Images/champion/${data.name}.png`}
+                          src={`https://am-a.akamaihd.net/image?resize=90:&f=${data.championImage}`}
                           alt="champIcon"
                         ></img>
                         <div>
@@ -420,7 +420,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                     <td className="ChampName">
                       <div className="champ">
                         <img
-                          src={`Images/champion/${data.champion}.png`}
+                          src={`https://am-a.akamaihd.net/image?resize=90:&f=${data.championImage}`}
                           alt="champIcon"
                           onError={(e) => {
                             e.target.src = "Images/ico-player.png";
@@ -440,7 +440,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                     <td className="ChampName">
                       <div className="champ">
                         <img
-                          src={`Images/champion/${data.oppChampion}.png`}
+                          src={`https://am-a.akamaihd.net/image?resize=90:&f=${data.oppChmapionImage}`}
                           onError={(e) => {
                             e.target.src = "Images/ico-player.png";
                           }}

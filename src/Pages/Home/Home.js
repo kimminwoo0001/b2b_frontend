@@ -14,9 +14,9 @@ function Home() {
   // 홈 화면 컨테이너
   const copyvalue = useSelector((state) => state.CopyReducer);
   const { t } = useTranslation();
-  useEffect(() => {
+  if (document.title !== `${t("sidebar.part1")} - NUNU.GG`) {
     document.title = `${t("sidebar.part1")} - NUNU.GG`
-  }, [])
+  }
 
   return (
     <ErrorBoundary>

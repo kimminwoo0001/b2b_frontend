@@ -1,6 +1,7 @@
 import React, { memo, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 //import YoutubeVideo from '../../../lib/youtube';
 import ChampDetail from "./SummaryOption/ChampionOption/ChampDetail";
 import DetailLog from "./DetailLogOption/DetailLog";
@@ -11,7 +12,11 @@ import VideoPlayer from "../../../Components/Video/VideoPlayer";
 import ErrorBoundary from "../../../Components/ErrorBoundary";
 
 const GameReportDetail = () => {
-  useEffect(() => { }, []);
+  const { t } = useTranslation();
+
+  if (document.title !== `${t("sidebar.part12")} - NUNU.GG`) {
+    document.title = `${t("sidebar.part12")} - NUNU.GG`
+  }
 
   return (
     <ErrorBoundary>

@@ -10,19 +10,17 @@
     "part3": "Team Report",
     "part4": "Meta Analysis",
     "part5": "Player Report",
-    "part6": "Ward & Route Analysis",
+    "part6": "Ward & Pathing",
     "part7": "Match Analysis",
     "part8": "Compare Teams",
     "part9": "Compare Players",
     "part10": "Item Simulator",
     "part11": "Team WR Calculator",
-    "part12": "League game Analysis",
-    "part13": "Solo Rank",
-    "part14": "Item Calculator"
+    "part12": "Pro Game Analysis"
   },
   "sign": {
     "signUp": "Sign up",
-    "changePW": "Reset Password",
+    "changePW": "Change Password",
     "login": {
       "fail": "Failed to login."
     },
@@ -103,7 +101,7 @@
   "league": {
     "tab": {
       "calendar": "Calendar",
-      "draft": "Draft",
+      "draft": "Champions",
       "leagueStat": "League Stats",
       "playerStat": "Player Stats"
     },
@@ -132,7 +130,7 @@
       "pm": "pm"
     },
     "draft": {
-      "mostPick": "Most Picks",
+      "mostPick": "Picks",
       "against": "Stats Against",
       "unique": "Unique Picks",
       "champtier": "Champion Tier",
@@ -162,15 +160,15 @@
       "pressure": "Lane Help Time",
       "lane": "Lane",
       "yPressure": "Lane Help Received (sec)",
-      "teamFight": "Number of Engagements (until 15)",
+      "teamFight": "Combats before 15",
       "yTeamFight": "Count",
       "gank": "Time of First Gank",
       "time": "Time (min)",
       "noData": "This information is not yet supported.",
-      "noData2": "AI is still in the canyon."
+      "noData2": "AI is still in the Rift."
     },
     "playerStat": {
-      "sbrLabel": "PR Ranking",
+      "sbrLabel": "Performance Rating",
       "played": "Games Played",
       "winrate": "Wins",
       "kda": "KDA",
@@ -182,14 +180,14 @@
   "team": {
     "tab": {
       "calendar": "Calendar",
-      "draft": "Draft Analysis",
-      "analysis": "Team Analysis",
+      "draft": "Draft",
+      "analysis": "Team Stats",
       "comparison": "Team Comparison"
     },
     "draft": {
       "stats": "Stats",
       "insight": "Insights",
-      "order": "Pick Order by Lane",
+      "order": "Picks",
       "mostban": "Bans",
       "mostbaned": "Banned",
       "allSide": "Side-independent Strategy",
@@ -302,7 +300,7 @@
       "nodata": "No data for two weeks.",
       "avgLeague": "League",
       "playerStat": "Player",
-      "teamFight": "Team Fight/Roaming/Ganking Stats",
+      "teamFight": "Combat/Roaming Stats",
       "tendency": "Tendency",
       "keywords": "Keywords",
       "champStat": "Champion Stats",
@@ -317,7 +315,7 @@
       "recentGame": "Recent Games",
       "carrer": "Career Stats",
       "team": "Team",
-      "gamePlayed": "Games Played",
+      "gamePlayed": "Games",
       "kda": "KDA",
       "seasonStat": "Season-by-season Stats",
       "season": "Season",
@@ -326,7 +324,9 @@
       "lose": "L",
       "ageLabel": "",
       "place": "",
-      "noEnoughMatch": "No enough matches."
+      "noEnoughMatch": "No enough matches.",
+      "min": "m",
+      "sec": "s"
     },
     "comparison": {
       "overview": "Overview",
@@ -347,7 +347,7 @@
       "growth": "Growth",
       "laneGraph": "Lane Phase Stats",
       "teamGraph": "Team Fight Stats",
-      "gamePlayed": "Games Played",
+      "gamePlayed": "Games",
       "winrate": "Win Rate",
       "solokill": "Solo Kill",
       "kda": "KDA",
@@ -410,13 +410,13 @@
     "setPatchVersion": "Patch Version",
     "team": "Team",
     "player": "Player",
-    "NoCommonSeasons": "There are no common seasons in the selected leagues. Please select seasons again.",
+    "NoCommonSeasons": "Please select seasons again.",
     "mainTeamChanged": "Main team has changed. Moves to the initial page.",
     "sorry": "The game data for the 2022 season has been updated."
   },
   "video": {
     "tab": {
-      "ward": "Vision",
+      "ward": "Ward",
       "object": "Object Pathing",
       "games": "Game Pathing",
       "heatmap": "Heatmap"
@@ -424,7 +424,7 @@
     "vision": {
       "teamview": "Team-wide View",
       "playerview": "Player View",
-      "checkWard": "Check Vision",
+      "checkWard": "Confirm",
       "totalWard": "Total Wards Placed",
       "area": "Area",
       "count": "Ward Count",
@@ -515,7 +515,7 @@
     },
     "logout": {
       "sessionExpires": "Your account validity time has expired and moves to the login page.",
-      "loginFail": "No log in information. Please log in again."
+      "loginFail": "Invalid ID or Password. Please try again."
     },
     "label": {
       "confirm": "Confirm",

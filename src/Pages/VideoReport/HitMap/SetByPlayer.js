@@ -35,6 +35,35 @@ const WardSlider = withStyles({
   valueLabel: {
     left: "calc(-50%)",
     top: -30,
+    // class^="PrivateValueLabel-circle" 타임스탬프 배경 스타일링 
+    "& > span": {
+      minWidth: 50,
+      height: 23,
+      transform: "rotate(0deg) translateX(-35%) translateY(5px)",
+      borderRadius: 3,
+      "&::before": {
+        content: "",
+        position: "absolute",
+        display: "block",
+        width: 0,
+        left: 50,
+        bottom: 10,
+        border: "15px solid transparent",
+        borderBottom: 0,
+        borderTop: "7px solid #5942ba",
+        transform: "translate(-50%, calc(100% + 5px))",
+      }
+    },
+    // class^="PrivateValueLabel-label" 타임스탬프 내부 스타일링
+    "& > span > span": {
+      margin: 0,
+      whiteSpace: "nowrap",
+      padding: 0,
+      fontFamily: "Poppins",
+      fontSize: 12,
+      fontWeight: "bold",
+      transform: "rotate(0deg) !important"
+    }
   },
   track: {
     height: 6,
@@ -61,6 +90,15 @@ function SetByPlayer({ minFrom, setMinFrom }) {
   const [champArray, setChampArray] = useState([]);
   const isPageSolo = document.location.pathname === "/solo" ? true : false;
   useOutsideAlerter(wrapperRef, isActive2, filters, champArray);
+
+
+  useEffect(() => {
+    wrapperRef.current = null;
+    isActive2.current = false;
+    dropdownRef.current = null;
+    setFilterData();
+    setChampArray([]);
+  }, [filters.team])
 
   function useOutsideAlerter(ref, isActive2, filters, champArray) {
     useEffect(() => {
@@ -430,9 +468,8 @@ function SetByPlayer({ minFrom, setMinFrom }) {
               {filterData?.champion ? (
                 <nav
                   ref={wrapperRef}
-                  className={`menu2 ${
-                    isActive2.current ? "active" : "inactive"
-                  }`}
+                  className={`menu2 ${isActive2.current ? "active" : "inactive"
+                    }`}
                 >
                   <ul>
                     <Menu3li
@@ -510,7 +547,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
               aria-labelledby="range-slider"
               getAriaValueText={timeFormat.hitmap}
               valueLabelFormat={timeFormat.hitmap}
-              // ValueLabelComponent={ValueLabelComponent}
+            // ValueLabelComponent={ValueLabelComponent}
             />
           </SliderContainer>
           <DefaultTime>
@@ -526,7 +563,8 @@ function SetByPlayer({ minFrom, setMinFrom }) {
 export default SetByPlayer;
 
 const SliderContainer = styled.div`
-  span [class^="PrivateValueLabel-circle"] {
+//local
+  /* span [class^="PrivateValueLabel-circle"] {
     min-width: 50px;
     height: 23px;
     transform: rotate(0deg) translateX(-35%) translateY(5px);
@@ -556,20 +594,36 @@ const SliderContainer = styled.div`
     letter-spacing: normal;
     font-weight: bold;
     transform: rotate(0deg) !important;
-  }
+  } */
   
-  span [class^="jss"] {
+// nunu.gg 
+/* span [class^="jss50"] {
+    min-width: 50px;
+    height: 23px;
+    transform: rotate(0deg) translateX(-35%) translateY(5px);
+    border-radius: 10%;
+    ::before {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 0px;
+      left: 50%;
+      bottom: 10;
+      border: 15px solid transparent;
+      border-bottom: 0;
+      border-top: 7px solid #5942ba;
+      transform: translate(-50%, calc(100% + 5px));
+    }
+  }
+  span [class^="jss51"] {
     margin: 0px;
+    white-space: nowrap;
     padding: 0;
-    font-family: SpoqaHanSansNeo;
+    font-family: Poppins;
     font-size: 12px;
     font-weight: bold;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 2.33;
-    letter-spacing: normal;
     transform: rotate(0deg) !important;
-  }
+  } */
 `;
 
 const DefaultTime = styled.div`
@@ -753,7 +807,7 @@ const DropDownToggle = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: ${(props) =>
-      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
+    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
     width: 240px;
   }
   .Label2 {
@@ -766,7 +820,7 @@ const DropDownToggle = styled.div`
     letter-spacing: normal;
     text-align: left;
     color: ${(props) =>
-      props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
+    props.changeColor ? `rgb(255, 255, 255)` : `rgba(255, 255, 255,0.3)`};
     width: 488px;
     /* ::first-letter {
       color: #f04545;

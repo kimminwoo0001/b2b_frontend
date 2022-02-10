@@ -101,8 +101,75 @@ function HitMap() {
         params,
         function (e) {
           const heatData = e.position;
-          getThreeMinBlue(heatData);
-          getEightMinBlue(heatData);
+          let blueData = [];
+          let redData = [];
+          let blueMax = 0;
+          let redMax = 0;
+
+          if (heatData) {
+            for (let j = 0; j < heatData.length; j++) {
+              let dto = heatData[j];
+              if (!(Object.keys(dto).length === 0)) {
+                for (let i = 0; i < dto.player.length; i++) {
+                  // if (max < dto.player.length) {
+                  //   max = dto.player.length;
+                  // }
+                  if (dto.player[i].team === "blue") {
+                    blueMax++;
+                    if (
+                      Number(dto.player[i].x1) === -1 &&
+                      Number(dto.player[i].y1) === -1 &&
+                      Number(dto.player[i].x2) === -1 &&
+                      Number(dto.player[i].y2) === -1
+                    ) {
+                      console.log("Dead");
+                    } else {
+                      let x =
+                        ((Number(dto.player[i].x1) + Number(dto.player[i].x2)) / 2) *
+                        1.824;
+                      let y =
+                        ((Number(dto.player[i].y1) + Number(dto.player[i].y2)) / 2) *
+                        1.824;
+                      blueData.push({ x: x, y: y, value: 0.5 });
+                    }
+                  } else if (dto.player[i].team === "red") {
+                    redMax++
+                    if (
+                      Number(dto.player[i].x1) === -1 &&
+                      Number(dto.player[i].y1) === -1 &&
+                      Number(dto.player[i].x2) === -1 &&
+                      Number(dto.player[i].y2) === -1
+                    ) {
+                      console.log("Dead");
+                    } else {
+                      let x =
+                        ((Number(dto.player[i].x1) + Number(dto.player[i].x2)) / 2) *
+                        1.824;
+                      let y =
+                        ((Number(dto.player[i].y1) + Number(dto.player[i].y2)) / 2) *
+                        1.824;
+                      redData.push({ x: x.toFixed(0), y: y.toFixed(0), value: 0.5 });
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          let blueBlur = 0.9;
+          let redBlur = 0.9;
+
+          if (blueMax > redMax) {
+            redBlur = redMax / blueMax * redBlur;
+          } else {
+            blueBlur = blueMax / redMax * blueBlur;
+          }
+
+          console.log("redMax, blueMax", redMax, blueMax);
+          console.log("redBlur, blueBlur", redBlur, blueBlur);
+
+          getHitmapBlue(blueData, blueBlur);
+          getHitmapRed(redData, redBlur);
         },
 
         function (objStore) {
@@ -118,98 +185,35 @@ function HitMap() {
   };
 
   //히트맵 블루팀 데이터 가공 함수
-  const getThreeMinBlue = (heatData) => {
+  const getHitmapBlue = (data, blur) => {
+
     resetHeatMap1.current.innerHTML = "";
+
+    var data2 = {
+      max: 30,
+      min: 0,
+      data,
+    };
+
     let heatmap = h337.create({
       container: resetHeatMap1.current,
       maxOpacity: 0.6,
       radius: 30,
-      blur: 0.9,
+      blur: blur === 0 ? 0.9 : blur,
     });
+    heatmap.setData(data2);
 
-    let max = 0;
-    let data = [];
-
-    if (heatData) {
-      for (let j = 0; j < heatData.length; j++) {
-        let dto = heatData[j];
-        if (!(Object.keys(dto).length === 0)) {
-          for (let i = 0; i < dto.player.length; i++) {
-            if (max < dto.player.length) {
-              max = dto.player.length;
-            }
-            if (dto.player[i].team === "blue") {
-              if (
-                Number(dto.player[i].x1) === -1 &&
-                Number(dto.player[i].y1) === -1 &&
-                Number(dto.player[i].x2) === -1 &&
-                Number(dto.player[i].y2) === -1
-              ) {
-                console.log("Dead");
-              } else {
-                let x =
-                  ((Number(dto.player[i].x1) + Number(dto.player[i].x2)) / 2) *
-                  1.824;
-                let y =
-                  ((Number(dto.player[i].y1) + Number(dto.player[i].y2)) / 2) *
-                  1.824;
-                data.push({ x: x, y: y, value: 0.5 });
-              }
-            }
-          }
-        }
-      }
-
-      var data2 = {
-        max: 30,
-        min: 0,
-        data,
-      };
-      heatmap.setData(data2);
-    }
   };
   //히트맵 레드팀 데이터 가공 함수
-  const getEightMinBlue = (heatData) => {
+  const getHitmapRed = (data, blur) => {
     resetHeatMap2.current.innerHTML = "";
     let heatmap = h337.create({
       container: resetHeatMap2.current,
       maxOpacity: 0.6,
       radius: 30,
-      blur: 0.9,
+      blur: blur === 0 ? 0.9 : blur,
     });
 
-    let max = 0;
-
-    let data = [];
-
-    for (let j = 0; j < heatData.length; j++) {
-      let dto = heatData[j];
-      if (!(Object.keys(dto).length === 0)) {
-        for (let i = 0; i < dto.player.length; i++) {
-          if (max < dto.player.length) {
-            max = dto.player.length;
-          }
-          if (dto.player[i].team === "red") {
-            if (
-              Number(dto.player[i].x1) === -1 &&
-              Number(dto.player[i].y1) === -1 &&
-              Number(dto.player[i].x2) === -1 &&
-              Number(dto.player[i].y2) === -1
-            ) {
-              console.log("Dead");
-            } else {
-              let x =
-                ((Number(dto.player[i].x1) + Number(dto.player[i].x2)) / 2) *
-                1.824;
-              let y =
-                ((Number(dto.player[i].y1) + Number(dto.player[i].y2)) / 2) *
-                1.824;
-              data.push({ x: x.toFixed(0), y: y.toFixed(0), value: 0.5 });
-            }
-          }
-        }
-      }
-    }
     var data2 = {
       max: 30,
       min: 0,
@@ -283,8 +287,8 @@ function HitMap() {
                   ? true
                   : false
                 : tab === "champion"
-                ? filters.champion_eng && filters.oppchampion_eng
-                : false
+                  ? filters.champion_eng && filters.oppchampion_eng
+                  : false
             }
           >
             {t("video.heatmap.apply")}
