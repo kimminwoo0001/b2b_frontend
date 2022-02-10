@@ -45,13 +45,10 @@ export const SET_PLAYER = "filtervalue/SET_PLAYER";
 export const SET_PATCH = "filtervalue/SET_PATCH";
 export const SELECT_ALL_BTN = "filtervalue/SELECT_ALL_BTN";
 export const RESET_WARD_PATHING_TAB = "filtervalue/RESET_WARD_PATHING_TAB";
-<<<<<<< HEAD
 export const SET_CHECKBOX_INPUTS = "filtervalue/SET_CHECKBOX_INPUTS";
-=======
 export const SET_CHAMPIONS = "filtervalue/SET_CHAMPIONS";
 export const SET_CHAMPIONS_ENG = "filtervalue/SET_CHAMPIONS_ENG";
 
->>>>>>> e00ba885b28476c06751b3d13d5f40d029bf17f9
 
 
 

@@ -7,9 +7,9 @@ import JungleFilter from '../components/JungleFilter';
 const Sequence = () => {
   return (
     <SContainer>
-      {/* <SFilterContainer> */}
-        <JungleFilter />
-      {/* </SFilterContainer> */}
+      <SFilterContainer>
+        {/* <JungleFilter /> */}
+      </SFilterContainer>
       <SFitlerContents>
         <SSelector>셀럭터가 들어가요!</SSelector>
         <SMap>맵이 들어가요!</SMap>
