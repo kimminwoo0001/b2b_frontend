@@ -69,7 +69,6 @@ function PlayerFilterModal() {
   let history = useHistory();
 
   useEffect(() => {
-    document.title = `${t("sidebar.part9")} - NUNU.GG`
     // fetchYearFilter();
     setOppTeamFilter([]);
     setOppPlayerFilter([]);
@@ -231,8 +230,8 @@ function PlayerFilterModal() {
     let count = 0;
     for (let league of filters.league) {
       const ObjectKeys = Object.keys(staticvalue.filterObjects[league]);
-          // const ObjectKeys = ["2021"];
-          // yearList = yearList.concat(ObjectKeys);
+      // const ObjectKeys = ["2021"];
+      // yearList = yearList.concat(ObjectKeys);
       if (ObjectKeys.length === 1) {
         count++;
       }
@@ -250,8 +249,8 @@ function PlayerFilterModal() {
     if (filters.year.length !== 0) {
       dispatch(Year(yearList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
     }
-      // }
-      // yearList.map(data => { console.log("yeartLiost", data) })
+    // }
+    // yearList.map(data => { console.log("yeartLiost", data) })
 
     dispatch(setYearFilter(yearList));
 
@@ -492,22 +491,22 @@ function PlayerFilterModal() {
             </FilterHeader>
             {filters.openFilterModal !== "/playerCompare" &&
               <>
-            <LeagueFilter>
-              <label>{t("filters.setLeague")}</label>
-              <DropDownToggle>
-                <div className="menu-container">
-                  <button
-                    onClick={() => {
-                      if (filters.openFilterModal === "/playerCompare") {
-                      setIsActiveLeague(!isActiveLeague)
-                      fetchLeagueFilter()
-                      }
-                    }}
-                    disabled={filters.openFilterModal === "/solo"}
-                    className="menu-trigger"
-                  >
-                    <div className="wrapper">
-                      {/* <img
+                <LeagueFilter>
+                  <label>{t("filters.setLeague")}</label>
+                  <DropDownToggle>
+                    <div className="menu-container">
+                      <button
+                        onClick={() => {
+                          if (filters.openFilterModal === "/playerCompare") {
+                            setIsActiveLeague(!isActiveLeague)
+                            fetchLeagueFilter()
+                          }
+                        }}
+                        disabled={filters.openFilterModal === "/solo"}
+                        className="menu-trigger"
+                      >
+                        <div className="wrapper">
+                          {/* <img
                         className="ChampIconImg"
                         width="14px"
                         height="14px"
@@ -518,114 +517,114 @@ function PlayerFilterModal() {
                         }
                         alt="champIcon"
                       /> */}
-                      <span className="Label">
-                        {filters.league.length === 1
-                          ? filters.league
-                          : t("filters.leagueLabel")}
-                      </span>
-                    </div>
-                    <ArrowIcon page={filters.openFilterModal}
-                      className="ArrowIcon"
-                      src="Images/ico-filter-arrow.png"
-                      alt="arrowIcon"
-                    />
-                  </button>
-                  <nav
-                    ref={dropdownRef}
-                    className={`menu ${isActiveLeague ? "active" : "inactive"}`}
-                  >
-                    <ul>
-                      {selector.leagueFilter?.map((league, idx) => {
-                        return (
-                          <div className="Wrapper" key={idx}>
-                            <img
-                              className="ChampIconImg"
-                              width="14px"
-                              height="14px"
-                              src={`Images/ico-league-${league.toLowerCase()}.png`}
-                              alt="champIcon"
-                            />
-                            <li
-                              onClick={() => {
-                                dispatch(SetLeague([league]));
-                                setIsActiveLeague(!isActiveLeague);
-                                //dispatch(ResetFilter(league));
-                                //fetchingPatchFilter(league);
-                                league !== filters.league[0] &&
-                                  dispatch(setTeamFilter([]));
-                                league !== filters.league[0] &&
-                                  setOppTeamFilter([]);
-                                dispatch(setPlayerFilter([]));
-                                setOppPlayerFilter([]);
-                              }}
-                              key={idx}
-                            >
-                              {league}
-                            </li>
-                          </div>
-                        );
-                      })}
-                    </ul>
-                  </nav>
-                </div>
-              </DropDownToggle>
-            </LeagueFilter>
-            {filters.openFilterModal !== "/playerCompare" ? "" :
-              <YearFilter>
-                <label>{t("filters.setYear")}</label>
-                {!selector.yearFilter ? (
-                  <PatchLabels>
-                    <img
-                      className="ChampIconImg"
-                      width="14px"
-                      height="14px"
-                      src={
-                        filters.year !== ""
-                          ? `Images/ico-filter-version.png`
-                          : "Images/ico-filter-none.png"
-                      }
-                      alt="champIcon"
-                    />
-                    <span className="Label">{t("filters.patchLabel")}</span>
-                  </PatchLabels>
-                ) : (
-                  selector.yearFilter?.map((year, idx) => {
-                    return (
-                      <SelectedYear
-                        radioBtn={true}
-                        key={idx}
-                        // draggable="true"
-                        // onDragStart={(event) => {
-                        //   handleMouseEvent(event);
-                        // }}
-                        // onMouseUp={(event) => {
-                        //   handleMouseEvent(event);
-                        // }}
-                        isChecked={filters.year.includes(year) ? true : false}
-                        onClick={() => {
-                          // dispatch(Patch(patch));
-                          // dispatch(Year(year))
-                          dispatch(SetYear([year]));
-                          //fetchingTeamFilter(patch);
-                        }}
-                      >
-                        <input
-                          id={idx}
-                          checked={filters.year.includes(year) ? true : false}
-                          type="checkbox"
-                          readOnly
-                        ></input>
-                        <div className="Version">
-                          {/* {patch === "11.6" ? "11.6 (P.O)" : patch} */}
-                          {year}
+                          <span className="Label">
+                            {filters.league.length === 1
+                              ? filters.league
+                              : t("filters.leagueLabel")}
+                          </span>
                         </div>
-                      </SelectedYear>
-                    );
-                  })
-                )
+                        <ArrowIcon page={filters.openFilterModal}
+                          className="ArrowIcon"
+                          src="Images/ico-filter-arrow.png"
+                          alt="arrowIcon"
+                        />
+                      </button>
+                      <nav
+                        ref={dropdownRef}
+                        className={`menu ${isActiveLeague ? "active" : "inactive"}`}
+                      >
+                        <ul>
+                          {selector.leagueFilter?.map((league, idx) => {
+                            return (
+                              <div className="Wrapper" key={idx}>
+                                <img
+                                  className="ChampIconImg"
+                                  width="14px"
+                                  height="14px"
+                                  src={`Images/ico-league-${league.toLowerCase()}.png`}
+                                  alt="champIcon"
+                                />
+                                <li
+                                  onClick={() => {
+                                    dispatch(SetLeague([league]));
+                                    setIsActiveLeague(!isActiveLeague);
+                                    //dispatch(ResetFilter(league));
+                                    //fetchingPatchFilter(league);
+                                    league !== filters.league[0] &&
+                                      dispatch(setTeamFilter([]));
+                                    league !== filters.league[0] &&
+                                      setOppTeamFilter([]);
+                                    dispatch(setPlayerFilter([]));
+                                    setOppPlayerFilter([]);
+                                  }}
+                                  key={idx}
+                                >
+                                  {league}
+                                </li>
+                              </div>
+                            );
+                          })}
+                        </ul>
+                      </nav>
+                    </div>
+                  </DropDownToggle>
+                </LeagueFilter>
+                {filters.openFilterModal !== "/playerCompare" ? "" :
+                  <YearFilter>
+                    <label>{t("filters.setYear")}</label>
+                    {!selector.yearFilter ? (
+                      <PatchLabels>
+                        <img
+                          className="ChampIconImg"
+                          width="14px"
+                          height="14px"
+                          src={
+                            filters.year !== ""
+                              ? `Images/ico-filter-version.png`
+                              : "Images/ico-filter-none.png"
+                          }
+                          alt="champIcon"
+                        />
+                        <span className="Label">{t("filters.patchLabel")}</span>
+                      </PatchLabels>
+                    ) : (
+                      selector.yearFilter?.map((year, idx) => {
+                        return (
+                          <SelectedYear
+                            radioBtn={true}
+                            key={idx}
+                            // draggable="true"
+                            // onDragStart={(event) => {
+                            //   handleMouseEvent(event);
+                            // }}
+                            // onMouseUp={(event) => {
+                            //   handleMouseEvent(event);
+                            // }}
+                            isChecked={filters.year.includes(year) ? true : false}
+                            onClick={() => {
+                              // dispatch(Patch(patch));
+                              // dispatch(Year(year))
+                              dispatch(SetYear([year]));
+                              //fetchingTeamFilter(patch);
+                            }}
+                          >
+                            <input
+                              id={idx}
+                              checked={filters.year.includes(year) ? true : false}
+                              type="checkbox"
+                              readOnly
+                            ></input>
+                            <div className="Version">
+                              {/* {patch === "11.6" ? "11.6 (P.O)" : patch} */}
+                              {year}
+                            </div>
+                          </SelectedYear>
+                        );
+                      })
+                    )
+                    }
+                  </YearFilter>
                 }
-              </YearFilter>
-            }
               </>
             }
             {filters.openFilterModal === "/playerCompare" &&

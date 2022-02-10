@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 import SideBar from "../../Components/SideBar/SideBar";
 import Nav from "../../Components/Nav/Nav";
@@ -15,6 +16,11 @@ import PlayerFilterModal from "../../Components/Filter/PlayerFilterModal";
 function TeamCompare() {
   const filters = useSelector((state) => state.FilterReducer);
   const copyvalue = useSelector((state) => state.CopyReducer);
+  const { t } = useTranslation();
+
+  if (document.title !== `${t("sidebar.part8")} - NUNU.GG`) {
+    document.title = `${t("sidebar.part8")} - NUNU.GG`
+  }
 
   return (
     <ErrorBoundary>

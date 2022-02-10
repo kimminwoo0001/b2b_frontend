@@ -15,9 +15,9 @@ function Solo() {
   const filters = useSelector((state) => state.FilterReducer);
   const { t } = useTranslation();
 
-  useEffect(() => {
+  if (document.title !== `${t("sidebar.part5")} - NUNU.GG`) {
     document.title = `${t("sidebar.part5")} - NUNU.GG`
-  }, [])
+  }
 
   return (
     <ErrorBoundary>
