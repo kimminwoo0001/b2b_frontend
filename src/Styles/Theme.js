@@ -12,6 +12,7 @@ const theme = {
     bg_gnb: "#16151c",
     bg_light: "#2e2d38",
     bg_box: "#2f2d38",
+    bg_select: "#23212a",
 
     // text
     text: "#ffffff",
