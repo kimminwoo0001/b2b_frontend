@@ -45,6 +45,8 @@ export const SET_PLAYER = "filtervalue/SET_PLAYER";
 export const SET_PATCH = "filtervalue/SET_PATCH";
 export const SELECT_ALL_BTN = "filtervalue/SELECT_ALL_BTN";
 export const RESET_WARD_PATHING_TAB = "filtervalue/RESET_WARD_PATHING_TAB";
+export const SET_CHECKBOX_INPUTS = "filtervalue/SET_CHECKBOX_INPUTS";
+
 
 
 
@@ -349,6 +351,17 @@ export const ResetWardPathingTab = (payload) => {
   }
 }
 
+export const SetCheckedInputs = (payload) => {
+  return {
+    type: SET_CHECKBOX_INPUTS,
+    payload,
+  }
+}
+
+
+
+
+
 const initialState = {
   league: [],
   year: [],
@@ -374,6 +387,7 @@ const initialState = {
   gameid: "",
   menu_num: "",
   filterMenuState: true,
+  checkedInputs: []
 };
 
 export default function FilterReducer(state = initialState, action) {
@@ -662,6 +676,11 @@ export default function FilterReducer(state = initialState, action) {
         champion_eng: "",
         oppchampion_eng: "",
       };
+    case SET_CHECKBOX_INPUTS:
+      return {
+        ...state,
+        league: action.payload,
+      } 
     default:
       return state;
   }

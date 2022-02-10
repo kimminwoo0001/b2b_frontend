@@ -3,7 +3,6 @@ import styled from "@emotion/styled";
 import { transitionStyle } from "../../Styles/ui";
 
 const Radio = ({ children, checked, ...props }) => {
-  console.log(checked)
   return (
     <SRadioContainer>
       <input type="radio" checked={checked} {...props} />

@@ -25,6 +25,7 @@ import {
   SetLeague,
   OppTeam,
   Loading,
+  SetCheckedInputs
 } from "../../../../redux/modules/filtervalue";
 import {
   setLeagueFilter,
@@ -46,8 +47,14 @@ const JungleFilter = () => {
   const filters = useSelector((state) => state.FilterReducer);
   const staticvalue = useSelector((state) => state.StaticValueReducer);
   const selector = useSelector((state) => state.SelectorReducer);
-  const [checkedList, setCheckedLists] = useState([]);
-  
+  // checkbox 개별선택 관련
+  const [checkedInputs, setCheckedInputs] = useState({
+    league: [],
+    season: [],
+    patch: [],
+  });
+
+
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -81,19 +88,21 @@ const JungleFilter = () => {
     }
   };
 
-  // 개별 체크 클릭 시 발생하는 함수
-  const onCheckedElement = useCallback(
-  (checked, item) => {
-    if (checked) {
-    setCheckedLists([...checkedList, item]);
-    } else {
-    setCheckedLists(checkedList.filter((el) => el !== item));
-  }
-},
-  [checkedList]
-  );
-;
 
+  // 개별 체크박스 선택
+  const changeHandler = (e, checked, id) => {
+    const { name } = e.target;
+    console.log(name);
+    if (checked) {
+      setCheckedInputs({ ...checkedInputs, [name]: id })
+    } else {
+
+      // 체크 해제
+      // console.log(Object.entries(checkedInputs))
+      setCheckedInputs({ [name]: "", })
+    }
+    console.log(checkedInputs);
+  };
 
   const fetchYearFilter = () => {
     let yearList = [];
@@ -129,6 +138,42 @@ const JungleFilter = () => {
     dispatch(setLeagueFilter(leagueList.sort()));
   };
 
+  const fetchSeasonFilter = () => {
+    let seasonList = [];
+    if (filters.year.length !== 0) {
+      for (let year of filters.year) {
+        for (let league of filters.league) {
+          const ObjectKeys = Object.keys(
+            staticvalue.filterObjects[league][year]
+          );
+          seasonList = seasonList.concat(ObjectKeys);
+        }
+      }
+      seasonList = seasonList.filter(
+        (item, pos) => seasonList.indexOf(item) === pos
+      );
+      console.log("sortedSeasonList", seasonList);
+
+      let updateSeason = [];
+      for (const season of filters.season) {
+        // if (seasonList.includes(season)) {
+        //   updateSeason.push(season);
+        // }
+        // else {
+        updateSeason = [seasonList[0]];
+        // }
+      }
+      dispatch(SetSeason(updateSeason));
+
+      if (filters.season.length === 0) {
+        dispatch(Season(seasonList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
+      }
+    } else {
+      dispatch(ResetSeason());
+    }
+    dispatch(setSeasonFilter(seasonList));
+  };
+
   useEffect(() => {
     fetchYearFilter();
   }, [])
@@ -140,6 +185,12 @@ const JungleFilter = () => {
     fetchLeagueFilter();
   },[filters.year])
 
+  useEffect(() => {
+    if (filters.league.length === 0) {
+      return;
+    }
+    fetchSeasonFilter();
+  }, [filters.league])
 
   return (
     <SFilterContainer>
@@ -168,22 +219,20 @@ const JungleFilter = () => {
         <STitle>리그</STitle>
         <SFilterGroup>
           <SCheckboxAll
-            onChange={handleChange}
+            // onChange={(e) => handleAllCheck(e.target.checked)}
             name="league"
             value="all"
-            checked={filterData.league.all}
+            checked={selector.leagueFilter.length === 0 || checkedInputs.league.length === selector.leagueFilter.length ? true : false}
           >
             전체선택
           </SCheckboxAll>
           {selector.leagueFilter?.map((league) => {
             return (
               <Checkbox
-              // onChange={handleChange}
-              onChange={(e) => onCheckedElement(e.target.checked, league)}
+                onChange={(e) => changeHandler(e, e.target.checked, league)}
               name="league"
-              value="league"
-              checked={filters.league.includes(league)}
-              onClick={() => {dispatch(League(league))}}
+                value="league"
+                checked={checkedInputs.league.includes(league) ? true : false}
             >
               {league}
             </Checkbox>
@@ -197,12 +246,24 @@ const JungleFilter = () => {
         <SFilterGroup>
           <SCheckboxAll
             onChange={handleChange}
-            name="league"
-            value="all"
-            checked={filterData.league.all}
+            name="season"
+            value="season"
+            checked={selector.seasonFilter.length === 0 || checkedInputs.season.length === selector.seasonFilter.length ? true : false}
           >
             전체선택
           </SCheckboxAll>
+          {selector.seasonFilter?.map((season) => {
+            return (
+              <Checkbox
+                onChange={(e) => changeHandler(e, e.target.checked, season)}
+                name="season"
+                value="season"
+                checked={checkedInputs.season.includes(season) ? true : false}
+              >
+                {season}
+              </Checkbox>
+            )
+          })}
         </SFilterGroup>
       </SRow>
       {/* 팀 */}
@@ -211,7 +272,7 @@ const JungleFilter = () => {
         <SFilterGroup>
           <SCheckboxAll
             onChange={handleChange}
-            name="league"
+            name="team"
             value="all"
             checked={filterData.league.all}
           >
@@ -225,7 +286,7 @@ const JungleFilter = () => {
         <SFilterGroup>
           <SCheckboxAll
             onChange={handleChange}
-            name="league"
+            name="patch"
             value="all"
             checked={filterData.league.all}
           >
