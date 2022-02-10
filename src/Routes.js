@@ -32,6 +32,7 @@ import CheckLogin from "./Pages/Sign/CheckLogin";
 import Loading from "./Components/LoadingImg/LoadingImg";
 import ChannelService from "./Components/UtilityComponent/ChannelService";
 import GameReportDetail from "./Pages/GameReport/Components/GameReportDetail";
+import UiTest from "./Pages/Ui/UiTest";
 
 function Routes() {
   //const token = sessionStorage.getItem("token");
@@ -48,19 +49,18 @@ function Routes() {
 
   if (user.id && user.name) {
     ChannelService.boot({
-      "pluginKey": "7cc25793-4246-4495-80e9-97a59767ef03", //please fill with your plugin key
-      "memberId": user.id, //fill with user id
-      "profile": {
-        "name": user.name, //fill with user name
-        "teamName": user.teamName ?? "Developer",
-        "email": user.id,
+      pluginKey: "7cc25793-4246-4495-80e9-97a59767ef03", //please fill with your plugin key
+      memberId: user.id, //fill with user id
+      profile: {
+        name: user.name, //fill with user name
+        teamName: user.teamName ?? "Developer",
+        email: user.id,
         // "mobileNumber": "YOUR_USER_MOBILE_NUMBER", //fill with user phone number
         // "CUSTOM_VALUE_1": "VALUE_1", //any other custom meta data
         // "CUSTOM_VALUE_2": "VALUE_2"
-      }
+      },
     });
   }
-
 
   return (
     <Router>
@@ -75,7 +75,11 @@ function Routes() {
         <PrivateRoute exact path="/solo" component={Solo} />
         <PrivateRoute exact path="/video" component={Video} />
         <PrivateRoute exact path="/gameReport" component={GameReport} />
-        <PrivateRoute exact path="/gameReportDetail" component={GameReportDetail} />
+        <PrivateRoute
+          exact
+          path="/gameReportDetail"
+          component={GameReportDetail}
+        />
         <PrivateRoute exact path="/utility" component={Utility} />
         <PrivateRoute exact path="/simulator" component={ItemSimulator} />
         <PrivateRoute exact path="/calculator" component={PickCalculator} />
@@ -88,6 +92,7 @@ function Routes() {
         <Route exact path="/checkLogin" component={CheckLogin} />
         <Route exact path="/signUp" component={SingUp} />
         <Route exact path="/changePW" component={ChangePW} />
+        <Route exact path="/test" component={UiTest} />
       </Switch>
 
       <Footer />
