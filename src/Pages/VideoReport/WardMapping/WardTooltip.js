@@ -27,7 +27,7 @@ function WardTooltip({
     } else if (position == "5") {
       setPos("SUP");
     }
-  }, []);
+  }, [position]);
 
   return (
     <WardTooltipWrapper>

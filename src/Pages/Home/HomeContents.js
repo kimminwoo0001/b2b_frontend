@@ -13,6 +13,7 @@ import { SetFilterAllItems, SetRunesJson } from "../../redux/modules/staticvalue
 import axiosRequest from "../../lib/axiosRequest";
 import LeagueRank from "./LeagueRank";
 import { SetStatus, SetModalInfo } from "../../redux/modules/modalvalue";
+import setCookie from "../../lib/setCookie";
 
 const HomeContents = memo(() => {
   const filters = useSelector((state) => state.FilterReducer);
@@ -42,6 +43,13 @@ const HomeContents = memo(() => {
     fetchHomeData();
     fetchRunesObject();
     fetchFilterData();
+
+    //sessionStorage.setItem("user", );
+    setCookie("user-id", user.id, 1);
+    setCookie("user-token", user.token, 1);
+    setCookie("user-name", user.name, 1);
+    setCookie("user-teamName", user.teamName, 1);
+    setCookie("user-charge_time", user.charge_time, 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

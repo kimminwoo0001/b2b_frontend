@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { MenuNum, InitailizeState } from "../../redux/modules/filtervalue";
-import { useDispatch, useSelector } from "react-redux";
+import { batch, useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { SelectorInitailizeState } from "../../redux/modules/selectorvalue";
 import { InitializeGameState } from "../../redux/modules/gamevalue";
@@ -32,12 +32,16 @@ const SideBarItem = ({ menu, idx }) => {
         dispatch(InitializeGameState());
         // dispatch(InitailizeState());
         if (menu.modal) {
-          dispatch(CopyFvInit());
-          dispatch(SetOpenFilterModal(menu.path))
-          dispatch(CompareModal(true));
+          batch(() => {
+            dispatch(CopyFvInit());
+            dispatch(SetOpenFilterModal(menu.path))
+            dispatch(CompareModal(true));
+          })
         } else {
-          dispatch(InitailizeState());
-          dispatch(MenuNum(menu.idx));
+          batch(() => {
+            dispatch(InitailizeState());
+            dispatch(MenuNum(menu.idx));
+          })
           history.push(menu.path);
         }
       }}

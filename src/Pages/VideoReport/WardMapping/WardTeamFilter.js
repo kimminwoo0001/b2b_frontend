@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
 import styled from "styled-components";
 import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
 import { Reset_Map } from "../../../redux/modules/filtervalue";
@@ -10,7 +9,6 @@ import Slider from "@material-ui/core/Slider";
 import { API2 } from "../../config";
 import { API } from "../../config";
 
-import qs from "qs";
 import timeFormat from "../../../lib/timeFormat";
 import axiosRequest from "../../../lib/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
@@ -35,6 +33,35 @@ const WardSlider = withStyles({
   valueLabel: {
     left: "calc(-50%)",
     top: -30,
+    // class^="PrivateValueLabel-circle" 타임스탬프 배경 스타일링 
+    "& > span": {
+      minWidth: 50,
+      height: 23,
+      transform: "rotate(0deg) translateX(-35%) translateY(5px)",
+      borderRadius: 3,
+      "&::before": {
+        content: "",
+        position: "absolute",
+        display: "block",
+        width: 0,
+        left: 50,
+        bottom: 10,
+        border: "15px solid transparent",
+        borderBottom: 0,
+        borderTop: "7px solid #5942ba",
+        transform: "translate(-50%, calc(100% + 5px))",
+      }
+    },
+    // class^="PrivateValueLabel-label" 타임스탬프 내부 스타일링
+    "& > span > span": {
+      margin: 0,
+      whiteSpace: "nowrap",
+      padding: 0,
+      fontFamily: "Poppins",
+      fontSize: 12,
+      fontWeight: "bold",
+      transform: "rotate(0deg) !important"
+    }
   },
   track: {
     height: 6,
@@ -156,6 +183,7 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
         </div>
         <SliderContainer className="slider-container">
           <WardSlider
+
             min={0}
             max={100}
             value={minFrom}
@@ -164,7 +192,7 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
             aria-labelledby="range-slider"
             // getAriaValueText={valuetext}
             valueLabelFormat={timeFormat.ward}
-            // ValueLabelComponent={ValueLabelComponent}
+          // ValueLabelComponent={ValueLabelComponent}
           />
         </SliderContainer>
 
@@ -180,46 +208,6 @@ function WardTeamFilter({ minFrom, setMinFrom }) {
 export default WardTeamFilter;
 
 const SliderContainer = styled.div`
-  span [class^="PrivateValueLabel-circle"] {
-    min-width: 50px;
-    height: 23px;
-    transform: rotate(0deg) translateX(-35%) translateY(5px);
-    border-radius: 10%;
-    ::before {
-      content: "";
-      position: absolute;
-      display: block;
-      width: 0px;
-      left: 50%;
-      bottom: 10;
-      border: 15px solid transparent;
-      border-bottom: 0;
-      border-top: 7px solid #5942ba;
-      transform: translate(-50%, calc(100% + 5px));
-    }
-  }
-  span [class^="PrivateValueLabel-label"] {
-    margin: 0px;
-    white-space: nowrap;
-    padding: 0;
-    font-family: Poppins;
-    font-size: 12px;
-    font-weight: bold;
-    transform: rotate(0deg) !important;
-  }
-
-  span [class^="jss"] {
-    margin: 0px;
-    padding: 0;
-    font-family: SpoqaHanSansNeo;
-    font-size: 12px;
-    font-weight: bold;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 2.33;
-    letter-spacing: normal;
-    transform: rotate(0deg) !important;
-  }
 `;
 
 const WardTeamFilterContainer = styled.div``;

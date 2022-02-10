@@ -45,7 +45,13 @@ export const SET_PLAYER = "filtervalue/SET_PLAYER";
 export const SET_PATCH = "filtervalue/SET_PATCH";
 export const SELECT_ALL_BTN = "filtervalue/SELECT_ALL_BTN";
 export const RESET_WARD_PATHING_TAB = "filtervalue/RESET_WARD_PATHING_TAB";
+<<<<<<< HEAD
 export const SET_CHECKBOX_INPUTS = "filtervalue/SET_CHECKBOX_INPUTS";
+=======
+export const SET_CHAMPIONS = "filtervalue/SET_CHAMPIONS";
+export const SET_CHAMPIONS_ENG = "filtervalue/SET_CHAMPIONS_ENG";
+
+>>>>>>> e00ba885b28476c06751b3d13d5f40d029bf17f9
 
 
 
@@ -78,6 +84,8 @@ export const Champion = (champion) => {
     payload: champion,
   };
 };
+
+
 export const Opp_Champion = (champion) => {
   return {
     type: OPP_CHAMPION,
@@ -359,8 +367,19 @@ export const SetCheckedInputs = (payload) => {
 }
 
 
+export const SetChampion = (payload) => {
+  return {
+    type: SET_CHAMPIONS,
+    payload,
+  };
+};
 
-
+export const SetChampionEng = (payload) => {
+  return {
+    type: SET_CHAMPIONS_ENG,
+    payload,
+  };
+};
 
 const initialState = {
   league: [],
@@ -376,10 +395,12 @@ const initialState = {
   position: "",
   getoppteam: "",
   getoppplayer: "",
-  champion: "",
-  oppchampion: "",
-  champion_eng: "",
-  oppchampion_eng: "",
+  // champion: "",
+  champion: [],
+  oppchampion: [],
+  // champion_eng: "",
+  champion_eng: [],
+  oppchampion_eng: [],
   tab: "",
   loading: false,
   resetchamp: "",
@@ -535,10 +556,10 @@ export default function FilterReducer(state = initialState, action) {
         player: "",
         oppplayer: "",
         oppteam: "",
-        champion: "",
-        oppchampion: "",
-        champion_eng: "",
-        oppchampion_eng: "",
+        champion: [],
+        oppchampion: [],
+        champion_eng: [],
+        oppchampion_eng: [],
       };
     case RESET_OBJECT_MAPPINGTAB:
       return {
@@ -675,6 +696,16 @@ export default function FilterReducer(state = initialState, action) {
         oppchampion: "",
         champion_eng: "",
         oppchampion_eng: "",
+      }
+    case SET_CHAMPIONS:
+      return {
+        ...state,
+        champion: action.payload,
+      };
+    case SET_CHAMPIONS_ENG:
+      return {
+        ...state,
+        champion_eng: action.payload,
       };
     case SET_CHECKBOX_INPUTS:
       return {

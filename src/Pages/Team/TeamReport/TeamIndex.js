@@ -46,19 +46,6 @@ function TeamIndex() {
   const [isActive, setIsActive] = useState(false);
 
 
-  // 팀 전력보고서에서 최초 선택된 리그와 중복되는 시즌을 가지는 다른 리그를 선택하는 경우 무한루프 발생.
-  // 임시로 리그 변경 시 밴픽보고서로 탭 이동시킴
-  // useEffect(() => {
-  //   if(isInitialMount.current) {
-  //     isInitialMount.current = false;
-  //   }else {
-  //     if(pagePath === "/team")  {
-  //       dispatch(HandleTab(0));
-  //     }  
-  //   }
-  // }, [filters.team, filters.league])
-
-
   useEffect(() => {
     fetchingStatisticData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -723,7 +710,8 @@ function TeamIndex() {
                         stepSize: supportTimeData?.supportingTimeRow,
                         fontColor: "#84818e",
                         fontSize: 15,
-                        min: supportTimeData?.supportingTimeMin,
+                        // min: supportTimeData?.supportingTimeMin,
+                        min: 0,
                         max: supportTimeData?.supportingTimeMax,
                       },
                       gridLines: {

@@ -181,7 +181,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
               return (
                 <MapBanData key={idx}>
                   <img
-                    src={`Images/champion/${ban.champFileName}.png`}
+                    src={`https://am-a.akamaihd.net/image?resize=90:&f=${ban.championImage}`}
                     width="19px"
                     height="19px"
                     style={{ borderRadius: "30px" }}
@@ -202,7 +202,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
               return (
                 <MapBanData key={idx}>
                   <img
-                    src={`Images/champion/${ban.champFileName}.png`}
+                    src={`https://am-a.akamaihd.net/image?resize=90:&f=${ban.championImage}`}
                     width="19px"
                     height="19px"
                     style={{ borderRadius: "30px" }}
@@ -223,7 +223,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
               return (
                 <MapBanData key={idx}>
                   <img
-                    src={`Images/champion/${ban.champFileName}.png`}
+                    src={`https://am-a.akamaihd.net/image?resize=90:&f=${ban.championImage}`}
                     width="19px"
                     height="19px"
                     style={{ borderRadius: "30px" }}
@@ -244,7 +244,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
               return (
                 <MapBanData key={idx}>
                   <img
-                    src={`Images/champion/${ban.champFileName}.png`}
+                    src={`https://am-a.akamaihd.net/image?resize=90:&f=${ban.championImage}`}
                     width="19px"
                     height="19px"
                     style={{ borderRadius: "30px" }}
@@ -265,7 +265,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
               return (
                 <MapBanData key={idx}>
                   <img
-                    src={`Images/champion/${ban.champFileName}.png`}
+                    src={`https://am-a.akamaihd.net/image?resize=90:&f=${ban.championImage}`}
                     width="19px"
                     height="19px"
                     style={{ borderRadius: "30px" }}
@@ -300,7 +300,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
               return (
                 <MapBanData key={idx}>
                   <img
-                    src={`Images/champion/${ban.champFileName}.png`}
+                    src={`https://am-a.akamaihd.net/image?resize=90:&f=${ban.championImage}`}
                     width="19px"
                     height="19px"
                     style={{ borderRadius: "30px" }}
@@ -321,7 +321,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
               return (
                 <MapBanData key={idx}>
                   <img
-                    src={`Images/champion/${ban.champFileName}.png`}
+                    src={`https://am-a.akamaihd.net/image?resize=90:&f=${ban.championImage}`}
                     width="19px"
                     height="19px"
                     style={{ borderRadius: "30px" }}
@@ -342,7 +342,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
               return (
                 <MapBanData key={idx}>
                   <img
-                    src={`Images/champion/${ban.champFileName}.png`}
+                    src={`https://am-a.akamaihd.net/image?resize=90:&f=${ban.championImage}`}
                     width="19px"
                     height="19px"
                     style={{ borderRadius: "30px" }}
@@ -363,7 +363,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
               return (
                 <MapBanData key={idx}>
                   <img
-                    src={`Images/champion/${ban.champFileName}.png`}
+                    src={`https://am-a.akamaihd.net/image?resize=90:&f=${ban.championImage}`}
                     width="19px"
                     height="19px"
                     style={{ borderRadius: "30px" }}
@@ -384,7 +384,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
               return (
                 <MapBanData key={idx}>
                   <img
-                    src={`Images/champion/${ban.champFileName}.png`}
+                    src={`https://am-a.akamaihd.net/image?resize=90:&f=${ban.championImage}`}
                     width="19px"
                     height="19px"
                     style={{ borderRadius: "30px" }}
@@ -417,7 +417,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                 return (
                   <MapPhaseData key={idx}>
                     <img
-                      src={`Images/champion/${phase.key}.png`}
+                      src={`https://am-a.akamaihd.net/image?resize=90:&f=${phase.championImage}`}
                       width="19px"
                       height="19px"
                       style={{ borderRadius: "30px" }}
@@ -448,7 +448,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                 return (
                   <MapPhaseData key={idx}>
                     <img
-                      src={`Images/champion/${phase.key}.png`}
+                      src={`https://am-a.akamaihd.net/image?resize=90:&f=${phase.championImage}`}
                       width="19px"
                       height="19px"
                       style={{ borderRadius: "30px" }}
@@ -467,7 +467,6 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
           </PhaseWrapper>
         </PhaseTable>
       </PhaseContainer>
-
       <PhaseContainer>
         <PhaseTable>
           <PhaseTitle>
@@ -482,7 +481,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                 return (
                   <MapPhaseData key={idx}>
                     <img
-                      src={`Images/champion/${phase.key}.png`}
+                      src={`https://am-a.akamaihd.net/image?resize=90:&f=${phase.championImage}`}
                       width="19px"
                       height="19px"
                       style={{ borderRadius: "30px" }}
@@ -513,7 +512,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
                 return (
                   <MapPhaseData key={idx}>
                     <img
-                      src={`Images/champion/${phase.key}.png`}
+                      src={`https://am-a.akamaihd.net/image?resize=90:&f=${phase.championImage}`}
                       width="19px"
                       height="19px"
                       style={{ borderRadius: "30px" }}

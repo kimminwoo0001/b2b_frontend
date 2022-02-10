@@ -82,6 +82,22 @@ const typoStyle = {
     color: ${theme.colors.text};
     letter-spacing: 0.025em;
   `,
+
+  // select
+  select: css`
+    font-family: SpoqaHanSansNeo;
+    letter-spacing: normal;
+    text-align: left;
+    font-size: 13px;
+    color: ${theme.colors.text};
+  `,
+
+  select_item: css`
+    font-family: NotoSansKR, Apple SD Gothic Neo;
+    font-size: 11px;
+    letter-spacing: -0.55px;
+    color: ${theme.colors.text};
+  `,
 };
 
 export default typoStyle;

@@ -13,7 +13,7 @@ import qs from "qs";
 import WardTooltip from "./WardTooltip";
 import axiosRequest from "../../../lib/axiosRequest";
 import { duration } from "@material-ui/core";
-import { SetModalInfo } from "../../../redux/modules/modalvalue";
+import { SetDesc, SetIsOpen, SetIsSelector, SetModalInfo } from "../../../redux/modules/modalvalue";
 
 const sectorName = {
   0: 1,
@@ -56,6 +56,14 @@ function WardMapping() {
   let firstTime = minFrom[0] * 5100;
   let secondTime = minFrom[1] * 5100;
 
+  useEffect(() => {
+    setWard([]);
+    setSector([]);
+    setTotalWard();
+    setMapSector("");
+    setIsClicked(false);
+  }, [filters.team])
+
 
   const handleTimeReset = () => {
     // setMinFrom(t("video.vision.selectMin"));
@@ -77,7 +85,7 @@ function WardMapping() {
       />
     ),
   };
-
+  console.log(filters.championArray);
   //맵핑 데이터 fetch 함수
   const fetchingWardData = (wardside) => {
     try {
@@ -91,6 +99,7 @@ function WardMapping() {
         team: filters.team,
         player: filters.player,
         champion: filters.champion_eng,
+        // champion: filters.champion,
         compare: compareOpen ? "on" : "off",
         oppteam: filters.oppteam,
         oppplayer: filters.oppplayer,
@@ -148,7 +157,9 @@ function WardMapping() {
             });
             setSector(arrSum);
           } else {
-            alert(t("video.vision.noData"));
+            dispatch(SetIsSelector(false));
+            dispatch(SetIsOpen(true));
+            dispatch(SetDesc(t("video.vision.noData")));
             setTotalWard(0);
             setSector([]);
           }
@@ -166,30 +177,42 @@ function WardMapping() {
   const handleWardClick = () => {
     if (tab === "team") {
       if (!filters.team) {
-        alert(t("video.vision.selectTeam"));
+        dispatch(SetIsSelector(false));
+        dispatch(SetIsOpen(true));
+        dispatch(SetDesc(t("video.vision.selectTeam")));
         return;
       }
       if (secondTime - firstTime <= 0) {
-        alert(t("video.vision.noTime"));
+        dispatch(SetIsSelector(false));
+        dispatch(SetIsOpen(true));
+        dispatch(SetDesc(t("video.vision.noTime")));
         return;
       } else {
         fetchingWardData("all");
       }
     } else {
       if (!filters.team) {
-        alert(t("video.vision.selectTeam"));
+        dispatch(SetIsSelector(false));
+        dispatch(SetIsOpen(true));
+        dispatch(SetDesc(t("video.vision.selectTeam")));
         return;
       }
       if (!filters.player) {
-        alert(t("video.vision.selectPlayer"));
+        dispatch(SetIsSelector(false));
+        dispatch(SetIsOpen(true));
+        dispatch(SetDesc(t("video.vision.selectPlayer")));
         return;
       }
       if (!filters.champion_eng) {
-        alert(t("video.vision.selectChamp"));
+        dispatch(SetIsSelector(false));
+        dispatch(SetIsOpen(true));
+        dispatch(SetDesc(t("video.vision.selectChamp")));
         return;
       }
       if (secondTime - firstTime <= 0) {
-        alert(t("video.vision.noTime"));
+        dispatch(SetIsSelector(false));
+        dispatch(SetIsOpen(true));
+        dispatch(SetDesc(t("video.vision.noTime")));
         return;
       } else {
         fetchingWardData("all");
@@ -216,7 +239,6 @@ function WardMapping() {
               <span>{t("video.vision.teamview")}</span>
             </div>
           </TopTabItem>
-
           <TopTabItem
             onClick={() => {
               setTab("player");
@@ -292,7 +314,7 @@ function WardMapping() {
                   <button
                     onClick={() => {
                       mapSector === "" ||
-                      mapSector !== `Images/minimap_new/15.png`
+                        mapSector !== `Images/minimap_new/15.png`
                         ? setMapSector(`Images/minimap_new/15.png`)
                         : setMapSector("");
                     }}
@@ -351,9 +373,8 @@ function WardMapping() {
       <RightSection>
         <WardMap
           style={{
-            backgroundImage: `url(${
-              mapSector ? mapSector : "Images/ward_map.png"
-            })`,
+            backgroundImage: `url(${mapSector ? mapSector : "Images/ward_map.png"
+              })`,
           }}
         >
           {ward?.map((ward, idx) => {

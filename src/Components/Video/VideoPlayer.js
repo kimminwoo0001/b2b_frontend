@@ -16,9 +16,10 @@ const VideoPlayer = ({ video, startTime }) => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const [seekTime, setSeekTime] = useState(0)
   const dispatch = useDispatch();
+  const player = useRef(null);
 
   // video option
-  let player;
+
   const endTime = +gamevalue.startTime + +gamevalue.gameTime;
   const startPlayed = +gamevalue.startTime / +videovalue.duration;
   const sec5 = 5;
@@ -140,7 +141,8 @@ const VideoPlayer = ({ video, startTime }) => {
     const movePlayed = (parseFloat(+videovalue.playedSeconds) + move) / videovalue.duration;
     dispatch(HandleSeekChange(movePlayed))
     dispatch(HandleSeekMouseUp())
-    player.seekTo(movePlayed)
+    player.current.seekTo(movePlayed)
+    //player.current.focus();
   }
 
   const handleSeekTime = () => {
@@ -148,15 +150,16 @@ const VideoPlayer = ({ video, startTime }) => {
     const movePlayed = (parseFloat(+gamevalue.startTime) + +gamevalue.seekTime) / videovalue.duration;
     dispatch(HandleSeekChange(movePlayed))
     dispatch(HandleSeekMouseUp())
-    player.seekTo(movePlayed)
+    player.current.seekTo(movePlayed)
     dispatch(SetSeekTime(0));
+    //player.current.focus();
   }
 
   const handleSeekMouseUp = e => {
     dispatch(HandleSeekMouseUp())
     //this.setState({ seeking: false })
     //console.log("handleSeekMouseUp", parseFloat(seekTime))
-    player.seekTo(parseFloat(seekTime))
+    player.current.seekTo(parseFloat(seekTime))
     //player.seekTo(parseFloat(videovalue.playedSeconds))
   }
 
@@ -338,7 +341,7 @@ const VideoPlayer = ({ video, startTime }) => {
   }
 
   const ref = newPlayer => {
-    player = newPlayer;
+    player.current = newPlayer;
   }
 
   useEffect(() => {

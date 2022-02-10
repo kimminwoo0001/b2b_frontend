@@ -17,37 +17,33 @@ function Team() {
   const copy = useSelector((state) => state.CopyReducer);
   const { t } = useTranslation();
 
-  useEffect(() => {
+  if (document.title !== `${t("sidebar.part3")} - NUNU.GG`) {
     document.title = `${t("sidebar.part3")} - NUNU.GG`
-  }, [])
+  }
 
   return (
     <ErrorBoundary>
       <Nav />
       <TeamWrapper>
         <SideBar />
-
-        (<>
-        <div
+        <>
+          <div
           // className={filters.filterMenuState ? "filter-open" : "filter-close"}
-        >
-          <Filter />
-        </div>
-        {/* <div
+          >
+            <Filter />
+          </div>
+          {/* <div
           className={filters.filterMenuState ? "filter-close" : "filter-open"}
         >
           <CloseFilter />
         </div> */}
         </>
-        )
-
         <ContentWrapper>
-          {filters.team !== "" && filters.team.length > 0 && filters.year.length > 0  && filters.patch.length > 0? (
+          {filters.team !== "" && filters.team.length > 0 && filters.year.length > 0 && filters.patch.length > 0 ? (
             <TeamTabs />
           ) : (
             <SelectFilter />
           )}
-          
         </ContentWrapper>
       </TeamWrapper>
     </ErrorBoundary>
