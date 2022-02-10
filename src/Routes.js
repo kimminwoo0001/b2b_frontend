@@ -32,6 +32,7 @@ import CheckLogin from "./Pages/Sign/CheckLogin";
 import Loading from "./Components/LoadingImg/LoadingImg";
 import ChannelService from "./Components/UtilityComponent/ChannelService";
 import GameReportDetail from "./Pages/GameReport/Components/GameReportDetail";
+import ServerTest from "./Pages/ServerTest/ServerTest";
 
 function Routes() {
   //const token = sessionStorage.getItem("token");
@@ -88,8 +89,8 @@ function Routes() {
         <Route exact path="/checkLogin" component={CheckLogin} />
         <Route exact path="/signUp" component={SingUp} />
         <Route exact path="/changePW" component={ChangePW} />
+        <Route exact path="/serverTest" component={ServerTest} />
       </Switch>
-
       <Footer />
     </Router>
   );
