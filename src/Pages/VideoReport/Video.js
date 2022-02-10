@@ -13,7 +13,9 @@ import CloseFilter from "../../Components/Filter/CloseFilter";
 function Video() {
   const filters = useSelector((state) => state.FilterReducer);
   const { t } = useTranslation();
-  document.title = `${t("sidebar.part6")} - NUNU.GG`
+  if (document.title !== `${t("sidebar.part6")} - NUNU.GG`) {
+    document.title = `${t("sidebar.part6")} - NUNU.GG`
+  }
   useEffect(() => {
     console.log("ay")
   }, [filters.team])

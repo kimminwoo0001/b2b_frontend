@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 import Nav from "../../Components/Nav/Nav";
 import SelectFilter from "../../Components/SelectFilter/SelectFilter";
@@ -15,6 +16,11 @@ import PlayerFilterModal from "../../Components/Filter/PlayerFilterModal";
 function PlayerCompare() {
   const filters = useSelector((state) => state.FilterReducer);
   const copyvalue = useSelector((state) => state.CopyReducer);
+  const { t } = useTranslation();
+
+  if (document.title !== `${t("sidebar.part9")} - NUNU.GG`) {
+    document.title = `${t("sidebar.part9")} - NUNU.GG`
+  }
   return (
     <ErrorBoundary>
       {copyvalue?.openFilterModal === "/teamCompare" && <TeamFilterModal />}
