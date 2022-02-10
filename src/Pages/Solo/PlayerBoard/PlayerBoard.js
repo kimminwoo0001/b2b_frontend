@@ -59,7 +59,7 @@ function PlayerBoard() {
 
   const secToMin = (sec) => {
     let mm = Math.floor(sec / 60);
-    let ss = addZero(Math.floor(sec % 60));
+    let ss = Math.floor(sec % 60);
 
     return `${mm}${t("solo.playerboard.min")} ${ss}${t("solo.playerboard.sec")}`;
   }
