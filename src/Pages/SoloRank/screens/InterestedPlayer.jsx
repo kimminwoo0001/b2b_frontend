@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
 
-const SR_MyTeam = () => {
+const InterestedPlayer = () => {
   return <></>;
 };
 
-export default SR_MyTeam;
+export default InterestedPlayer;

@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -8,6 +9,7 @@ import ErrorBoundary from "../../Components/ErrorBoundary";
 import Nav from "../../Components/Nav/Nav";
 import { useSelector, useDispatch, batch } from "react-redux";
 import SelectFilter from "../../Components/SelectFilter/SelectFilter";
+import SoloRankTab from "./Component/Common/SoloRankTab";
 
 const SoloRank = () => {
   const filters = useSelector((state) => state.FilterReducer);
@@ -24,7 +26,9 @@ const SoloRank = () => {
       <Nav />
       <Wrapper>
         <SideBar />
-        <ContentWrapper></ContentWrapper>
+        <ContentWrapper>
+          <SoloRankTab />
+        </ContentWrapper>
       </Wrapper>
     </ErrorBoundary>
   );

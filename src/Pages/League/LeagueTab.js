@@ -78,33 +78,6 @@ const TabContainer = styled.ul`
   /* padding-bottom: 15px; */
 `;
 
-// const Schedule = styled.li`
-//   cursor: pointer;
-//   display: flex;
-//   align-items: center;
-//   padding-bottom: 15px;
-//   color: #84818e;
-//   margin-right: 30px;
-//   ${(props) =>
-//     props.changeColor &&
-//     css`
-//       color: #f04545;
-//       border-bottom: 2px solid #f04545;
-//     `}
-//   div {
-//     width: auto;
-//     height: 17px;
-//     font-family: NotoSansKR, Apple SD Gothic Neo;
-//     font-size: 13px;
-//     line-height: 1.31;
-//     letter-spacing: -0.65px;
-//     text-align: left;
-//     margin-right: 4px;
-//   }
-//   img {
-//   }
-// `;
-
 const TabItem = styled.li`
   cursor: pointer;
   display: flex;
