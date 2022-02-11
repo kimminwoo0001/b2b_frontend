@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { API } from "../../config";
 import qs from "qs";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function BanBoard() {

@@ -13,7 +13,7 @@ import { API } from "../../config";
 
 import ObjectTooltip from "./ObjectTooltip";
 import addZero from "../../../lib/addZero";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetDesc, SetIsOpen, SetIsSelector, SetModalInfo } from "../../../redux/modules/modalvalue";
 

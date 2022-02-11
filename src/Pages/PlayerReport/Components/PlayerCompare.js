@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { API } from "../../config";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 

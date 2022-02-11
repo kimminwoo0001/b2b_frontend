@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { InitializeGameState } from "../../../../redux/modules/gamevalue";
 import EventLogBox from "./Component/EventLogBox";
 import StatusLogBox from "./Component/StatusLogBox";
+import { goProGameReport } from "../../../../lib/pagePath";
 
 const DetailLog = () => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
@@ -21,7 +22,7 @@ const DetailLog = () => {
         <img
           onClick={() => {
             dispatch(InitializeGameState());
-            history.push("/gameReport");
+            history.push(goProGameReport);
           }}
           src={"Images/ic_close_bk_30.svg"}
           alt="close"

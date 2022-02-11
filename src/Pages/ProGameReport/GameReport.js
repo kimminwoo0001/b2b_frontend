@@ -18,6 +18,7 @@ import TeamFilterModal from "../../Components/Filter/TeamFilterModal";
 import PlayerFilterModal from "../../Components/Filter/PlayerFilterModal";
 import { InitializeGameState, SetGameId } from "../../redux/modules/gamevalue";
 import { SetTeam } from "../../redux/modules/filtervalue";
+import { goPlayerCompare, goTeamCompare } from "../../lib/pagePath";
 
 
 function GameReport() {
@@ -39,8 +40,8 @@ function GameReport() {
   return (
     <ErrorBoundary>
       {checkGameId ? "" : <Nav />}
-      {copyvalue?.openFilterModal === "/teamCompare" && <TeamFilterModal />}
-      {copyvalue?.openFilterModal === "/playerCompare" && <PlayerFilterModal />}
+      {copyvalue?.openFilterModal === goTeamCompare && <TeamFilterModal />}
+      {copyvalue?.openFilterModal === goPlayerCompare && <PlayerFilterModal />}
       <GameWrapper>
         {checkGameId && filters.team !== "" && filters.team.length > 0 ? "" :
           <>

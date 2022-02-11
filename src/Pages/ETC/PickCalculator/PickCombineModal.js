@@ -10,7 +10,7 @@ import {
   GetOppPlayer,
 } from "../../../redux/modules/filtervalue";
 import { API } from "../../config";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 // import { useDetectOutsideClick } from "../../Components/SelectFilter/useDetectOustsideClick";

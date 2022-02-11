@@ -31,8 +31,9 @@ import {
 import { API } from "../../Pages/config";
 import { useTranslation } from "react-i18next";
 import { useDetectOutsideClick } from "../../Pages/TeamCompare/useDetectOustsideClick";
-import axiosRequest from "../../lib/axiosRequest";
+import axiosRequest from "../../lib/axios/axiosRequest";
 import { HandleTab, Loading, MenuNum, Reset_Map } from "../../redux/modules/filtervalue";
+import { goTeamCompare, goTeamReport } from "../../lib/pagePath";
 
 const TeamFilterModal = () => {
   //사이드바에 있는 팀 비교 탭 모달창
@@ -62,7 +63,7 @@ const TeamFilterModal = () => {
 
 
   useEffect(() => {
-    if (filters.openFilterModal === "/teamCompare" && selector.yearFilter.length === 0) {
+    if (filters.openFilterModal === goTeamCompare && selector.yearFilter.length === 0) {
       fetchYearFilter();
     }
   }, [selector.yearFilter]);
@@ -93,7 +94,7 @@ const TeamFilterModal = () => {
       return;
     }
     if (JSON.stringify(year) !== JSON.stringify(filters.year)) {
-      if (filters.openFilterModal === "/teamCompare") {
+      if (filters.openFilterModal === goTeamCompare) {
         dispatch(SetLeague([]));
         dispatch(SetSeason([]));
         fetchLeagueFilter();
@@ -123,7 +124,7 @@ const TeamFilterModal = () => {
   }, [filters.season])
 
   useEffect(() => {
-    if (filters.openFilterModal !== "/teamCompare") {
+    if (filters.openFilterModal !== goTeamCompare) {
       fetchingOppTeamFilter();
     }
 
@@ -309,7 +310,6 @@ const TeamFilterModal = () => {
 
   const handleConfirm = () => {
     if (filters.team && filters.oppteam) {
-      //history.push("/teamCompare");
       history.push(filters.openFilterModal)
       dispatch(CompareModal(false));
       dispatch(GetOppTeam(filters.oppteam));
@@ -346,15 +346,8 @@ const TeamFilterModal = () => {
             alt="closeBtn"
             className="Close"
             onClick={() => {
-              // dispatch(InitailizeState());
-              // dispatch(MenuNum(2));
               dispatch(CompareModal(false));
-              //dispatch(Reset_Map(copyvalue))
               dispatch(InitalCopy());
-              // dispatch(OppTeam([]));
-              // history.push("/team");
-              // dispatch(setTeamFilter([]));
-              // setOppTeamFilter([]);
             }}
           />
         </ModalNav>
@@ -363,7 +356,7 @@ const TeamFilterModal = () => {
             <FilterHeader>
               <label>{t("filters.setFilter")}</label>
             </FilterHeader>
-            {filters.openFilterModal === "/teamCompare" ?
+            {filters.openFilterModal === goTeamCompare ?
               <>
                 <ModalYearFilter>
                   <label>{t("filters.setYear")}</label>
@@ -418,12 +411,12 @@ const TeamFilterModal = () => {
                     <div className="menu-container">
                       <button
                         onClick={() => {
-                          if (filters.openFilterModal === "/teamCompare") {
+                          if (filters.openFilterModal === goTeamCompare) {
                             setIsActiveLeague(!isActiveLeague);
                             fetchLeagueFilter();
                           }
                         }}
-                        disabled={filters.openFilterModal === "/team"}
+                        disabled={filters.openFilterModal === goTeamReport}
                         className="menu-trigger"
                       >
                         <span className="Label">
@@ -485,12 +478,12 @@ const TeamFilterModal = () => {
                     <div className="menu-container">
                       <button
                         onClick={() => {
-                          if (filters.openFilterModal === "/teamCompare") {
+                          if (filters.openFilterModal === goTeamCompare) {
                             setIsActiveLeague(!isActiveLeague);
                             fetchLeagueFilter();
                           }
                         }}
-                        disabled={filters.openFilterModal === "/team"}
+                        disabled={filters.openFilterModal === goTeamReport}
                         className="menu-trigger"
                       >
                         <span className="Label">
@@ -686,13 +679,13 @@ const TeamFilterModal = () => {
             <TeamFilterBox>
               <TeamWrapper>
                 <SelectTeamTitle isFilterSelected={filters.league.length > 0}>
-                  {filters.openFilterModal === "/team" ?
+                  {filters.openFilterModal === goTeamReport ?
                     t("filters.teamCompareLabel1") :
                     t("filters.teamCompareLabel")
                   }
                 </SelectTeamTitle>
                 <SelectTeam isFilterSelected={filters.league.length > 0}>
-                  {filters.openFilterModal === "/team" ?
+                  {filters.openFilterModal === goTeamReport ?
 
                     (
                       // <>
@@ -1508,7 +1501,7 @@ const DropDownToggle = styled.div`
 `;
 
 const ArrowIcon = styled.img`
-      visibility: ${(props) => props.page === "/teamCompare" ? "visible" : "hidden"};
+      visibility: ${(props) => props.page === goTeamCompare ? "visible" : "hidden"};
       text-align: right;
 
 `

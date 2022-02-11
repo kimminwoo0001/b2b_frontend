@@ -1,7 +1,7 @@
 // 데이터 오류로 인해 null 값을 받을 시, 슬랙으로 받을 수 있도록 백엔드에 요청.
 
-import { API } from "../Pages/config";
-import axiosRequest from "./axiosRequest";
+import { API } from "../../Pages/config";
+import axiosRequest from "../axiosRequest";
 
 export default function axiosErrorReq(errUrl, errParam, errResult) {
 

@@ -10,7 +10,7 @@ import { API2 } from "../../config";
 import { API } from "../../config";
 
 import timeFormat from "../../../lib/timeFormat";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 const WardSlider = withStyles({

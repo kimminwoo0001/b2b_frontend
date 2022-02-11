@@ -14,15 +14,16 @@ import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
 import { API } from "../../config";
 
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
+import { goPlayerReport } from "../../../lib/pagePath";
 
 function HitMap() {
   // 시간 설정 상태값
   const [minFrom, setMinFrom] = useState([0, 100]);
   let firstTime = minFrom[0] * 18;
   let secondTime = minFrom[1] * 18;
-  const isPageSolo = document.location.pathname === "/solo" ? true : false;
+  const isPageSolo = document.location.pathname === goPlayerReport ? true : false;
 
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);

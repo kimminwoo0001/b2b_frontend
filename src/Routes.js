@@ -6,7 +6,6 @@ import {
   Redirect,
   useHistory,
 } from "react-router-dom";
-
 import Home from "./Pages/Home/Home";
 import League from "./Pages/LeagueReport/League";
 import Team from "./Pages/TeamReport/Team";
@@ -30,6 +29,7 @@ import GameReportDetail from "./Pages/ProGameReport/Components/GameReportDetail"
 import UiTest from "./Pages/ETC/Ui/UiTest"
 import ServerTest from "./Pages/ETC/ServerTest/ServerTest";
 import SoloRank from "./Pages/SoloRank/SoloRank";
+import { goChangePw, goCheckLogin, goError, goHome, goLeagueReport, goLogin, goPathAnalysis, goPiArea, goPlayerCompare, goPlayerReport, goProGameReport, goServerTest, goSignUp, goSoloRank, goTeamCompare, goTeamReport, goUiTest, proGameReportDetail } from "./lib/pagePath";
 
 // import Utility from "./Pages/ETC/Utility/Utility";
 // import PickCalculator from "./Pages/ETC/PickCalculator/PickCalculator";
@@ -68,31 +68,31 @@ function Routes() {
       <AlertModal />
       <Loading />
       <Switch>
-        <PrivateRoute exact path="/" component={Home} />
-        <PrivateRoute exact path="/leagueReport" component={League} />
-        <PrivateRoute exact path="/teamReport" component={Team} />
-        <PrivateRoute exact path="/playerReport" component={Solo} />
-        <PrivateRoute exact path="/pathAnalysis" component={Video} />
-        <PrivateRoute exact path="/proGameReport" component={GameReport} />
+        <PrivateRoute exact path={goHome} component={Home} />
+        <PrivateRoute exact path={goLeagueReport} component={League} />
+        <PrivateRoute exact path={goTeamReport} component={Team} />
+        <PrivateRoute exact path={goPlayerReport} component={Solo} />
+        <PrivateRoute exact path={goPathAnalysis} component={Video} />
+        <PrivateRoute exact path={goProGameReport} component={GameReport} />
         <PrivateRoute
           exact
-          path="/proGameReportDetail"
+          path={proGameReportDetail}
           component={GameReportDetail}
         />
         {/* <PrivateRoute exact path="/utility" component={Utility} />
         <PrivateRoute exact path="/calculator" component={PickCalculator} /> */}
-        <PrivateRoute exact path="/teamCompare" component={TeamCompare} />
-        <PrivateRoute exact path="/playerCompare" component={PlayerCompare} />
-        <PrivateRoute exact path="/soloRank" component={SoloRank} />
+        <PrivateRoute exact path={goTeamCompare} component={TeamCompare} />
+        <PrivateRoute exact path={goPlayerCompare} component={PlayerCompare} />
+        <PrivateRoute exact path={goSoloRank} component={SoloRank} />
         {/* pi only */}
-        <PrivateRoute exact path="/piArea" component={PiArea} />
-        <Route exact path="/error" component={NotFound} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/checkLogin" component={CheckLogin} />
-        <Route exact path="/signUp" component={SingUp} />
-        <Route exact path="/changePW" component={ChangePW} />
-        <Route exact path="/uiTest" component={UiTest} />
-        <Route exact path="/serverTest" component={ServerTest} />
+        <PrivateRoute exact path={goPiArea} component={PiArea} />
+        <Route exact path={goError} component={NotFound} />
+        <Route exact path={goLogin} component={Login} />
+        <Route exact path={goCheckLogin} component={CheckLogin} />
+        <Route exact path={goSignUp} component={SingUp} />
+        <Route exact path={goChangePw} component={ChangePW} />
+        <Route exact path={goUiTest} component={UiTest} />
+        <Route exact path={goServerTest} component={ServerTest} />
       </Switch>
       <Footer />
     </Router>

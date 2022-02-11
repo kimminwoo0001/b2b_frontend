@@ -1,6 +1,5 @@
 import qs from "qs";
 import axios from "axios";
-import checkRequest from "./checkRequest";
 
 const signAxiosReq = async (
   url,

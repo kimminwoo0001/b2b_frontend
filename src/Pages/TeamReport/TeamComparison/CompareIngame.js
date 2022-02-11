@@ -17,13 +17,14 @@ import {
   label,
 
 } from "recharts";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import {
   Loading,
   HandleTab
 } from '../../../redux/modules/filtervalue';
+import { goTeamReport } from "../../../lib/pagePath";
 
 function CompareIngame() {
   //팀 비교 인게임 지표
@@ -63,7 +64,7 @@ function CompareIngame() {
     if (isInitialMount.current) {
       isInitialMount.current = false;
     } else {
-      if (pagePath === "/team") {
+      if (pagePath === goTeamReport) {
         dispatch(HandleTab(0));
       }
     }
@@ -116,13 +117,13 @@ function CompareIngame() {
         //첫 갱크 데이터 가져와서 x,y로 나눠서 배열로 만듬
         const gankData = e[Team]?.firstGank.firstGankList !== "NULL"
           && e[Team]?.firstGank.firstGankList?.map((gank) => {
-          return { x: gank.position, y1: gank.gankCount };
-        });
+            return { x: gank.position, y1: gank.gankCount };
+          });
 
         const gankData2 = e[OppTeam]?.firstGank.firstGankList !== "NULL"
           && e[OppTeam]?.firstGank.firstGankList?.map((gank) => {
-          return { x: gank.position, y2: gank.gankCount };
-        });
+            return { x: gank.position, y2: gank.gankCount };
+          });
         for (let i = 0; i < gankData.length; i++) {
           Object.assign(gankData[i], gankData2[i]);
           setGank(gankData);
@@ -144,15 +145,15 @@ function CompareIngame() {
         //첫 서포팅 데이터 가져와서 x,y로 나눠서 배열로 만듬
         const supData = e[Team]?.supportedTime.supportedTimeList !== "NULL"
           && e[Team]?.supportedTime.supportedTimeList?.map((sup) => {
-          return { x: sup.position, y1: sup.value };
+            return { x: sup.position, y1: sup.value };
           }
           );
         const supData2 = e[OppTeam]?.supportedTime.supportedTimeList !== "NULL"
           && e[OppTeam]?.supportedTime.supportedTimeList.map(
-          (sup) => {
-            return { x: sup.position, y2: sup.value };
-          }
-        );
+            (sup) => {
+              return { x: sup.position, y2: sup.value };
+            }
+          );
         console.log(supData);
         for (let i = 0; i < supData.length; i++) {
           Object.assign(supData[i], supData2[i]);
@@ -230,7 +231,7 @@ function CompareIngame() {
     return null;
   };
 
-  if(!isActive) return <></>; 
+  if (!isActive) return <></>;
 
 
 
@@ -249,51 +250,51 @@ function CompareIngame() {
               <p className="Y">Y {t("team.comparison.gankCount")}</p>
             </div>
           </NavBar>
-            {console.log(gankDomain?.firstGankList[0].gankCount)}
-          {gankDomain?.firstGankList === "NULL" ? 
-            <NoData>{t("league.leagueStat.noData2")}</NoData> : 
+          {console.log(gankDomain?.firstGankList[0].gankCount)}
+          {gankDomain?.firstGankList === "NULL" ?
+            <NoData>{t("league.leagueStat.noData2")}</NoData> :
             <CompareTeamStat>
-            <BarChart
-              width={520}
-              height={250}
-              margin={{ top: 20, right: 10, bottom: 5, left: 0 }}
-              data={gank ? Object.values(gank) : 0}
-            >
-              <Tooltip
-                cursor={{ fill: "transparent" }}
-                content={<CustomTooltip />}
-                animationDuration={0}
-              />
-              <CartesianGrid stroke="#3a3745" vertical={false} />
-              <XAxis
-                dataKey="x"
-                stroke="#3a3745 "
-                tick={{ fill: "#84818e", fontSize: 15 }}
-              />
-              <YAxis
-                type="number"
-                domain={[gankDomain?.firstGankMin, gankDomain?.firstGankMax]}
-                stroke="#3a3745 "
-                tick={{
-                  fill: "#84818e",
-                  fontSize: 15,
-                }}
-                ticks={gankTicks}
-              />
-              <Legend
-                verticalAlign="bottom"
-                align="left"
-                wrapperStyle={{ top: 235, left: 200 }}
-                height={36}
-                iconType="plainline"
-                formatter={renderColorfulLegendText}
-                iconSize={20}
-              />
-              <Bar dataKey="y1" name={Team} fill="#f04545" barSize={28} />
-              <Bar dataKey="y2" name={OppTeam} fill="#005489" barSize={28} />
-            </BarChart>
-          </CompareTeamStat>
-}
+              <BarChart
+                width={520}
+                height={250}
+                margin={{ top: 20, right: 10, bottom: 5, left: 0 }}
+                data={gank ? Object.values(gank) : 0}
+              >
+                <Tooltip
+                  cursor={{ fill: "transparent" }}
+                  content={<CustomTooltip />}
+                  animationDuration={0}
+                />
+                <CartesianGrid stroke="#3a3745" vertical={false} />
+                <XAxis
+                  dataKey="x"
+                  stroke="#3a3745 "
+                  tick={{ fill: "#84818e", fontSize: 15 }}
+                />
+                <YAxis
+                  type="number"
+                  domain={[gankDomain?.firstGankMin, gankDomain?.firstGankMax]}
+                  stroke="#3a3745 "
+                  tick={{
+                    fill: "#84818e",
+                    fontSize: 15,
+                  }}
+                  ticks={gankTicks}
+                />
+                <Legend
+                  verticalAlign="bottom"
+                  align="left"
+                  wrapperStyle={{ top: 235, left: 200 }}
+                  height={36}
+                  iconType="plainline"
+                  formatter={renderColorfulLegendText}
+                  iconSize={20}
+                />
+                <Bar dataKey="y1" name={Team} fill="#f04545" barSize={28} />
+                <Bar dataKey="y2" name={OppTeam} fill="#005489" barSize={28} />
+              </BarChart>
+            </CompareTeamStat>
+          }
         </FirstGankChart>
         <LineSupportChart>
           <NavBar>
@@ -308,50 +309,50 @@ function CompareIngame() {
             </div>
           </NavBar>
           {supportDomain?.supportedTimeList === "NULL" ?
-            <NoData>{t("league.leagueStat.noData2")}</NoData> : 
-          <CompareTeamStat>
-            <BarChart
-              width={520}
-              height={220}
-              margin={{ top: 0, right: 10, bottom: 5, left: 0 }}
-              data={support ? Object.values(support) : 0}
-            >
-              <Tooltip
-                cursor={{ fill: "transparent" }}
-                content={<CustomTooltip />}
-                animationDuration={0}
-              />
-              <CartesianGrid stroke="#3a3745" vertical={false} />
-              <XAxis
-                dataKey="x"
-                stroke="#3a3745 "
-                tick={{ fill: "#84818e", fontSize: 15 }}
-              />
-              <YAxis
-                domain={[
-                  supportDomain?.supportedTimeMin,
-                  supportDomain?.supportedTimeMax,
-                ]}
-                stroke="#3a3745 "
-                tick={{
-                  fill: "#84818e",
-                  fontSize: 15,
-                }}
-                ticks={supportTicks}
-              />
-              <Legend
-                verticalAlign="top"
-                align="left"
-                wrapperStyle={{ top: 235, left: 200 }}
-                height={36}
-                iconType="plainline"
-                formatter={renderColorfulLegendText}
-                iconSize={20}
-              />
-              <Bar dataKey="y1" name={Team} fill="#f04545" barSize={28} />
-              <Bar dataKey="y2" name={OppTeam} fill="#005489" barSize={28} />
-            </BarChart>
-          </CompareTeamStat>
+            <NoData>{t("league.leagueStat.noData2")}</NoData> :
+            <CompareTeamStat>
+              <BarChart
+                width={520}
+                height={220}
+                margin={{ top: 0, right: 10, bottom: 5, left: 0 }}
+                data={support ? Object.values(support) : 0}
+              >
+                <Tooltip
+                  cursor={{ fill: "transparent" }}
+                  content={<CustomTooltip />}
+                  animationDuration={0}
+                />
+                <CartesianGrid stroke="#3a3745" vertical={false} />
+                <XAxis
+                  dataKey="x"
+                  stroke="#3a3745 "
+                  tick={{ fill: "#84818e", fontSize: 15 }}
+                />
+                <YAxis
+                  domain={[
+                    supportDomain?.supportedTimeMin,
+                    supportDomain?.supportedTimeMax,
+                  ]}
+                  stroke="#3a3745 "
+                  tick={{
+                    fill: "#84818e",
+                    fontSize: 15,
+                  }}
+                  ticks={supportTicks}
+                />
+                <Legend
+                  verticalAlign="top"
+                  align="left"
+                  wrapperStyle={{ top: 235, left: 200 }}
+                  height={36}
+                  iconType="plainline"
+                  formatter={renderColorfulLegendText}
+                  iconSize={20}
+                />
+                <Bar dataKey="y1" name={Team} fill="#f04545" barSize={28} />
+                <Bar dataKey="y2" name={OppTeam} fill="#005489" barSize={28} />
+              </BarChart>
+            </CompareTeamStat>
           }
         </LineSupportChart>
       </ChartBox>
@@ -613,52 +614,52 @@ function CompareIngame() {
             )}${t("team.comparison.times")}`}</BlueTeamData>
           </GameDataBox>
 
-          {redData?.IngameStats["timeOfFirstGank"].second === -1 ? 
-          "" :
-          <>
+          {redData?.IngameStats["timeOfFirstGank"].second === -1 ?
+            "" :
+            <>
               <div className="under-line"></div>
-          <GameDataBox>
-            <RedTeamData>{`${redData?.IngameStats[
-              "timeOfFirstGank"
-            ].minute.toFixed(0)}${t(
-              "team.comparison.min"
-            )} ${redData?.IngameStats["timeOfFirstGank"].second.toFixed(0)}${t(
-              "team.comparison.sec"
-            )}`}</RedTeamData>
-            <IndexBox>
-              <LeftArrow></LeftArrow>
-              <AverageLabel>{t("team.comparison.firstGank")}</AverageLabel>
-              <RightArrow></RightArrow>
-            </IndexBox>
-            <BlueTeamData>{`${blueData?.IngameStats[
-              "timeOfFirstGank"
-            ].minute.toFixed(0)}${t(
-              "team.comparison.min"
-            )} ${blueData?.IngameStats["timeOfFirstGank"].second.toFixed(0)}${t(
-              "team.comparison.sec"
-            )}`}</BlueTeamData>
-          </GameDataBox> 
-          <div className="under-line"></div>
-          </>
-          } 
+              <GameDataBox>
+                <RedTeamData>{`${redData?.IngameStats[
+                  "timeOfFirstGank"
+                ].minute.toFixed(0)}${t(
+                  "team.comparison.min"
+                )} ${redData?.IngameStats["timeOfFirstGank"].second.toFixed(0)}${t(
+                  "team.comparison.sec"
+                )}`}</RedTeamData>
+                <IndexBox>
+                  <LeftArrow></LeftArrow>
+                  <AverageLabel>{t("team.comparison.firstGank")}</AverageLabel>
+                  <RightArrow></RightArrow>
+                </IndexBox>
+                <BlueTeamData>{`${blueData?.IngameStats[
+                  "timeOfFirstGank"
+                ].minute.toFixed(0)}${t(
+                  "team.comparison.min"
+                )} ${blueData?.IngameStats["timeOfFirstGank"].second.toFixed(0)}${t(
+                  "team.comparison.sec"
+                )}`}</BlueTeamData>
+              </GameDataBox>
+              <div className="under-line"></div>
+            </>
+          }
           {redData?.IngameStats[
-              "numberOfTeamFight"
-          ].winRate === -1 ? "" : 
+            "numberOfTeamFight"
+          ].winRate === -1 ? "" :
             <GameDataBox>
-            <RedTeamData>{`${redData?.IngameStats[
-              "numberOfTeamFight"
-            ].winRate.toFixed(1)}${t("team.comparison.times")}`}</RedTeamData>
-            <IndexBox>
-              <LeftArrow></LeftArrow>
-              <AverageLabel>{t("team.comparison.avgTeamFight")}</AverageLabel>
-              <RightArrow></RightArrow>
-            </IndexBox>
-            <BlueTeamData>{`${blueData?.IngameStats[
-              "numberOfTeamFight"
-            ].winRate.toFixed(1)}${t("team.comparison.times")}`}</BlueTeamData>
-          </GameDataBox>
-            }
-   
+              <RedTeamData>{`${redData?.IngameStats[
+                "numberOfTeamFight"
+              ].winRate.toFixed(1)}${t("team.comparison.times")}`}</RedTeamData>
+              <IndexBox>
+                <LeftArrow></LeftArrow>
+                <AverageLabel>{t("team.comparison.avgTeamFight")}</AverageLabel>
+                <RightArrow></RightArrow>
+              </IndexBox>
+              <BlueTeamData>{`${blueData?.IngameStats[
+                "numberOfTeamFight"
+              ].winRate.toFixed(1)}${t("team.comparison.times")}`}</BlueTeamData>
+            </GameDataBox>
+          }
+
         </CompareStats>
       </CompareDisplay>
     </CompareIngameWrapper>

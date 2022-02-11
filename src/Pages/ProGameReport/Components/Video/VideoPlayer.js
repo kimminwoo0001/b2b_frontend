@@ -1,14 +1,15 @@
 import react, { useRef, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import styled, { css } from "styled-components";
-import { useTranslation } from "react-i18next";
+import styled from "styled-components";
 import ReactPlayer from 'react-player'
-import twitchTimeToMilliSec from '../../lib/twitchTimeToMilliSec';
-import { withStyles } from "@material-ui/core/styles";
-import Slider from "@material-ui/core/Slider";
-import { HandledisablePip, HandleDuration, HandleEnablePip, HandleEnded, HandlePlaybackRateChange, HandlePlaying, HandleProgress, HandleSeekChange, HandleSeekMouseDown, HandleSeekMouseUp, HandleStop, HandleToggleControls, HandleToggleLight, HandleToggleLoop, HandleToggleMuted, HandleTogglePip, HandleVolumeChange, SetPause, SetPlay, SetPlayBackRate, SetUrl } from '../../redux/modules/videovalue';
-import secToMS from '../../lib/secToMS';
-import { SetCurrentItemIdxActiveIdx, SetEventLogActiveIdx, SetLiveActiveIdx, SetGoldActiveIdx, SetStatusLogActiveIdx, SetSeekTime } from '../../redux/modules/gamevalue';
+import {
+  HandledisablePip, HandleDuration, HandleEnablePip, HandleEnded, HandlePlaybackRateChange,
+  HandlePlaying, HandleProgress, HandleSeekChange, HandleSeekMouseDown, HandleSeekMouseUp,
+  HandleStop, HandleToggleControls, HandleToggleLight, HandleToggleLoop, HandleToggleMuted,
+  HandleTogglePip, HandleVolumeChange, SetPause, SetPlay, SetPlayBackRate, SetUrl
+} from '../../../../redux/modules/videovalue';
+import secToMS from '../../../../lib/secToMS';
+import { SetCurrentItemIdxActiveIdx, SetEventLogActiveIdx, SetLiveActiveIdx, SetGoldActiveIdx, SetStatusLogActiveIdx, SetSeekTime } from '../../../../redux/modules/gamevalue';
 
 
 const VideoPlayer = ({ video, startTime }) => {

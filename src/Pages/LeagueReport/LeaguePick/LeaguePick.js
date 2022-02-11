@@ -4,7 +4,7 @@ import { API } from "../../config";
 import { useSelector, useDispatch } from "react-redux";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import TabforTop from "./TabforTop";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { useTranslation } from "react-i18next";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 

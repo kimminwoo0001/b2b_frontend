@@ -8,7 +8,7 @@ import DetailLog from "./DetailLogOption/DetailLog";
 import TeamStatus from "./TeamStatusOption/TeamStatus";
 import TimeLine from "./TimeLineOption/TimeLine";
 import Summary from "./SummaryOption/Summary";
-import VideoPlayer from "../../../Components/Video/VideoPlayer";
+import VideoPlayer from "./Video/VideoPlayer";
 import ErrorBoundary from "../../../Components/ErrorBoundary";
 
 const GameReportDetail = () => {

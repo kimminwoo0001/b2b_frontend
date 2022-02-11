@@ -1,4 +1,5 @@
 import React from "react";
+import { goHome } from "../lib/pagePath";
 export default class ErrorBoundary extends React.Component {
   state = {
     hasError: false,
@@ -20,7 +21,7 @@ export default class ErrorBoundary extends React.Component {
     if (this.state.hasError) {
       console.log("error:");
       sessionStorage.clear();
-      this.props.history.push("/");
+      this.props.history.push(goHome);
     }
     return this.props.children;
   }

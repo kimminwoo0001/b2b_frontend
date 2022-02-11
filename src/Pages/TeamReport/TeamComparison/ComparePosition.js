@@ -7,10 +7,11 @@ import qs from "qs";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import { Loading, HandleTab } from '../../../redux/modules/filtervalue';
+import { goTeamReport } from "../../../lib/pagePath";
 
 
 function mycomparator(a, b) {
@@ -54,7 +55,7 @@ function ComparePosition() {
     if (isInitialMount.current) {
       isInitialMount.current = false;
     } else {
-      if (pagePath === "/team") {
+      if (pagePath === goTeamReport) {
         dispatch(HandleTab(0));
       }
     }
@@ -328,7 +329,7 @@ function ComparePosition() {
     }),
   };
 
-  if (!isActive) return <></>; 
+  if (!isActive) return <></>;
 
 
   return (

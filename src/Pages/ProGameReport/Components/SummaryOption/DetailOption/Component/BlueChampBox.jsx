@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
-import transferValuetoWidth from "../../../../../../lib/transferValuetoWidth";
+import transferValuetoWidth from "../../../../lib/transferValuetoWidth";
 import { useSelector, useDispatch } from "react-redux";
 import thousand from "../../../../../../lib/thousand";
 

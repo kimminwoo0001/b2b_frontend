@@ -10,7 +10,7 @@ import { Bar } from "react-chartjs-2";
 import { API } from "../../config";
 import { useSelector } from "react-redux";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import { HandleTab, Loading } from "../../../redux/modules/filtervalue";
@@ -92,10 +92,10 @@ function TeamIndex() {
           firstGank.firstGankRow = firstGank.firstGankMax / 5;
           setGankCount(e.firstGank);
           e.firstGank.firstGankList !== "NULL" &&
-          e.firstGank.firstGankList.forEach((game) => {
-            gameX.push(game.position);
-            gameY.push(game.value);
-          });
+            e.firstGank.firstGankList.forEach((game) => {
+              gameX.push(game.position);
+              gameY.push(game.value);
+            });
           setGankCountX(gameX);
           setGankCountY(gameY);
 
@@ -161,7 +161,7 @@ function TeamIndex() {
   };
 
 
-  if(!isActive) return <></>; 
+  if (!isActive) return <></>;
 
 
   return (
@@ -418,44 +418,44 @@ function TeamIndex() {
               </DisplayInfo>
             </div>
             <div className="AvgFirstGank">
-               <img
-               className="MainIcon"
-               src="Images/ico-team-dash-gank.png"
-               alt="Icon"
-             ></img>
+              <img
+                className="MainIcon"
+                src="Images/ico-team-dash-gank.png"
+                alt="Icon"
+              ></img>
               <DisplayInfoFirstGank>
-               <div className="SubTitle">{t("team.analysis.gank")}</div>
+                <div className="SubTitle">{t("team.analysis.gank")}</div>
                 {teamStats?.timeOfFirstGank.minute === "NULL" && teamStats?.timeOfFirstGank.second === "NULL" ?
                   <NoData2>{t("league.leagueStat.noData2")}</NoData2> :
                   <>
-               <div className="CalcData">
-                 <img
-                   src={
-                     teamStats?.timeOfFirstGank.result === true
-                       ? "Images/ico-teamreport-num-up.svg"
-                       : "Images/ico-teamreport-num-down.svg"
-                   }
-                   alt="arrowIcon"
-                   width="13px"
-                   height="13px"
-                 ></img>
-                 <TeamValue
-                   changeColor={teamStats?.timeOfFirstGank.result === false}
-                 >
-                   {`${teamStats?.timeOfFirstGank.minute}${t(
-                     "team.analysis.min"
-                   )} ${teamStats?.timeOfFirstGank.second}${t(
-                     "team.analysis.sec"
-                   )}`}
-                 </TeamValue>
-               </div>
-               <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${leagueStat?.timeOfFirstGank.minute
-                 }${t("team.analysis.min")} ${leagueStat?.timeOfFirstGank.second
-                 }${t("team.analysis.sec")}`}</div>
+                    <div className="CalcData">
+                      <img
+                        src={
+                          teamStats?.timeOfFirstGank.result === true
+                            ? "Images/ico-teamreport-num-up.svg"
+                            : "Images/ico-teamreport-num-down.svg"
+                        }
+                        alt="arrowIcon"
+                        width="13px"
+                        height="13px"
+                      ></img>
+                      <TeamValue
+                        changeColor={teamStats?.timeOfFirstGank.result === false}
+                      >
+                        {`${teamStats?.timeOfFirstGank.minute}${t(
+                          "team.analysis.min"
+                        )} ${teamStats?.timeOfFirstGank.second}${t(
+                          "team.analysis.sec"
+                        )}`}
+                      </TeamValue>
+                    </div>
+                    <div className="AvgData">{`${t("team.analysis.leagueAvg")} ${leagueStat?.timeOfFirstGank.minute
+                      }${t("team.analysis.min")} ${leagueStat?.timeOfFirstGank.second
+                      }${t("team.analysis.sec")}`}</div>
                   </>
                 }
               </DisplayInfoFirstGank>
-           </div>
+            </div>
           </div>
           <div className="SecondBox">
             <div className="FirstBaron">
@@ -504,32 +504,32 @@ function TeamIndex() {
                 {teamStats?.numberOfTeamFight.winRate === "NULL" ?
                   <NoData2>{t("league.leagueStat.noData2")}</NoData2> :
                   <>
-                <div className="CalcData">
-                  <img
-                    src={
-                      teamStats?.numberOfTeamFight.result === true
-                        ? "Images/ico-teamreport-num-up.svg"
-                        : "Images/ico-teamreport-num-down.svg"
-                    }
-                    alt="arrowIcon"
-                    width="13px"
-                    height="13px"
-                  ></img>
-                  <TeamValue
-                    changeColor={teamStats?.numberOfTeamFight.result === false}
-                  >
-                    {`${teamStats?.numberOfTeamFight.winRate.toFixed(2)}`}
-                  </TeamValue>
-                </div>
-                <div className="AvgData">{`${t(
-                  "team.analysis.leagueAvg"
+                    <div className="CalcData">
+                      <img
+                        src={
+                          teamStats?.numberOfTeamFight.result === true
+                            ? "Images/ico-teamreport-num-up.svg"
+                            : "Images/ico-teamreport-num-down.svg"
+                        }
+                        alt="arrowIcon"
+                        width="13px"
+                        height="13px"
+                      ></img>
+                      <TeamValue
+                        changeColor={teamStats?.numberOfTeamFight.result === false}
+                      >
+                        {`${teamStats?.numberOfTeamFight.winRate.toFixed(2)}`}
+                      </TeamValue>
+                    </div>
+                    <div className="AvgData">{`${t(
+                      "team.analysis.leagueAvg"
                     )} ${leagueStat?.winRate.toFixed(2)}`}</div>
                   </>
                 }
               </DisplayInfoNumOfFight>
-            </div>               
+            </div>
           </div>
-                
+
         </ContentsBoxTwo>
       </DisplayWithIcon>
       <TeamSBRTable>
@@ -603,61 +603,61 @@ function TeamIndex() {
           {console.log(gankCount)}
           {gankCount?.firstGankList === "NULL" ?
             <NoData>{t("league.leagueStat.noData2")}</NoData>
-            : 
-          <GameTimeCharts>
-            <Bar
-              data={firstGankTime}
-              options={{
-                tooltips: {
-                  intersect: false,
-                  backgroundColor: "#1d1d1d",
-                  titleFontSize: 12,
-                  bodyFontSize: 10,
-                  displayColors: true,
-                  boxWidth: 2,
-                  boxHeight: 2,
-                  cornerRadius: 10,
-                },
-                hover: {
-                  animationDuration: 100,
-                },
-                legend: {
-                  display: false,
-                },
-                maintainAspectRatio: false,
-                scales: {
-                  xAxes: [
-                    {
-                      ticks: {
-                        fontColor: "#84818e",
-                        fontSize: 15,
+            :
+            <GameTimeCharts>
+              <Bar
+                data={firstGankTime}
+                options={{
+                  tooltips: {
+                    intersect: false,
+                    backgroundColor: "#1d1d1d",
+                    titleFontSize: 12,
+                    bodyFontSize: 10,
+                    displayColors: true,
+                    boxWidth: 2,
+                    boxHeight: 2,
+                    cornerRadius: 10,
+                  },
+                  hover: {
+                    animationDuration: 100,
+                  },
+                  legend: {
+                    display: false,
+                  },
+                  maintainAspectRatio: false,
+                  scales: {
+                    xAxes: [
+                      {
+                        ticks: {
+                          fontColor: "#84818e",
+                          fontSize: 15,
+                        },
+                        gridLines: { color: "rgb(47, 45, 56)" },
                       },
-                      gridLines: { color: "rgb(47, 45, 56)" },
-                    },
-                  ],
-                  yAxes: [
-                    {
-                      ticks: {
-                        stepSize: gankCount?.firstGankRow,
-                        fontColor: "#84818e",
-                        fontSize: 15,
-                        min: gankCount?.firstGankMin,
-                        max:
-                          gankCount?.firstGankMax % 5 === 0
-                            ? gankCount?.firstGankMax
-                            : gankCount?.firstGankMax +
-                            (5 - (gankCount?.firstGankMax % 5)),
+                    ],
+                    yAxes: [
+                      {
+                        ticks: {
+                          stepSize: gankCount?.firstGankRow,
+                          fontColor: "#84818e",
+                          fontSize: 15,
+                          min: gankCount?.firstGankMin,
+                          max:
+                            gankCount?.firstGankMax % 5 === 0
+                              ? gankCount?.firstGankMax
+                              : gankCount?.firstGankMax +
+                              (5 - (gankCount?.firstGankMax % 5)),
+                        },
+                        gridLines: {
+                          color: "rgb(58, 55, 69)",
+                        },
                       },
-                      gridLines: {
-                        color: "rgb(58, 55, 69)",
-                      },
-                    },
-                  ],
-                },
-              }}
-            />
-          </GameTimeCharts>
-}
+                    ],
+                  },
+                }}
+              />
+            </GameTimeCharts>
+          }
         </FirstGankLine>
         <AvgSupportTime>
           <NavBar>
@@ -672,57 +672,57 @@ function TeamIndex() {
             </div>
           </NavBar>
           {supportTimeY && supportTimeY.length === 0 ?
-            <NoData>{t("league.leagueStat.noData2")}</NoData> : 
-          <GameTimeCharts>
-            <Bar
-              data={averageSupport}
-              options={{
-                tooltips: {
-                  intersect: false,
-                  backgroundColor: "#1d1d1d",
-                  titleFontSize: 12,
-                  bodyFontSize: 10,
-                  displayColors: true,
-                  boxWidth: 2,
-                  boxHeight: 2,
-                  cornerRadius: 10,
-                },
-                legend: {
-                  display: false,
-                },
-                hover: {
-                  animationDuration: 100,
-                },
-                maintainAspectRatio: false,
-                scales: {
-                  xAxes: [
-                    {
-                      ticks: {
-                        fontColor: "#84818e",
-                        fontSize: 15,
+            <NoData>{t("league.leagueStat.noData2")}</NoData> :
+            <GameTimeCharts>
+              <Bar
+                data={averageSupport}
+                options={{
+                  tooltips: {
+                    intersect: false,
+                    backgroundColor: "#1d1d1d",
+                    titleFontSize: 12,
+                    bodyFontSize: 10,
+                    displayColors: true,
+                    boxWidth: 2,
+                    boxHeight: 2,
+                    cornerRadius: 10,
+                  },
+                  legend: {
+                    display: false,
+                  },
+                  hover: {
+                    animationDuration: 100,
+                  },
+                  maintainAspectRatio: false,
+                  scales: {
+                    xAxes: [
+                      {
+                        ticks: {
+                          fontColor: "#84818e",
+                          fontSize: 15,
+                        },
+                        gridLines: { color: "rgb(47, 45, 56)" },
                       },
-                      gridLines: { color: "rgb(47, 45, 56)" },
-                    },
-                  ],
-                  yAxes: [
-                    {
-                      ticks: {
-                        stepSize: supportTimeData?.supportingTimeRow,
-                        fontColor: "#84818e",
-                        fontSize: 15,
-                        // min: supportTimeData?.supportingTimeMin,
-                        min: 0,
-                        max: supportTimeData?.supportingTimeMax,
+                    ],
+                    yAxes: [
+                      {
+                        ticks: {
+                          stepSize: supportTimeData?.supportingTimeRow,
+                          fontColor: "#84818e",
+                          fontSize: 15,
+                          // min: supportTimeData?.supportingTimeMin,
+                          min: 0,
+                          max: supportTimeData?.supportingTimeMax,
+                        },
+                        gridLines: {
+                          color: "rgb(58, 55, 69)",
+                        },
                       },
-                      gridLines: {
-                        color: "rgb(58, 55, 69)",
-                      },
-                    },
-                  ],
-                },
-              }}
-            />
-          </GameTimeCharts>
+                    ],
+                  },
+                }}
+              />
+            </GameTimeCharts>
           }
         </AvgSupportTime>
       </GraphContainer>

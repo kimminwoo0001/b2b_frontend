@@ -9,7 +9,7 @@ import { API } from "../../config";
 
 import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
 import qs from "qs";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function ChampionSetting({
@@ -683,9 +683,8 @@ function ChampionSetting({
               {filterData?.champion ? (
                 <nav
                   ref={wrapperRef}
-                  className={`menu3 ${
-                    isActive2.current ? "active" : "inactive"
-                  }`}
+                  className={`menu3 ${isActive2.current ? "active" : "inactive"
+                    }`}
                 >
                   <ul>
                     <Menu3li
@@ -907,9 +906,8 @@ function ChampionSetting({
               {filterData?.oppchampion ? (
                 <nav
                   ref={wrapperRef2}
-                  className={`menu3 ${
-                    isActive5.current ? "active" : "inactive"
-                  }`}
+                  className={`menu3 ${isActive5.current ? "active" : "inactive"
+                    }`}
                 >
                   <ul>
                     <Menu3li

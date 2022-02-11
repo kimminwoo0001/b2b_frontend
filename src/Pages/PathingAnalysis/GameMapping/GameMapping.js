@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import { API2 } from "../../config";
 import Tippy from "@tippy.js/react";
 import ObjectTooltip from "../ObjectMapping/ObjectTooltip";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 //fast 버튼 setinterval 메모리 최적화 함수
@@ -299,11 +299,11 @@ function GameMapping() {
                 ) {
                   if (
                     Number(currentPos[range]?.player[i].x1) -
-                      Number(currentPos[range]?.player[i].x2) !==
-                      0 &&
+                    Number(currentPos[range]?.player[i].x2) !==
+                    0 &&
                     Number(currentPos[range]?.player[i].y1) -
-                      Number(currentPos[range]?.player[i].y2) !==
-                      0
+                    Number(currentPos[range]?.player[i].y2) !==
+                    0
                   ) {
                     var x =
                       ((Number(currentPos[range]?.player[i].x1) +
@@ -430,9 +430,8 @@ function GameMapping() {
             ).toFixed(1)}`}</span>
             <p>/</p>
             {maxTime ? (
-              <span className="max">{`${Math.floor(maxTime / 2 / 60)} : ${
-                (maxTime / 2) % 60
-              }`}</span>
+              <span className="max">{`${Math.floor(maxTime / 2 / 60)} : ${(maxTime / 2) % 60
+                }`}</span>
             ) : (
               <span className="max">{`00 : 00`}</span>
             )}

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
-import transferValuetoWidth from "../../../../../../lib/transferValuetoWidth";
+import transferValuetoWidth from "../../../../lib/transferValuetoWidth";
 import { useSelector, useDispatch } from "react-redux";
 import { SetChampTab } from "../../../../../../redux/modules/gamevalue";
 import ItemTimeBox from "./ItemTimeBox";
-import NoneItem from "../../../../../../lib/NoneItem";
+import noneItem from "../../../../lib/noneItem";
 
 const skillBoxWidth = 610;
 const purchasedItemBoxWidth = 339;
@@ -248,7 +248,7 @@ const TimeStatus = () => {
                     ></ItemStatusImg>
                   );
                 })}
-                {NoneItem(lastItemSet.items.length).map(() => {
+                {noneItem(lastItemSet.items.length).map(() => {
                   //console.log("maping 중");
                   return <ItemStatusNotImg></ItemStatusNotImg>;
                 })}

@@ -16,7 +16,7 @@ import {
   ResetChampion2,
   ResetOppChampion,
 } from "../../../redux/modules/filtervalue";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import ExcelExport from "../../../Components/UtilityComponent/ExcelExport";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import orderStats from "../../../lib/orderStats";

@@ -22,7 +22,7 @@ import {
   SetTimeLineDataset,
 } from "../../../redux/modules/gamevalue";
 import { SetVodUrl } from "../../../redux/modules/videovalue";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import {
   SetDesc,
   SetIsOpen,
@@ -35,6 +35,7 @@ import { API5 } from "../../config";
 import { Loading, SetTeam } from "../../../redux/modules/filtervalue";
 import { useTranslation } from "react-i18next";
 import secToMS from "../../../lib/secToMS";
+import { proGameReportDetail } from "../../../lib/pagePath";
 
 const TOTAL_SET = [0, 1, 2, 3, 4];
 
@@ -157,7 +158,7 @@ const EachMatch = ({ matchData, team }) => {
                 dispatch(SetStatusLogDataset(e?.actionLog));
                 dispatch(SetPlayersStatusDataset(e?.status));
                 dispatch(SetTimeLineDataset(timeLineSet));
-                history.push("/gameReportDetail");
+                history.push(proGameReportDetail);
               });
             } else {
               dispatch(SetIsSelector(false));

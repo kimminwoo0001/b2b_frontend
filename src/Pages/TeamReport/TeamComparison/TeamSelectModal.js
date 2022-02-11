@@ -10,7 +10,7 @@ import {
   HandleTab,
 } from "../../../redux/modules/filtervalue";
 import { API } from "../../config";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {

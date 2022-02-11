@@ -6,7 +6,7 @@ import qs from "qs";
 import TabTop from "./Components/TabTop";
 
 import { useSelector, useDispatch } from "react-redux";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { useTranslation } from "react-i18next";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 

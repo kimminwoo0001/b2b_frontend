@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
-import transferValuetoWidth from "../../../../lib/transferValuetoWidth";
+import transferValuetoWidth from "../../lib/transferValuetoWidth";
 import { useSelector, useDispatch } from "react-redux";
 import TimeBar from "../Common/TimeBar";
 import TimeBarTitle from "../Common/TimeBarTitle";

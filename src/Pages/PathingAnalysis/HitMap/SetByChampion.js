@@ -12,8 +12,9 @@ import qs from "qs";
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import timeFormat from "../../../lib/timeFormat";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
+import { goPlayerReport } from "../../../lib/pagePath";
 
 const WardSlider = withStyles({
   root: {
@@ -95,7 +96,7 @@ function SetByChampion({ minFrom, setMinFrom }) {
   const [filterData, setFilterData] = useState({});
   const [champArray, setChampArray] = useState([]);
   const [champArray2, setChampArray2] = useState([]);
-  const isPageSolo = document.location.pathname === "/solo" ? true : false;
+  const isPageSolo = document.location.pathname === goPlayerReport ? true : false;
   useOutsideAlerter(wrapperRef, isActive2, filters, champArray);
   useOutsideAlerter2(wrapperRef2, isActive5, filters, champArray2);
 

@@ -12,7 +12,7 @@ import WeekTwo from "./WeekTwo";
 import WeekThree from "./WeekThree";
 import WeekFour from "./WeekFour";
 import WeekFive from "./WeekFive";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import { Loading } from "../../../redux/modules/filtervalue";

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
-import NoneItem from "../../../../../../lib/NoneItem";
+import noneItem from "../../../../lib/noneItem";
 
 const ItemTimeBox = () => {
   const { t } = useTranslation();
@@ -15,7 +15,7 @@ const ItemTimeBox = () => {
   const [trinket, setTrinket] = useState(3340);
   const curTrinket = currentItem.trinket ?? "";
 
-  if (currentItem[0].realCount  !== 0) {
+  if (currentItem[0].realCount !== 0) {
     currentItem.unshift({
       realCount: 0,
       items: [],
@@ -48,7 +48,7 @@ const ItemTimeBox = () => {
                 ></ItemStatusImg>
               );
             })}
-            {NoneItem(currentItem[gamevalue.itemActiveIdx].items.length).map(
+            {noneItem(currentItem[gamevalue.itemActiveIdx].items.length).map(
               () => {
                 // console.log("maping 중");
                 return <ItemStatusNotImg></ItemStatusNotImg>;

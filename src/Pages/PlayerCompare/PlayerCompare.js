@@ -12,6 +12,7 @@ import Filter from "../../Components/Filter/Filter";
 import CloseFilter from "../../Components/Filter/CloseFilter";
 import TeamFilterModal from "../../Components/Filter/TeamFilterModal";
 import PlayerFilterModal from "../../Components/Filter/PlayerFilterModal";
+import { goPlayerCompare, goTeamCompare } from "../../lib/pagePath";
 
 function PlayerCompare() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -23,13 +24,13 @@ function PlayerCompare() {
   }
   return (
     <ErrorBoundary>
-      {copyvalue?.openFilterModal === "/teamCompare" && <TeamFilterModal />}
-      {copyvalue?.openFilterModal === "/playerCompare" && <PlayerFilterModal />}
+      {copyvalue?.openFilterModal === goTeamCompare && <TeamFilterModal />}
+      {copyvalue?.openFilterModal === goPlayerCompare && <PlayerFilterModal />}
 
       <Nav />
       <SoloWrapper>
         <SideBar />
-        {filters.openFilterModal === "/playerCompare" && filters.oppplayer !== "" && filters.compareModal ?
+        {filters.openFilterModal === goPlayerCompare && filters.oppplayer !== "" && filters.compareModal ?
           (
             <CloseFilter />
           ) :

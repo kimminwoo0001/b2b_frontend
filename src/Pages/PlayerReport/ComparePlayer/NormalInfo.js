@@ -21,7 +21,7 @@ import {
   ResetFilter2
 } from "../../../redux/modules/filtervalue";
 import qs from "qs";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function NormalInfo() {

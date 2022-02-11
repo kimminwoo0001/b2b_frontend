@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { API } from "../../../config";
 import qs from "qs";
 import { useDetectOutsideClick } from "../../Components/useDetectOustsideClick";
-import axiosRequest from "../../../../lib/axiosRequest";
+import axiosRequest from "../../../../lib/axios/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../../redux/modules/modalvalue";
 import { Loading } from "../../../../redux/modules/filtervalue";

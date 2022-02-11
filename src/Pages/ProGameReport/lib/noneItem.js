@@ -1,4 +1,4 @@
-const NoneItem = (len) => {
+const noneItem = (len) => {
   const empty = 6 - len;
   let result = [];
   for (let i = 0; i < empty; i++) {
@@ -9,5 +9,5 @@ const NoneItem = (len) => {
   return result;
 };
 
-export default NoneItem;
+export default noneItem;
 

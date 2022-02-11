@@ -13,7 +13,7 @@ import Second from "./Second";
 import Third from "./Third";
 import Fourth from "./Fourth";
 import Fifth from "./Fifth";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 

@@ -31,7 +31,7 @@ import {
   ResetOppChampion,
   Loading,
 } from "../../../redux/modules/filtervalue";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function Stats() {
@@ -622,20 +622,20 @@ function Stats() {
                         <NoData>{t("league.leagueStat.noData2")}</NoData>
                         :
                         <>
-                      <RedPlayer
+                          <RedPlayer
                             changeColor={stat?.data1 === "NULL" || stat?.data1 < stat?.data0}
                           >{`${stat?.data0 !== "NULL" ? stat?.data0.toFixed(1) : "-"}`}</RedPlayer>
-                      <img
-                        src={
+                          <img
+                            src={
                               stat?.data0 === "NULL" ? "Images/ico-compare-right-arrow.png" :
                                 stat?.data1 === "NULL" ? "Images/ico-compare-left-arrow.png" :
                                   stat?.data1 > stat?.data0
                                     ? "Images/ico-compare-right-arrow.png"
                                     : "Images/ico-compare-left-arrow.png"
-                        }
-                        alt="arrowIcon"
-                      />
-                      <BluePlayer
+                            }
+                            alt="arrowIcon"
+                          />
+                          <BluePlayer
                             changeColor={stat?.data0 === "NULL" || stat?.data1 > stat?.data0}
                           >{`${stat?.data1 !== "NULL" ? stat?.data1.toFixed(1) : "-"}`}</BluePlayer>
                         </>
@@ -654,20 +654,20 @@ function Stats() {
                         <NoData>{t("league.leagueStat.noData2")}</NoData>
                         :
                         <>
-                      <RedPlayer
+                          <RedPlayer
                             changeColor={stat?.data1 === "NULL" || stat?.data1 < stat?.data0}
                           >{`${stat?.data0 && stat?.data0 !== "NULL" ? stat?.data0.toFixed(1) : "-"}`}</RedPlayer>
-                      <img
-                        src={
+                          <img
+                            src={
                               stat?.data0 === "NULL" ? "Images/ico-compare-right-arrow.png" :
                                 stat?.data1 === "NULL" ? "Images/ico-compare-left-arrow.png" :
                                   stat?.data1 > stat?.data0
                                     ? "Images/ico-compare-right-arrow.png"
                                     : "Images/ico-compare-left-arrow.png"
-                        }
-                        alt="arrowIcon"
-                      />
-                      <BluePlayer
+                            }
+                            alt="arrowIcon"
+                          />
+                          <BluePlayer
                             changeColor={stat?.data0 === "NULL" || stat?.data1 > stat?.data0}
                           >{`${stat?.data1 && stat?.data1 !== "NULL" ? stat?.data1.toFixed(1) : "-"}`}</BluePlayer>
                         </>
@@ -686,20 +686,20 @@ function Stats() {
                         <NoData>{t("league.leagueStat.noData2")}</NoData>
                         :
                         <>
-                      <RedPlayer
+                          <RedPlayer
                             changeColor={stat?.data1 === "NULL" || stat?.data1 < stat?.data0}
                           >{`${stat?.data0 !== "NULL" ? stat?.data0.toFixed(1) : "-"}`}</RedPlayer>
-                      <img
-                        src={
+                          <img
+                            src={
                               stat?.data0 === "NULL" ? "Images/ico-compare-right-arrow.png" :
                                 stat?.data1 === "NULL" ? "Images/ico-compare-left-arrow.png" :
                                   stat?.data1 > stat?.data0
                                     ? "Images/ico-compare-right-arrow.png"
                                     : "Images/ico-compare-left-arrow.png"
-                        }
-                        alt="arrowIcon"
-                      />
-                      <BluePlayer
+                            }
+                            alt="arrowIcon"
+                          />
+                          <BluePlayer
                             changeColor={stat?.data0 === "NULL" || stat?.data1 > stat?.data0}
                           >{`${stat?.data1 !== "NULL" ? stat?.data1.toFixed(1) : "-"}`}</BluePlayer>
                         </>

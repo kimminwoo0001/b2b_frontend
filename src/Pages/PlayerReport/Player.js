@@ -16,6 +16,7 @@ import ErrorBoundary from "../../Components/ErrorBoundary";
 import HitMap from "../PathingAnalysis/HitMap/HitMap";
 import PlayerFilterModal from "../../Components/Filter/PlayerFilterModal";
 import { CompareModal, SetCopyFilters, SetOpenFilterModal } from "../../redux/modules/copyvalue";
+import { goPlayerCompare, goPlayerReport } from "../../lib/pagePath";
 
 function Player() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -36,7 +37,7 @@ function Player() {
       <ErrorBoundary>
         <BoardWrapper>
           <TabContainer>
-            {pagePath === "/playerCompare" ? (
+            {pagePath === goPlayerCompare ? (
               ""
             ) : (
               <TabContent
@@ -74,13 +75,13 @@ function Player() {
               onClick={() => {
                 dispatch(SetCopyFilters(filters));
                 dispatch(CompareModal(true));
-                pagePath === "/playerCompare" ? dispatch(SetOpenFilterModal("/playerCompare")) : dispatch(SetOpenFilterModal("/solo"));
+                pagePath === goPlayerCompare ? dispatch(SetOpenFilterModal(goPlayerCompare)) : dispatch(SetOpenFilterModal(goPlayerReport));
                 // dispatch(HandleTab(1));/
               }}
               changeColor={filters.tab === 1}
             >
               <div>
-                {filters.getoppplayer && pagePath !== "/playerCompare" ? (
+                {filters.getoppplayer && pagePath !== goPlayerCompare ? (
                   <span>
                     {t("solo.tabs.comparison")} : {filters.oppplayer}
                   </span>

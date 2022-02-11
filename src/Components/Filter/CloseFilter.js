@@ -2,16 +2,21 @@ import React, { useState, memo } from "react";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import FilterHeader from "./FilterHeader";
+import { goPlayerCompare, goTeamCompare } from "../../lib/pagePath";
 
 const CloseFilter = memo(() => {
   const filters = useSelector((state) => state.FilterReducer);
 
-  const hideFilter = filters.openFilterModal === "/teamCompare" && filters.oppteam.length > 0 && filters.compareModal ||
-    filters.openFilterModal === "/playerCompare" && filters.oppplayer !== "" && filters.compareModal;
+  const hideFilter = filters.openFilterModal === goTeamCompare && filters.oppteam.length > 0 && filters.compareModal ||
+    filters.openFilterModal === goPlayerCompare && filters.oppplayer !== "" && filters.compareModal;
   return (
     <FilterWrapper hideFilter={hideFilter}>
-      {filters.openFilterModal === "/teamCompare" && filters.oppteam.length > 0 && filters.compareModal ||
-        filters.openFilterModal === "/playerCompare" && filters.oppplayer !== "" && filters.compareModal
+      {filters.openFilterModal === goTeamCompare
+        && filters.oppteam.length > 0
+        && filters.compareModal
+        || filters.openFilterModal === goPlayerCompare
+        && filters.oppplayer !== ""
+        && filters.compareModal
         ? "" :
         <FilterHeader />}
     </FilterWrapper>

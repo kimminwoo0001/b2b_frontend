@@ -7,8 +7,7 @@ import { API } from "../../config";
 import { useSelector } from "react-redux";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import qs from "qs";
-import checkRequestBase from "../../../lib/checkRequestBase";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import { Loading } from "../../../redux/modules/filtervalue";
@@ -45,7 +44,8 @@ function LeagueStatistics() {
   // const [chart, setChart] = useState();
 
   useEffect(() => {
-    if (checkRequestBase(filters)) {
+    const { league, year, season } = filters;
+    if (league.length > 0 && year.length > 0 && season.length > 0) {
       fetchingStatisticData();
     }
     // colorChange();
@@ -288,7 +288,7 @@ function LeagueStatistics() {
             </div>
           </NavBar>
           {supportTimeY && supportTimeY.length === 0 ?
-            <NoData>{t("league.leagueStat.noData2")}</NoData> : 
+            <NoData>{t("league.leagueStat.noData2")}</NoData> :
             <GameTimeCharts>
               <Bar
                 data={averageSupport}
@@ -358,59 +358,59 @@ function LeagueStatistics() {
           </NavBar>
           {totalMatchY && totalMatchY.length === 0 ?
             <NoData>{t("league.leagueStat.noData2")}</NoData> :
-          <GameTimeCharts>
-            {console.log("firstFight:", firstFight)}
-            {console.log("totalMatchData:", totalMatchData)}
-            <Line
-              data={firstFight}
-              options={{
-                tooltips: {
-                  intersect: false,
-                  backgroundColor: "#1d1d1d",
-                  titleFontSize: 12,
-                  bodyFontSize: 10,
-                  displayColors: true,
-                  boxWidth: 2,
-                  boxHeight: 2,
-                  cornerRadius: 10,
-                },
-                legend: {
-                  display: false,
-                },
-                hover: {
-                  animationDuration: 100,
-                },
-                maintainAspectRatio: false,
-                scales: {
-                  xAxes: [
-                    {
-                      ticks: {
-                        fontColor: "#84818e",
-                        fontSize: 15,
+            <GameTimeCharts>
+              {console.log("firstFight:", firstFight)}
+              {console.log("totalMatchData:", totalMatchData)}
+              <Line
+                data={firstFight}
+                options={{
+                  tooltips: {
+                    intersect: false,
+                    backgroundColor: "#1d1d1d",
+                    titleFontSize: 12,
+                    bodyFontSize: 10,
+                    displayColors: true,
+                    boxWidth: 2,
+                    boxHeight: 2,
+                    cornerRadius: 10,
+                  },
+                  legend: {
+                    display: false,
+                  },
+                  hover: {
+                    animationDuration: 100,
+                  },
+                  maintainAspectRatio: false,
+                  scales: {
+                    xAxes: [
+                      {
+                        ticks: {
+                          fontColor: "#84818e",
+                          fontSize: 15,
+                        },
+                        gridLines: { color: "rgb(47, 45, 56)" },
+                        offset: true,
                       },
-                      gridLines: { color: "rgb(47, 45, 56)" },
-                      offset: true,
-                    },
-                  ],
-                  yAxes: [
-                    {
-                      ticks: {
-                        stepSize: totalMatchData?.row,
-                        fontColor: "#84818e",
-                        fontSize: 15,
-                        min: totalMatchData?.min,
-                        max: totalMatchData?.max,
+                    ],
+                    yAxes: [
+                      {
+                        ticks: {
+                          stepSize: totalMatchData?.row,
+                          fontColor: "#84818e",
+                          fontSize: 15,
+                          min: totalMatchData?.min,
+                          max: totalMatchData?.max,
+                        },
+                        gridLines: {
+                          color: "rgb(58, 55, 69)",
+                        },
                       },
-                      gridLines: {
-                        color: "rgb(58, 55, 69)",
-                      },
-                    },
-                  ],
-                },
-              }}
-            />
+                    ],
+                  },
+                }}
+              />
             }
-          </GameTimeCharts>
+            </GameTimeCharts>
           }
         </FirstEncounter>
         <FirstGank>
@@ -425,58 +425,58 @@ function LeagueStatistics() {
           </NavBar>
           {firstGankY && firstGankY.length === 0 ?
             <NoData>{t("league.leagueStat.noData2")}</NoData>
-            : 
-          <GameTimeCharts>
-            <Line
-              data={averageGank}
-              options={{
-                tooltips: {
-                  intersect: false,
-                  backgroundColor: "#1d1d1d",
-                  titleFontSize: 12,
-                  bodyFontSize: 10,
-                  displayColors: true,
-                  boxWidth: 2,
-                  boxHeight: 2,
-                  cornerRadius: 10,
-                },
-                legend: {
-                  display: false,
-                },
-                hover: {
-                  animationDuration: 100,
-                },
-                maintainAspectRatio: false,
-                scales: {
-                  xAxes: [
-                    {
-                      ticks: {
-                        fontColor: "#84818e",
-                        fontSize: 15,
+            :
+            <GameTimeCharts>
+              <Line
+                data={averageGank}
+                options={{
+                  tooltips: {
+                    intersect: false,
+                    backgroundColor: "#1d1d1d",
+                    titleFontSize: 12,
+                    bodyFontSize: 10,
+                    displayColors: true,
+                    boxWidth: 2,
+                    boxHeight: 2,
+                    cornerRadius: 10,
+                  },
+                  legend: {
+                    display: false,
+                  },
+                  hover: {
+                    animationDuration: 100,
+                  },
+                  maintainAspectRatio: false,
+                  scales: {
+                    xAxes: [
+                      {
+                        ticks: {
+                          fontColor: "#84818e",
+                          fontSize: 15,
+                        },
+                        gridLines: { color: "rgb(47, 45, 56)" },
+                        offset: true,
                       },
-                      gridLines: { color: "rgb(47, 45, 56)" },
-                      offset: true,
-                    },
-                  ],
-                  yAxes: [
-                    {
-                      ticks: {
-                        stepSize: 0.5,
-                        fontColor: "#84818e",
-                        fontSize: 15,
-                        min: firstGankData?.min,
-                        max: firstGankData?.max,
+                    ],
+                    yAxes: [
+                      {
+                        ticks: {
+                          stepSize: 0.5,
+                          fontColor: "#84818e",
+                          fontSize: 15,
+                          min: firstGankData?.min,
+                          max: firstGankData?.max,
+                        },
+                        gridLines: {
+                          color: "rgb(58, 55, 69)",
+                        },
                       },
-                      gridLines: {
-                        color: "rgb(58, 55, 69)",
-                      },
-                    },
-                  ],
-                },
-              }}
-            />
+                    ],
+                  },
+                }}
+              />
             }
-          </GameTimeCharts>
+            </GameTimeCharts>
           }
         </FirstGank>
       </BottomBox>

@@ -16,6 +16,7 @@ import BanIndex from "./BanReport/BanIndex";
 import TeamIndex from "./TeamReport/TeamIndex";
 import TeamFilterModal from "../../Components/Filter/TeamFilterModal";
 import { CompareModal, SetCopyFilters, SetOpenFilterModal } from "../../redux/modules/copyvalue";
+import { goTeamCompare, goTeamReport } from "../../lib/pagePath";
 
 function TeamTabs() {
   //팀 보고서 탭
@@ -68,7 +69,7 @@ function TeamTabs() {
               alt="arrowIcon"
             ></img>
           </Schedule> */}
-              {pagePath === "/teamCompare" ? (
+              {pagePath === goTeamCompare ? (
                 ""
               ) : (
                 <TabItem
@@ -84,7 +85,7 @@ function TeamTabs() {
                 </TabItem>
               )}
 
-              {pagePath !== "/teamCompare" &&
+              {pagePath !== goTeamCompare &&
                 filters.league.indexOf("lpl") === -1 ? (
                 <TabItem
                   onClick={() => {
@@ -108,7 +109,7 @@ function TeamTabs() {
                     dispatch(SetCopyFilters(filters));
                     dispatch(CompareModal(true));
 
-                    pagePath === "/teamCompare" ? dispatch(SetOpenFilterModal("/teamCompare")) : dispatch(SetOpenFilterModal("/team"))
+                    pagePath === goTeamCompare ? dispatch(SetOpenFilterModal(goTeamCompare)) : dispatch(SetOpenFilterModal(goTeamReport))
                     //setOpenModal(true);
                   }}
                   changeColor={filters.tab === 2}

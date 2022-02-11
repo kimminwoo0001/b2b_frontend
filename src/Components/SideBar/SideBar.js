@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import SideBarItem from "./SideBarItem";
+import { goHome, goLeagueReport, goPathAnalysis, goPlayerCompare, goPlayerReport, goProGameReport, goSoloRank, goTeamCompare, goTeamReport } from "../../lib/pagePath";
+
 
 function Sidebar() {
   //팀 비교 모달창 상태 값
@@ -29,25 +31,25 @@ function Sidebar() {
       // menus[0] Home
       idx: 0,
       name: t("sidebar.part1"),
-      path: "/",
+      path: goHome,
       image: "/Images/sidebar_newLogo/ico-home.png",
-      changeColor: pathName === "/",
+      changeColor: pathName === goHome,
     },
     {
       // menus[1] 리그 보고서
       idx: 1,
       name: t("sidebar.part2"),
-      path: "/leagueReport",
+      path: goLeagueReport,
       image: "/Images/sidebar_newLogo/ico-league.png",
-      changeColor: pathName === "/leagueReport",
+      changeColor: pathName === goLeagueReport,
     },
     {
       // menus[2] 팀 보고서
       idx: 2,
       name: t("sidebar.part3"),
-      path: "/teamReport",
+      path: goTeamReport,
       image: "/Images/sidebar_newLogo/ico-team.png",
-      changeColor: pathName === "/teamReport",
+      changeColor: pathName === goTeamReport,
     },
     {
       // menus[3] 메타 분석
@@ -61,17 +63,17 @@ function Sidebar() {
       // menus[4] 선수 보고서
       idx: 4,
       name: t("sidebar.part5"),
-      path: "/playerReport",
+      path: goPlayerReport,
       image: "/Images/sidebar_newLogo/ico-player.png",
-      changeColor: pathName === "/playerReport",
+      changeColor: pathName === goPlayerReport,
     },
     {
       // menus[5] 영상 보고서
       idx: 5,
       name: t("sidebar.part6"),
-      path: "/pathAnalysis",
+      path: goPathAnalysis,
       image: "/Images/sidebar_newLogo/ico-movie.png",
-      changeColor: pathName === "/pathAnalysis",
+      changeColor: pathName === goPathAnalysis,
     },
     {
       // menus[6] 매치 분석
@@ -85,18 +87,18 @@ function Sidebar() {
       // menus[7] 팀 비교
       idx: 7,
       name: t("sidebar.part8"),
-      path: "/teamCompare",
+      path: goTeamCompare,
       image: "/Images/sidebar_newLogo/ico-teamcom.png",
-      changeColor: pathName === "/teamCompare",
+      changeColor: pathName === goTeamCompare,
       modal: true,
     },
     {
       // menus[8] 선수 비교
       idx: 8,
       name: t("sidebar.part9"),
-      path: "/playerCompare",
+      path: goPlayerCompare,
       image: "/Images/sidebar_newLogo/ico-playercom.png",
-      changeColor: pathName === "/playerCompare",
+      changeColor: pathName === goPlayerCompare,
       modal: true,
     },
     {
@@ -119,18 +121,18 @@ function Sidebar() {
       // menus[11] 게임 보고서
       idx: 11,
       name: t("sidebar.part12"),
-      path: "/proGameReport",
+      path: goProGameReport,
       image: "/Images/sidebar_newLogo/ico_game.png",
-      changeColor: pathName === "/proGameReport",
+      changeColor: pathName === goProGameReport,
       version: "beta",
     },
     {
       // menus[12] 솔로 랭크
       idx: 12,
       name: t("sidebar.part13"),
-      path: "/soloRank",
+      path: goSoloRank,
       image: "/Images/sidebar_newLogo/ico_solorank.svg",
-      changeColor: pathName === "/soloRank",
+      changeColor: pathName === goSoloRank,
       version: "beta",
     },
     {
@@ -156,59 +158,9 @@ function Sidebar() {
     menus[8],
     menus[12],
   ];
-
-  // // 로그아웃 함수, 로그아웃 이벤트가 발생되면 session 값을 clear하고 로그인 페이지로 이동시킴
-  // const handleLogOut = () => {
-  //   sessionStorage.clear();
-  //   dispatch(UserLogout());
-  //   history.push("/login");
-  // };
-
   return (
     <>
       <SideBarWrapper>
-        {/* <Link to="/utility"> */}
-        {/* <TSBLogo>
-      {<img src="/Images/profile-default.png" alt="profile"></img>}
-      <img
-            src="/Images/logo.png"
-            alt="profile"
-            onClick={() => history.push("/")}
-          ></img>
-        </TSBLogo>
-        */}
-        {/* </Link> */}
-        {/* 
-        <Info>
-          <div className="user">
-            {lang === "en" && <span className="text">Hello, </span>}
-            {user.id}
-            {lang !== "en" && <span className="text">님 안녕하세요!</span>}
-          </div>
-
-          <div className="icon">
-            {user.alarm ? (
-              <img
-                className="Alert"
-                src="Images/ico_alaram.png"
-                alt="alertIconOn"
-              ></img>
-            ) : (
-              <img
-                className="Alert"
-                src="Images/ico-alarm.png"
-                alt="alertIconOff"
-              ></img>
-            )}
-            <img
-              className="LogOut"
-              src="Images/ico-logout.png"
-              alt="LogoutIcon"
-              onClick={() => handleLogOut()}
-            ></img>
-          </div>
-        </Info>
-      */}
         <MenuList>
           {usingValue.length > 0 &&
             usingValue.map((menu, idx) => (

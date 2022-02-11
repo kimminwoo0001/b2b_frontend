@@ -15,8 +15,8 @@ import {
 } from "../../redux/modules/modalvalue";
 import { useHistory } from "react-router-dom";
 import { API } from "../config";
-import signAxiosReq from "../../lib/signAxiosReq";
-import axiosRequest from "../../lib/axiosRequest";
+import signAxiosReq from "../../lib/axios/signAxiosReq";
+import axiosRequest from "../../lib/axios/axiosRequest";
 import { Language } from "../../redux/modules/locale";
 import {
   SetIsNeedChkLogin,
@@ -26,6 +26,7 @@ import {
   UserTeamName,
   UserToken,
 } from "../../redux/modules/user";
+import { goCheckLogin, goHome } from "../../lib/pagePath";
 
 const CheckLogin = ({}) => {
   const user = useSelector((state) => state.UserReducer);
@@ -145,7 +146,7 @@ const CheckLogin = ({}) => {
               dispatch(UserChargeTime(token.charge_time));
               dispatch(UserName(token.name));
               dispatch(UserTeamName(token.teamName));
-              history.push("/");
+              history.push(goHome);
             });
           }
         },
@@ -160,7 +161,7 @@ const CheckLogin = ({}) => {
               param,
               function (success) {
                 dispatch(UserID(user.id));
-                history.push("/checkLogin");
+                history.push(goCheckLogin);
               },
               function (data) {
                 dispatch(SetIsSelector(false));

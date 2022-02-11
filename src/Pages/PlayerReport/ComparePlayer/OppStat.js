@@ -17,7 +17,7 @@ import {
   ResetChampion,
   ResetChampion2,
 } from "../../../redux/modules/filtervalue";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 function OppStat() {
@@ -332,511 +332,511 @@ function OppStat() {
           //   </ComapreValue>
           // ) :
           (
-          <ComapreValue>
+            <ComapreValue>
               {noData ? <NoData>{t("solo.comparison.noOppStatData")}</NoData> :
                 <>
-            <DisplayValue>
-              <div className="Wrapper">
-                <PlayerValue>
-                  {`${player?.total.value.toFixed(0)} ${t(
-                    "solo.comparison.total"
-                  )} ${player?.win.toFixed(0)} ${t(
-                    "solo.comparison.win"
-                  )} ${player?.lose.toFixed(0)} ${t("solo.comparison.lose")}`}
-                </PlayerValue>
-              </div>
-              <div className="ValueTitle">
-                {t("solo.comparison.statLabelvs")}
-              </div>
-              <div className="Wrapper">
-                <OppValue>{`${oppPlayer?.total.value.toFixed(0)} ${t(
-                  "solo.comparison.total"
-                )} ${oppPlayer?.win.toFixed(0)} ${t(
-                  "solo.comparison.win"
-                )} ${oppPlayer?.lose.toFixed(0)} ${t(
-                  "solo.comparison.lose"
-                )}`}</OppValue>
-              </div>
-            </DisplayValue>
-            <DisplayValue>
-              <div className="Wrapper">
-                <PlayerValue>
-                  {`${player?.total.value.toFixed(0)} ${t(
-                    "solo.comparison.games"
-                  )}`}
-                </PlayerValue>
-              </div>
-              <div className="ValueTitle">
-                {t("solo.comparison.gamePlayed")}
-              </div>
-              <div className="Wrapper">
-                <OppValue>{`${oppPlayer?.total.value.toFixed(0)} ${t(
-                  "solo.comparison.games"
-                )}`}</OppValue>
-              </div>
-            </DisplayValue>
-            <DisplayValue>
-              <div className="Wrapper">
-                <PlayerValue color={player?.winRate.result === true}>
-                  {`${player?.winRate.value.toFixed(1)} %`}
-                </PlayerValue>
-                <ComparedValue
-                  color={player?.winRate.result === true ? "true" : 0}
-                >
-                  (
-                  <img
-                    src={
-                      player?.winRate.result
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down-wh.png"
-                    }
-                    alt="icon"
-                  />
-                  <div>{`${Math.abs(player?.winRate.value2).toFixed(
-                    1
-                  )} %p`}</div>
-                  )
-                </ComparedValue>
-              </div>
-              <div className="ValueTitle">{t("solo.comparison.winrate")}</div>
-              <div className="Wrapper">
-                <OppValue
-                  color={oppPlayer?.winRate.result === true ? "true" : 0}
-                >{`${oppPlayer?.winRate.value.toFixed(1)} %`}</OppValue>
-                <OppComparedValue
-                  color={oppPlayer?.winRate.result === true ? "true" : 0}
-                >
-                  (
-                  <img
-                    src={
-                      oppPlayer?.winRate.result
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down-wh.png"
-                    }
-                    alt="icon"
-                  />
-                  <div>{`${Math.abs(oppPlayer?.winRate.value2).toFixed(
-                    1
-                  )} %p`}</div>
-                  )
-                </OppComparedValue>
-              </div>
-            </DisplayValue>
-            <DisplayValue>
-              <div className="Wrapper">
-                <PlayerValue
-                  color={player?.solokill.result === true ? "true" : undefined}
-                >
-                  {`${player?.solokill.value.toFixed(0)} ${t(
-                    "solo.comparison.kills"
-                  )}`}
-                </PlayerValue>
-                <ComparedValue
-                  color={player?.solokill.result === true ? "true" : undefined}
-                >
-                  (
-                  <img
-                    src={
-                      player?.solokill.result
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down-wh.png"
-                    }
-                    alt="icon"
-                  />
-                  <div>{`${Math.abs(player?.solokill.value2).toFixed(
-                    0
-                  )} `}</div>
-                  )
-                </ComparedValue>
-              </div>
-              <div className="ValueTitle">{t("solo.comparison.solokill")}</div>
-              <div className="Wrapper">
-                <OppValue
-                  color={
-                    oppPlayer?.solokill.result === true ? "true" : undefined
-                  }
-                >
-                  {`${oppPlayer?.solokill.value.toFixed(0)} ${t(
-                    "solo.comparison.kills"
-                  )}`}
-                </OppValue>
-                <OppComparedValue
-                  color={
-                    oppPlayer?.solokill.result === true ? "true" : undefined
-                  }
-                >
-                  (
-                  <img
-                    src={
-                      oppPlayer?.solokill.result
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down-wh.png"
-                    }
-                    alt="icon"
-                  />
-                  <div>
-                    {`${Math.abs(oppPlayer?.solokill.value2).toFixed(0)}`}
-                  </div>
-                  )
-                </OppComparedValue>
-              </div>
-            </DisplayValue>
-            <DisplayValue>
-              <div className="Wrapper">
-                <PlayerValue
-                  color={player?.kda.result === true ? "true" : undefined}
-                >
-                  <div className="WhiteValue">{`${player?.kill.toFixed(
-                    0
-                  )}`}</div>
-                  <div className="Slash">/</div>
-                  <div className="WhiteValue">{`${player?.death.toFixed(
-                    0
-                  )}`}</div>
-                  <div className="Slash">/</div>
-                  <div className="WhiteValue">{`${player?.assist.toFixed(
-                    0
-                  )}`}</div>
-                  <div className="KDAValue">{`${player?.kda.value.toFixed(
-                    1
-                  )}:1`}</div>
-                </PlayerValue>
-                <ComparedValue
-                  color={player?.kda.result === true ? "true" : undefined}
-                >
-                  (
-                  <img
-                    src={
-                      player?.kda.result
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down-wh.png"
-                    }
-                    alt="icon"
-                  />
-                  <div>{`${Math.abs(player?.kda.value2).toFixed(1)}: 1`}</div>)
-                </ComparedValue>
-              </div>
-              <div className="ValueTitle">{t("solo.comparison.kda")}</div>
-              <div className="Wrapper">
-                <OppValue
-                  color={oppPlayer?.kda.result === true ? "true" : undefined}
-                >
-                  <div className="WhiteValue">{`${oppPlayer?.kill.toFixed(
-                    0
-                  )}`}</div>
-                  <div className="Slash">/</div>
-                  <div className="WhiteValue">{`${oppPlayer?.death.toFixed(
-                    0
-                  )}`}</div>
-                  <div className="Slash">/</div>
-                  <div className="WhiteValue">{`${oppPlayer?.assist.toFixed(
-                    0
-                  )}`}</div>
-                  <div className="KDAValue">{`${oppPlayer?.kda.value.toFixed(
-                    1
-                  )}:1`}</div>
-                </OppValue>
-                <OppComparedValue
-                  color={oppPlayer?.kda.result === true ? "true" : undefined}
-                >
-                  (
-                  <img
-                    src={
-                      oppPlayer?.kda.result
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down-wh.png"
-                    }
-                    alt="icon"
-                  />
-                  <div>{`${Math.abs(oppPlayer?.kda.value2).toFixed(
-                    1
-                  )}: 1`}</div>
-                  )
-                </OppComparedValue>
-              </div>
-            </DisplayValue>
-            <DisplayValue>
-              <div className="Wrapper">
-                <PlayerValue
-                  color={player?.cs.result === true ? "true" : undefined}
-                >{`${player?.cs.value.toFixed(1)}`}</PlayerValue>
-                <ComparedValue
-                  color={player?.cs.result === true ? "true" : undefined}
-                >
-                  (
-                  <img
-                    src={
-                      player?.cs.result
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down-wh.png"
-                    }
-                    alt="icon"
-                  />
-                  <div>{`${Math.abs(player?.cs.value2).toFixed(1)}`}</div>)
-                </ComparedValue>
-              </div>
-              <div className="ValueTitle">{t("solo.comparison.cs")}</div>
-              <div className="Wrapper">
-                <OppValue
-                  color={oppPlayer?.cs.result === true ? "true" : undefined}
-                >{`${oppPlayer?.cs.value.toFixed(1)}`}</OppValue>
-                <OppComparedValue
-                  color={oppPlayer?.cs.result === true ? "true" : undefined}
-                >
-                  (
-                  <img
-                    src={
-                      oppPlayer?.cs.result
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down-wh.png"
-                    }
-                    alt="icon"
-                  />
-                  <div>{`${Math.abs(oppPlayer?.cs.value2).toFixed(1)}`}</div>)
-                </OppComparedValue>
-              </div>
-            </DisplayValue>
-            <DisplayValue>
-              <div className="Wrapper">
-                <PlayerValue
-                  color={player?.dpm.result === true ? "true" : undefined}
-                >{`${player?.dpm.value.toFixed(1)}`}</PlayerValue>
-                <ComparedValue
-                  color={player?.dpm.result === true ? "true" : undefined}
-                >
-                  (
-                  <img
-                    src={
-                      player?.dpm.result
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down-wh.png"
-                    }
-                    alt="icon"
-                  />
-                  <div>{`${Math.abs(player?.dpm.value2).toFixed(1)}`}</div>)
-                </ComparedValue>
-              </div>
-              <div className="ValueTitle">{t("solo.comparison.dpm")}</div>
-              <div className="Wrapper">
-                <OppValue
-                  color={oppPlayer?.dpm.result === true ? "true" : undefined}
-                >{`${oppPlayer?.dpm.value.toFixed(1)}`}</OppValue>
-                <OppComparedValue
-                  color={oppPlayer?.dpm.result === true ? "true" : undefined}
-                >
-                  (
-                  <img
-                    src={
-                      oppPlayer?.dpm.result
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down-wh.png"
-                    }
-                    alt="icon"
-                  />
-                  <div>{`${Math.abs(oppPlayer?.dpm.value2).toFixed(1)}`}</div>)
-                </OppComparedValue>
-              </div>
-            </DisplayValue>
-            <DisplayValue>
-              <div className="Wrapper">
-                <PlayerValue
-                  color={player?.dtpm.result === true ? "true" : undefined}
-                >{`${player?.dtpm.value.toFixed(1)}`}</PlayerValue>
-                <ComparedValue
-                  color={player?.dtpm.result === true ? "true" : undefined}
-                >
-                  (
-                  <img
-                    src={
-                      player?.dtpm.result
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down-wh.png"
-                    }
-                    alt="icon"
-                  />
-                  <div>{`${Math.abs(player?.dtpm.value2).toFixed(1)}`}</div>)
-                </ComparedValue>
-              </div>
-              <div className="ValueTitle">{t("solo.comparison.dtpm")}</div>
-              <div className="Wrapper">
-                <OppValue
-                  color={oppPlayer?.dtpm.result === true ? "true" : undefined}
-                >{`${oppPlayer?.dtpm.value.toFixed(1)}`}</OppValue>
-                <OppComparedValue
-                  color={oppPlayer?.dtpm.result === true ? "true" : undefined}
-                >
-                  (
-                  <img
-                    src={
-                      oppPlayer?.dtpm.result
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down-wh.png"
-                    }
-                    alt="icon"
-                  />
-                  <div>{`${Math.abs(oppPlayer?.dtpm.value2).toFixed(1)}`}</div>)
-                </OppComparedValue>
-              </div>
-            </DisplayValue>
-              {player?.match_parti.value === "NULL" && player?.match_parti.value2 === "NULL" ? "" :
-            <DisplayValue>
-                  <div className="Wrapper">
-                    <PlayerValue
-                      color={
-                        player?.match_parti.result === true ? "true" : undefined
-                      }
-                    >{`${player?.match_parti.value.toFixed(1)} %`}</PlayerValue>
-                    <ComparedValue
-                      color={
-                        player?.match_parti.result === true ? "true" : undefined
-                      }
-                    >
-                      (
-                      <img
-                        src={
-                          player?.match_parti.result
-                            ? "Images/ico-teamreport-num-up.png"
-                            : "Images/ico-teamreport-num-down-wh.png"
+                  <DisplayValue>
+                    <div className="Wrapper">
+                      <PlayerValue>
+                        {`${player?.total.value.toFixed(0)} ${t(
+                          "solo.comparison.total"
+                        )} ${player?.win.toFixed(0)} ${t(
+                          "solo.comparison.win"
+                        )} ${player?.lose.toFixed(0)} ${t("solo.comparison.lose")}`}
+                      </PlayerValue>
+                    </div>
+                    <div className="ValueTitle">
+                      {t("solo.comparison.statLabelvs")}
+                    </div>
+                    <div className="Wrapper">
+                      <OppValue>{`${oppPlayer?.total.value.toFixed(0)} ${t(
+                        "solo.comparison.total"
+                      )} ${oppPlayer?.win.toFixed(0)} ${t(
+                        "solo.comparison.win"
+                      )} ${oppPlayer?.lose.toFixed(0)} ${t(
+                        "solo.comparison.lose"
+                      )}`}</OppValue>
+                    </div>
+                  </DisplayValue>
+                  <DisplayValue>
+                    <div className="Wrapper">
+                      <PlayerValue>
+                        {`${player?.total.value.toFixed(0)} ${t(
+                          "solo.comparison.games"
+                        )}`}
+                      </PlayerValue>
+                    </div>
+                    <div className="ValueTitle">
+                      {t("solo.comparison.gamePlayed")}
+                    </div>
+                    <div className="Wrapper">
+                      <OppValue>{`${oppPlayer?.total.value.toFixed(0)} ${t(
+                        "solo.comparison.games"
+                      )}`}</OppValue>
+                    </div>
+                  </DisplayValue>
+                  <DisplayValue>
+                    <div className="Wrapper">
+                      <PlayerValue color={player?.winRate.result === true}>
+                        {`${player?.winRate.value.toFixed(1)} %`}
+                      </PlayerValue>
+                      <ComparedValue
+                        color={player?.winRate.result === true ? "true" : 0}
+                      >
+                        (
+                        <img
+                          src={
+                            player?.winRate.result
+                              ? "Images/ico-teamreport-num-up.png"
+                              : "Images/ico-teamreport-num-down-wh.png"
+                          }
+                          alt="icon"
+                        />
+                        <div>{`${Math.abs(player?.winRate.value2).toFixed(
+                          1
+                        )} %p`}</div>
+                        )
+                      </ComparedValue>
+                    </div>
+                    <div className="ValueTitle">{t("solo.comparison.winrate")}</div>
+                    <div className="Wrapper">
+                      <OppValue
+                        color={oppPlayer?.winRate.result === true ? "true" : 0}
+                      >{`${oppPlayer?.winRate.value.toFixed(1)} %`}</OppValue>
+                      <OppComparedValue
+                        color={oppPlayer?.winRate.result === true ? "true" : 0}
+                      >
+                        (
+                        <img
+                          src={
+                            oppPlayer?.winRate.result
+                              ? "Images/ico-teamreport-num-up.png"
+                              : "Images/ico-teamreport-num-down-wh.png"
+                          }
+                          alt="icon"
+                        />
+                        <div>{`${Math.abs(oppPlayer?.winRate.value2).toFixed(
+                          1
+                        )} %p`}</div>
+                        )
+                      </OppComparedValue>
+                    </div>
+                  </DisplayValue>
+                  <DisplayValue>
+                    <div className="Wrapper">
+                      <PlayerValue
+                        color={player?.solokill.result === true ? "true" : undefined}
+                      >
+                        {`${player?.solokill.value.toFixed(0)} ${t(
+                          "solo.comparison.kills"
+                        )}`}
+                      </PlayerValue>
+                      <ComparedValue
+                        color={player?.solokill.result === true ? "true" : undefined}
+                      >
+                        (
+                        <img
+                          src={
+                            player?.solokill.result
+                              ? "Images/ico-teamreport-num-up.png"
+                              : "Images/ico-teamreport-num-down-wh.png"
+                          }
+                          alt="icon"
+                        />
+                        <div>{`${Math.abs(player?.solokill.value2).toFixed(
+                          0
+                        )} `}</div>
+                        )
+                      </ComparedValue>
+                    </div>
+                    <div className="ValueTitle">{t("solo.comparison.solokill")}</div>
+                    <div className="Wrapper">
+                      <OppValue
+                        color={
+                          oppPlayer?.solokill.result === true ? "true" : undefined
                         }
-                        alt="icon"
-                      />
-                      <div>{`${Math.abs(player?.match_parti.value2).toFixed(
-                        1
-                      )} %p`}</div>
-                      )
-                    </ComparedValue>
-                  </div>
-                  <div className="ValueTitle">
-                    {t("solo.comparison.fightParti")}
-                  </div>
-                  <div className="Wrapper">
-                    <OppValue
-                      color={
-                        oppPlayer?.match_parti.result === true ? "true" : undefined
-                      }
-                    >{`${oppPlayer?.match_parti.value.toFixed(1)} %`}</OppValue>
-                    <OppComparedValue
-                      color={
-                        oppPlayer?.match_parti.result === true ? "true" : undefined
-                      }
-                    >
-                      (
-                      <img
-                        src={
-                          oppPlayer?.match_parti.result
-                            ? "Images/ico-teamreport-num-up.png"
-                            : "Images/ico-teamreport-num-down-wh.png"
+                      >
+                        {`${oppPlayer?.solokill.value.toFixed(0)} ${t(
+                          "solo.comparison.kills"
+                        )}`}
+                      </OppValue>
+                      <OppComparedValue
+                        color={
+                          oppPlayer?.solokill.result === true ? "true" : undefined
                         }
-                        alt="icon"
-                      />
-                      <div>{`${Math.abs(oppPlayer?.match_parti.value2).toFixed(
-                        1
-                      )} %p`}</div>
-                      )
-                    </OppComparedValue>
-                  </div>
-                </DisplayValue>
-              }
+                      >
+                        (
+                        <img
+                          src={
+                            oppPlayer?.solokill.result
+                              ? "Images/ico-teamreport-num-up.png"
+                              : "Images/ico-teamreport-num-down-wh.png"
+                          }
+                          alt="icon"
+                        />
+                        <div>
+                          {`${Math.abs(oppPlayer?.solokill.value2).toFixed(0)}`}
+                        </div>
+                        )
+                      </OppComparedValue>
+                    </div>
+                  </DisplayValue>
+                  <DisplayValue>
+                    <div className="Wrapper">
+                      <PlayerValue
+                        color={player?.kda.result === true ? "true" : undefined}
+                      >
+                        <div className="WhiteValue">{`${player?.kill.toFixed(
+                          0
+                        )}`}</div>
+                        <div className="Slash">/</div>
+                        <div className="WhiteValue">{`${player?.death.toFixed(
+                          0
+                        )}`}</div>
+                        <div className="Slash">/</div>
+                        <div className="WhiteValue">{`${player?.assist.toFixed(
+                          0
+                        )}`}</div>
+                        <div className="KDAValue">{`${player?.kda.value.toFixed(
+                          1
+                        )}:1`}</div>
+                      </PlayerValue>
+                      <ComparedValue
+                        color={player?.kda.result === true ? "true" : undefined}
+                      >
+                        (
+                        <img
+                          src={
+                            player?.kda.result
+                              ? "Images/ico-teamreport-num-up.png"
+                              : "Images/ico-teamreport-num-down-wh.png"
+                          }
+                          alt="icon"
+                        />
+                        <div>{`${Math.abs(player?.kda.value2).toFixed(1)}: 1`}</div>)
+                      </ComparedValue>
+                    </div>
+                    <div className="ValueTitle">{t("solo.comparison.kda")}</div>
+                    <div className="Wrapper">
+                      <OppValue
+                        color={oppPlayer?.kda.result === true ? "true" : undefined}
+                      >
+                        <div className="WhiteValue">{`${oppPlayer?.kill.toFixed(
+                          0
+                        )}`}</div>
+                        <div className="Slash">/</div>
+                        <div className="WhiteValue">{`${oppPlayer?.death.toFixed(
+                          0
+                        )}`}</div>
+                        <div className="Slash">/</div>
+                        <div className="WhiteValue">{`${oppPlayer?.assist.toFixed(
+                          0
+                        )}`}</div>
+                        <div className="KDAValue">{`${oppPlayer?.kda.value.toFixed(
+                          1
+                        )}:1`}</div>
+                      </OppValue>
+                      <OppComparedValue
+                        color={oppPlayer?.kda.result === true ? "true" : undefined}
+                      >
+                        (
+                        <img
+                          src={
+                            oppPlayer?.kda.result
+                              ? "Images/ico-teamreport-num-up.png"
+                              : "Images/ico-teamreport-num-down-wh.png"
+                          }
+                          alt="icon"
+                        />
+                        <div>{`${Math.abs(oppPlayer?.kda.value2).toFixed(
+                          1
+                        )}: 1`}</div>
+                        )
+                      </OppComparedValue>
+                    </div>
+                  </DisplayValue>
+                  <DisplayValue>
+                    <div className="Wrapper">
+                      <PlayerValue
+                        color={player?.cs.result === true ? "true" : undefined}
+                      >{`${player?.cs.value.toFixed(1)}`}</PlayerValue>
+                      <ComparedValue
+                        color={player?.cs.result === true ? "true" : undefined}
+                      >
+                        (
+                        <img
+                          src={
+                            player?.cs.result
+                              ? "Images/ico-teamreport-num-up.png"
+                              : "Images/ico-teamreport-num-down-wh.png"
+                          }
+                          alt="icon"
+                        />
+                        <div>{`${Math.abs(player?.cs.value2).toFixed(1)}`}</div>)
+                      </ComparedValue>
+                    </div>
+                    <div className="ValueTitle">{t("solo.comparison.cs")}</div>
+                    <div className="Wrapper">
+                      <OppValue
+                        color={oppPlayer?.cs.result === true ? "true" : undefined}
+                      >{`${oppPlayer?.cs.value.toFixed(1)}`}</OppValue>
+                      <OppComparedValue
+                        color={oppPlayer?.cs.result === true ? "true" : undefined}
+                      >
+                        (
+                        <img
+                          src={
+                            oppPlayer?.cs.result
+                              ? "Images/ico-teamreport-num-up.png"
+                              : "Images/ico-teamreport-num-down-wh.png"
+                          }
+                          alt="icon"
+                        />
+                        <div>{`${Math.abs(oppPlayer?.cs.value2).toFixed(1)}`}</div>)
+                      </OppComparedValue>
+                    </div>
+                  </DisplayValue>
+                  <DisplayValue>
+                    <div className="Wrapper">
+                      <PlayerValue
+                        color={player?.dpm.result === true ? "true" : undefined}
+                      >{`${player?.dpm.value.toFixed(1)}`}</PlayerValue>
+                      <ComparedValue
+                        color={player?.dpm.result === true ? "true" : undefined}
+                      >
+                        (
+                        <img
+                          src={
+                            player?.dpm.result
+                              ? "Images/ico-teamreport-num-up.png"
+                              : "Images/ico-teamreport-num-down-wh.png"
+                          }
+                          alt="icon"
+                        />
+                        <div>{`${Math.abs(player?.dpm.value2).toFixed(1)}`}</div>)
+                      </ComparedValue>
+                    </div>
+                    <div className="ValueTitle">{t("solo.comparison.dpm")}</div>
+                    <div className="Wrapper">
+                      <OppValue
+                        color={oppPlayer?.dpm.result === true ? "true" : undefined}
+                      >{`${oppPlayer?.dpm.value.toFixed(1)}`}</OppValue>
+                      <OppComparedValue
+                        color={oppPlayer?.dpm.result === true ? "true" : undefined}
+                      >
+                        (
+                        <img
+                          src={
+                            oppPlayer?.dpm.result
+                              ? "Images/ico-teamreport-num-up.png"
+                              : "Images/ico-teamreport-num-down-wh.png"
+                          }
+                          alt="icon"
+                        />
+                        <div>{`${Math.abs(oppPlayer?.dpm.value2).toFixed(1)}`}</div>)
+                      </OppComparedValue>
+                    </div>
+                  </DisplayValue>
+                  <DisplayValue>
+                    <div className="Wrapper">
+                      <PlayerValue
+                        color={player?.dtpm.result === true ? "true" : undefined}
+                      >{`${player?.dtpm.value.toFixed(1)}`}</PlayerValue>
+                      <ComparedValue
+                        color={player?.dtpm.result === true ? "true" : undefined}
+                      >
+                        (
+                        <img
+                          src={
+                            player?.dtpm.result
+                              ? "Images/ico-teamreport-num-up.png"
+                              : "Images/ico-teamreport-num-down-wh.png"
+                          }
+                          alt="icon"
+                        />
+                        <div>{`${Math.abs(player?.dtpm.value2).toFixed(1)}`}</div>)
+                      </ComparedValue>
+                    </div>
+                    <div className="ValueTitle">{t("solo.comparison.dtpm")}</div>
+                    <div className="Wrapper">
+                      <OppValue
+                        color={oppPlayer?.dtpm.result === true ? "true" : undefined}
+                      >{`${oppPlayer?.dtpm.value.toFixed(1)}`}</OppValue>
+                      <OppComparedValue
+                        color={oppPlayer?.dtpm.result === true ? "true" : undefined}
+                      >
+                        (
+                        <img
+                          src={
+                            oppPlayer?.dtpm.result
+                              ? "Images/ico-teamreport-num-up.png"
+                              : "Images/ico-teamreport-num-down-wh.png"
+                          }
+                          alt="icon"
+                        />
+                        <div>{`${Math.abs(oppPlayer?.dtpm.value2).toFixed(1)}`}</div>)
+                      </OppComparedValue>
+                    </div>
+                  </DisplayValue>
+                  {player?.match_parti.value === "NULL" && player?.match_parti.value2 === "NULL" ? "" :
+                    <DisplayValue>
+                      <div className="Wrapper">
+                        <PlayerValue
+                          color={
+                            player?.match_parti.result === true ? "true" : undefined
+                          }
+                        >{`${player?.match_parti.value.toFixed(1)} %`}</PlayerValue>
+                        <ComparedValue
+                          color={
+                            player?.match_parti.result === true ? "true" : undefined
+                          }
+                        >
+                          (
+                          <img
+                            src={
+                              player?.match_parti.result
+                                ? "Images/ico-teamreport-num-up.png"
+                                : "Images/ico-teamreport-num-down-wh.png"
+                            }
+                            alt="icon"
+                          />
+                          <div>{`${Math.abs(player?.match_parti.value2).toFixed(
+                            1
+                          )} %p`}</div>
+                          )
+                        </ComparedValue>
+                      </div>
+                      <div className="ValueTitle">
+                        {t("solo.comparison.fightParti")}
+                      </div>
+                      <div className="Wrapper">
+                        <OppValue
+                          color={
+                            oppPlayer?.match_parti.result === true ? "true" : undefined
+                          }
+                        >{`${oppPlayer?.match_parti.value.toFixed(1)} %`}</OppValue>
+                        <OppComparedValue
+                          color={
+                            oppPlayer?.match_parti.result === true ? "true" : undefined
+                          }
+                        >
+                          (
+                          <img
+                            src={
+                              oppPlayer?.match_parti.result
+                                ? "Images/ico-teamreport-num-up.png"
+                                : "Images/ico-teamreport-num-down-wh.png"
+                            }
+                            alt="icon"
+                          />
+                          <div>{`${Math.abs(oppPlayer?.match_parti.value2).toFixed(
+                            1
+                          )} %p`}</div>
+                          )
+                        </OppComparedValue>
+                      </div>
+                    </DisplayValue>
+                  }
 
-            <DisplayValue>
-              <div className="Wrapper">
-                <PlayerValue
-                  color={player?.kp.result === true ? "true" : undefined}
-                >{`${player?.kp.value.toFixed(1)} %`}</PlayerValue>
-                <ComparedValue
-                  color={player?.kp.result === true ? "true" : undefined}
-                >
-                  (
-                  <img
-                    src={
-                      player?.kp.result
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down-wh.png"
-                    }
-                    alt="icon"
-                  />
-                  <div>{`${Math.abs(player?.kp.value2).toFixed(1)} %p`}</div>)
-                </ComparedValue>
-              </div>
-              <div className="ValueTitle">{t("solo.comparison.killParti")}</div>
-              <div className="Wrapper">
-                <OppValue
-                  color={oppPlayer?.kp.result === true ? "true" : undefined}
-                >{`${oppPlayer?.kp.value.toFixed(1)} %`}</OppValue>
-                <OppComparedValue
-                  color={oppPlayer?.kp.result === true ? "true" : undefined}
-                >
-                  (
-                  <img
-                    src={
-                      oppPlayer?.kp.result
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down-wh.png"
-                    }
-                    alt="icon"
-                  />
-                  <div>{`${Math.abs(oppPlayer?.kp.value2).toFixed(1)} %p`}</div>
-                  )
-                </OppComparedValue>
-              </div>
-            </DisplayValue>
-              {player?.match.value === "NULL" && player?.match.value2 === "NULL" ? "" :
-            <DisplayValue>
-              <div className="Wrapper">
-                <PlayerValue
-                  color={player?.match.result === true ? "true" : undefined}
-                >{`${player?.match.value.toFixed(1)} ${t(
-                  "solo.comparison.sec"
-                )}`}</PlayerValue>
-                <ComparedValue
-                  color={player?.match.result === true ? "true" : undefined}
-                >
-                  (
-                  <img
-                    src={
-                      player?.match.result
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down-wh.png"
-                    }
-                    alt="icon"
-                  />
-                  <div>{`${Math.abs(player?.match.value2).toFixed(1)} ${t(
-                    "solo.comparison.sec"
-                  )}`}</div>
-                  )
-                </ComparedValue>
-              </div>
-              <div className="ValueTitle">{t("solo.comparison.engage")}</div>
-              <div className="Wrapper">
-                <OppValue
-                  color={oppPlayer?.match.result === true ? "true" : undefined}
-                >{`${oppPlayer?.match.value.toFixed(1)} ${t(
-                  "solo.comparison.sec"
-                )}`}</OppValue>
-                <OppComparedValue
-                  color={oppPlayer?.match.result === true ? "true" : undefined}
-                >
-                  (
-                  <img
-                    src={
-                      oppPlayer?.match.result === true
-                        ? "Images/ico-teamreport-num-up.png"
-                        : "Images/ico-teamreport-num-down-wh.png"
-                    }
-                    alt="icon"
-                  />
-                  <div>{`${Math.abs(oppPlayer?.match.value2).toFixed(1)} ${t(
-                    "solo.comparison.sec"
-                  )}`}</div>
-                  )
-                </OppComparedValue>
-              </div>
-            </DisplayValue>
-              }
+                  <DisplayValue>
+                    <div className="Wrapper">
+                      <PlayerValue
+                        color={player?.kp.result === true ? "true" : undefined}
+                      >{`${player?.kp.value.toFixed(1)} %`}</PlayerValue>
+                      <ComparedValue
+                        color={player?.kp.result === true ? "true" : undefined}
+                      >
+                        (
+                        <img
+                          src={
+                            player?.kp.result
+                              ? "Images/ico-teamreport-num-up.png"
+                              : "Images/ico-teamreport-num-down-wh.png"
+                          }
+                          alt="icon"
+                        />
+                        <div>{`${Math.abs(player?.kp.value2).toFixed(1)} %p`}</div>)
+                      </ComparedValue>
+                    </div>
+                    <div className="ValueTitle">{t("solo.comparison.killParti")}</div>
+                    <div className="Wrapper">
+                      <OppValue
+                        color={oppPlayer?.kp.result === true ? "true" : undefined}
+                      >{`${oppPlayer?.kp.value.toFixed(1)} %`}</OppValue>
+                      <OppComparedValue
+                        color={oppPlayer?.kp.result === true ? "true" : undefined}
+                      >
+                        (
+                        <img
+                          src={
+                            oppPlayer?.kp.result
+                              ? "Images/ico-teamreport-num-up.png"
+                              : "Images/ico-teamreport-num-down-wh.png"
+                          }
+                          alt="icon"
+                        />
+                        <div>{`${Math.abs(oppPlayer?.kp.value2).toFixed(1)} %p`}</div>
+                        )
+                      </OppComparedValue>
+                    </div>
+                  </DisplayValue>
+                  {player?.match.value === "NULL" && player?.match.value2 === "NULL" ? "" :
+                    <DisplayValue>
+                      <div className="Wrapper">
+                        <PlayerValue
+                          color={player?.match.result === true ? "true" : undefined}
+                        >{`${player?.match.value.toFixed(1)} ${t(
+                          "solo.comparison.sec"
+                        )}`}</PlayerValue>
+                        <ComparedValue
+                          color={player?.match.result === true ? "true" : undefined}
+                        >
+                          (
+                          <img
+                            src={
+                              player?.match.result
+                                ? "Images/ico-teamreport-num-up.png"
+                                : "Images/ico-teamreport-num-down-wh.png"
+                            }
+                            alt="icon"
+                          />
+                          <div>{`${Math.abs(player?.match.value2).toFixed(1)} ${t(
+                            "solo.comparison.sec"
+                          )}`}</div>
+                          )
+                        </ComparedValue>
+                      </div>
+                      <div className="ValueTitle">{t("solo.comparison.engage")}</div>
+                      <div className="Wrapper">
+                        <OppValue
+                          color={oppPlayer?.match.result === true ? "true" : undefined}
+                        >{`${oppPlayer?.match.value.toFixed(1)} ${t(
+                          "solo.comparison.sec"
+                        )}`}</OppValue>
+                        <OppComparedValue
+                          color={oppPlayer?.match.result === true ? "true" : undefined}
+                        >
+                          (
+                          <img
+                            src={
+                              oppPlayer?.match.result === true
+                                ? "Images/ico-teamreport-num-up.png"
+                                : "Images/ico-teamreport-num-down-wh.png"
+                            }
+                            alt="icon"
+                          />
+                          <div>{`${Math.abs(oppPlayer?.match.value2).toFixed(1)} ${t(
+                            "solo.comparison.sec"
+                          )}`}</div>
+                          )
+                        </OppComparedValue>
+                      </div>
+                    </DisplayValue>
+                  }
                 </>
               }
-          </ComapreValue>
-        )}
+            </ComapreValue>
+          )}
       </OppStatContents>
     </OppStatWrapper>
   );

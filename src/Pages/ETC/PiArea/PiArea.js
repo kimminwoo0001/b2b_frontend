@@ -6,7 +6,7 @@ import axios from "axios";
 import qs from "qs";
 
 import { API4 } from "../../config";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 

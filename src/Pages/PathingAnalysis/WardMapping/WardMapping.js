@@ -11,7 +11,7 @@ import { API2 } from "../../config";
 import { API } from "../../config";
 import qs from "qs";
 import WardTooltip from "./WardTooltip";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { duration } from "@material-ui/core";
 import { SetDesc, SetIsOpen, SetIsSelector, SetModalInfo } from "../../../redux/modules/modalvalue";
 

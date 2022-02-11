@@ -12,8 +12,9 @@ import qs from "qs";
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import timeFormat from "../../../lib/timeFormat";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
+import { goPlayerReport } from "../../../lib/pagePath";
 
 const WardSlider = withStyles({
   root: {
@@ -88,7 +89,7 @@ function SetByPlayer({ minFrom, setMinFrom }) {
   const [isActive1, setIsActive1] = useDetectOutsideClick(dropdownRef, false);
   const { t } = useTranslation();
   const [champArray, setChampArray] = useState([]);
-  const isPageSolo = document.location.pathname === "/solo" ? true : false;
+  const isPageSolo = document.location.pathname === goPlayerReport ? true : false;
   useOutsideAlerter(wrapperRef, isActive2, filters, champArray);
 
 

@@ -6,7 +6,7 @@ import styled, { css } from "styled-components";
 import { useDetectOutsideClick } from "../../Components/SelectFilter/useDetectOustsideClick";
 import PickCombineModal from "./PickCombineModal";
 import { API } from "../config";
-import axiosRequest from "../../lib/axiosRequest";
+import axiosRequest from "../../lib/axios/axiosRequest";
 import { SetModalInfo } from "../../redux/modules/modalvalue";
 
 const PositionImage = [
