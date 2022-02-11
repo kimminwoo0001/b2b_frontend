@@ -36,7 +36,7 @@ function VideoTabs() {
     1: <ObjectMapping />,
     2: <GameMapping />,
     3: <HitMap />,
-    4: <JungleMap />,
+    // 4: <JungleMap />,
   };
 
   return (
@@ -61,11 +61,11 @@ function VideoTabs() {
           <TabContent
             onClick={() => {
               dispatch(HandleTab(1));
-              dispatch(Reset_MapTab()); 
+              dispatch(Reset_MapTab());
               dispatch(Reset_Object_MapTab());
               if (filters.tab === 4) {
-              dispatch(ResetWardPathingTab());
-              dispatch(SelectorInitailizeState());
+                dispatch(ResetWardPathingTab());
+                dispatch(SelectorInitailizeState());
 
               }
             }}
@@ -97,8 +97,8 @@ function VideoTabs() {
               dispatch(HandleTab(3));
               dispatch(Reset_MapTab());
               if (filters.tab === 4) {
-              dispatch(ResetWardPathingTab());
-              dispatch(SelectorInitailizeState());
+                dispatch(ResetWardPathingTab());
+                dispatch(SelectorInitailizeState());
               }
             }}
             changeColor={filters.tab === 3}
@@ -108,13 +108,13 @@ function VideoTabs() {
             </div>
           </TabContent>
           {/* 정글동선 탭 */}
-          <TabContent
+          {/* <TabContent
             onClick={() => {
               dispatch(HandleTab(4));
               dispatch(Reset_MapTab());
               if (filters.tab === 4) {
-              dispatch(ResetWardPathingTab());
-              dispatch(SelectorInitailizeState());
+                dispatch(ResetWardPathingTab());
+                dispatch(SelectorInitailizeState());
               }
               // dispatch(InitializeGameState());
               // dispatch(InitailizeState());
@@ -125,7 +125,7 @@ function VideoTabs() {
             <div>
               <span>{t("video.tab.jungle")}</span>
             </div>
-          </TabContent>
+          </TabContent> */}
         </TabContainer>
         <div>{VideoTab[filters.tab]}</div>
       </VideoTabsWrapper>
