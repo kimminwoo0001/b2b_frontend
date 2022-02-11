@@ -12,7 +12,6 @@ import League from "./Pages/League/League";
 import Team from "./Pages/Team/Team";
 import Solo from "./Pages/Solo/Solo";
 import Utility from "./Pages/Utility/Utility";
-import ItemSimulator from "./Pages/ItemSimulator/ItemSimulator";
 import PickCalculator from "./Pages/PickCalculator/PickCalculator";
 import NotFound from "./Pages/NotFound/NotFound";
 import Login from "./Pages/Sign/Login";
@@ -20,8 +19,6 @@ import TeamCompare from "./Pages/TeamCompare/TeamCompare";
 import PlayerCompare from "./Pages/PlayerCompare/PlayerCompare";
 import Video from "./Pages/VideoReport/Video";
 import Footer from "./Components/Footer/Footer";
-import MetaAnalysis from "./Pages/MetaAnalysis/MetaAnalysis";
-import MatchAnalysis from "./Pages/MatchAnalysis/MatchAnalysis";
 import SingUp from "./Pages/Sign/SignUp";
 import ChangePW from "./Pages/Sign/ChangePW";
 import { useSelector } from "react-redux";
@@ -73,8 +70,6 @@ function Routes() {
         <PrivateRoute exact path="/" component={Home} />
         <PrivateRoute exact path="/league" component={League} />
         <PrivateRoute exact path="/team" component={Team} />
-        <PrivateRoute exact path="/metaAnalysis" component={MetaAnalysis} />
-        <PrivateRoute exact path="/matchAnalysis" component={MatchAnalysis} />
         <PrivateRoute exact path="/solo" component={Solo} />
         <PrivateRoute exact path="/video" component={Video} />
         <PrivateRoute exact path="/gameReport" component={GameReport} />
@@ -84,7 +79,6 @@ function Routes() {
           component={GameReportDetail}
         />
         <PrivateRoute exact path="/utility" component={Utility} />
-        <PrivateRoute exact path="/simulator" component={ItemSimulator} />
         <PrivateRoute exact path="/calculator" component={PickCalculator} />
         <PrivateRoute exact path="/teamCompare" component={TeamCompare} />
         <PrivateRoute exact path="/playerCompare" component={PlayerCompare} />
