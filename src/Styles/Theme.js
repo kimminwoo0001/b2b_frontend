@@ -13,6 +13,7 @@ const theme = {
     bg_light: "#2e2d38",
     bg_box: "#2f2d38",
     bg_select: "#23212a",
+    bg_hover: "rgba(255,255,255,0.1)",
 
     // text
     text: "#ffffff",
@@ -20,6 +21,7 @@ const theme = {
     error: "#ee1717",
     red: "#f04545",
     blue: "#0075bf",
+    vs: "#817e90",
   },
   borderRadius: "20px",
 };
