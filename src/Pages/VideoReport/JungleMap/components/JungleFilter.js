@@ -131,8 +131,30 @@ const JungleFilter = () => {
 
   // 첫 렌더링 시 연도 필터 가져오기
   useEffect(() => {
+    initializedLeagueValue();
     fetchYearFilter();
   }, [])
+
+  // 첫 렌더링 시 연도 필터 가져오기
+  const initializedLeagueValue = () => {
+    let newArray = [];
+    let result;
+    for (let i = 0; i < selector.leagueFilter.length; i++) {
+      newArray.push(selector.leagueFilter[i]).sort().reduce(
+        (newObj, key) => {
+          newObj[key] = false;
+          return newObj;
+        },
+        {}
+      )
+    }
+    // console.log(result);
+    setFilterData({
+      ...filterData,
+      league: result,
+    });
+  }
+
 
   useEffect(() => {
     console.log(filterData)
@@ -158,7 +180,6 @@ const JungleFilter = () => {
           })}
         </SFilterGroup>
       </SRow>
-
       {/* 리그 */}
       <SRow>
         <STitle>리그</STitle>
@@ -167,12 +188,13 @@ const JungleFilter = () => {
             name="league"
             value="all"
             onChange={handleChange}
-            checked={filterData.league.all}
+            checked={selector.leagueFilter.length === Object.keys(filterData.league).length}
           >
             전체선택
           </SCheckboxAll>
           {selector.leagueFilter?.map((league) => {
             console.log(filterData["league"].league === league);
+            console.log(filterData);
             return (
               <Checkbox
                 name="league"
