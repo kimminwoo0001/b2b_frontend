@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { memo } from "react";
 import { useContext } from "react";
 import { DropdownContext } from "./DropdownContainer";
 
@@ -22,4 +22,4 @@ const Container = styled.div`
   }
 `;
 
-export default DropdownLabel;
+export default memo(DropdownLabel);

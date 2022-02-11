@@ -25,7 +25,7 @@ const DropdownContainer = ({ children, onChange, label, ...props }) => {
     if (onChange) {
       onChange({ currentValue, label });
     }
-  }, [currentValue, onChange]);
+  }, [currentValue]);
 
   const contextValue = useMemo(
     () => ({
