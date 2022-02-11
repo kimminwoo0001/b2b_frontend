@@ -52,18 +52,23 @@ const JungleFilter = () => {
   const dispatch = useDispatch();
 
   const [filterData, setFilterData] = useState({
-    year: "",
-    league: {}
+    year: [],
+    league: {},
+    season: {},
+    team: {},
+    patch: {},
   });
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+    console.log(name, value, type, checked);
 
     if (type === "radio") {
-      setFilterData({ ...filterData, [name]: value });
+      setFilterData({ ...filterData, [name]: [value] });
     }
 
     if (type === "checkbox") {
+      console.log("--------", filterData.league)
       if (value === "all") {
         setFilterData((prev) => {
           const newData = { ...prev };
@@ -73,15 +78,18 @@ const JungleFilter = () => {
           return newData;
         });
       } else {
-        console.log("checked:", checked)
+        console.log("=====checked:", filterData.season)
+        console.log("=====checked:", checked)
+
         setFilterData({
           ...filterData,
           [name]: { ...filterData[name], [value]: checked },
+
+
         });
       }
     }
   };
-
 
   const fetchYearFilter = () => {
     let yearList = [];
@@ -108,16 +116,15 @@ const JungleFilter = () => {
     dispatch(setYearFilter(yearList));
   }
 
-
   const fetchLeagueFilter = () => {
     let leagueList = [];
-    if (filterData.year === "") {
+    if (filterData.year.length === 0) {
       return;
     }
 
-    if (filterData.year === "2021") {
+    if (filterData.year.includes("2021")) {
       leagueList = Object.keys(staticvalue.filterObjects).filter((league) => league !== "LPL");
-    } else if (filterData.year === "2022") {
+    } else {
       leagueList = Object.keys(staticvalue.filterObjects).filter((league) => league !== "LPL" && league !== "MSI" && league !== "WC");
     }
 
@@ -125,40 +132,98 @@ const JungleFilter = () => {
     dispatch(setLeagueFilter(leagueList));
   }
 
+  const fetchSeasonFilter = () => {
+    let seasonList = [];
+    if (filterData.year.length !== 0) {
+      const result = Object.keys(filterData.league).filter(key => filterData.league[key] === true)
+      console.log(result);
+      for (let year of filterData.year) {
+        console.log(year);
+        for (let league of result) {
+          const ObjectKeys = Object.keys(staticvalue.filterObjects[league][year])
+          seasonList = seasonList.concat(ObjectKeys);
+        }
+      }
+      // 공통되는 시즌이 아닌 경우로만 sorting
+      seasonList = seasonList.filter(
+        (item, pos) => seasonList.indexOf(item) === pos
+      );
+      console.log("sortedSeasonList", seasonList);
+    }
+    dispatch(setSeasonFilter(seasonList));
+  }
+
+  console.log("=====checked:", filterData)
+
+  // 연도 설정 후 리그필터 호출
   useEffect(() => {
+    if (filterData.year.length === 0) {
+      return;
+    }
     fetchLeagueFilter();
   }, [filterData.year])
 
-  // 첫 렌더링 시 연도 필터 가져오기
+  // 리그 설정 후 시즌필터 호출
   useEffect(() => {
-    initializedLeagueValue();
-    fetchYearFilter();
-  }, [])
-
-  // 첫 렌더링 시 연도 필터 가져오기
-  const initializedLeagueValue = () => {
-    let newArray = [];
-    let result;
-    for (let i = 0; i < selector.leagueFilter.length; i++) {
-      newArray.push(selector.leagueFilter[i]).sort().reduce(
-        (newObj, key) => {
-          newObj[key] = false;
-          return newObj;
-        },
-        {}
-      )
+    if (Object.keys(filterData.league).length === 0) {
+      return;
     }
-    // console.log(result);
+    fetchSeasonFilter();
+  }, [filterData.league])
+
+
+  // 최초 checkbox state의 value값을 false 처리
+  const initializedLeagueValue = (param) => {
+    let newArray = [];
+    for (let i = 0; i < param.length; i++) {
+      newArray.push(param[i])
+    }
+    const result = newArray.sort().reduce((newObj, key) => {
+      console.log(newObj);
+      console.log(key);
+      newObj[key] = false;
+      return newObj;
+    },
+      {}
+      )
+    return result;
+  }
+
+  useEffect(() => {
+    if (filterData.year.length === 0) {
+      return;
+    }
+    const result = initializedLeagueValue(selector.leagueFilter);
+
     setFilterData({
       ...filterData,
       league: result,
-    });
-  }
+    })
+  }, [selector.leagueFilter])
 
+  useEffect(() => {
+    if (Object.keys(filterData.league).length === 0) {
+      return;
+    }
+    const result = initializedLeagueValue(selector.seasonFilter);
+
+    setFilterData({
+      ...filterData,
+      season: result,
+    })
+  }, [selector.seasonFilter])
+
+
+  // 첫 렌더 시 연도 필터 가져오기
+  useEffect(() => {
+    fetchYearFilter();
+  }, [])
 
   useEffect(() => {
     console.log(filterData)
-  }, [filterData.year, filterData.league])
+    console.log(staticvalue.filterObjects);
+  }, [filterData.year, filterData.league, filterData.season])
+
 
   return (
     <SFilterContainer>
@@ -172,7 +237,7 @@ const JungleFilter = () => {
                 name="year"
                 value={year}
                 onChange={handleChange}
-                checked={filterData.year === year}
+                checked={filterData.year.includes(year)}
               >
                 {year}
               </Radio>
@@ -188,11 +253,11 @@ const JungleFilter = () => {
             name="league"
             value="all"
             onChange={handleChange}
-            checked={selector.leagueFilter.length === Object.keys(filterData.league).length}
+            checked={selector.leagueFilter.length === Object.keys(filterData.league).length && !Object.values(filterData.league).includes(false)}
           >
             전체선택
           </SCheckboxAll>
-          {selector.leagueFilter?.map((league) => {
+          {Object.keys(filterData.league).length !== 0 && selector.leagueFilter?.map((league) => {
             console.log(filterData["league"].league === league);
             console.log(filterData);
             return (
@@ -200,13 +265,39 @@ const JungleFilter = () => {
                 name="league"
                 value={league}
                 onChange={handleChange}
-                checked={filterData["league"].league === league}
+                checked={filterData["league"][league]}
             >
               {league}
             </Checkbox>
             )
           })}
 
+        </SFilterGroup>
+      </SRow>
+      {/* 시즌 */}
+      <SRow>
+        <STitle>시즌</STitle>
+        <SFilterGroup>
+          <SCheckboxAll
+            name="season"
+            value="all"
+            onChange={handleChange}
+            checked={selector.seasonFilter.length === Object.keys(filterData.season).length && !Object.values(filterData.season).includes(false)}
+          >
+            전체선택
+          </SCheckboxAll>
+          {Object.keys(filterData.season).length !== 0 && selector.seasonFilter?.map((season) => {
+            return (
+              <Checkbox
+                name="season"
+                value={season}
+                onChange={handleChange}
+                checked={filterData["season"][season]}
+              >
+                {season}
+              </Checkbox>
+            )
+          })}
         </SFilterGroup>
       </SRow>
     </SFilterContainer>
