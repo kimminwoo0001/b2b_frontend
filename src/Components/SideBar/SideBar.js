@@ -37,17 +37,17 @@ function Sidebar() {
       // menus[1] 리그 보고서
       idx: 1,
       name: t("sidebar.part2"),
-      path: "/league",
+      path: "/leagueReport",
       image: "/Images/sidebar_newLogo/ico-league.png",
-      changeColor: pathName === "/league",
+      changeColor: pathName === "/leagueReport",
     },
     {
       // menus[2] 팀 보고서
       idx: 2,
       name: t("sidebar.part3"),
-      path: "/team",
+      path: "/teamReport",
       image: "/Images/sidebar_newLogo/ico-team.png",
-      changeColor: pathName === "/team",
+      changeColor: pathName === "/teamReport",
     },
     {
       // menus[3] 메타 분석
@@ -61,17 +61,17 @@ function Sidebar() {
       // menus[4] 선수 보고서
       idx: 4,
       name: t("sidebar.part5"),
-      path: "/solo",
+      path: "/playerReport",
       image: "/Images/sidebar_newLogo/ico-player.png",
-      changeColor: pathName === "/solo",
+      changeColor: pathName === "/playerReport",
     },
     {
       // menus[5] 영상 보고서
       idx: 5,
       name: t("sidebar.part6"),
-      path: "/video",
+      path: "/pathAnalysis",
       image: "/Images/sidebar_newLogo/ico-movie.png",
-      changeColor: pathName === "/video",
+      changeColor: pathName === "/pathAnalysis",
     },
     {
       // menus[6] 매치 분석
@@ -119,9 +119,9 @@ function Sidebar() {
       // menus[11] 게임 보고서
       idx: 11,
       name: t("sidebar.part12"),
-      path: "/gameReport",
+      path: "/proGameReport",
       image: "/Images/sidebar_newLogo/ico_game.png",
-      changeColor: pathName === "/gameReport",
+      changeColor: pathName === "/proGameReport",
       version: "beta",
     },
     {

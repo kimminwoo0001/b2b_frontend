@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import Nav from "../../Components/Nav/Nav";
 import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 import SideBar from "../../Components/SideBar/SideBar";
-import Player from "../Solo/Player";
+import Player from "../PlayerReport/Player";
 import ErrorBoundary from "../../Components/ErrorBoundary";
 import Filter from "../../Components/Filter/Filter";
 import CloseFilter from "../../Components/Filter/CloseFilter";

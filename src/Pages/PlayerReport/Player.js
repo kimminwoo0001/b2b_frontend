@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import PlayerBoard from "../Solo/PlayerBoard/PlayerBoard";
+import PlayerBoard from "./PlayerBoard/PlayerBoard";
 // import PlayerVideo from "../Solo/PlayerVideo/PlayerVideo";
-import PlayerSoloRank from "../Solo/PlayerSoloRank/PlayerSoloRank";
-import ComparePlayer from "../Solo/ComparePlayer/ComparePlayer";
+import PlayerSoloRank from "./PlayerSoloRank/PlayerSoloRank";
+import ComparePlayer from "./ComparePlayer/ComparePlayer";
 import PlayerSelectModal from "../../Components/Filter/PlayerSelectModal";
 import { useTranslation } from "react-i18next";
 import {
@@ -13,7 +13,7 @@ import {
   ResetFilter2,
 } from "../../redux/modules/filtervalue";
 import ErrorBoundary from "../../Components/ErrorBoundary";
-import HitMap from "../VideoReport/HitMap/HitMap";
+import HitMap from "../PathingAnalysis/HitMap/HitMap";
 import PlayerFilterModal from "../../Components/Filter/PlayerFilterModal";
 import { CompareModal, SetCopyFilters, SetOpenFilterModal } from "../../redux/modules/copyvalue";
 

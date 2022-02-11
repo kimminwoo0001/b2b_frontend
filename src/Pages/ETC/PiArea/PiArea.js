@@ -5,10 +5,10 @@ import SetPiData from "./SetPiData/SetPiData";
 import axios from "axios";
 import qs from "qs";
 
-import { API4 } from "../config";
-import axiosRequest from "../../lib/axiosRequest";
+import { API4 } from "../../config";
+import axiosRequest from "../../../lib/axiosRequest";
 import { useDispatch } from "react-redux";
-import { SetModalInfo } from "../../redux/modules/modalvalue";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
 
 const PiArea = () => {
   const [tab, setTab] = useState(0);

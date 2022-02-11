@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import SideBar from "../../Components/SideBar/SideBar";
 import Nav from "../../Components/Nav/Nav";
-import TeamTabs from "../Team/TeamTabs";
+import TeamTabs from "../TeamReport/TeamTabs";
 import { useSelector } from "react-redux";
 import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 import ErrorBoundary from "../../Components/ErrorBoundary";
