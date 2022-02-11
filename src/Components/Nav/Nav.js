@@ -126,6 +126,7 @@ const NavWrapper = styled.div`
       height: 37px;
       margin: 3px 18px 13px 24px;
       object-fit: contain;
+      cursor: pointer;
     }
   }
 

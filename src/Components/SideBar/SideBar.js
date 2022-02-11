@@ -138,7 +138,7 @@ function Sidebar() {
       idx: 13,
       name: t("sidebar.part14"),
       path: "/itemCalculator",
-      image: "/Images/sidebar_newLogo/ico_ calculate.svg",
+      image: "/Images/sidebar_newLogo/ico_calculate.svg",
       changeColor: pathName === "/itemCalculator",
       version: "beta",
     },
@@ -154,6 +154,7 @@ function Sidebar() {
     menus[11],
     menus[7],
     menus[8],
+    menus[12],
   ];
 
   // // 로그아웃 함수, 로그아웃 이벤트가 발생되면 session 값을 clear하고 로그인 페이지로 이동시킴

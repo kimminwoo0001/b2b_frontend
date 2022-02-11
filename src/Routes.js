@@ -34,6 +34,7 @@ import ChannelService from "./Components/UtilityComponent/ChannelService";
 import GameReportDetail from "./Pages/GameReport/Components/GameReportDetail";
 import UiTest from "./Pages/Ui/UiTest";
 import ServerTest from "./Pages/ServerTest/ServerTest";
+import SoloRank from "./Pages/SoloRank/SoloRank";
 
 function Routes() {
   //const token = sessionStorage.getItem("token");
@@ -87,6 +88,7 @@ function Routes() {
         <PrivateRoute exact path="/calculator" component={PickCalculator} />
         <PrivateRoute exact path="/teamCompare" component={TeamCompare} />
         <PrivateRoute exact path="/playerCompare" component={PlayerCompare} />
+        <PrivateRoute exact path="/soloRank" component={SoloRank} />
         {/* pi only */}
         <PrivateRoute exact path="/piArea" component={PiArea} />
         <Route exact path="/error" component={NotFound} />
