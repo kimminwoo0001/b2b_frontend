@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
-
 import styled from "@emotion/styled";
 import { dropdownStyle, transitionStyle, typoStyle } from "../../Styles/ui";
 import DropdownList from "../../Components/Ui/DropDown/DropdownList";
@@ -10,16 +9,26 @@ import AccordionSummary from "../../Components/Ui/Accordion/AccordionSummary";
 import AccordionDetails from "../../Components/Ui/Accordion/AccordionDetails";
 import DropdownLabel from "../../Components/Ui/DropDown/DropdownLabel";
 import DropdownContainer from "../../Components/Ui/DropDown/DropdownContainer";
-
+import Versus from "../../Components/Ui/Versus";
 import Checkbox from "../../Components/Ui/Checkbox";
 import tableStyle from "../../Styles/ui/table_style";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { isObjEqual } from "../../lib/isObjEqual";
+import Avatar from "../../Components/Ui/Avatar";
+
+import Radio from "../../Components/Ui/Radio";
+import scrollbarStyle from "../../Styles/ui/scrollbar_style";
 
 const UiTest = () => {
   const [filterState, setFilterState] = useState({
-    champion: { all: false, gnar: false },
+    step1: { all: false, gnar: false, teemo: false },
   });
 
+  const [radioState, setRadioState] = useState("1경기");
+
+  const radioRef = useRef([]);
+
+  // 체크박스의 체인지 관련로직
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
 
@@ -35,19 +44,55 @@ const UiTest = () => {
         }
         return newData;
       });
-    } else {
+    }
+    // 개별선택
+    else {
       setFilterState((prev) => {
-        const newData = {
-          ...prev,
-        };
+        const newData = { ...prev };
         newData[name] = { ...newData[name], [value]: checked };
+
+        if (isObjEqual(newData[name])) {
+          newData[name].all = checked;
+        } else {
+          newData[name].all = false;
+        }
         return newData;
       });
     }
   };
 
+  // 라디오버튼 체인지 관련로직
+  const handleRadio = (e) => {
+    const { value, name } = e.target;
+    setRadioState(value);
+  };
+
+  // 상위 이벤트
+  const handleClickGameItem = (num) => {
+    radioRef.current[num].click();
+  };
+
   return (
     <Container>
+      {/* 아바타 */}
+      <section>
+        <h1>아바타</h1>
+
+        <div css={{ display: "flex" }}>
+          <Avatar src="images/champion/teemo.png" alt={"티모^오^"} size={30} />
+
+          <Avatar
+            src="images/champion/nunu.png"
+            alt={"누누"}
+            size={100}
+            circle={false}
+          />
+
+          <Avatar src="images/champion/teemo.png" alt={"티모^오^"} size={100} />
+        </div>
+      </section>
+
+      {/* 드롭다운 */}
       <section>
         <h1>드롭다운 메뉴</h1>
         {/* select style */}
@@ -124,11 +169,27 @@ const UiTest = () => {
             </SContainer>
           </AccordionSummary>
           <AccordionDetails>
-            <DropdownList label="챔피언 선택" onChange={() => {}}>
-              <DropdownItem value={"메뉴1"}>메뉴1</DropdownItem>
-              <DropdownItem value={"메뉴2"}>메뉴2</DropdownItem>
-              <DropdownItem value={"메뉴3"}>메뉴3</DropdownItem>
-            </DropdownList>
+            <DropdownContainer
+              label="champion"
+              onChange={(e) => {
+                console.log(e);
+              }}
+            >
+              <DropdownLabel css={[dropdownStyle.select_head]}>
+                챔피언선택
+              </DropdownLabel>
+              <DropdownList>
+                <DropdownItem css={[dropdownStyle.select_item]} value={"메뉴1"}>
+                  메뉴1
+                </DropdownItem>
+                <DropdownItem css={[dropdownStyle.select_item]} value={"메뉴2"}>
+                  메뉴2
+                </DropdownItem>
+                <DropdownItem css={[dropdownStyle.select_item]} value={"메뉴3"}>
+                  메뉴3
+                </DropdownItem>
+              </DropdownList>
+            </DropdownContainer>
           </AccordionDetails>
         </Accordion>
 
@@ -147,25 +208,26 @@ const UiTest = () => {
               <SHead>
                 <div css={Row1}>
                   <Checkbox
-                    name="champion"
+                    name="step1"
                     value="all"
                     onChange={handleChange}
-                    checked={filterState.champion.all}
+                    checked={filterState.step1.all}
                   />
                 </div>
                 <div css={Row2}>챔피언(경기수)</div>
                 <div css={[Row3]}>진영별</div>
                 <div css={[Row3]}>경기수</div>
               </SHead>
+
               <SBody>
-                <SRow isActive={filterState.champion["gnar"]}>
+                <SRow isActive={filterState.step1["gnar"]}>
                   {/* 체크 */}
                   <div css={Row1}>
                     <Checkbox
-                      name="champion"
+                      name="step1"
                       value="gnar"
                       onChange={handleChange}
-                      checked={filterState.champion.gnar}
+                      checked={filterState.step1.gnar}
                     />
                   </div>
                   {/* 본문 */}
@@ -173,12 +235,167 @@ const UiTest = () => {
                     <img src="images/champion/gnar.png" alt="나르!" />
                     <span>나르 (48)</span>
                   </SChamp>
+
                   {/* 경기수 */}
+                  <SRed>24</SRed>
+                  <SBlue>24</SBlue>
+                </SRow>
+
+                <SRow isActive={filterState.step1["teemo"]}>
+                  <div css={Row1}>
+                    <Checkbox
+                      name="step1"
+                      value="teemo"
+                      onChange={handleChange}
+                      checked={filterState.step1.teemo}
+                    />
+                  </div>
+
+                  <SChamp css={Row2}>
+                    <img src="images/champion/teemo.png" alt="나르!" />
+                    <span>나르 (48)</span>
+                  </SChamp>
+
                   <SRed>24</SRed>
                   <SBlue>24</SBlue>
                 </SRow>
               </SBody>
             </STable>
+          </AccordionDetails>
+        </Accordion>
+      </section>
+
+      {/* step4 - 라디오 경기 선택 */}
+      <section>
+        <Accordion css={{ marginBottom: 30 }}>
+          <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
+            <SContainer>
+              <SLabel>STEP 03</SLabel>
+              <STeam>
+                <span>동선을 확인할 경기 선택</span>
+              </STeam>
+            </SContainer>
+          </AccordionSummary>
+
+          <AccordionDetails>
+            <SGameList>
+              {/* 경기 정보 item */}
+              {Array.from({ length: 5 }, (_, i) => i + 1).map((item) => (
+                <SGameItem
+                  isActive={radioState === `${item}경기`}
+                  key={`경기정보${item}`}
+                  onClick={() => handleClickGameItem(item)}
+                >
+                  {/* 라디오버튼 */}
+                  <SRadioContainer>
+                    <Radio
+                      name="game"
+                      value={`${item}경기`}
+                      ref={(el) => (radioRef.current[item] = el)}
+                      onChange={handleRadio}
+                      checked={radioState === `${item}경기`}
+                    />
+                  </SRadioContainer>
+                  {/* 경기정보 */}
+                  <div>
+                    {/* 팀정보 */}
+                    <STeam>
+                      <Avatar
+                        size={24}
+                        src={"images/champion/nunu.png"}
+                        alt={"티원"}
+                      />
+                      <Versus spacing={6} />
+                      <Avatar
+                        size={24}
+                        src={"images/champion/nunu.png"}
+                        alt={"티원"}
+                      />
+                    </STeam>
+
+                    {/* 경기정보 */}
+                    <div>
+                      {/* 경기정보 택스트 */}
+                      <SInfo>
+                        <span>LCK 1R 1SET</span>
+                        <span>
+                          Win
+                          <em>2021-03-19</em>
+                        </span>
+                      </SInfo>
+
+                      <STeamSlideContainer>
+                        <STeamSide>
+                          <Avatar
+                            src="images/champion/nunu.png"
+                            alt="누누"
+                            color={"blue"}
+                            size={20}
+                          />
+                          <Avatar
+                            src="images/champion/nunu.png"
+                            alt="누누"
+                            color={"blue"}
+                            size={20}
+                          />
+                          <Avatar
+                            src="images/champion/nunu.png"
+                            alt="누누"
+                            color={"blue"}
+                            size={20}
+                          />
+                          <Avatar
+                            src="images/champion/nunu.png"
+                            alt="누누"
+                            color={"blue"}
+                            size={20}
+                          />
+                          <Avatar
+                            src="images/champion/nunu.png"
+                            alt="누누"
+                            color={"blue"}
+                            size={20}
+                          />
+                        </STeamSide>
+                        <Versus spacing={8} />
+                        <STeamSide>
+                          <Avatar
+                            color={"red"}
+                            src="images/champion/nunu.png"
+                            alt="누누"
+                            size={20}
+                          />
+                          <Avatar
+                            color={"red"}
+                            src="images/champion/nunu.png"
+                            alt="누누"
+                            size={20}
+                          />
+                          <Avatar
+                            color={"red"}
+                            src="images/champion/nunu.png"
+                            alt="누누"
+                            size={20}
+                          />
+                          <Avatar
+                            color={"red"}
+                            src="images/champion/nunu.png"
+                            alt="누누"
+                            size={20}
+                          />
+                          <Avatar
+                            color={"red"}
+                            src="images/champion/nunu.png"
+                            alt="누누"
+                            size={20}
+                          />
+                        </STeamSide>
+                      </STeamSlideContainer>
+                    </div>
+                  </div>
+                </SGameItem>
+              ))}
+            </SGameList>
           </AccordionDetails>
         </Accordion>
       </section>
@@ -207,15 +424,14 @@ const SContainer = styled.div`
   display: flex;
   align-items: center;
 `;
-
 const SLabel = styled.p`
   ${typoStyle.label}
   height: 100%;
   margin-right: 8px;
 `;
+
 const STeam = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
 
   img {
@@ -228,15 +444,11 @@ const STeam = styled.div`
     ${typoStyle.contents}
   }
 `;
-
 const STable = styled.div``;
-
 const SHead = styled.div`
   ${tableStyle.table_head}
 `;
-
 const SBody = styled.div``;
-
 const SRow = styled.div`
   border-radius: 999px;
   ${tableStyle.table_row}
@@ -247,7 +459,6 @@ const SRow = styled.div`
     background-color: ${({ theme }) => theme.colors.bg_gnb};
   }
 `;
-
 const SChamp = styled.div`
   display: flex;
   align-items: center;
@@ -263,6 +474,53 @@ const SChamp = styled.div`
   }
 
   span {
+  }
+`;
+
+// 게임리스트 css
+const SGameList = styled.div`
+  height: 400px;
+  overflow-y: auto;
+  ${scrollbarStyle.hidden}
+`;
+const SGameItem = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 16px 8px;
+  border-radius: 20px;
+  cursor: pointer;
+  ${transitionStyle.background}
+  background-color: ${({ isActive, theme }) =>
+    isActive ? `${theme.colors.bg_gnb}` : ""};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.bg_hover};
+  }
+`;
+const SRadioContainer = styled.div`
+  margin-right: 8px;
+`;
+const SInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  ${typoStyle.contents}
+
+  em {
+    margin-left: 10px;
+    ${typoStyle.info_md}
+  }
+`;
+const STeamSlideContainer = styled.div`
+  display: flex;
+`;
+const STeamSide = styled.div`
+  display: flex;
+  > div {
+    margin-right: 4px;
+    &:last-child {
+      margin-right: 0;
+    }
   }
 `;
 

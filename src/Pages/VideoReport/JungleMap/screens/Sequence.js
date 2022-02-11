@@ -2,7 +2,8 @@
 import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 import { testStyle } from "../../../../Styles/ui";
-import JungleFilter from '../components/JungleFilter';
+import JungleFilter from "../components/JungleFilter";
+import JungleSideFilter from "../components/JungleSideFilter";
 
 const Sequence = () => {
   return (
@@ -11,7 +12,9 @@ const Sequence = () => {
         <JungleFilter />
       </SFilterContainer>
       <SFitlerContents>
-        <SSelector>셀럭터가 들어가요!</SSelector>
+        <SSelector>
+          <JungleSideFilter />
+        </SSelector>
         <SMap>맵이 들어가요!</SMap>
       </SFitlerContents>
     </SContainer>
@@ -34,7 +37,10 @@ const SFitlerContents = styled.section`
 const SSelector = styled.section`
   flex: 0;
   flex-basis: 376px;
-  ${testStyle.border4}
+
+  padding: 29px 23px;
+  border-radius: 20px;
+  background-color: ${({ theme }) => theme.colors.bg_light};
 `;
 const SMap = styled.section`
   flex: 1 0;

@@ -45,6 +45,13 @@ const typoStyle = {
     color: ${theme.colors.info};
   `,
 
+  info_md: css`
+    font-family: "Spoqa Han Sans";
+    font-size: 15px;
+    font-weight: 400;
+    color: ${theme.colors.info};
+  `,
+
   /* label */
   label: css`
     font-family: "Spoqa Han Sans";
@@ -76,7 +83,6 @@ const typoStyle = {
 
   /** input type */
 
-  //placeHolder
   placeHolder: css`
     &::placeholder {
       font-family: "Spoqa Han Sans";
@@ -114,8 +120,15 @@ const typoStyle = {
   table_head: css`
     font-family: SpoqaHanSansNeo;
     font-size: 15px;
+    color: ${theme.colors.vs};
+  `,
 
-    color: #817e8b;
+  /* vs */
+  vs: css`
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+    color: ${theme.colors.vs};
+    font-weight: 700;
   `,
 };
 
