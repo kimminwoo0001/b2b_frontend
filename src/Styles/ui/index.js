@@ -4,6 +4,7 @@ import transitionStyle from "./transition_styled";
 import { testStyle } from "./test_style";
 import shadowStyle from "./shadow_styled";
 import spacing from "./space_style";
+import dropdownStyle from "./select_style";
 import tableStyle from "./table_style";
 
 export {
@@ -14,4 +15,5 @@ export {
   shadowStyle,
   spacing,
   tableStyle,
+  dropdownStyle,
 };
