@@ -18,6 +18,8 @@ const theme = {
     text: "#ffffff",
     info: "#84818e",
     error: "#ee1717",
+    red: "#f04545",
+    blue: "#0075bf",
   },
   borderRadius: "20px",
 };

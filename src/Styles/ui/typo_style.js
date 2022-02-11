@@ -37,7 +37,7 @@ const typoStyle = {
     color: ${theme.colors.text};
   `,
 
-  // info text
+  /** info */
   info: css`
     font-family: "Spoqa Han Sans";
     font-size: 13px;
@@ -45,14 +45,22 @@ const typoStyle = {
     color: ${theme.colors.info};
   `,
 
-  // error text
+  /* label */
+  label: css`
+    font-family: "Spoqa Han Sans";
+    font-size: 15px;
+    text-align: left;
+    color: ${theme.colors.info};
+  `,
+
+  /** error */
   error: css`
     font-family: "Spoqa Han Sans";
     font-size: 11px;
     color: ${theme.colors.error};
   `,
 
-  // popup text
+  /**  popup  */
   popup: css`
     font-family: "Spoqa Han Sans";
     font-size: 18px;
@@ -66,6 +74,8 @@ const typoStyle = {
     color: ${theme.colors.text};
   `,
 
+  /** input type */
+
   //placeHolder
   placeHolder: css`
     &::placeholder {
@@ -75,7 +85,7 @@ const typoStyle = {
     }
   `,
 
-  // button text
+  /** button type */
   button: css`
     font-family: "Spoqa Han Sans";
     font-size: 14px;
@@ -83,7 +93,8 @@ const typoStyle = {
     letter-spacing: 0.025em;
   `,
 
-  // select
+  /** select type **/
+
   select: css`
     font-family: SpoqaHanSansNeo;
     letter-spacing: normal;
@@ -97,6 +108,14 @@ const typoStyle = {
     font-size: 11px;
     letter-spacing: -0.55px;
     color: ${theme.colors.text};
+  `,
+
+  /* table */
+  table_head: css`
+    font-family: SpoqaHanSansNeo;
+    font-size: 15px;
+
+    color: #817e8b;
   `,
 };
 
