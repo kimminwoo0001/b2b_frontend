@@ -6,10 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { SetIsOpen, SetSelectedResult, SetSemiDesc } from "../../redux/modules/modalvalue";
 import { API } from "../../Pages/config";
-import axiosRequest from "../../lib/axiosRequest";
+import axiosRequest from "../../lib/axios/axiosRequest";
 import { Loading } from "../../redux/modules/filtervalue";
 import { UserLogout } from "../../redux/modules";
-import setCookie from "../../lib/setCookie";
+import setCookie from "../../lib/Cookie/setCookie";
+import { goHome, goLogin } from "../../lib/pagePath";
 
 const customStyles = {
   overlay: {
@@ -68,18 +69,18 @@ const AlertModal = () => {
         dispatch(Loading(false))
         sessionStorage.clear();
         dispatch(UserLogout());
-        history.push("/login")
+        history.push(goLogin)
         setCookie("user-token", user.token, -1);
         return;
       case "/home":
-        history.push("/");
+        history.push(goHome);
         return;
       default:
         break;
     }
 
     if (desc === t("alert.logout.sessionExpires")) {
-      history.push("/login");
+      history.push(goLogin);
     }
 
     if (confirmFuncId) {

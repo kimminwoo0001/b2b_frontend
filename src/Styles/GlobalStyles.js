@@ -34,6 +34,7 @@ export const GlobalStyles = createGlobalStyle`
   body {
     width: 100%;
     height: 100%;
+    font-family:'Spoqa Han Sans';
     /* font-family: --apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,'Apple SD Gothic Neo', 'Open Sans', 'Helvetica Neue', sans-serif; */
   }
 `;

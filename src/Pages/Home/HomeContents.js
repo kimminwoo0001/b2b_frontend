@@ -10,10 +10,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../../redux/modules/filtervalue";
 import { SetFilterAllItems, SetRunesJson } from "../../redux/modules/staticvalue";
 
-import axiosRequest from "../../lib/axiosRequest";
+import axiosRequest from "../../lib/axios/axiosRequest";
 import LeagueRank from "./LeagueRank";
 import { SetStatus, SetModalInfo } from "../../redux/modules/modalvalue";
-import setCookie from "../../lib/setCookie";
+import setCookie from "../../lib/Cookie/setCookie";
 
 const HomeContents = memo(() => {
   const filters = useSelector((state) => state.FilterReducer);

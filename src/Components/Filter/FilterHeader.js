@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { FilterMenuSwitch } from '../../redux/modules/filtervalue';
+import { goHome, goLeagueReport, goPathAnalysis, goPlayerCompare, goPlayerReport, goProGameReport, goSoloRank, goTeamCompare, goTeamReport } from '../../lib/pagePath';
 
 const FilterHeader = memo(() => {
   const lang = useSelector((state) => state.LocaleReducer);
@@ -15,7 +16,7 @@ const FilterHeader = memo(() => {
       // menus[0] Home
       idx: 0,
       name: t("sidebar.part1"),
-      path: "/",
+      path: goHome,
       image: "/Images/sidebar_newLogo/ico-home.png",
 
     },
@@ -23,7 +24,7 @@ const FilterHeader = memo(() => {
       // menus[1] 리그 보고서
       idx: 1,
       name: t("sidebar.part2"),
-      path: "/league",
+      path: goLeagueReport,
       image: "/Images/sidebar_newLogo/ico-league.png",
 
     },
@@ -31,7 +32,7 @@ const FilterHeader = memo(() => {
       // menus[2] 팀 보고서
       idx: 2,
       name: t("sidebar.part3"),
-      path: "/team",
+      path: goTeamReport,
       image: "/Images/sidebar_newLogo/ico-team.png",
 
     },
@@ -47,7 +48,7 @@ const FilterHeader = memo(() => {
       // menus[4] 선수 보고서
       idx: 4,
       name: t("sidebar.part5"),
-      path: "/solo",
+      path: goPlayerReport,
       image: "/Images/sidebar_newLogo/ico-player.png",
 
     },
@@ -55,7 +56,7 @@ const FilterHeader = memo(() => {
       // menus[5] 영상 보고서
       idx: 5,
       name: t("sidebar.part6"),
-      path: "/video",
+      path: goPathAnalysis,
       image: "/Images/sidebar_newLogo/ico-movie.png",
 
     },
@@ -71,7 +72,7 @@ const FilterHeader = memo(() => {
       // menus[7] 팀 비교
       idx: 7,
       name: t("sidebar.part8"),
-      path: "/teamCompare",
+      path: goTeamCompare,
       image: "/Images/sidebar_newLogo/ico-teamcom.png",
 
     },
@@ -79,7 +80,7 @@ const FilterHeader = memo(() => {
       // menus[8] 선수 비교
       idx: 8,
       name: t("sidebar.part9"),
-      path: "/playerCompare",
+      path: goPlayerCompare,
       image: "/Images/sidebar_newLogo/ico-playercom.png",
 
     },
@@ -102,8 +103,23 @@ const FilterHeader = memo(() => {
       // menus[11] 게임 보고서
       idx: 11,
       name: t("sidebar.part12"),
-      path: "/gameReport",
+      path: goProGameReport,
       image: "/Images/sidebar_newLogo/ico_game.png",
+
+    },
+    {
+      // menus[12] 솔로 랭크
+      idx: 12,
+      name: t("sidebar.part13"),
+      path: goSoloRank,
+      image: "/Images/sidebar_newLogo/ico_solorank.svg",
+    },
+    {
+      // menus[13] 아이템 계산기
+      idx: 13,
+      name: t("sidebar.part14"),
+      path: "/itemCalculator",
+      image: "/Images/sidebar_newLogo/ico_calculate.svg",
 
     },
   ];
