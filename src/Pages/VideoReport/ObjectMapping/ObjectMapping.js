@@ -300,7 +300,7 @@ function ObjectMapping() {
               }}
               changeColor={gameOpen}
             >
-              <img src={"Images/ico-arrow-down.svg"} alt="" />
+              <img src={"Images/ico-arrow-up.svg"} alt="" />
               <div className="title">
                 <span className="step">STEP 02</span>
                 <span className="subtitle">{t("video.object.step2")}</span>
@@ -643,7 +643,7 @@ const StepTitle = styled.nav`
     }
   }
   img {
-    content: url("Images/ico-arrow-down.svg");
+    content: url("Images/ico-arrow-up.svg");
     transform: ${(props) =>
     props.changeColor ? `rotate(0deg);` : `rotate(180deg);`};
     opacity: ${(props) => (props.changeColor ? `1` : `0.3`)};

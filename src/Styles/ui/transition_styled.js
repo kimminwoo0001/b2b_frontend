@@ -5,7 +5,7 @@ const transitionStyle = {
     transition: opacity 200ms ease-in-out;
   `,
   background: css`
-    transition: background-image 200ms ease-in-out;
+    transition: background 200ms ease-in-out;
   `,
 };
 

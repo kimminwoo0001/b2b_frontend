@@ -47,8 +47,10 @@ function VideoTabs() {
             onClick={() => {
               dispatch(HandleTab(0));
               dispatch(Reset_MapTab());
-              dispatch(ResetWardPathingTab());
-              dispatch(SelectorInitailizeState());
+              if (filters.tab === 4) {
+                dispatch(ResetWardPathingTab());
+                dispatch(SelectorInitailizeState());
+              }
             }}
             changeColor={filters.tab === 0}
           >
@@ -59,10 +61,13 @@ function VideoTabs() {
           <TabContent
             onClick={() => {
               dispatch(HandleTab(1));
-              dispatch(Reset_MapTab());
+              dispatch(Reset_MapTab()); 
               dispatch(Reset_Object_MapTab());
+              if (filters.tab === 4) {
               dispatch(ResetWardPathingTab());
               dispatch(SelectorInitailizeState());
+
+              }
             }}
             changeColor={filters.tab === 1}
           >
@@ -91,8 +96,10 @@ function VideoTabs() {
             onClick={() => {
               dispatch(HandleTab(3));
               dispatch(Reset_MapTab());
+              if (filters.tab === 4) {
               dispatch(ResetWardPathingTab());
               dispatch(SelectorInitailizeState());
+              }
             }}
             changeColor={filters.tab === 3}
           >
@@ -105,8 +112,10 @@ function VideoTabs() {
             onClick={() => {
               dispatch(HandleTab(4));
               dispatch(Reset_MapTab());
+              if (filters.tab === 4) {
               dispatch(ResetWardPathingTab());
               dispatch(SelectorInitailizeState());
+              }
               // dispatch(InitializeGameState());
               // dispatch(InitailizeState());
 

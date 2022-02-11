@@ -1,17 +1,16 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, forwardRef } from "react";
 import styled from "@emotion/styled";
 import { transitionStyle } from "../../Styles/ui";
 
-const Radio = ({ children, checked, ...props }) => {
-  console.log(checked)
+const Radio = forwardRef(({ children, checked, ...props }, ref) => {
   return (
     <SRadioContainer>
-      <input type="radio" checked={checked} {...props} />
+      <input type="radio" checked={checked} {...props} ref={ref} />
       <em className={checked ? "is-active" : ""}></em>
       <span>{children}</span>
     </SRadioContainer>
   );
-};
+});
 
 // style
 const SRadioContainer = styled.label`
