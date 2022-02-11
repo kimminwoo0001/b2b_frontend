@@ -2,10 +2,10 @@ import React from "react";
 import styled from "@emotion/styled";
 import { typoStyle } from "../../../Styles/ui";
 import { useContext } from "react";
-import { ListContext } from "./DropdownList";
+import { DropdownContext } from "./DropdownContainer";
 
 const DropdownItem = ({ children, value, ...props }) => {
-  const { setCurrentValue, setIsActive } = useContext(ListContext);
+  const { setCurrentValue, setIsActive } = useContext(DropdownContext);
 
   const handleClick = (e) => {
     const targetValue = e.target.dataset.value;
@@ -21,12 +21,8 @@ const DropdownItem = ({ children, value, ...props }) => {
 };
 
 const Item = styled.li`
-  padding: 10px 10px;
   cursor: pointer;
   ${typoStyle.select_item}
-  :hover {
-    background-color: rgb(60, 58, 72);
-  }
 `;
 
 export default DropdownItem;
