@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { transitionStyle } from "../../Styles/ui";
 
 const Checkbox = ({ children, checked, name, value, disabled, onChange, ...props }) => {
+  console.log(checked)
   return (
     <SCheckboxContainer className={disabled ? "is-disabled" : ""} {...props}>
       <input

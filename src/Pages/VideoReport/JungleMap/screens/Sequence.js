@@ -8,7 +8,7 @@ const Sequence = () => {
   return (
     <SContainer>
       <SFilterContainer>
-        {/* <JungleFilter /> */}
+        <JungleFilter />
       </SFilterContainer>
       <SFitlerContents>
         <SSelector>셀럭터가 들어가요!</SSelector>
