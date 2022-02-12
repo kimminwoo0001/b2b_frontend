@@ -3,27 +3,15 @@ import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { typoStyle } from "../../Styles/ui";
 
-const Sortingimage = ({ sortConfig, setSortConfig, key }) => {
-  const requestSorts = (key) => {
-    let direction = "ascending";
-    if (
-      sortConfig &&
-      sortConfig.key === key &&
-      sortConfig.direction === "ascending"
-    ) {
-      direction = "descending";
-    }
-    setSortConfig({ key, direction });
-  };
-
+const Sortingimage = ({ requestSorts, key }) => {
   return (
     <SSortingimage
       onClick={() => {
         requestSorts(key);
       }}
     >
-      <img src="Images/ico-sorting-up.png" alt="up" />
-      <img src="Images/ico-sorting-down.png" alt="down" />
+      <img src="Images/btn-sort-up.svg" alt="up" />
+      <img src="Images/btn-sort-down.svg" alt="down" />
     </SSortingimage>
   );
 };

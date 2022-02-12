@@ -7,16 +7,16 @@ import { testStyle, transitionStyle, typoStyle } from "../../../Styles/ui";
 import Compare from "./screens/Compare";
 import Sequence from "./screens/Sequence";
 
-// subtab data
-const JungleTab = [
-  { title: "경기별 정글동선", component: <Sequence /> },
-  { title: "정글링 비교", component: <Compare /> },
-];
 
 
 const JungleMap = () => {
-  const { currentIndex, currentTab, setIndex } = useTab(0, JungleTab);
 
+  // subtab data
+  const JungleTab = [
+    { title: "경기별 정글동선", component: <Sequence /> },
+    { title: "정글링 비교", component: <Compare /> },
+  ];
+  const { currentIndex, currentTab, setIndex } = useTab(0, JungleTab);
   console.log(currentTab);
   return (
     <SContainer>

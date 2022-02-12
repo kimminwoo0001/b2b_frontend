@@ -156,6 +156,7 @@ function Sidebar() {
     menus[11],
     menus[7],
     menus[8],
+    menus[12],
   ];
   return (
     <>

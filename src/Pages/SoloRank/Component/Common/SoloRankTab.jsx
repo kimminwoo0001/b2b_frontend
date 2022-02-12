@@ -9,25 +9,26 @@ import { useSelector } from "react-redux";
 import MyTeam from "../../screens/MyTeam";
 import SearchFilter from "../../screens/SearchFilter";
 import InterestedPlayer from "../../screens/InterestedPlayer";
+import { useState } from "react";
 
 const SoloRankTab = () => {
   const { t } = useTranslation();
-  const SRTab = [
+  const [tab] = useState([
     { title: t("soloRank.tab.myTeam"), component: <MyTeam /> },
     { title: t("soloRank.tab.filterSearch"), component: <SearchFilter /> },
     {
       title: t("soloRank.tab.interestedPlayer"),
       component: <InterestedPlayer />,
     },
-  ];
-  const { currentIndex, currentTab, setIndex } = useTab(0, SRTab);
+  ]);
+  const { currentIndex, currentTab, setIndex } = useTab(0, tab);
 
   console.log(currentTab);
 
   return (
     <SContainer>
       <STab>
-        {SRTab.map((tab, index) => (
+        {tab.map((tab, index) => (
           <STabItem
             key={tab.title}
             className={index === currentIndex ? "is-active" : ""}
