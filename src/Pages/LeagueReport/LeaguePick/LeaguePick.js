@@ -7,6 +7,7 @@ import TabforTop from "./TabforTop";
 import axiosRequest from "../../../lib/axios/axiosRequest";
 import { useTranslation } from "react-i18next";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
+import CalendarFilterNav from "../../../Components/Filter/Calendar/CalendarFilterNav";
 
 function LeaguePick() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -141,6 +142,7 @@ function LeaguePick() {
 
   return (
     <LeaguePickWrapper>
+      <CalendarFilterNav />
       <LeaguePickTabs changeColor={positionTab}>
         <TabItem
           onClick={() => setPositionTab(0)}

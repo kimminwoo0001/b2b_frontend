@@ -10,11 +10,9 @@ import MyTeam from "../../screens/MyTeam";
 import SearchFilter from "../../screens/SearchFilter";
 import InterestedPlayer from "../../screens/InterestedPlayer";
 import { useState } from "react";
-import { useEffect } from "react";
 
 const SoloRankTab = () => {
   const { t } = useTranslation();
-  const a = t("soloRank.tab.myTeam");
   const [tab, setTab] = useState([
     { title: t("soloRank.tab.myTeam"), component: <MyTeam /> },
     { title: t("soloRank.tab.filterSearch"), component: <SearchFilter /> },

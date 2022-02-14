@@ -709,5 +709,23 @@
         "daysPlayedCham": "최근 ##일간\n플레이한 챔피언"
       }
     }
+  },
+  "utility": {
+    "calendarFilter": {
+      "dateSet": "날짜 설정",
+      "inputStart": "시작일 입력",
+      "inputEnd": "종료일 입력",
+      "date": {
+        "allSeason": "시즌 전체",
+        "recent3days": "최근 3일",
+        "recent5days": "최근 5일",
+        "recent7days": "최근 7일",
+        "recent15days": "최근 15일",
+        "recent1months": "최근 1개월",
+        "recent3months": "최근 3개월"
+      },
+      "selectedStartDay": "시작일 선택 완료",
+      "selectedEndDay": "종료일 선택 완료"
+    }
   }
 }
