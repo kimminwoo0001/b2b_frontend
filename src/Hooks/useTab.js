@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 /**
  * @param  initialTabIndex : number
@@ -8,15 +8,10 @@ import { useState, useEffect } from "react";
 
 export const useTab = (initialTabIndex, allTabs) => {
   const [index, setIndex] = useState(initialTabIndex);
-  const [currentTab, setCurrentTab] = useState(allTabs[initialTabIndex]);
-
-  useEffect(() => {
-    setCurrentTab(allTabs[index]);
-  }, [index, allTabs]);
 
   if (!allTabs || !Array.isArray(allTabs)) {
     return;
   }
 
-  return { currentIndex: index, currentTab, setIndex };
+  return { currentIndex: index, currentTab: allTabs[index], setIndex };
 };

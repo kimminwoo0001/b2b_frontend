@@ -106,7 +106,11 @@ const UiTest = () => {
             챔피언선택
           </DropdownLabel>
           <DropdownList>
-            <DropdownItem css={[dropdownStyle.select_item]} value={"메뉴1"}>
+            <DropdownItem
+              css={[dropdownStyle.select_item]}
+              value={"icon"}
+              label={"menu1"}
+            >
               메뉴1
             </DropdownItem>
             <DropdownItem css={[dropdownStyle.select_item]} value={"메뉴2"}>
@@ -157,7 +161,7 @@ const UiTest = () => {
         <h1>아코디언 메뉴</h1>
         {/* type select 박스 */}
         <Accordion css={{ marginBottom: 30 }}>
-          <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
+          <AccordionSummary css={{ marginBottom: 8 }} onClick={() => { }}>
             <SContainer>
               <SLabel>STEP 01</SLabel>
               <STeam>
@@ -195,7 +199,7 @@ const UiTest = () => {
 
         {/* type 2 체크 박스 */}
         <Accordion>
-          <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
+          <AccordionSummary css={{ marginBottom: 8 }} onClick={() => { }}>
             <SContainer>
               <SLabel>STEP 02</SLabel>
               <STeam>
@@ -268,7 +272,7 @@ const UiTest = () => {
       {/* step4 - 라디오 경기 선택 */}
       <section>
         <Accordion css={{ marginBottom: 30 }}>
-          <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
+          <AccordionSummary css={{ marginBottom: 8 }} onClick={() => { }}>
             <SContainer>
               <SLabel>STEP 03</SLabel>
               <STeam>
@@ -399,13 +403,19 @@ const UiTest = () => {
           </AccordionDetails>
         </Accordion>
       </section>
+
+      {/* 오른쪽 비디오 */}
+      <section>
+        {/* <CheckboxList /> */}
+      </section>
     </Container>
   );
 };
 
 const Container = styled.article`
-  height: 100vh;
+  min-height: 100vh;
   padding: 30px;
+
   background-color: ${({ theme }) => theme.colors.bg_light};
   ${typoStyle.body}
 

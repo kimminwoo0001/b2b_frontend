@@ -19,13 +19,13 @@ const MTHeader = () => {
 
   console.log("야옹", lang);
 
-  const [lebels] = useState([
+  const lebels = [
     t("soloRank.myTeam.label.leagueInfo"),
     t("soloRank.myTeam.label.teamLogo"),
     t("soloRank.myTeam.label.teamAbbr"),
     t("soloRank.myTeam.label.teamName"),
     t("common.label.player"),
-  ]);
+  ];
 
   return (
     <SWrapper>

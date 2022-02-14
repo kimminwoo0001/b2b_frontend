@@ -1,23 +1,23 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
+import { useTranslation } from "react-i18next";
 import { useTab } from "../../../Hooks";
 import { testStyle, transitionStyle, typoStyle } from "../../../Styles/ui";
 
 import Compare from "./screens/Compare";
 import Sequence from "./screens/Sequence";
 
-
+// subtab data
 
 const JungleMap = () => {
-
-  // subtab data
+  const { t } = useTranslation();
   const JungleTab = [
-    { title: "경기별 정글동선", component: <Sequence /> },
+    { title: t("filters.sorry"), component: <Sequence /> },
     { title: "정글링 비교", component: <Compare /> },
   ];
   const { currentIndex, currentTab, setIndex } = useTab(0, JungleTab);
-  console.log(currentTab);
+  console.log("--------------", currentTab);
   return (
     <SContainer>
       <STab>
