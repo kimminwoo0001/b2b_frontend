@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
-import { useState, useEffect,useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   League,
@@ -43,7 +43,7 @@ import Checkbox from '../../../../Components/Ui/Checkbox'
 import { typoStyle } from "../../../../Styles/ui";
 import { useTranslation } from "react-i18next";
 import { API } from '../../../config';
-import axiosRequest from '../../../../lib/axiosRequest';
+import axiosRequest from '../../../../lib/axios/axiosRequest';
 
 
 const JungleFilter = () => {
@@ -76,13 +76,13 @@ const JungleFilter = () => {
         //   }
         //   return newData;
         // }
-        const datas = {...filterData[name]}
+        const datas = { ...filterData[name] }
         const list = Object.keys(filterData[name]);
-          const a = list.map((data) => {
-            return datas[data] = checked;
-          })
-      //  console.log("야옹", datas)
-       setFilterData({...filterData, [name]: datas});
+        const a = list.map((data) => {
+          return datas[data] = checked;
+        })
+        //  console.log("야옹", datas)
+        setFilterData({ ...filterData, [name]: datas });
       } else {
         // console.log("=====checked:", filterData.season)
         // console.log("=====checked:", checked)
@@ -93,7 +93,7 @@ const JungleFilter = () => {
       }
     }
   };
-  console.log("filterData.league =====> ",filterData.league);
+  console.log("filterData.league =====> ", filterData.league);
 
   const fetchYearFilter = () => {
     let yearList = [];
@@ -142,50 +142,50 @@ const JungleFilter = () => {
     if (filterData.year.length !== 0) {
       // console.log("야옹");
       const result = Object.keys(filterData.league).filter(key => filterData.league[key] === true)
-        for (let year of filterData.year) {
-          for (let league of result) {
-            const seasonKeys = Object.keys(staticvalue.filterObjects[league][year])
-            seasonList = seasonList.concat(seasonKeys);
-          }
+      for (let year of filterData.year) {
+        for (let league of result) {
+          const seasonKeys = Object.keys(staticvalue.filterObjects[league][year])
+          seasonList = seasonList.concat(seasonKeys);
         }
-        // 공통되는 시즌이 아닌 경우로만 sorting
-        seasonList = seasonList.filter(
-          (item, pos) => seasonList.indexOf(item) === pos
-        );
       }
-    
+      // 공통되는 시즌이 아닌 경우로만 sorting
+      seasonList = seasonList.filter(
+        (item, pos) => seasonList.indexOf(item) === pos
+      );
+    }
+
     dispatch(setSeasonFilter(seasonList));
   }
 
   const fetchTeamFilter = () => {
     let teamList = [];
-      if(filterData.year.length !== 0 && Object.keys(filterData.season).length!== 0) {
+    if (filterData.year.length !== 0 && Object.keys(filterData.season).length !== 0) {
       const selectedLeagues = Object.keys(filterData.league).filter(key => filterData.league[key] === true)
-      const selectedSeasons = Object.keys(filterData.season).filter(key => filterData.season[key] === true) 
+      const selectedSeasons = Object.keys(filterData.season).filter(key => filterData.season[key] === true)
       // console.log("result --------", result)
       // console.log("result2 --------", result2)
-        for(let year of filterData.year) {
-          for (let league of selectedLeagues) {
-            for (let season of selectedSeasons) {
-              const teamData = staticvalue.filterObjects[league][year][season];
-              if(teamData) {
-                const teamKeys = Object.keys(teamData);
-                teamList = teamList.concat(teamKeys);
-              }
+      for (let year of filterData.year) {
+        for (let league of selectedLeagues) {
+          for (let season of selectedSeasons) {
+            const teamData = staticvalue.filterObjects[league][year][season];
+            if (teamData) {
+              const teamKeys = Object.keys(teamData);
+              teamList = teamList.concat(teamKeys);
             }
           }
         }
-        // console.log("result3---------",teamList);
-        // 공통되는 팀이 아닌 경우로만 sorting
+      }
+      // console.log("result3---------",teamList);
+      // 공통되는 팀이 아닌 경우로만 sorting
       teamList = teamList.filter((item, pos) => teamList.indexOf(item) === pos);
 
-     }
-     dispatch(setTeamFilter(teamList));
+    }
+    dispatch(setTeamFilter(teamList));
   }
 
   const fetchPatchFilter = () => {
     const selectedLeagues = Object.keys(filterData.league).filter(key => filterData.league[key] === true)
-    const selectedSeasons = Object.keys(filterData.season).filter(key => filterData.season[key] === true) 
+    const selectedSeasons = Object.keys(filterData.season).filter(key => filterData.season[key] === true)
 
     dispatch(Loading(true))
     const url = `${API}/lolapi/filter/patch`;
@@ -205,7 +205,7 @@ const JungleFilter = () => {
       dispatch(Loading(false));
     });
   }
-  
+
 
 
 
@@ -220,7 +220,7 @@ const JungleFilter = () => {
 
   // 리그 설정 후 시즌필터 호출
   useEffect(() => {
-   console.log("야옹3")
+    console.log("야옹3")
     if (Object.keys(filterData.league).length === 0) {
       return;
     }
@@ -235,11 +235,11 @@ const JungleFilter = () => {
     }
     fetchTeamFilter();
     // fetchPatchFilter();
-  },[filterData.season])
+  }, [filterData.season])
 
 
   useEffect(() => {
-    if(filterData.team.length === 0) {
+    if (filterData.team.length === 0) {
       return;
     }
     fetchPatchFilter();
@@ -258,7 +258,7 @@ const JungleFilter = () => {
       return newObj;
     },
       {}
-      )
+    )
     return result;
   }
 
@@ -348,9 +348,9 @@ const JungleFilter = () => {
                 value={league}
                 onChange={handleChange}
                 checked={filterData["league"][league]}
-            >
-              {league}
-            </Checkbox>
+              >
+                {league}
+              </Checkbox>
             )
           })}
 
@@ -382,20 +382,20 @@ const JungleFilter = () => {
           })}
         </SFilterGroup>
       </SRow>
-        {/* 팀 */}
+      {/* 팀 */}
       <SRow>
         <STitle>팀</STitle>
         <SFilterGroup>
-          {Object.keys(filterData.season).length !== 0 &&selector.teamFilter?.map((team) => {
+          {Object.keys(filterData.season).length !== 0 && selector.teamFilter?.map((team) => {
             return (
-                <Radio
-                  name="team"
-                  value={team}
-                  onChange={handleChange}
-                  checked={filterData.team.includes(team)}
-                >
-                  {team}
-                </Radio>
+              <Radio
+                name="team"
+                value={team}
+                onChange={handleChange}
+                checked={filterData.team.includes(team)}
+              >
+                {team}
+              </Radio>
             )
           })}
         </SFilterGroup>
