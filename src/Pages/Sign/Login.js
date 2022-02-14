@@ -20,9 +20,9 @@ import { useHistory } from "react-router-dom";
 import { Language } from "../../redux/modules/locale";
 import AlertModal from "../../Components/UtilityComponent/AlertModal";
 import { useTranslation } from "react-i18next";
-import axiosRequest from "../../lib/axiosRequest";
+import axiosRequest from "../../lib/axios/axiosRequest";
 import { API } from "../config";
-import checkEmail from "../../lib/checkEmail";
+import checkEmail from "./lib/checkEmail";
 import {
   SetModalInfo,
   SetDesc,
@@ -30,12 +30,13 @@ import {
   SetIsSelector,
   SetConfirmFuncId,
 } from "../../redux/modules/modalvalue";
-import signAxiosReq from "../../lib/signAxiosReq";
+import signAxiosReq from "../../lib/axios/signAxiosReq";
 import LoadingImg from "../../Components/LoadingImg/LoadingImg";
 import { Loading } from "../../redux/modules/filtervalue";
-import getCookie from "../../lib/getCookie";
+import getCookie from "../../lib/Cookie/getCookie";
 import buttonStyle from "../../Styles/ui/button_style";
 import Button from "../../Components/Ui/Button";
+import { goChangePw, goCheckLogin, goHome, goSignUp } from "../../lib/pagePath";
 
 function Login() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -77,7 +78,7 @@ function Login() {
         dispatch(UserToken(getCookie("user-token")));
         dispatch(UserChargeTime(getCookie("user-charge_time")));
         dispatch(UserName(getCookie("user-name")));
-        history.push("/");
+        history.push(goHome);
       })
     }
 
@@ -86,7 +87,7 @@ function Login() {
 
   useEffect(() => {
     if (user.token && user.token.length > 0) {
-      history.push("/");
+      history.push(goHome);
     }
   }, [user.token])
 
@@ -122,7 +123,7 @@ function Login() {
                 dispatch(UserToken(token.token));
                 dispatch(UserChargeTime(token.charge_time));
                 dispatch(UserName(token.name));
-                history.push("/");
+                history.push(goHome);
               });
             }
             dispatch(Loading(false));
@@ -140,7 +141,7 @@ function Login() {
                 param,
                 function (success) {
                   dispatch(UserID(id));
-                  history.push("/checkLogin");
+                  history.push(goCheckLogin);
                   dispatch(Loading(false));
                 },
                 function (data) {
@@ -161,7 +162,7 @@ function Login() {
               dispatch(SetIsOpen(true));
               dispatch(Loading(false));
             } else if (msg === "TO") {
-              dispatch(SetDesc(t("alert.desc.loginTimeOver")));
+              dispatch(SetDesc(t("alert.desc.goLoginTimeOver")));
               dispatch(SetIsOpen(true));
               dispatch(Loading(false));
             } else {
@@ -178,7 +179,7 @@ function Login() {
         dispatch(Loading(false));
       }
     } catch (e) {
-      // setAlertDesc(t("alert.desc.login_fail"));
+      // setAlertDesc(t("alert.desc.goLogin_fail"));
       dispatch(SetDesc(t("alert.desc.login_fail")));
       dispatch(SetIsOpen(true));
       dispatch(Loading(false));
@@ -240,7 +241,7 @@ function Login() {
               <div className="left">
                 <span
                   onClick={() => {
-                    history.push("/signUp");
+                    history.push(goSignUp);
                   }}
                 >
                   {t("sign.signUp")}
@@ -252,7 +253,7 @@ function Login() {
               <div className="right">
                 <span
                   onClick={() => {
-                    history.push("/changePw");
+                    history.push(goChangePw);
                   }}
                 >
                   {t("sign.changePW")}

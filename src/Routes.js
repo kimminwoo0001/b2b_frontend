@@ -6,34 +6,33 @@ import {
   Redirect,
   useHistory,
 } from "react-router-dom";
-
 import Home from "./Pages/Home/Home";
-import League from "./Pages/League/League";
-import Team from "./Pages/Team/Team";
-import Solo from "./Pages/Solo/Solo";
-import Utility from "./Pages/Utility/Utility";
-import ItemSimulator from "./Pages/ItemSimulator/ItemSimulator";
-import PickCalculator from "./Pages/PickCalculator/PickCalculator";
-import NotFound from "./Pages/NotFound/NotFound";
+import League from "./Pages/LeagueReport/League";
+import Team from "./Pages/TeamReport/Team";
+import Solo from "./Pages/PlayerReport/Solo";
+import NotFound from "./Pages/ETC/NotFound/NotFound";
 import Login from "./Pages/Sign/Login";
 import TeamCompare from "./Pages/TeamCompare/TeamCompare";
 import PlayerCompare from "./Pages/PlayerCompare/PlayerCompare";
-import Video from "./Pages/VideoReport/Video";
+import Video from "./Pages/PathingAnalysis/Video";
 import Footer from "./Components/Footer/Footer";
-import MetaAnalysis from "./Pages/MetaAnalysis/MetaAnalysis";
-import MatchAnalysis from "./Pages/MatchAnalysis/MatchAnalysis";
 import SingUp from "./Pages/Sign/SignUp";
 import ChangePW from "./Pages/Sign/ChangePW";
 import { useSelector } from "react-redux";
-import PiArea from "./Pages/PiArea/PiArea";
-import GameReport from "./Pages/GameReport/GameReport";
+import PiArea from "./Pages/ETC/PiArea/PiArea";
+import GameReport from "./Pages/ProGameReport/GameReport";
 import AlertModal from "./Components/UtilityComponent/AlertModal";
 import CheckLogin from "./Pages/Sign/CheckLogin";
 import Loading from "./Components/LoadingImg/LoadingImg";
 import ChannelService from "./Components/UtilityComponent/ChannelService";
-import GameReportDetail from "./Pages/GameReport/Components/GameReportDetail";
-import UiTest from "./Pages/Ui/UiTest";
-import ServerTest from "./Pages/ServerTest/ServerTest";
+import GameReportDetail from "./Pages/ProGameReport/Components/GameReportDetail";
+import UiTest from "./Pages/ETC/Ui/UiTest"
+import ServerTest from "./Pages/ETC/ServerTest/ServerTest";
+import SoloRank from "./Pages/SoloRank/SoloRank";
+import { goChangePw, goCheckLogin, goError, goHome, goLeagueReport, goLogin, goPathAnalysis, goPiArea, goPlayerCompare, goPlayerReport, goProGameReport, goServerTest, goSignUp, goSoloRank, goTeamCompare, goTeamReport, goUiTest, proGameReportDetail } from "./lib/pagePath";
+
+// import Utility from "./Pages/ETC/Utility/Utility";
+// import PickCalculator from "./Pages/ETC/PickCalculator/PickCalculator";
 
 function Routes() {
   //const token = sessionStorage.getItem("token");
@@ -69,33 +68,31 @@ function Routes() {
       <AlertModal />
       <Loading />
       <Switch>
-        <PrivateRoute exact path="/" component={Home} />
-        <PrivateRoute exact path="/league" component={League} />
-        <PrivateRoute exact path="/team" component={Team} />
-        <PrivateRoute exact path="/metaAnalysis" component={MetaAnalysis} />
-        <PrivateRoute exact path="/matchAnalysis" component={MatchAnalysis} />
-        <PrivateRoute exact path="/solo" component={Solo} />
-        <PrivateRoute exact path="/video" component={Video} />
-        <PrivateRoute exact path="/gameReport" component={GameReport} />
+        <PrivateRoute exact path={goHome} component={Home} />
+        <PrivateRoute exact path={goLeagueReport} component={League} />
+        <PrivateRoute exact path={goTeamReport} component={Team} />
+        <PrivateRoute exact path={goPlayerReport} component={Solo} />
+        <PrivateRoute exact path={goPathAnalysis} component={Video} />
+        <PrivateRoute exact path={goProGameReport} component={GameReport} />
         <PrivateRoute
           exact
-          path="/gameReportDetail"
+          path={proGameReportDetail}
           component={GameReportDetail}
         />
-        <PrivateRoute exact path="/utility" component={Utility} />
-        <PrivateRoute exact path="/simulator" component={ItemSimulator} />
-        <PrivateRoute exact path="/calculator" component={PickCalculator} />
-        <PrivateRoute exact path="/teamCompare" component={TeamCompare} />
-        <PrivateRoute exact path="/playerCompare" component={PlayerCompare} />
+        {/* <PrivateRoute exact path="/utility" component={Utility} />
+        <PrivateRoute exact path="/calculator" component={PickCalculator} /> */}
+        <PrivateRoute exact path={goTeamCompare} component={TeamCompare} />
+        <PrivateRoute exact path={goPlayerCompare} component={PlayerCompare} />
+        <PrivateRoute exact path={goSoloRank} component={SoloRank} />
         {/* pi only */}
-        <PrivateRoute exact path="/piArea" component={PiArea} />
-        <Route exact path="/error" component={NotFound} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/checkLogin" component={CheckLogin} />
-        <Route exact path="/signUp" component={SingUp} />
-        <Route exact path="/changePW" component={ChangePW} />
-        <Route exact path="/test" component={UiTest} />
-        <Route exact path="/serverTest" component={ServerTest} />
+        <PrivateRoute exact path={goPiArea} component={PiArea} />
+        <Route exact path={goError} component={NotFound} />
+        <Route exact path={goLogin} component={Login} />
+        <Route exact path={goCheckLogin} component={CheckLogin} />
+        <Route exact path={goSignUp} component={SingUp} />
+        <Route exact path={goChangePw} component={ChangePW} />
+        <Route exact path={goUiTest} component={UiTest} />
+        <Route exact path={goServerTest} component={ServerTest} />
       </Switch>
       <Footer />
     </Router>

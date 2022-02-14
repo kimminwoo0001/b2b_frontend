@@ -2,6 +2,7 @@ import React, { memo, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { goPlayerReport } from "../../lib/pagePath";
 
 const MultiSelectCb = memo(
   ({
@@ -16,7 +17,7 @@ const MultiSelectCb = memo(
     const { t } = useTranslation();
     const filters = useSelector((state) => state.FilterReducer);
     const pagePath = document.location.pathname;
-    const isSoloPage = pagePath === "/solo";
+    const isPlayerReportPage = pagePath === goPlayerReport;
 
     return (
       <>
@@ -25,7 +26,7 @@ const MultiSelectCb = memo(
           isChecked={filterData?.includes(mapData) ? true : false}
           radioBtn={radioBtn}
           noTeamSelected={filters.team.length === 0}
-          noPlayerSelected={isSoloPage && filters.player === ""}
+          noPlayerSelected={isPlayerReportPage && filters.player === ""}
           onClick={() => {
             clickEvent();
           }}
@@ -107,9 +108,9 @@ const Selecter = styled.div`
 
     background-clip: content-box;
     background: ${(props) =>
-        props.radioBtn
-          ? `url("/Images/btn_radio_off.svg")`
-          : `url("/Images/btn_check_off.svg")`}
+    props.radioBtn
+      ? `url("/Images/btn_radio_off.svg")`
+      : `url("/Images/btn_check_off.svg")`}
       no-repeat;
     margin-right: 8px;
 
@@ -118,9 +119,9 @@ const Selecter = styled.div`
       border: #5942ba;
       border-radius: 2px;
       background: ${(props) =>
-          props.radioBtn
-            ? `url("/Images/btn_radio_on.svg")`
-            : `url("/Images/btn_check_on.svg")`}
+    props.radioBtn
+      ? `url("/Images/btn_radio_on.svg")`
+      : `url("/Images/btn_check_on.svg")`}
         no-repeat;
       float: right;
     }

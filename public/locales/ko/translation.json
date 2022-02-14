@@ -16,6 +16,17 @@
     "part13": "솔로 랭크",
     "part14": "아이템 계산기"
   },
+  "common": {
+    "label": {
+      "recent": "최근",
+      "game": "경기",
+      "player": "선수",
+      "winrate": "승률"
+    },
+    "button": {
+      "add": "추가"
+    }
+  },
   "sign": {
     "signUp": "신규 계정등록",
     "changePW": "비밀번호 재설정",
@@ -675,6 +686,27 @@
         "mid": "미드 선픽",
         "ad": "원딜 선픽",
         "sup": "서폿 선픽"
+      }
+    }
+  },
+  "soloRank": {
+    "tab": {
+      "myTeam": "우리팀 솔로랭크",
+      "filterSearch": "필터검색",
+      "interestedPlayer": "관심선수 솔로랭크"
+    },
+    "myTeam": {
+      "label": {
+        "leagueInfo": "리그정보",
+        "teamLogo": "팀 로고",
+        "teamAbbr": "팀 약자",
+        "teamName": "팀 이름",
+        "addInterestedPlayer": "관심선수 등록",
+        "soloRankID": "솔로랭크 ID",
+        "curTier8prevTier": "현재 티어 LP \n(이전 시즌 티어)",
+        "curSeason": "이번 시즌",
+        "recentDays": "최근 ##일",
+        "daysPlayedCham": "최근 ##일간\n플레이한 챔피언"
       }
     }
   }
