@@ -18,6 +18,7 @@ import Avatar from "../../../Components/Ui/Avatar";
 
 import Radio from "../../../Components/Ui/Radio";
 import scrollbarStyle from "../../../Styles/ui/scrollbar_style";
+import CheckboxList from "./components/CheckboxList";
 
 const UiTest = () => {
   const [filterState, setFilterState] = useState({
@@ -106,7 +107,11 @@ const UiTest = () => {
             챔피언선택
           </DropdownLabel>
           <DropdownList>
-            <DropdownItem css={[dropdownStyle.select_item]} value={"메뉴1"}>
+            <DropdownItem
+              css={[dropdownStyle.select_item]}
+              value={"icon"}
+              label={"menu1"}
+            >
               메뉴1
             </DropdownItem>
             <DropdownItem css={[dropdownStyle.select_item]} value={"메뉴2"}>
@@ -399,13 +404,19 @@ const UiTest = () => {
           </AccordionDetails>
         </Accordion>
       </section>
+
+      {/* 오른쪽 비디오 */}
+      <section>
+        <CheckboxList />
+      </section>
     </Container>
   );
 };
 
 const Container = styled.article`
-  height: 100vh;
+  min-height: 100vh;
   padding: 30px;
+
   background-color: ${({ theme }) => theme.colors.bg_light};
   ${typoStyle.body}
 

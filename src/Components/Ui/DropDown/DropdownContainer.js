@@ -12,13 +12,16 @@ export const DropdownContext = createContext({
   label: "",
   isActive: false,
   currentValue: "",
+  currentLabel: "",
   setCurrentValue: () => {},
   setIsActive: () => {},
+  setCurrentLabel: () => {},
 });
 
 const DropdownContainer = ({ children, onChange, label, ...props }) => {
   const containerRef = useRef(null);
   const [currentValue, setCurrentValue] = useState("");
+  const [currentLabel, setCurrentLabel] = useState("");
   const [isActive, setIsActive] = useDetectOutsideClick(containerRef, false);
 
   useEffect(() => {
@@ -33,8 +36,10 @@ const DropdownContainer = ({ children, onChange, label, ...props }) => {
       currentValue,
       setCurrentValue,
       setIsActive,
+      currentLabel,
+      setCurrentLabel,
     }),
-    [setCurrentValue, setIsActive, currentValue, isActive]
+    [setCurrentValue, setIsActive, currentValue, isActive, currentLabel]
   );
 
   return (
