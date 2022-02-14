@@ -144,6 +144,18 @@ const typoStyle = {
     text-overflow: ellipsis;
     overflow: hidden;
   `,
+
+  /* event log */
+  eventlog: css`
+    line-height: 22px;
+    font-size: 13px;
+    color: ${theme.colors.text};
+
+    > div {
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+  `,
 };
 
 export default typoStyle;
