@@ -268,7 +268,8 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
             )}
             {pickDifference?.map((pick, idx) => {
               return (
-                <MatchContents key={idx}>
+
+                <MatchContents LPLnotSelected={!filters.league.includes("LPL")} key={idx}>
                   <BlueSide>
                     <ChampInfo>
                       <img
@@ -286,7 +287,10 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                         )} ${pick?.champion.lose}${t("league.draft.l")}`}</div>
                       </div>
                     </ChampInfo>
-                    <KDA>
+                    {!filters.league.includes("LPL") ? 
+                    (
+                      <>
+                      <KDA>
                       <div className="Kda">KDA</div>
                       <span className="Kills">
                         {pick?.champion.kills.toFixed(0)}
@@ -325,6 +329,11 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                         <div></div>
                       )}
                     </DPM>
+                    </>
+                    ) : 
+                    (<div></div>)
+                     }
+  
                   </BlueSide>
                   <div className="Vs">VS</div>
                   <RedSide>
@@ -345,6 +354,10 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                         alt="champIcon"
                       ></img>
                     </ChampInfo>
+
+                    {!filters.league.includes("LPL") ?
+                    (
+                    <>
                     <KDA>
                       <span className="Kills">
                         {pick?.opp_champion.kills.toFixed(0)}
@@ -384,6 +397,9 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                         <div></div>
                       )}
                     </DPM>
+                    </> )
+                    :( <div></div>)
+                     } 
                   </RedSide>
                 </MatchContents>
               );
@@ -398,14 +414,20 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
               tableid="unique-table"
             />
           </Header>
-          <UniqueTable id="unique-table">
+          <UniqueTable LPLnotSelected={!filters.league.includes("LPL")} id="unique-table">
             <thead>
-              <UniqueNavBar>
+              <UniqueNavBar >
                 <th className="Champion">{t("league.draft.champion")}</th>
+                {!filters.league.includes("LPL") ? 
                 <th className="WinRate">{t("league.draft.player")}</th>
+                :<></>
+                }
                 <th className="PickCount">{t("league.draft.result")}</th>
                 <th className="BanRate">{t("league.draft.opponent")}</th>
+                {!filters.league.includes("LPL") ? 
                 <th className="WinRate">{t("league.draft.oppplayer")}</th>
+                :<></>
+                }
               </UniqueNavBar>
             </thead>
             <tbody>
@@ -431,7 +453,9 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                         </span>
                       </div>
                     </td>
-                    <td className="PlayerUsed">{`${data.player} `}</td>
+                    {!filters.league.includes("LPL") ?
+                    <td className="PlayerUsed">{`${data.player} `}</td> : <></>
+                    }
                     <td className="Win">
                       <Result color={data.result === "Win"}>
                         {data.result}
@@ -453,7 +477,9 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                         </span>
                       </div>
                     </td>
-                    <td className="PlayerUsed">{`${data.oppPlayer} `}</td>
+                    {!filters.league.includes("LPL") ?
+                    <td className="PlayerUsed">{`${data.oppPlayer} `}</td> : <></>
+                    }
                   </UniqueMappingPicks>
                 );
               })}
@@ -543,13 +569,15 @@ const UniqueTable = styled.table`
     > .Champion {
       padding: 0 0 0 10px;
       vertical-align: middle;
-      text-align: left;
+      text-align: ${props => props.LPLnotSelected ? "left" : "center"};
+
       /* width: 155px; */
     }
     > .BanRate {
       padding: 0 0 0 10px;
       vertical-align: middle;
-      text-align: left;
+      text-align: ${props => props.LPLnotSelected ? "left" : "center"};
+
     }
     > .PickCount {
       /* width: 60px; */

@@ -2,7 +2,7 @@ import React, { memo, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { goPlayerReport } from "../../lib/pagePath";
+import { goLeagueReport, goPlayerReport } from "../../lib/pagePath";
 
 const MultiSelectCb = memo(
   ({
@@ -19,8 +19,10 @@ const MultiSelectCb = memo(
     const pagePath = document.location.pathname;
     const isPlayerReportPage = pagePath === goPlayerReport;
 
+    console.log("clicked mapdata: ", mapData)
     return (
-      <>
+      
+      <SelectorWrapper isUpperLineNecessary={mapData === "LPL" && pagePath === goLeagueReport}>
         <Selecter
           key={idx}
           isChecked={filterData?.includes(mapData) ? true : false}
@@ -36,14 +38,26 @@ const MultiSelectCb = memo(
             checked={filterData?.includes(mapData) ? true : false}
             readOnly
           />
-          <span>{mapData === "11.6" ? "11.6 (P.O)" : mapData}</span>
+          <span 
+          >{(mapData === "11.6" ? "11.6 (P.O)" : mapData === "LPL" && pagePath === goLeagueReport ? `${mapData} (${t("filters.noMultipleSelection")})`: mapData )}</span>
         </Selecter>
-      </>
+        </SelectorWrapper>
+      
     );
   }
 );
 
 export default MultiSelectCb;
+
+const SelectorWrapper = styled.div`
+${(props) => 
+  props.isUpperLineNecessary && 
+css`
+border-top: 1px solid #433f4e;
+border-radius: 0px;
+`}
+
+`
 
 const Selecter = styled.div`
   display: flex;
@@ -54,6 +68,8 @@ const Selecter = styled.div`
   height: 30px;
   color: #84818e;
   cursor: pointer;
+
+
 
   ${(props) =>
     props.isChecked &&
