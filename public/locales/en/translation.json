@@ -507,6 +507,18 @@
       "3min": "0'-3'",
       "8min": "3'-8'",
       "side": "SIDE"
+    },
+    "jungle" : {
+      "Jungle Pathing": "Jungle Pathing",
+      "Compare Jungling" : "Compare Jungling",
+      "year": "Year",
+      "league" : "League",
+      "season" : "Season", 
+      "team" : "Team",
+      "patch" : "Patch",
+      "selectAll": "Select All",
+      "selectedFilter" : "Selected Filter",
+      "reset": "Reset"
     }
   },
   "alert": {

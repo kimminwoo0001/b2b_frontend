@@ -43,7 +43,8 @@ import Checkbox from '../../../../Components/Ui/Checkbox'
 import { typoStyle } from "../../../../Styles/ui";
 import { useTranslation } from "react-i18next";
 import { API } from '../../../config';
-import axiosRequest from '../../../../lib/axiosRequest';
+import axiosRequest from '../../../../lib/axios/axiosRequest';
+
 
 
 const JungleFilter = () => {
@@ -93,7 +94,7 @@ const JungleFilter = () => {
       }
     }
   };
-  console.log("filterData.league =====> ",filterData.league);
+  // console.log("filterData.league =====> ",filterData.league);
 
   const fetchYearFilter = () => {
     let yearList = [];
@@ -214,7 +215,14 @@ const JungleFilter = () => {
   useEffect(() => {
     if (filterData.year.length === 0) {
       return;
-    }
+    } 
+    setFilterData({
+      year: filterData.year,
+      league: {},
+      season: {},
+      team: [],
+      patch: {},
+    });
     fetchLeagueFilter();
   }, [filterData.year])
 
@@ -333,14 +341,17 @@ const JungleFilter = () => {
       <SRow>
         <STitle>리그</STitle>
         <SFilterGroup>
+          {filterData.year.length === 0 ? <SInitialStatement>리그 선택</SInitialStatement> : 
           <SCheckboxAll
-            name="league"
-            value="all"
-            onChange={handleChange}
-            checked={selector.leagueFilter.length > 0 && selector.leagueFilter.length === Object.keys(filterData.league).length && !Object.values(filterData.league).includes(false)}
-          >
-            전체선택
-          </SCheckboxAll>
+          name="league"
+          value="all"
+          onChange={handleChange}
+          checked={selector.leagueFilter.length > 0 && selector.leagueFilter.length === Object.keys(filterData.league).length && !Object.values(filterData.league).includes(false)}
+        >
+          전체선택
+        </SCheckboxAll>
+          } 
+        
           {Object.keys(filterData.league).length !== 0 && selector.leagueFilter?.map((league) => {
             return (
               <Checkbox
@@ -360,14 +371,16 @@ const JungleFilter = () => {
       <SRow>
         <STitle>시즌</STitle>
         <SFilterGroup>
+          {Object.keys(filterData.league).length === 0 || !Object.values(filterData.league).includes(true) ? <SInitialStatement>시즌 선택</SInitialStatement> :
           <SCheckboxAll
-            name="season"
-            value="all"
-            onChange={handleChange}
-            checked={selector.seasonFilter.length > 0 && selector.seasonFilter.length === Object.keys(filterData.season).length && !Object.values(filterData.season).includes(false)}
-          >
-            전체선택
-          </SCheckboxAll>
+          name="season"
+          value="all"
+          onChange={handleChange}
+          checked={selector.seasonFilter.length > 0 && selector.seasonFilter.length === Object.keys(filterData.season).length && !Object.values(filterData.season).includes(false)}
+        >
+          전체선택
+        </SCheckboxAll>
+          } 
           {Object.keys(filterData.season).length !== 0 && selector.seasonFilter?.map((season) => {
             return (
               <Checkbox
@@ -386,6 +399,7 @@ const JungleFilter = () => {
       <SRow>
         <STitle>팀</STitle>
         <SFilterGroup>
+          {(Object.keys(filterData.season).length === 0 || !Object.values(filterData.season).includes(true)) && <SInitialStatement>팀 선택</SInitialStatement> }
           {Object.keys(filterData.season).length !== 0 &&selector.teamFilter?.map((team) => {
             return (
                 <Radio
@@ -400,17 +414,20 @@ const JungleFilter = () => {
           })}
         </SFilterGroup>
       </SRow>
+      {/* 패치 */}
       <SRow>
         <STitle>패치</STitle>
         <SFilterGroup>
+          {filterData.team.length === 0 ?  <SInitialStatement>패치 선택</SInitialStatement> : 
           <SCheckboxAll
-            name="patch"
-            value="all"
-            onChange={handleChange}
-            checked={selector.patchFilter.length > 0 && selector.patchFilter.length === Object.keys(filterData.patch).length && !Object.values(filterData.patch).includes(false)}
-          >
-            전체선택
-          </SCheckboxAll>
+          name="patch"
+          value="all"
+          onChange={handleChange}
+          checked={selector.patchFilter.length > 0 && selector.patchFilter.length === Object.keys(filterData.patch).length && !Object.values(filterData.patch).includes(false)}
+        >
+          전체선택
+        </SCheckboxAll>
+          }
           {filterData.team.length > 0 && selector.patchFilter?.map((patch) => {
             return (
               <Checkbox
@@ -425,6 +442,32 @@ const JungleFilter = () => {
           })}
         </SFilterGroup>
       </SRow>
+      {/* 선택된 필터 */}
+      {filterData.year.length > 0 ? 
+       <SRow>
+       <STitle>선택된 필터</STitle>
+       <SFilterGroup>
+        <SReset>
+        <SResetImg src="Images/ico_reset.png" alt="reset"/>
+        <SResetTitle>초기화</SResetTitle>
+        </SReset>
+  
+         {/* {filterData.team.length > 0 && selector.patchFilter?.map((patch) => {
+           return (
+             <Checkbox
+               name="patch"
+               value={patch}
+               onChange={handleChange}
+               checked={filterData["patch"][patch]}
+             >
+               {patch}
+             </Checkbox>
+           )
+         })} */}
+
+       </SFilterGroup>
+     </SRow> : <></>
+      }
     </SFilterContainer>
   );
 };
@@ -443,11 +486,26 @@ const STitle = styled.div`
   flex: 1;
 `;
 
+const SResetTitle = styled.span`
+${typoStyle.contents}
+`;
+
 const SCheckboxAll = styled(Checkbox)``;
+
+const SReset = styled.button``;
+
+
+const SResetImg = styled.img``;
+
+
+const SInitialStatement = styled.div`
+opacity: 0.3;
+`;
 
 const SFilterGroup = styled.div`
   display: flex;
   flex-flow: wrap;
+  justify-contents: space-between;
   align-items: center;
   width: 1004px;
   min-height: 44px;
