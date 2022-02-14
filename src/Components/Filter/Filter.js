@@ -236,6 +236,14 @@ const Filter = memo(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [copyvalue.compareModal]);
 
+  // 팀 보고서 - 전력보고서 탭에서 리그를 lpl로 변경시 밴픽보고서 탭만 보여주도록 처리
+  useEffect(() => {
+    if(pagePath === "/team" && filters.tab === 1 && filters.league.includes("LPL")) {
+      dispatch(HandleTab(0));
+    }
+  },[filters.league])
+
+
   const fetchActiveFilter = () => {
     // if (selector.leagueFilter?.length > 0) fetchLeagueFilter();
     // if (selector.yearFilter?.length > 0) fetchYearFilter();
@@ -263,14 +271,12 @@ const Filter = memo(() => {
         return;
       }
       // 모든 리그에서 LPL 리그 제외
-      leagueList = Object.keys(staticvalue.filterObjects).filter(
-        (key) => key !== "LPL"
-      )
+      leagueList = Object.keys(staticvalue.filterObjects)
     }
 
     if (filters.year[0] === "2022") {
       leagueList = Object.keys(staticvalue.filterObjects).filter(
-        (key) => key !== "MSI" && key !== "WC" && key !== "LPL"
+        (key) => key !== "MSI" && key !== "WC"
       );
     }
     if (pagesWithLimitedLeagues) {
