@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
+import PositionCheckList from "../../../../Components/Ui/PositionCheckList";
 import { testStyle } from "../../../../Styles/ui";
 import JungleFilter from "../components/JungleFilter";
 import JungleSideFilter from "../components/JungleSideFilter";
@@ -17,7 +18,10 @@ const Sequence = () => {
           <JungleSideFilter />
         </SSelector>
         <SMap>
-          <SVideo>여기에 비디오 플레이어가 들어갑니다</SVideo>
+          <SVideo>
+            <PositionCheckList onChange={(position) => console.log(position)} />
+            {/* ehck */}
+          </SVideo>
           <SDialog>
             <SequenceDialog />
           </SDialog>
