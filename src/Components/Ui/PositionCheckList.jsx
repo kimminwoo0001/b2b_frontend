@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CustomCheckbox from "./CustomCheckbox";
 import styled from "@emotion/styled";
 import { isObjEqual } from "../../lib/isObjEqual";
 import { transitionStyle, typoStyle } from "../../Styles/ui";
-const PositionCheckList = () => {
+
+const PositionCheckList = ({ onChange, ...props }) => {
   const [position, setPosition] = useState({
     all: false,
     top: false,
@@ -22,26 +23,35 @@ const PositionCheckList = () => {
         for (let key in newPosition) {
           newPosition[key] = checked;
         }
+
+        if (onChange) {
+          onChange(newPosition);
+        }
+
         return newPosition;
       });
     } else {
       setPosition((prev) => {
-        const newData = { ...prev };
-        newData[value] = checked;
+        const newPosition = { ...prev };
+        newPosition[value] = checked;
 
-        if (isObjEqual(newData)) {
-          newData.all = checked;
+        if (isObjEqual(newPosition)) {
+          newPosition.all = checked;
         } else {
-          newData.all = false;
+          newPosition.all = false;
         }
 
-        return newData;
+        if (onChange) {
+          onChange(newPosition);
+        }
+
+        return newPosition;
       });
     }
   };
 
   return (
-    <div>
+    <div {...props}>
       <SList>
         <SListItem>
           <SCustomCheckbox
