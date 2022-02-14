@@ -7,7 +7,7 @@ import CheckBox from "../../../Components/UtilityComponent/CheckBox";
 import { useDispatch, useSelector } from "react-redux";
 import contentTOU from "../../../lib/content/contentTOU";
 import contentPICACU from "../../../lib/content/contentPICAUA";
-import checkEmail from "../../../lib/checkEmail";
+import checkEmail from "../lib/checkEmail";
 import { number } from "prop-types";
 import {
   SetConfirmFuncId,
@@ -16,10 +16,11 @@ import {
   SetIsSelector,
   SetSemiDesc,
 } from "../../../redux/modules/modalvalue";
-import signAxiosReq from "../../../lib/signAxiosReq";
+import signAxiosReq from "../../../lib/axios/signAxiosReq";
 import { API } from "../../config";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import { Loading } from "../../../redux/modules/filtervalue";
+import { goLogin } from "../../../lib/pagePath";
 
 const EnrollAccount = ({ id, authCode, signType }) => {
   const filters = useSelector((state) => state.FilterReducer);
@@ -222,7 +223,7 @@ const EnrollAccount = ({ id, authCode, signType }) => {
             dispatch(SetDesc(t(`sign.${id}.confirmSuccess`)));
             dispatch(SetSemiDesc(""));
             //dispatch(SetConfirmFuncId("login"));
-            history.push("/login");
+            history.push(goLogin);
           }
           dispatch(Loading(false));
         },

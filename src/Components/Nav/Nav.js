@@ -10,9 +10,10 @@ import LocaleDropdown from "./LocaleDropdown";
 import DataProcess from "../DataProcessing/DataProcess";
 import SearchBox from "./SearchBox";
 import AlertModal from "../UtilityComponent/AlertModal";
-import axiosRequest from "./../../lib/axiosRequest"
+import axiosRequest from "./../../lib/axios/axiosRequest"
 import NoticeDropdown from "./NoticeDropdown";
 import { Loading } from "../../redux/modules/filtervalue";
+import { goHome, goLogin } from "../../lib/pagePath";
 
 function Nav() {
   // locale 값을 store에 저장된 값을 가져옴
@@ -45,7 +46,7 @@ function Nav() {
       dispatch(Loading(false))
       sessionStorage.clear();
       dispatch(UserLogout());
-      history.push("/login")
+      history.push(goLogin)
     });
   };
 
@@ -64,7 +65,7 @@ function Nav() {
               className="logo"
               src="/Images/logo.png"
               alt="profile"
-              onClick={() => history.push("/")}
+              onClick={() => history.push(goHome)}
             />
             <SearchBox />
           </div>
@@ -126,6 +127,7 @@ const NavWrapper = styled.div`
       height: 37px;
       margin: 3px 18px 13px 24px;
       object-fit: contain;
+      cursor: pointer;
     }
   }
 

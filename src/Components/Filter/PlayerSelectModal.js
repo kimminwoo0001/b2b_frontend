@@ -13,7 +13,7 @@ import {
   HandleTab,
   Loading,
 } from "../../redux/modules/filtervalue";
-import axiosRequest from "../../lib/axiosRequest";
+import axiosRequest from "../../lib/axios/axiosRequest";
 import { SetModalInfo } from "../../redux/modules/modalvalue";
 
 function PlayerSelectModal({ openModal, setOpenModal }) {

@@ -38,8 +38,9 @@ import {
 
 import { API } from "../../Pages/config";
 import { useDetectOutsideClick } from "../../Pages/PlayerCompare/useDetectOustsideClick";
-import axiosRequest from "../../lib/axiosRequest";
+import axiosRequest from "../../lib/axios/axiosRequest";
 import { SetModalInfo, SetDesc, SetIsOpen } from "../../redux/modules/modalvalue";
+import { goPlayerCompare, goPlayerReport } from "../../lib/pagePath";
 
 function PlayerFilterModal() {
   // sidebar 선수 비교 눌렀을때 뜨는 모달창
@@ -78,7 +79,7 @@ function PlayerFilterModal() {
 
 
   useEffect(() => {
-    if (filters.openFilterModal === "/playerCompare" && selector.yearFilter.length === 0) {
+    if (filters.openFilterModal === goPlayerCompare && selector.yearFilter.length === 0) {
       fetchYearFilter();
     }
   }, [selector.yearFilter]);
@@ -86,7 +87,7 @@ function PlayerFilterModal() {
 
   useEffect(() => {
     if (JSON.stringify(year) !== JSON.stringify(filters.year)) {
-      if (filters.openFilterModal === "/playerCompare") {
+      if (filters.openFilterModal === goPlayerCompare) {
         dispatch(SetLeague([]));
         dispatch(SetSeason([]));
         fetchLeagueFilter();
@@ -143,7 +144,7 @@ function PlayerFilterModal() {
 
 
   useEffect(() => {
-    if (filters.openFilterModal !== "/playerCompare") {
+    if (filters.openFilterModal !== goPlayerCompare) {
       fetchingOppTeamFilter();
       fetchingOppPlayerFilter();
     }
@@ -427,7 +428,6 @@ function PlayerFilterModal() {
   // 확인하기 버튼 조건
   const handleConfirm = () => {
     if (filters.oppplayer) {
-      //history.push("/playerCompare");
       history.push(filters.openFilterModal)
       dispatch(Reset_Map(filters))
       dispatch(InitalCopy())
@@ -473,14 +473,6 @@ function PlayerFilterModal() {
               dispatch(InitalCopy());
               dispatch(SetDesc(""));
               dispatch(SetIsOpen(false));
-
-
-
-              // history.push("/solo");
-              // dispatch(setTeamFilter([]));
-              // dispatch(setPlayerFilter([]));
-              // setOppPlayerFilter([]);
-              // setOppTeamFilter([]);
             }}
           />
         </ModalNav>
@@ -489,7 +481,7 @@ function PlayerFilterModal() {
             <FilterHeader>
               <label>{t("filters.setFilter")}</label>
             </FilterHeader>
-            {filters.openFilterModal !== "/playerCompare" &&
+            {filters.openFilterModal !== goPlayerCompare &&
               <>
                 <LeagueFilter>
                   <label>{t("filters.setLeague")}</label>
@@ -497,12 +489,12 @@ function PlayerFilterModal() {
                     <div className="menu-container">
                       <button
                         onClick={() => {
-                          if (filters.openFilterModal === "/playerCompare") {
+                          if (filters.openFilterModal === goPlayerCompare) {
                             setIsActiveLeague(!isActiveLeague)
                             fetchLeagueFilter()
                           }
                         }}
-                        disabled={filters.openFilterModal === "/solo"}
+                        disabled={filters.openFilterModal === goPlayerReport}
                         className="menu-trigger"
                       >
                         <div className="wrapper">
@@ -569,7 +561,7 @@ function PlayerFilterModal() {
                     </div>
                   </DropDownToggle>
                 </LeagueFilter>
-                {filters.openFilterModal !== "/playerCompare" ? "" :
+                {filters.openFilterModal !== goPlayerCompare ? "" :
                   <YearFilter>
                     <label>{t("filters.setYear")}</label>
                     {!selector.yearFilter ? (
@@ -627,7 +619,7 @@ function PlayerFilterModal() {
                 }
               </>
             }
-            {filters.openFilterModal === "/playerCompare" &&
+            {filters.openFilterModal === goPlayerCompare &&
 
               <>
                 <ModalYearFilter>
@@ -690,12 +682,12 @@ function PlayerFilterModal() {
                     <div className="menu-container">
                       <button
                         onClick={() => {
-                          if (filters.openFilterModal === "/playerCompare") {
+                          if (filters.openFilterModal === goPlayerCompare) {
                             setIsActiveLeague(!isActiveLeague)
                             fetchLeagueFilter()
                           }
                         }}
-                        disabled={filters.openFilterModal === "/solo"}
+                        disabled={filters.openFilterModal === goPlayerReport}
                         className="menu-trigger"
                       >
                         <div className="wrapper">
@@ -838,7 +830,7 @@ function PlayerFilterModal() {
             <TeamFilterBox>
               <SelectTeam isFilterSelected={filters.league.length > 0}>
                 <div className="SelectTitle">
-                  {filters.openFilterModal === "/solo" ?
+                  {filters.openFilterModal === goPlayerReport ?
                     t("filters.playerCompareLabel1") :
                     t("filters.playerCompareLabel")
                   }
@@ -846,7 +838,7 @@ function PlayerFilterModal() {
                 <GetFilterData>
                   <MyTeamBox isFilterSelected={filters.league.length > 0}>
                     <div className="Nav">{t("filters.team")}</div>
-                    {filters.openFilterModal === "/solo" ?
+                    {filters.openFilterModal === goPlayerReport ?
                       <MapTeams>
                         <img
                           src={
@@ -892,7 +884,7 @@ function PlayerFilterModal() {
                     isFilterSelected={filters.league.length > 0}
                   >
                     <div className="Nav2">{t("filters.player")}</div>
-                    {filters.openFilterModal === "/solo" ?
+                    {filters.openFilterModal === goPlayerReport ?
                       <MapTeams>
                         <img
                           src={`Images/ico-position-${filters.position}.png`}
@@ -1272,7 +1264,7 @@ const PatchFilter = styled.div`
   border-radius: 10px;
   margin: 10px 5px;
   padding: 5px 10px;
-  max-height:  ${props => props.path === "/solo" ? "240px" : "155px"};
+  max-height:  ${props => props.path === goPlayerReport ? "240px" : "155px"};
   width: 240px;
 
   overflow-y: scroll;
@@ -1809,7 +1801,7 @@ const DropDownToggle = styled.div`
 `;
 
 const ArrowIcon = styled.img`
-      visibility: ${(props) => props.page === "/solo" ? "hidden" : "visible"}
+      visibility: ${(props) => props.page === goPlayerReport ? "hidden" : "visible"}
 
 `
 

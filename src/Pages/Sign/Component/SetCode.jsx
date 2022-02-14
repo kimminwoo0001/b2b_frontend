@@ -11,9 +11,9 @@ import {
   SetSelectedResult,
   SetSemiDesc,
 } from "../../../redux/modules/modalvalue";
-import axiosRequest from "../../../lib/axiosRequest";
+import axiosRequest from "../../../lib/axios/axiosRequest";
 import { API } from "../../config";
-import signAxiosReq from "../../../lib/signAxiosReq";
+import signAxiosReq from "../../../lib/axios/signAxiosReq";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import { Loading } from "../../../redux/modules/filtervalue";
 

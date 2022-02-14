@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 import { SetLeague, SetSeason } from "../../redux/modules/filtervalue";
+import { goTeamReport, goPlayerReport } from "../../lib/pagePath";
 
 const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
   const { t } = useTranslation();
@@ -12,15 +13,13 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
   const dispatch = useDispatch();
   const [checked, setChecked] = useState(false);
   const pagePath = document.location.pathname;
-  const nameTeam = "/team";
-  const nameSolo = "/solo";
 
   const changeSwitch = () => {
     setViewSwitch(!viewSwitch);
   };
 
   useEffect(() => {
-    if ([nameTeam, nameSolo].includes(pagePath)) {
+    if ([goTeamReport, goTeamReport].includes(pagePath)) {
       return;
     }
 
@@ -124,7 +123,7 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
         </Header>
         <div className={viewSwitch ? "open-filter-item" : "close-filter-item"}>
           {/* 전체선택 */}
-          {![nameTeam, nameSolo].includes(pagePath) && filters.year.length > 0 && 
+          {![goTeamReport, goTeamReport].includes(pagePath) && filters.year.length > 0 &&
             (title === t("label.league") ||
               (title === t("label.season") && filters.league.length > 0)) && (
               <div className="div-select-all">
