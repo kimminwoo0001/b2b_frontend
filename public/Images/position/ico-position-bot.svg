@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+    <defs>
+        <style>
+            .cls-2{fill:#fff;opacity:.3}
+        </style>
+    </defs>
+    <g id="ico-position-bot" transform="translate(1 1)">
+        <path id="area" transform="translate(-1 -1)" style="fill:none" d="M0 0h21v21H0z"/>
+        <g id="Group_2685" data-name="Group 2685">
+            <path id="Path_864" data-name="Path 864" class="cls-2" d="m113.264-612.818 3.6-3.6v-8.994h8.994l3.6-3.6h-16.194z" transform="translate(-113.264 629.007)"/>
+            <path id="Path_865" data-name="Path 865" d="m148.5-609.959-3.6 3.6v8.994h-8.99l-3.6 3.6h16.19z" transform="translate(-130.501 611.771)" style="fill:#fff"/>
+            <path id="Rectangle_219" data-name="Rectangle 219" class="cls-2" transform="translate(6.92 6.92)" d="M0 0h3.801v3.801H0z"/>
+        </g>
+    </g>
+</svg>

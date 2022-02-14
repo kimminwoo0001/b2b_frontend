@@ -99,6 +99,13 @@ const typoStyle = {
     letter-spacing: 0.025em;
   `,
 
+  button_popin: css`
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 700;
+    color: ${theme.colors.text};
+  `,
+
   /** select type **/
 
   select: css`
