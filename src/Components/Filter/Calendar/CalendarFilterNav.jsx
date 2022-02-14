@@ -2,22 +2,53 @@
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
 import { useTranslation } from "react-i18next";
+import { batch, useDispatch } from "react-redux";
+import {
+  SetCalendarIsOpen,
+  SetCalendarIsStartSelector,
+} from "../../../redux/modules/calendarvalue";
 import theme from "../../../Styles/Theme";
 
 const CalendarFilterNav = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   return (
     <SCFContainer>
       <div className="calendar-filter-label">
         {t("utility.calendarFilter.dateSet")}
       </div>
       <SCFDaysInput
-        placeholder={t("utility.calendarFilter.inputStart")}
-      ></SCFDaysInput>
+        onClick={() => {
+          batch(() => {
+            dispatch(SetCalendarIsOpen(true));
+            dispatch(SetCalendarIsStartSelector(true));
+          });
+        }}
+      >
+        <input
+          className="calendar-input"
+          type="text"
+          placeholder={t("utility.calendarFilter.inputStart")}
+        />
+        <img className="calendar-icon" src="Images/ic-calendar.svg" alt="" />
+      </SCFDaysInput>
       <div className="hyphen">-</div>
       <SCFDaysInput
-        placeholder={t("utility.calendarFilter.inputEnd")}
-      ></SCFDaysInput>
+        onClick={() => {
+          batch(() => {
+            dispatch(SetCalendarIsOpen(true));
+            dispatch(SetCalendarIsStartSelector(false));
+          });
+        }}
+      >
+        <input
+          className="calendar-input"
+          type="text"
+          placeholder={t("utility.calendarFilter.inputEnd")}
+        />
+        <img className="calendar-icon" src="Images/ic-calendar.svg" alt="" />
+      </SCFDaysInput>
+
       <SCFButton>{t("utility.calendarFilter.date.allSeason")}</SCFButton>
       <SCFButton>{t("utility.calendarFilter.date.recent3days")}</SCFButton>
       <SCFButton>{t("utility.calendarFilter.date.recent5days")}</SCFButton>
@@ -65,17 +96,27 @@ const SCFContainer = styled.div`
     text-align: center;
     color: ${theme.colors.text};
   }
+
+  .calendar-input {
+    width: 78px;
+    cursor: pointer;
+  }
+
+  .calendar-icon {
+    width: 34px;
+    height: 34px;
+    margin-top: -3px;
+  }
 `;
 
-const SCFDaysInput = styled.input`
-  type: text;
+const SCFDaysInput = styled.div`
+  display: flex;
   width: 122px;
   height: 34px;
   padding: 3px 0 0 10px;
   border-radius: 10px;
   margin: 0 2px;
   background-color: ${theme.colors.bg_box};
-
   font-family: SpoqaHanSansNeo;
   font-size: 13px;
   font-weight: normal;
@@ -85,6 +126,7 @@ const SCFDaysInput = styled.input`
   letter-spacing: normal;
   text-align: left;
   color: ${theme.colors.text};
+  cursor: pointer;
 `;
 
 const SCFButton = styled.button`

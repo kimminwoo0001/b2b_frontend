@@ -14,6 +14,7 @@ const theme = {
     bg_box: "#2f2d38",
     bg_select: "#23212a",
     bg_hover: "rgba(255,255,255,0.1)",
+    bg_button: "#3a3745",
 
     // btn
     btn_nor: "#484655",

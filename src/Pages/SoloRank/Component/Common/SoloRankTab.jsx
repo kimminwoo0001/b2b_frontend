@@ -13,14 +13,14 @@ import { useState } from "react";
 
 const SoloRankTab = () => {
   const { t } = useTranslation();
-  const [tab, setTab] = useState([
+  const tab = [
     { title: t("soloRank.tab.myTeam"), component: <MyTeam /> },
     { title: t("soloRank.tab.filterSearch"), component: <SearchFilter /> },
     {
       title: t("soloRank.tab.interestedPlayer"),
       component: <InterestedPlayer />,
     },
-  ]);
+  ];
   const { currentIndex, currentTab, setIndex } = useTab(0, tab);
 
   return (

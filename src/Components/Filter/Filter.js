@@ -53,12 +53,14 @@ import {
   goLeagueReport, goTeamReport, goPlayerReport, goPathAnalysis,
   goTeamCompare, goPlayerCompare, goProGameReport, itemCalculator
 } from "../../lib/pagePath";
+import CalendarFilter from "./Calendar/CalendarFilter";
 
 const Filter = memo(() => {
   const filters = useSelector((state) => state.FilterReducer);
   const copyvalue = useSelector((state) => state.CopyReducer);
   const user = useSelector((state) => state.UserReducer);
   const staticvalue = useSelector((state) => state.StaticValueReducer);
+  const calendarvalue = useSelector((state) => state.CalendarReducer);
   const selector = useSelector((state) => state.SelectorReducer);
   const dispatch = useDispatch();
   const isInitialMount = useRef(true);
@@ -489,6 +491,7 @@ const Filter = memo(() => {
       <AlertModal />
       {[goTeamCompare, goTeamReport].includes(copyvalue.openFilterModal) && <TeamFilterModal />}
       {[goPlayerReport, goPlayerCompare].includes(copyvalue.openFilterModal) && <PlayerFilterModal />}
+      {[goLeagueReport, goTeamReport].includes(pagePath) && calendarvalue.isOpen && <CalendarFilter />}
       {!filters.filterMenuState ? <CloseFilter /> :
         <FilterWrapper>
           <FilterHeader />

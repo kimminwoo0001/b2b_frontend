@@ -130,6 +130,13 @@ const typoStyle = {
     color: ${theme.colors.vs};
     font-weight: 700;
   `,
+
+  /* textstyle  */
+  noWrap: css`
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  `,
 };
 
 export default typoStyle;
