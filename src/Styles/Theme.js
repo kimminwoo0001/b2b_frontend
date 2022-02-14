@@ -15,6 +15,13 @@ const theme = {
     bg_select: "#23212a",
     bg_hover: "rgba(255,255,255,0.1)",
 
+    // btn
+    btn_nor: "#484655",
+
+    // table
+    table_head: "#3a3745",
+
+
     // text
     text: "#ffffff",
     info: "#84818e",
@@ -22,6 +29,7 @@ const theme = {
     red: "#f04545",
     blue: "#0075bf",
     vs: "#817e90",
+
   },
   borderRadius: "20px",
 };

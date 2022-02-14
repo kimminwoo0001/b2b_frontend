@@ -4,22 +4,29 @@ import styled from "@emotion/styled/macro";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import DropdownContainer from "../../../../Components/Ui/DropDown/DropdownContainer";
-import DropdownItem from "../../../../Components/Ui/DropDown/DropdownItem";
-import DropdownLabel from "../../../../Components/Ui/DropDown/DropdownLabel";
-import DropdownList from "../../../../Components/Ui/DropDown/DropdownList";
-import Sortingimage from "../../../../Components/Ui/Sortingimage";
-import { dropdownStyle } from "../../../../Styles/ui";
 import MTCategory from "./MTCategory";
-import ItemBox from "./SubComponent/ItemBox";
+import theme from "../../../../Styles/Theme";
+import MTPlayerHeader from "./SubComponent/MTPlayerHeader";
 
 const inquireDayList = [1, 3, 5, 7, 15, 30];
+
+const isLike = true;
+const exTeamLine = "DK 정글";
+const exPlayerNickName = "Canyon";
+const exPlayerName = "김건부";
 
 const MTContent = () => {
   return (
     <SWrapper>
       <MTCategory />
-      
+      <SPlayerContainer>
+        <MTPlayerHeader
+          isLike={isLike}
+          teamLine={exTeamLine}
+          nickName={exPlayerNickName}
+          name={exPlayerName}
+        />
+      </SPlayerContainer>
     </SWrapper>
   );
 };
@@ -30,4 +37,14 @@ const SWrapper = styled.section`
   width: 1110px;
   height: 1346px;
   margin: 20px 0 0;
+`;
+
+const SPlayerContainer = styled.div`
+  width: 1110px;
+  height: 370px;
+  margin: 10px 0 10px;
+  padding: 0 0 0 14px;
+  border-radius: 20px;
+  background-color: ${theme.colors.bg_select};
+  position: relative;
 `;

@@ -21,7 +21,8 @@
       "recent": "최근",
       "game": "경기",
       "player": "선수",
-      "winrate": "승률"
+      "winrate": "승률",
+      "ID": "ID"
     },
     "button": {
       "add": "추가"
@@ -517,8 +518,7 @@
       "8min": "3분~8분 동선",
       "side": "사이드"
     },
-    "jungle": {
-    }
+    "jungle": {}
   },
   "alert": {
     "login": {
