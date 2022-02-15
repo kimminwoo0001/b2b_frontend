@@ -40,8 +40,8 @@ function GameReport() {
   return (
     <ErrorBoundary>
       {checkGameId ? "" : <Nav />}
-      {copyvalue?.openFilterModal === goTeamCompare && <TeamFilterModal />}
-      {copyvalue?.openFilterModal === goPlayerCompare && <PlayerFilterModal />}
+      {copyvalue?.openFilterModal === "/teamCompare" && <TeamFilterModal />}
+      {copyvalue?.openFilterModal === "/playerCompare" && <PlayerFilterModal />}
       <GameWrapper>
         {checkGameId && filters.team !== "" && filters.team.length > 0 ? "" :
           <>
@@ -128,7 +128,7 @@ const GameWrapper = styled.div`
   min-height: 100vh;
   overflow: auto;
   display: flex;
-  background-color: #000000;
+  background-color: #16151c;
   overflow: hidden;
 
   .filter-close {

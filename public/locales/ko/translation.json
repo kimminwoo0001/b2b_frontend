@@ -175,7 +175,9 @@
       "w": "승",
       "l": "패",
       "tier": "티어",
-      "noUniquePickData": "유니크 픽 데이터가 없습니다."
+      "noUniquePickData": "유니크 픽 데이터가 없습니다.",
+      "team":"팀",
+      "oppTeam":"상대 팀"
     },
     "leagueStat": {
       "gameLength": "평균 게임 시간",
@@ -436,7 +438,9 @@
     "player": "선수",
     "NoCommonSeasons": "시즌을 다시 선택해주세요.",
     "mainTeamChanged": "메인 팀이 변경되어 비교 데이터가 초기화됩니다.",
-    "sorry": "22년도 시즌데이터가 업데이트 되었습니다."
+    "sorry": "22년도 시즌데이터가 업데이트 되었습니다.",
+    "noMultipleSelection": "중복 선택 불가"
+
   },
   "video": {
     "tab": {

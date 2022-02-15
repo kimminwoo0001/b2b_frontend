@@ -2,20 +2,23 @@ import React from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+
 function ToolTips({ pick }) {
   const { t } = useTranslation();
   const lang = useSelector((state) => state.LocaleReducer);
   const tooltip = pick.playinfos;
+  const filters = useSelector((state) => state.FilterReducer);
 
   return (
     <ArrowWrapper>
       <Arrow />
       <ToolTipWrapper>
-        <TooltipTable>
+        <TooltipTable isLplExcluded={!filters.league.includes("LPL")}>
           <thead>
             <TooltipNav>
               <th className="Champion">{t("team.draft.champion")}</th>
-              <th className="Player">{t("team.draft.player")}</th>
+              {!filters.league.includes("LPL") && 
+              <th className="Player">{t("team.draft.player")}</th>}
               <th className="Pick">{t("team.draft.pick")}</th>
             </TooltipNav>
           </thead>
@@ -37,7 +40,8 @@ function ToolTips({ pick }) {
                       </div>
                     </div>
                   </td>
-                  <td className="Player">{tooltip?.player}</td>
+                  {!filters.league.includes("LPL") && 
+                  <td className="Player">{tooltip?.player}</td>}
                   <td className="Pick">{`${tooltip?.gamesPlayed}${t(
                     "team.draft.count"
                   )}`}</td>
@@ -54,7 +58,7 @@ function ToolTips({ pick }) {
 export default ToolTips;
 
 const TooltipTable = styled.table`
-  width: 316px;
+  width: ${props => props.isLplExcluded ? "250px" : "316px"}
   border-collapse: separate;
   border-collapse: collapse;
 `;

@@ -58,8 +58,8 @@ function PlayerBoard() {
 
 
   const secToMin = (sec) => {
-    let mm = addZero(Math.floor(sec / 60));
-    let ss = addZero(Math.floor(sec % 60));
+    let mm = Math.floor(sec / 60);
+    let ss = Math.floor(sec % 60);
 
     return `${mm}${t("solo.playerboard.min")} ${ss}${t("solo.playerboard.sec")}`;
   }
@@ -1288,6 +1288,7 @@ const PlayerOverView = styled.div`
     letter-spacing: -0.65px;
     text-align: left;
     color: rgb(240, 69, 69);
+    
   }
   .AgeValue {
     display: flex;
@@ -1613,6 +1614,7 @@ const MapCompetition = styled.tr`
   }
   .WinValue {
     width: 40px;
+    white-space: nowrap;
   }
   .SbrValue {
     color: rgb(240, 69, 69);

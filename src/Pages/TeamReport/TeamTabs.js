@@ -86,7 +86,7 @@ function TeamTabs() {
               )}
 
               {pagePath !== goTeamCompare &&
-                filters.league.indexOf("lpl") === -1 ? (
+                !filters.league.includes("LPL")  ? (
                 <TabItem
                   onClick={() => {
                     dispatch(HandleTab(1));
@@ -102,7 +102,7 @@ function TeamTabs() {
                 <div></div>
               )}
 
-              {filters.league.indexOf("lpl") === -1 ? (
+              {pagePath !== goTeamReport || (pagePath === goTeamReport && !filters.league.includes("LPL"))?  (
                 <TabItem
                   onClick={() => {
                     // dispatch(HandleTab(2));
