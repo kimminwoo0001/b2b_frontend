@@ -1,9 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import theme from "../../../../Styles/Theme";
 import { useTranslation } from "react-i18next";
+import {
+  SetCalendarDayEndIdx,
+  SetCalendarDayStartIdx,
+} from "../../../../redux/modules/calendarvalue";
 
 const DayBox = ({
   info,
@@ -14,10 +18,31 @@ const DayBox = ({
 }) => {
   const lang = useSelector((state) => state.LocaleReducer);
   const { t } = useTranslation();
+  const dispath = useDispatch();
   const { day, month, index } = info;
-  console.log("day", day);
+  console.log(
+    startDayIdx,
+    index,
+    endDayIdx,
+    startDayIdx <= index || index <= endDayIdx
+  );
   return (
-    <SCalendarDayBox isActive={startDayIdx <= index || index <= endDayIdx}>
+    <SCalendarDayBox
+      isActive={
+        startDayIdx === -1 &&
+        startDayIdx <= index &&
+        endDayIdx === -1 &&
+        index <= endDayIdx
+      }
+      onClick={() => {
+        console.log("a");
+        dispath(
+          isStartSelector
+            ? SetCalendarDayStartIdx(index)
+            : SetCalendarDayEndIdx(index)
+        );
+      }}
+    >
       {day >= 0 && month < 13 && (
         <div className="header-day">
           {lang === "ko"

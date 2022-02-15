@@ -31,9 +31,7 @@ function CalendarFilter() {
   const [month, setMonth] = useState(new Date().getUTCMonth() + 1);
   const [lock, setLock] = useState(false);
   const calendar = useSelector((state) => state.CalendarReducer);
-  const filters = useSelector((state) => state.FilterReducer);
   const { year } = useSelector((state) => state.FilterReducer);
-  console.log("year", year);
   const dispath = useDispatch();
   const { t } = useTranslation();
   const lang = useSelector((state) => state.LocaleReducer);
@@ -70,6 +68,7 @@ function CalendarFilter() {
         return {
           month: i + 1,
           day: index - total,
+          index: index,
         };
       }
     }
@@ -135,13 +134,11 @@ function CalendarFilter() {
 
   useEffect(() => {
     scrollSpy.update();
-    console.log("[]", month);
     moveLock();
     autoMoveScroll(month);
   }, []);
 
   return (
-    // 전체화면 로딩 이미지
     <SCalendarFilter active={calendar.isOpen}>
       <SCalendarContainer>
         <div className="header">
@@ -228,13 +225,6 @@ function CalendarFilter() {
                           startDayIdx={calendar.startDayIdx}
                           endDayIdx={calendar.endDayIdx}
                           isStartSelector={calendar.isStartSelector}
-                          onClick={() =>
-                            dispath(
-                              calendar.isStartSelector
-                                ? SetCalendarDayStartIdx(getIdx(idx, idx2))
-                                : SetCalendarDayEndIdx(getIdx(idx, idx2))
-                            )
-                          }
                         />
                       );
                     })}
