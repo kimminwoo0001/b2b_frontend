@@ -37,6 +37,7 @@ import getCookie from "../../lib/Cookie/getCookie";
 import buttonStyle from "../../Styles/ui/button_style";
 import Button from "../../Components/Ui/Button";
 import { goChangePw, goCheckLogin, goHome, goSignUp } from "../../lib/pagePath";
+import { borderRadiusStyle } from "../../Styles/ui";
 
 function Login() {
   const filters = useSelector((state) => state.FilterReducer);
@@ -50,7 +51,7 @@ function Login() {
   let history = useHistory();
   const { t } = useTranslation();
 
-  console.log(user)
+  console.log(user);
 
   useEffect(() => {
     if (navigator.language.includes("ko")) {
@@ -64,11 +65,7 @@ function Login() {
       dispatch(Loading(false));
     }
 
-
-
     const cookieToken = getCookie("user-token");
-
-
 
     if (cookieToken && cookieToken !== "undefined") {
       batch(() => {
@@ -79,17 +76,15 @@ function Login() {
         dispatch(UserChargeTime(getCookie("user-charge_time")));
         dispatch(UserName(getCookie("user-name")));
         history.push(goHome);
-      })
+      });
     }
-
-
   }, []);
 
   useEffect(() => {
     if (user.token && user.token.length > 0) {
       history.push(goHome);
     }
-  }, [user.token])
+  }, [user.token]);
 
   useEffect(() => {
     if (selectedResult === "tryLoginAgain" && info.id !== "") {
@@ -230,7 +225,7 @@ function Login() {
             <Button
               type="submit"
               className="LoginBtn"
-              css={buttonStyle.color.main}
+              css={[buttonStyle.color.main, borderRadiusStyle.full]}
             >
               LOGIN
             </Button>
