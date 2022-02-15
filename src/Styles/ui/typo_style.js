@@ -99,6 +99,13 @@ const typoStyle = {
     letter-spacing: 0.025em;
   `,
 
+  button_popin: css`
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 700;
+    color: ${theme.colors.text};
+  `,
+
   /** select type **/
 
   select: css`
@@ -136,6 +143,18 @@ const typoStyle = {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+  `,
+
+  /* event log */
+  eventlog: css`
+    line-height: 22px;
+    font-size: 13px;
+    color: ${theme.colors.text};
+
+    > div {
+      vertical-align: middle;
+      margin: 0 2px;
+    }
   `,
 };
 

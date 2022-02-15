@@ -18,8 +18,14 @@ import Avatar from "../../../Components/Ui/Avatar";
 
 import Radio from "../../../Components/Ui/Radio";
 import scrollbarStyle from "../../../Styles/ui/scrollbar_style";
+import PositionCheckList from "../../../Components/Ui/PositionCheckList";
+
+import { useTranslation } from "react-i18next";
+import EventLog from "../../../Components/Ui/Dialog/EventLog";
 
 const UiTest = () => {
+  const { t } = useTranslation();
+
   const [filterState, setFilterState] = useState({
     step1: { all: false, gnar: false, teemo: false },
   });
@@ -74,6 +80,7 @@ const UiTest = () => {
 
   return (
     <Container>
+      <h1>{t("filters.sorry")}</h1>
       {/* 아바타 */}
       <section>
         <h1>아바타</h1>
@@ -106,7 +113,11 @@ const UiTest = () => {
             챔피언선택
           </DropdownLabel>
           <DropdownList>
-            <DropdownItem css={[dropdownStyle.select_item]} value={"메뉴1"}>
+            <DropdownItem
+              css={[dropdownStyle.select_item]}
+              value={"icon"}
+              label={"menu1"}
+            >
               메뉴1
             </DropdownItem>
             <DropdownItem css={[dropdownStyle.select_item]} value={"메뉴2"}>
@@ -399,13 +410,47 @@ const UiTest = () => {
           </AccordionDetails>
         </Accordion>
       </section>
+
+      {/* 오른쪽 비디오 */}
+      <section>
+        {/* 포지션 체크박스 */}
+        <PositionCheckList onChange={(position) => console.log(position)} />
+        {/* 이벤트로그 */}
+        <div>
+          <h3>레드사이드</h3>
+          <div>
+            <EventLog index={1} time={"02:00"} color="red">
+              <SMessage>
+                <Avatar
+                  src="images/champion/teemo.png"
+                  alt="티모"
+                  block={false}
+                  color={"blue"}
+                  size={16}
+                ></Avatar>
+                티모가
+                <Avatar
+                  src="images/champion/Renekton.png"
+                  alt="악어"
+                  color={"red"}
+                  block={false}
+                  size={16}
+                ></Avatar>
+                레넥톤을 잡고 버섯을 깔고 용도 잡고 와드도 박고 여러가지를 하면
+                두줄이 됩니다
+              </SMessage>
+            </EventLog>
+          </div>
+        </div>
+      </section>
     </Container>
   );
 };
 
 const Container = styled.article`
-  height: 100vh;
+  min-height: 100vh;
   padding: 30px;
+
   background-color: ${({ theme }) => theme.colors.bg_light};
   ${typoStyle.body}
 
@@ -545,6 +590,12 @@ const SRed = styled.div`
 const SBlue = styled.div`
   ${Row3}
   color: ${({ theme }) => theme.colors.blue};
+`;
+
+/* 이벤트로그*/
+
+const SMessage = styled.div`
+  ${typoStyle.eventlog}
 `;
 
 export default UiTest;

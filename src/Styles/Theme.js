@@ -14,6 +14,11 @@ const theme = {
     bg_box: "#2f2d38",
     bg_select: "#23212a",
     bg_hover: "rgba(255,255,255,0.1)",
+    bg_checkbox: "#3a3745",
+
+    //badge
+    badge_red: "#f04545",
+    badge_blue: "#0075bf",
 
     // text
     text: "#ffffff",
@@ -22,6 +27,10 @@ const theme = {
     red: "#f04545",
     blue: "#0075bf",
     vs: "#817e90",
+    black: "#000000",
+
+    // scrollbar
+    bg_scrollbar: "#434050",
   },
   borderRadius: "20px",
 };
