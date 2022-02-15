@@ -2,9 +2,11 @@
 import { jsx, css } from "@emotion/react";
 import { useState } from "react";
 import { cx } from "@emotion/css";
-import styled from "@emotion/styled";
 
-// UI tool kit
+// util
+import { isObjEqual } from "../../../../lib/isObjEqual";
+
+// UI Components
 import Accordion from "../../../../Components/Ui/Accordion/Accordion";
 import AccordionDetails from "../../../../Components/Ui/Accordion/AccordionDetails";
 import AccordionSummary from "../../../../Components/Ui/Accordion/AccordionSummary";
@@ -16,16 +18,14 @@ import Checkbox from "../../../../Components/Ui/Checkbox";
 import Avatar from "../../../../Components/Ui/Avatar";
 import Button from "../../../../Components/Ui/Button";
 
-// css
+// css style
 import {
   dropdownStyle,
-  tableStyle,
-  transitionStyle,
   typoStyle,
   buttonStyle,
   borderRadiusStyle,
 } from "../../../../Styles/ui";
-import { isObjEqual } from "../../../../lib/isObjEqual";
+import * as S from "../components/styled/StyledSideFilter";
 
 const CompareSideFilter = () => {
   // 필터 데이터 데모
@@ -73,20 +73,20 @@ const CompareSideFilter = () => {
   };
 
   return (
-    <SWrapper>
-      <SFilterContainer>
+    <S.Wrapper>
+      <S.FilterContainer>
         {/* step1 : 나의 팀 */}
-        <div css={{ marginBottom: 30 }}>
+        <S.FilterSection>
           <Accordion>
             <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
-              <SStepContainer>
-                <SLabel>STEP 01</SLabel>
-                <SLabelTitle>나의 팀 선택하기</SLabelTitle>
-              </SStepContainer>
+              <S.Title>
+                <S.TitleLabel>STEP 01</S.TitleLabel>
+                <S.Text>나의 팀 선택하기</S.Text>
+              </S.Title>
             </AccordionSummary>
             <AccordionDetails>
               {/* 셀렉트 그룹 */}
-              <SSelectGroup>
+              <S.SelectContainer>
                 {/* 연도 & 리그 */}
                 <div className="group-row">
                   {/* 연도 */}
@@ -98,7 +98,7 @@ const CompareSideFilter = () => {
                       }}
                     >
                       <DropdownLabel css={[dropdownStyle.select_head]}>
-                        <SLabelText>연도선택</SLabelText>
+                        <S.SelectLabel>연도선택</S.SelectLabel>
                       </DropdownLabel>
                       <DropdownList>
                         <DropdownItem
@@ -126,7 +126,7 @@ const CompareSideFilter = () => {
                       }}
                     >
                       <DropdownLabel css={[dropdownStyle.select_head]}>
-                        <SLabelText>리그선택</SLabelText>
+                        <S.SelectLabel>리그선택</S.SelectLabel>
                       </DropdownLabel>
                       <DropdownList>
                         <DropdownItem
@@ -156,7 +156,7 @@ const CompareSideFilter = () => {
                       }}
                     >
                       <DropdownLabel css={[dropdownStyle.select_head]}>
-                        <SLabelText>팀선택</SLabelText>
+                        <S.SelectLabel>팀선택</S.SelectLabel>
                       </DropdownLabel>
                       <DropdownList>
                         <DropdownItem
@@ -183,7 +183,7 @@ const CompareSideFilter = () => {
                       }}
                     >
                       <DropdownLabel css={[dropdownStyle.select_head]}>
-                        <SLabelText>선수선택</SLabelText>
+                        <S.SelectLabel>선수선택</S.SelectLabel>
                       </DropdownLabel>
                       <DropdownList>
                         <DropdownItem
@@ -213,7 +213,7 @@ const CompareSideFilter = () => {
                       }}
                     >
                       <DropdownLabel css={[dropdownStyle.select_head]}>
-                        <SLabelText>시즌선택</SLabelText>
+                        <S.SelectLabel>시즌선택</S.SelectLabel>
                       </DropdownLabel>
                       <DropdownList>
                         <DropdownItem
@@ -232,23 +232,23 @@ const CompareSideFilter = () => {
                     </DropdownContainer>
                   </div>
                 </div>
-              </SSelectGroup>
+              </S.SelectContainer>
             </AccordionDetails>
           </Accordion>
-        </div>
+        </S.FilterSection>
 
         {/* step2 : 상대 팀 */}
         <div css={{ marginBottom: 30 }}>
           <Accordion>
             <AccordionSummary css={{ marginBottom: 13 }} onClick={() => {}}>
-              <SStepContainer>
-                <SLabel>STEP 02</SLabel>
-                <SLabelTitle>비교하고 싶은 팀 선택</SLabelTitle>
-              </SStepContainer>
+              <S.Title>
+                <S.TitleLabel>STEP 02</S.TitleLabel>
+                <S.Text>비교하고 싶은 팀 선택</S.Text>
+              </S.Title>
             </AccordionSummary>
             <AccordionDetails>
               {/* 셀렉트 그룹 */}
-              <SSelectGroup>
+              <S.SelectContainer>
                 {/* 연도 & 리그 */}
                 <div className="group-row">
                   {/* 연도 */}
@@ -260,7 +260,7 @@ const CompareSideFilter = () => {
                       }}
                     >
                       <DropdownLabel css={[dropdownStyle.select_head]}>
-                        <SLabelText>연도 선택</SLabelText>
+                        <S.SelectLabel>연도 선택</S.SelectLabel>
                       </DropdownLabel>
                       <DropdownList>
                         <DropdownItem
@@ -288,7 +288,7 @@ const CompareSideFilter = () => {
                       }}
                     >
                       <DropdownLabel css={[dropdownStyle.select_head]}>
-                        <SLabelText>리그 선택</SLabelText>
+                        <S.SelectLabel>리그 선택</S.SelectLabel>
                       </DropdownLabel>
                       <DropdownList>
                         <DropdownItem
@@ -318,7 +318,7 @@ const CompareSideFilter = () => {
                       }}
                     >
                       <DropdownLabel css={[dropdownStyle.select_head]}>
-                        <SLabelText>팀 선택</SLabelText>
+                        <S.SelectLabel>팀 선택</S.SelectLabel>
                       </DropdownLabel>
                       <DropdownList>
                         <DropdownItem
@@ -345,7 +345,7 @@ const CompareSideFilter = () => {
                       }}
                     >
                       <DropdownLabel css={[dropdownStyle.select_head]}>
-                        <SLabelText>선수 선택</SLabelText>
+                        <S.SelectLabel>선수 선택</S.SelectLabel>
                       </DropdownLabel>
                       <DropdownList>
                         <DropdownItem
@@ -375,7 +375,7 @@ const CompareSideFilter = () => {
                       }}
                     >
                       <DropdownLabel css={[dropdownStyle.select_head]}>
-                        <SLabelText>시즌 선택</SLabelText>
+                        <S.SelectLabel>시즌 선택</S.SelectLabel>
                       </DropdownLabel>
                       <DropdownList>
                         <DropdownItem
@@ -394,7 +394,7 @@ const CompareSideFilter = () => {
                     </DropdownContainer>
                   </div>
                 </div>
-              </SSelectGroup>
+              </S.SelectContainer>
             </AccordionDetails>
           </Accordion>
         </div>
@@ -403,10 +403,10 @@ const CompareSideFilter = () => {
         <div css={{ marginBottom: 30 }}>
           <Accordion>
             <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
-              <SStepContainer>
-                <SLabel>STEP 3</SLabel>
-                <SLabelTitle>패치 선택</SLabelTitle>
-              </SStepContainer>
+              <S.Title>
+                <S.TitleLabel>STEP 3</S.TitleLabel>
+                <S.Text>패치 선택</S.Text>
+              </S.Title>
             </AccordionSummary>
             <AccordionDetails>
               <DropdownContainer
@@ -441,9 +441,9 @@ const CompareSideFilter = () => {
         <div css={{ marginBottom: 30 }}>
           <Accordion>
             <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
-              <SStepContainer>
-                <SLabel>STEP 4</SLabel>
-                <SLabelTitle>
+              <S.Title>
+                <S.TitleLabel>STEP 4</S.TitleLabel>
+                <S.Text>
                   <Avatar
                     src="images/LCK_CL_LOGO/T1.C.png"
                     alt="t1"
@@ -451,38 +451,38 @@ const CompareSideFilter = () => {
                     block={false}
                   />
                   {"T1"} 플레이한 챔피언 선택
-                </SLabelTitle>
-              </SStepContainer>
+                </S.Text>
+              </S.Title>
             </AccordionSummary>
             <AccordionDetails>
-              <STable>
-                <SHead>
-                  <div css={Col1}>
+              <S.Table>
+                <S.Head>
+                  <S.Col1>
                     <Checkbox
                       name="step4"
                       value="all"
                       onChange={handleChange}
                       checked={filterState.step4.all}
                     />
-                  </div>
-                  <div css={Col2}>챔피언(경기수)</div>
-                  <div css={[Col3]}>진영별</div>
-                  <div css={[Col3]}>경기수</div>
-                </SHead>
+                  </S.Col1>
+                  <S.Col2>챔피언(경기수)</S.Col2>
+                  <S.Col3>진영별</S.Col3>
+                  <S.Col3>경기수</S.Col3>
+                </S.Head>
 
-                <SBody>
-                  <SRow isActive={filterState.step4["gnar"]}>
+                <S.Body>
+                  <S.Row isActive={filterState.step4["gnar"]}>
                     {/* 체크 */}
-                    <div css={Col1}>
+                    <S.Col1>
                       <Checkbox
                         name="step4"
                         value="gnar"
                         onChange={handleChange}
                         checked={filterState.step4.gnar}
                       />
-                    </div>
+                    </S.Col1>
                     {/* 본문 */}
-                    <SChamp css={Col2}>
+                    <S.Col2>
                       <Avatar
                         css={{ marginRight: 5 }}
                         size={20}
@@ -490,24 +490,24 @@ const CompareSideFilter = () => {
                         alt="티모"
                       />
                       <span>나르 (48)</span>
-                    </SChamp>
+                    </S.Col2>
 
                     {/* 경기수 */}
-                    <SRed>24</SRed>
-                    <SBlue>24</SBlue>
-                  </SRow>
+                    <S.Red>24</S.Red>
+                    <S.Blue>24</S.Blue>
+                  </S.Row>
 
-                  <SRow isActive={filterState.step4["teemo"]}>
-                    <div css={Col1}>
+                  <S.Row isActive={filterState.step4["teemo"]}>
+                    <S.Col1>
                       <Checkbox
                         name="step4"
                         value="teemo"
                         onChange={handleChange}
                         checked={filterState.step4.teemo}
                       />
-                    </div>
+                    </S.Col1>
 
-                    <SChamp css={Col2}>
+                    <S.Col2>
                       <Avatar
                         css={{ marginRight: 5 }}
                         size={20}
@@ -515,13 +515,13 @@ const CompareSideFilter = () => {
                         alt="티모"
                       />
                       <span>트위스티드 페이트 같이 이름이 길면 (7)</span>
-                    </SChamp>
+                    </S.Col2>
 
-                    <SRed>24</SRed>
-                    <SBlue>24</SBlue>
-                  </SRow>
-                </SBody>
-              </STable>
+                    <S.Red>24</S.Red>
+                    <S.Blue>24</S.Blue>
+                  </S.Row>
+                </S.Body>
+              </S.Table>
             </AccordionDetails>
           </Accordion>
         </div>
@@ -530,9 +530,9 @@ const CompareSideFilter = () => {
         <div css={{ marginBottom: 30 }}>
           <Accordion>
             <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
-              <SStepContainer>
-                <SLabel>STEP 5</SLabel>
-                <SLabelTitle>
+              <S.Title>
+                <S.TitleLabel>STEP 5</S.TitleLabel>
+                <S.Text>
                   <Avatar
                     src="images/LCK_CL_LOGO/DK.C.png"
                     alt="DK"
@@ -540,38 +540,38 @@ const CompareSideFilter = () => {
                     block={false}
                   />
                   {`DK`} 플레이한 챔피언 선택
-                </SLabelTitle>
-              </SStepContainer>
+                </S.Text>
+              </S.Title>
             </AccordionSummary>
             <AccordionDetails>
-              <STable>
-                <SHead>
-                  <div css={Col1}>
+              <S.Table>
+                <S.Head>
+                  <S.Col1>
                     <Checkbox
                       name="step5"
                       value="all"
                       onChange={handleChange}
                       checked={filterState.step5.all}
                     />
-                  </div>
-                  <div css={Col2}>챔피언(경기수)</div>
-                  <div css={[Col3]}>진영별</div>
-                  <div css={[Col3]}>경기수</div>
-                </SHead>
+                  </S.Col1>
+                  <S.Col2>챔피언(경기수)</S.Col2>
+                  <S.Col3>진영별</S.Col3>
+                  <S.Col3>경기수</S.Col3>
+                </S.Head>
 
-                <SBody>
-                  <SRow isActive={filterState.step5["gnar"]}>
+                <S.Body>
+                  <S.Row isActive={filterState.step5["gnar"]}>
                     {/* 체크 */}
-                    <div css={Col1}>
+                    <S.Col1>
                       <Checkbox
                         name="step5"
                         value="gnar"
                         onChange={handleChange}
                         checked={filterState.step5.gnar}
                       />
-                    </div>
+                    </S.Col1>
                     {/* 본문 */}
-                    <SChamp css={Col2}>
+                    <S.Col2>
                       <Avatar
                         css={{ marginRight: 5 }}
                         size={20}
@@ -579,24 +579,24 @@ const CompareSideFilter = () => {
                         alt="티모"
                       />
                       <span>나르 (48)</span>
-                    </SChamp>
+                    </S.Col2>
 
                     {/* 경기수 */}
-                    <SRed>24</SRed>
-                    <SBlue>24</SBlue>
-                  </SRow>
+                    <S.Red>24</S.Red>
+                    <S.Blue>24</S.Blue>
+                  </S.Row>
 
-                  <SRow isActive={filterState.step5["teemo"]}>
-                    <div css={Col1}>
+                  <S.Row isActive={filterState.step5["teemo"]}>
+                    <S.Col1>
                       <Checkbox
                         name="step5"
                         value="teemo"
                         onChange={handleChange}
                         checked={filterState.step5.teemo}
                       />
-                    </div>
+                    </S.Col1>
 
-                    <SChamp css={Col2}>
+                    <S.Col2>
                       <Avatar
                         css={{ marginRight: 5 }}
                         size={20}
@@ -604,19 +604,19 @@ const CompareSideFilter = () => {
                         alt="티모"
                       />
                       <span>트위스티드 페이트 같이 이름이 길면 (7)</span>
-                    </SChamp>
+                    </S.Col2>
 
-                    <SRed>24</SRed>
-                    <SBlue>24</SBlue>
-                  </SRow>
-                </SBody>
-              </STable>
+                    <S.Red>24</S.Red>
+                    <S.Blue>24</S.Blue>
+                  </S.Row>
+                </S.Body>
+              </S.Table>
             </AccordionDetails>
           </Accordion>
         </div>
-      </SFilterContainer>
+      </S.FilterContainer>
 
-      <SButtonContainer>
+      <S.ButtonContainer>
         <Button
           className={cx([{ "is-disabled": data.length <= 0 }])}
           css={[
@@ -629,121 +629,8 @@ const CompareSideFilter = () => {
         >
           정글링 비교하기
         </Button>
-      </SButtonContainer>
-    </SWrapper>
+      </S.ButtonContainer>
+    </S.Wrapper>
   );
 };
-
-// 레이아웃
-const SWrapper = styled.div`
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-const SFilterContainer = styled.div`
-  padding: 24px 20px 0 20px;
-`;
-const SButtonContainer = styled.div`
-  padding: 20px;
-  border-top: 1px solid ${({ theme }) => theme.colors.border_light};
-`;
-
-// Accordian
-const SStepContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
-const SLabel = styled.p`
-  ${typoStyle.label}
-  height: 100%;
-  margin-right: 8px;
-`;
-const SLabelTitle = styled.span`
-  display: flex;
-  align-items: center;
-  ${typoStyle.contents}
-`;
-const SLabelText = styled.div`
-  opacity: 0.3;
-`;
-
-// 셀렉트 그룹
-const SSelectGroup = styled.div`
-  .group-row {
-    display: flex;
-    margin-bottom: 6px;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-
-  .group-col-1 {
-    width: 100%;
-    flex: 0 1 100%;
-  }
-  .group-col-2 {
-    width: 50%;
-    flex: 0 1 50%;
-    &:first-of-type {
-      margin-right: 12px;
-    }
-  }
-`;
-// 테이블 관련 코드
-const STable = styled.div``;
-
-const SHead = styled.div`
-  ${tableStyle.table_head}
-`;
-
-const SBody = styled.div``;
-
-const SRow = styled.div`
-  border-radius: 999px;
-  ${tableStyle.table_row}
-  ${transitionStyle.background}
-  
-  background-color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.bg_gnb : ""};
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.bg_gnb};
-  }
-`;
-
-const SChamp = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 10px 0;
-
-  span {
-    ${typoStyle.noWrap}
-  }
-`;
-
-// 테이블
-const Col1 = css`
-  margin-right: 16px;
-`;
-
-const Col2 = css`
-  flex: 1;
-  max-width: 180px;
-`;
-
-const Col3 = css`
-  width: 43px;
-  text-align: center;
-`;
-
-const SRed = styled.div`
-  ${Col3}
-  color: ${({ theme }) => theme.colors.red};
-`;
-const SBlue = styled.div`
-  ${Col3}
-  color: ${({ theme }) => theme.colors.blue};
-`;
-
 export default CompareSideFilter;
