@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
+import { useSelector } from "react-redux";
 import PositionCheckList from "../../../../Components/Ui/PositionCheckList";
 import { testStyle } from "../../../../Styles/ui";
 import JungleFilter from "../components/JungleFilter";
@@ -8,25 +9,28 @@ import JungleSideFilter from "../components/JungleSideFilter";
 import SequenceDialog from "../components/SequenceDialog";
 
 const Sequence = () => {
+  const junglevalue = useSelector((state) => state.JungleMapReducer);
   return (
     <SContainer>
       <SFilterContainer>
         <JungleFilter />
       </SFilterContainer>
+      {/* jungleFilter의 패치까지 선택되었을 때 하위 컨텐츠 노출 */}
+      {Object.keys(junglevalue.patch).length !== 0 && Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key] === true).length > 0 &&
       <SFitlerContents>
-        <SSelector>
-          <JungleSideFilter />
-        </SSelector>
-        <SMap>
-          <SVideo>
-            <PositionCheckList onChange={(position) => console.log(position)} />
-            {/* ehck */}
-          </SVideo>
-          <SDialog>
-            <SequenceDialog />
-          </SDialog>
-        </SMap>
-      </SFitlerContents>
+      <SSelector>
+        <JungleSideFilter />
+      </SSelector>
+      <SMap>
+        <SVideo>
+          <PositionCheckList onChange={(position) => console.log(position)} />
+        </SVideo>
+        <SDialog>
+          <SequenceDialog />
+        </SDialog>
+      </SMap>
+    </SFitlerContents> 
+      }
     </SContainer>
   );
 };
@@ -41,6 +45,8 @@ const SFilterContainer = styled.section`
   ${testStyle.border3}
 `;
 const SFitlerContents = styled.section`
+/* 임시 margin부여 */
+  margin-top: 80px;
   display: flex;
 `;
 // components
