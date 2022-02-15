@@ -33,7 +33,10 @@ const dropdownStyle = {
       background-color: ${theme.colors.bg_light};
     }
   `,
-  circle: {},
+
+  select_opacity: css`
+    opacity: 0.3;
+  `,
 };
 
 export default dropdownStyle;
