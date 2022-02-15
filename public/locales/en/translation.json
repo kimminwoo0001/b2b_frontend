@@ -151,7 +151,9 @@
       "w": "W",
       "l": "L",
       "tier": "Tier",
-      "noUniquePickData": "There is no unique pick data."
+      "noUniquePickData": "There is no unique pick data.",
+      "team":"Team",
+      "oppTeam":"Opponent Team"
     },
     "leagueStat": {
       "gameLength": "Game Length",
@@ -412,7 +414,8 @@
     "player": "Player",
     "NoCommonSeasons": "Please select seasons again.",
     "mainTeamChanged": "Main team has changed. Moves to the initial page.",
-    "sorry": "The game data for the 2022 season has been updated."
+    "sorry": "The game data for the 2022 season has been updated.",
+    "noMultipleSelection": "Multi Select Disabled"
   },
   "video": {
     "tab": {

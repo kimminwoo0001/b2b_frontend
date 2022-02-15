@@ -37,7 +37,7 @@ function League() {
         </div> */}
         <ContentWrapper>
           {/* season 값이 있으면 데이터를 보여주고 아니면 selectFilter화면을 보여주도록 */}
-          {filters.season.length !== 0 ? <LeagueTab /> : <SelectFilter />}
+          {filters.league.length !== 0 && filters.season.length !== 0 ? <LeagueTab /> : <SelectFilter />}
         </ContentWrapper>
       </LeagueWrapper>
     </ErrorBoundary>

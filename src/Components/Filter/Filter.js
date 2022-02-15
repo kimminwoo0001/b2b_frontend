@@ -8,6 +8,7 @@ import {
   Player,
   Patch,
   ResetYear,
+  ResetLeague,
   ResetSeason,
   ResetTeam,
   ResetPlayer,
@@ -204,7 +205,6 @@ const Filter = memo(() => {
 
   // 최초 선택된 리그의 시즌이 없는 리그일 경우 팝업 적용
   useEffect(() => {
-
     if (pagePath === goLeagueReport || pagePath === goPathAnalysis) {
       if (filters.season.length !== 0) {
         if (filters.year.length !== 0) {
@@ -220,9 +220,7 @@ const Filter = memo(() => {
             }
           }
         }
-
       }
-
     }
   }, [filters.league])
 
@@ -233,12 +231,28 @@ const Filter = memo(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [copyvalue.compareModal]);
 
-  // 팀이 이미 선택된 경우에 리그를 재선택하게될 때 팀 리셋하여 빈 데이터가 나오지 않게 함
+  useEffect(() => {
+  // 팀 보고서 - 전력보고서 탭에서 리그를 lpl로 변경시 밴픽보고서 탭만 보여주도록 처리
+    if(pagePath === goTeamReport && filters.tab === 1 && filters.league.includes("LPL")) {
+      dispatch(HandleTab(0));
+    }
+  },[filters.league])
+
+    // 팀이 이미 선택된 경우에 리그를 재선택하게될 때 팀 리셋하여 빈 데이터가 나오지 않게 함
   useEffect(() => {
     if ([goPlayerReport, goTeamReport].includes(pagePath) && filters.team.length > 0) {
       dispatch(ResetTeam());
     }
   }, [filters.league])
+
+  useEffect(() => {
+  // 리그 보고서 - 리그 통합 지수, 선수 정보 탭에서 리그를 lpl로 변경 시 픽 탭만 보여주도록 처리
+  if(pagePath === goLeagueReport && ( filters.tab === 2 || filters.tab === 3 )) {
+    if(filters.league.includes("LPL"))
+    dispatch(HandleTab(1));
+  }
+  }, [filters.league])
+
 
   const fetchActiveFilter = () => {
     // if (selector.leagueFilter?.length > 0) fetchLeagueFilter();
@@ -267,14 +281,12 @@ const Filter = memo(() => {
         return;
       }
       // 모든 리그에서 LPL 리그 제외
-      leagueList = Object.keys(staticvalue.filterObjects).filter(
-        (key) => key !== "LPL"
-      )
+      leagueList = Object.keys(staticvalue.filterObjects)
     }
 
     if (filters.year[0] === "2022") {
       leagueList = Object.keys(staticvalue.filterObjects).filter(
-        (key) => key !== "MSI" && key !== "WC" && key !== "LPL"
+        (key) => key !== "MSI" && key !== "WC"
       );
     }
     if (pagesWithLimitedLeagues) {
@@ -526,16 +538,20 @@ const Filter = memo(() => {
                 <FilterItem
                   title={t("label.league")}
                   isHaveFilter={selector.leagueFilter.length > 0 ? true : false}
-                  multiFilter={selector.leagueFilter?.map((league, idx) => {
+                  multiFilter={selector.leagueFilter?.filter(league  => league !== "LPL")
+                  .concat(selector.leagueFilter?.filter(league => league === "LPL")).map((league, idx) => {
                     return (
                       <MultiSelectCb
                         idx={idx}
                         filterData={filters.league}
                         mapData={league}
-                        radioBtn={[goTeamReport, goPlayerReport].includes(pagePath)}
+                        radioBtn={[goTeamReport, goPlayerReport].includes(pagePath) 
+                          || (pagePath.includes(goLeagueReport) && league  === "LPL")}
                         pngPath={`ico-league-${league.toLowerCase()}`}
                         clickEvent={() => {
-                          [goTeamReport, goPlayerReport].includes(pagePath)
+                            ([goTeamReport, goPlayerReport].includes(pagePath)) 
+                            // 리그보고서이면서 LPL리그의 경우 라디오버튼 + 단독 선택 처리
+                            || (filters.league.includes("LPL") || (pagePath.includes(goLeagueReport) && league  === "LPL"))
                             ? dispatch(SetLeague([league]))
                             : dispatch(League(league));
 
