@@ -1,69 +1,41 @@
 /** @jsxImportSource @emotion/react */
 import { jsx } from "@emotion/react";
-import styled from "@emotion/styled";
 import PositionCheckList from "../../../../Components/Ui/PositionCheckList";
-import { testStyle } from "../../../../Styles/ui";
 import JungleFilter from "../components/JungleFilter";
 import JungleSideFilter from "../components/JungleSideFilter";
 import SequenceDialog from "../components/SequenceDialog";
+import * as S from "../components/styled/StyledJungleLayout";
 
 const Sequence = () => {
   return (
-    <SContainer>
-      <SFilterContainer>
+    <S.SequenceContainer>
+      {/* 메인 필터 */}
+      <S.FilterContainer>
         <JungleFilter />
-      </SFilterContainer>
-      <SFitlerContents>
-        <SSelector>
+      </S.FilterContainer>
+
+      {/* 사이드 필터와 맵 비디오  */}
+      <S.FlexContainer>
+        {/* 사이드 필터 */}
+        <S.Sidebar>
           <JungleSideFilter />
-        </SSelector>
-        <SMap>
-          <SVideo>
+        </S.Sidebar>
+
+        {/*  맵 & 다이얼로그 */}
+        <S.Container>
+          {/* 맵 비디오 */}
+          <S.VideoContainer>
             <PositionCheckList onChange={(position) => console.log(position)} />
-            {/* ehck */}
-          </SVideo>
-          <SDialog>
+          </S.VideoContainer>
+
+          {/* 이벤트 다이얼로그 */}
+          <S.DialogContainer>
             <SequenceDialog />
-          </SDialog>
-        </SMap>
-      </SFitlerContents>
-    </SContainer>
+          </S.DialogContainer>
+        </S.Container>
+      </S.FlexContainer>
+    </S.SequenceContainer>
   );
 };
-
-// layout
-const SContainer = styled.article`
-  width: 100%;
-`;
-const SFilterContainer = styled.section`
-  height: 348px;
-  margin-bottom: 30px;
-  ${testStyle.border3}
-`;
-const SFitlerContents = styled.section`
-  display: flex;
-`;
-// components
-const SSelector = styled.section`
-  flex: 0 0 376px;
-  width: 376px;
-  border-radius: 20px;
-  margin-right: 20px;
-  background-color: ${({ theme }) => theme.colors.bg_light};
-`;
-const SMap = styled.section`
-  flex: 1 0;
-  ${testStyle.border5}
-  height: 1115px;
-`;
-
-const SVideo = styled.div`
-  height: 810px;
-  margin-bottom: 20px;
-  ${testStyle.border6}
-`;
-const SDialog = styled.div`
-  height: 280px;
-`;
 
 export default Sequence;

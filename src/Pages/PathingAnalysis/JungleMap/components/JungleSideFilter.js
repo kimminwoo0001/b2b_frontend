@@ -437,7 +437,12 @@ const JungleSideFilter = () => {
 
       <SButtonContainer>
         <Button
-          css={[buttonStyle.color.main, buttonStyle.size.lg, typoStyle.body]}
+          css={[
+            buttonStyle.color.main,
+            buttonStyle.size.full,
+            buttonStyle.size.y_20,
+            typoStyle.body,
+          ]}
         >
           정글동선 확인하기
         </Button>
