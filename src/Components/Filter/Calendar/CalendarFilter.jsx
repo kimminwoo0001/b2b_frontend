@@ -6,21 +6,40 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import theme from "../../../Styles/Theme";
-import { SetCalendarIsOpen } from "../../../redux/modules/calendarvalue";
+import {
+  SetCalendarDayEndIdx,
+  SetCalendarDayStartIdx,
+  SetCalendarIsOpen,
+} from "../../../redux/modules/calendarvalue";
 import addZero from "../../../lib/addZero";
 import DayBox from "./SubContainer/DayBox";
+import {
+  Link,
+  DirectLink,
+  Element,
+  Events,
+  animateScroll as scroll,
+  scrollSpy,
+  scroller,
+} from "react-scroll";
+import { useState } from "react";
 
 const date = new Date();
 const weekDays = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 
 function CalendarFilter() {
+  const [month, setMonth] = useState(new Date().getUTCMonth() + 1);
+  const [lock, setLock] = useState(false);
   const calendar = useSelector((state) => state.CalendarReducer);
+  const filters = useSelector((state) => state.FilterReducer);
   const { year } = useSelector((state) => state.FilterReducer);
+  console.log("year", year);
   const dispath = useDispatch();
   const { t } = useTranslation();
   const lang = useSelector((state) => state.LocaleReducer);
   const firstDays = new Date(year, 1, 1);
   const leapYear = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+
   const monthDays = [
     31,
     leapYear ? 29 : 28,
@@ -57,8 +76,69 @@ function CalendarFilter() {
     return {
       month: -1,
       day: -1,
+      index: index,
     };
   };
+
+  const autoMoveScroll = (idx) => {
+    if (idx > 1) {
+      scroller.scrollTo(`week-${getMonthDays(idx)}`, {
+        duration: 500,
+        delay: 0,
+        smooth: "easeInOutQuart",
+        containerId: "calendar-body",
+      });
+    } else {
+      scroll.scrollToTop({
+        duration: 500,
+        delay: 0,
+        smooth: "easeInOutQuart",
+        containerId: "calendar-body",
+      });
+    }
+  };
+
+  const handleSetActive = (to) => {
+    if (lock) {
+      return;
+    }
+    console.log("to", to);
+    let currentIdx = (+to.split("-")[1] + 1) * 7 - firstDays.getDay();
+
+    for (let i = 0; i < monthDays.length; i++) {
+      console.log("currentIdx", currentIdx);
+      if (currentIdx - monthDays[i] >= 0) {
+        currentIdx -= monthDays[i];
+        continue;
+      } else {
+        console.log("i", i + 1);
+        return setMonth(i);
+        //
+      }
+    }
+  };
+
+  const getMonthDays = (mon) => {
+    let result = 0;
+    console.log("mon", mon);
+    for (let i = 0; i < mon; i++) {
+      result += monthDays[i];
+    }
+    result = Math.floor((result + firstDays.getDay()) / 7);
+    return result;
+  };
+
+  const moveLock = () => {
+    setLock(true);
+    setTimeout(() => setLock(false), 1000);
+  };
+
+  useEffect(() => {
+    scrollSpy.update();
+    console.log("[]", month);
+    moveLock();
+    autoMoveScroll(month);
+  }, []);
 
   return (
     // 전체화면 로딩 이미지
@@ -66,17 +146,42 @@ function CalendarFilter() {
       <SCalendarContainer>
         <div className="header">
           <div className="date-info">
-            <img src="Images/ic-pre.svg" alt="pre" />
+            <Link
+              activeClass="active"
+              className="test1"
+              to={`week-${getMonthDays(month - 1)}`}
+              smooth={true}
+              duration={500}
+              containerId="calendar-body"
+              onClick={() => {
+                setMonth(month - 1);
+                moveLock();
+              }}
+              //onSetActive={handleSetActive}
+            >
+              <img src="Images/ic-pre.svg" alt="pre" />
+            </Link>
             <div className="date-view">
               {lang === "ko"
-                ? `${date.getUTCFullYear()}${t("common.date.year")} ${addZero(
-                    date.getUTCMonth() + 1
-                  )}${t("common.date.month")}`
-                : `${addZero(
-                    date.getUTCMonth() + 1
-                  )}, ${date.getUTCFullYear()}`}
+                ? `${year}${t("common.date.year")} ${addZero(month + 1)}${t(
+                    "common.date.month"
+                  )}`
+                : `${addZero(month + 1)}, ${year}`}
             </div>
-            <img src="Images/ic-next.svg" alt="next" />
+            <Link
+              activeClass="active"
+              className="test1"
+              to={`week-${getMonthDays(month + 1)}`}
+              smooth={true}
+              duration={500}
+              containerId="calendar-body"
+              onClick={() => {
+                setMonth(month + 1);
+                moveLock();
+              }}
+            >
+              <img src="Images/ic-next.svg" alt="next" />
+            </Link>
           </div>
           <img
             className="close-btn"
@@ -95,39 +200,49 @@ function CalendarFilter() {
           })}
         </div>
         <CalendarBody>
-          {leapYear
-            ? [...Array(Math.floor((366 + firstDays.getDay()) / 7) + 1)].map(
-                (week, idx) => {
-                  return (
-                    <div className="calendar-days">
-                      {[...Array(7)].map((day, idx2) => {
-                        return (
-                          <DayBox
-                            info={getCalendarInfo(idx, idx2)}
-                            isLeapYear={leapYear}
-                          />
-                        );
-                      })}
-                    </div>
-                  );
-                }
-              )
-            : [...Array(Math.floor((365 + firstDays.getDay()) / 7) + 1)].map(
-                (week, idx) => {
-                  return (
-                    <div className="calendar-days">
-                      {[...Array(7)].map((day, idx2) => {
-                        return (
-                          <DayBox
-                            info={getCalendarInfo(idx, idx2)}
-                            isLeapYear={leapYear}
-                          />
-                        );
-                      })}
-                    </div>
-                  );
-                }
-              )}
+          <div id="calendar-body">
+            {[
+              ...Array(
+                Math.floor(
+                  (365 + (leapYear ? 1 : 0) + firstDays.getDay()) / 7
+                ) + 1
+              ),
+            ].map((week, idx) => {
+              return (
+                <Element name={`week-${idx}`} className="element">
+                  <Link
+                    activeClass="active"
+                    className="test1"
+                    to={`week-${idx}`}
+                    spy={true}
+                    containerId="calendar-body"
+                    onSetActive={handleSetActive}
+                    spyThrottle={200}
+                  ></Link>
+                  <div className="calendar-days">
+                    {[...Array(7)].map((day, idx2) => {
+                      return (
+                        <DayBox
+                          info={getCalendarInfo(idx, idx2)}
+                          isLeapYear={leapYear}
+                          startDayIdx={calendar.startDayIdx}
+                          endDayIdx={calendar.endDayIdx}
+                          isStartSelector={calendar.isStartSelector}
+                          onClick={() =>
+                            dispath(
+                              calendar.isStartSelector
+                                ? SetCalendarDayStartIdx(getIdx(idx, idx2))
+                                : SetCalendarDayEndIdx(getIdx(idx, idx2))
+                            )
+                          }
+                        />
+                      );
+                    })}
+                  </div>
+                </Element>
+              );
+            })}
+          </div>
         </CalendarBody>
         <div className="confirm">
           <div className="label">
@@ -180,6 +295,10 @@ const SCalendarContainer = styled.div`
       top: 30px;
       position: absolute;
       display: flex;
+
+      .active {
+        background-color: green;
+      }
 
       .date-view {
         width: 180px;
@@ -262,8 +381,10 @@ const SCalendarContainer = styled.div`
 `;
 
 const CalendarBody = styled.div`
-  width: 100%;
-  height: 884px;
-  padding: 4px 0 0;
-  overflow: scroll;
+  #calendar-body {
+    overflow: scroll;
+    width: 100%;
+    height: 884px;
+    padding: 4px 0 0;
+  }
 `;

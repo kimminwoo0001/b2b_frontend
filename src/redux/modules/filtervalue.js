@@ -575,6 +575,7 @@ export default function FilterReducer(state = initialState, action) {
         menu_num: action.payload,
       };
     case YEAR:
+      console.log("YEAR", action.payload);
       if (state.year.length === 0) {
         return { ...state, year: [action.payload] };
       }
@@ -649,6 +650,7 @@ export default function FilterReducer(state = initialState, action) {
         league: action.payload,
       };
     case SET_YEAR:
+      console.log("SET_YEAR", action.payload);
       return {
         ...state,
         year: action.payload,
@@ -708,7 +710,7 @@ export default function FilterReducer(state = initialState, action) {
       return {
         ...state,
         league: action.payload,
-      } 
+      }
     default:
       return state;
   }

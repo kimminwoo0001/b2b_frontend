@@ -30,6 +30,7 @@ import UiTest from "./Pages/ETC/Ui/UiTest"
 import ServerTest from "./Pages/ETC/ServerTest/ServerTest";
 import SoloRank from "./Pages/SoloRank/SoloRank";
 import { goChangePw, goCheckLogin, goError, goHome, goLeagueReport, goLogin, goPathAnalysis, goPiArea, goPlayerCompare, goPlayerReport, goProGameReport, goServerTest, goSignUp, goSoloRank, goTeamCompare, goTeamReport, goUiTest, proGameReportDetail } from "./lib/pagePath";
+import CalendarFilter from "./Components/Filter/Calendar/CalendarFilter";
 
 // import Utility from "./Pages/ETC/Utility/Utility";
 // import PickCalculator from "./Pages/ETC/PickCalculator/PickCalculator";
@@ -37,6 +38,7 @@ import { goChangePw, goCheckLogin, goError, goHome, goLeagueReport, goLogin, goP
 function Routes() {
   //const token = sessionStorage.getItem("token");
   const user = useSelector((state) => state.UserReducer);
+  const calendar = useSelector((state) => state.CalendarReducer);
 
   const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
@@ -67,6 +69,7 @@ function Routes() {
     <Router>
       <AlertModal />
       <Loading />
+      
       <Switch>
         <PrivateRoute exact path={goHome} component={Home} />
         <PrivateRoute exact path={goLeagueReport} component={League} />

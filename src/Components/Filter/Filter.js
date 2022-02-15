@@ -327,7 +327,7 @@ const Filter = memo(() => {
         .filter((item, pos) => yearList.indexOf(item) === pos)
         .sort()
         .reverse();
-      if (filters.year.length !== 0) {
+      if (filters.year.length === 0) {
         dispatch(Year(yearList[0])); // 리그 선택 시, 가장 최근 Year, Season을 자동 선택
       }
       // }
@@ -491,7 +491,7 @@ const Filter = memo(() => {
       <AlertModal />
       {[goTeamCompare, goTeamReport].includes(copyvalue.openFilterModal) && <TeamFilterModal />}
       {[goPlayerReport, goPlayerCompare].includes(copyvalue.openFilterModal) && <PlayerFilterModal />}
-      {[goLeagueReport, goTeamReport].includes(pagePath) && calendarvalue.isOpen && <CalendarFilter />}
+      {calendarvalue.isOpen && <CalendarFilter />}
       {!filters.filterMenuState ? <CloseFilter /> :
         <FilterWrapper>
           <FilterHeader />
