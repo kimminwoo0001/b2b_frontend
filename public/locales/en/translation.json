@@ -151,7 +151,9 @@
       "w": "W",
       "l": "L",
       "tier": "Tier",
-      "noUniquePickData": "There is no unique pick data."
+      "noUniquePickData": "There is no unique pick data.",
+      "team":"Team",
+      "oppTeam":"Opponent Team"
     },
     "leagueStat": {
       "gameLength": "Game Length",
