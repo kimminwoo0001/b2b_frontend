@@ -104,3 +104,51 @@ export const TableData = styled.div`
     }
   }
 `;
+
+/** 텍스트 테이블 */
+export const TextTable = styled.table`
+  /* width: 100%; */
+  width: 900px;
+
+  thead {
+    ${typoStyle.contents_title}
+
+    th {
+      vertical-align: middle;
+      text-align: center;
+      background-color: ${colors.bg_box};
+      ${spacing.paddingY(4)}
+
+      &:nth-of-type(2n) {
+        width: 20px;
+      }
+
+      &:first-of-type {
+        border-radius: 9999px 0 0 9999px;
+      }
+      &:last-of-type {
+        border-radius: 0 9999px 9999px 0;
+      }
+    }
+  }
+
+  tbody {
+    font-size: 16px;
+    /* 첫번쨰 행 */
+    tr:first-of-type {
+      td {
+        ${spacing.paddingT(5)}
+        ${spacing.paddingB(3)}
+      }
+    }
+    /* 나머지행 */
+    tr {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      td {
+        vertical-align: middle;
+        text-align: center;
+        ${spacing.padding(3)}
+      }
+    }
+  }
+`;
