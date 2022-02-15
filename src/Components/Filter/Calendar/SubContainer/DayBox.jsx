@@ -8,39 +8,54 @@ import {
   SetCalendarDayEndIdx,
   SetCalendarDayStartIdx,
 } from "../../../../redux/modules/calendarvalue";
+import addZero from "../../../../lib/addZero";
+import { SetDesc, SetIsOpen } from "../../../../redux/modules/modalvalue";
+
+const checkClick = (isStartSelector, startDayIdx, index) => {
+  if (isStartSelector) {
+    return true;
+  } else {
+    const now = new Date();
+    if (startDayIdx < index) {
+      return true;
+    }
+  }
+  return false;
+};
 
 const DayBox = ({
   info,
-  isLeapYear,
-  startDayIdx,
-  endDayIdx,
   isStartSelector,
+  selectIdx,
+  setSelectIdx,
+  setSelectValue,
+  startDayIdx,
 }) => {
   const lang = useSelector((state) => state.LocaleReducer);
   const { t } = useTranslation();
-  const dispath = useDispatch();
-  const { day, month, index } = info;
-  console.log(
-    startDayIdx,
-    index,
-    endDayIdx,
-    startDayIdx <= index || index <= endDayIdx
-  );
+  const dispatch = useDispatch();
+  const { year, day, month, index } = info;
+
   return (
     <SCalendarDayBox
       isActive={
-        startDayIdx === -1 &&
-        startDayIdx <= index &&
-        endDayIdx === -1 &&
-        index <= endDayIdx
+        selectIdx === index ||
+        (!isStartSelector && startDayIdx === index) ||
+        (!isStartSelector && startDayIdx <= index && index <= selectIdx)
       }
       onClick={() => {
-        console.log("a");
-        dispath(
-          isStartSelector
-            ? SetCalendarDayStartIdx(index)
-            : SetCalendarDayEndIdx(index)
-        );
+        if (checkClick(isStartSelector, startDayIdx, index)) {
+          if (selectIdx !== index) {
+            setSelectIdx(index);
+            setSelectValue(`${year}-${addZero(month)}-${addZero(day + 1)}`);
+          } else {
+            setSelectIdx();
+            setSelectValue();
+          }
+        } else {
+          dispatch(SetDesc(t("utility.calendarFilter.desc.wrongDate")));
+          dispatch(SetIsOpen(true));
+        }
       }}
     >
       {day >= 0 && month < 13 && (

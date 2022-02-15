@@ -2,7 +2,9 @@ export const CALENDAR_INIT = "calendarvalue/CALENDAR_INIT"
 export const SET_CALENDAR_ISOPEN = "calendarvalue/SET_CALENDAR_ISOPEN";
 export const SET_CALENDAR_ISSTARTSELECTOR = "calendarvalue/SET_CALENDAR_ISSTARTSELECTOR";
 export const SET_CALENDAR_DAY_START_IDX = "calendarvalue/SET_CALENDAR_DAY_START_IDX";
-export const SET_CALENDAR_DAY_END_IDX = "calendarvalue/SET_CALENDAR_DAY_START_IDX";
+export const SET_CALENDAR_START_DATE = "calendarvalue/SET_CALENDAR_START_DATE";
+export const SET_CALENDAR_DAY_END_IDX = "calendarvalue/SET_CALENDAR_DAY_END_IDX";
+export const SET_CALENDAR_END_DATE = "calendarvalue/SET_CALENDAR_END_DATE";
 
 
 export const CalendarInit = () => {
@@ -34,12 +36,26 @@ export const SetCalendarDayEndIdx = (payload) => {
     payload
   };
 }
+export const SetCalendarStartDate = (payload) => {
+  return {
+    type: SET_CALENDAR_START_DATE,
+    payload
+  };
+}
+export const SetCalendarEndDate = (payload) => {
+  return {
+    type: SET_CALENDAR_END_DATE,
+    payload
+  };
+}
 
 const initialState = {
   isOpen: false,
   isStartSelector: false,
-  startDayIdx: -1,
-  endDayIdx: -1,
+  startDayIdx: "",
+  endDayIdx: "",
+  startDate: "",
+  endDate: "",
 }
 
 export default function CalendarReducer(state = initialState, action) {
@@ -57,28 +73,24 @@ export default function CalendarReducer(state = initialState, action) {
         isStartSelector: action.payload
       }
     case SET_CALENDAR_DAY_START_IDX:
-      if (action.payload === state.startDayIdx) {
-        return {
-          ...state,
-          startDayIdx: -1
-        }
-      } else {
-        return {
-          ...state,
-          startDayIdx: action.payload
-        }
+      return {
+        ...state,
+        startDayIdx: action.payload
       }
     case SET_CALENDAR_DAY_END_IDX:
-      if (action.payload === state.endDayIdx) {
-        return {
-          ...state,
-          endDayIdx: -1
-        }
-      } else {
-        return {
-          ...state,
-          endDayIdx: action.payload
-        }
+      return {
+        ...state,
+        endDayIdx: action.payload
+      }
+    case SET_CALENDAR_START_DATE:
+      return {
+        ...state,
+        startDate: action.payload
+      }
+    case SET_CALENDAR_END_DATE:
+      return {
+        ...state,
+        endDate: action.payload
       }
     default:
       return state;

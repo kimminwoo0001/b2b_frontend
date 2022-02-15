@@ -2,6 +2,7 @@
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { batch, useDispatch } from "react-redux";
 import {
   SetCalendarIsOpen,
@@ -12,6 +13,7 @@ import theme from "../../../Styles/Theme";
 const CalendarFilterNav = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const calendar = useSelector((state) => state.CalendarReducer);
   return (
     <SCFContainer>
       <div className="calendar-filter-label">
@@ -29,6 +31,7 @@ const CalendarFilterNav = () => {
           className="calendar-input"
           type="text"
           placeholder={t("utility.calendarFilter.inputStart")}
+          value={calendar.startDate}
         />
         <img className="calendar-icon" src="Images/ic-calendar.svg" alt="" />
       </SCFDaysInput>
@@ -45,6 +48,7 @@ const CalendarFilterNav = () => {
           className="calendar-input"
           type="text"
           placeholder={t("utility.calendarFilter.inputEnd")}
+          value={calendar.endDate}
         />
         <img className="calendar-icon" src="Images/ic-calendar.svg" alt="" />
       </SCFDaysInput>
@@ -100,6 +104,7 @@ const SCFContainer = styled.div`
   .calendar-input {
     width: 78px;
     cursor: pointer;
+    color: ${theme.colors.text};
   }
 
   .calendar-icon {

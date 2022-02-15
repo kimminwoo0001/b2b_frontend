@@ -176,8 +176,8 @@
       "l": "패",
       "tier": "티어",
       "noUniquePickData": "유니크 픽 데이터가 없습니다.",
-      "team":"팀",
-      "oppTeam":"상대 팀"
+      "team": "팀",
+      "oppTeam": "상대 팀"
     },
     "leagueStat": {
       "gameLength": "평균 게임 시간",
@@ -440,7 +440,6 @@
     "mainTeamChanged": "메인 팀이 변경되어 비교 데이터가 초기화됩니다.",
     "sorry": "22년도 시즌데이터가 업데이트 되었습니다.",
     "noMultipleSelection": "중복 선택 불가"
-
   },
   "video": {
     "tab": {
@@ -743,7 +742,13 @@
         "recent3months": "최근 3개월"
       },
       "selectedStartDay": "시작일 선택 완료",
-      "selectedEndDay": "종료일 선택 완료"
+      "selectedEndDay": "종료일 선택 완료",
+      "desc": {
+        "noStartIdx": "시작일을 선택이 필요합니다.",
+        "noEndIdx": "종료일을 선택이 필요합니다.",
+        "needStartIdx": "시작일을 먼저 선택해야 합니다.",
+        "wrongDate": "사용 가능한 날짜를 선택해야합니다."
+      }
     }
   }
 }

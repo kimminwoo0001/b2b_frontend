@@ -54,14 +54,13 @@ import {
   goLeagueReport, goTeamReport, goPlayerReport, goPathAnalysis,
   goTeamCompare, goPlayerCompare, goProGameReport, itemCalculator
 } from "../../lib/pagePath";
-import CalendarFilter from "./Calendar/CalendarFilter";
 
 const Filter = memo(() => {
   const filters = useSelector((state) => state.FilterReducer);
   const copyvalue = useSelector((state) => state.CopyReducer);
   const user = useSelector((state) => state.UserReducer);
   const staticvalue = useSelector((state) => state.StaticValueReducer);
-  const calendarvalue = useSelector((state) => state.CalendarReducer);
+
   const selector = useSelector((state) => state.SelectorReducer);
   const dispatch = useDispatch();
   const isInitialMount = useRef(true);
@@ -234,13 +233,13 @@ const Filter = memo(() => {
   }, [copyvalue.compareModal]);
 
   useEffect(() => {
-  // 팀 보고서 - 전력보고서 탭에서 리그를 lpl로 변경시 밴픽보고서 탭만 보여주도록 처리
-    if(pagePath === goTeamReport && filters.tab === 1 && filters.league.includes("LPL")) {
+    // 팀 보고서 - 전력보고서 탭에서 리그를 lpl로 변경시 밴픽보고서 탭만 보여주도록 처리
+    if (pagePath === goTeamReport && filters.tab === 1 && filters.league.includes("LPL")) {
       dispatch(HandleTab(0));
     }
-  },[filters.league])
+  }, [filters.league])
 
-    // 팀이 이미 선택된 경우에 리그를 재선택하게될 때 팀 리셋하여 빈 데이터가 나오지 않게 함
+  // 팀이 이미 선택된 경우에 리그를 재선택하게될 때 팀 리셋하여 빈 데이터가 나오지 않게 함
   useEffect(() => {
     if ([goPlayerReport, goTeamReport].includes(pagePath) && filters.team.length > 0) {
       dispatch(ResetTeam());
@@ -248,11 +247,11 @@ const Filter = memo(() => {
   }, [filters.league])
 
   useEffect(() => {
-  // 리그 보고서 - 리그 통합 지수, 선수 정보 탭에서 리그를 lpl로 변경 시 픽 탭만 보여주도록 처리
-  if(pagePath === goLeagueReport && ( filters.tab === 2 || filters.tab === 3 )) {
-    if(filters.league.includes("LPL"))
-    dispatch(HandleTab(1));
-  }
+    // 리그 보고서 - 리그 통합 지수, 선수 정보 탭에서 리그를 lpl로 변경 시 픽 탭만 보여주도록 처리
+    if (pagePath === goLeagueReport && (filters.tab === 2 || filters.tab === 3)) {
+      if (filters.league.includes("LPL"))
+        dispatch(HandleTab(1));
+    }
   }, [filters.league])
 
 
@@ -503,7 +502,7 @@ const Filter = memo(() => {
       <AlertModal />
       {[goTeamCompare, goTeamReport].includes(copyvalue.openFilterModal) && <TeamFilterModal />}
       {[goPlayerReport, goPlayerCompare].includes(copyvalue.openFilterModal) && <PlayerFilterModal />}
-      {calendarvalue.isOpen && <CalendarFilter />}
+
       {!filters.filterMenuState ? <CloseFilter /> :
         <FilterWrapper>
           <FilterHeader />
@@ -541,27 +540,27 @@ const Filter = memo(() => {
                 <FilterItem
                   title={t("label.league")}
                   isHaveFilter={selector.leagueFilter.length > 0 ? true : false}
-                  multiFilter={selector.leagueFilter?.filter(league  => league !== "LPL")
-                  .concat(selector.leagueFilter?.filter(league => league === "LPL")).map((league, idx) => {
-                    return (
-                      <MultiSelectCb
-                        idx={idx}
-                        filterData={filters.league}
-                        mapData={league}
-                        radioBtn={[goTeamReport, goPlayerReport].includes(pagePath) 
-                          || (pagePath.includes(goLeagueReport) && league  === "LPL")}
-                        pngPath={`ico-league-${league.toLowerCase()}`}
-                        clickEvent={() => {
-                            ([goTeamReport, goPlayerReport].includes(pagePath)) 
-                            // 리그보고서이면서 LPL리그의 경우 라디오버튼 + 단독 선택 처리
-                            || (filters.league.includes("LPL") || (pagePath.includes(goLeagueReport) && league  === "LPL"))
-                            ? dispatch(SetLeague([league]))
-                            : dispatch(League(league));
+                  multiFilter={selector.leagueFilter?.filter(league => league !== "LPL")
+                    .concat(selector.leagueFilter?.filter(league => league === "LPL")).map((league, idx) => {
+                      return (
+                        <MultiSelectCb
+                          idx={idx}
+                          filterData={filters.league}
+                          mapData={league}
+                          radioBtn={[goTeamReport, goPlayerReport].includes(pagePath)
+                            || (pagePath.includes(goLeagueReport) && league === "LPL")}
+                          pngPath={`ico-league-${league.toLowerCase()}`}
+                          clickEvent={() => {
+                            ([goTeamReport, goPlayerReport].includes(pagePath))
+                              // 리그보고서이면서 LPL리그의 경우 라디오버튼 + 단독 선택 처리
+                              || (filters.league.includes("LPL") || (pagePath.includes(goLeagueReport) && league === "LPL"))
+                              ? dispatch(SetLeague([league]))
+                              : dispatch(League(league));
 
-                        }}
-                      />
-                    );
-                  })}
+                          }}
+                        />
+                      );
+                    })}
                 />
                 <FilterItem
                   title={t("label.season")}

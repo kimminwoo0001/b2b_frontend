@@ -2,14 +2,16 @@
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { batch, useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import theme from "../../../Styles/Theme";
 import {
   SetCalendarDayEndIdx,
   SetCalendarDayStartIdx,
+  SetCalendarEndDate,
   SetCalendarIsOpen,
+  SetCalendarStartDate,
 } from "../../../redux/modules/calendarvalue";
 import addZero from "../../../lib/addZero";
 import DayBox from "./SubContainer/DayBox";
@@ -23,16 +25,20 @@ import {
   scroller,
 } from "react-scroll";
 import { useState } from "react";
+import { SetDesc, SetIsOpen } from "../../../redux/modules/modalvalue";
 
 const date = new Date();
 const weekDays = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 
 function CalendarFilter() {
+  const [selectIdx, setSelectIdx] = useState();
+  const [selectValue, setSelectValue] = useState();
   const [month, setMonth] = useState(new Date().getUTCMonth() + 1);
+
   const [lock, setLock] = useState(false);
   const calendar = useSelector((state) => state.CalendarReducer);
   const { year } = useSelector((state) => state.FilterReducer);
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const lang = useSelector((state) => state.LocaleReducer);
   const firstDays = new Date(year, 1, 1);
@@ -68,11 +74,13 @@ function CalendarFilter() {
         return {
           month: i + 1,
           day: index - total,
+          year: year,
           index: index,
         };
       }
     }
     return {
+      year: year,
       month: -1,
       day: -1,
       index: index,
@@ -185,7 +193,7 @@ function CalendarFilter() {
             src="Images/ic_close_bk_30.svg"
             alt="close"
             onClick={() => {
-              dispath(SetCalendarIsOpen(false));
+              dispatch(SetCalendarIsOpen(false));
             }}
           />
         </div>
@@ -221,10 +229,11 @@ function CalendarFilter() {
                       return (
                         <DayBox
                           info={getCalendarInfo(idx, idx2)}
-                          isLeapYear={leapYear}
-                          startDayIdx={calendar.startDayIdx}
-                          endDayIdx={calendar.endDayIdx}
                           isStartSelector={calendar.isStartSelector}
+                          setSelectIdx={setSelectIdx}
+                          selectIdx={selectIdx}
+                          setSelectValue={setSelectValue}
+                          startDayIdx={calendar.startDayIdx}
                         />
                       );
                     })}
@@ -234,13 +243,43 @@ function CalendarFilter() {
             })}
           </div>
         </CalendarBody>
-        <div className="confirm">
+        <SCalendarConfirm
+          isSelect={selectIdx}
+          onClick={() =>
+            selectIdx
+              ? calendar.isStartSelector
+                ? batch(() => {
+                    dispatch(SetCalendarDayStartIdx(selectIdx));
+                    dispatch(SetCalendarStartDate(selectValue));
+                    dispatch(SetCalendarDayEndIdx(""));
+                    dispatch(SetCalendarEndDate(""));
+                    dispatch(SetCalendarIsOpen(false));
+                  })
+                : batch(() => {
+                    dispatch(SetCalendarDayEndIdx(selectIdx));
+                    dispatch(SetCalendarEndDate(selectValue));
+                    dispatch(SetCalendarIsOpen(false));
+                  })
+              : batch(() => {
+                  dispatch(
+                    SetDesc(
+                      t(
+                        `utility.calendarFilter.desc.${
+                          calendar.isStartSelector ? "noStartIdx" : "noEndIdx"
+                        }`
+                      )
+                    )
+                  );
+                  dispatch(SetIsOpen(true));
+                })
+          }
+        >
           <div className="label">
             {calendar.isStartSelector
               ? t("utility.calendarFilter.selectedStartDay")
               : t("utility.calendarFilter.selectedEndDay")}
           </div>
-        </div>
+        </SCalendarConfirm>
       </SCalendarContainer>
     </SCalendarFilter>
   );
@@ -349,24 +388,6 @@ const SCalendarContainer = styled.div`
   }
 
   .confirm {
-    width: 1160px;
-    height: 60px;
-    margin: 20px;
-    border-radius: 20px;
-    background-color: ${theme.colors.btn_nor};
-
-    .label {
-      line-height: 60px;
-    }
-    font-family: SpoqaHanSansNeo;
-    font-size: 18px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1;
-    letter-spacing: normal;
-    text-align: center;
-    color: ${theme.colors.text};
   }
 `;
 
@@ -377,4 +398,26 @@ const CalendarBody = styled.div`
     height: 884px;
     padding: 4px 0 0;
   }
+`;
+
+const SCalendarConfirm = styled.div`
+  width: 1160px;
+  height: 60px;
+  margin: 20px;
+  border-radius: 20px;
+  background-color: ${(props) =>
+    props.isSelect ? theme.colors.point : theme.colors.btn_nor};
+
+  .label {
+    line-height: 60px;
+  }
+  font-family: SpoqaHanSansNeo;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-align: center;
+  color: ${theme.colors.text};
 `;
