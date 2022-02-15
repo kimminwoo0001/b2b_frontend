@@ -3,12 +3,15 @@ import typoStyle from "./typo_style";
 import transitionStyle from "./transition_styled";
 import { testStyle } from "./test_style";
 import shadowStyle from "./shadow_styled";
-import spacing from "./space_style";
-import dropdownStyle from "./select_style";
+import spacing from "./spacing";
+import dropdownStyle from "./dropdown_style";
 import tableStyle from "./table_style";
 import scrollbarStyle from "./scrollbar_style";
+import colors from "./colors";
+import borderRadiusStyle from "./borderRadius_style";
 
 export {
+  colors,
   buttonStyle,
   typoStyle,
   transitionStyle,
@@ -18,4 +21,5 @@ export {
   tableStyle,
   dropdownStyle,
   scrollbarStyle,
+  borderRadiusStyle,
 };

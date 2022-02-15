@@ -30,6 +30,7 @@ import {
   typoStyle,
   scrollbarStyle,
   buttonStyle,
+  borderRadiusStyle,
 } from "../../../../Styles/ui";
 import { isObjEqual } from "../../../../lib/isObjEqual";
 import { intlFormat } from "date-fns";
@@ -114,7 +115,7 @@ const JungleSideFilter = () => {
       token: user.token,
       id: user.id,
     };
-    axiosRequest(undefined, url, params, function(e) {
+    axiosRequest("POST", url, params, function(e) {
       // setPlayerInfo(e);
       console.log(e);
     }, function (objStore) {
@@ -475,7 +476,13 @@ const JungleSideFilter = () => {
 
       <SButtonContainer>
         <Button
-          css={[buttonStyle.color.main, buttonStyle.size.lg, typoStyle.body]}
+          css={[
+            buttonStyle.color.main,
+            buttonStyle.size.full,
+            buttonStyle.size.y_20,
+            typoStyle.body,
+            borderRadiusStyle.full,
+          ]}
         >
           정글동선 확인하기
         </Button>

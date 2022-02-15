@@ -227,7 +227,7 @@ const SContainer = styled.div`
     flex: 1;
   }
 
-  > div:first-child {
+  > div:first-of-type {
     margin-right: 20px;
   }
 `;
