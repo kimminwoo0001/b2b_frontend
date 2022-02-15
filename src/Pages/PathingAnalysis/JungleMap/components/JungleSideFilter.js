@@ -115,7 +115,7 @@ const JungleSideFilter = () => {
       token: user.token,
       id: user.id,
     };
-    axiosRequest("POST", url, params, function(e) {
+    axiosRequest(undefined, url, params, function(e) {
       // setPlayerInfo(e);
       console.log(e);
     }, function (objStore) {
