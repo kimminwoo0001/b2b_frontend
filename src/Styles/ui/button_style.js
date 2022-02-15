@@ -5,6 +5,10 @@ const buttonStyle = {
   color: {
     main: css`
       background-color: ${theme.colors.point};
+
+      &.is-disabled {
+        background-color: ${theme.colors.default};
+      }
     `,
     default: css`
       background-color: ${theme.colors.default};

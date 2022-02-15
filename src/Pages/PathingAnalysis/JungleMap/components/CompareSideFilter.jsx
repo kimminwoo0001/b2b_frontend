@@ -23,10 +23,12 @@ import {
   transitionStyle,
   typoStyle,
   buttonStyle,
+  borderRadiusStyle,
 } from "../../../../Styles/ui";
 import { isObjEqual } from "../../../../lib/isObjEqual";
 
 const CompareSideFilter = () => {
+  // 필터 데이터 데모
   const [filterState, setFilterState] = useState({
     step1: [],
     step2: [],
@@ -34,6 +36,9 @@ const CompareSideFilter = () => {
     step4: { all: false, gnar: false, teemo: false },
     step5: { all: false, gnar: false, teemo: false },
   });
+
+  // button disabled demo
+  const [data, setData] = useState([]);
 
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
@@ -613,10 +618,12 @@ const CompareSideFilter = () => {
 
       <SButtonContainer>
         <Button
+          className={cx([{ "is-disabled": data.length <= 0 }])}
           css={[
             buttonStyle.color.main,
             buttonStyle.size.full,
             buttonStyle.size.y_20,
+            borderRadiusStyle.full,
             typoStyle.body,
           ]}
         >
