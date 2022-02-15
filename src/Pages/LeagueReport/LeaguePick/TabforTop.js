@@ -268,7 +268,6 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
             )}
             {pickDifference?.map((pick, idx) => {
               return (
-
                 <MatchContents LPLnotSelected={!filters.league.includes("LPL")} key={idx}>
                   <BlueSide>
                     <ChampInfo>
