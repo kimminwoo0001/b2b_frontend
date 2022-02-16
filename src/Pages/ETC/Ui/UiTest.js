@@ -19,13 +19,10 @@ import Avatar from "../../../Components/Ui/Avatar";
 import Radio from "../../../Components/Ui/Radio";
 import scrollbarStyle from "../../../Styles/ui/scrollbar_style";
 import PositionCheckList from "../../../Components/Ui/PositionCheckList";
-
-import { useTranslation } from "react-i18next";
 import EventLog from "../../../Components/Ui/Dialog/EventLog";
+import Comp1 from "./Comp1";
 
 const UiTest = () => {
-  const { t } = useTranslation();
-
   const [filterState, setFilterState] = useState({
     step1: { all: false, gnar: false, teemo: false },
   });
@@ -80,7 +77,25 @@ const UiTest = () => {
 
   return (
     <Container>
-      <h1>{t("filters.sorry")}</h1>
+      <section>
+        <Comp1 />
+      </section>
+      {/* 체크박스 */}
+      <section>
+        <Checkbox
+          name="name"
+          checked={true}
+          value={"항목의 값"}
+          onChange={(e) => {
+            console.log(e);
+            const { name, value, checked } = e.target;
+            console.log(name, value, checked);
+          }}
+        >
+          체크박스의 이름
+        </Checkbox>
+      </section>
+
       {/* 아바타 */}
       <section>
         <h1>아바타</h1>
@@ -164,6 +179,7 @@ const UiTest = () => {
         </div>
       </section>
 
+      {/* 아코디언 */}
       <section>
         <h1>아코디언 메뉴</h1>
         {/* type select 박스 */}
@@ -411,7 +427,7 @@ const UiTest = () => {
         </Accordion>
       </section>
 
-      {/* 오른쪽 비디오 */}
+      {/* 다이얼로그 */}
       <section>
         {/* 포지션 체크박스 */}
         <PositionCheckList onChange={(position) => console.log(position)} />
@@ -443,6 +459,9 @@ const UiTest = () => {
           </div>
         </div>
       </section>
+
+      {/* 정글 테이블 탭 */}
+      <section></section>
     </Container>
   );
 };
@@ -451,7 +470,7 @@ const Container = styled.article`
   min-height: 100vh;
   padding: 30px;
 
-  background-color: ${({ theme }) => theme.colors.bg_light};
+  background-color: black;
   ${typoStyle.body}
 
   section {
@@ -474,7 +493,6 @@ const SLabel = styled.p`
   height: 100%;
   margin-right: 8px;
 `;
-
 const STeam = styled.div`
   display: flex;
   align-items: center;
@@ -582,7 +600,6 @@ const Row3 = css`
   width: 43px;
   text-align: center;
 `;
-
 const SRed = styled.div`
   ${Row3}
   color: ${({ theme }) => theme.colors.red};
