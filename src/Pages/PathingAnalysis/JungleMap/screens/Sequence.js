@@ -16,8 +16,8 @@ const Sequence = () => {
       <S.FilterContainer>
         <JungleFilter />
       </S.FilterContainer>
-      {/* {Object.keys(junglevalue.patch).length !== 0 && Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key] === true).length > 0 && } */}
       {/* 사이드 필터와 맵 비디오  */}
+      {Object.keys(junglevalue.patch).length > 0 && Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key] === true).length > 0 && 
       <S.FlexContainer>
         {/* 사이드 필터 */}
         <S.Sidebar>
@@ -36,6 +36,7 @@ const Sequence = () => {
           </S.DialogContainer>
         </S.Container>
       </S.FlexContainer>
+}
     </S.SequenceContainer>
   );
 };

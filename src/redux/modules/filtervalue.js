@@ -405,7 +405,6 @@ const initialState = {
   gameid: "",
   menu_num: "",
   filterMenuState: true,
-  checkedInputs: []
 };
 
 export default function FilterReducer(state = initialState, action) {
@@ -704,11 +703,6 @@ export default function FilterReducer(state = initialState, action) {
         ...state,
         champion_eng: action.payload,
       };
-    case SET_CHECKBOX_INPUTS:
-      return {
-        ...state,
-        league: action.payload,
-      } 
     default:
       return state;
   }

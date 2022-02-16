@@ -9,8 +9,8 @@ export const AccordionContext = createContext({
   setIsActive: () => {},
 });
 
-const Accordion = ({ children, ...props }) => {
-  const [isActive, setIsActive] = useState(true);
+const Accordion = ({ children, act = false, ...props }) => {
+  const [isActive, setIsActive] = useState(act);
   const contextValue = useMemo(
     () => ({
       setIsActive,

@@ -36,7 +36,7 @@ import {
   setTeamFilter,
   setYearFilter,
 } from "../../../../redux/modules/selectorvalue";
-import {JungleInit, SetFilterData} from '../../../../redux/modules/junglevalue';
+import {JungleInit, SetFilterData, SetJunglePlayer} from '../../../../redux/modules/junglevalue';
 
 
 import Radio from "../../../../Components/Ui/Radio";
@@ -46,7 +46,7 @@ import { useTranslation } from "react-i18next";
 import { API } from '../../../config';
 import axiosRequest from '../../../../lib/axios/axiosRequest';
 import SelectedJungleFilter from "./SelectedJungleFilter";
-
+import {initializedFalseValue} from '../../../../lib/initializedFalseValue';
 
 
 const JungleFilter = () => {
@@ -73,7 +73,6 @@ const JungleFilter = () => {
 
 
   const handleChange = (e) => {
-
     const { name, value, type, checked } = e.target;
     if (type === "radio") {
       if(name === "year") {
@@ -97,11 +96,8 @@ const JungleFilter = () => {
         const a = list.map((data) => {
           return datas[data] = checked;
         })
-        //  console.log("야옹", datas)
         dispatch(SetFilterData({ ...junglevalue, [name]: datas }));
       } else {
-        // console.log("=====checked:", filterData.season)
-        // console.log("=====checked:", checked)
         dispatch(SetFilterData({
           ...junglevalue,
           [name]: { ...junglevalue[name], [value]: checked },
@@ -109,8 +105,6 @@ const JungleFilter = () => {
       }
     }
   };
-  // console.log("filterData.league =====> ",filterData.league);
-
 
   const fetchYearFilter = () => {
     let yearList = [];
@@ -155,8 +149,6 @@ const JungleFilter = () => {
   
     dispatch(setLeagueFilter(leagueList));
   }
-
-  console.log(junglevalue);
 
   const fetchSeasonFilter = () => {
     let seasonList = [];
@@ -228,10 +220,6 @@ const JungleFilter = () => {
     });
   }
 
-
-
-
-
   // 연도 설정 후 리그필터 호출
   useEffect(() => {
     if (junglevalue.year.length === 0) {
@@ -273,28 +261,16 @@ const JungleFilter = () => {
     fetchPatchFilter();
   }, [junglevalue.team])
 
+  useEffect(() => {
+    dispatch(SetJunglePlayer(""));
+  }, [junglevalue.patch])
 
-  // 최초 checkbox state의 value값을 false 처리
-  const initializedLeagueValue = (param) => {
-    let newArray = [];
-    for (let i = 0; i < param.length; i++) {
-      newArray.push(param[i])
-    }
-    const result = newArray.sort().reduce((newObj, key) => {
-
-      newObj[key] = false;
-      return newObj;
-    },
-      {}
-    )
-    return result;
-  }
 
   useEffect(() => {
     if (junglevalue.year.length === 0) {
       return;
     }
-    const result = initializedLeagueValue(selector.leagueFilter);
+    const result = initializedFalseValue(selector.leagueFilter);
 
     dispatch(SetFilterData({
       ...junglevalue,
@@ -306,7 +282,7 @@ const JungleFilter = () => {
     if (Object.keys(junglevalue.league).length === 0) {
       return;
     }
-    const result = initializedLeagueValue(selector.seasonFilter);
+    const result = initializedFalseValue(selector.seasonFilter);
 
     dispatch(SetFilterData({
       ...junglevalue,
@@ -318,14 +294,13 @@ const JungleFilter = () => {
     if (junglevalue.team.length === 0) {
       return;
     }
-    const result = initializedLeagueValue(selector.patchFilter);
+    const result = initializedFalseValue(selector.patchFilter);
 
     dispatch(SetFilterData({
       ...junglevalue,
       patch: result,
     }))
   }, [selector.patchFilter])
-
 
   // 첫 렌더 시 연도 필터 가져오기
   useEffect(() => {

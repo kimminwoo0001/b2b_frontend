@@ -13,8 +13,8 @@ import Sequence from "./screens/Sequence";
 const JungleMap = () => {
   const { t } = useTranslation();
   const JungleTab = [
-    { title: t("filters.sorry"), component: <Sequence /> },
-    { title: "정글링 비교", component: <Compare /> },
+    { title: t("video.jungle.JunglePathing"), component: <Sequence /> },
+    { title: t("video.jungle.CompareJungling"), component: <Compare /> },
   ];
   const { currentIndex, currentTab, setIndex } = useTab(0, JungleTab);
   console.log("--------------", currentTab);

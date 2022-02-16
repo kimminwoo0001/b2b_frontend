@@ -518,6 +518,17 @@
       "side": "사이드"
     },
     "jungle": {
+      "JunglePathing": "경기별 정글 동선",
+      "CompareJungling" : "정글링 비교",
+      "year": "연도",
+      "league" : "리그",
+      "season" : "시즌", 
+      "team" : "팀",
+      "patch" : "패치",
+      "selectAll": "전체 선택",
+      "selectedFilter" : "선택된 필터",
+      "reset": "초기하",
+      "selectPlayer": "선수 선택"
     }
   },
   "alert": {

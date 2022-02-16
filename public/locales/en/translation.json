@@ -509,8 +509,8 @@
       "side": "SIDE"
     },
     "jungle" : {
-      "Jungle Pathing": "Jungle Pathing",
-      "Compare Jungling" : "Compare Jungling",
+      "JunglePathing": "Jungle Pathing",
+      "CompareJungling" : "Compare Jungling",
       "year": "Year",
       "league" : "League",
       "season" : "Season", 
@@ -518,7 +518,9 @@
       "patch" : "Patch",
       "selectAll": "Select All",
       "selectedFilter" : "Selected Filter",
-      "reset": "Reset"
+      "reset": "Reset",
+      "selectPlayer": "선수 선택"
+
     }
   },
   "alert": {
