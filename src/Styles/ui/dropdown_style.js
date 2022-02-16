@@ -9,7 +9,7 @@ const dropdownStyle = {
     padding: 10px;
     border-radius: 10px;
     background-color: ${theme.colors.bg_select};
-
+    cursor: pointer;
     ${typoStyle.select}
     ${transitionStyle.background}
     &::after {
