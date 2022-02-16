@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="21.255" height="21" viewBox="0 0 21.255 21">
+    <defs>
+        <style>
+            .cls-3{fill:#fff;stroke:transparent;stroke-miterlimit:10}
+        </style>
+    </defs>
+    <g id="ico-position-sup-off" transform="translate(.128 1)" style="opacity:.996">
+        <path id="area" transform="translate(0 -1)" style="fill:none" d="M0 0h21v21H0z"/>
+        <g id="Group_2696" data-name="Group 2696">
+            <path id="Path_869" data-name="Path 869" class="cls-3" d="m179.842-380.2-.544-1.185h-4.652l-.546 1.185 2.87 3.339z" transform="translate(-166.472 383.389)"/>
+            <path id="Path_870" data-name="Path 870" class="cls-3" d="m183.411-312.541-.514-.638-1.77 8.585 2.284 1.616 2.284-1.616-1.77-8.585z" transform="translate(-172.911 320.811)"/>
+            <path id="Path_871" data-name="Path 871" class="cls-3" d="M100.554-340.422h-6.337c2.174 2.4 4.307 2.273 4.307 2.273h1.183l-1.666 2.255 2.833 1.162 1.29-4.08z" transform="translate(-93.217 345.821)"/>
+            <path id="Path_872" data-name="Path 872" class="cls-3" d="M235.5-340.422h-6.336l-1.61 1.61 1.29 4.08 2.833-1.162-1.666-2.255h1.189s2.127.127 4.3-2.273z" transform="translate(-215.502 345.821)"/>
+        </g>
+    </g>
+</svg>

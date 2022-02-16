@@ -18,6 +18,9 @@ import Avatar from "../../../Components/Ui/Avatar";
 
 import Radio from "../../../Components/Ui/Radio";
 import scrollbarStyle from "../../../Styles/ui/scrollbar_style";
+import PositionCheckList from "../../../Components/Ui/PositionCheckList";
+import EventLog from "../../../Components/Ui/Dialog/EventLog";
+import Comp1 from "./Comp1";
 
 const UiTest = () => {
   const [filterState, setFilterState] = useState({
@@ -74,6 +77,25 @@ const UiTest = () => {
 
   return (
     <Container>
+      <section>
+        <Comp1 />
+      </section>
+      {/* 체크박스 */}
+      <section>
+        <Checkbox
+          name="name"
+          checked={true}
+          value={"항목의 값"}
+          onChange={(e) => {
+            console.log(e);
+            const { name, value, checked } = e.target;
+            console.log(name, value, checked);
+          }}
+        >
+          체크박스의 이름
+        </Checkbox>
+      </section>
+
       {/* 아바타 */}
       <section>
         <h1>아바타</h1>
@@ -157,11 +179,12 @@ const UiTest = () => {
         </div>
       </section>
 
+      {/* 아코디언 */}
       <section>
         <h1>아코디언 메뉴</h1>
         {/* type select 박스 */}
         <Accordion css={{ marginBottom: 30 }}>
-          <AccordionSummary css={{ marginBottom: 8 }} onClick={() => { }}>
+          <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
             <SContainer>
               <SLabel>STEP 01</SLabel>
               <STeam>
@@ -199,7 +222,7 @@ const UiTest = () => {
 
         {/* type 2 체크 박스 */}
         <Accordion>
-          <AccordionSummary css={{ marginBottom: 8 }} onClick={() => { }}>
+          <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
             <SContainer>
               <SLabel>STEP 02</SLabel>
               <STeam>
@@ -272,7 +295,7 @@ const UiTest = () => {
       {/* step4 - 라디오 경기 선택 */}
       <section>
         <Accordion css={{ marginBottom: 30 }}>
-          <AccordionSummary css={{ marginBottom: 8 }} onClick={() => { }}>
+          <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
             <SContainer>
               <SLabel>STEP 03</SLabel>
               <STeam>
@@ -404,10 +427,41 @@ const UiTest = () => {
         </Accordion>
       </section>
 
-      {/* 오른쪽 비디오 */}
+      {/* 다이얼로그 */}
       <section>
-        {/* <CheckboxList /> */}
+        {/* 포지션 체크박스 */}
+        <PositionCheckList onChange={(position) => console.log(position)} />
+        {/* 이벤트로그 */}
+        <div>
+          <h3>레드사이드</h3>
+          <div>
+            <EventLog index={1} time={"02:00"} color="red">
+              <SMessage>
+                <Avatar
+                  src="images/champion/teemo.png"
+                  alt="티모"
+                  block={false}
+                  color={"blue"}
+                  size={16}
+                ></Avatar>
+                티모가
+                <Avatar
+                  src="images/champion/Renekton.png"
+                  alt="악어"
+                  color={"red"}
+                  block={false}
+                  size={16}
+                ></Avatar>
+                레넥톤을 잡고 버섯을 깔고 용도 잡고 와드도 박고 여러가지를 하면
+                두줄이 됩니다
+              </SMessage>
+            </EventLog>
+          </div>
+        </div>
       </section>
+
+      {/* 정글 테이블 탭 */}
+      <section></section>
     </Container>
   );
 };
@@ -416,7 +470,7 @@ const Container = styled.article`
   min-height: 100vh;
   padding: 30px;
 
-  background-color: ${({ theme }) => theme.colors.bg_light};
+  background-color: black;
   ${typoStyle.body}
 
   section {
@@ -439,7 +493,6 @@ const SLabel = styled.p`
   height: 100%;
   margin-right: 8px;
 `;
-
 const STeam = styled.div`
   display: flex;
   align-items: center;
@@ -547,7 +600,6 @@ const Row3 = css`
   width: 43px;
   text-align: center;
 `;
-
 const SRed = styled.div`
   ${Row3}
   color: ${({ theme }) => theme.colors.red};
@@ -555,6 +607,12 @@ const SRed = styled.div`
 const SBlue = styled.div`
   ${Row3}
   color: ${({ theme }) => theme.colors.blue};
+`;
+
+/* 이벤트로그*/
+
+const SMessage = styled.div`
+  ${typoStyle.eventlog}
 `;
 
 export default UiTest;

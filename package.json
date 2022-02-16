@@ -85,6 +85,7 @@
     ]
   },
   "devDependencies": {
+    "@emotion/css": "^11.7.1",
     "redux-devtools": "^3.7.0"
   }
 }

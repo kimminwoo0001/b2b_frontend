@@ -37,7 +37,6 @@ const JungleMap = () => {
 };
 
 const SContainer = styled.section`
-  width: 1110px;
   ${typoStyle.contents}
   ${testStyle.border1}
 `;
