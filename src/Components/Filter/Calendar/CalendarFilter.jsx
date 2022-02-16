@@ -244,7 +244,7 @@ function CalendarFilter() {
           </div>
         </CalendarBody>
         <SCalendarConfirm
-          isSelect={selectIdx}
+          isSelect={selectIdx > -1}
           onClick={() =>
             selectIdx
               ? calendar.isStartSelector

@@ -13,7 +13,11 @@ import { SetDesc, SetIsOpen } from "../../../../redux/modules/modalvalue";
 
 const checkClick = (isStartSelector, startDayIdx, index) => {
   if (isStartSelector) {
-    return true;
+    if (-1 < index) {
+      return true;
+    } else {
+      return false;
+    }
   } else {
     const now = new Date();
     if (startDayIdx < index) {
