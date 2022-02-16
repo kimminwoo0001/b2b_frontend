@@ -15,12 +15,11 @@ const buttonStyle = {
     `,
     default: css`
       background-color: ${theme.colors.default};
-
       &:disabled {
         background-color: ${theme.colors.default};
       }
-
       &:not(:disabled):hover {
+        background-color: ${theme.colors.point};
       }
     `,
     normal: css`
