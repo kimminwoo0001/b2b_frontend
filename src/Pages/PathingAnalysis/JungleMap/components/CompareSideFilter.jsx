@@ -626,7 +626,7 @@ const CompareSideFilter = () => {
 
       <S.ButtonContainer>
         <Button
-          className={cx([{ "is-disabled": data.length <= 0 }])}
+          disabled={data.length <= 0}
           css={[
             buttonStyle.color.main,
             buttonStyle.size.full,

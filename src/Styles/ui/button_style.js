@@ -6,18 +6,33 @@ const buttonStyle = {
     main: css`
       background-color: ${theme.colors.point};
 
-      &.is-disabled {
+      &:disabled {
         background-color: ${theme.colors.default};
+      }
+
+      &:not(:disabled):hover {
       }
     `,
     default: css`
       background-color: ${theme.colors.default};
+
+      &:disabled {
+        background-color: ${theme.colors.default};
+      }
+
+      &:not(:disabled):hover {
+      }
     `,
     normal: css`
       color: ${theme.colors.text_hover};
       background-color: ${theme.colors.default};
-      &:hover,
-      &.is-active {
+
+      &:disabled {
+        background-color: ${theme.colors.default};
+      }
+
+      &:not(:disabled):hover,
+      &:not(:disabled).is-active {
         color: ${theme.colors.text};
         background-color: ${theme.colors.bg_select};
       }
