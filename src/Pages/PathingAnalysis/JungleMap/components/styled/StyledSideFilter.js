@@ -114,11 +114,9 @@ export const Col3 = styled.div`
   text-align: center;
 `;
 
-export const Red = styled.div`
-  ${Col3}
+export const Red = styled(Col3)`
   color: ${({ theme }) => theme.colors.red};
 `;
-export const Blue = styled.div`
-  ${Col3}
+export const Blue = styled(Col3)`
   color: ${({ theme }) => theme.colors.blue};
 `;

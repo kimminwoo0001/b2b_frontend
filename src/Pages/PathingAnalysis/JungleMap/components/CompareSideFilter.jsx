@@ -483,13 +483,15 @@ const CompareSideFilter = () => {
                     </S.Col1>
                     {/* 본문 */}
                     <S.Col2>
-                      <Avatar
-                        css={{ marginRight: 5 }}
-                        size={20}
-                        src="images/champion/teemo.png"
-                        alt="티모"
-                      />
-                      <span>나르 (48)</span>
+                      <S.Champ>
+                        <Avatar
+                          css={{ marginRight: 5 }}
+                          size={20}
+                          src="images/champion/teemo.png"
+                          alt="티모"
+                        />
+                        <span>나르 (48)</span>
+                      </S.Champ>
                     </S.Col2>
 
                     {/* 경기수 */}
@@ -508,13 +510,15 @@ const CompareSideFilter = () => {
                     </S.Col1>
 
                     <S.Col2>
-                      <Avatar
-                        css={{ marginRight: 5 }}
-                        size={20}
-                        src="images/champion/teemo.png"
-                        alt="티모"
-                      />
-                      <span>트위스티드 페이트 같이 이름이 길면 (7)</span>
+                      <S.Champ>
+                        <Avatar
+                          css={{ marginRight: 5 }}
+                          size={20}
+                          src="images/champion/teemo.png"
+                          alt="티모"
+                        />
+                        <span>나르 (48)</span>
+                      </S.Champ>
                     </S.Col2>
 
                     <S.Red>24</S.Red>
@@ -572,13 +576,15 @@ const CompareSideFilter = () => {
                     </S.Col1>
                     {/* 본문 */}
                     <S.Col2>
-                      <Avatar
-                        css={{ marginRight: 5 }}
-                        size={20}
-                        src="images/champion/teemo.png"
-                        alt="티모"
-                      />
-                      <span>나르 (48)</span>
+                      <S.Champ>
+                        <Avatar
+                          css={{ marginRight: 5 }}
+                          size={20}
+                          src="images/champion/teemo.png"
+                          alt="티모"
+                        />
+                        <span>나르 (48)</span>
+                      </S.Champ>
                     </S.Col2>
 
                     {/* 경기수 */}
@@ -597,13 +603,15 @@ const CompareSideFilter = () => {
                     </S.Col1>
 
                     <S.Col2>
-                      <Avatar
-                        css={{ marginRight: 5 }}
-                        size={20}
-                        src="images/champion/teemo.png"
-                        alt="티모"
-                      />
-                      <span>트위스티드 페이트 같이 이름이 길면 (7)</span>
+                      <S.Champ>
+                        <Avatar
+                          css={{ marginRight: 5 }}
+                          size={20}
+                          src="images/champion/teemo.png"
+                          alt="티모"
+                        />
+                        <span>나르 (48)</span>
+                      </S.Champ>
                     </S.Col2>
 
                     <S.Red>24</S.Red>
