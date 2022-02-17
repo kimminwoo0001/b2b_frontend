@@ -18,6 +18,7 @@ import {
 } from "../../../redux/modules/calendarvalue";
 import theme from "../../../Styles/Theme";
 import getLeafYaer from "../../../lib/Calendar/getLeafYear";
+import { SetDesc, SetIsOpen } from "../../../redux/modules/modalvalue";
 
 const date = new Date();
 
@@ -59,16 +60,22 @@ const CalendarFilterNav = () => {
   const setRecentDayFilter = (day, mon) => {
     const calcuDate = getCalcuDate(now, day ? day : false, mon ? mon : false);
 
+    const seasonStartDateNum = new Date(calendar.seasonStartDate).getTime();
+    const calcuDateNum = new Date(calcuDate).getTime();
+    const changeToStartSeason = calcuDateNum < seasonStartDateNum;
+
+    const startDate = changeToStartSeason ? calendar.startDate : calcuDate;
+
     batch(() => {
-      dispatch(SetCalendarStartDate(calcuDate));
+      dispatch(SetCalendarStartDate(startDate));
       dispatch(SetCalendarEndDate(now));
       dispatch(
         SetCalendarDayStartIdx(
           getMonthDays(
-            +calcuDate.split("-")[1] - 1,
+            +startDate.split("-")[1] - 1,
             getMonthDayList(leapYear)
           ) +
-            +calcuDate.split("-")[2] -
+            +startDate.split("-")[2] -
             1
         )
       );
@@ -80,6 +87,11 @@ const CalendarFilterNav = () => {
         )
       );
     });
+
+    if (changeToStartSeason) {
+      dispatch(SetDesc(t("utility.calendarFilter.desc.changeToStartSeason")));
+      dispatch(SetIsOpen(true));
+    }
   };
 
   return (

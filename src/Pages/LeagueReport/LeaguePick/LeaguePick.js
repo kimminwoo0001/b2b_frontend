@@ -170,10 +170,6 @@ function LeaguePick() {
         const startIdx = (getMonthDays(+start.split("-")[1] - 1, getMonthDayList(leapYear))) + +start.split("-")[2] - 1
         const endIdx = (getMonthDays(+end.split("-")[1] - 1, getMonthDayList(leapYear))) + +end.split("-")[2] - 1
 
-
-        // 8.18 31 
-        // 256
-
         for (let i = 0; i < e.length; i++) {
           const date = e[i].date;
           const index = (getMonthDays(+date.split("-")[1] - 1, getMonthDayList(leapYear))) + +date.split("-")[2] - 1;
@@ -199,52 +195,52 @@ function LeaguePick() {
     )
   }
 
-  // week 데이터 fetch 함수
-  const fetchingPickData = () => {
-    dispatch(Loading(true));
-    //  선택된 리그가 없을 시 api호출 X
-    if (filters.league.length === 0) {
-      return;
-    }
+  // // week 데이터 fetch 함수
+  // const fetchingPickData = () => {
+  //   dispatch(Loading(true));
+  //   //  선택된 리그가 없을 시 api호출 X
+  //   if (filters.league.length === 0) {
+  //     return;
+  //   }
 
-    let url = `${API}/lolapi/league/pick`;
-    let params = {
-      league: filters.league,
-      year: filters.year,
-      season: filters.season,
-      patch: filters.patch,
-      position: queryPosition,
-      token: user.token,
-      id: user.id,
-    };
+  //   let url = `${API}/lolapi/league/pick`;
+  //   let params = {
+  //     league: filters.league,
+  //     year: filters.year,
+  //     season: filters.season,
+  //     patch: filters.patch,
+  //     position: queryPosition,
+  //     token: user.token,
+  //     id: user.id,
+  //   };
 
-    axiosRequest(
-      undefined,
-      url,
-      params,
-      function (e) {
-        //주요픽 데이터 저장
-        setImportantPicks(e.importantPick);
-        //주요픽간의전적 저장
-        setPickDifference(e.pickDiff);
-        //챔피언 티어 저장
-        setTier(e.championTier);
-        //유니크픽 데이터 저장
-        setUniquePick(e.uniquePick);
-      },
-      function (objStore) {
-        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
-      }
-    ).finally(dispatch(Loading(false)));
-  };
+  //   axiosRequest(
+  //     undefined,
+  //     url,
+  //     params,
+  //     function (e) {
+  //       //주요픽 데이터 저장
+  //       setImportantPicks(e.importantPick);
+  //       //주요픽간의전적 저장
+  //       setPickDifference(e.pickDiff);
+  //       //챔피언 티어 저장
+  //       setTier(e.championTier);
+  //       //유니크픽 데이터 저장
+  //       setUniquePick(e.uniquePick);
+  //     },
+  //     function (objStore) {
+  //       dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+  //     }
+  //   ).finally(dispatch(Loading(false)));
+  // };
 
   useEffect(() => {
-    if (calendar.endDate.length > 0) {
+    if (calendar.endDate.length > 0 && filters.patch.length > 0) {
       getPickData()
       //fetchingPickData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [calendar.endDate, calendar.startDate]);
+  }, [calendar.endDate, calendar.startDate, queryPosition, filters.patch]);
 
   useEffect(() => {
     getCalendarFilteData();

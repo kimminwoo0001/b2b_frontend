@@ -133,12 +133,12 @@ function CalendarFilter() {
     if (calendar.isOpen) {
       scrollSpy.update();
       moveLock();
-      console.log("startDate", calendar.startDate);
+
       if (calendar.startDate) {
         const date = calendar.startDate.split("-");
         console.log("month", month);
-        setMonth(+date[1] - 1);
 
+        setMonth(+date[1] - 1);
         autoMoveScroll(
           getMonthWeeks(+date[1] - 1, monthDays, firstDays) +
             Math.floor((+date[2] + firstDays.getDay()) / 7) +

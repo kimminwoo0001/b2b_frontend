@@ -11,18 +11,43 @@ import {
 import addZero from "../../../../lib/addZero";
 import { SetDesc, SetIsOpen } from "../../../../redux/modules/modalvalue";
 import MatchBox from "./MatchBox";
+import getMonthDays from "../../../../lib/Calendar/getMonthDays";
+import getMonthDayList from "../../../../lib/Calendar/getMonthDayList";
+import getLeafYaer from "../../../../lib/Calendar/getLeafYear";
 
-const checkClick = (isStartSelector, startDayIdx, index) => {
+const checkClick = (
+  isStartSelector,
+  startDayIdx,
+  index,
+  year,
+  seasonStart,
+  seasonEnd
+) => {
+  const leapYear = getLeafYaer(year);
+  const seasonStartIdx =
+    getMonthDays(+seasonStart.split("-")[1] - 1, getMonthDayList(leapYear)) +
+    +seasonStart.split("-")[2] -
+    1;
+  const seasonEndIdx =
+    getMonthDays(+seasonEnd.split("-")[1] - 1, getMonthDayList(leapYear)) +
+    +seasonEnd.split("-")[2] -
+    1;
   if (isStartSelector) {
-    if (-1 < index) {
+    if (-1 < index && seasonStartIdx <= index && index <= seasonEndIdx) {
       return true;
     } else {
       return false;
     }
   } else {
     //const now = new Date();
-    if (startDayIdx < index) {
+    if (
+      startDayIdx < index &&
+      seasonStartIdx <= index &&
+      index <= seasonEndIdx
+    ) {
       return true;
+    } else {
+      return false;
     }
   }
   return false;
@@ -40,6 +65,7 @@ const DayBox = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { year, day, month, index, match } = info;
+  const calendar = useSelector((state) => state.CalendarReducer);
 
   if (match.length > 0) {
     console.log("match:", match);
@@ -47,15 +73,32 @@ const DayBox = ({
   return (
     <SCalendarDayBox
       isAble={
-        startDayIdx === index || checkClick(isStartSelector, startDayIdx, index)
+        startDayIdx === index ||
+        checkClick(
+          isStartSelector,
+          startDayIdx,
+          index,
+          year,
+          calendar.seasonStartDate,
+          calendar.seasonEndDate
+        )
       }
       isActive={
-        selectIdx === index || 
+        selectIdx === index ||
         (!isStartSelector && startDayIdx === index) ||
         (!isStartSelector && startDayIdx <= index && index <= selectIdx)
       }
       onClick={() => {
-        if (checkClick(isStartSelector, startDayIdx, index)) {
+        if (
+          checkClick(
+            isStartSelector,
+            startDayIdx,
+            index,
+            year,
+            calendar.seasonStartDate,
+            calendar.seasonEndDate
+          )
+        ) {
           if (selectIdx !== index) {
             setSelectIdx(index);
             setSelectValue(`${year}-${addZero(month)}-${addZero(day + 1)}`);

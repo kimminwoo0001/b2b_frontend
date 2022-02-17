@@ -491,6 +491,7 @@ export default function FilterReducer(state = initialState, action) {
     case HANDLE_CLICK:
       return { ...state, click: action.payload };
     case LOADING:
+      console.log("LOADING", action.payload)
       return { ...state, loading: action.payload };
     case POSITION:
       return { ...state, position: action.payload };

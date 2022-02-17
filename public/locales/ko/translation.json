@@ -747,7 +747,10 @@
         "noStartIdx": "시작일을 선택이 필요합니다.",
         "noEndIdx": "종료일을 선택이 필요합니다.",
         "needStartIdx": "시작일을 먼저 선택해야 합니다.",
-        "wrongDate": "사용 가능한 날짜를 선택해야합니다."
+        "wrongDate": "사용 가능한 날짜를 선택해야합니다.",
+        "changeToStartSeason": "시작일을 시즌의 시작일로 수정합니다.",
+        "changeToEndSeason": "종료일을 시즌의 종료일로 수정합니다.",
+        "changeToAllSeason": "시작일과 종료일을 시즌의 시작일과 종료일로 수정합니다."
       }
     }
   }
