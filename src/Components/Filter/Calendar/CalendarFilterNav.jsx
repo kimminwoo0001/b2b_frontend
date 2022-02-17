@@ -1,19 +1,87 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
+import { getDate } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { batch, useDispatch } from "react-redux";
+import addZero from "../../../lib/addZero";
+import getMonthDays from "../../../lib/Calendar/getMonthDays";
+import getMonthDayList from "../../../lib/Calendar/getMonthDayList";
 import {
+  SetCalendarDayEndIdx,
+  SetCalendarDayStartIdx,
+  SetCalendarEndDate,
   SetCalendarIsOpen,
   SetCalendarIsStartSelector,
+  SetCalendarStartDate,
 } from "../../../redux/modules/calendarvalue";
 import theme from "../../../Styles/Theme";
+import getLeafYaer from "../../../lib/Calendar/getLeafYear";
+
+const date = new Date();
 
 const CalendarFilterNav = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const calendar = useSelector((state) => state.CalendarReducer);
+  const filters = useSelector((state) => state.FilterReducer);
+  const now = `${date.getFullYear()}-${addZero(date.getMonth() + 1)}-${addZero(
+    date.getDate()
+  )}`;
+  const leapYear = getLeafYaer(filters.year);
+
+  const getCalcuDate = (now, day, mon) => {
+    let time = new Date(now);
+    let oneDay = 24 * 3600 * 1000;
+    if (day) {
+      const calcuDate = new Date(time - oneDay * day);
+
+      return `${calcuDate.getFullYear()}-${addZero(
+        calcuDate.getMonth() + 1
+      )}-${addZero(calcuDate.getDate())}`;
+    } else if (mon) {
+      const calcuDate = new Date(
+        time.getFullYear(),
+        time.getMonth() - mon,
+        time.getDate()
+      );
+      return `${calcuDate.getFullYear()}-${addZero(
+        calcuDate.getMonth() + 1
+      )}-${addZero(calcuDate.getDate())}`;
+    } else {
+      return `${now.getFullYear()}-${addZero(now.getMonth() + 1)}-${addZero(
+        now.getDate()
+      )}`;
+    }
+  };
+
+  const setRecentDayFilter = (day, mon) => {
+    const calcuDate = getCalcuDate(now, day ? day : false, mon ? mon : false);
+
+    batch(() => {
+      dispatch(SetCalendarStartDate(calcuDate));
+      dispatch(SetCalendarEndDate(now));
+      dispatch(
+        SetCalendarDayStartIdx(
+          getMonthDays(
+            +calcuDate.split("-")[1] - 1,
+            getMonthDayList(leapYear)
+          ) +
+            +calcuDate.split("-")[2] -
+            1
+        )
+      );
+      dispatch(
+        SetCalendarDayEndIdx(
+          getMonthDays(+now.split("-")[1] - 1, getMonthDayList(leapYear)) +
+            +now.split("-")[2] -
+            1
+        )
+      );
+    });
+  };
+
   return (
     <SCFContainer>
       <div className="calendar-filter-label">
@@ -53,13 +121,111 @@ const CalendarFilterNav = () => {
         <img className="calendar-icon" src="Images/ic-calendar.svg" alt="" />
       </SCFDaysInput>
 
-      <SCFButton>{t("utility.calendarFilter.date.allSeason")}</SCFButton>
-      <SCFButton>{t("utility.calendarFilter.date.recent3days")}</SCFButton>
-      <SCFButton>{t("utility.calendarFilter.date.recent5days")}</SCFButton>
-      <SCFButton>{t("utility.calendarFilter.date.recent7days")}</SCFButton>
-      <SCFButton>{t("utility.calendarFilter.date.recent15days")}</SCFButton>
-      <SCFButton>{t("utility.calendarFilter.date.recent1months")}</SCFButton>
-      <SCFButton>{t("utility.calendarFilter.date.recent3months")}</SCFButton>
+      <SCFButton
+        isActive={
+          calendar.seasonStartDate === calendar.startDate &&
+          calendar.seasonEndDate === calendar.endDate
+        }
+        isRecentYear={true}
+        onClick={() => {
+          batch(() => {
+            dispatch(SetCalendarStartDate(calendar.seasonStartDate));
+            dispatch(SetCalendarEndDate(calendar.seasonEndDate));
+            dispatch(SetCalendarDayStartIdx(calendar.info[0].index));
+            dispatch(
+              SetCalendarDayEndIdx(
+                calendar.info[calendar.info.length - 1].index
+              )
+            );
+          });
+        }}
+      >
+        {t("utility.calendarFilter.date.allSeason")}
+      </SCFButton>
+      <SCFButton
+        isActive={
+          calendar.startDate === getCalcuDate(now, 3, false) &&
+          now === calendar.endDate
+        }
+        isRecentYear={+filters.year === date.getFullYear()}
+        onClick={() => {
+          if (+filters.year === date.getFullYear()) {
+            setRecentDayFilter(3, false);
+          }
+        }}
+      >
+        {t("utility.calendarFilter.date.recent3days")}
+      </SCFButton>
+      <SCFButton
+        isActive={
+          calendar.startDate === getCalcuDate(now, 5, false) &&
+          now === calendar.endDate
+        }
+        isRecentYear={+filters.year === date.getFullYear()}
+        onClick={() => {
+          if (+filters.year === date.getFullYear()) {
+            setRecentDayFilter(5, false);
+          }
+        }}
+      >
+        {t("utility.calendarFilter.date.recent5days")}
+      </SCFButton>
+      <SCFButton
+        isActive={
+          calendar.startDate === getCalcuDate(now, 7, false) &&
+          now === calendar.endDate
+        }
+        isRecentYear={+filters.year === date.getFullYear()}
+        onClick={() => {
+          if (+filters.year === date.getFullYear()) {
+            setRecentDayFilter(7, false);
+          }
+        }}
+      >
+        {t("utility.calendarFilter.date.recent7days")}
+      </SCFButton>
+      <SCFButton
+        isActive={
+          calendar.startDate === getCalcuDate(now, 15, false) &&
+          now === calendar.endDate
+        }
+        isRecentYear={+filters.year === date.getFullYear()}
+        onClick={() => {
+          if (+filters.year === date.getFullYear()) {
+            setRecentDayFilter(15, false);
+          }
+        }}
+      >
+        {t("utility.calendarFilter.date.recent15days")}
+      </SCFButton>
+      <SCFButton
+        isActive={
+          calendar.startDate === getCalcuDate(now, false, 1) &&
+          now === calendar.endDate
+        }
+        isRecentYear={+filters.year === date.getFullYear()}
+        onClick={() => {
+          if (+filters.year === date.getFullYear()) {
+            setRecentDayFilter(false, 1);
+          }
+        }}
+      >
+        {t("utility.calendarFilter.date.recent1months")}
+      </SCFButton>
+      <SCFButton
+        isActive={
+          calendar.startDate === getCalcuDate(now, false, 3) &&
+          now === calendar.endDate
+        }
+        isRecentYear={+filters.year === date.getFullYear()}
+        onClick={() => {
+          if (+filters.year === date.getFullYear()) {
+            setRecentDayFilter(false, 3);
+          }
+        }}
+      >
+        {t("utility.calendarFilter.date.recent3months")}
+      </SCFButton>
     </SCFContainer>
   );
 };
@@ -135,11 +301,14 @@ const SCFDaysInput = styled.div`
 `;
 
 const SCFButton = styled.button`
+  cursor: default;
   height: 34px;
   margin-left: 5px;
   padding: 9px 12px 7px;
   border-radius: 10px;
-  background-color: ${theme.colors.bg_box};
+  background-color: ${(props) =>
+    props.isActive ? theme.colors.point : theme.colors.bg_box};
+  opacity: ${(props) => (props.isRecentYear ? "1" : "0.3")};
 
   font-family: SpoqaHanSansNeo;
   font-size: 14px;

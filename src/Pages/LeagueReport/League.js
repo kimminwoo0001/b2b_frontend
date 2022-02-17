@@ -24,7 +24,7 @@ function League() {
 
   return (
     <ErrorBoundary>
-      <CalendarFilter />
+      {calendarvalue.isOpen && < CalendarFilter />}
       <Nav />
       <LeagueWrapper>
         <SideBar />

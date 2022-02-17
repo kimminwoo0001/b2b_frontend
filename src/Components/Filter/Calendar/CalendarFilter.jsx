@@ -26,38 +26,32 @@ import {
 } from "react-scroll";
 import { useState } from "react";
 import { SetDesc, SetIsOpen } from "../../../redux/modules/modalvalue";
+import getMonthDayList from "../../../lib/Calendar/getMonthDayList";
+import getFirstDay from "../../../lib/Calendar/getFirstDay";
+import getMonthWeeks from "../../../lib/Calendar/getMonthWeeks";
+import getLeafYaer from "../../../lib/Calendar/getLeafYear";
 
 const date = new Date();
 const weekDays = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 
 function CalendarFilter() {
-  const [selectIdx, setSelectIdx] = useState();
-  const [selectValue, setSelectValue] = useState();
-  const [month, setMonth] = useState(new Date().getUTCMonth() + 1);
-
-  const [lock, setLock] = useState(false);
   const calendar = useSelector((state) => state.CalendarReducer);
   const { year } = useSelector((state) => state.FilterReducer);
+  const lang = useSelector((state) => state.LocaleReducer);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const lang = useSelector((state) => state.LocaleReducer);
-  const firstDays = new Date(year, 1, 1);
-  const leapYear = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+  const firstDays = getFirstDay(year);
+  const leapYear = getLeafYaer(year);
+  const monthDays = getMonthDayList(leapYear);
 
-  const monthDays = [
-    31,
-    leapYear ? 29 : 28,
-    31,
-    30,
-    31,
-    30,
-    31,
-    31,
-    30,
-    31,
-    30,
-    31,
-  ];
+  const [selectIdx, setSelectIdx] = useState(
+    calendar.isStartSelector ? calendar.startDayIdx : calendar.endDayIdx
+  );
+  const [selectValue, setSelectValue] = useState(
+    calendar.isStartSelector ? calendar.startDate : calendar.endDate
+  );
+  const [month, setMonth] = useState(new Date().getUTCMonth() + 1);
+  const [lock, setLock] = useState(false);
 
   const getIdx = (idx, idx2) => {
     return idx * 7 + idx2 - firstDays.getDay();
@@ -66,6 +60,8 @@ function CalendarFilter() {
   const getCalendarInfo = (idx, idx2) => {
     let total = 0;
     const index = getIdx(idx, idx2);
+    const info = calendar.info;
+
     for (let i = 0; monthDays.length; i++) {
       if (index > total + monthDays[i] - 1) {
         total += monthDays[i];
@@ -76,6 +72,12 @@ function CalendarFilter() {
           day: index - total,
           year: year,
           index: index,
+          match: info
+            ? info
+                .filter((arr) => arr.index === index)
+                .map((data) => data.matchs)
+                .flat()
+            : [],
         };
       }
     }
@@ -122,15 +124,6 @@ function CalendarFilter() {
     }
   };
 
-  const getMonthDays = (mon) => {
-    let result = 0;
-    for (let i = 0; i < mon; i++) {
-      result += monthDays[i];
-    }
-    result = Math.floor((result + firstDays.getDay()) / 7);
-    return result;
-  };
-
   const moveLock = () => {
     setLock(true);
     setTimeout(() => setLock(false), 1000);
@@ -144,15 +137,15 @@ function CalendarFilter() {
       if (calendar.startDate) {
         const date = calendar.startDate.split("-");
         console.log("month", month);
-        setMonth(+month - 1);
+        setMonth(+date[1] - 1);
 
         autoMoveScroll(
-          getMonthDays(+date[1] - 1) +
+          getMonthWeeks(+date[1] - 1, monthDays, firstDays) +
             Math.floor((+date[2] + firstDays.getDay()) / 7) +
             (calendar.isStartSelector ? -2 : 0)
         );
       } else {
-        autoMoveScroll(getMonthDays(month));
+        autoMoveScroll(getMonthWeeks(month, monthDays, firstDays));
       }
     }
   }, [calendar.isOpen]);
@@ -165,7 +158,7 @@ function CalendarFilter() {
             <Link
               activeClass="active"
               className="test1"
-              to={`week-${getMonthDays(month - 1)}`}
+              to={`week-${getMonthWeeks(month - 1, monthDays, firstDays)}`}
               smooth={true}
               duration={500}
               containerId="calendar-body"
@@ -187,7 +180,7 @@ function CalendarFilter() {
             <Link
               activeClass="active"
               className="test1"
-              to={`week-${getMonthDays(month + 1)}`}
+              to={`week-${getMonthWeeks(month + 1, monthDays, firstDays)}`}
               smooth={true}
               duration={500}
               containerId="calendar-body"

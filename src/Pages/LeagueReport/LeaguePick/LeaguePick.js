@@ -1,22 +1,26 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
 import { API } from "../../config";
-import { useSelector, useDispatch } from "react-redux";
-import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
+import { useSelector, useDispatch, batch } from "react-redux";
 import TabforTop from "./TabforTop";
 import axiosRequest from "../../../lib/axios/axiosRequest";
 import { useTranslation } from "react-i18next";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import CalendarFilterNav from "../../../Components/Filter/Calendar/CalendarFilterNav";
-import { SetCalendarInfo } from "../../../redux/modules/calendarvalue";
+import { SetCalendarDayEndIdx, SetCalendarDayStartIdx, SetCalendarEndDate, SetCalendarInfo, SetCalendarSeasonEndDate, SetCalendarSeasonStartDate, SetCalendarStartDate } from "../../../redux/modules/calendarvalue";
 import addZero from "../../../lib/addZero";
+import getMonthWeeks from "../../../lib/Calendar/getMonthWeeks";
+import getMonthDayList from "../../../lib/Calendar/getMonthDayList";
+import getLeafYaer from "../../../lib/Calendar/getLeafYear";
+import getFirstDay from "../../../lib/Calendar/getFirstDay";
+import getMonthDays from "../../../lib/Calendar/getMonthDays";
+import { Loading } from "../../../redux/modules/filtervalue";
 
 function LeaguePick() {
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
   const calendar = useSelector((state) => state.CalendarReducer);
 
-  const [loading, setLoading] = useState(false);
   const [positionTab, setPositionTab] = useState(0);
   const [queryPosition, setQueryPosition] = useState();
 
@@ -73,25 +77,7 @@ function LeaguePick() {
     ),
   };
 
-  useEffect(() => {
-    if (calendar.endDate.length > 0) {
-      fetchingPickData();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [calendar.endDate]);
 
-  useEffect(() => {
-    getCalendarFilteData();
-  }, [])
-
-  useEffect(() => {
-    if (isInitialMount2.current) {
-      isInitialMount2.current = false;
-    } else {
-      convertPosition();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [positionTab]);
 
   // 선택된 탭에 따라서 백엔드 요청에 쓰일 position 저장해주는 함수
   const convertPosition = () => {
@@ -110,12 +96,16 @@ function LeaguePick() {
 
   // week 데이터 fetch 함수
   const getPickData = () => {
-    setLoading(true);
+    dispatch(Loading(true));
     //  선택된 리그가 없을 시 api호출 X
-    if (filters.league.length === 0) {
+    if (filters.league.length === 0
+      && filters.year.length === 0
+      && filters.season.length === 0
+      && filters.patch.length === 0
+    ) {
       return;
     }
-
+    const gml = new Date().getTimezoneOffset();
     let url = `${API}/lolapi/league/pick`;
     let params = {
       league: filters.league,
@@ -123,6 +113,9 @@ function LeaguePick() {
       season: filters.season,
       patch: filters.patch,
       position: queryPosition,
+      startTime: calendar.startDate,
+      endTime: calendar.endDate,
+      gml: gml,
       token: user.token,
       id: user.id,
     };
@@ -140,15 +133,16 @@ function LeaguePick() {
         setTier(e.championTier);
         //유니크픽 데이터 저장
         setUniquePick(e.uniquePick);
+        dispatch(Loading(false))
       },
       function (objStore) {
         dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        dispatch(Loading(false))
       }
-    ).finally(setLoading(false));
+    )
   };
 
   const getCalendarFilteData = () => {
-    setLoading(true);
     //  선택된 리그가 없을 시 api호출 X
     if (filters.league.length === 0) {
       return;
@@ -164,25 +158,50 @@ function LeaguePick() {
       token: user.token,
       id: user.id,
     };
-    console.log("야옹 params", params);
 
     axiosRequest(
       undefined,
       url,
       params,
       function (e) {
-        console.log("야옹")
-        SetCalendarInfo(e);
+        const start = e[0].date;
+        const end = e[e.length - 1].date
+        const leapYear = getLeafYaer(filters.year);
+        const startIdx = (getMonthDays(+start.split("-")[1] - 1, getMonthDayList(leapYear))) + +start.split("-")[2] - 1
+        const endIdx = (getMonthDays(+end.split("-")[1] - 1, getMonthDayList(leapYear))) + +end.split("-")[2] - 1
+
+
+        // 8.18 31 
+        // 256
+
+        for (let i = 0; i < e.length; i++) {
+          const date = e[i].date;
+          const index = (getMonthDays(+date.split("-")[1] - 1, getMonthDayList(leapYear))) + +date.split("-")[2] - 1;
+          e[i].index = index;
+          console.log(index)
+          //res.push(e[i]);
+        }
+
+
+        batch(() => {
+          dispatch(SetCalendarInfo(e));
+          dispatch(SetCalendarStartDate(e[0].date));
+          dispatch(SetCalendarEndDate(e[e.length - 1].date));
+          dispatch(SetCalendarDayStartIdx(startIdx))
+          dispatch(SetCalendarDayEndIdx(endIdx))
+          dispatch(SetCalendarSeasonStartDate(e[0].date))
+          dispatch(SetCalendarSeasonEndDate(e[e.length - 1].date))
+        })
       },
       function (objStore) {
         dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
       }
-    ).finally(setLoading(false));
+    )
   }
 
   // week 데이터 fetch 함수
   const fetchingPickData = () => {
-    setLoading(true);
+    dispatch(Loading(true));
     //  선택된 리그가 없을 시 api호출 X
     if (filters.league.length === 0) {
       return;
@@ -216,8 +235,29 @@ function LeaguePick() {
       function (objStore) {
         dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
       }
-    ).finally(setLoading(false));
+    ).finally(dispatch(Loading(false)));
   };
+
+  useEffect(() => {
+    if (calendar.endDate.length > 0) {
+      getPickData()
+      //fetchingPickData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [calendar.endDate, calendar.startDate]);
+
+  useEffect(() => {
+    getCalendarFilteData();
+  }, [])
+
+  useEffect(() => {
+    if (isInitialMount2.current) {
+      isInitialMount2.current = false;
+    } else {
+      convertPosition();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [positionTab]);
 
   return (
     <LeaguePickWrapper>

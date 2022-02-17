@@ -39,15 +39,18 @@ const DayBox = ({
   const lang = useSelector((state) => state.LocaleReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { year, day, month, index } = info;
+  const { year, day, month, index, match } = info;
 
+  if (match.length > 0) {
+    console.log("match:", match);
+  }
   return (
     <SCalendarDayBox
       isAble={
         startDayIdx === index || checkClick(isStartSelector, startDayIdx, index)
       }
       isActive={
-        selectIdx === index ||
+        selectIdx === index || 
         (!isStartSelector && startDayIdx === index) ||
         (!isStartSelector && startDayIdx <= index && index <= selectIdx)
       }
@@ -74,7 +77,9 @@ const DayBox = ({
             : `${month}/${day + 1}`}
         </div>
       )}
-      <MatchBox text="T1 : GEN" />
+      {match.map((data) => {
+        return <MatchBox text={data} />;
+      })}
     </SCalendarDayBox>
   );
 };
