@@ -97,7 +97,7 @@
     "confirm": "확인",
     "notice": "알림",
     "noData": "새로운 알림이 없습니다.",
-    "hello": "안녕하세요. nunu.gg 운영진입니다.\n22년도 시즌데이터가 업데이트 되었습니다.\n감사합니다."
+    "hello": "안녕하세요. nunu.gg 운영진입니다.\nLPL데이터가 일부 업데이트 되었습니다.\n감사합니다."
   },
   "home": {
     "rank": "순위",
@@ -161,8 +161,8 @@
       "l": "패",
       "tier": "티어",
       "noUniquePickData": "유니크 픽 데이터가 없습니다.",
-      "team":"팀",
-      "oppTeam":"상대 팀"
+      "team": "팀",
+      "oppTeam": "상대 팀"
     },
     "leagueStat": {
       "gameLength": "평균 게임 시간",
@@ -425,7 +425,6 @@
     "mainTeamChanged": "메인 팀이 변경되어 비교 데이터가 초기화됩니다.",
     "sorry": "22년도 시즌데이터가 업데이트 되었습니다.",
     "noMultipleSelection": "중복 선택 불가"
-
   },
   "video": {
     "tab": {
@@ -521,8 +520,7 @@
       "8min": "3분~8분 동선",
       "side": "사이드"
     },
-    "jungle": {
-    }
+    "jungle": {}
   },
   "alert": {
     "login": {
