@@ -18,10 +18,8 @@ const MultiSelectCb = memo(
     const filters = useSelector((state) => state.FilterReducer);
     const pagePath = document.location.pathname;
     const isPlayerReportPage = pagePath === goPlayerReport;
-
-    console.log("clicked mapdata: ", mapData)
     return (
-      
+
       <SelectorWrapper isUpperLineNecessary={mapData === "LPL" && pagePath === goLeagueReport}>
         <Selecter
           key={idx}
@@ -38,11 +36,11 @@ const MultiSelectCb = memo(
             checked={filterData?.includes(mapData) ? true : false}
             readOnly
           />
-          <span 
-          >{(mapData === "11.6" ? "11.6 (P.O)" : mapData === "LPL" && pagePath === goLeagueReport ? `${mapData} (${t("filters.noMultipleSelection")})`: mapData )}</span>
+          <span
+          >{(mapData === "11.6" ? "11.6 (P.O)" : mapData === "LPL" && pagePath === goLeagueReport ? `${mapData} (${t("filters.noMultipleSelection")})` : mapData)}</span>
         </Selecter>
-        </SelectorWrapper>
-      
+      </SelectorWrapper>
+
     );
   }
 );
@@ -50,9 +48,9 @@ const MultiSelectCb = memo(
 export default MultiSelectCb;
 
 const SelectorWrapper = styled.div`
-${(props) => 
-  props.isUpperLineNecessary && 
-css`
+${(props) =>
+    props.isUpperLineNecessary &&
+    css`
 border-top: 1px solid #433f4e;
 border-radius: 0px;
 `}

@@ -413,7 +413,6 @@ export default function FilterReducer(state = initialState, action) {
     case INITIAL_STATE:
       return initialState;
     case LEAGUE:
-      console.log(state);
       if (state.league.length === 0) {
         return { ...state, league: [action.payload] };
       }
@@ -460,7 +459,6 @@ export default function FilterReducer(state = initialState, action) {
     case OPP_TEAM:
       return { ...state, oppteam: action.payload };
     case PLAYER:
-      console.log("PLAYER", PLAYER)
       if (state.player === action.payload) {
         return { ...state, player: "" };
       } else {
@@ -575,7 +573,6 @@ export default function FilterReducer(state = initialState, action) {
         menu_num: action.payload,
       };
     case YEAR:
-      console.log("YEAR", action.payload);
       if (state.year.length === 0) {
         return { ...state, year: [action.payload] };
       }
@@ -650,7 +647,6 @@ export default function FilterReducer(state = initialState, action) {
         league: action.payload,
       };
     case SET_YEAR:
-      console.log("SET_YEAR", action.payload);
       return {
         ...state,
         year: action.payload,

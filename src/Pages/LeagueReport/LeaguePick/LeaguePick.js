@@ -8,10 +8,13 @@ import axiosRequest from "../../../lib/axios/axiosRequest";
 import { useTranslation } from "react-i18next";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import CalendarFilterNav from "../../../Components/Filter/Calendar/CalendarFilterNav";
+import { SetCalendarInfo } from "../../../redux/modules/calendarvalue";
+import addZero from "../../../lib/addZero";
 
 function LeaguePick() {
   const filters = useSelector((state) => state.FilterReducer);
   const user = useSelector((state) => state.UserReducer);
+  const calendar = useSelector((state) => state.CalendarReducer);
 
   const [loading, setLoading] = useState(false);
   const [positionTab, setPositionTab] = useState(0);
@@ -71,9 +74,15 @@ function LeaguePick() {
   };
 
   useEffect(() => {
-    fetchingPickData();
+    if (calendar.endDate.length > 0) {
+      fetchingPickData();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.patch, queryPosition]);
+  }, [calendar.endDate]);
+
+  useEffect(() => {
+    getCalendarFilteData();
+  }, [])
 
   useEffect(() => {
     if (isInitialMount2.current) {
@@ -98,6 +107,78 @@ function LeaguePick() {
       setQueryPosition("sup");
     }
   };
+
+  // week 데이터 fetch 함수
+  const getPickData = () => {
+    setLoading(true);
+    //  선택된 리그가 없을 시 api호출 X
+    if (filters.league.length === 0) {
+      return;
+    }
+
+    let url = `${API}/lolapi/league/pick`;
+    let params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      patch: filters.patch,
+      position: queryPosition,
+      token: user.token,
+      id: user.id,
+    };
+
+    axiosRequest(
+      undefined,
+      url,
+      params,
+      function (e) {
+        //주요픽 데이터 저장
+        setImportantPicks(e.importantPick);
+        //주요픽간의전적 저장
+        setPickDifference(e.pickDiff);
+        //챔피언 티어 저장
+        setTier(e.championTier);
+        //유니크픽 데이터 저장
+        setUniquePick(e.uniquePick);
+      },
+      function (objStore) {
+        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      }
+    ).finally(setLoading(false));
+  };
+
+  const getCalendarFilteData = () => {
+    setLoading(true);
+    //  선택된 리그가 없을 시 api호출 X
+    if (filters.league.length === 0) {
+      return;
+    }
+
+    const gml = new Date().getTimezoneOffset();
+    let url = `${API}/lolapi/filter/schedule`;
+    let params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      gml: gml,
+      token: user.token,
+      id: user.id,
+    };
+    console.log("야옹 params", params);
+
+    axiosRequest(
+      undefined,
+      url,
+      params,
+      function (e) {
+        console.log("야옹")
+        SetCalendarInfo(e);
+      },
+      function (objStore) {
+        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      }
+    ).finally(setLoading(false));
+  }
 
   // week 데이터 fetch 함수
   const fetchingPickData = () => {
@@ -137,8 +218,6 @@ function LeaguePick() {
       }
     ).finally(setLoading(false));
   };
-
-
 
   return (
     <LeaguePickWrapper>

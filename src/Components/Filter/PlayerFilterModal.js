@@ -272,7 +272,7 @@ function PlayerFilterModal() {
       seasonList = seasonList.filter(
         (item, pos) => seasonList.indexOf(item) === pos
       );
-      console.log("sortedSeasonList", seasonList);
+      // console.log("sortedSeasonList", seasonList);
 
       let updateSeason = [];
       for (const season of filters.season) {

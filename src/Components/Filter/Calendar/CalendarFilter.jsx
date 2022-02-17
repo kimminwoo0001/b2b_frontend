@@ -88,8 +88,8 @@ function CalendarFilter() {
   };
 
   const autoMoveScroll = (idx) => {
-    if (idx > 1) {
-      scroller.scrollTo(`week-${getMonthDays(idx)}`, {
+    if (idx > 0) {
+      scroller.scrollTo(`week-${idx}`, {
         duration: 500,
         delay: 0,
         smooth: "easeInOutQuart",
@@ -109,16 +109,13 @@ function CalendarFilter() {
     if (lock) {
       return;
     }
-    console.log("to", to);
     let currentIdx = (+to.split("-")[1] + 1) * 7 - firstDays.getDay();
 
     for (let i = 0; i < monthDays.length; i++) {
-      console.log("currentIdx", currentIdx);
       if (currentIdx - monthDays[i] >= 0) {
         currentIdx -= monthDays[i];
         continue;
       } else {
-        console.log("i", i + 1);
         return setMonth(i);
         //
       }
@@ -127,7 +124,6 @@ function CalendarFilter() {
 
   const getMonthDays = (mon) => {
     let result = 0;
-    console.log("mon", mon);
     for (let i = 0; i < mon; i++) {
       result += monthDays[i];
     }
@@ -141,10 +137,25 @@ function CalendarFilter() {
   };
 
   useEffect(() => {
-    scrollSpy.update();
-    moveLock();
-    autoMoveScroll(month);
-  }, []);
+    if (calendar.isOpen) {
+      scrollSpy.update();
+      moveLock();
+      console.log("startDate", calendar.startDate);
+      if (calendar.startDate) {
+        const date = calendar.startDate.split("-");
+        console.log("month", month);
+        setMonth(+month - 1);
+
+        autoMoveScroll(
+          getMonthDays(+date[1] - 1) +
+            Math.floor((+date[2] + firstDays.getDay()) / 7) +
+            (calendar.isStartSelector ? -2 : 0)
+        );
+      } else {
+        autoMoveScroll(getMonthDays(month));
+      }
+    }
+  }, [calendar.isOpen]);
 
   return (
     <SCalendarFilter active={calendar.isOpen}>
@@ -246,7 +257,7 @@ function CalendarFilter() {
         <SCalendarConfirm
           isSelect={selectIdx > -1}
           onClick={() =>
-            selectIdx
+            selectIdx >= 0
               ? calendar.isStartSelector
                 ? batch(() => {
                     dispatch(SetCalendarDayStartIdx(selectIdx));

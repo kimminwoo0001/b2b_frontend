@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import styled, { css } from "styled-components";
 
 const SetWardData = ({ wardData }) => {
-  console.log(wardData);
   const labelRef = useRef("TOP1");
   const canvasRef = useRef(null);
   const canvas = canvasRef.current;

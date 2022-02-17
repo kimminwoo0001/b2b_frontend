@@ -10,6 +10,7 @@ import {
 } from "../../../../redux/modules/calendarvalue";
 import addZero from "../../../../lib/addZero";
 import { SetDesc, SetIsOpen } from "../../../../redux/modules/modalvalue";
+import MatchBox from "./MatchBox";
 
 const checkClick = (isStartSelector, startDayIdx, index) => {
   if (isStartSelector) {
@@ -19,7 +20,7 @@ const checkClick = (isStartSelector, startDayIdx, index) => {
       return false;
     }
   } else {
-    const now = new Date();
+    //const now = new Date();
     if (startDayIdx < index) {
       return true;
     }
@@ -42,6 +43,9 @@ const DayBox = ({
 
   return (
     <SCalendarDayBox
+      isAble={
+        startDayIdx === index || checkClick(isStartSelector, startDayIdx, index)
+      }
       isActive={
         selectIdx === index ||
         (!isStartSelector && startDayIdx === index) ||
@@ -70,6 +74,7 @@ const DayBox = ({
             : `${month}/${day + 1}`}
         </div>
       )}
+      <MatchBox text="T1 : GEN" />
     </SCalendarDayBox>
   );
 };
@@ -80,13 +85,21 @@ const SCalendarDayBox = styled.div`
   width: 145px;
   height: 181px;
   margin: 0 10px 20px;
+  //padding: 9px 0 10px;
   border-radius: 20px;
   background-color: ${(props) =>
     props.isActive ? theme.colors.point : theme.colors.bg_button};
+  opacity: ${(props) => (props.isAble ? "1" : "0.3")};
+
+  &:hover {
+    background-color: ${(props) =>
+      props.isActive ? theme.colors.point_hover : theme.colors.bg_hover};
+  }
 
   .header-day {
     height: 19px;
-    padding: 21px 0 26px 20px;
+    margin: 9px 20px 3px;
+    margin-bottom: 3px;
     font-family: SpoqaHanSansNeo;
     font-size: 15px;
     font-weight: bold;

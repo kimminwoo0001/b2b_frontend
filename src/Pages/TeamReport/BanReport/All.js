@@ -413,7 +413,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
           <PhaseWrapper>
             <PhaseContents>
               {phase1?.map((phase, idx) => {
-                console.log(phase);
+                //console.log(phase);
                 return (
                   <MapPhaseData key={idx}>
                     <img

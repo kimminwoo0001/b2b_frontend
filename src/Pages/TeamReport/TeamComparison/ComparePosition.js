@@ -19,7 +19,7 @@ function mycomparator(a, b) {
   if (Math.floor(a) - Math.floor(b) > 0) {
     num1 = 1;
   } else if (Math.floor(a) - Math.floor(b) < 0) {
-    console.log(Math.floor(a) + "," + Math.floor(b));
+    // console.log(Math.floor(a) + "," + Math.floor(b));
     num1 = -1;
   } else {
     num1 = 0;

@@ -5,6 +5,10 @@ export const SET_CALENDAR_DAY_START_IDX = "calendarvalue/SET_CALENDAR_DAY_START_
 export const SET_CALENDAR_START_DATE = "calendarvalue/SET_CALENDAR_START_DATE";
 export const SET_CALENDAR_DAY_END_IDX = "calendarvalue/SET_CALENDAR_DAY_END_IDX";
 export const SET_CALENDAR_END_DATE = "calendarvalue/SET_CALENDAR_END_DATE";
+export const SET_CALENDAR_IFNO = "calendarvalue/SET_CALENDAR_IFNO";
+export const SET_CALENDAR_SEASON_START_DATE = "calendarvalue/SET_CALENDAR_SEASON_START_DATE";
+export const SET_CALENDAR_SEASON_END_DATE = "calendarvalue/SET_CALENDAR_SEASON_END_DATE";
+
 
 
 export const CalendarInit = () => {
@@ -48,6 +52,24 @@ export const SetCalendarEndDate = (payload) => {
     payload
   };
 }
+export const SetCalendarInfo = (payload) => {
+  return {
+    type: SET_CALENDAR_IFNO,
+    payload
+  };
+}
+export const SetCalendarSeasonStartDate = (payload) => {
+  return {
+    type: SET_CALENDAR_SEASON_START_DATE,
+    payload
+  };
+}
+export const SetCalendarSeasonEndDate = (payload) => {
+  return {
+    type: SET_CALENDAR_SEASON_END_DATE,
+    payload
+  };
+}
 
 const initialState = {
   isOpen: false,
@@ -56,6 +78,9 @@ const initialState = {
   endDayIdx: "",
   startDate: "",
   endDate: "",
+  seasonStartDate: "",
+  seasonEndDate: "",
+  info: [],
 }
 
 export default function CalendarReducer(state = initialState, action) {
@@ -91,6 +116,21 @@ export default function CalendarReducer(state = initialState, action) {
       return {
         ...state,
         endDate: action.payload
+      }
+    case SET_CALENDAR_IFNO:
+      return {
+        ...state,
+        info: action.payload
+      }
+    case SET_CALENDAR_SEASON_START_DATE:
+      return {
+        ...state,
+        seasonStartDate: action.payload
+      }
+    case SET_CALENDAR_SEASON_END_DATE:
+      return {
+        ...state,
+        seasonEndDate: action.payload
       }
     default:
       return state;

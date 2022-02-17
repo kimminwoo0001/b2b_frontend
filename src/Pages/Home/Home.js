@@ -21,7 +21,6 @@ function Home() {
 
   return (
     <ErrorBoundary>
-      {console.log("홈 실행")}
       {copyvalue?.openFilterModal === goTeamCompare && <TeamFilterModal />}
       {copyvalue?.openFilterModal === goPlayerCompare && <PlayerFilterModal />}
       <Nav />
