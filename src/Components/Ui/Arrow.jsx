@@ -11,13 +11,23 @@ const Arrow = ({ direction, size = 8, color = colors.text, ...props }) => {
 };
 const SArrow = styled.span`
   display: block;
-  width: ${({ size }) => size * 2}px;
-  height: ${({ size }) => size}px;
   border: ${({ size }) => size / 2}px solid transparent;
   margin: auto;
-  ${({ direction, color, size }) =>
-    direction === "L"
-      ? `border-right: ${size}px solid ${color}`
-      : `border-left: ${size}px solid ${color}`}
+
+  ${({ direction, color, size }) => {
+    switch (direction) {
+      case "L":
+        return `border-right: ${size}px solid ${color}`;
+      case "R":
+        return `border-left: ${size}px solid ${color}`;
+      case "T":
+        return `border-bottom: ${size}px solid ${color}`;
+      case "B":
+        return `border-top: ${size}px solid ${color}`;
+      default:
+        break;
+    }
+  }}
 `;
+
 export default Arrow;
