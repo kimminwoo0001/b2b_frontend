@@ -88,7 +88,7 @@
     "confirm": "Confirm",
     "notice": "Notice",
     "noData": "No new notifications",
-    "hello": "Hello.\nThe game data for the 2022 season has been updated.\nthank you."
+    "hello": "Hello.\nLPL data has been partially updated.\nthank you."
   },
   "home": {
     "rank": "Rank",
@@ -152,8 +152,8 @@
       "l": "L",
       "tier": "Tier",
       "noUniquePickData": "There is no unique pick data.",
-      "team":"Team",
-      "oppTeam":"Opponent Team"
+      "team": "Team",
+      "oppTeam": "Opponent Team"
     },
     "leagueStat": {
       "gameLength": "Game Length",
