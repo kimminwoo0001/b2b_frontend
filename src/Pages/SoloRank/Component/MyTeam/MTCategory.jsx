@@ -11,6 +11,7 @@ import DropdownList from "../../../../Components/Ui/DropDown/DropdownList";
 import Sortingimage from "../../../../Components/Ui/Sortingimage";
 import { dropdownStyle } from "../../../../Styles/ui";
 import ItemBox from "./SubComponent/ItemBox";
+import * as S from "./styled/MTStyledTable";
 
 const inquireDayList = [1, 3, 5, 7, 15, 30];
 // 챔피언 티어 데이터 sorting Hooks
@@ -54,127 +55,113 @@ const MTCategory = () => {
   const [selectedDay, setSelectedDay] = useState(30);
   const { t } = useTranslation();
   return (
-    <SCategory>
-      <div className="label addInterestedPlayer">
-        {t("soloRank.myTeam.label.addInterestedPlayer")}
-      </div>
-      <div className="label soloRankID">
-        {t("soloRank.myTeam.label.soloRankID")}
-      </div>
-      <div className="label curTier8prevTier">
-        {t("soloRank.myTeam.label.curTier8prevTier")
-          .split("\n")
-          .map((line) => {
-            return (
-              <>
-                {line}
-                <br />
-              </>
-            );
-          })}
-        <Sortingimage requestSorts={requestSorts} key={"curTier8prevTier"} />
-      </div>
-      <div className="label curSeason">
-        {t("soloRank.myTeam.label.curSeason")}
-        <Sortingimage requestSorts={requestSorts} key={"curSeason"} />
-      </div>
-      <div className="label winrate">
-        {t("common.label.winrate")}
-        <Sortingimage requestSorts={requestSorts} key={"curSeason-winrate"} />
-      </div>
-      <div className="label recentDays">
-        {t("soloRank.myTeam.label.recentDays").replace("##", selectedDay)}
-        <Sortingimage requestSorts={requestSorts} key={"recentDays"} />
-      </div>
-      <div className="label winrate">
-        {t("common.label.winrate")}
-        <Sortingimage requestSorts={requestSorts} key={"recentDays-winrate"} />
-      </div>
-      <div className="label daysPlayedCham">
-        {t("soloRank.myTeam.label.daysPlayedCham")
-          .split("\n")
-          .map((line) => {
-            return (
-              <>
-                {line.replace("##", selectedDay)}
-                <br />
-              </>
-            );
-          })}
-      </div>
-      <div css={{ width: 107 }}>
-        <DropdownContainer
-          onChange={(e) => {
-            setSelectedDay(e.currentValue ?? 30);
-          }}
-        >
-          <DropdownLabel css={[dropdownStyle.select_head]}>
+    // 테이블 헤더 카테고리
+    <S.TableHead>
+      <S.TableHeaderRow>
+        {/* col1. 관심선수 */}
+        <div className="table-col1">
+          <span>{t("soloRank.myTeam.label.addInterestedPlayer")}</span>
+        </div>
+        {/* col2. 솔로랭크 id */}
+        <div className="table-col2">
+          <span>{t("soloRank.myTeam.label.soloRankID")}</span>
+        </div>
+        {/* col3. 현재 티어 LP */}
+        <div className="table-col3">
+          <span>
+            {t("soloRank.myTeam.label.curTier8prevTier")
+              .split("\n")
+              .map((line) => {
+                return (
+                  <>
+                    {line}
+                    <br />
+                  </>
+                );
+              })}
+            <Sortingimage
+              requestSorts={requestSorts}
+              key={"curTier8prevTier"}
+            />
+          </span>
+        </div>
+        {/* col4. 이번시즌 */}
+        <div className="table-col4">
+          <span>
+            {t("soloRank.myTeam.label.curSeason")}
+            <Sortingimage requestSorts={requestSorts} key={"curSeason"} />
+          </span>
+        </div>
+        {/* col5. 이번시즌 승률 */}
+        <div className="table-col5">
+          <span>
+            {t("common.label.winrate")}
+            <Sortingimage
+              requestSorts={requestSorts}
+              key={"curSeason-winrate"}
+            />
+          </span>
+        </div>
+        {/* col6. 최근 30일 */}
+        <div className="table-col6">
+          <span>
             {t("soloRank.myTeam.label.recentDays").replace("##", selectedDay)}
-          </DropdownLabel>
-          <DropdownList label={"recentDays"}>
-            {inquireDayList.map((day) => {
-              return (
-                <DropdownItem css={[dropdownStyle.select_item]} value={day}>
-                  {t("soloRank.myTeam.label.recentDays").replace("##", day)}
-                </DropdownItem>
-              );
-            })}
-          </DropdownList>
-        </DropdownContainer>
-      </div>
-    </SCategory>
+            <Sortingimage requestSorts={requestSorts} key={"recentDays"} />
+          </span>
+        </div>
+        {/* col7. 최근 30일 승률 */}
+        <div className="table-col7">
+          <span>
+            {t("common.label.winrate")}
+            <Sortingimage
+              requestSorts={requestSorts}
+              key={"recentDays-winrate"}
+            />
+          </span>
+        </div>
+        {/* col8. 최근 30일간 플레이한 챔피언 */}
+        <div className="table-col8">
+          <span>
+            {t("soloRank.myTeam.label.daysPlayedCham")
+              .split("\n")
+              .map((line) => {
+                return (
+                  <>
+                    {line.replace("##", selectedDay)}
+                    <br />
+                  </>
+                );
+              })}
+            <DropdownContainer
+              onChange={(e) => {
+                setSelectedDay(e.currentValue ?? 30);
+              }}
+            >
+              <DropdownLabel css={[dropdownStyle.select_head]}>
+                {t("soloRank.myTeam.label.recentDays").replace(
+                  "##",
+                  selectedDay
+                )}
+              </DropdownLabel>
+              <DropdownList label={"recentDays"}>
+                {inquireDayList.map((day) => {
+                  return (
+                    <DropdownItem
+                      css={[dropdownStyle.select_item]}
+                      value={day}
+                      label={`최근 ${day}일`}
+                    >
+                      {t("soloRank.myTeam.label.recentDays").replace("##", day)}
+                    </DropdownItem>
+                  );
+                })}
+              </DropdownList>
+            </DropdownContainer>
+          </span>
+        </div>
+      </S.TableHeaderRow>
+    </S.TableHead>
   );
 };
 
 export default MTCategory;
-
-const SCategory = styled.div`
-  width: 1110px;
-  height: 38px;
-  margin: 0 0 5px;
-  padding: 0 0 0 14px;
-  display: flex;
-  //justify-content: space-between;
-
-  .label {
-    height: 19px;
-    margin: 10px 0 9px 0;
-    font-family: SpoqaHanSansNeo;
-    font-size: 15px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: left;
-    color: #817e8b;
-    display: flex;
-    align-items: center;
-  }
-
-  .addInterestedPlayer {
-    width: 168px;
-  }
-  .soloRankID {
-    width: 139px;
-  }
-  .curTier8prevTier {
-    width: 228px;
-  }
-  .curSeason {
-    width: 105px;
-  }
-  .winrate {
-    width: 66px;
-  }
-  .recentDays {
-    width: 97px;
-  }
-  .daysPlayedCham {
-    width: 120px;
-  }
-
-  .recentDropdown {
-    width: 107px;
-  }
-`;

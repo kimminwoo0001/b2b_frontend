@@ -8,6 +8,12 @@ import MTCategory from "./MTCategory";
 import theme from "../../../../Styles/Theme";
 import MTPlayerHeader from "./SubComponent/MTPlayerHeader";
 
+// styled components
+import * as table from "./styled/MTStyledTable";
+import * as layout from "./styled/MTStyledLayout";
+
+const S = { table, layout };
+
 const inquireDayList = [1, 3, 5, 7, 15, 30];
 
 const isLike = true;
@@ -17,34 +23,23 @@ const exPlayerName = "김건부";
 
 const MTContent = () => {
   return (
-    <SWrapper>
-      <MTCategory />
-      <SPlayerContainer>
-        <MTPlayerHeader
-          isLike={isLike}
-          teamLine={exTeamLine}
-          nickName={exPlayerNickName}
-          name={exPlayerName}
-        />
-      </SPlayerContainer>
-    </SWrapper>
+    <S.layout.Container>
+      {/* 테이블 */}
+      <S.table.Table>
+        {/* 테이블 헤더 */}
+        <MTCategory />
+        <main>
+          {/* 테이블 바디 */}
+          <MTPlayerHeader
+            isLike={isLike}
+            teamLine={exTeamLine}
+            nickName={exPlayerNickName}
+            name={exPlayerName}
+          />
+        </main>
+      </S.table.Table>
+    </S.layout.Container>
   );
 };
 
 export default MTContent;
-
-const SWrapper = styled.section`
-  width: 1110px;
-  height: 1346px;
-  margin: 20px 0 0;
-`;
-
-const SPlayerContainer = styled.div`
-  width: 1110px;
-  height: 370px;
-  margin: 10px 0 10px;
-  padding: 0 0 0 14px;
-  border-radius: 20px;
-  background-color: ${theme.colors.bg_select};
-  position: relative;
-`;
