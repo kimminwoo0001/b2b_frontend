@@ -10,9 +10,11 @@ const fontsStyle = {
     `,
     13: css`
       font-size: 13px;
+      line-height: 17px;
     `,
     15: css`
       font-size: 15px;
+      line-height: 19px;
     `,
     16: css`
       font-size: 16px;

@@ -168,6 +168,13 @@ const typoStyle = {
     ${fontsStyle.weight[400]};
     color: ${theme.colors.text};
   `,
+  player_title: css`
+    font-family: Spoqa Han Sans;
+    ${fontsStyle.size[15]};
+    line-height: 21px;
+    ${fontsStyle.weight[700]};
+    color: ${theme.colors.text};
+  `,
 
   /* event log */
   eventlog: css`
@@ -193,7 +200,7 @@ const typoStyle = {
     font-family: Spoqa Han Sans;
     ${fontsStyle.size[15]};
     ${fontsStyle.weight[400]};
-    ${colors.badge_red};
+    color: ${colors.badge_red};
   `,
 };
 
