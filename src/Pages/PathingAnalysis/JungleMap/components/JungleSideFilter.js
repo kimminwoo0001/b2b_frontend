@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { jsx, css, keyframes } from "@emotion/react";
+import { jsx, css } from "@emotion/react";
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "@emotion/styled";
@@ -94,7 +94,7 @@ const JungleSideFilter = () => {
   const handleClickGameItem = (num) => {
     radioRef.current[num].click();
   };
-  const [radioState, setRadioState] = useState("1경기");
+  const [radioState, setRadioState] = useState();
   const radioRef = useRef([]);
 
   const leagueArr =  Object.keys(junglevalue.league).filter(key => junglevalue.league[key] === true)
@@ -213,8 +213,39 @@ const JungleSideFilter = () => {
       id: user.id,
     };
     axiosRequest(undefined, url, params, function(e) {
-      console.log(e);
       setGameList(e.game)
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+    })
+  }
+
+
+  // 임시 호출
+  const GetMappingInfo = () => {
+    const selectedChamps = Object.keys(filterState.step1).filter(key => filterState.step1[key] === true);
+    const selectedOppChamps = Object.keys(filterState.step2).filter(key => filterState.step2[key] === true);
+    console.log(selectedChamps);
+    console.log(selectedOppChamps);
+    const url = `${API}/lolapi/jungle/mapping`;
+    const params = {
+      league: leagueArr,
+      year: junglevalue.year,
+      season: seasonArr,
+      patch: patchArr,
+      team: junglevalue.team[0],
+      player: junglevalue.player,
+      champion: selectedChamps,
+      oppchampion: selectedOppChamps,
+      side:"all",
+      time:"all",
+      position:['top','jng','mid','bot','sup'],
+      gameid:"ESPORTSTMNT02 2578705",
+      token: user.token,
+      id: user.id,
+    };
+    axiosRequest(undefined, url, params, function(e) {
+      // setGameList(e.game)
+      console.log(e);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
     })
@@ -237,7 +268,7 @@ useEffect(() => {
 useEffect(() => {
 let newArr = [];
 for(let key in oppChampInfo) {
-  newArr.push(oppChampInfo[key].champ);      
+  newArr.push(oppChampInfo[key].champs);      
 }
 const result = initializedFalseValue(newArr);
 setFilterState({
@@ -249,6 +280,10 @@ setFilterState({
 useEffect(() => {
   console.log(filterState)
 }, [filterState.step1, filterState.step2])
+
+useEffect(() => {
+console.log(junglevalue.player==="")
+}, [junglevalue])
 
   return (
     <SWrapper>
@@ -267,7 +302,7 @@ useEffect(() => {
                     src={`Images/TeamLogo/${junglevalue.team}.png`}
                     alt="TeamLogo"
                   />
-                  <span>{junglevalue.team} 선수선택</span>
+                  <span>{junglevalue.team} {t("video.jungle.selectPlayer")}</span>
                 </STeam>
               </SStepContainer>
             </AccordionSummary>
@@ -303,12 +338,12 @@ useEffect(() => {
 
         {/* step2 - 챔피언 체크박스 */}
         <div css={{ marginBottom: 30 }}>
-          <Accordion act={junglevalue.player !== ""}>
+          <Accordion>
             <AccordionSummary css={{ marginBottom: 13 }} onClick={() => {}}>
               <SStepContainer>
                 <SLabel>STEP 02</SLabel>
                 <STeam>
-                  <span>플레이 한 챔피언 선택</span>
+                  <span>{t("video.jungle.champLabel")}</span>
                 </STeam>
               </SStepContainer>
             </AccordionSummary>
@@ -323,9 +358,9 @@ useEffect(() => {
                       checked={Object.keys(filterState.step1).filter(key => filterState.step1[key] === false).length === 0}
                     />
                   </div>
-                  <div css={Col2}>챔피언(경기수)</div>
-                  <div css={[Col3]}>진영별</div>
-                  <div css={[Col3]}>경기수</div>
+                  <div css={Col2}>{`${t("video.jungle.champTitle")}(${t("video.jungle.numOfMatches")})`}</div>
+                  <div css={[Col3]}>{t("video.jungle.numOfMatches")}</div>
+                  <div css={[Col3]}>{t("video.jungle.matchesBySide")}</div>
                 </SHead>
 
                 <SBody>
@@ -372,9 +407,9 @@ useEffect(() => {
           <Accordion>
             <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
               <SStepContainer>
-                <SLabel>STEP 02</SLabel>
+                <SLabel>STEP 03</SLabel>
                 <STeam>
-                  <span>플레이 한 챔피언 선택</span>
+                  <span>{t("video.jungle.oppChampLable")}</span>
                 </STeam>
               </SStepContainer>
             </AccordionSummary>
@@ -389,23 +424,23 @@ useEffect(() => {
                       checked={Object.keys(filterState.step2).filter(key => filterState.step2[key] === false).length === 0}
                     />
                   </div>
-                  <div css={Col2}>챔피언(경기수)</div>
-                  <div css={[Col3]}>진영별</div>
-                  <div css={[Col3]}>경기수</div>
+                  <div css={Col2}>{`${t("video.jungle.champTitle")}(${t("video.jungle.numOfMatches")})`}</div>
+                  <div css={[Col3]}>{t("video.jungle.numOfMatches")}</div>
+                  <div css={[Col3]}>{t("video.jungle.matchesBySide")}</div>
                 </SHead>
 
                 <SBody>
                   {oppChampInfo?.map((oppChamp,idx) => {
-                    console.log(Object.keys(filterState.step2).includes(oppChamp.champ));
+                    console.log(Object.keys(filterState.step2).includes(oppChamp.champs));
                     return (
-                      <SRow isActive ={Object.keys(filterState.step2).filter(key => filterState.step2[key] === true).includes(oppChamp.champ)}>
+                      <SRow isActive ={Object.keys(filterState.step2).filter(key => filterState.step2[key] === true).includes(oppChamp.champs)}>
                     {/* 체크 */}
                     <div css={Col1}>
                       <Checkbox
                         name="step2"
-                        value={oppChamp.champ}
+                        value={oppChamp.champs}
                         onChange={handleChange}
-                        checked={Object.keys(filterState.step2).filter(key => filterState.step2[key] === true).includes(oppChamp.champ)}
+                        checked={Object.keys(filterState.step2).filter(key => filterState.step2[key] === true).includes(oppChamp.champs)}
                         />
                     </div>
                     {/* 본문 */}
@@ -413,10 +448,10 @@ useEffect(() => {
                       <Avatar
                         css={{ marginRight: 5 }}
                         size={20}
-                        src={`Images/champion/${oppChamp.champ}.png`}
+                        src={`Images/champion/${oppChamp.champs}.png`}
                         alt="oppChampLogo"
                       />
-                        <span>{`${oppChamp.champ} (${oppChamp.blue_champ + oppChamp.red_champ})`}</span>
+                        <span>{`${oppChamp.champs} (${oppChamp.blue_champ + oppChamp.red_champ})`}</span>
                     </SChamp>
 
               {/* 경기수 */}
@@ -433,12 +468,12 @@ useEffect(() => {
 
         {/* step4 - 경기체크 */}
         <div>
-          <Accordion css={{ marginBottom: 30 }}>
+          <Accordion>
             <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
               <SStepContainer>
-                <SLabel>STEP 03</SLabel>
+                <SLabel>STEP 04</SLabel>
                 <STeam>
-                  <span>동선을 확인할 경기 선택</span>
+                  <span>{t("video.jungle.selectGame")}</span>
                 </STeam>
               </SStepContainer>
             </AccordionSummary>
@@ -447,7 +482,6 @@ useEffect(() => {
               <SGameList>
                 {/* 경기 정보 item */}
                 {gameList?.map((game, idx) => (
-
                   <SGameItem
                     isActive={radioState === `${idx+1}경기`}
                     key={`경기정보${idx+1}`}
@@ -536,8 +570,9 @@ useEffect(() => {
             typoStyle.body,
             borderRadiusStyle.full,
           ]}
+          onClick={() => GetMappingInfo()}
         >
-          정글동선 확인하기
+          {t("video.jungle.confirm")}
         </Button>
       </SButtonContainer>
     </SWrapper>
@@ -547,7 +582,8 @@ useEffect(() => {
 // 레이아웃
 const SWrapper = styled.div`
   display: flex;
-  height: 100%;
+  /* height: 100%; */
+  /* min-height: 427px; */
   flex-direction: column;
   justify-content: space-between;
 `;
@@ -650,7 +686,7 @@ const SInfo = styled.div`
 
 const SName = styled.div`
   width: 100%;
-  margin-bottom: 6px;
+  margin: 5px 0 ;
   ${typoStyle.noWrap}
 `;
 const STeamSlideContainer = styled.div`

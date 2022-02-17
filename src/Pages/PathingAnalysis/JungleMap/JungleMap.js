@@ -4,13 +4,16 @@ import styled from "@emotion/styled/macro";
 import { useTranslation } from "react-i18next";
 import { useTab } from "../../../Hooks";
 import { testStyle, transitionStyle, typoStyle } from "../../../Styles/ui";
+import { useDispatch } from "react-redux";
 
 import Compare from "./screens/Compare";
 import Sequence from "./screens/Sequence";
+import { JungleInit } from "../../../redux/modules/junglevalue";
 
 // subtab data
 
 const JungleMap = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const JungleTab = [
     { title: t("video.jungle.JunglePathing"), component: <Sequence /> },
@@ -25,7 +28,11 @@ const JungleMap = () => {
           <STabItem
             key={tab.title}
             className={index === currentIndex ? "is-active" : ""}
-            onClick={() => setIndex(index)}
+            onClick={() => {
+              setIndex(index)
+              dispatch(JungleInit());
+            }
+            }
           >
             {tab.title}
           </STabItem>
@@ -38,7 +45,7 @@ const JungleMap = () => {
 
 const SContainer = styled.section`
   ${typoStyle.contents}
-  ${testStyle.border1}
+  /* ${testStyle.border1} */
 `;
 
 const STab = styled.ul`
@@ -85,7 +92,7 @@ const STabItem = styled.li`
 
 const SContents = styled.div`
   display: flex;
-  ${testStyle.border2}
+  /* ${testStyle.border2} */
 `;
 
 export default JungleMap;
