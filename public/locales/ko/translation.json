@@ -21,10 +21,25 @@
       "recent": "최근",
       "game": "경기",
       "player": "선수",
-      "winrate": "승률"
+      "winrate": "승률",
+      "ID": "ID"
     },
     "button": {
       "add": "추가"
+    },
+    "date": {
+      "year": "년",
+      "month": "월",
+      "day": "일",
+      "weekDays": {
+        "mon": "월",
+        "tue": "화",
+        "wed": "수",
+        "thu": "목",
+        "fri": "금",
+        "sat": "토",
+        "sun": "일"
+      }
     }
   },
   "sign": {
@@ -709,6 +724,33 @@
         "curSeason": "이번 시즌",
         "recentDays": "최근 ##일",
         "daysPlayedCham": "최근 ##일간\n플레이한 챔피언"
+      }
+    }
+  },
+  "utility": {
+    "calendarFilter": {
+      "dateSet": "날짜 설정",
+      "inputStart": "시작일 입력",
+      "inputEnd": "종료일 입력",
+      "date": {
+        "allSeason": "시즌 전체",
+        "recent3days": "최근 3일",
+        "recent5days": "최근 5일",
+        "recent7days": "최근 7일",
+        "recent15days": "최근 15일",
+        "recent1months": "최근 1개월",
+        "recent3months": "최근 3개월"
+      },
+      "selectedStartDay": "시작일 선택 완료",
+      "selectedEndDay": "종료일 선택 완료",
+      "desc": {
+        "noStartIdx": "시작일을 선택이 필요합니다.",
+        "noEndIdx": "종료일을 선택이 필요합니다.",
+        "needStartIdx": "시작일을 먼저 선택해야 합니다.",
+        "wrongDate": "사용 가능한 날짜를 선택해야합니다.",
+        "changeToStartSeason": "시작일을 시즌의 시작일로 수정합니다.",
+        "changeToEndSeason": "종료일을 시즌의 종료일로 수정합니다.",
+        "changeToAllSeason": "시작일과 종료일을 시즌의 시작일과 종료일로 수정합니다."
       }
     }
   }

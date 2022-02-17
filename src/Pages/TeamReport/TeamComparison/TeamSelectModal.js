@@ -23,7 +23,6 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("openModal", openModal);
     if (openModal) {
       fetchingTeamFilter();
     }

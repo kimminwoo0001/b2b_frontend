@@ -25,13 +25,13 @@ const axiosRequest = async (
         // 여기서도 에러를 던지면 아래의 catch로 이동된다.
         // throw Error("에러 테스트")
         const check = checkRequest(e.data);
-        console.log("check", check);
+        // console.log("check", check);
         if (check?.value) {
           if (callback) {
-            console.log("checkout", e);
+            // console.log("checkout", e);
             callback(e.data.response);
           } else {
-            console.log(check.objStore);
+            // console.log(check.objStore);
             // sessionStorage.clear();
             //history.push("/login");
           }
@@ -51,13 +51,13 @@ const axiosRequest = async (
       timeout: timeout,
     })
       .then((e) => {
-        console.log("e: ", e)
+        // console.log("e: ", e)
         const check = checkRequest(e.data);
-        console.log("check", check);
+        // console.log("check", check);
         if (check.value) {
           if (callback) {
             callback(e.data.response);
-            console.log(e.data.response);
+            // console.log(e.data.response);
           } else {
             //sessionStorage.clear();
             //history.push("/login");

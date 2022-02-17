@@ -8,19 +8,19 @@ import CloseFilter from "../../Components/Filter/CloseFilter";
 import ErrorBoundary from "../../Components/ErrorBoundary";
 import Nav from "../../Components/Nav/Nav";
 import { useSelector, useDispatch, batch } from "react-redux";
-import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 import SoloRankTab from "./Component/Common/SoloRankTab";
 
 const SoloRank = () => {
-  const filters = useSelector((state) => state.FilterReducer);
+  //const filters = useSelector((state) => state.FilterReducer);
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 
   useEffect(() => {}, []);
 
   if (document.title !== `${t("sidebar.part13")} - NUNU.GG`) {
     document.title = `${t("sidebar.part13")} - NUNU.GG`;
   }
+
   return (
     <ErrorBoundary>
       <Nav />

@@ -121,7 +121,7 @@ const GameWrapper = styled.div`
   min-height: 100vh;
   overflow: auto;
   display: flex;
-  background-color: #000000;
+  background-color: #16151c;
   overflow: hidden;
 
   .filter-close {

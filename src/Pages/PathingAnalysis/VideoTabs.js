@@ -112,6 +112,7 @@ function VideoTabs() {
             onClick={() => {
               dispatch(HandleTab(4));
               dispatch(Reset_MapTab());
+              dispatch(SelectorInitailizeState());
               if (filters.tab === 4) {
                 dispatch(ResetWardPathingTab());
                 dispatch(SelectorInitailizeState());

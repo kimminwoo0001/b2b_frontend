@@ -128,7 +128,7 @@ function CompareIngame() {
           Object.assign(gankData[i], gankData2[i]);
           setGank(gankData);
         }
-        console.log(gank);
+        // console.log(gank);
         //첫 서포팅 데이터 min, max, stepsize값
         let supTicks = "";
         if (
@@ -154,7 +154,7 @@ function CompareIngame() {
               return { x: sup.position, y2: sup.value };
             }
           );
-        console.log(supData);
+        //console.log(supData);
         for (let i = 0; i < supData.length; i++) {
           Object.assign(supData[i], supData2[i]);
           setSupport(supData);
@@ -210,7 +210,7 @@ function CompareIngame() {
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
-      console.log("payload", payload);
+      //console.log("payload", payload);
       return (
         payload.length > 1 && (
           <CustomTool className="custom-tooltip">
@@ -250,7 +250,7 @@ function CompareIngame() {
               <p className="Y">Y {t("team.comparison.gankCount")}</p>
             </div>
           </NavBar>
-          {console.log(gankDomain?.firstGankList[0].gankCount)}
+          {/* {console.log(gankDomain?.firstGankList[0].gankCount)} */}
           {gankDomain?.firstGankList === "NULL" ?
             <NoData>{t("league.leagueStat.noData2")}</NoData> :
             <CompareTeamStat>

@@ -35,10 +35,8 @@ const SFitlerContents = styled.section`
 `;
 // components
 const SSelector = styled.section`
-  flex: 0;
-  flex-basis: 376px;
-
-  padding: 29px 23px;
+  flex: 0 0 376px;
+  width: 376px;
   border-radius: 20px;
   background-color: ${({ theme }) => theme.colors.bg_light};
 `;

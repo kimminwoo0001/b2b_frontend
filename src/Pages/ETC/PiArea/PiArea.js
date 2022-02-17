@@ -103,7 +103,7 @@ const PiArea = () => {
   useEffect(() => {
     setWard(entireData[0]);
     setPI(entireData[1]);
-    console.log(entireData);
+    //console.log(entireData);
   }, [entireData]);
 
   // db저장 submit 함수

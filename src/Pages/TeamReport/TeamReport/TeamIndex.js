@@ -600,7 +600,6 @@ function TeamIndex() {
               <p className="Y">Y {t("team.analysis.gankCount")}</p>
             </div>
           </NavBar>
-          {console.log(gankCount)}
           {gankCount?.firstGankList === "NULL" ?
             <NoData>{t("league.leagueStat.noData2")}</NoData>
             :

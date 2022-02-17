@@ -48,12 +48,12 @@ const AlertModal = () => {
     (state) => state.ModalReducer
   );
   const pagePath = document.location.pathname;
-  console.log(isOpen, desc, semiDesc);
+  // console.log(isOpen, desc, semiDesc);
 
   useEffect(() => {
-    console.log("모달 창 useEffect");
+    console.log("Open");
     if (isOpen) {
-      console.log("모달 창 열림");
+      console.log("Close");
     }
   }, [isOpen]);
 

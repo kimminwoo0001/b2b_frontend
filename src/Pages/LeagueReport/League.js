@@ -11,9 +11,11 @@ import ErrorBoundary from "../../Components/ErrorBoundary";
 // import Filter from "./Components/Filter";
 import Nav from "../../Components/Nav/Nav";
 import CloseFilter from "../../Components/Filter/CloseFilter";
+import CalendarFilter from "../../Components/Filter/Calendar/CalendarFilter";
 
 function League() {
   const filters = useSelector((state) => state.FilterReducer);
+  const calendarvalue = useSelector((state) => state.CalendarReducer);
   const { t } = useTranslation();
 
   if (document.title !== `${t("sidebar.part2")} - NUNU.GG`) {
@@ -22,6 +24,7 @@ function League() {
 
   return (
     <ErrorBoundary>
+      {calendarvalue.isOpen && < CalendarFilter />}
       <Nav />
       <LeagueWrapper>
         <SideBar />
@@ -29,6 +32,7 @@ function League() {
         // className={filters.filterMenuState ? "filter-open" : "filter-close"}
         >
           <Filter />
+
         </div>
         {/* <div
           className={filters.filterMenuState ? "filter-close" : "filter-open"}

@@ -3,6 +3,7 @@ import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import ItemBox from "./SubComponent/ItemBox";
 
 const sample = [
@@ -14,6 +15,7 @@ const sample = [
 ];
 const MTHeader = () => {
   const { t } = useTranslation();
+
   const lebels = [
     t("soloRank.myTeam.label.leagueInfo"),
     t("soloRank.myTeam.label.teamLogo"),

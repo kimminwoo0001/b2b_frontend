@@ -27,7 +27,7 @@ const SetCode = ({ id, authCode, setAuthCode, setSignType, signType }) => {
 
   const onChange = (e) => {
     const { value, id } = e.target;
-    console.log("id", id);
+    //console.log("id", id);
 
     setAuthCode(value);
   };

@@ -6,7 +6,7 @@ import shadowStyle from "./shadow_styled";
 import spacing from "./space_style";
 import dropdownStyle from "./select_style";
 import tableStyle from "./table_style";
-import scollbarStyle from "./scrollbar_style";
+import scrollbarStyle from "./scrollbar_style";
 
 export {
   buttonStyle,
@@ -17,5 +17,5 @@ export {
   spacing,
   tableStyle,
   dropdownStyle,
-  scollbarStyle,
+  scrollbarStyle,
 };
