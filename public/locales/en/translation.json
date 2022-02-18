@@ -414,7 +414,7 @@
     "player": "Player",
     "NoCommonSeasons": "Please select seasons again.",
     "mainTeamChanged": "Main team has changed. Moves to the initial page.",
-    "sorry": "The game data for the 2022 season has been updated.",
+    "sorry": "Performance Rating algorithms have been modified to better account for playmaking.",
     "noMultipleSelection": "Multi Select Disabled"
   },
   "video": {

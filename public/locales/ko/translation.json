@@ -438,7 +438,7 @@
     "player": "선수",
     "NoCommonSeasons": "시즌을 다시 선택해주세요.",
     "mainTeamChanged": "메인 팀이 변경되어 비교 데이터가 초기화됩니다.",
-    "sorry": "22년도 시즌데이터가 업데이트 되었습니다.",
+    "sorry": "선수의 플레이메이킹을 보다 잘 반영할 수 있도록 PR 알고리즘이 일부 업데이트 되었습니다.",
     "noMultipleSelection": "중복 선택 불가"
   },
   "video": {
