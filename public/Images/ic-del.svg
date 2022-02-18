@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+    <path style="fill:none" d="M0 0h20v20H0z"/>
+    <g data-name="Group 1835" transform="translate(2 3)">
+        <circle data-name="Ellipse 194" cx="10" cy="10" r="10" transform="translate(-2 -3)" style="fill:#484655"/>
+        <path data-name="Union 6" d="M5.366 5.891 3 3.525.635 5.891a.372.372 0 0 1-.526-.526L2.474 3 .109.635A.372.372 0 1 1 .635.108L3 2.474 5.366.108a.372.372 0 0 1 .526.527L3.526 3l2.365 2.365a.372.372 0 1 1-.526.526z" transform="translate(5.5 4.501)" style="fill:#fff;stroke:#fff;stroke-width:.5px"/>
+    </g>
+</svg>

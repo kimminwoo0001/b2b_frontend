@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import MTCategory from "./MTCategory";
 import theme from "../../../../Styles/Theme";
-import MTPlayerHeader from "./SubComponent/MTPlayerHeader";
+import MTPlayerList from "./SubComponent/MTPlayerList";
 
 // styled components
 import * as table from "./styled/MTStyledTable";
@@ -28,15 +28,16 @@ const MTContent = () => {
       <S.table.Table>
         {/* 테이블 헤더 */}
         <MTCategory />
-        <main>
+        <S.table.TableBody>
           {/* 테이블 바디 */}
-          <MTPlayerHeader
+          <MTPlayerList
+            id={"showmaker"}
             isLike={isLike}
             teamLine={exTeamLine}
             nickName={exPlayerNickName}
             name={exPlayerName}
           />
-        </main>
+        </S.table.TableBody>
       </S.table.Table>
     </S.layout.Container>
   );
