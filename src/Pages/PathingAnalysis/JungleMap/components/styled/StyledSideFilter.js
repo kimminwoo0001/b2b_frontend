@@ -8,9 +8,11 @@ import {
 
 export const Wrapper = styled.div`
   display: flex;
-  height: 100%;
+  /* height: 100%; */
   flex-direction: column;
   justify-content: space-between;
+  background-color: ${({ theme }) => theme.colors.bg_light};
+  border-radius: 20px;
 `;
 export const FilterContainer = styled.div`
   padding: 24px 20px 0 20px;

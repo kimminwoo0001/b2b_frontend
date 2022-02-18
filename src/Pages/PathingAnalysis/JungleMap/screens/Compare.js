@@ -1,7 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { jsx } from "@emotion/react";
 import { cx } from "@emotion/css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { API } from "../../../config";
+import axiosRequest from "../../../../lib/axios/axiosRequest";
+import { SetModalInfo } from "../../../../redux/modules/modalvalue";
+import secToMS from "../../../../lib/secToMS";
 
 // Compeontns
 import CompareSideFilter from "../components/CompareSideFilter";
@@ -21,10 +27,73 @@ import {
 import * as table from "../components/styled/StyledTable";
 import * as layout from "../components/styled/StyledJungleLayout";
 
+
+
+
 // 스타일 컴포넌트 임포트
 const S = { table, layout };
 
 const Compare = () => {
+  const staticvalue = useSelector((state) => state.StaticValueReducer);
+  const selector = useSelector((state) => state.SelectorReducer);
+  const junglevalue = useSelector((state) => state.JungleMapReducer);
+  const user = useSelector((state) => state.UserReducer);
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  const [team,setTeam] = useState();
+  const [oppTeam, setOppTeam] = useState();
+
+
+  const secToMin = (sec) => {
+    let mm = Math.floor(sec / 60);
+    let ss = Math.floor(sec % 60);
+
+    return `${mm}${t("solo.playerboard.min")} ${ss}${t("solo.playerboard.sec")}`;
+  }
+
+
+  // 정글링비교 데이터 호출
+  const fetchCampSelectionRate = () => {
+    const leagueArr =  Object.keys(junglevalue.league).filter(key => junglevalue.league[key] === true)
+    const seasonArr =  Object.keys(junglevalue.season).filter(key => junglevalue.season[key] === true)
+    const patchArr =  Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key] === true)
+
+    const url = `${API}/lolapi/jungle/jungle-passing`;
+    const params = {
+      league: leagueArr,
+      year: junglevalue.year,
+      season: seasonArr,
+      patch: patchArr,
+      team: junglevalue.team[0],
+      player: junglevalue.player,
+      champion: ["Nidalee"],
+      oppteam: "DK",
+      oppplayer: "Canyon",
+      oppchampion: ["XinZhao"],
+      side:"all",
+      token: user.token,
+      id: user.id,
+    };
+    axiosRequest(undefined, url, params, function(e) {
+
+      setTeam(e["team1"]);
+      setOppTeam(e["team2"]);
+
+      
+      console.log(e["team1"]);
+      console.log(e["team2"]);
+
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+    })
+  }
+
+  useEffect(() => {
+    fetchCampSelectionRate();
+  }, [])
+
+
   const [active, setActive] = useState(true);
   return (
     <S.layout.CompareContainer>
@@ -92,146 +161,53 @@ const Compare = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {/* 칼날부리 한줄 코드 */}
+                  {team?.campRate?.map((teamCamp,idx) => (
                   <tr>
-                    <td>1</td>
-                    <td>
-                      <S.table.TableData>
-                        <Avatar
-                          src={"images/champion/teemo.png"}
-                          alt={"칼날부리"}
-                          size={36}
-                          color={"blue"}
-                        />
-                        <div>
-                          <p>46%</p>
-                          <p>칼날부리</p>
-                        </div>
-                      </S.table.TableData>
-                    </td>
-                    <td>
-                      <S.table.TableData>
-                        <Avatar
-                          src={"images/champion/teemo.png"}
-                          alt={"칼날부리"}
-                          size={36}
-                          color={"blue"}
-                        />
-                        <div>
-                          <p>46%</p>
-                          <p>칼날부리</p>
-                        </div>
-                      </S.table.TableData>
-                    </td>
-                    <td>
-                      <S.table.TableData>
-                        <Avatar
-                          src={"images/champion/teemo.png"}
-                          alt={"칼날부리"}
-                          size={36}
-                          color={"blue"}
-                        />
-                        <div>
-                          <p>46%</p>
-                          <p>칼날부리</p>
-                        </div>
-                      </S.table.TableData>
-                    </td>
-                  </tr>
-
-                  {/* 칼날부리 한줄 코드 */}
-                  <tr>
-                    <td>1</td>
-                    <td>
-                      <S.table.TableData>
-                        <Avatar
-                          src={"images/champion/teemo.png"}
-                          alt={"칼날부리"}
-                          size={36}
-                          color={"blue"}
-                        />
-                        <div>
-                          <p>46%</p>
-                          <p>칼날부리</p>
-                        </div>
-                      </S.table.TableData>
-                    </td>
-                    <td>
-                      <S.table.TableData>
-                        <Avatar
-                          src={"images/champion/teemo.png"}
-                          alt={"칼날부리"}
-                          size={36}
-                          color={"blue"}
-                        />
-                        <div>
-                          <p>46%</p>
-                          <p>칼날부리</p>
-                        </div>
-                      </S.table.TableData>
-                    </td>
-                    <td>
-                      <S.table.TableData>
-                        <Avatar
-                          src={"images/champion/teemo.png"}
-                          alt={"칼날부리"}
-                          size={36}
-                          color={"blue"}
-                        />
-                        <div>
-                          <p>46%</p>
-                          <p>칼날부리</p>
-                        </div>
-                      </S.table.TableData>
-                    </td>
-                  </tr>
-
-                  {/* 칼날부리 한줄 코드 */}
-                  <tr>
-                    <td>1</td>
-                    <td>
-                      <S.table.TableData>
-                        <Avatar
-                          src={"images/champion/teemo.png"}
-                          alt={"칼날부리"}
-                          size={36}
-                          color={"blue"}
-                        />
-                        <div>
-                          <p>46%</p>
-                          <p>칼날부리</p>
-                        </div>
-                      </S.table.TableData>
-                    </td>
-                    <td>
-                      <S.table.TableData>
-                        <Avatar
-                          src={"images/champion/teemo.png"}
-                          alt={"칼날부리"}
-                          size={36}
-                          color={"blue"}
-                        />
-                        <div>
-                          <p>46%</p>
-                          <p>칼날부리</p>
-                        </div>
-                      </S.table.TableData>
-                    </td>
-                    <td>
-                      <S.table.TableData>
-                        <Avatar
-                          src={"images/champion/teemo.png"}
-                          alt={"칼날부리"}
-                          size={36}
-                          color={"blue"}
-                        />
-                        <div>
-                          <p>46%</p>
-                          <p>칼날부리</p>
-                        </div>
-                      </S.table.TableData>
-                    </td>
-                  </tr>
+                  <td>{teamCamp.order}</td>
+                  <td>
+                    <S.table.TableData>
+                      <Avatar
+                        src={"images/champion/teemo.png"}
+                        alt={"칼날부리"}
+                        size={36}
+                        color={"blue"}
+                      />
+                      <div>
+                        <p>{teamCamp.jg_rates}</p>
+                        <p>칼날부리</p>
+                      </div>
+                    </S.table.TableData>
+                  </td>
+                  <td>
+                    <S.table.TableData>
+                      <Avatar
+                        src={"images/champion/teemo.png"}
+                        alt={"칼날부리"}
+                        size={36}
+                        color={"blue"}
+                      />
+                      <div>
+                        <p>46%</p>
+                        <p>칼날부리</p>
+                      </div>
+                    </S.table.TableData>
+                  </td>
+                  <td>
+                    <S.table.TableData>
+                      <Avatar
+                        src={"images/champion/teemo.png"}
+                        alt={"칼날부리"}
+                        size={36}
+                        color={"blue"}
+                      />
+                      <div>
+                        <p>46%</p>
+                        <p>칼날부리</p>
+                      </div>
+                    </S.table.TableData>
+                  </td>
+                </tr>
+                  ))}
                 </tbody>
               </S.table.Table>
             </S.table.TableContainer>
@@ -291,146 +267,53 @@ const Compare = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {/* 칼날부리 한줄 코드 */}
+                  {oppTeam?.campRate?.map((oppTeamCamp,idx) =>  (
                   <tr>
-                    <td>1</td>
-                    <td>
-                      <S.table.TableData>
-                        <Avatar
-                          src={"images/champion/teemo.png"}
-                          alt={"칼날부리"}
-                          size={36}
-                          color={"blue"}
-                        />
-                        <div>
-                          <p>46%</p>
-                          <p>칼날부리</p>
-                        </div>
-                      </S.table.TableData>
-                    </td>
-                    <td>
-                      <S.table.TableData>
-                        <Avatar
-                          src={"images/champion/teemo.png"}
-                          alt={"칼날부리"}
-                          size={36}
-                          color={"blue"}
-                        />
-                        <div>
-                          <p>46%</p>
-                          <p>칼날부리</p>
-                        </div>
-                      </S.table.TableData>
-                    </td>
-                    <td>
-                      <S.table.TableData>
-                        <Avatar
-                          src={"images/champion/teemo.png"}
-                          alt={"칼날부리"}
-                          size={36}
-                          color={"blue"}
-                        />
-                        <div>
-                          <p>46%</p>
-                          <p>칼날부리</p>
-                        </div>
-                      </S.table.TableData>
-                    </td>
-                  </tr>
-
-                  {/* 칼날부리 한줄 코드 */}
-                  <tr>
-                    <td>1</td>
-                    <td>
-                      <S.table.TableData>
-                        <Avatar
-                          src={"images/champion/teemo.png"}
-                          alt={"칼날부리"}
-                          size={36}
-                          color={"blue"}
-                        />
-                        <div>
-                          <p>46%</p>
-                          <p>칼날부리</p>
-                        </div>
-                      </S.table.TableData>
-                    </td>
-                    <td>
-                      <S.table.TableData>
-                        <Avatar
-                          src={"images/champion/teemo.png"}
-                          alt={"칼날부리"}
-                          size={36}
-                          color={"blue"}
-                        />
-                        <div>
-                          <p>46%</p>
-                          <p>칼날부리</p>
-                        </div>
-                      </S.table.TableData>
-                    </td>
-                    <td>
-                      <S.table.TableData>
-                        <Avatar
-                          src={"images/champion/teemo.png"}
-                          alt={"칼날부리"}
-                          size={36}
-                          color={"blue"}
-                        />
-                        <div>
-                          <p>46%</p>
-                          <p>칼날부리</p>
-                        </div>
-                      </S.table.TableData>
-                    </td>
-                  </tr>
-
-                  {/* 칼날부리 한줄 코드 */}
-                  <tr>
-                    <td>1</td>
-                    <td>
-                      <S.table.TableData>
-                        <Avatar
-                          src={"images/champion/teemo.png"}
-                          alt={"칼날부리"}
-                          size={36}
-                          color={"blue"}
-                        />
-                        <div>
-                          <p>46%</p>
-                          <p>칼날부리</p>
-                        </div>
-                      </S.table.TableData>
-                    </td>
-                    <td>
-                      <S.table.TableData>
-                        <Avatar
-                          src={"images/champion/teemo.png"}
-                          alt={"칼날부리"}
-                          size={36}
-                          color={"blue"}
-                        />
-                        <div>
-                          <p>46%</p>
-                          <p>칼날부리</p>
-                        </div>
-                      </S.table.TableData>
-                    </td>
-                    <td>
-                      <S.table.TableData>
-                        <Avatar
-                          src={"images/champion/teemo.png"}
-                          alt={"칼날부리"}
-                          size={36}
-                          color={"blue"}
-                        />
-                        <div>
-                          <p>46%</p>
-                          <p>칼날부리</p>
-                        </div>
-                      </S.table.TableData>
-                    </td>
-                  </tr>
+                  <td>1</td>
+                  <td>
+                    <S.table.TableData>
+                      <Avatar
+                        src={"images/champion/teemo.png"}
+                        alt={"칼날부리"}
+                        size={36}
+                        color={"blue"}
+                      />
+                      <div>
+                        <p>46%</p>
+                        <p>칼날부리</p>
+                      </div>
+                    </S.table.TableData>
+                  </td>
+                  <td>
+                    <S.table.TableData>
+                      <Avatar
+                        src={"images/champion/teemo.png"}
+                        alt={"칼날부리"}
+                        size={36}
+                        color={"blue"}
+                      />
+                      <div>
+                        <p>46%</p>
+                        <p>칼날부리</p>
+                      </div>
+                    </S.table.TableData>
+                  </td>
+                  <td>
+                    <S.table.TableData>
+                      <Avatar
+                        src={"images/champion/teemo.png"}
+                        alt={"칼날부리"}
+                        size={36}
+                        color={"blue"}
+                      />
+                      <div>
+                        <p>46%</p>
+                        <p>칼날부리</p>
+                      </div>
+                    </S.table.TableData>
+                  </td>
+                </tr>
+                  ))}
                 </tbody>
               </S.table.Table>
             </S.table.TableContainer>
@@ -442,13 +325,13 @@ const Compare = () => {
               {/* 선수명 */}
               <thead>
                 <tr>
-                  <th>Canyon</th>
+                  <th>{team?.countRate[0]?.player}</th>
                   <th></th>
                   <th>
                     <Versus size={18} />
                   </th>
                   <th></th>
-                  <th>Owner</th>
+                  <th>{oppTeam?.countRate[0]?.player}</th>
                 </tr>
               </thead>
 
@@ -456,7 +339,7 @@ const Compare = () => {
               <tbody>
                 {/* 각 행 */}
                 <tr>
-                  <td>23.64%</td>
+                  <td>{`${team?.countRate[0]?.counter_jg*100}%`}</td>
                   <td>
                     <Arrow direction={"L"} />
                   </td>
@@ -464,43 +347,19 @@ const Compare = () => {
                   <td>
                     <Arrow direction={"R"} />
                   </td>
-                  <td>26.77%</td>
+                  <td>{`${oppTeam?.countRate[0]?.counter_jg*100}%`}</td>
                 </tr>
 
                 <tr>
-                  <td>23.64%</td>
+                  <td>{secToMin(team?.sixTime[0]?.realcount)}</td>
                   <td>
                     <Arrow direction={"L"} />
                   </td>
-                  <td>카운터정글비율</td>
+                  <td>6캠프 평균 정글링 시간</td>
                   <td>
                     <Arrow direction={"R"} />
                   </td>
-                  <td>26.77%</td>
-                </tr>
-
-                <tr>
-                  <td>23.64%</td>
-                  <td>
-                    <Arrow direction={"L"} />
-                  </td>
-                  <td>카운터정글비율</td>
-                  <td>
-                    <Arrow direction={"R"} />
-                  </td>
-                  <td>26.77%</td>
-                </tr>
-
-                <tr>
-                  <td>23.64%</td>
-                  <td>
-                    <Arrow direction={"L"} />
-                  </td>
-                  <td>카운터정글비율</td>
-                  <td>
-                    <Arrow direction={"R"} />
-                  </td>
-                  <td>26.77%</td>
+                  <td>{secToMin(oppTeam?.sixTime[0]?.realcount)}</td>
                 </tr>
               </tbody>
             </S.table.TextTable>

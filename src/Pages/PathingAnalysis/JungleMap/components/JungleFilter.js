@@ -62,7 +62,6 @@ const JungleFilter = () => {
 
 
   const handleFoldUp = () => {
-    console.log("------------Fold Btn Clicked----------");
     setToggleFoldBtn(!toggleFoldBtn);
   }
 

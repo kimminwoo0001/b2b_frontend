@@ -30,7 +30,7 @@ const JungleMap = () => {
             className={index === currentIndex ? "is-active" : ""}
             onClick={() => {
               setIndex(index)
-              dispatch(JungleInit());
+              // dispatch(JungleInit());
             }
             }
           >

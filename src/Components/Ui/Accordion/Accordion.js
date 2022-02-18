@@ -11,7 +11,6 @@ export const AccordionContext = createContext({
 
 const Accordion = ({ children, act = false, ...props }) => {
   const [isActive, setIsActive] = useState(act);
-  console.log("act:",isActive);
 
   const contextValue = useMemo(
     () => ({

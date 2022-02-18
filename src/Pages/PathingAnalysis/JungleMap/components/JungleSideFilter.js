@@ -42,8 +42,6 @@ const JungleSideFilter = () => {
   const user = useSelector((state) => state.UserReducer);
   const lang = useSelector((state) => state.LocaleReducer);
   const { t } = useTranslation();
-
-
   const dispatch = useDispatch();
   // const [filterState, setFilterState] = useState({
   //   step1: { all: false, gnar: false, teemo: false },
@@ -342,7 +340,7 @@ console.log(junglevalue.player==="")
           <Accordion act={junglevalue.player.length}>
             <AccordionSummary css={{ marginBottom: 13 }} onClick={() => {}}>
               <SStepContainer>
-                <SLabel>STEP 02{junglevalue.player.length}</SLabel>
+                <SLabel>STEP 02</SLabel>
                 <STeam>
                   <span>{t("video.jungle.champLabel")}</span>
                 </STeam>

@@ -77,7 +77,7 @@ const CompareSideFilter = () => {
       <S.FilterContainer>
         {/* step1 : 나의 팀 */}
         <S.FilterSection>
-          <Accordion>
+          <Accordion act={true}>
             <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
               <S.Title>
                 <S.TitleLabel>STEP 01</S.TitleLabel>
