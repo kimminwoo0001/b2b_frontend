@@ -11,6 +11,7 @@ const buttonStyle = {
       }
 
       &:not(:disabled):hover {
+        background-color: ${theme.colors.point_hover};
       }
     `,
     default: css`

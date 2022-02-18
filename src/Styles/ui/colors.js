@@ -1,7 +1,9 @@
 const colors = {
   // maincolor
   point: "#5942ba",
+  point_hover: "#6a55c1",
   default: "#484655",
+  default_hover: "#5b5966",
 
   // bordercolor
   border_light: "#433f4e",
