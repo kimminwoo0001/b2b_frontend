@@ -282,6 +282,7 @@ useEffect(() => {
 }, [filterState.step1, filterState.step2])
 
 useEffect(() => {
+
 console.log(junglevalue.player==="")
 }, [junglevalue])
 
@@ -338,10 +339,10 @@ console.log(junglevalue.player==="")
 
         {/* step2 - 챔피언 체크박스 */}
         <div css={{ marginBottom: 30 }}>
-          <Accordion>
+          <Accordion act={junglevalue.player.length}>
             <AccordionSummary css={{ marginBottom: 13 }} onClick={() => {}}>
               <SStepContainer>
-                <SLabel>STEP 02</SLabel>
+                <SLabel>STEP 02{junglevalue.player.length}</SLabel>
                 <STeam>
                   <span>{t("video.jungle.champLabel")}</span>
                 </STeam>
@@ -404,12 +405,12 @@ console.log(junglevalue.player==="")
 
         {/* stpe3 - 상대팀 챔피언 체크박스 */}
         <div css={{ marginBottom: 30 }}>
-          <Accordion>
+          <Accordion act={Object.keys(filterState.step1).filter(key => filterState.step1[key] === true).length}>
             <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
               <SStepContainer>
                 <SLabel>STEP 03</SLabel>
                 <STeam>
-                  <span>{t("video.jungle.oppChampLable")}</span>
+                  <span>{t("video.jungle.oppChampLabel")}</span>
                 </STeam>
               </SStepContainer>
             </AccordionSummary>
@@ -468,7 +469,7 @@ console.log(junglevalue.player==="")
 
         {/* step4 - 경기체크 */}
         <div>
-          <Accordion>
+          <Accordion  act={Object.keys(filterState.step2).filter(key => filterState.step2[key] === true).length}>
             <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
               <SStepContainer>
                 <SLabel>STEP 04</SLabel>
@@ -586,6 +587,10 @@ const SWrapper = styled.div`
   /* min-height: 427px; */
   flex-direction: column;
   justify-content: space-between;
+  background-color: ${({ theme }) => theme.colors.bg_light};
+  border-radius: 20px;
+
+
 `;
 
 const SFilterContainer = styled.div`

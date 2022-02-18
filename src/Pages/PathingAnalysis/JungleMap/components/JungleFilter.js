@@ -323,6 +323,8 @@ const JungleFilter = () => {
         >
           {t("video.jungle.selectAll")}
         </SCheckboxAll>
+        <SCheckboxWrapper>
+
           {selector.yearFilter?.map((year) => {
             return (
               <Radio
@@ -335,6 +337,7 @@ const JungleFilter = () => {
               </Radio>
             )
           })}
+        </SCheckboxWrapper>
         </SFilterGroup>
       </SRow>
       {/* 리그 */}
@@ -414,9 +417,8 @@ const JungleFilter = () => {
         {t("video.jungle.selectAll")}
         </SCheckboxAll>
         }
-          
+        <SCheckboxWrapper>
           {Object.keys(junglevalue.season).length !== 0 &&selector.teamFilter?.map((team) => {
-            
             return (
               <Radio
                 name="team"
@@ -428,6 +430,7 @@ const JungleFilter = () => {
               </Radio>
             )
           })}
+        </SCheckboxWrapper>
         </SFilterGroup>
       </SRow>
       {/* 패치 */}
@@ -469,9 +472,12 @@ const JungleFilter = () => {
             <SResetImg src="Images/ico_reset.svg" alt="reset"/>
             <SResetTitle>{t("video.jungle.reset")}</SResetTitle>
         </SResetWrapper>
+        <SCheckboxWrapper>
+
         {/* 선택된 필터 노출 */}
         <SelectedJungleFilter 
         filterData={junglevalue} />
+        </SCheckboxWrapper>
        </SFilterGroup>
    
      </SRow> 
@@ -560,6 +566,7 @@ const SResetImg = styled.img`
 ;
 
 const SCheckboxWrapper = styled.div`
+flex:1
 `;
 
 const FoldUpBtn = styled.button`

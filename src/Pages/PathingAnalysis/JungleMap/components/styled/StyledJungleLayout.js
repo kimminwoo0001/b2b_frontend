@@ -15,7 +15,6 @@ export const Sidebar = styled.aside`
   width: 376px;
   border-radius: 20px;
   margin-right: 20px;
-  background-color: ${({ theme }) => theme.colors.bg_light};
 `;
 
 // 메인 컨텐츠
