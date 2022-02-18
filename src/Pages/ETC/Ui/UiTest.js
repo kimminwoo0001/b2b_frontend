@@ -21,14 +21,13 @@ import scrollbarStyle from "../../../Styles/ui/scrollbar_style";
 import PositionCheckList from "../../../Components/Ui/PositionCheckList";
 import EventLog from "../../../Components/Ui/Dialog/EventLog";
 import Comp1 from "./Comp1";
+import ToggleSwitch from "../../../Components/Ui/ToggleSwitch/ToggleSwitch";
 
 const UiTest = () => {
   const [filterState, setFilterState] = useState({
     step1: { all: false, gnar: false, teemo: false },
   });
-
   const [radioState, setRadioState] = useState("1경기");
-
   const radioRef = useRef([]);
 
   // 체크박스의 체인지 관련로직
@@ -73,6 +72,13 @@ const UiTest = () => {
   // 상위 이벤트
   const handleClickGameItem = (num) => {
     radioRef.current[num].click();
+  };
+
+  // 토글 스위치 관련로직
+  const [check, setCheck] = useState(false);
+  const onToggleChange = (e) => {
+    const { checked } = e.target;
+    setCheck(checked);
   };
 
   return (
@@ -460,8 +466,8 @@ const UiTest = () => {
         </div>
       </section>
 
-      {/* 정글 테이블 탭 */}
-      <section></section>
+      {/* 기본 스위치 */}
+      <ToggleSwitch checked={check} onChange={onToggleChange} />
     </Container>
   );
 };
