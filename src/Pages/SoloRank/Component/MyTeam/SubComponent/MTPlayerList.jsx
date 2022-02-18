@@ -7,10 +7,10 @@ import { useTranslation } from "react-i18next";
 import * as S from "../styled/MTStyledTable";
 import Button from "../../../../../Components/Ui/Button";
 import IconStar from "../../../../../Components/Ui/Icons/IconStar";
-import { useForm } from "react-hook-form";
 import Avatar from "../../../../../Components/Ui/Avatar";
 import Arrow from "../../../../../Components/Ui/Arrow";
 import IconDel from "../../../../../Components/Ui/Icons/IconDel";
+import { typoStyle } from "../../../../../Styles/ui";
 
 import { AnimatePresence } from "framer-motion";
 
@@ -34,6 +34,11 @@ const MTPlayerHeader = ({ id }) => {
     console.log("선수아이디를 삭제하는 기능");
   };
 
+  // 선수등록
+  const handleAddPlayer = () => {
+    console.log("선수등록 ㄱㄱ");
+  };
+
   return (
     // 관심선수
     <S.TableItemRow>
@@ -44,7 +49,7 @@ const MTPlayerHeader = ({ id }) => {
             <IconStar isActive={isLike} />
           </S.Star>
           <span>dk미드</span>
-          <h4>라이엇아이디글자수가 몇글자일까요</h4>
+          <h4 css={typoStyle.noWrap}>AAAAAAAAAAAAA</h4>
           <h5>김허수</h5>
         </S.InfoId>
       </div>
@@ -59,7 +64,9 @@ const MTPlayerHeader = ({ id }) => {
               .map(() => (
                 <S.OpenList>
                   {/* 아이디 */}
-                  <div className="table-col2">{`라이엇아이디글자수가 몇글자일까요`}</div>
+                  <div className="table-col2">
+                    <span css={typoStyle.noWrap}>{`DK SHOWMAKER`}</span>
+                  </div>
                   {/* 티어 */}
                   <div className="table-col3">
                     <p>{`Challenger 1588LP`}</p>
@@ -92,7 +99,7 @@ const MTPlayerHeader = ({ id }) => {
               ))}
 
             {/* 선수 추가 ui */}
-            <S.AddPlayer>
+            <S.AddPlayer onClick={handleAddPlayer}>
               <button>+</button>
               <div>
                 <p>솔로랭크 ID 추가</p>
@@ -102,29 +109,112 @@ const MTPlayerHeader = ({ id }) => {
           </>
         ) : (
           // 클로즈 ui
-          <S.CloseList></S.CloseList>
+          <S.CloseList>
+            <div className="table-col2">
+              <span css={typoStyle.noWrap}>{`DK SHOWMAKER`}</span>
+            </div>
+            {/* 티어 */}
+            <div className="table-col3">
+              <p>{`Challenger 1588LP`}</p>
+              <span>{`S11 challenger / S10 Challenger`}</span>
+            </div>
+            {/* 이번시즌 */}
+            <div className="table-col4">
+              <span>{`${1042}경기`}</span>
+              <span>{`${580}승 ${449}패`}</span>
+            </div>
+            {/* 시즌 승률 */}
+            <div className="table-col5">
+              {`${parseInt((580 / 1042) * 100)}%`}
+            </div>
+            {/* 최근 */}
+            <div className="table-col6">
+              <span>{`${30}경기`}</span>
+              <span>{`${15}승 ${15}패`}</span>
+            </div>
+            {/* 최근 승률 */}
+            <div className="table-col7">
+              {`${parseInt((580 / 1042) * 100)}%`}
+            </div>
+          </S.CloseList>
         )}
       </ul>
 
       {/* 최근 30일간 플레이한 챔피언 */}
-      <ul className="table-item-col3">
-        {/* 반복 */}
-        <S.ChampList>
+      <S.ChampList className="table-item-col3" isOpen={isOpen}>
+        {/* #반복 - 챔피언 리스트 */}
+        <S.ChampListItem>
           <S.ChampInfo>
-            <S.ChampLabel>Most 1</S.ChampLabel>
+            {isOpen && <S.ChampLabel>Most 1</S.ChampLabel>}
             <S.ChampInfoText>
-              <Avatar size={34} src="images/champion/nunu.png" alt="누누" />
+              <Avatar
+                size={isOpen ? 34 : 24}
+                src="images/champion/nunu.png"
+                alt="누누"
+              />
               <div>
-                <h6>블라디미르</h6>
-                <p>
-                  {`${100000}경기 ${5000}승 ${5000}패`}
-                  <em>{` ${(5 / 10) * 100}%`}</em>
-                </p>
+                {isOpen && <h6>블라디미르</h6>}
+                {isOpen ? (
+                  <p css={typoStyle.noWrap}>
+                    {`${100}경기 ${50}승 ${50}패`}
+                    <em>{` ${(5 / 10) * 100}%`}</em>
+                  </p>
+                ) : (
+                  <p>{`${100}경기`}</p>
+                )}
               </div>
             </S.ChampInfoText>
           </S.ChampInfo>
-        </S.ChampList>
-      </ul>
+        </S.ChampListItem>
+
+        <S.ChampListItem>
+          <S.ChampInfo>
+            {isOpen && <S.ChampLabel>Most 1</S.ChampLabel>}
+            <S.ChampInfoText>
+              <Avatar
+                size={isOpen ? 34 : 24}
+                src="images/champion/nunu.png"
+                alt="누누"
+              />
+              <div>
+                {isOpen && <h6>블라디미르</h6>}
+                {isOpen ? (
+                  <p css={typoStyle.noWrap}>
+                    {`${100}경기 ${50}승 ${50}패`}
+                    <em>{` ${(5 / 10) * 100}%`}</em>
+                  </p>
+                ) : (
+                  <p>{`${100}경기`}</p>
+                )}
+              </div>
+            </S.ChampInfoText>
+          </S.ChampInfo>
+        </S.ChampListItem>
+
+        <S.ChampListItem>
+          <S.ChampInfo>
+            {isOpen && <S.ChampLabel>Most 1</S.ChampLabel>}
+            <S.ChampInfoText>
+              <Avatar
+                size={isOpen ? 34 : 24}
+                src="images/champion/nunu.png"
+                alt="누누"
+              />
+              <div>
+                {isOpen && <h6>블라디미르</h6>}
+                {isOpen ? (
+                  <p css={typoStyle.noWrap}>
+                    {`${100}경기 ${50}승 ${50}패`}
+                    <em>{` ${(5 / 10) * 100}%`}</em>
+                  </p>
+                ) : (
+                  <p>{`${100}경기`}</p>
+                )}
+              </div>
+            </S.ChampInfoText>
+          </S.ChampInfo>
+        </S.ChampListItem>
+      </S.ChampList>
 
       <S.ToggleMenuButton onClick={() => setIsOpen(!isOpen)}>
         <Arrow direction={isOpen ? "T" : "B"} size={5}></Arrow>

@@ -29,7 +29,7 @@ const MTContent = () => {
         {/* 테이블 헤더 */}
         <MTCategory />
         <S.table.TableBody>
-          {/* 테이블 바디 */}
+          {/* 반복 */}
           <MTPlayerList
             id={"showmaker"}
             isLike={isLike}
@@ -37,6 +37,22 @@ const MTContent = () => {
             nickName={exPlayerNickName}
             name={exPlayerName}
           />
+
+          <MTPlayerList
+            id={"showmaker"}
+            isLike={isLike}
+            teamLine={exTeamLine}
+            nickName={exPlayerNickName}
+            name={exPlayerName}
+          />
+
+          <S.table.AddPlayerPopupButton>
+            <span>+</span>
+            <div>
+              <h5>우리팀 소속 선수 등록</h5>
+              <span>우리팀 소속으로 솔로랭크를 확인할 선수를 등록하세요.</span>
+            </div>
+          </S.table.AddPlayerPopupButton>
         </S.table.TableBody>
       </S.table.Table>
     </S.layout.Container>
