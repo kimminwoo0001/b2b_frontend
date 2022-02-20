@@ -613,6 +613,7 @@ const Filter = memo(() => {
                           idx={idx}
                           filterData={filters.player}
                           mapData={player.name}
+                          playerPosition={player.position}
                           pngPath={`ico-position-${player.position}`}
                           radioBtn={true}
                           clickEvent={() => {

@@ -15,6 +15,7 @@ const MultiSelectCb = memo(
     clickEvent,
     title,
     radioBtn = false,
+    playerPosition = false
   }) => {
     const { t } = useTranslation();
     const filters = useSelector((state) => state.FilterReducer);
@@ -38,7 +39,9 @@ const MultiSelectCb = memo(
             checked={filterData?.includes(mapData) ? true : false}
             readOnly
           />
+          {playerPosition && <img className="player-positon" src={`Images/ico-position-${playerPosition}.png`} alt="position" />}
           <span
+            className="text"
           >{(mapData === "11.6" ? "11.6 (P.O)" : mapData === "LPL" && pagePath === goLeagueReport ? `${mapData} (${t("filters.noMultipleSelection")})` : mapData)}</span>
         </Selecter>
       </SelectorWrapper>
@@ -68,6 +71,15 @@ const Selecter = styled.div`
   height: 30px;
   color: #84818e;
   cursor: pointer;
+
+  .player-positon {
+    width: 19px;
+    height: 19px;
+    object-fit: contain;
+    align-items: center;
+    margin-right: 6px;
+  }
+  
 
 
 
@@ -159,7 +171,7 @@ const Selecter = styled.div`
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
-    line-height: 1.42;
+    line-height: 1.65;
     letter-spacing: normal;
     text-align: left;
     color: #fff;
