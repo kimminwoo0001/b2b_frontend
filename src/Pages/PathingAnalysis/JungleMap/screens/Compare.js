@@ -188,7 +188,7 @@ const Compare = () => {
                               color={"blue"}
                             />
                             <div>
-                              <p>{`${teamCamp.jg_rates.split(',')[0]*100}%`}</p>
+                              <p>{`${(teamCamp.jg_rates.split(',')[0]*100).toFixed(2)}%`}</p>
                               <p>{`${teamCamp.monsterids.split(',')[0]}`}</p>
                             </div>
                           </S.table.TableData>
@@ -205,7 +205,7 @@ const Compare = () => {
                             }
                             <div>
                             {!teamCamp.jg_rates.split(',')[1] ? <></> : 
-                              <p>{`${teamCamp.jg_rates.split(',')[1]*100}%`}</p>
+                              <p>{`${(teamCamp.jg_rates.split(',')[1]*100).toFixed(2)}%`}</p>
                             }
                             {teamCamp.monsterids.split(',')[1] === undefined ? <></> : 
                               <p>{`${teamCamp.monsterids.split(',')[1]}`}</p>
@@ -229,7 +229,7 @@ const Compare = () => {
                               color={"red"}
                             />
                             <div>
-                              <p>{`${teamCamp.jg_rates.split(',')[0]*100}%`}</p>
+                              <p>{`${(teamCamp.jg_rates.split(',')[0]*100).toFixed(2)}%`}</p>
                               <p>{`${teamCamp.monsterids.split(',')[0]}`}</p>
                             </div>
                           </S.table.TableData>
@@ -246,7 +246,7 @@ const Compare = () => {
                             }
                             <div>
                             {!teamCamp.jg_rates.split(',')[1] ? <></> : 
-                              <p>{`${teamCamp.jg_rates.split(',')[1]*100}%`}</p>
+                              <p>{`${(teamCamp.jg_rates.split(',')[1]*100).toFixed(2)}%`}</p>
                             }
                             {teamCamp.monsterids.split(',')[1] === undefined ? <></> : 
                               <p>{`${teamCamp.monsterids.split(',')[1]}`}</p>
@@ -339,7 +339,7 @@ const Compare = () => {
                             color={"blue"}
                           />
                           <div>
-                          <p>{`${oppTeamCamp.jg_rates.split(',')[0]*100}%`}</p>
+                          <p>{`${(oppTeamCamp.jg_rates.split(',')[0]*100).toFixed(2)}%`}</p>
                             <p>{`${oppTeamCamp.monsterids.split(',')[0]}`}</p>
                           </div>
                         </S.table.TableData>
@@ -357,7 +357,7 @@ const Compare = () => {
                       }
                           <div>
                           {!oppTeamCamp.jg_rates.split(',')[1] ? <></> : 
-                            <p>{`${oppTeamCamp.jg_rates.split(',')[1]*100}%`}</p>
+                            <p>{`${(oppTeamCamp.jg_rates.split(',')[1]*100).toFixed(2)}%`}</p>
                           }
                           {oppTeamCamp.monsterids.split(',')[1] === undefined ? <></> : 
                             <p>{`${oppTeamCamp.monsterids.split(',')[1]}`}</p>
@@ -381,7 +381,7 @@ const Compare = () => {
                               color={"red"}
                             />
                             <div>
-                            <p>{`${oppTeamCamp.jg_rates.split(',')[0]*100}%`}</p>
+                            <p>{`${(oppTeamCamp.jg_rates.split(',')[0]*100).toFixed(2)}%`}</p>
                               <p>{`${oppTeamCamp.monsterids.split(',')[0]}`}</p>
                             </div>
                           </S.table.TableData>
@@ -399,7 +399,7 @@ const Compare = () => {
                         }
                             <div>
                             {!oppTeamCamp.jg_rates.split(',')[1] ? <></> : 
-                              <p>{`${oppTeamCamp.jg_rates.split(',')[1]*100}%`}</p>
+                              <p>{`${(oppTeamCamp.jg_rates.split(',')[1]*100).toFixed(2)}%`}</p>
                             }
                             {oppTeamCamp.monsterids.split(',')[1] === undefined ? <></> : 
                               <p>{`${oppTeamCamp.monsterids.split(',')[1]}`}</p>
@@ -435,7 +435,7 @@ const Compare = () => {
                   <tbody>
                     {/* 각 행 */}
                     <tr>
-                      <td>{`${team?.countRate[0]?.counter_jg*100}%`}</td>
+                      <td>{`${(team?.countRate[0]?.counter_jg*100).toFixed(2)}%`}</td>
                       <td>
                         <Arrow direction={"L"} />
                       </td>
@@ -443,7 +443,7 @@ const Compare = () => {
                       <td>
                         <Arrow direction={"R"} />
                       </td>
-                      <td>{`${oppTeam?.countRate[0]?.counter_jg*100}%`}</td>
+                      <td>{`${(oppTeam?.countRate[0]?.counter_jg*100).toFixed(2)}%`}</td>
                     </tr>
     
                     <tr>

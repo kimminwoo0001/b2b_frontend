@@ -419,7 +419,9 @@
       "ward": "Ward",
       "object": "Object Pathing",
       "games": "Game Pathing",
-      "heatmap": "Heatmap"
+      "heatmap": "Heatmap",
+      "jungle": "Jungle Pathing"
+
     },
     "vision": {
       "teamview": "Team-wide View",
