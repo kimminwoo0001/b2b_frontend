@@ -160,7 +160,7 @@ function PlayerBoard() {
         const champArray = e.champion.map(
           (data) => `${data.kor}(${data.total}경기)`
         );
-        const champArrayEng = e.champion.map((data) => data.eng);
+        const champArrayEng = e.champion.map((data) => `${data.eng} (${data.total})`);
 
         // setChampFilter(e.champion);
         // setChampEng(e.championEng);
@@ -188,7 +188,7 @@ function PlayerBoard() {
       season: filters.season,
       patch: filters.patch,
       position: filters.position,
-      champion: filters.champion_eng,
+      champion: filters.champion_eng.split('(')[0], // 영어 이름 넣는거 수정이 필요함
       player: filters.player,
       token: user.token,
       id: user.id,
