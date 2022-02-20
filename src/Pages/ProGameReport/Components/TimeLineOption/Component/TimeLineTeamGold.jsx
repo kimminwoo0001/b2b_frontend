@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useDispatch, useSelector } from "react-redux";
 import TimeLineTeamGoldLabel from "./TimeLineTeamGoldLabel";
 import { Line } from "react-chartjs-2";

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import SetWardData from "./SetWardData/SetWardData";
 import SetPiData from "./SetPiData/SetPiData";
 import axios from "axios";

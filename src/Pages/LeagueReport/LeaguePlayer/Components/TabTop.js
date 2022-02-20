@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import Tippy from "@tippy.js/react";
 import LoadingImg from "../../../../Components/LoadingImg/LoadingImg";
 import { useSelector } from "react-redux";

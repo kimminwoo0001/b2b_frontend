@@ -1,5 +1,7 @@
 import React from "react";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useTranslation } from "react-i18next";
 function SelectObject({ setPeriod, period, setPositionOpen }) {
   //오브젝트별 동선 => 오브젝트 설정

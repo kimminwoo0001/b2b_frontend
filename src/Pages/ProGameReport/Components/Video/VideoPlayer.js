@@ -1,6 +1,8 @@
 import react, { useRef, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import ReactPlayer from 'react-player'
 import {
   HandledisablePip, HandleDuration, HandleEnablePip, HandleEnded, HandlePlaybackRateChange,

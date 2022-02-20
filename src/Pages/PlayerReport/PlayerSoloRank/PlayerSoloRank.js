@@ -1,5 +1,7 @@
 import React from "react";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 
 function PlayerSoloRank() {
   // const mockData = ["Hide On bush", "SKT T1 Faker", "고전파", "이상혁", "욜로"];

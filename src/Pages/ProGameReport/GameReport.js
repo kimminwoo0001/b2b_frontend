@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import SideBar from "../../Components/SideBar/SideBar";
 // import Filter from "../../Components/Filter/Filter";
 // import CloseFilter from "../../Components/Filter/CloseFilter";
@@ -46,15 +48,22 @@ function GameReport() {
         {checkGameId && filters.team !== "" && filters.team.length > 0 ? "" :
           <>
             <SideBar />
+            <div
+              className={filters.filterMenuState ? "filter-open" : "filter-close"}
+            >
+              <Filter />
+            </div>
+            <div
+              className={filters.filterMenuState ? "filter-close" : "filter-open"}
+            >
+              <CloseFilter />
+            </div>
           </>}
         <ContentWrapper>
           {filters.team !== "" && filters.team.length > 0 ? (
             <GameReportTab />
           ) : (
-            // <SelectFilter />
-            <Temporal>
-              <iframe width="1422" height="800" src="https://www.youtube.com/embed/c6e38xOmXfw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </Temporal>
+            <SelectFilter />
           )}
         </ContentWrapper>
       </GameWrapper>

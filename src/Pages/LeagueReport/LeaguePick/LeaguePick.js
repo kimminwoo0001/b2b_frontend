@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { API } from "../../config";
 import { useSelector, useDispatch, batch } from "react-redux";
 import TabforTop from "./TabforTop";

@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import { API } from "../../config";
 import { useTranslation } from "react-i18next";
