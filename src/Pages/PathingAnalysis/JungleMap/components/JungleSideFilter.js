@@ -6,7 +6,7 @@ import styled from "@emotion/styled";
 import { API } from "../../../config"
 import axiosRequest from "../../../../lib/axios/axiosRequest";
 import { SetModalInfo } from "../../../../redux/modules/modalvalue";
-import {SetJunglePlayer, SetChamp, SetOppChamp} from '../../../../redux/modules/junglevalue';
+import {SetJunglePlayer, SetIsJungleMappingClicked, SetFilterData} from '../../../../redux/modules/junglevalue';
 import { useTranslation } from "react-i18next";
 
 
@@ -43,15 +43,12 @@ const JungleSideFilter = () => {
   const lang = useSelector((state) => state.LocaleReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  // const [filterState, setFilterState] = useState({
-  //   step1: { all: false, gnar: false, teemo: false },
-  //   step2: { all: false, gnar: false, teemo: false },
-  // });
+  const isInitialMount = useRef(true);
+  const isInitialMount2 = useRef(true);
 
-  const [filterState, setFilterState] = useState({
-    step1: {},
-    step2: {},
-  });
+
+  const [radioState, setRadioState] = useState();
+  const radioRef = useRef([]);
 
   const [playerInfo, setPlayerInfo] = useState();
   const [champInfo, setChampInfo] = useState();
@@ -62,38 +59,43 @@ const JungleSideFilter = () => {
     const { name, value, checked } = e.target;
     // 전체선택
     if (value === "all") {
-      const datas = { ...filterState[name] }
-      const list = Object.keys(filterState[name]);
-      const a = list.map((data) => {
-        return datas[data] = checked;
-      })
-      setFilterState({ ...filterState, [name]: datas });
+      const datas = { ...junglevalue[name] }
+        const list = Object.keys(junglevalue[name]);
+        const a = list.map((data) => {
+          return datas[data] = checked;
+        })
+        dispatch(SetFilterData({ ...junglevalue, [name]: datas }));
     }
     // 개별선택
     else {
-      setFilterState((prev) => {
-        const newData = { ...prev };
-        newData[name] = { ...newData[name], [value]: checked };
-        // if (isObjEqual(newData[name])) {
-        //   newData[name].all = checked;
-        // } else {
-        //   newData[name].all = false;
-        // }
-        return newData;
-      });
+      dispatch(SetFilterData({
+        ...junglevalue,
+        [name]: { ...junglevalue[name], [value]: checked },
+      }));
+
+      // setFilterState((prev) => {
+      //   const newData = { ...prev };
+      //   newData[name] = { ...newData[name], [value]: checked };
+      //   // if (isObjEqual(newData[name])) {
+      //   //   newData[name].all = checked;
+      //   // } else {
+      //   //   newData[name].all = false;
+      //   // }
+      //   return newData;
+      // });
     }
   };
   // 라디오버튼 체인지 관련로직
   const handleRadio = (e) => {
     const { value, name } = e.target;
-    setRadioState(value);
+    // setRadioState(value);
+    dispatch(SetFilterData({...junglevalue, [name]: [value] }));
   };
   // 상위 이벤트
   const handleClickGameItem = (num) => {
     radioRef.current[num].click();
   };
-  const [radioState, setRadioState] = useState();
-  const radioRef = useRef([]);
+  
 
   const leagueArr =  Object.keys(junglevalue.league).filter(key => junglevalue.league[key] === true)
   const seasonArr =  Object.keys(junglevalue.season).filter(key => junglevalue.season[key] === true)
@@ -110,21 +112,30 @@ const JungleSideFilter = () => {
 
 
   useEffect(() => {
-    if(Object.keys(filterState.step1).filter(key => filterState.step1[key] === true).length === 0) {
+    if(junglevalue.champion &&Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === true).length === 0
+   ) {
       return; 
     } 
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
     GetOppChampion();
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterState.step1])
+  }, [junglevalue.champion])
 
 
   useEffect(() => {
-    if(Object.keys(filterState.step2).filter(key => filterState.step2[key] === true).length === 0) {
+    if(junglevalue.oppchampion && Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).length === 0) {
       return; 
     } 
+    if (isInitialMount2.current) {
+      isInitialMount2.current = false;
+    } else {
     GetGameList();
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterState.step2])
+  }, [junglevalue.oppchampion])
 
 
 
@@ -170,7 +181,7 @@ const JungleSideFilter = () => {
 
   // STEP 03 상대 챔피언 선택 api 호출
   const GetOppChampion = () => {
-    const selectedChamps = Object.keys(filterState.step1).filter(key => filterState.step1[key] === true);
+    const selectedChamps = junglevalue.champion && Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === true);
     const url = `${API}/lolapi/jungle/opp-champions`;
     const params = {
       league: leagueArr,
@@ -192,10 +203,8 @@ const JungleSideFilter = () => {
 
   // STEP 04 동선 확인할 경기 리스트 api 호출
   const GetGameList = () => {
-    const selectedChamps = Object.keys(filterState.step1).filter(key => filterState.step1[key] === true);
-    const selectedOppChamps = Object.keys(filterState.step2).filter(key => filterState.step2[key] === true);
-    console.log(selectedChamps);
-    console.log(selectedOppChamps);
+    const selectedChamps = junglevalue.champion && Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === true);
+    const selectedOppChamps = junglevalue.oppchampion && Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true);
     const url = `${API}/lolapi/jungle/object-game`;
     const params = {
       league: leagueArr,
@@ -218,36 +227,7 @@ const JungleSideFilter = () => {
   }
 
 
-  // 임시 호출
-  const GetMappingInfo = () => {
-    const selectedChamps = Object.keys(filterState.step1).filter(key => filterState.step1[key] === true);
-    const selectedOppChamps = Object.keys(filterState.step2).filter(key => filterState.step2[key] === true);
-    console.log(selectedChamps);
-    console.log(selectedOppChamps);
-    const url = `${API}/lolapi/jungle/mapping`;
-    const params = {
-      league: leagueArr,
-      year: junglevalue.year,
-      season: seasonArr,
-      patch: patchArr,
-      team: junglevalue.team[0],
-      player: junglevalue.player,
-      champion: selectedChamps,
-      oppchampion: selectedOppChamps,
-      side:"all",
-      time:"all",
-      position:['top','jng','mid','bot','sup'],
-      gameid:"ESPORTSTMNT02 2578705",
-      token: user.token,
-      id: user.id,
-    };
-    axiosRequest(undefined, url, params, function(e) {
-      // setGameList(e.game)
-      console.log(e);
-    }, function (objStore) {
-      dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    })
-  }
+
 
   // champInfo 있을 시 모든 value를 객체 및 false처리
 useEffect(() => {
@@ -256,10 +236,10 @@ useEffect(() => {
     newArr.push(champInfo[key].champ);      
   }
   const result = initializedFalseValue(newArr);
-  setFilterState({
-    ...filterState,
-    step1: result,
-  })
+  dispatch(SetFilterData(({
+    ...junglevalue,
+    champion: result,
+  })))
 }, [champInfo])
 
  // oppChampInfo 있을 시 모든 value를 객체 밒 false처리
@@ -269,20 +249,12 @@ for(let key in oppChampInfo) {
   newArr.push(oppChampInfo[key].champs);      
 }
 const result = initializedFalseValue(newArr);
-setFilterState({
-  ...filterState,
-  step2: result,
-})
+dispatch(SetFilterData(({
+  ...junglevalue,
+  oppchampion: result,
+})))
 }, [oppChampInfo])
 
-useEffect(() => {
-  console.log(filterState)
-}, [filterState.step1, filterState.step2])
-
-useEffect(() => {
-
-console.log(junglevalue.player==="")
-}, [junglevalue])
 
   return (
     <SWrapper>
@@ -307,7 +279,7 @@ console.log(junglevalue.player==="")
             </AccordionSummary>
             <AccordionDetails>
               <DropdownContainer
-                label="champion"
+                label="player"
                 onChange={(e) => {
                   console.log(e);
                 }}
@@ -351,10 +323,10 @@ console.log(junglevalue.player==="")
                 <SHead>
                   <div css={Col1}>
                     <Checkbox
-                      name="step1"
+                      name="champion"
                       value="all"
                       onChange={handleChange}
-                      checked={Object.keys(filterState.step1).filter(key => filterState.step1[key] === false).length === 0}
+                      checked={junglevalue.champion && Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === false).length === 0}
                     />
                   </div>
                   <div css={Col2}>{`${t("video.jungle.champTitle")}(${t("video.jungle.numOfMatches")})`}</div>
@@ -364,16 +336,15 @@ console.log(junglevalue.player==="")
 
                 <SBody>
                   {champInfo?.map((champ,idx) => {
-                    console.log(Object.keys(filterState.step1).includes(champ.champ));
                     return (
-                      <SRow isActive ={Object.keys(filterState.step1).filter(key => filterState.step1[key] === true).includes(champ.champ)}>
+                      <SRow isActive ={junglevalue.champion &&Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === true).includes(champ.champ)}>
                       {/* 체크 */}
                       <div css={Col1}>
                         <Checkbox
-                          name="step1"
+                          name="champion"
                           value={champ.champ}
                           onChange={handleChange}
-                          checked={Object.keys(filterState.step1).filter(key => filterState.step1[key] === true).includes(champ.champ)}
+                          checked={junglevalue.champion &&Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === true).includes(champ.champ)}
                         />
                       </div>
   
@@ -403,7 +374,7 @@ console.log(junglevalue.player==="")
 
         {/* stpe3 - 상대팀 챔피언 체크박스 */}
         <div css={{ marginBottom: 30 }}>
-          <Accordion act={Object.keys(filterState.step1).filter(key => filterState.step1[key] === true).length}>
+          <Accordion act={junglevalue.champion && Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === true).length}>
             <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
               <SStepContainer>
                 <SLabel>STEP 03</SLabel>
@@ -417,10 +388,10 @@ console.log(junglevalue.player==="")
                 <SHead>
                   <div css={Col1}>
                     <Checkbox
-                      name="step2"
+                      name="oppchampion"
                       value="all"
                       onChange={handleChange}
-                      checked={Object.keys(filterState.step2).filter(key => filterState.step2[key] === false).length === 0}
+                      checked={junglevalue.oppchampion && Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === false).length === 0}
                     />
                   </div>
                   <div css={Col2}>{`${t("video.jungle.champTitle")}(${t("video.jungle.numOfMatches")})`}</div>
@@ -430,16 +401,15 @@ console.log(junglevalue.player==="")
 
                 <SBody>
                   {oppChampInfo?.map((oppChamp,idx) => {
-                    console.log(Object.keys(filterState.step2).includes(oppChamp.champs));
                     return (
-                      <SRow isActive ={Object.keys(filterState.step2).filter(key => filterState.step2[key] === true).includes(oppChamp.champs)}>
+                      <SRow isActive ={junglevalue.oppchampion && Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).includes(oppChamp.champs)}>
                     {/* 체크 */}
                     <div css={Col1}>
                       <Checkbox
-                        name="step2"
+                        name="oppchampion"
                         value={oppChamp.champs}
                         onChange={handleChange}
-                        checked={Object.keys(filterState.step2).filter(key => filterState.step2[key] === true).includes(oppChamp.champs)}
+                        checked={junglevalue.oppchampion && Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).includes(oppChamp.champs)}
                         />
                     </div>
                     {/* 본문 */}
@@ -467,7 +437,7 @@ console.log(junglevalue.player==="")
 
         {/* step4 - 경기체크 */}
         <div>
-          <Accordion  act={Object.keys(filterState.step2).filter(key => filterState.step2[key] === true).length}>
+          <Accordion  act={junglevalue.oppchampion && Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).length}>
             <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
               <SStepContainer>
                 <SLabel>STEP 04</SLabel>
@@ -482,18 +452,22 @@ console.log(junglevalue.player==="")
                 {/* 경기 정보 item */}
                 {gameList?.map((game, idx) => (
                   <SGameItem
-                    isActive={radioState === `${idx+1}경기`}
+                    // isActive={radioState === `${idx+1}경기`}
+                    isActive={junglevalue.gameid == game.gameid}
                     key={`경기정보${idx+1}`}
                     onClick={() => handleClickGameItem(idx+1)}
                   >
                     {/* 라디오버튼 */}
                     <SRadioContainer>
                       <Radio
-                        name="game"
-                        value={`${idx+1}경기`}
+                        name="gameid"
+                        // value={`${idx+1}경기`}
+                        value={game.gameid}
                         ref={(el) => (radioRef.current[idx+1] = el)}
                         onChange={handleRadio}
-                        checked={radioState === `${idx+1}경기`}
+                        // checked={radioState === `${idx+1}경기`}
+                        checked={junglevalue.gameid == game.gameid}
+
                       />
                     </SRadioContainer>
                     {/* 경기정보 */}
@@ -562,6 +536,7 @@ console.log(junglevalue.player==="")
 
       <SButtonContainer>
         <Button
+          disabled={junglevalue.oppChampion && Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).length === 0}
           css={[
             buttonStyle.color.main,
             buttonStyle.size.full,
@@ -569,7 +544,9 @@ console.log(junglevalue.player==="")
             typoStyle.body,
             borderRadiusStyle.full,
           ]}
-          onClick={() => GetMappingInfo()}
+          onClick={() => {
+            dispatch(SetIsJungleMappingClicked(true));
+          }}
         >
           {t("video.jungle.confirm")}
         </Button>

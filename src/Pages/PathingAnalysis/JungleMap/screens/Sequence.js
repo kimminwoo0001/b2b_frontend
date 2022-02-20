@@ -6,6 +6,7 @@ import PositionCheckList from "../../../../Components/Ui/PositionCheckList";
 import JungleFilter from "../components/JungleFilter";
 import JungleSideFilter from "../components/JungleSideFilter";
 import SequenceDialog from "../components/SequenceDialog";
+import Map from "../components/Map";
 import * as S from "../components/styled/StyledJungleLayout";
 
 const Sequence = () => {
@@ -29,6 +30,7 @@ const Sequence = () => {
           {/* 맵 비디오 */}
           <S.VideoContainer>
             <PositionCheckList onChange={(position) => console.log(position)} />
+            <Map />
           </S.VideoContainer>
           {/* 이벤트 다이얼로그 */}
           <S.DialogContainer>

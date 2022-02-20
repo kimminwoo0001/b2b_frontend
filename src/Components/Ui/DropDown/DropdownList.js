@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { shadowStyle } from "../../../Styles/ui";
 import { motion, AnimatePresence } from "framer-motion/dist/framer-motion";

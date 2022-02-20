@@ -258,6 +258,9 @@ const JungleFilter = () => {
   }, [junglevalue.team])
 
   useEffect(() => {
+    if(junglevalue.patch.length === 0) {
+      return;
+    }
     dispatch(SetJunglePlayer(""));
   }, [junglevalue.patch])
 
@@ -302,10 +305,6 @@ const JungleFilter = () => {
   useEffect(() => {
     fetchYearFilter();
   }, [])
-
-  useEffect(() => {
-    console.log(junglevalue)
-  }, [junglevalue.year, junglevalue.league, junglevalue.season, junglevalue.team, junglevalue.patch])
 
 
   return (

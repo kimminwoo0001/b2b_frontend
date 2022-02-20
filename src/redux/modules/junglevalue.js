@@ -11,6 +11,8 @@ export const RESET_JUNGLE_LEAGUE = "junglevalue/RESET_LEAGUE";
 export const RESET_JUNGLE_SEASON = "junglevalue/RESET_JUNGLE_SEASON";
 export const RESET_JUNGLE_TEAM = "junglevalue/RESET_JUNGLE_TEAM";
 export const RESET_JUNGLE_PATCH = "junglevalue/RESET_JUNGLE_PATCH";
+export const SET_IS_JUNGLING_CLICKED = "junglevalue/SET_IS_JUNGLING_CLICKED";
+export const SET_IS_JUNGLE_MAPPING_CLICKED  = "junglevalue/SET_IS_JUNGLE_MAPPING_CLICKED";
 
 
 
@@ -71,15 +73,37 @@ export const SetOppChamp = (payload) => {
   };
 }
 
+export const SetIsJunglingClicked = (payload) => {
+  return {
+    type: SET_IS_JUNGLING_CLICKED,
+    payload
+  }
+}
+
+export const SetIsJungleMappingClicked = (payload) => {
+  return {
+    type: SET_IS_JUNGLE_MAPPING_CLICKED,
+    payload
+  }
+}
+
 const initialState = {
     year: [],
+    oppyear:[],
     league: {},
+    oppleague:{},
     season: {},
+    oppseason:{},
     team: [],
+    oppteam:[],
     patch: {},
     player:"",
+    oppplayer:"",
     champion:{},
-    oppchampion:{}
+    oppchampion:{},
+    isClicked:false,
+    isMappingClicked:false,
+    gameid:"",
   }
 
 export default function JungleMapReducer(state = initialState, action) {
@@ -125,6 +149,18 @@ export default function JungleMapReducer(state = initialState, action) {
           ...state,
           patch : {},
         }   
+
+    case SET_IS_JUNGLING_CLICKED:
+      return {
+        ...state,
+        isClicked:action.payload,
+      }
+
+    case SET_IS_JUNGLE_MAPPING_CLICKED:
+      return {
+        ...state,
+        isMappingClicked:action.payload,
+      }
     default:
       return state;
   }

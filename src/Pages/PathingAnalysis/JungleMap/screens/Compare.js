@@ -26,23 +26,28 @@ import {
 // ui Style components
 import * as table from "../components/styled/StyledTable";
 import * as layout from "../components/styled/StyledJungleLayout";
-
-
-
+import { SetIsJunglingClicked } from '../../../../redux/modules/junglevalue';
 
 // 스타일 컴포넌트 임포트
 const S = { table, layout };
 
 const Compare = () => {
-  const staticvalue = useSelector((state) => state.StaticValueReducer);
-  const selector = useSelector((state) => state.SelectorReducer);
   const junglevalue = useSelector((state) => state.JungleMapReducer);
   const user = useSelector((state) => state.UserReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
+  const [active, setActive] = useState(true);
   const [team,setTeam] = useState();
   const [oppTeam, setOppTeam] = useState();
+  const [teamBlue, setTeamBlue] = useState();
+  const [teamRed, setTeamRed] = useState();
+  const [oppTeamBlue, setOppTeamBlue] = useState();
+  const [oppTeamRed, setOppTeamRed] = useState();
+
+  const [teamSide, setTeamSide] = useState("blue");
+  const [oppTeamSide, setOppTeamSide] = useState("blue");
+
 
 
   const secToMin = (sec) => {
@@ -52,49 +57,51 @@ const Compare = () => {
     return `${mm}${t("solo.playerboard.min")} ${ss}${t("solo.playerboard.sec")}`;
   }
 
-
-  // 정글링비교 데이터 호출
-  const fetchCampSelectionRate = () => {
-    const leagueArr =  Object.keys(junglevalue.league).filter(key => junglevalue.league[key] === true)
-    const seasonArr =  Object.keys(junglevalue.season).filter(key => junglevalue.season[key] === true)
-    const patchArr =  Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key] === true)
+   const fetchCampSelectionRate = () => {
+    const {year, league,season, patch,team,oppteam,player,oppplayer} = junglevalue;
+    const champArr = Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === true)
+    const oppChampArr = Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true)
 
     const url = `${API}/lolapi/jungle/jungle-passing`;
     const params = {
-      league: leagueArr,
-      year: junglevalue.year,
-      season: seasonArr,
-      patch: patchArr,
-      team: junglevalue.team[0],
-      player: junglevalue.player,
-      champion: ["Nidalee"],
-      oppteam: "DK",
-      oppplayer: "Canyon",
-      oppchampion: ["XinZhao"],
+      league: league,
+      year: year,
+      season: season,
+      patch: patch,
+      team: team[0],
+      player: player[0],
+      champion:champArr ,
+      oppteam: oppteam[0],
+      oppplayer: oppplayer[0],
+      oppchampion: oppChampArr,
       side:"all",
       token: user.token,
       id: user.id,
     };
     axiosRequest(undefined, url, params, function(e) {
-
       setTeam(e["team1"]);
       setOppTeam(e["team2"]);
 
-      
-      console.log(e["team1"]);
-      console.log(e["team2"]);
+      setTeamBlue(e["team1"].campRate.filter(team => team.side === "blue"))
+      setTeamRed(e["team1"].campRate.filter(team => team.side === "red"))
 
+      setOppTeamBlue(e["team2"].campRate.filter(team => team.side === "blue"))
+      setOppTeamRed(e["team2"].campRate.filter(team => team.side === "red"))
+
+      dispatch(SetIsJunglingClicked(false));
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
     })
   }
 
   useEffect(() => {
+    if((Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).length === 0) || 
+    !junglevalue.isClicked) {
+      return;
+    }
     fetchCampSelectionRate();
-  }, [])
+  }, [junglevalue.isClicked])
 
-
-  const [active, setActive] = useState(true);
   return (
     <S.layout.CompareContainer>
       <S.layout.FlexContainer>
@@ -102,269 +109,359 @@ const Compare = () => {
         <S.layout.Sidebar>
           <CompareSideFilter />
         </S.layout.Sidebar>
-
-        <S.layout.Contents>
-          {/* 비교테이블 */}
-          <S.layout.FlexContainer css={spacing.marginB(5)}>
-            {/* 첫번째 테이블 */}
-            <S.table.TableContainer css={spacing.marginR(5)}>
-              <S.table.TableHeader>
-                {/* 제목 */}
-                <S.table.TableTitle>
-                  <Avatar
-                    src="images/LCK_CL_LOGO/T1.C.png"
-                    alt="T1"
-                    size={20}
-                    block={false}
-                  />
-                  {"T1"}
-                  정글 순서별 캠프 선택비율
-                </S.table.TableTitle>
-                <S.table.TableButtonGroup>
-                  <Button
-                    onClick={() => setActive(false)}
-                    className={cx([{ "is-disabled": true }])}
-                    css={[
-                      typoStyle.select,
-                      buttonStyle.size.full,
-                      buttonStyle.size.x_20,
-                      buttonStyle.size.y_8,
-                      buttonStyle.color.normal,
-                      borderRadiusStyle[10],
-                    ]}
-                  >
-                    BLUE
-                  </Button>
-                  <Button
-                    onClick={() => setActive(true)}
-                    className={cx([{ "is-active": active }])}
-                    css={[
-                      typoStyle.select,
-                      buttonStyle.size.full,
-                      buttonStyle.size.x_20,
-                      buttonStyle.size.y_8,
-                      buttonStyle.color.normal,
-                      borderRadiusStyle[10],
-                    ]}
-                  >
-                    RED
-                  </Button>
-                </S.table.TableButtonGroup>
-              </S.table.TableHeader>
-
-              {/* 테이블 */}
-              <S.table.Table>
-                <thead>
-                  <tr>
-                    <th>순위</th>
-                    <th colSpan={3}>순서별캠프선택 비율</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {team?.campRate?.map((teamCamp,idx) => (
-                  <tr>
-                  <td>{teamCamp.order}</td>
-                  <td>
-                    <S.table.TableData>
+        { Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).length > 0  &&
+           
+              <S.layout.Contents>
+              {/* 비교테이블 */}
+              <S.layout.FlexContainer css={spacing.marginB(5)}>
+                {/* 첫번째 테이블 */}
+                <S.table.TableContainer css={spacing.marginR(5)}>
+                  <S.table.TableHeader>
+                    {/* 제목 */}
+                    <S.table.TableTitle>
                       <Avatar
-                        src={"images/champion/teemo.png"}
-                        alt={"칼날부리"}
-                        size={36}
-                        color={"blue"}
+                     src={`Images/TeamLogo/${junglevalue.team}.png`}
+                      alt="teamLogo"
+                        size={20}
+                        block={false}
                       />
-                      <div>
-                        <p>{teamCamp.jg_rates}</p>
-                        <p>칼날부리</p>
-                      </div>
-                    </S.table.TableData>
-                  </td>
-                  <td>
-                    <S.table.TableData>
+                      {junglevalue.team}
+                      정글 순서별 캠프 선택비율
+                    </S.table.TableTitle>
+                    <S.table.TableButtonGroup>
+                      <Button
+                        onClick={() => 
+                          // setActive(false)
+                          setTeamSide("blue")
+                        }
+                        className={cx([{ "is-active": teamSide === "blue" }])}
+                        css={[
+                          typoStyle.select,
+                          buttonStyle.size.full,
+                          buttonStyle.size.x_20,
+                          buttonStyle.size.y_8,
+                          buttonStyle.color.normal,
+                          borderRadiusStyle[10],
+                        ]}
+                      >
+                        BLUE
+                      </Button>
+                      <Button
+                        onClick={() => 
+                          // setActive(true)
+                          setTeamSide("red")
+                        }
+                        className={cx([{ "is-active": teamSide === "red" }])}
+                        css={[
+                          typoStyle.select,
+                          buttonStyle.size.full,
+                          buttonStyle.size.x_20,
+                          buttonStyle.size.y_8,
+                          buttonStyle.color.normal,
+                          borderRadiusStyle[10],
+                        ]}
+                      >
+                        RED
+                      </Button>
+                    </S.table.TableButtonGroup>
+                  </S.table.TableHeader>
+    
+                  {/* 테이블 */}
+                  <S.table.Table>
+                    <thead>
+                      <tr>
+                        <th>순위</th>
+                        <th colSpan={3}>순서별캠프선택 비율</th>
+                      </tr>
+                    </thead>
+                    {teamSide === "blue" ?
+                        <tbody>
+                        {teamBlue?.map((teamCamp,idx) => (
+                        <tr>
+                        <td>{teamCamp.order}</td>
+                        <td>
+                          <S.table.TableData>
+                            <Avatar
+                              src={"images/champion/teemo.png"}
+                              alt={"칼날부리"}
+                              size={36}
+                              color={"blue"}
+                            />
+                            <div>
+                              <p>{`${teamCamp.jg_rates.split(',')[0]*100}%`}</p>
+                              <p>{`${teamCamp.monsterids.split(',')[0]}`}</p>
+                            </div>
+                          </S.table.TableData>
+                        </td>
+                        <td>
+                          <S.table.TableData>
+                            {!teamCamp.monsterids.split(',')[1] ? <></> :
+                            <Avatar
+                            src={"images/champion/teemo.png"}
+                            alt={"칼날부리"}
+                            size={36}
+                            color={"blue"}
+                          />
+                            }
+                            <div>
+                            {!teamCamp.jg_rates.split(',')[1] ? <></> : 
+                              <p>{`${teamCamp.jg_rates.split(',')[1]*100}%`}</p>
+                            }
+                            {teamCamp.monsterids.split(',')[1] === undefined ? <></> : 
+                              <p>{`${teamCamp.monsterids.split(',')[1]}`}</p>
+                            }
+                            </div>
+                          </S.table.TableData>
+                        </td>
+                      </tr>
+                        ))}
+                      </tbody> :
+                        <tbody>
+                        {teamRed?.map((teamCamp,idx) => (
+                        <tr>
+                        <td>{teamCamp.order}</td>
+                        <td>
+                          <S.table.TableData>
+                            <Avatar
+                              src={"images/champion/teemo.png"}
+                              alt={"칼날부리"}
+                              size={36}
+                              color={"red"}
+                            />
+                            <div>
+                              <p>{`${teamCamp.jg_rates.split(',')[0]*100}%`}</p>
+                              <p>{`${teamCamp.monsterids.split(',')[0]}`}</p>
+                            </div>
+                          </S.table.TableData>
+                        </td>
+                        <td>
+                          <S.table.TableData>
+                            {!teamCamp.monsterids.split(',')[1] ? <></> :
+                            <Avatar
+                            src={"images/champion/teemo.png"}
+                            alt={"칼날부리"}
+                            size={36}
+                            color={"red"}
+                          />
+                            }
+                            <div>
+                            {!teamCamp.jg_rates.split(',')[1] ? <></> : 
+                              <p>{`${teamCamp.jg_rates.split(',')[1]*100}%`}</p>
+                            }
+                            {teamCamp.monsterids.split(',')[1] === undefined ? <></> : 
+                              <p>{`${teamCamp.monsterids.split(',')[1]}`}</p>
+                            }
+                            </div>
+                          </S.table.TableData>
+                        </td>
+                      </tr>
+                        ))}
+                      </tbody> 
+                  }
+            
+                  </S.table.Table>
+                </S.table.TableContainer>
+    
+                {/* 두번째 테이블 */}
+                <S.table.TableContainer>
+                  <S.table.TableHeader>
+                    {/* 제목 */}
+                    <S.table.TableTitle>
                       <Avatar
-                        src={"images/champion/teemo.png"}
-                        alt={"칼날부리"}
-                        size={36}
-                        color={"blue"}
+                       src={`Images/TeamLogo/${junglevalue.oppteam}.png`}
+                       alt="oppteamLogo"
+                        size={20}
+                        block={false}
                       />
-                      <div>
-                        <p>46%</p>
-                        <p>칼날부리</p>
-                      </div>
-                    </S.table.TableData>
-                  </td>
-                  <td>
-                    <S.table.TableData>
-                      <Avatar
-                        src={"images/champion/teemo.png"}
-                        alt={"칼날부리"}
-                        size={36}
-                        color={"blue"}
-                      />
-                      <div>
-                        <p>46%</p>
-                        <p>칼날부리</p>
-                      </div>
-                    </S.table.TableData>
-                  </td>
-                </tr>
-                  ))}
-                </tbody>
-              </S.table.Table>
-            </S.table.TableContainer>
+                      {junglevalue.oppteam}
+                      정글 순서별 캠프 선택비율
+                    </S.table.TableTitle>
+                    <S.table.TableButtonGroup>
+                      <Button
+                        onClick={() => {
+                          // setActive(false)
+                          setOppTeamSide("blue")                          
+                        }
+                        }
+                        className={cx([{ "is-active": oppTeamSide === "blue" }])}
+                        css={[
+                          typoStyle.select,
+                          buttonStyle.size.full,
+                          buttonStyle.size.x_20,
+                          buttonStyle.size.y_8,
+                          buttonStyle.color.normal,
+                          borderRadiusStyle[10],
+                        ]}
+                      >
+                        BLUE
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          // setActive(true)
+                          setOppTeamSide("red")
 
-            {/* 두번째 테이블 */}
-            <S.table.TableContainer>
-              <S.table.TableHeader>
-                {/* 제목 */}
-                <S.table.TableTitle>
-                  <Avatar
-                    src="images/LCK_CL_LOGO/T1.C.png"
-                    alt="T1"
-                    size={20}
-                    block={false}
-                  />
-                  {"T1"}
-                  정글 순서별 캠프 선택비율
-                </S.table.TableTitle>
-                <S.table.TableButtonGroup>
-                  <Button
-                    onClick={() => setActive(false)}
-                    className={cx([{ "is-active": !active }])}
-                    css={[
-                      typoStyle.select,
-                      buttonStyle.size.full,
-                      buttonStyle.size.x_20,
-                      buttonStyle.size.y_8,
-                      buttonStyle.color.normal,
-                      borderRadiusStyle[10],
-                    ]}
-                  >
-                    BLUE
-                  </Button>
-                  <Button
-                    onClick={() => setActive(true)}
-                    className={cx([{ "is-active": active }])}
-                    css={[
-                      typoStyle.select,
-                      buttonStyle.size.full,
-                      buttonStyle.size.x_20,
-                      buttonStyle.size.y_8,
-                      buttonStyle.color.normal,
-                      borderRadiusStyle[10],
-                    ]}
-                  >
-                    RED
-                  </Button>
-                </S.table.TableButtonGroup>
-              </S.table.TableHeader>
-
-              {/* 테이블 */}
-              <S.table.Table>
-                <thead>
-                  <tr>
-                    <th>순위</th>
-                    <th colSpan={3}>순서별캠프선택 비율</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {oppTeam?.campRate?.map((oppTeamCamp,idx) =>  (
-                  <tr>
-                  <td>1</td>
-                  <td>
-                    <S.table.TableData>
-                      <Avatar
-                        src={"images/champion/teemo.png"}
-                        alt={"칼날부리"}
-                        size={36}
-                        color={"blue"}
-                      />
-                      <div>
-                        <p>46%</p>
-                        <p>칼날부리</p>
-                      </div>
-                    </S.table.TableData>
-                  </td>
-                  <td>
-                    <S.table.TableData>
-                      <Avatar
-                        src={"images/champion/teemo.png"}
-                        alt={"칼날부리"}
-                        size={36}
-                        color={"blue"}
-                      />
-                      <div>
-                        <p>46%</p>
-                        <p>칼날부리</p>
-                      </div>
-                    </S.table.TableData>
-                  </td>
-                  <td>
-                    <S.table.TableData>
-                      <Avatar
-                        src={"images/champion/teemo.png"}
-                        alt={"칼날부리"}
-                        size={36}
-                        color={"blue"}
-                      />
-                      <div>
-                        <p>46%</p>
-                        <p>칼날부리</p>
-                      </div>
-                    </S.table.TableData>
-                  </td>
-                </tr>
-                  ))}
-                </tbody>
-              </S.table.Table>
-            </S.table.TableContainer>
-          </S.layout.FlexContainer>
-
-          {/* 텍스트테이블 */}
-          <S.layout.Container>
-            <S.table.TextTable>
-              {/* 선수명 */}
-              <thead>
-                <tr>
-                  <th>{team?.countRate[0]?.player}</th>
-                  <th></th>
-                  <th>
-                    <Versus size={18} />
-                  </th>
-                  <th></th>
-                  <th>{oppTeam?.countRate[0]?.player}</th>
-                </tr>
-              </thead>
-
-              {/* 선수비교 데이터 */}
-              <tbody>
-                {/* 각 행 */}
-                <tr>
-                  <td>{`${team?.countRate[0]?.counter_jg*100}%`}</td>
-                  <td>
-                    <Arrow direction={"L"} />
-                  </td>
-                  <td>카운터정글비율</td>
-                  <td>
-                    <Arrow direction={"R"} />
-                  </td>
-                  <td>{`${oppTeam?.countRate[0]?.counter_jg*100}%`}</td>
-                </tr>
-
-                <tr>
-                  <td>{secToMin(team?.sixTime[0]?.realcount)}</td>
-                  <td>
-                    <Arrow direction={"L"} />
-                  </td>
-                  <td>6캠프 평균 정글링 시간</td>
-                  <td>
-                    <Arrow direction={"R"} />
-                  </td>
-                  <td>{secToMin(oppTeam?.sixTime[0]?.realcount)}</td>
-                </tr>
-              </tbody>
-            </S.table.TextTable>
-          </S.layout.Container>
-        </S.layout.Contents>
+                        }
+                        }
+                        className={cx([{ "is-active": oppTeamSide === "red"}])}
+                        css={[
+                          typoStyle.select,
+                          buttonStyle.size.full,
+                          buttonStyle.size.x_20,
+                          buttonStyle.size.y_8,
+                          buttonStyle.color.normal,
+                          borderRadiusStyle[10],
+                        ]}
+                      >
+                        RED
+                      </Button>
+                    </S.table.TableButtonGroup>
+                  </S.table.TableHeader>
+    
+                  {/* 테이블 */}
+                  <S.table.Table>
+                    <thead>
+                      <tr>
+                        <th>순위</th>
+                        <th colSpan={3}>순서별캠프선택 비율</th>
+                      </tr>
+                    </thead>
+                    {oppTeamSide === "blue" ?
+                    <tbody>
+                      {oppTeamBlue?.map((oppTeamCamp,idx) =>  (
+                      <tr>
+                      <td>{oppTeamCamp.order}</td>
+                      <td>
+                        <S.table.TableData>
+                          <Avatar
+                            src={"images/champion/teemo.png"}
+                            alt={"칼날부리"}
+                            size={36}
+                            color={"blue"}
+                          />
+                          <div>
+                          <p>{`${oppTeamCamp.jg_rates.split(',')[0]*100}%`}</p>
+                            <p>{`${oppTeamCamp.monsterids.split(',')[0]}`}</p>
+                          </div>
+                        </S.table.TableData>
+                      </td>
+                      <td>
+                        <S.table.TableData>
+                      {!oppTeamCamp.monsterids.split(',')[1] ? <></> :
+    
+                          <Avatar
+                            src={"images/champion/teemo.png"}
+                            alt={"칼날부리"}
+                            size={36}
+                            color={"blue"}
+                          />
+                      }
+                          <div>
+                          {!oppTeamCamp.jg_rates.split(',')[1] ? <></> : 
+                            <p>{`${oppTeamCamp.jg_rates.split(',')[1]*100}%`}</p>
+                          }
+                          {oppTeamCamp.monsterids.split(',')[1] === undefined ? <></> : 
+                            <p>{`${oppTeamCamp.monsterids.split(',')[1]}`}</p>
+                          }
+                          </div>
+                        </S.table.TableData>
+                      </td>
+                    </tr>
+                      ))}
+                    </tbody>:
+                        <tbody>
+                        {oppTeamRed?.map((oppTeamCamp,idx) =>  (
+                        <tr>
+                        <td>{oppTeamCamp.order}</td>
+                        <td>
+                          <S.table.TableData>
+                            <Avatar
+                              src={"images/champion/teemo.png"}
+                              alt={"칼날부리"}
+                              size={36}
+                              color={"red"}
+                            />
+                            <div>
+                            <p>{`${oppTeamCamp.jg_rates.split(',')[0]*100}%`}</p>
+                              <p>{`${oppTeamCamp.monsterids.split(',')[0]}`}</p>
+                            </div>
+                          </S.table.TableData>
+                        </td>
+                        <td>
+                          <S.table.TableData>
+                        {!oppTeamCamp.monsterids.split(',')[1] ? <></> :
+      
+                            <Avatar
+                              src={"images/champion/teemo.png"}
+                              alt={"칼날부리"}
+                              size={36}
+                              color={"red"}
+                            />
+                        }
+                            <div>
+                            {!oppTeamCamp.jg_rates.split(',')[1] ? <></> : 
+                              <p>{`${oppTeamCamp.jg_rates.split(',')[1]*100}%`}</p>
+                            }
+                            {oppTeamCamp.monsterids.split(',')[1] === undefined ? <></> : 
+                              <p>{`${oppTeamCamp.monsterids.split(',')[1]}`}</p>
+                            }
+                            </div>
+                          </S.table.TableData>
+                        </td>
+                      </tr>
+                        ))}
+                      </tbody>
+}
+                  </S.table.Table>
+                </S.table.TableContainer>
+              </S.layout.FlexContainer>
+    
+              {/* 텍스트테이블 */}
+              <S.layout.Container>
+                <S.table.TextTable>
+                  {/* 선수명 */}
+                  <thead>
+                    <tr>
+                      <th>{team?.countRate[0]?.player}</th>
+                      <th></th>
+                      <th>
+                        <Versus size={18} />
+                      </th>
+                      <th></th>
+                      <th>{oppTeam?.countRate[0]?.player}</th>
+                    </tr>
+                  </thead>
+    
+                  {/* 선수비교 데이터 */}
+                  <tbody>
+                    {/* 각 행 */}
+                    <tr>
+                      <td>{`${team?.countRate[0]?.counter_jg*100}%`}</td>
+                      <td>
+                        <Arrow direction={"L"} />
+                      </td>
+                      <td>카운터정글비율</td>
+                      <td>
+                        <Arrow direction={"R"} />
+                      </td>
+                      <td>{`${oppTeam?.countRate[0]?.counter_jg*100}%`}</td>
+                    </tr>
+    
+                    <tr>
+                      <td>{secToMin(team?.sixTime[0]?.realcount)}</td>
+                      <td>
+                        <Arrow direction={"L"} />
+                      </td>
+                      <td>6캠프 평균 정글링 시간</td>
+                      <td>
+                        <Arrow direction={"R"} />
+                      </td>
+                      <td>{secToMin(oppTeam?.sixTime[0]?.realcount)}</td>
+                    </tr>
+                  </tbody>
+                </S.table.TextTable>
+              </S.layout.Container>
+            </S.layout.Contents>   
+        }
       </S.layout.FlexContainer>
     </S.layout.CompareContainer>
   );
