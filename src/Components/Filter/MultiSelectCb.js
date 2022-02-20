@@ -171,7 +171,7 @@ const Selecter = styled.div`
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
-    line-height: 1.65;
+    line-height: 1.6;
     letter-spacing: normal;
     text-align: left;
     color: #fff;
