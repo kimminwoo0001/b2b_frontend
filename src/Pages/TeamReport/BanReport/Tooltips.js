@@ -1,5 +1,7 @@
 import React from "react";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
@@ -17,8 +19,8 @@ function ToolTips({ pick }) {
           <thead>
             <TooltipNav>
               <th className="Champion">{t("team.draft.champion")}</th>
-              {!filters.league.includes("LPL") && 
-              <th className="Player">{t("team.draft.player")}</th>}
+              {!filters.league.includes("LPL") &&
+                <th className="Player">{t("team.draft.player")}</th>}
               <th className="Pick">{t("team.draft.pick")}</th>
             </TooltipNav>
           </thead>
@@ -40,8 +42,8 @@ function ToolTips({ pick }) {
                       </div>
                     </div>
                   </td>
-                  {!filters.league.includes("LPL") && 
-                  <td className="Player">{tooltip?.player}</td>}
+                  {!filters.league.includes("LPL") &&
+                    <td className="Player">{tooltip?.player}</td>}
                   <td className="Pick">{`${tooltip?.gamesPlayed}${t(
                     "team.draft.count"
                   )}`}</td>

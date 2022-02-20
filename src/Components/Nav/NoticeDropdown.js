@@ -1,7 +1,9 @@
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useDetectOutsideClick } from "../SelectFilter/useDetectOustsideClick";
 
 function NoticeDropdown({ alertDesc, setAlertDesc, setIsOpen }) {

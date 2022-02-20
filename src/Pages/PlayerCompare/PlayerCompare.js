@@ -1,6 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useTranslation } from "react-i18next";
 
 import Nav from "../../Components/Nav/Nav";

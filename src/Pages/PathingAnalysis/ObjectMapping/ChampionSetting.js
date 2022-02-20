@@ -1,7 +1,9 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useTranslation } from "react-i18next";
 import { Reset_Map } from "../../../redux/modules/filtervalue";
 import { API2 } from "../../config";

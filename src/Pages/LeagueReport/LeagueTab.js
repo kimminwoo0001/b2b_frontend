@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useTranslation } from "react-i18next";
 import LeagueSchedule from "./LeagueSchedule/LeagueSchedule";
 import LeaguePick from "./LeaguePick/LeaguePick";
@@ -7,7 +9,7 @@ import { HandleTab } from "../../redux/modules/filtervalue";
 import LeagueStatistics from "./LeagueStatistics/LeagueStatistics";
 import LeaguePlayer from "./LeaguePlayer/LeaguePlayer";
 import { useSelector, useDispatch } from "react-redux";
-import {goLeagueReport} from '../../lib/pagePath';
+import { goLeagueReport } from '../../lib/pagePath';
 
 function LeagueTab() {
   const { t } = useTranslation();
@@ -38,12 +40,12 @@ function LeagueTab() {
             alt="arrowIcon"
           ></img>
         </Schedule> */}
-        <TabItem onClick={() =>  {
-        // setActiveTab(1)
-        dispatch(HandleTab(1));
+        <TabItem onClick={() => {
+          // setActiveTab(1)
+          dispatch(HandleTab(1));
         }
 
-          } changeColor={filters.tab === 1}>
+        } changeColor={filters.tab === 1}>
           <div>
             <span>{t("league.tab.draft")}</span>
           </div>
@@ -55,7 +57,7 @@ function LeagueTab() {
               // setActiveTab(2)
               dispatch(HandleTab(2));
             }
-             }
+            }
             changeColor={filters.tab === 2}
           >
             <div>
@@ -66,20 +68,20 @@ function LeagueTab() {
           <div></div>
         )}
         {/* 리그보고서에서 LPL리그일 경우 해당 탭 미노출 */}
-        {pagePath === goLeagueReport && !filters.league.includes("LPL") ?  (
+        {pagePath === goLeagueReport && !filters.league.includes("LPL") ? (
           <TabItem onClick={
             () => {
               // setActiveTab(3)
               dispatch(HandleTab(3));
             }
-            } changeColor={filters.tab === 3}>
-              <div>
-                <span>{t("league.tab.playerStat")}</span>
-              </div>
+          } changeColor={filters.tab === 3}>
+            <div>
+              <span>{t("league.tab.playerStat")}</span>
+            </div>
           </TabItem>
         ) : (
           <div></div>
-        ) 
+        )
         }
       </TabContainer>
       <div>{BoardTab[filters.tab]}</div>

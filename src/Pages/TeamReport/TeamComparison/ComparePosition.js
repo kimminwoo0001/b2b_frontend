@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { Line } from "react-chartjs-2";
 import { API } from "../../config";
 import axios from "axios";

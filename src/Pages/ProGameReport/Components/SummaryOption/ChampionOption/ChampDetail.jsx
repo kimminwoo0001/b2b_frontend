@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import TimeBar from "../../Common/TimeBar";
 import TimeBarTitle from "../../Common/TimeBarTitle";
 import StatusBox1 from "./Component/StatusBox1";

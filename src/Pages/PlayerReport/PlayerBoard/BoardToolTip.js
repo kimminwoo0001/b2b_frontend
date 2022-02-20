@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 

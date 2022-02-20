@@ -1,5 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
 import { Line } from "react-chartjs-2";
 import Tippy from "@tippy.js/react";

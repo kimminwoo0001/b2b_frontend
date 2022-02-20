@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useDetectOutsideClick } from "../SelectFilter/useDetectOustsideClick";
 import { Language } from "../../redux/modules/locale";
 

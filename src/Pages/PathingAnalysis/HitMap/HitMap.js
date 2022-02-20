@@ -1,5 +1,7 @@
 import React, { useState, useRef } from "react";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import qs from "qs";

@@ -36,7 +36,9 @@ import {
 import { SetIsOpen, SetDesc } from "../../redux/modules/modalvalue";
 import AlertModal from '../UtilityComponent/AlertModal';
 
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { API } from "../../Pages/config";
 import { useTranslation } from "react-i18next";
 import { useDetectOutsideClick } from "../SelectFilter/useDetectOustsideClick";

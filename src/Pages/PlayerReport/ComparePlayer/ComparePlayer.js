@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import NormalInfo from "./NormalInfo";
