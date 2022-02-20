@@ -44,6 +44,12 @@ export const SET_TEAM = "filtervalue/SET_TEAM";
 export const SET_PLAYER = "filtervalue/SET_PLAYER";
 export const SET_PATCH = "filtervalue/SET_PATCH";
 export const SELECT_ALL_BTN = "filtervalue/SELECT_ALL_BTN";
+export const RESET_WARD_PATHING_TAB = "filtervalue/RESET_WARD_PATHING_TAB";
+export const SET_CHECKBOX_INPUTS = "filtervalue/SET_CHECKBOX_INPUTS";
+export const SET_CHAMPIONS = "filtervalue/SET_CHAMPIONS";
+export const SET_CHAMPIONS_ENG = "filtervalue/SET_CHAMPIONS_ENG";
+
+
 
 
 
@@ -75,6 +81,8 @@ export const Champion = (champion) => {
     payload: champion,
   };
 };
+
+
 export const Opp_Champion = (champion) => {
   return {
     type: OPP_CHAMPION,
@@ -341,6 +349,35 @@ export const SetPatch = (payload) => {
   };
 };
 
+export const ResetWardPathingTab = (payload) => {
+  return {
+    type: RESET_WARD_PATHING_TAB,
+    payload,
+  }
+}
+
+export const SetCheckedInputs = (payload) => {
+  return {
+    type: SET_CHECKBOX_INPUTS,
+    payload,
+  }
+}
+
+
+export const SetChampion = (payload) => {
+  return {
+    type: SET_CHAMPIONS,
+    payload,
+  };
+};
+
+export const SetChampionEng = (payload) => {
+  return {
+    type: SET_CHAMPIONS_ENG,
+    payload,
+  };
+};
+
 const initialState = {
   league: [],
   year: [],
@@ -355,10 +392,12 @@ const initialState = {
   position: "",
   getoppteam: "",
   getoppplayer: "",
-  champion: "",
-  oppchampion: "",
-  champion_eng: "",
-  oppchampion_eng: "",
+  // champion: "",
+  champion: [],
+  oppchampion: [],
+  // champion_eng: "",
+  champion_eng: [],
+  oppchampion_eng: [],
   tab: "",
   loading: false,
   resetchamp: "",
@@ -366,6 +405,7 @@ const initialState = {
   gameid: "",
   menu_num: "",
   filterMenuState: true,
+  checkedInputs: []
 };
 
 export default function FilterReducer(state = initialState, action) {
@@ -373,7 +413,6 @@ export default function FilterReducer(state = initialState, action) {
     case INITIAL_STATE:
       return initialState;
     case LEAGUE:
-      console.log(state);
       if (state.league.length === 0) {
         return { ...state, league: [action.payload] };
       }
@@ -420,7 +459,6 @@ export default function FilterReducer(state = initialState, action) {
     case OPP_TEAM:
       return { ...state, oppteam: action.payload };
     case PLAYER:
-      console.log("PLAYER", PLAYER)
       if (state.player === action.payload) {
         return { ...state, player: "" };
       } else {
@@ -453,6 +491,7 @@ export default function FilterReducer(state = initialState, action) {
     case HANDLE_CLICK:
       return { ...state, click: action.payload };
     case LOADING:
+      console.log("LOADING", action.payload)
       return { ...state, loading: action.payload };
     case POSITION:
       return { ...state, position: action.payload };
@@ -513,10 +552,10 @@ export default function FilterReducer(state = initialState, action) {
         player: "",
         oppplayer: "",
         oppteam: "",
-        champion: "",
-        oppchampion: "",
-        champion_eng: "",
-        oppchampion_eng: "",
+        champion: [],
+        oppchampion: [],
+        champion_eng: [],
+        oppchampion_eng: [],
       };
     case RESET_OBJECT_MAPPINGTAB:
       return {
@@ -633,6 +672,42 @@ export default function FilterReducer(state = initialState, action) {
         ...state,
         patch: action.payload,
       };
+
+    case RESET_WARD_PATHING_TAB:
+      return {
+        ...state,
+        league: [],
+        year: [],
+        season: [],
+        team: [],
+        patch: [],
+        patchfilter: [],
+        player: "",
+        oppplayer: "",
+        oppteam: "",
+        position: "",
+        getoppteam: "",
+        getoppplayer: "",
+        champion: "",
+        oppchampion: "",
+        champion_eng: "",
+        oppchampion_eng: "",
+      }
+    case SET_CHAMPIONS:
+      return {
+        ...state,
+        champion: action.payload,
+      };
+    case SET_CHAMPIONS_ENG:
+      return {
+        ...state,
+        champion_eng: action.payload,
+      };
+    case SET_CHECKBOX_INPUTS:
+      return {
+        ...state,
+        league: action.payload,
+      }
     default:
       return state;
   }

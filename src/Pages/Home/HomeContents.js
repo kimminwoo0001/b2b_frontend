@@ -10,9 +10,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../../redux/modules/filtervalue";
 import { SetFilterAllItems, SetRunesJson } from "../../redux/modules/staticvalue";
 
-import axiosRequest from "../../lib/axiosRequest";
+import axiosRequest from "../../lib/axios/axiosRequest";
 import LeagueRank from "./LeagueRank";
 import { SetStatus, SetModalInfo } from "../../redux/modules/modalvalue";
+import setCookie from "../../lib/Cookie/setCookie";
 
 const HomeContents = memo(() => {
   const filters = useSelector((state) => state.FilterReducer);
@@ -42,6 +43,13 @@ const HomeContents = memo(() => {
     fetchHomeData();
     fetchRunesObject();
     fetchFilterData();
+
+    //sessionStorage.setItem("user", );
+    setCookie("user-id", user.id, 1);
+    setCookie("user-token", user.token, 1);
+    setCookie("user-name", user.name, 1);
+    setCookie("user-teamName", user.teamName, 1);
+    setCookie("user-charge_time", user.charge_time, 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -54,14 +62,14 @@ const HomeContents = memo(() => {
   // 홈 데이터 fetch 해오는 함수
 
   const fetchHomeData = () => {
-    console.log(user);
+    //console.log(user);
     try {
       const url = `${API}/lolapi/home/home`;
       const params = {
         token: user.token
       }
       axiosRequest(undefined, url, params, function (data) {
-        console.log("modal", modal);
+        //console.log("modal", modal);
         setLeagueDataset(data);
         setDoneHome(true);
       }, function (objStore) {
@@ -83,7 +91,7 @@ const HomeContents = memo(() => {
           id: user.id
         }
         axiosRequest(undefined, url, params, function (data) {
-          console.log(data);
+          //console.log(data);
           dispatch(SetFilterAllItems(data));
           setDoneFilter(true);
         }, function (objStore) {
@@ -117,7 +125,7 @@ const HomeContents = memo(() => {
     }
   }
 
-  console.log("전역 변수 테스트", staticvalue);
+  //console.log("전역 변수 테스트", staticvalue);
   return (
     <LeagueListWrapper>
       <BoxWrapper>

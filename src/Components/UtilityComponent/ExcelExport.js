@@ -80,7 +80,7 @@ const ExportUtil = ({ filename = "none", tableid }) => {
         } else {
           columnData = columnData.toString().replace(/"/g, '""').replace(regex, ''); // escape double quotes
         }
-        console.log(result);
+        // console.log(result);
         result =
           type === "csv"
             ? result + '"' + columnData + '",'

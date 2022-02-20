@@ -10,19 +10,19 @@ import Filter from "../../Components/Filter/Filter";
 import { useSelector } from "react-redux";
 import TeamFilterModal from "../../Components/Filter/TeamFilterModal";
 import PlayerFilterModal from "../../Components/Filter/PlayerFilterModal";
+import { goPlayerCompare, goTeamCompare } from "../../lib/pagePath";
 function Home() {
   // 홈 화면 컨테이너
   const copyvalue = useSelector((state) => state.CopyReducer);
   const { t } = useTranslation();
-  useEffect(() => {
+  if (document.title !== `${t("sidebar.part1")} - NUNU.GG`) {
     document.title = `${t("sidebar.part1")} - NUNU.GG`
-  }, [])
+  }
 
   return (
     <ErrorBoundary>
-      {console.log("홈 실행")}
-      {copyvalue?.openFilterModal === "/teamCompare" && <TeamFilterModal />}
-      {copyvalue?.openFilterModal === "/playerCompare" && <PlayerFilterModal />}
+      {copyvalue?.openFilterModal === goTeamCompare && <TeamFilterModal />}
+      {copyvalue?.openFilterModal === goPlayerCompare && <PlayerFilterModal />}
       <Nav />
       <HomeWrapper>
         <SideBar />

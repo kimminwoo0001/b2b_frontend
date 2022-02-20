@@ -25,6 +25,8 @@ export const SET_PLAY = "videovalue/SET_PLAY";
 export const SET_PAUSE = "videovalue/SET_PAUSE";
 export const SET_URL = "videovalue/SET_URL";
 
+export const SET_PLAYER_STATUS = "videovalue/SET_PLAYER_STATUS";
+
 export const SetVodUrl = (payload) => {
   return {
     type: SET_VOD_URL,
@@ -163,6 +165,12 @@ export const SetUrl = (payload) => {
     payload
   };
 };
+export const SetPlayerStatus = (payload) => {
+  return {
+    type: SET_PLAYER_STATUS,
+    payload
+  };
+};
 
 const initialState = {
   vodUrl: "", //"1136669396",
@@ -180,6 +188,7 @@ const initialState = {
   url: "",
   playedSeconds: 0,
   teamGold: 0,
+  playersStatue: [],
 };
 
 export default function GameReportReducer(state = initialState, action) {
@@ -308,6 +317,11 @@ export default function GameReportReducer(state = initialState, action) {
         played: 0,
         loaded: 0,
         pip: false
+      }
+    case SET_PLAYER_STATUS:
+      return {
+        ...state,
+        playersStatue: action.payload
       }
     default:
       return state;

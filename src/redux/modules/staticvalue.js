@@ -27,7 +27,6 @@ export default function StaticValueReducer(state = initialState, action) {
         filterObjects: action.payload
       }
     case SET_RUNES_OBJECT:
-      console.log('runesObjects', action.payload);
       return {
         ...state,
         runesObjects: action.payload

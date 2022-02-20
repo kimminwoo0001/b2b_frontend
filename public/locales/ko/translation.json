@@ -12,7 +12,35 @@
     "part9": "선수 비교",
     "part10": "아이템 시뮬레이터",
     "part11": "픽 조합 계산기",
-    "part12": "대회 경기 분석"
+    "part12": "대회 경기 분석",
+    "part13": "솔로 랭크",
+    "part14": "아이템 계산기"
+  },
+  "common": {
+    "label": {
+      "recent": "최근",
+      "game": "경기",
+      "player": "선수",
+      "winrate": "승률",
+      "ID": "ID"
+    },
+    "button": {
+      "add": "추가"
+    },
+    "date": {
+      "year": "년",
+      "month": "월",
+      "day": "일",
+      "weekDays": {
+        "mon": "월",
+        "tue": "화",
+        "wed": "수",
+        "thu": "목",
+        "fri": "금",
+        "sat": "토",
+        "sun": "일"
+      }
+    }
   },
   "sign": {
     "signUp": "신규 계정등록",
@@ -84,7 +112,7 @@
     "confirm": "확인",
     "notice": "알림",
     "noData": "새로운 알림이 없습니다.",
-    "hello": "안녕하세요. nunu.gg 운영진입니다.\n22년도 시즌데이터가 업데이트 되었습니다.\n감사합니다."
+    "hello": "안녕하세요. nunu.gg 운영진입니다.\nLPL데이터가 일부 업데이트 되었습니다.\n감사합니다."
   },
   "home": {
     "rank": "순위",
@@ -147,7 +175,9 @@
       "w": "승",
       "l": "패",
       "tier": "티어",
-      "noUniquePickData": "유니크 픽 데이터가 없습니다."
+      "noUniquePickData": "유니크 픽 데이터가 없습니다.",
+      "team": "팀",
+      "oppTeam": "상대 팀"
     },
     "leagueStat": {
       "gameLength": "평균 게임 시간",
@@ -408,14 +438,16 @@
     "player": "선수",
     "NoCommonSeasons": "시즌을 다시 선택해주세요.",
     "mainTeamChanged": "메인 팀이 변경되어 비교 데이터가 초기화됩니다.",
-    "sorry": "22년도 시즌데이터가 업데이트 되었습니다."
+    "sorry": "선수의 플레이메이킹을 보다 잘 반영할 수 있도록 PR 알고리즘이 일부 업데이트 되었습니다.",
+    "noMultipleSelection": "중복 선택 불가"
   },
   "video": {
     "tab": {
       "ward": "와드 매핑",
       "object": "오브젝트별 동선",
       "games": "경기별 동선",
-      "heatmap": "히트맵"
+      "heatmap": "히트맵",
+      "jungle": "정글 동선"
     },
     "vision": {
       "teamview": "팀 기준으로 보기",
@@ -475,7 +507,7 @@
       "herald": "첫번째 전령",
       "herald2": "획득 전 1분 30초",
       "return": "첫번째 귀환",
-      "return2": "귀환 후 1분",
+      "return2": "귀환 후 1분 30초",
       "position": "포지션을 선택하시면 관련 된 모든 동선이 보여집니다.",
       "confirm": "선택완료",
       "selectChamp": "챔피언 선택"
@@ -502,7 +534,8 @@
       "3min": "0분~3분 동선",
       "8min": "3분~8분 동선",
       "side": "사이드"
-    }
+    },
+    "jungle": {}
   },
   "alert": {
     "login": {
@@ -546,6 +579,9 @@
     "sup": "서포터"
   },
   "game": {
+    "eachMatch": {
+      "noneData": "해당 경기 데이터가 존재하지 않아 확인할 수 없습니다."
+    },
     "log": {
       "event": {
         "subject": "이벤트 로그",
@@ -586,6 +622,17 @@
         "roaming": {
           "title": "로밍",
           "desc": "에 로밍을 시도합니다."
+        },
+        "teamfight": {
+          "title": "교전"
+        },
+        "invade": {
+          "title": "인베이드"
+        },
+        "teleport": {
+          "title": "텔레포트",
+          "particicle": "이(가)",
+          "desc": "텔레포트를 사용합니다."
         }
       },
       "detail": {
@@ -618,15 +665,92 @@
         "cs": "CS"
       },
       "timeline": {
-        "roming": "로밍성공",
-        "ganking": "갱킹성공",
+        "roming": "로밍",
+        "ganking": "갱킹",
         "fight": "교전",
         "blue-kill": "블루킬",
         "red-kill": "레드킬",
         "tower": "타워",
         "herald&baron": "전령,바론",
         "dragon": "용",
-        "tooltipInfo": "게임시간 15분 이후 데이터는 아직 지원하지 않습니다."
+        "tooltipInfo": "게임시간 15분 이후 데이터는 아직 지원하지 않습니다.",
+        "InLane": ""
+      }
+    },
+    "teamStatus": {
+      "player": {
+        "Ambush": "부쉬에 숨음",
+        "Diving": "다이브",
+        "TowerHugging": "타워 허깅",
+        "OppTowerPushing": "타워 푸쉬",
+        "Ganking": "갱킹",
+        "Dealt": "딜 교환",
+        "Dealing": "딜 교환",
+        "MovingToLane": "라인 복귀",
+        "Roaming": "로밍",
+        "Jungling": "정글링",
+        "CounterJungling": "카운터 정글",
+        "Dead": "죽음",
+        "TeleportToLane": "텔레포트",
+        "TeleportToOther": "텔레포트",
+        "InLane": "라인전"
+      }
+    },
+    "banPick": {
+      "firstPick": {
+        "top": "탑 선픽",
+        "jng": "정글 선픽",
+        "mid": "미드 선픽",
+        "ad": "원딜 선픽",
+        "sup": "서폿 선픽"
+      }
+    }
+  },
+  "soloRank": {
+    "tab": {
+      "myTeam": "우리팀 솔로랭크",
+      "filterSearch": "필터검색",
+      "interestedPlayer": "관심선수 솔로랭크"
+    },
+    "myTeam": {
+      "label": {
+        "leagueInfo": "리그정보",
+        "teamLogo": "팀 로고",
+        "teamAbbr": "팀 약자",
+        "teamName": "팀 이름",
+        "addInterestedPlayer": "관심선수 등록",
+        "soloRankID": "솔로랭크 ID",
+        "curTier8prevTier": "현재 티어 LP \n(이전 시즌 티어)",
+        "curSeason": "이번 시즌",
+        "recentDays": "최근 ##일",
+        "daysPlayedCham": "최근 ##일간\n플레이한 챔피언"
+      }
+    }
+  },
+  "utility": {
+    "calendarFilter": {
+      "dateSet": "날짜 설정",
+      "inputStart": "시작일 입력",
+      "inputEnd": "종료일 입력",
+      "date": {
+        "allSeason": "시즌 전체",
+        "recent3days": "최근 3일",
+        "recent5days": "최근 5일",
+        "recent7days": "최근 7일",
+        "recent15days": "최근 15일",
+        "recent1months": "최근 1개월",
+        "recent3months": "최근 3개월"
+      },
+      "selectedStartDay": "시작일 선택 완료",
+      "selectedEndDay": "종료일 선택 완료",
+      "desc": {
+        "noStartIdx": "시작일을 선택이 필요합니다.",
+        "noEndIdx": "종료일을 선택이 필요합니다.",
+        "needStartIdx": "시작일을 먼저 선택해야 합니다.",
+        "wrongDate": "사용 가능한 날짜를 선택해야합니다.",
+        "changeToStartSeason": "시작일을 시즌의 시작일로 수정합니다.",
+        "changeToEndSeason": "종료일을 시즌의 종료일로 수정합니다.",
+        "changeToAllSeason": "시작일과 종료일을 시즌의 시작일과 종료일로 수정합니다."
       }
     }
   }

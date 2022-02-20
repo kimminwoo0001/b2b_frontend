@@ -5,6 +5,12 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { SetIsOpen, SetSelectedResult, SetSemiDesc } from "../../redux/modules/modalvalue";
+import { API } from "../../Pages/config";
+import axiosRequest from "../../lib/axios/axiosRequest";
+import { Loading } from "../../redux/modules/filtervalue";
+import { UserLogout } from "../../redux/modules";
+import setCookie from "../../lib/Cookie/setCookie";
+import { goHome, goLogin } from "../../lib/pagePath";
 
 const customStyles = {
   overlay: {
@@ -14,6 +20,7 @@ const customStyles = {
     right: 0,
     bottom: 0,
     backgroundColor: "rgba(0, 0, 0, 0.75)",
+    zIndex: 1
   },
   content: {
     top: "50%",
@@ -32,6 +39,8 @@ const customStyles = {
 };
 
 const AlertModal = () => {
+  const user = useSelector((state) => state.UserReducer);
+  const lang = useSelector((state) => state.LocaleReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -39,11 +48,12 @@ const AlertModal = () => {
     (state) => state.ModalReducer
   );
   const pagePath = document.location.pathname;
+  // console.log(isOpen, desc, semiDesc);
 
   useEffect(() => {
-    console.log("모달 창 useEffect");
+    console.log("Open");
     if (isOpen) {
-      console.log("모달 창 열림");
+      console.log("Close");
     }
   }, [isOpen]);
 
@@ -52,23 +62,28 @@ const AlertModal = () => {
     dispatch(SetSemiDesc(""));
     switch (confirmFuncId) {
       case "/login":
-        history.push("/login");
+        const url = `${API}}/lolapi/logout`;
+        const info = `id=${user.id}&charge_time=${user.charge_time}&lang=${lang}`;
+        axiosRequest("POST", url, info, function (e) {
+        });
+        dispatch(Loading(false))
+        sessionStorage.clear();
+        dispatch(UserLogout());
+        history.push(goLogin)
+        setCookie("user-token", user.token, -1);
         return;
       case "/home":
-        history.push("/");
+        history.push(goHome);
         return;
       default:
         break;
     }
 
-    // 팀 비교 이후 - 다시 팀 비교 누르고 oppteam 선택 없이 창 닫았을 경우 home으로 이동
-    // if (desc === t("alert.desc.serverError")) {
-    //   if (pagePath === "/team" || pagePath === "/teamCompare")
-    //     history.push("/");
-    // }
+    if (desc === t("alert.logout.sessionExpires")) {
+      history.push(goLogin);
+    }
 
     if (confirmFuncId) {
-
       dispatch(SetSelectedResult(confirmFuncId));
     }
   };

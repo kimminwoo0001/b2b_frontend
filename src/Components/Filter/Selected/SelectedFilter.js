@@ -51,7 +51,7 @@ const SelectedFilter = memo(({ pagePath, nameSolo, nameTeam, nameVideo, namePlay
       <SelectedArea>
         <header><label className={filters.patch.length === 0 && "not-selected"}>{t("label.patchVersion")}</label></header>
         <section>
-          {console.log(filters.patch)}
+          {/* {console.log(filters.patch)} */}
           {filters.patch.length > 0 && filters.patch?.map((data) => {
             return <SelectedData data={data} deleteBtn={() => { dispatch(Patch(data)); }} />
           })}

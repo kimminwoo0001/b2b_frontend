@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { useTranslation } from "react-i18next";
 import SetInputBox from "./Component/SetInputBox";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, batch } from "react-redux";
 import {
   ModalInit,
   SetConfirmFuncId,
@@ -15,15 +15,18 @@ import {
 } from "../../redux/modules/modalvalue";
 import { useHistory } from "react-router-dom";
 import { API } from "../config";
-import signAxiosReq from "../../lib/signAxiosReq";
-import axiosRequest from "../../lib/axiosRequest";
+import signAxiosReq from "../../lib/axios/signAxiosReq";
+import axiosRequest from "../../lib/axios/axiosRequest";
 import { Language } from "../../redux/modules/locale";
 import {
   SetIsNeedChkLogin,
   UserChargeTime,
   UserID,
+  UserName,
+  UserTeamName,
   UserToken,
 } from "../../redux/modules/user";
+import { goCheckLogin, goHome } from "../../lib/pagePath";
 
 const CheckLogin = ({}) => {
   const user = useSelector((state) => state.UserReducer);
@@ -137,10 +140,14 @@ const CheckLogin = ({}) => {
             sessionStorage.setItem("i18nextLng", token.lang);
             //sessionStorage.setItem("id", id);
             console.log("token:", token);
-            dispatch(Language(token.lang));
-            dispatch(UserToken(token.token));
-            dispatch(UserChargeTime(token.charge_time));
-            history.push("/");
+            batch(() => {
+              dispatch(Language(token.lang));
+              dispatch(UserToken(token.token));
+              dispatch(UserChargeTime(token.charge_time));
+              dispatch(UserName(token.name));
+              dispatch(UserTeamName(token.teamName));
+              history.push(goHome);
+            });
           }
         },
         function (objStore) {
@@ -154,7 +161,7 @@ const CheckLogin = ({}) => {
               param,
               function (success) {
                 dispatch(UserID(user.id));
-                history.push("/checkLogin");
+                history.push(goCheckLogin);
               },
               function (data) {
                 dispatch(SetIsSelector(false));

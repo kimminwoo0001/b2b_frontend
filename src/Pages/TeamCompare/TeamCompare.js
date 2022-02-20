@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 import SideBar from "../../Components/SideBar/SideBar";
 import Nav from "../../Components/Nav/Nav";
-import TeamTabs from "../Team/TeamTabs";
+import TeamTabs from "../TeamReport/TeamTabs";
 import { useSelector } from "react-redux";
 import SelectFilter from "../../Components/SelectFilter/SelectFilter";
 import ErrorBoundary from "../../Components/ErrorBoundary";
@@ -11,20 +12,26 @@ import Filter from "../../Components/Filter/Filter";
 import CloseFilter from "../../Components/Filter/CloseFilter";
 import TeamFilterModal from "../../Components/Filter/TeamFilterModal";
 import PlayerFilterModal from "../../Components/Filter/PlayerFilterModal";
+import { goPlayerCompare, goTeamCompare } from "../../lib/pagePath";
 
 function TeamCompare() {
   const filters = useSelector((state) => state.FilterReducer);
   const copyvalue = useSelector((state) => state.CopyReducer);
+  const { t } = useTranslation();
+
+  if (document.title !== `${t("sidebar.part8")} - NUNU.GG`) {
+    document.title = `${t("sidebar.part8")} - NUNU.GG`
+  }
 
   return (
     <ErrorBoundary>
-      {copyvalue?.openFilterModal === "/teamCompare" && <TeamFilterModal />}
-      {copyvalue?.openFilterModal === "/playerCompare" && <PlayerFilterModal />}
+      {copyvalue?.openFilterModal === goTeamCompare && <TeamFilterModal />}
+      {copyvalue?.openFilterModal === goPlayerCompare && <PlayerFilterModal />}
 
       <Nav />
       <TeamWrapper>
         <SideBar />
-        {filters.openFilterModal === "/teamCompare" && filters.oppteam.length > 0 && filters.compareModal ?
+        {filters.openFilterModal === goTeamCompare && filters.oppteam.length > 0 && filters.compareModal ?
           (
             <CloseFilter />
           ) : (

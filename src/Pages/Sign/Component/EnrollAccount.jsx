@@ -7,7 +7,7 @@ import CheckBox from "../../../Components/UtilityComponent/CheckBox";
 import { useDispatch, useSelector } from "react-redux";
 import contentTOU from "../../../lib/content/contentTOU";
 import contentPICACU from "../../../lib/content/contentPICAUA";
-import checkEmail from "../../../lib/checkEmail";
+import checkEmail from "../lib/checkEmail";
 import { number } from "prop-types";
 import {
   SetConfirmFuncId,
@@ -16,10 +16,11 @@ import {
   SetIsSelector,
   SetSemiDesc,
 } from "../../../redux/modules/modalvalue";
-import signAxiosReq from "../../../lib/signAxiosReq";
+import signAxiosReq from "../../../lib/axios/signAxiosReq";
 import { API } from "../../config";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import { Loading } from "../../../redux/modules/filtervalue";
+import { goLogin } from "../../../lib/pagePath";
 
 const EnrollAccount = ({ id, authCode, signType }) => {
   const filters = useSelector((state) => state.FilterReducer);
@@ -65,7 +66,7 @@ const EnrollAccount = ({ id, authCode, signType }) => {
       case "pw-input":
         setPwText(value);
         if (pwValidateText.length > 0 && pwValidateText.length > 0) {
-          console.log(pwValidateText.length > 0 && pwValidateText.length > 0);
+          // console.log(pwValidateText.length > 0 && pwValidateText.length > 0);
           setPwAlertOpen(!(value === pwValidateText));
         }
         if (value.length < 8 || value.length > 16) {
@@ -87,7 +88,7 @@ const EnrollAccount = ({ id, authCode, signType }) => {
         }
         break;
       case "email-input":
-        console.log("checkEmail(value)", checkEmail(value));
+        // console.log("checkEmail(value)", checkEmail(value));
         setEmailText(value);
         setEmailAlertOpen(!checkEmail(value));
         break;
@@ -98,8 +99,6 @@ const EnrollAccount = ({ id, authCode, signType }) => {
       default:
         break;
     }
-
-    console.log(value);
   };
 
   const btnChange = () => {
@@ -116,12 +115,10 @@ const EnrollAccount = ({ id, authCode, signType }) => {
     dispatch(Loading(true));
     const url = `${API}/lolapi/authemailcord`;
     const param = `email=${emailText}&type=EC&key=${authCode}`;
-    console.log("param", param);
     signAxiosReq(
       url,
       param,
       function (success) {
-        console.log();
         if (success) {
           dispatch(SetIsSelector(false));
           dispatch(SetIsOpen(true));
@@ -157,12 +154,11 @@ const EnrollAccount = ({ id, authCode, signType }) => {
     dispatch(Loading(true));
     const url = `${API}/lolapi/authcord`;
     const param = `authcord=${emailAuthText}&key=${authCode}&email=${emailText}&type=${signType}`;
-    console.log("param", param);
+    // console.log("param", param);
     signAxiosReq(
       url,
       param,
       function (success) {
-        console.log();
         if (success) {
           dispatch(SetIsSelector(false));
           dispatch(SetIsOpen(true));
@@ -222,7 +218,7 @@ const EnrollAccount = ({ id, authCode, signType }) => {
             dispatch(SetDesc(t(`sign.${id}.confirmSuccess`)));
             dispatch(SetSemiDesc(""));
             //dispatch(SetConfirmFuncId("login"));
-            history.push("/login");
+            history.push(goLogin);
           }
           dispatch(Loading(false));
         },

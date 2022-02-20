@@ -19,6 +19,8 @@ export const SET_TEAM_GOLD_DATASET = "gamevalue/SET_TEAM_GOLD_DATASET";
 export const SET_MAPPING_DATASET = "gamevalue/SET_MAPPING_DATASET";
 export const SET_LIVE_DATASET = "gamevalue/SET_LIVE_DATASET";
 export const SET_STATUS_LOG_DATASET = "gamevalue/SET_STATUS_LOG_DATASET";
+export const SET_PLAYERS_STATUS_DATASET = "gamevalue/SET_PLAYERS_STATUS_DATASET";
+export const SET_TIMELINE_DATASET = "gamevalue/SET_TIMELINE_DATASET";
 
 
 // 선택 
@@ -27,6 +29,9 @@ export const SET_SELECTED_TEAM = "gamevalue/SET_SELECTED_TEAM";
 export const SET_SELECTED_POSITION = "gamevalue/SET_SELECTED_POSITION";
 export const SET_SELECTED_PARTICIPANT = "gamevalue/SET_SELECTED_PARTICIPANT";
 export const SET_CHAMP_TAB = "gamevalue/SET_CHAMP_TAB"; // 챔피언 컴포넌트 선택 탭
+export const SET_SELETED_STATUS_TIME = "gamevalue/SET_SELETED_STATUS_TIME";
+export const SET_SELETED_STATUS_TYPE = "gamevalue/SET_SELETED_STATUS_TYPE";
+export const SET_SELETED_STATUS_TEXT = "gamevalue/SET_SELETED_STATUS_TEXT";
 
 // 활성화 인덱스
 export const SET_EVENT_LOG_ACTIVE_IDX = "gamevalue/SET_EVENT_LOG_ACTIVE_IDX";
@@ -34,6 +39,9 @@ export const SET_STATUS_LOG_ACTIVE_IDX = "gamevalue/SET_STATUS_LOG_ACTIVE_IDX";
 export const SET_CURRENT_ITEM_IDX_ACTIVE_IDX = "gamevalue/SET_CURRENT_ITEM_IDX_ACTIVE_IDX";
 export const SET_LIVE_ACTIVE_IDX = "gamevalue/SET_LIVE_ACTIVE_IDX";
 export const SET_GOLD_ACTIVE_IDX = "gamevalue/SET_GOLD_ACTIVE_IDX";
+
+// 이동 시간
+export const SET_SEEK_TIME = "gamevalue/SET_SEEK_TIME";
 
 export const InitializeGameState = (payload) => {
   return {
@@ -205,6 +213,42 @@ export const SetStatusLogDataset = (payload) => {
     payload,
   };
 };
+export const SetSeekTime = (payload) => {
+  return {
+    type: SET_SEEK_TIME,
+    payload,
+  };
+};
+export const SetPlayersStatusDataset = (payload) => {
+  return {
+    type: SET_PLAYERS_STATUS_DATASET,
+    payload,
+  };
+};
+export const SetSeletedStatusTime = (payload) => {
+  return {
+    type: SET_SELETED_STATUS_TIME,
+    payload,
+  };
+};
+export const SetSeletedStatusType = (payload) => {
+  return {
+    type: SET_SELETED_STATUS_TYPE,
+    payload,
+  };
+};
+export const SetSeletedStatusText = (payload) => {
+  return {
+    type: SET_SELETED_STATUS_TEXT,
+    payload,
+  };
+};
+export const SetTimeLineDataset = (payload) => {
+  return {
+    type: SET_TIMELINE_DATASET,
+    payload,
+  };
+};
 
 const initialState = {
   gameId: "",
@@ -219,6 +263,8 @@ const initialState = {
   teamGoldDataset: [],
   mappingDataset: [],
   liveDataset: [],
+  playersStatusDataset: [],
+  timeLineDataset: {},
   blueteam: "",
   redteam: "",
   selectedTeam: 0, // 0: 블루팀, 1: 레드팀
@@ -231,7 +277,11 @@ const initialState = {
   statusLogActiveIdx: 0,
   itemActiveIdx: 0,
   liveActiveIdx: 0,
-  goldActiveIdx: 0
+  goldActiveIdx: 0,
+  seekTime: 0,
+  selectedStatusTime: 0,
+  selectedStatusType: "",
+  selectedStatusText: ""
 };
 
 export default function GameReportReducer(state = initialState, action) {
@@ -371,16 +421,44 @@ export default function GameReportReducer(state = initialState, action) {
         liveActiveIdx: action.payload,
       };
     case SET_GOLD_ACTIVE_IDX:
-      console.log(action.payload);
       return {
         ...state,
         goldActiveIdx: action.payload,
       };
     case SET_STATUS_LOG_DATASET:
-      console.log(action.payload);
       return {
         ...state,
         statusLogDataset: action.payload,
+      };
+    case SET_SEEK_TIME:
+      return {
+        ...state,
+        seekTime: action.payload,
+      };
+    case SET_PLAYERS_STATUS_DATASET:
+      return {
+        ...state,
+        playersStatusDataset: action.payload,
+      };
+    case SET_SELETED_STATUS_TIME:
+      return {
+        ...state,
+        selectedStatusTime: action.payload,
+      };
+    case SET_SELETED_STATUS_TYPE:
+      return {
+        ...state,
+        selectedStatusType: action.payload,
+      };
+    case SET_SELETED_STATUS_TEXT:
+      return {
+        ...state,
+        selectedStatusText: action.payload,
+      };
+    case SET_TIMELINE_DATASET:
+      return {
+        ...state,
+        timeLineDataset: action.payload,
       };
     case INITIALIZE_GAME_STATE:
       return initialState;
