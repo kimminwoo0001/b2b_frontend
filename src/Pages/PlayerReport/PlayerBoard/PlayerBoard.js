@@ -83,7 +83,7 @@ function PlayerBoard() {
       patch: filters.patch,
       team: filters.team,
       player: filters.player,
-      champion: filters.champion_eng,
+      champion: filters.champion_eng.split(' (')[0], // 이 부분도 수정이 필요
       oppchampion: filters.oppchampion_eng,
       token: user.token,
       id: user.id,
