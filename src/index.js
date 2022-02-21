@@ -19,16 +19,22 @@ import { PersistGate } from "redux-persist/integration/react";
 
 // ui
 import Theme from "./Styles/Theme";
+import ModalProvider from "./Components/Modals/ModalProvider";
+import ReactModal from "react-modal";
+import Modals from "./Components/Modals/Modals";
 // import AlertModal from "./Components/UtilityComponent/AlertModal";
 
+/* 리덕스 & 리덕스사가 & 세션스토리지에 리덕스 상태 보관 */
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
   persistReducer,
   composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
-
 const persistor = persistStore(store);
 // export const history = syncHistoryWithStore(createBrowserHistory, store);
+
+/* 모달 렌더링 관련*/
+ReactModal.setAppElement("#root");
 
 ReactDOM.render(
   <>
@@ -38,9 +44,13 @@ ReactDOM.render(
           {/* <AlertModal />/ */}
           <PersistGate persistor={persistor}>
             <ThemeProvider theme={Theme}>
-              <Routes />
               <GlobalFonts />
               <GlobalStyles />
+              {/* 모달 통합 context */}
+              <ModalProvider>
+                <Routes />
+                <Modals />
+              </ModalProvider>
             </ThemeProvider>
           </PersistGate>
         </Provider>

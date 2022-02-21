@@ -11,6 +11,8 @@ import MTPlayerList from "./SubComponent/MTPlayerList";
 // styled components
 import * as table from "./styled/MTStyledTable";
 import * as layout from "./styled/MTStyledLayout";
+import { useModal } from "../../../../Hooks";
+import Modals, { modalList } from "../../../../Components/Modals/Modals";
 
 const S = { table, layout };
 
@@ -22,6 +24,16 @@ const exPlayerNickName = "Canyon";
 const exPlayerName = "김건부";
 
 const MTContent = () => {
+  const { openModal } = useModal();
+
+  const handleClick = () => {
+    openModal(modalList.myModal, {
+      onSubmit: () => {
+        console.log("비동기 로직을 수행한디야");
+      },
+    });
+  };
+
   return (
     <S.layout.Container>
       {/* 테이블 */}
@@ -53,6 +65,9 @@ const MTContent = () => {
               <span>우리팀 소속으로 솔로랭크를 확인할 선수를 등록하세요.</span>
             </div>
           </S.table.AddPlayerPopupButton>
+          <button onClick={handleClick} style={{ color: "white" }}>
+            모달 열기
+          </button>
         </S.table.TableBody>
       </S.table.Table>
     </S.layout.Container>
