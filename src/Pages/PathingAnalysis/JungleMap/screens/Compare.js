@@ -83,7 +83,7 @@ const Compare = () => {
       setOppTeam(e["team2"]);
 
       setTeamBlue(e["team1"].campRate.filter(team => team.side === "blue"))
-      setTeamRed(e["team1"].campRate.filter(team => team.side === "red"))
+      setTeamRed(e["team1"].campRate.filter(team => team.side === "red"))    
 
       setOppTeamBlue(e["team2"].campRate.filter(team => team.side === "blue"))
       setOppTeamRed(e["team2"].campRate.filter(team => team.side === "red"))
@@ -126,7 +126,7 @@ const Compare = () => {
                         block={false}
                       />
                       {junglevalue.team}
-                      정글 순서별 캠프 선택비율
+                      {t("video.jungle.campSelectionRate")}
                     </S.table.TableTitle>
                     <S.table.TableButtonGroup>
                       <Button
@@ -170,8 +170,8 @@ const Compare = () => {
                   <S.table.Table>
                     <thead>
                       <tr>
-                        <th>순위</th>
-                        <th colSpan={3}>순서별캠프선택 비율</th>
+                        <th>{t("video.jungle.rank")}</th>
+                        <th colSpan={3}>{t("video.jungle.selectionRate")}</th>
                       </tr>
                     </thead>
                     {teamSide === "blue" ?
@@ -274,7 +274,7 @@ const Compare = () => {
                         block={false}
                       />
                       {junglevalue.oppteam}
-                      정글 순서별 캠프 선택비율
+                      {t("video.jungle.campSelectionRate")}
                     </S.table.TableTitle>
                     <S.table.TableButtonGroup>
                       <Button
@@ -321,8 +321,8 @@ const Compare = () => {
                   <S.table.Table>
                     <thead>
                       <tr>
-                        <th>순위</th>
-                        <th colSpan={3}>순서별캠프선택 비율</th>
+                        <th>{t("video.jungle.rank")}</th>
+                        <th colSpan={3}>{t("video.jungle.selectionRate")}</th>
                       </tr>
                     </thead>
                     {oppTeamSide === "blue" ?
@@ -437,11 +437,15 @@ const Compare = () => {
                     <tr>
                       <td>{`${(team?.countRate[0]?.counter_jg*100).toFixed(2)}%`}</td>
                       <td>
+                        {team?.countRate[0]?.counter_jg*100 > oppTeam?.countRate[0]?.counter_jg*100 && 
                         <Arrow direction={"L"} />
+                        }
                       </td>
-                      <td>카운터정글비율</td>
+                      <td>{t("video.jungle.counterjungleRate")}</td>
                       <td>
+                      {team?.countRate[0]?.counter_jg*100 < oppTeam?.countRate[0]?.counter_jg*100 && 
                         <Arrow direction={"R"} />
+                      }
                       </td>
                       <td>{`${(oppTeam?.countRate[0]?.counter_jg*100).toFixed(2)}%`}</td>
                     </tr>
@@ -449,11 +453,15 @@ const Compare = () => {
                     <tr>
                       <td>{secToMin(team?.sixTime[0]?.realcount)}</td>
                       <td>
+                        {team?.sixTime[0]?.realcount > oppTeam?.sixTime[0]?.realcount &&
                         <Arrow direction={"L"} />
+                        }
                       </td>
-                      <td>6캠프 평균 정글링 시간</td>
+                      <td>{t("video.jungle.avgJunglingTimeForSixthCamp")}</td>
                       <td>
+                        {team?.sixTime[0]?.realcount < oppTeam?.sixTime[0]?.realcount &&
                         <Arrow direction={"R"} />
+                        }
                       </td>
                       <td>{secToMin(oppTeam?.sixTime[0]?.realcount)}</td>
                     </tr>

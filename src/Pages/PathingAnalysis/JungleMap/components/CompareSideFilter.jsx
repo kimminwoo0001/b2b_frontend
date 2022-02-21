@@ -1,5 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
+
 import { useState, useContext, useEffect, useRef } from "react";
 import { cx } from "@emotion/css";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,29 +13,7 @@ import axiosRequest from '../../../../lib/axios/axiosRequest';
 
 // redux action
 import {
-  League,
-  Year,
-  Season,
-  Team,
-  Player,
-  Patch,
-  ResetYear,
-  ResetSeason,
-  ResetTeam,
-  ResetPlayer,
-  Position,
-  ResetChampion,
-  HandleTab,
-  ResetFilter2,
-  PatchFull,
-  SetSeason,
-  SetYear,
   SetPatch,
-  SetLeague,
-  OppTeam,
-  Loading,
-  SetCheckedInputs,
-  CONVERTED_LEAGUE
 } from "../../../../redux/modules/filtervalue";
 
 import {
@@ -45,7 +25,7 @@ import {
   setYearFilter,
 } from "../../../../redux/modules/selectorvalue";
 import { SetModalInfo } from "../../../../redux/modules/modalvalue";
-import {JungleInit, SetFilterData, SetJunglePlayer, SetIsJunglingClicked} from '../../../../redux/modules/junglevalue';
+import {SetFilterData, SetIsJunglingClicked} from '../../../../redux/modules/junglevalue';
 
 
 // util
@@ -378,6 +358,21 @@ useEffect(() => {
   }, [oppChampInfo])
   
 
+
+
+  useEffect(() => {
+    if (junglevalue.player.length === 0) {
+      return;
+    }
+    const result = initializedFalseValue(selector.seasonFilter);
+
+    dispatch(SetFilterData({
+      ...junglevalue,
+      season: result,
+    }))
+  }, [selector.seasonFilter])
+
+
   // team
   useEffect(() => {
     fetchLeagueFilter(junglevalue.year);
@@ -427,11 +422,13 @@ useEffect(() => {
     if(junglevalue.patch.length === 0) {
       return;
     }
+
     if (isInitialMount.current) {
       isInitialMount.current = false;
     } else {
     GetChampion();
     }
+  
   },[junglevalue.patch])
 
   useEffect(() => {
@@ -457,7 +454,7 @@ useEffect(() => {
             <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
               <S.Title>
                 <S.TitleLabel>STEP 01</S.TitleLabel>
-                <S.Text>나의 팀 선택하기</S.Text>
+                <S.Text>{t("video.jungle.myTeam")}</S.Text>
               </S.Title>
             </AccordionSummary>
             <AccordionDetails>
@@ -476,7 +473,7 @@ useEffect(() => {
                     >
                       <DropdownLabel Label css={[dropdownStyle.select_head]}
                         >
-                        <S.SelectLabel>연도선택</S.SelectLabel>
+                        <S.SelectLabel>{t("video.jungle.selectYear")}</S.SelectLabel>
                       </DropdownLabel>
                       <DropdownList>
                         {selector.yearFilter?.map((year,idx) => {
@@ -502,7 +499,7 @@ useEffect(() => {
                       }}
                     >
                       <DropdownLabel css={[dropdownStyle.select_head]}>
-                        <S.SelectLabel>리그선택</S.SelectLabel>
+                        <S.SelectLabel>{t("video.jungle.selectLeague")}</S.SelectLabel>
                       </DropdownLabel>
                       <DropdownList>
                         {selector.leagueFilter?.map((league,idx) => {
@@ -530,7 +527,7 @@ useEffect(() => {
                       }}
                     >
                       <DropdownLabel css={[dropdownStyle.select_head]}>
-                        <S.SelectLabel>팀선택</S.SelectLabel>
+                        <S.SelectLabel>{t("video.jungle.selectTeam")}</S.SelectLabel>
                       </DropdownLabel>
                       <DropdownList>
                         {selector.teamFilter?.map((team,idx) => {
@@ -555,7 +552,7 @@ useEffect(() => {
                       }}
                     >
                       <DropdownLabel css={[dropdownStyle.select_head]}>
-                        <S.SelectLabel>선수선택</S.SelectLabel>
+                        <S.SelectLabel>{t("video.jungle.selectPlayer")}</S.SelectLabel>
                       </DropdownLabel>
                       <DropdownList>
                         {selector.playerFilter?.filter(player => player.position === "jng").map((player,idx)  => {
@@ -577,28 +574,36 @@ useEffect(() => {
                 <div className="group-row">
                   {/* 시즌 */}
                   <div className="group-col-1">
-                    <DropdownContainer
-                      label="season"
-                      onChange={(e) => {
-                        handleDropdownChange(e)
-                      }}
+                  <SRow >
+                    {/* <STitle>{t("video.jungle.season")}</STitle> */}
+                    <SFilterGroup>
+                   {junglevalue.player.length === 0 ? 
+                    <SInitialStatement> {t("video.jungle.selectSeason")}</SInitialStatement> : 
+                      <SCheckboxAll
+                      name="season"
+                      value="all"
+                      onChange={handleChange}
+                      checked={selector.seasonFilter.length > 0 && selector.seasonFilter.length === Object.keys(junglevalue.season).length && !Object.values(junglevalue.season).includes(false)}
                     >
-                      <DropdownLabel css={[dropdownStyle.select_head]}>
-                        <S.SelectLabel>시즌선택</S.SelectLabel>
-                      </DropdownLabel>
-                      <DropdownList>
+                    {t("video.jungle.selectAll")}
+                    </SCheckboxAll>
+                    }
+                    <SCheckboxWrapper>
                         {selector.seasonFilter?.map((season,idx) => {
                           return (
-                            <DropdownItem
-                            css={[dropdownStyle.select_item]}
+                            <Checkbox
+                            name="season"
                             value={season}
+                            onChange={handleChange}
+                            checked={junglevalue["season"][season]}
                           >
                             {season}
-                          </DropdownItem>
+                          </Checkbox>
                           )
-                        })}
-                      </DropdownList>
-                    </DropdownContainer>
+                        } )}
+                    </SCheckboxWrapper>
+                    </SFilterGroup>
+                </SRow>
                   </div>
                 </div>
               </S.SelectContainer>
@@ -608,11 +613,12 @@ useEffect(() => {
 
         {/* step2 : 상대 팀 */}
         <div css={{ marginBottom: 30 }}>
-          <Accordion act={junglevalue.season.length > 0 && !junglevalue.season.includes("")}>
+          {/* <Accordion act={junglevalue.season.length > 0 && !junglevalue.season.includes("")}> */}
+          <Accordion act={Object.keys(junglevalue.season).length !== 0 && Object.keys(junglevalue.season).filter(key => junglevalue.season[key] === true).length  > 0}>
             <AccordionSummary css={{ marginBottom: 13 }} onClick={() => {}}>
               <S.Title>
                 <S.TitleLabel>STEP 02</S.TitleLabel>
-                <S.Text>비교하고 싶은 팀 선택</S.Text>
+                <S.Text>{t("video.jungle.oppTeam")}</S.Text>
               </S.Title>
             </AccordionSummary>
             <AccordionDetails>
@@ -629,7 +635,7 @@ useEffect(() => {
                       }}
                     >
                       <DropdownLabel css={[dropdownStyle.select_head]}>
-                        <S.SelectLabel>연도 선택</S.SelectLabel>
+                        <S.SelectLabel>{t("video.jungle.selectYear")}</S.SelectLabel>
                       </DropdownLabel>
                       <DropdownList>
                         {selector.yearFilter?.map((year,idx)=> {
@@ -655,7 +661,7 @@ useEffect(() => {
                       }}
                     >
                       <DropdownLabel css={[dropdownStyle.select_head]}>
-                        <S.SelectLabel>리그 선택</S.SelectLabel>
+                        <S.SelectLabel>{t("video.jungle.selectLeague")}</S.SelectLabel>
                       </DropdownLabel>
                       <DropdownList>
                         {selector.leagueFilter?.map((league,idx) => {
@@ -683,7 +689,7 @@ useEffect(() => {
                       }}
                     >
                       <DropdownLabel css={[dropdownStyle.select_head]}>
-                        <S.SelectLabel>팀 선택</S.SelectLabel>
+                        <S.SelectLabel>{t("video.jungle.selectTeam")}</S.SelectLabel>
                       </DropdownLabel>
                       <DropdownList>
                         {selector.teamFilter?.map((oppteam, idx) => {
@@ -708,7 +714,7 @@ useEffect(() => {
                       }}
                     >
                       <DropdownLabel css={[dropdownStyle.select_head]}>
-                        <S.SelectLabel>선수 선택</S.SelectLabel>
+                        <S.SelectLabel>{t("video.jungle.selectPlayer")}</S.SelectLabel>
                       </DropdownLabel>
                       <DropdownList>
                         {selector.playerFilter?.filter(oppplayer => oppplayer.position === "jng").map((oppplayer,idx) => {
@@ -729,14 +735,44 @@ useEffect(() => {
                 <div className="group-row">
                   {/* 시즌 */}
                   <div className="group-col-1">
-                    <DropdownContainer
+                  <SRow >
+                    {/* <STitle>{t("video.jungle.season")}</STitle> */}
+                    <SFilterGroup>
+                   {junglevalue.oppplayer.length === 0 ? 
+                    <SInitialStatement> {t("video.jungle.selectSeason")}</SInitialStatement> : 
+                      <SCheckboxAll
+                      name="oppseason"
+                      value="all"
+                      onChange={handleChange}
+                      checked={selector.seasonFilter.length > 0 && selector.seasonFilter.length === Object.keys(junglevalue.oppseason).length && !Object.values(junglevalue.oppseason).includes(false)}
+                    >
+                    {t("video.jungle.selectAll")}
+                    </SCheckboxAll>
+                    }
+                    <SCheckboxWrapper>
+                        {selector.seasonFilter?.map((oppseason,idx) => {
+                          return (
+                            <Checkbox
+                            name="oppseason"
+                            value={oppseason}
+                            onChange={handleChange}
+                            checked={junglevalue["oppseason"][oppseason]}
+                          >
+                            {oppseason}
+                          </Checkbox>
+                          )
+                        } )}
+                    </SCheckboxWrapper>
+                    </SFilterGroup>
+                </SRow>
+                    {/* <DropdownContainer
                       label="oppseason"
                       onChange={(e) => {
                         handleDropdownChange(e);
                       }}
                     >
                       <DropdownLabel css={[dropdownStyle.select_head]}>
-                        <S.SelectLabel>시즌 선택</S.SelectLabel>
+                        <S.SelectLabel>{t("video.jungle.selectSeason")}</S.SelectLabel>
                       </DropdownLabel>
                       <DropdownList>
                         {selector.seasonFilter?.map((season,idx) => {
@@ -750,7 +786,7 @@ useEffect(() => {
                           )
                         })}
                       </DropdownList>
-                    </DropdownContainer>
+                    </DropdownContainer> */}
                   </div>
                 </div>
               </S.SelectContainer>
@@ -764,7 +800,7 @@ useEffect(() => {
             <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
               <S.Title>
                 <S.TitleLabel>STEP 03</S.TitleLabel>
-                <S.Text>패치 선택</S.Text>
+                <S.Text>{t("video.jungle.selectPatch")}</S.Text>
               </S.Title>
             </AccordionSummary>
             <AccordionDetails>
@@ -808,7 +844,7 @@ useEffect(() => {
                   size={20}
                   block={false}
                 />}
-                  {junglevalue.team} 플레이한 챔피언 선택
+                  {junglevalue.team} {t("video.jungle.champLabel")}
                 </S.Text>
               </S.Title>
             </AccordionSummary>
@@ -823,9 +859,9 @@ useEffect(() => {
                       checked={Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === false).length === 0}
                     />
                   </S.Col1>
-                  <S.Col2>챔피언(경기수)</S.Col2>
-                  <S.Col3>진영별</S.Col3>
-                  <S.Col3>경기수</S.Col3>
+                  <S.Col2>{`${t("video.jungle.champTitle")}(${t("video.jungle.numOfMatches")})`}</S.Col2>
+                  <S.Col3>{t("video.jungle.numOfMatches")}</S.Col3>
+                  <S.Col3>{t("video.jungle.matchesBySide")}</S.Col3>
                 </S.Head>
 
                 <S.Body>
@@ -881,7 +917,7 @@ useEffect(() => {
                   block={false}
                 />
                   }
-                  {junglevalue.oppteam} 플레이한 챔피언 선택
+                  {junglevalue.oppteam} {t("video.jungle.champLabel")}
                 </S.Text>
               </S.Title>
             </AccordionSummary>
@@ -895,9 +931,9 @@ useEffect(() => {
                       onChange={handleChange}
                       checked={Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === false).length === 0}/>
                   </S.Col1>
-                  <S.Col2>챔피언(경기수)</S.Col2>
-                  <S.Col3>진영별</S.Col3>
-                  <S.Col3>경기수</S.Col3>
+                  <S.Col2>{`${t("video.jungle.champTitle")}(${t("video.jungle.numOfMatches")})`}</S.Col2>
+                  <S.Col3>{t("video.jungle.numOfMatches")}</S.Col3>
+                  <S.Col3>{t("video.jungle.matchesBySide")}</S.Col3>
                 </S.Head>
 
                 <S.Body>
@@ -953,10 +989,61 @@ useEffect(() => {
             typoStyle.body,
           ]}
         >
-          정글링 비교하기
+          {t("video.jungle.compareJungling")}
         </Button>
       </S.ButtonContainer>
     </S.Wrapper>
   );
 };
 export default CompareSideFilter;
+
+
+
+const SRow = styled.div`
+  display: ${props => props.toggleFoldBtn ? "none" : "flex"};
+  align-items: center;
+  margin-bottom: 10px;
+`;
+const STitle = styled.div`
+  flex: 1;
+`;
+
+const SCheckboxAll = styled(Checkbox)`
+  opacity: ${props => props.name === "year" || props.name === "team" ? 0.3 : 1};
+  
+
+`;
+
+const SInitialStatement = styled.div`
+opacity: 0.3;
+margin: 5px 0 0 5px;
+`;
+
+const SFilterGroup = styled.div`
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* flex-flow: wrap; */
+
+  width: 335px;
+  min-height: 34px;
+  ${typoStyle.contents}
+
+  border-radius: 10px;
+  background-color: #23212a;
+  /* background-color: ${(props) => props.theme.colors.bg_box}; */
+  padding: 10px;
+
+  label {
+    margin-right: 22px;
+  }
+
+  ${SCheckboxAll} {
+    margin-bottom: 16px;
+  
+  }
+`;
+
+
+const SCheckboxWrapper = styled.div`
+flex:1
+`;

@@ -1,5 +1,3 @@
-import { RESET_LEAGUE } from "./filtervalue";
-
 export const JUNGLE_INIT = "junglevalue/Jungle_INIT"
 export const SET_FILTER_DATA = "junglevalue/SET_FILTER_DATA";
 export const SET_JUNGLE_PLAYER ="junglevalue/SET_JUNGLE_PLAYER";

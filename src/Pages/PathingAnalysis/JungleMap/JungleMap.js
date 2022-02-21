@@ -8,11 +8,13 @@ import { useDispatch } from "react-redux";
 
 import Compare from "./screens/Compare";
 import Sequence from "./screens/Sequence";
+import AlertModal from "../../../Components/UtilityComponent/AlertModal";
 import { JungleInit } from "../../../redux/modules/junglevalue";
 
 // subtab data
 
 const JungleMap = () => {
+  
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const JungleTab = [
@@ -20,8 +22,9 @@ const JungleMap = () => {
     { title: t("video.jungle.CompareJungling"), component: <Compare /> },
   ];
   const { currentIndex, currentTab, setIndex } = useTab(0, JungleTab);
-  console.log("--------------", currentTab);
   return (
+    <>
+    <AlertModal />
     <SContainer>
       <STab>
         {JungleTab.map((tab, index) => (
@@ -40,6 +43,7 @@ const JungleMap = () => {
       </STab>
       <SContents>{currentTab.component}</SContents>
     </SContainer>
+    </>
   );
 };
 
