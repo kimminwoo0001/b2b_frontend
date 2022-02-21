@@ -96,115 +96,18 @@ function LeaguePick() {
     }
   };
 
-  // // week 데이터 fetch 함수
-  // const getPickData = () => {
-  //   dispatch(Loading(true));
-  //   //  선택된 리그가 없을 시 api호출 X
-  //   if (filters.league.length === 0
-  //     && filters.year.length === 0
-  //     && filters.season.length === 0
-  //     && filters.patch.length === 0
-  //   ) {
-  //     return;
-  //   }
-  //   const gml = new Date().getTimezoneOffset();
-  //   let url = `${API}/lolapi/league/pick`;
-  //   let params = {
-  //     league: filters.league,
-  //     year: filters.year,
-  //     season: filters.season,
-  //     patch: filters.patch,
-  //     position: queryPosition,
-  //     startTime: calendar.startDate,
-  //     endTime: calendar.endDate,
-  //     gml: gml,
-  //     token: user.token,
-  //     id: user.id,
-  //   };
-
-  //   axiosRequest(
-  //     undefined,
-  //     url,
-  //     params,
-  //     function (e) {
-  //       //주요픽 데이터 저장
-  //       setImportantPicks(e.importantPick);
-  //       //주요픽간의전적 저장
-  //       setPickDifference(e.pickDiff);
-  //       //챔피언 티어 저장
-  //       setTier(e.championTier);
-  //       //유니크픽 데이터 저장
-  //       setUniquePick(e.uniquePick);
-  //       dispatch(Loading(false))
-  //     },
-  //     function (objStore) {
-  //       dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
-  //       dispatch(Loading(false))
-  //     }
-  //   )
-  // };
-
-  // const getCalendarFilteData = () => {
-  //   //  선택된 리그가 없을 시 api호출 X
-  //   if (filters.league.length === 0) {
-  //     return;
-  //   }
-
-  //   const gml = new Date().getTimezoneOffset();
-  //   let url = `${API}/lolapi/filter/schedule`;
-  //   let params = {
-  //     league: filters.league,
-  //     year: filters.year,
-  //     season: filters.season,
-  //     gml: gml,
-  //     token: user.token,
-  //     id: user.id,
-  //   };
-
-  //   axiosRequest(
-  //     undefined,
-  //     url,
-  //     params,
-  //     function (e) {
-  //       const start = e[0].date;
-  //       const end = e[e.length - 1].date
-  //       const leapYear = getLeafYaer(filters.year);
-  //       const startIdx = (getMonthDays(+start.split("-")[1] - 1, getMonthDayList(leapYear))) + +start.split("-")[2] - 1
-  //       const endIdx = (getMonthDays(+end.split("-")[1] - 1, getMonthDayList(leapYear))) + +end.split("-")[2] - 1
-
-  //       for (let i = 0; i < e.length; i++) {
-  //         const date = e[i].date;
-  //         const index = (getMonthDays(+date.split("-")[1] - 1, getMonthDayList(leapYear))) + +date.split("-")[2] - 1;
-  //         e[i].index = index;
-  //         console.log(index)
-  //         //res.push(e[i]);
-  //       }
-
-
-  //       batch(() => {
-  //         dispatch(SetCalendarInfo(e));
-  //         dispatch(SetCalendarStartDate(e[0].date));
-  //         dispatch(SetCalendarEndDate(e[e.length - 1].date));
-  //         dispatch(SetCalendarDayStartIdx(startIdx))
-  //         dispatch(SetCalendarDayEndIdx(endIdx))
-  //         dispatch(SetCalendarSeasonStartDate(e[0].date))
-  //         dispatch(SetCalendarSeasonEndDate(e[e.length - 1].date))
-  //       })
-  //     },
-  //     function (objStore) {
-  //       dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
-  //     }
-  //   )
-  // }
-
-  // // week 데이터 fetch 함수
-  const fetchingPickData = () => {
+  // week 데이터 fetch 함수
+  const getPickData = () => {
     dispatch(Loading(true));
     //  선택된 리그가 없을 시 api호출 X
-    if (filters.league.length === 0) {
+    if (filters.league.length === 0
+      && filters.year.length === 0
+      && filters.season.length === 0
+      && filters.patch.length === 0
+    ) {
       return;
     }
-
+    const gml = new Date().getTimezoneOffset();
     let url = `${API}/lolapi/league/pick`;
     let params = {
       league: filters.league,
@@ -212,6 +115,9 @@ function LeaguePick() {
       season: filters.season,
       patch: filters.patch,
       position: queryPosition,
+      startTime: calendar.startDate,
+      endTime: calendar.endDate,
+      gml: gml,
       token: user.token,
       id: user.id,
     };
@@ -229,24 +135,118 @@ function LeaguePick() {
         setTier(e.championTier);
         //유니크픽 데이터 저장
         setUniquePick(e.uniquePick);
+        dispatch(Loading(false))
+      },
+      function (objStore) {
+        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        dispatch(Loading(false))
+      }
+    )
+  };
+
+  const getCalendarFilteData = () => {
+    //  선택된 리그가 없을 시 api호출 X
+    if (filters.league.length === 0) {
+      return;
+    }
+
+    const gml = new Date().getTimezoneOffset();
+    let url = `${API}/lolapi/filter/schedule`;
+    let params = {
+      league: filters.league,
+      year: filters.year,
+      season: filters.season,
+      gml: gml,
+      token: user.token,
+      id: user.id,
+    };
+
+    axiosRequest(
+      undefined,
+      url,
+      params,
+      function (e) {
+        const start = e[0].date;
+        const end = e[e.length - 1].date
+        const leapYear = getLeafYaer(filters.year);
+        const startIdx = (getMonthDays(+start.split("-")[1] - 1, getMonthDayList(leapYear))) + +start.split("-")[2] - 1
+        const endIdx = (getMonthDays(+end.split("-")[1] - 1, getMonthDayList(leapYear))) + +end.split("-")[2] - 1
+
+        for (let i = 0; i < e.length; i++) {
+          const date = e[i].date;
+          const index = (getMonthDays(+date.split("-")[1] - 1, getMonthDayList(leapYear))) + +date.split("-")[2] - 1;
+          e[i].index = index;
+          console.log(index)
+          //res.push(e[i]);
+        }
+
+
+        batch(() => {
+          dispatch(SetCalendarInfo(e));
+          dispatch(SetCalendarStartDate(e[0].date));
+          dispatch(SetCalendarEndDate(e[e.length - 1].date));
+          dispatch(SetCalendarDayStartIdx(startIdx))
+          dispatch(SetCalendarDayEndIdx(endIdx))
+          dispatch(SetCalendarSeasonStartDate(e[0].date))
+          dispatch(SetCalendarSeasonEndDate(e[e.length - 1].date))
+        })
       },
       function (objStore) {
         dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
       }
-    ).finally(dispatch(Loading(false)));
-  };
+    )
+  }
+
+  // // // week 데이터 fetch 함수
+  // const fetchingPickData = () => {
+  //   dispatch(Loading(true));
+  //   //  선택된 리그가 없을 시 api호출 X
+  //   if (filters.league.length === 0) {
+  //     return;
+  //   }
+
+  //   let url = `${API}/lolapi/league/pick`;
+  //   let params = {
+  //     league: filters.league,
+  //     year: filters.year,
+  //     season: filters.season,
+  //     patch: filters.patch,
+  //     position: queryPosition,
+  //     token: user.token,
+  //     id: user.id,
+  //   };
+
+  //   axiosRequest(
+  //     undefined,
+  //     url,
+  //     params,
+  //     function (e) {
+  //       //주요픽 데이터 저장
+  //       setImportantPicks(e.importantPick);
+  //       //주요픽간의전적 저장
+  //       setPickDifference(e.pickDiff);
+  //       //챔피언 티어 저장
+  //       setTier(e.championTier);
+  //       //유니크픽 데이터 저장
+  //       setUniquePick(e.uniquePick);
+  //     },
+  //     function (objStore) {
+  //       dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+  //     }
+  //   ).finally(dispatch(Loading(false)));
+  // };
 
   useEffect(() => {
-    // if (calendar.endDate.length > 0 && filters.patch.length > 0) {
-    //   getPickData() 
-    // }
-    fetchingPickData();
+    if (calendar.endDate.length > 0 && filters.patch.length > 0) {
+      getPickData()
+    }
+    //fetchingPickData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryPosition, filters.patch]);
 
-  // useEffect(() => {
-  //   getCalendarFilteData();
-  // }, [])
+  useEffect(() => {
+    getCalendarFilteData();
+  }, [])
 
   useEffect(() => {
     if (isInitialMount2.current) {
@@ -259,7 +259,7 @@ function LeaguePick() {
 
   return (
     <LeaguePickWrapper>
-      {/* <CalendarFilterNav /> */}
+      <CalendarFilterNav />
       <LeaguePickTabs changeColor={positionTab}>
         <TabItem
           onClick={() => setPositionTab(0)}

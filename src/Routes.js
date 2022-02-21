@@ -53,12 +53,9 @@ function Routes() {
       "memberId": user.id, //fill with user id
       "profile": {
         "name": user.name, //fill with user name
-        "teamName": user.teamName ?? "Developer",
+        "teamName": user.teamName,
         "email": user.id,
         "lastPage": window.location.pathname,
-        // "mobileNumber": "YOUR_USER_MOBILE_NUMBER", //fill with user phone number
-        // "CUSTOM_VALUE_1": "VALUE_1", //any other custom meta data
-        // "CUSTOM_VALUE_2": "VALUE_2"
       },
     });
   }
