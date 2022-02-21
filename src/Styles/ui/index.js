@@ -11,6 +11,7 @@ import colors from "./colors";
 import borderRadiusStyle from "./borderRadius_style";
 import inputStyle from "./input_style";
 import fontsStyle from "./fonts_style";
+import modalStyle from "./modal_style";
 
 export {
   colors,
@@ -26,4 +27,5 @@ export {
   borderRadiusStyle,
   inputStyle,
   fontsStyle,
+  modalStyle,
 };

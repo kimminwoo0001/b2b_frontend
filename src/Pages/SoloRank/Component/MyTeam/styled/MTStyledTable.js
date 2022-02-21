@@ -146,7 +146,6 @@ export const Star = styled(CustomCheckBox)`
 // 테이블 바디 - col2 정렬필터
 export const OpenList = styled.li`
   position: relative;
-  z-index: 1;
   display: flex;
   ${borderRadiusStyle[20]}
   ${spacing.paddingY(3)}
