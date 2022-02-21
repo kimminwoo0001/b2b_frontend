@@ -491,6 +491,7 @@
       "step3": "오브젝트 설정",
       "step4": "포지션 설정",
       "apply": "동선 확인하기",
+      "team": "팀",
       "player": "선수 선택",
       "champ": "챔피언",
       "team2": "상대 팀",
@@ -556,11 +557,11 @@
       "email_check": "이메일 형식이 올바르지 않습니다.",
       "login_fail": "로그인 실패 : 시간 제한이 초과되었습니다.",
       "serverError": "서버에 문제가 생겼습니다. 관리자에게 문의해주세요.",
-      "questionCancel": "취소하시겠습니까?",
-      "questionContinue": "계속하시겠습니까?",
       "tryLoginAgain": "이전 로그인 계정을 로그아웃 하였습니다.",
       "loginTimeOver": "계정의 사용 기간이 만료되었습니다.",
-      "MasterKey": "키 인증이 필요합니다."
+      "MasterKey": "키 인증이 필요합니다.",
+      "questionCancel": "취소하시겠습니까?",
+      "questionContinue": "계속하시겠습니까?"
     }
   },
   "label": {

@@ -16,7 +16,35 @@
     "part9": "Compare Players",
     "part10": "Item Simulator",
     "part11": "Team WR Calculator",
-    "part12": "Pro Game Analysis"
+    "part12": "Pro Game Analysis",
+    "part13": "Solo Rank",
+    "part14": "Item Calculator"
+  },
+  "common": {
+    "label": {
+      "recent": "Recent",
+      "game": "Game",
+      "player": "Player",
+      "winrate": "WinRate",
+      "ID": "ID"
+    },
+    "button": {
+      "add": "add"
+    },
+    "date": {
+      "year": "y",
+      "month": "m",
+      "day": "d",
+      "weekDays": {
+        "mon": "mon",
+        "tue": "tue",
+        "wed": "wed",
+        "thu": "thu",
+        "fri": "fri",
+        "sat": "sat",
+        "sun": "sun"
+      }
+    }
   },
   "sign": {
     "signUp": "Sign up",
@@ -422,7 +450,8 @@
       "ward": "Ward",
       "object": "Object Pathing",
       "games": "Game Pathing",
-      "heatmap": "Heatmap"
+      "heatmap": "Heatmap",
+      "jungle": "Jungle Pathing"
     },
     "vision": {
       "teamview": "Team-wide View",
@@ -510,7 +539,8 @@
       "3min": "0'-3'",
       "8min": "3'-8'",
       "side": "SIDE"
-    }
+    },
+    "jungle": {}
   },
   "alert": {
     "login": {
@@ -518,7 +548,8 @@
     },
     "logout": {
       "sessionExpires": "Your account validity time has expired and moves to the login page.",
-      "loginFail": "Invalid ID or Password. Please try again."
+      "loginFail": "Invalid ID or Password. Please try again.",
+      "duplication": "Duplicate login is confirmed and logged out."
     },
     "label": {
       "confirm": "Confirm",
@@ -532,7 +563,9 @@
       "serverError": "There is a problem with the server. Please contact the manager.",
       "tryLoginAgain": "You have logged out of your previous login account.\nPlease log in again.",
       "loginTimeOver": "Your account has expired.",
-      "MasterKey": "Key authentication is required."
+      "MasterKey": "Key authentication is required.",
+      "questionCancel": "Do you want to cancel?",
+      "questionContinue": "Will you continue??"
     }
   },
   "label": {
@@ -586,7 +619,26 @@
       },
       "status": {
         "subject": "Status Log",
-        "tooltipInfo": "Status logs after 15 minutes of game time are not yet supported."
+        "tooltipInfo": "Status logs after 15 minutes of game time are not yet supported.",
+        "ganking": {
+          "title": "Ganking",
+          "desc": "에 갱킹을 시도합니다."
+        },
+        "roaming": {
+          "title": "Roaming",
+          "desc": "에 로밍을 시도합니다."
+        },
+        "teamfight": {
+          "title": "Tean Fight"
+        },
+        "invade": {
+          "title": "Invade"
+        },
+        "teleport": {
+          "title": "Teleport",
+          "particicle": "이(가)",
+          "desc": "텔레포트를 사용합니다."
+        }
       },
       "detail": {
         "subject": "Detail Log"
@@ -626,7 +678,84 @@
         "tower": "Tower",
         "herald&baron": "Object",
         "dragon": "Dragon",
-        "tooltipInfo": "Data after 15 minutes is not yet supported."
+        "tooltipInfo": "Data after 15 minutes is not yet supported.",
+        "InLane": ""
+      }
+    },
+    "teamStatus": {
+      "player": {
+        "Ambush": "부쉬에 숨음",
+        "Diving": "다이브",
+        "TowerHugging": "타워 허깅",
+        "OppTowerPushing": "타워 푸쉬",
+        "Ganking": "Ganking",
+        "Dealt": "딜 교환",
+        "Dealing": "딜 교환",
+        "MovingToLane": "라인 복귀",
+        "Roaming": "Roaming",
+        "Jungling": "Jungling",
+        "CounterJungling": "카운터 정글",
+        "Dead": "죽음",
+        "TeleportToLane": "텔레포트",
+        "TeleportToOther": "텔레포트",
+        "InLane": "라인전"
+      }
+    },
+    "banPick": {
+      "firstPick": {
+        "top": "탑 선픽",
+        "jng": "정글 선픽",
+        "mid": "미드 선픽",
+        "ad": "원딜 선픽",
+        "sup": "서폿 선픽"
+      }
+    }
+  },
+  "soloRank": {
+    "tab": {
+      "myTeam": "우리팀 솔로랭크",
+      "filterSearch": "필터검색",
+      "interestedPlayer": "관심선수 솔로랭크"
+    },
+    "myTeam": {
+      "label": {
+        "leagueInfo": "리그정보",
+        "teamLogo": "팀 로고",
+        "teamAbbr": "팀 약자",
+        "teamName": "팀 이름",
+        "addInterestedPlayer": "관심선수 등록",
+        "soloRankID": "솔로랭크 ID",
+        "curTier8prevTier": "현재 티어 LP \n(이전 시즌 티어)",
+        "curSeason": "이번 시즌",
+        "recentDays": "최근 ##일",
+        "daysPlayedCham": "최근 ##일간\n플레이한 챔피언"
+      }
+    }
+  },
+  "utility": {
+    "calendarFilter": {
+      "dateSet": "날짜 설정",
+      "inputStart": "시작일 입력",
+      "inputEnd": "종료일 입력",
+      "date": {
+        "allSeason": "시즌 전체",
+        "recent3days": "최근 3일",
+        "recent5days": "최근 5일",
+        "recent7days": "최근 7일",
+        "recent15days": "최근 15일",
+        "recent1months": "최근 1개월",
+        "recent3months": "최근 3개월"
+      },
+      "selectedStartDay": "시작일 선택 완료",
+      "selectedEndDay": "종료일 선택 완료",
+      "desc": {
+        "noStartIdx": "시작일을 선택이 필요합니다.",
+        "noEndIdx": "종료일을 선택이 필요합니다.",
+        "needStartIdx": "시작일을 먼저 선택해야 합니다.",
+        "wrongDate": "사용 가능한 날짜를 선택해야합니다.",
+        "changeToStartSeason": "시작일을 시즌의 시작일로 수정합니다.",
+        "changeToEndSeason": "종료일을 시즌의 종료일로 수정합니다.",
+        "changeToAllSeason": "시작일과 종료일을 시즌의 시작일과 종료일로 수정합니다."
       }
     }
   }
