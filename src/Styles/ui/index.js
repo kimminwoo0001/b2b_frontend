@@ -12,6 +12,7 @@ import borderRadiusStyle from "./borderRadius_style";
 import inputStyle from "./input_style";
 import fontsStyle from "./fonts_style";
 import modalStyle from "./modal_style";
+import { boxshadowStyle } from "./boxshadow_style";
 
 export {
   colors,
@@ -28,4 +29,5 @@ export {
   inputStyle,
   fontsStyle,
   modalStyle,
+  boxshadowStyle,
 };
