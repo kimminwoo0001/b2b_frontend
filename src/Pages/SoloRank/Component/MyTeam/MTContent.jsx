@@ -25,6 +25,7 @@ const exPlayerName = "김건부";
 
 const MTContent = () => {
   const { openModal } = useModal();
+  const { t } = useTranslation();
 
   const handleClick = () => {
     openModal(modalList.addTeamPlayer, {
@@ -61,8 +62,8 @@ const MTContent = () => {
           <S.table.AddPlayerPopupButton onClick={handleClick}>
             <span>+</span>
             <div>
-              <h5>우리팀 소속 선수 등록</h5>
-              <span>우리팀 소속으로 솔로랭크를 확인할 선수를 등록하세요.</span>
+              <h5>{t("soloRank.myTeam.label.addPlayer")}</h5>
+              <span>{t("soloRank.myTeam.desc.addPlayer")}</span>
             </div>
           </S.table.AddPlayerPopupButton>
         </S.table.TableBody>

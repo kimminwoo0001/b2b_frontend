@@ -60,7 +60,7 @@ const MTPlayerHeader = ({ id }) => {
         {isOpen ? (
           // 오픈 ui
           <>
-            {Array(8)
+            {Array(6)
               .fill(1)
               .map((_, i) => (
                 <S.OpenList key={"header" + i}>
@@ -75,8 +75,10 @@ const MTPlayerHeader = ({ id }) => {
                   </div>
                   {/* 이번시즌 */}
                   <div className="table-col4">
-                    <span>{`${1042}경기`}</span>
-                    <span>{`${580}승 ${449}패`}</span>
+                    <span>{`${1042}${t("common.label.game")}`}</span>
+                    <span>{`${580}${t("common.label.win")} ${449}${t(
+                      "common.label.lose"
+                    )}`}</span>
                   </div>
                   {/* 시즌 승률 */}
                   <div className="table-col5">
