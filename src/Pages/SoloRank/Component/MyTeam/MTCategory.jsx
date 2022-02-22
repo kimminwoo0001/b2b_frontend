@@ -147,6 +147,7 @@ const MTCategory = () => {
                 {inquireDayList.map((day) => {
                   return (
                     <DropdownItem
+                      key={day + "일"}
                       css={[dropdownStyle.select_item]}
                       value={day}
                       label={`최근 ${day}일`}

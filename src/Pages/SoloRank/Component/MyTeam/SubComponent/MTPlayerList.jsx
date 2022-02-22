@@ -61,8 +61,8 @@ const MTPlayerHeader = ({ id }) => {
           <>
             {Array(8)
               .fill(1)
-              .map(() => (
-                <S.OpenList>
+              .map((_, i) => (
+                <S.OpenList key={"header" + i}>
                   {/* 아이디 */}
                   <div className="table-col2">
                     <span css={typoStyle.noWrap}>{`DK SHOWMAKER`}</span>

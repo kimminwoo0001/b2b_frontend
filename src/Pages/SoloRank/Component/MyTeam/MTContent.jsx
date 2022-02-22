@@ -27,7 +27,7 @@ const MTContent = () => {
   const { openModal } = useModal();
 
   const handleClick = () => {
-    openModal(modalList.myModal, {
+    openModal(modalList.addTeamPlayer, {
       onSubmit: () => {
         console.log("비동기 로직을 수행한디야");
       },
