@@ -1,21 +1,20 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 
 import * as S from "../styled/MTStyledTable";
-import Button from "../../../../../Components/Ui/Button";
 import IconStar from "../../../../../Components/Ui/Icons/IconStar";
 import Avatar from "../../../../../Components/Ui/Avatar";
 import Arrow from "../../../../../Components/Ui/Arrow";
 import IconDel from "../../../../../Components/Ui/Icons/IconDel";
 import { typoStyle } from "../../../../../Styles/ui";
-
-import { AnimatePresence } from "framer-motion";
+import { useModal } from "../../../../../Hooks";
+import { modalList } from "../../../../../Components/Modals/Modals";
 
 const MTPlayerHeader = ({ id }) => {
   const { t } = useTranslation();
+  const { openModal } = useModal();
 
   // 선수id로 솔로랭크 조회
   // ui 열고 닫기 상태
@@ -28,15 +27,17 @@ const MTPlayerHeader = ({ id }) => {
     console.log(name, checked, value);
     setIsLike(checked);
   };
-
   // 선수삭제
   const handleDelete = (e) => {
     console.log("선수아이디를 삭제하는 기능");
   };
-
   // 선수등록
-  const handleAddPlayer = () => {
-    console.log("선수등록 ㄱㄱ");
+  const handleClickModalOpen = () => {
+    openModal(modalList.addSolorankID, {
+      onSubmit: () => {
+        console.log("submit시 action을 등록");
+      },
+    });
   };
 
   return (
@@ -54,7 +55,7 @@ const MTPlayerHeader = ({ id }) => {
         </S.InfoId>
       </div>
 
-      {/* 솔로랭크 정보 */}
+      {/* col-2 솔로랭크 정보 */}
       <ul className="table-item-col2">
         {isOpen ? (
           // 오픈 ui
@@ -98,8 +99,8 @@ const MTPlayerHeader = ({ id }) => {
                 </S.OpenList>
               ))}
 
-            {/* 선수 추가 ui */}
-            <S.AddPlayer onClick={handleAddPlayer}>
+            {/* 버튼 - 선수 추가 modal */}
+            <S.AddPlayer onClick={handleClickModalOpen}>
               <button>+</button>
               <div>
                 <p>솔로랭크 ID 추가</p>
@@ -140,7 +141,7 @@ const MTPlayerHeader = ({ id }) => {
         )}
       </ul>
 
-      {/* 최근 30일간 플레이한 챔피언 */}
+      {/* col3 - 최근 30일간 플레이한 챔피언 */}
       <S.ChampList className="table-item-col3" isOpen={isOpen}>
         {/* #반복 - 챔피언 리스트 */}
         <S.ChampListItem>
@@ -190,32 +191,9 @@ const MTPlayerHeader = ({ id }) => {
             </S.ChampInfoText>
           </S.ChampInfo>
         </S.ChampListItem>
-
-        <S.ChampListItem>
-          <S.ChampInfo>
-            {isOpen && <S.ChampLabel>Most 1</S.ChampLabel>}
-            <S.ChampInfoText>
-              <Avatar
-                size={isOpen ? 34 : 24}
-                src="images/champion/nunu.png"
-                alt="누누"
-              />
-              <div>
-                {isOpen && <h6>블라디미르</h6>}
-                {isOpen ? (
-                  <p css={typoStyle.noWrap}>
-                    {`${100}경기 ${50}승 ${50}패`}
-                    <em>{` ${(5 / 10) * 100}%`}</em>
-                  </p>
-                ) : (
-                  <p>{`${100}경기`}</p>
-                )}
-              </div>
-            </S.ChampInfoText>
-          </S.ChampInfo>
-        </S.ChampListItem>
       </S.ChampList>
 
+      {/* 우측버튼 - close <-> open */}
       <S.ToggleMenuButton onClick={() => setIsOpen(!isOpen)}>
         <Arrow direction={isOpen ? "T" : "B"} size={5}></Arrow>
       </S.ToggleMenuButton>

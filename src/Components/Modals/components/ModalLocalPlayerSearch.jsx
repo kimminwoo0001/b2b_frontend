@@ -1,5 +1,7 @@
-import styled from "@emotion/styled/macro";
 import React from "react";
+import styled from "@emotion/styled/macro";
+import { AnimatePresence, motion } from "framer-motion";
+// ui style, component
 import {
   borderRadiusStyle,
   boxshadowStyle,
@@ -56,28 +58,32 @@ const ModalLocalPlayerSearch = React.forwardRef(
           )}
         </div>
 
-        {isOpen && (
-          <OptionList>
-            {options.map((player) => (
-              <OptionItem key={player.id} onClick={() => handleClick(player)}>
-                <TeamLogo>
-                  <Avatar src={player.logo} alt={player.team} size={20} />
-                  <span>{player.team}</span>
-                </TeamLogo>
-                <PlayerInfo>
-                  <span>
-                    {player.id}&nbsp;({player.name})
-                  </span>
-                </PlayerInfo>
-              </OptionItem>
-            ))}
-          </OptionList>
-        )}
+        {/* 옵션 선택 박스 */}
+        <AnimatePresence>
+          {isOpen && (
+            <OptionList>
+              {options.map((player) => (
+                <OptionItem key={player.id} onClick={() => handleClick(player)}>
+                  <TeamLogo>
+                    <Avatar src={player.logo} alt={player.team} size={20} />
+                    <span>{player.team}</span>
+                  </TeamLogo>
+                  <PlayerInfo>
+                    <span>
+                      {player.id}&nbsp;({player.name})
+                    </span>
+                  </PlayerInfo>
+                </OptionItem>
+              ))}
+            </OptionList>
+          )}
+        </AnimatePresence>
       </Container>
     );
   }
 );
 
+/* 스타일  */
 const Container = styled.div`
   position: relative;
 
@@ -113,8 +119,8 @@ const Container = styled.div`
     top: 50%;
   }
 `;
-
-const OptionList = styled.ul`
+/* 스타일 - 옵션 리스트관련 */
+const OptionList = styled(motion.ul)`
   position: absolute;
   z-index: 1;
   ${spacing.marginT(1)};
@@ -129,7 +135,6 @@ const OptionList = styled.ul`
   ${borderRadiusStyle[10]};
   ${boxshadowStyle.modal};
 `;
-
 const OptionItem = styled.li`
   ${typoStyle.contents}
   ${spacing.paddingY(2)};
@@ -144,16 +149,14 @@ const OptionItem = styled.li`
     background-color: ${colors.text_hover};
   }
 `;
-
 const TeamLogo = styled.div`
   flex: 1;
   display: flex;
-  margin-right: 37px;
+
   > div:first-of-type {
     ${spacing.marginR(2)};
   }
 `;
-
 const PlayerInfo = styled.div`
   flex: 2.1;
 `;

@@ -29,7 +29,7 @@ const MTContent = () => {
   const handleClick = () => {
     openModal(modalList.addTeamPlayer, {
       onSubmit: () => {
-        console.log("비동기 로직을 수행한디야");
+        console.log("submit시 action을 등록");
       },
     });
   };
@@ -58,16 +58,13 @@ const MTContent = () => {
             name={exPlayerName}
           />
 
-          <S.table.AddPlayerPopupButton>
+          <S.table.AddPlayerPopupButton onClick={handleClick}>
             <span>+</span>
             <div>
               <h5>우리팀 소속 선수 등록</h5>
               <span>우리팀 소속으로 솔로랭크를 확인할 선수를 등록하세요.</span>
             </div>
           </S.table.AddPlayerPopupButton>
-          <button onClick={handleClick} style={{ color: "white" }}>
-            모달 열기
-          </button>
         </S.table.TableBody>
       </S.table.Table>
     </S.layout.Container>

@@ -1,10 +1,19 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
-import styled from "@emotion/styled";
-import { useState } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import ReactModal from "react-modal";
-import ModalLocalPlayerSearch from "../components/ModalLocalPlayerSearch";
+// lib
 import { getPositon } from "../../../lib/getPosition";
+import { debounce } from "../../../lib/debounce";
+// hook
+import { useDetectOutsideClick } from "../../../Hooks";
+// component
+import IconDel from "../../Ui/Icons/IconDel";
+import ModalLocalPlayerSearch from "../components/ModalLocalPlayerSearch";
+import ModalPlayerSearch from "../components/ModalPlayerSearch";
+import PositionCheckList from "../../Ui/PositionCheckList";
+// style
+import styled from "@emotion/styled";
 import {
   colors,
   inputStyle,
@@ -12,16 +21,7 @@ import {
   spacing,
   typoStyle,
 } from "../../../Styles/ui";
-import IconDel from "../../Ui/Icons/IconDel";
-import PositionCheckList from "../../Ui/PositionCheckList";
-import ModalPlayerSearch from "../components/ModalPlayerSearch";
-
 import * as layout from "../styled/styled_modal_layout";
-import { useCallback } from "react";
-import { useRef } from "react";
-import { useEffect } from "react";
-import { debounce } from "../../../lib/debounce";
-import { useDetectOutsideClick } from "../../../Hooks";
 
 // 샘플데이터
 const playerList = [
@@ -61,10 +61,9 @@ const S = {
 };
 
 const ModalAddTeamPlayer = ({ onSubmit, onClose }) => {
-  // useDetect ouside click
+  // hook
   const searchInputRef = useRef(null);
-
-  // state
+  // state - input
   const [nickname, setNickname] = useState("");
   const [name, setName] = useState("");
   const [position, setPosition] = useState({
@@ -75,13 +74,15 @@ const ModalAddTeamPlayer = ({ onSubmit, onClose }) => {
     bot: false,
     sup: false,
   });
+  // state - common
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [isLocalSearchList, setIsLocalSearchList] = useDetectOutsideClick(
     searchInputRef,
     false
   );
 
-  const handleInputChange = (e) => {
+  // event callback
+  const handleChangeInputs = (e) => {
     const { value, name } = e.target;
     switch (name) {
       case "name":
@@ -98,7 +99,7 @@ const ModalAddTeamPlayer = ({ onSubmit, onClose }) => {
   const handleSelectPlayer = useCallback((playerObj) => {
     setSelectedPlayer(playerObj);
   }, []);
-  const handleClear = useCallback(() => {
+  const handleClickClear = useCallback(() => {
     setSelectedPlayer("");
     setNickname("");
     setName("");
@@ -110,6 +111,10 @@ const ModalAddTeamPlayer = ({ onSubmit, onClose }) => {
       return newPosition;
     });
   }, []);
+  const handleSelectSoloRankId = useCallback((data) => {
+    console.log(data);
+  }, []);
+  // general function
   const searchQuery = useCallback(
     debounce((query) => {
       if (!query) setIsLocalSearchList(false);
@@ -121,12 +126,13 @@ const ModalAddTeamPlayer = ({ onSubmit, onClose }) => {
     []
   );
 
-  // 닉네임이 변경 될때 마다 선수 데이터베이스에서 검색
+  /* effect hook */
+  // nickname -> search db by nickname
   useEffect(() => {
     !selectedPlayer && searchQuery(nickname);
   }, [nickname]);
 
-  //  선수 결정시, [닉네임, 선수명, 포지션] 결정
+  //  selected -> nickname, name, position
   useEffect(() => {
     if (!selectedPlayer) return;
     setIsLocalSearchList(false);
@@ -137,10 +143,6 @@ const ModalAddTeamPlayer = ({ onSubmit, onClose }) => {
       [getPositon(selectedPlayer.pos)]: true,
     }));
   }, [selectedPlayer]);
-
-  const handleChangePlayer = useCallback((data) => {
-    const { name, player } = data;
-  }, []);
 
   return (
     <ReactModal isOpen style={modalStyle}>
@@ -164,11 +166,11 @@ const ModalAddTeamPlayer = ({ onSubmit, onClose }) => {
                 ref={searchInputRef}
                 value={nickname}
                 isOpen={isLocalSearchList}
-                onClear={handleClear}
+                onClear={handleClickClear}
                 options={playerList}
                 name="nickname"
                 onSelect={handleSelectPlayer}
-                onChange={handleInputChange}
+                onChange={handleChangeInputs}
                 readOnly={selectedPlayer}
               />
             </fieldset>
@@ -182,7 +184,7 @@ const ModalAddTeamPlayer = ({ onSubmit, onClose }) => {
                   name="name"
                   value={name}
                   readOnly={selectedPlayer}
-                  onChange={handleInputChange}
+                  onChange={handleChangeInputs}
                   autoComplete="off"
                 />
               </InputContainer>
@@ -200,11 +202,12 @@ const ModalAddTeamPlayer = ({ onSubmit, onClose }) => {
             </fieldset>
           </Form>
 
+          {/* 솔로랭크 아이디 */}
           <SearchContainer>
-            <ModalPlayerSearch name="solo1" onChange={handleChangePlayer} />
-            <ModalPlayerSearch name="solo2" onChange={handleChangePlayer} />
-            <ModalPlayerSearch name="solo3" onChange={handleChangePlayer} />
-            <ModalPlayerSearch name="solo4" onChange={handleChangePlayer} />
+            <ModalPlayerSearch name="solo1" onSelect={handleSelectSoloRankId} />
+            <ModalPlayerSearch name="solo2" onSelect={handleSelectSoloRankId} />
+            <ModalPlayerSearch name="solo3" onSelect={handleSelectSoloRankId} />
+            <ModalPlayerSearch name="solo4" onSelect={handleSelectSoloRankId} />
           </SearchContainer>
         </S.layout.Main>
 
@@ -217,6 +220,7 @@ const ModalAddTeamPlayer = ({ onSubmit, onClose }) => {
   );
 };
 
+/* style */
 const Form = styled.form`
   ${spacing.marginB(7)}
   fieldset:not(:last-of-type) {
@@ -256,7 +260,7 @@ const InputContainer = styled.div`
 `;
 
 const SearchContainer = styled.div`
-  > form {
+  > div {
     ${spacing.marginB(1)}
   }
 `;

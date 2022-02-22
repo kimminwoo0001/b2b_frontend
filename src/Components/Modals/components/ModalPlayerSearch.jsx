@@ -1,7 +1,8 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState, useRef } from "react";
 import styled from "@emotion/styled";
 import IconDel from "../../Ui/Icons/IconDel";
 import { motion, AnimatePresence } from "framer-motion/dist/framer-motion";
+import { useDetectOutsideClick, useUpdateEffect } from "../../../Hooks";
 import {
   borderRadiusStyle,
   boxshadowStyle,
@@ -12,11 +13,8 @@ import {
   spacing,
   typoStyle,
 } from "../../../Styles/ui";
-import { useState } from "react";
+
 import ModalPlayerListItem from "./ModalPlalyerListItem";
-import { useDetectOutsideClick, useUpdateEffect } from "../../../Hooks";
-import { useRef } from "react";
-import { useEffect } from "react";
 
 // transition variants
 const dropdownVariants = {
@@ -32,14 +30,16 @@ const dropdownVariants = {
 };
 
 /** 추후 렌더링 상의 해야함 -> query change 될때마다 리렌더 되고 있음. */
-const ModalPlayerSearch = ({ name, onChange }) => {
+const ModalPlayerSearch = ({ name, onSelect = () => {} }) => {
+  // hook
   const queryList = useRef(null);
   const [isListOpen, setIsListOpen] = useDetectOutsideClick(queryList, false);
+
   const [query, setQuery] = useState("");
   const [selectedObj, setSelectedObj] = useState(null);
   const [queryResult, setQueryResult] = useState(null);
 
-  const handleSubmit = useCallback(async (e) => {
+  const handleClickSearch = useCallback(async (e) => {
     e.preventDefault();
     setIsListOpen(true);
     // 쿼리로 api 검색
@@ -51,15 +51,16 @@ const ModalPlayerSearch = ({ name, onChange }) => {
       },
     ]);
   }, []);
+
   const handleChangeQuery = useCallback((e) => {
     const { value, name } = e.target;
     setQuery(value);
   }, []);
-  const onClickReset = useCallback(() => {
+  const handleClickClear = useCallback(() => {
     setQuery("");
     setSelectedObj(null);
   }, []);
-  const handleSelect = useCallback((player) => {
+  const handleClickSelect = useCallback((player) => {
     setSelectedObj(player);
     setIsListOpen(false);
   }, []);
@@ -68,13 +69,12 @@ const ModalPlayerSearch = ({ name, onChange }) => {
     if (selectedObj && selectedObj.id) {
       setQuery(selectedObj.id);
     }
-    if (onChange) {
-      onChange({ name, player: selectedObj });
-    }
-  }, [selectedObj, onChange, name]);
+
+    onSelect(selectedObj);
+  }, [selectedObj, onSelect]);
 
   return (
-    <Container onSubmit={handleSubmit} ref={queryList}>
+    <Container ref={queryList}>
       <SearchContainer>
         <InputContainer>
           <input
@@ -88,12 +88,14 @@ const ModalPlayerSearch = ({ name, onChange }) => {
           />
           {/* 리셋버튼 */}
           {query && (
-            <button onClick={onClickReset} type="reset">
+            <button onClick={handleClickClear} type="reset">
               <IconDel />
             </button>
           )}
         </InputContainer>
-        <SearchButton disabled={!query}>검색</SearchButton>
+        <SearchButton onClick={handleClickSearch} disabled={!query}>
+          검색
+        </SearchButton>
       </SearchContainer>
 
       {/* 결과창 */}
@@ -108,7 +110,7 @@ const ModalPlayerSearch = ({ name, onChange }) => {
             {queryResult && queryResult.length > 0 ? (
               queryResult.map((player, index) => (
                 <ModalPlayerListItem
-                  onClick={() => handleSelect(player)}
+                  onClick={() => handleClickSelect(player)}
                   key={"player" + index}
                   src={"images/champion/nunu.png"}
                   alt={player.id}
@@ -126,7 +128,7 @@ const ModalPlayerSearch = ({ name, onChange }) => {
   );
 };
 
-const Container = styled.form`
+const Container = styled.div`
   position: relative;
 `;
 
