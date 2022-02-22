@@ -36,7 +36,7 @@ const inputStyle = {
       }
 
       &:focus {
-        outline: 1px solid rgba(89, 66, 186, 0.8);
+        outline: 1px solid rgba(89, 66, 186, 1);
         box-shadow: 0 0 1px rgba(89, 66, 186, 0.4);
         &::placeholder {
           opacity: 0;
