@@ -174,6 +174,7 @@ export const OpenList = styled.li`
 
     /* 현재티어 점수 */
     p {
+      line-height: 38px;
     }
 
     /* 이번시즌 / 전시즌 */

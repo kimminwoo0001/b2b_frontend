@@ -71,7 +71,7 @@ const MTPlayerHeader = ({ id }) => {
                   {/* 티어 */}
                   <div className="table-col3">
                     <p>{`Challenger 1588LP`}</p>
-                    <span>{`S11 challenger / S10 Challenger`}</span>
+                    {/* <span>{`S11 challenger / S10 Challenger`}</span> */}
                   </div>
                   {/* 이번시즌 */}
                   <div className="table-col4">
@@ -86,8 +86,10 @@ const MTPlayerHeader = ({ id }) => {
                   </div>
                   {/* 최근 */}
                   <div className="table-col6">
-                    <span>{`${30}경기`}</span>
-                    <span>{`${15}승 ${15}패`}</span>
+                    <span>{`${30}${t("common.label.game")}`}</span>
+                    <span>{`${15}${t("common.label.win")} ${15}${t(
+                      "common.label.lose"
+                    )}`}</span>
                   </div>
                   {/* 최근 승률 */}
                   <div className="table-col7">
@@ -105,8 +107,8 @@ const MTPlayerHeader = ({ id }) => {
             <S.AddPlayer onClick={handleClickModalOpen}>
               <button>+</button>
               <div>
-                <p>솔로랭크 ID 추가</p>
-                <span>ID는 최대 6개 까지 등록 가능합니다</span>
+                <p>{t("soloRank.myTeam.label.addSoloRankID")}</p>
+                <span>{t("soloRank.myTeam.desc.addSoloRankID")}</span>
               </div>
             </S.AddPlayer>
           </>
@@ -119,12 +121,14 @@ const MTPlayerHeader = ({ id }) => {
             {/* 티어 */}
             <div className="table-col3">
               <p>{`Challenger 1588LP`}</p>
-              <span>{`S11 challenger / S10 Challenger`}</span>
+              {/* <span>{`S11 challenger / S10 Challenger`}</span> */}
             </div>
             {/* 이번시즌 */}
             <div className="table-col4">
-              <span>{`${1042}경기`}</span>
-              <span>{`${580}승 ${449}패`}</span>
+              <span>{`${1042}${t("common.label.game")}`}</span>
+              <span>{`${580}${t("common.label.win")} ${449}${t(
+                "common.label.lose"
+              )}`}</span>
             </div>
             {/* 시즌 승률 */}
             <div className="table-col5">
@@ -132,8 +136,10 @@ const MTPlayerHeader = ({ id }) => {
             </div>
             {/* 최근 */}
             <div className="table-col6">
-              <span>{`${30}경기`}</span>
-              <span>{`${15}승 ${15}패`}</span>
+              <span>{`${30}${t("common.label.game")}`}</span>
+              <span>{`${15}${t("common.label.win")} ${15}${t(
+                "common.label.lose"
+              )}`}</span>
             </div>
             {/* 최근 승률 */}
             <div className="table-col7">
@@ -159,18 +165,20 @@ const MTPlayerHeader = ({ id }) => {
                 {isOpen && <h6>블라디미르</h6>}
                 {isOpen ? (
                   <p css={typoStyle.noWrap}>
-                    {`${100}경기 ${50}승 ${50}패`}
-                    <em>{` ${(5 / 10) * 100}%`}</em>
+                    {`${100}${t("common.label.game")} ${50}${t(
+                      "common.label.win"
+                    )} ${50}${t("common.label.lose")}`}
+                    <em>{`${(5 / 10) * 100}%`}</em>
                   </p>
                 ) : (
-                  <p>{`${100}경기`}</p>
+                  <p>{`${100}${t("common.label.game")}`}</p>
                 )}
               </div>
             </S.ChampInfoText>
           </S.ChampInfo>
         </S.ChampListItem>
 
-        <S.ChampListItem>
+        {/* <S.ChampListItem>
           <S.ChampInfo>
             {isOpen && <S.ChampLabel>Most 1</S.ChampLabel>}
             <S.ChampInfoText>
@@ -192,7 +200,7 @@ const MTPlayerHeader = ({ id }) => {
               </div>
             </S.ChampInfoText>
           </S.ChampInfo>
-        </S.ChampListItem>
+        </S.ChampListItem> */}
       </S.ChampList>
 
       {/* 우측버튼 - close <-> open */}

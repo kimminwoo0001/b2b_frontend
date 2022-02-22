@@ -134,25 +134,30 @@ const MTCategory = () => {
               })}
             <DropdownContainer
               onChange={(e) => {
-                setSelectedDay(e.currentValue ?? 30);
+                if (e.currentValue !== "") {
+                  setSelectedDay(e.currentValue ?? 30);
+                }
               }}
             >
               <DropdownLabel css={[dropdownStyle.select_head]}>
-                {t("soloRank.myTeam.label.recentDays").replace(
-                  "##",
-                  selectedDay
-                )}
+                {`${t("common.label.recent")} ${selectedDay}${t(
+                  "common.date.day"
+                )}`}
               </DropdownLabel>
               <DropdownList label={"recentDays"}>
                 {inquireDayList.map((day) => {
                   return (
                     <DropdownItem
-                      key={day + "일"}
+                      key={day + t("common.date.day")}
                       css={[dropdownStyle.select_item]}
                       value={day}
-                      label={`최근 ${day}일`}
+                      label={`${t("common.label.recent")} ${day}${t(
+                        "common.date.day"
+                      )}`}
                     >
-                      {t("soloRank.myTeam.label.recentDays").replace("##", day)}
+                      {`${t("common.label.recent")} ${day}${t(
+                        "common.date.day"
+                      )}`}
                     </DropdownItem>
                   );
                 })}
