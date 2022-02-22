@@ -11,7 +11,7 @@ const MyModal = ({ onSubmit, onClose }) => {
   };
 
   return (
-    <ReactModal style={modalStyle} isOpen onRequestClose={() => onClose()}>
+    <ReactModal style={modalStyle} isOpen onRequestClose={onClose}>
       <div>나는 모달이에오</div>
       <div>
         <button onClick={handleClickSubmit}>확인</button>

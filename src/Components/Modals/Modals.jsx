@@ -1,9 +1,13 @@
 import React, { useContext } from "react";
 import { ModalsStateContext, ModalsDispatchCointext } from "./ModalsContext";
-import MyModal from "./components/MyModal";
+import MyModal from "./screens/MyModal";
+import ModalSolorankID from "./screens/ModalAddSolorankID";
+import ModalAddTeamPlayer from "./screens/ModalAddTeamPlayer";
 
 export const modalList = {
   myModal: MyModal,
+  addSolorankID: ModalSolorankID,
+  addTeamPlayer: ModalAddTeamPlayer,
 };
 
 const Modals = () => {
@@ -12,9 +16,12 @@ const Modals = () => {
 
   return openedModals.map((modal, index) => {
     const { Component, props } = modal;
-    const { onSubmit, ...restProps } = props;
+    const { onSubmit, onCancel, ...restProps } = props;
 
-    const onClose = () => {
+    const handleClose = async () => {
+      if (typeof onCancel === "function") {
+        await onCancel();
+      }
       close(Component);
     };
 
@@ -23,13 +30,13 @@ const Modals = () => {
         await onSubmit();
       }
       // 모달 닫기
-      onClose(Component);
+      handleClose(Component);
     };
 
     return (
       <Component
         key={"Modal" + index}
-        onClose={onClose}
+        onClose={handleClose}
         onSubmit={handleSubmit}
         {...restProps}
       />
