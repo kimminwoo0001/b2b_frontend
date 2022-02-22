@@ -1,7 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import SideBar from "../../Components/SideBar/SideBar";
 import Filter from "../../Components/Filter/Filter";
 import CloseFilter from "../../Components/Filter/CloseFilter";

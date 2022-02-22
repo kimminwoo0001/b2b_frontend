@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import SetWardData from "./SetWardData/SetWardData";
 import SetPiData from "./SetPiData/SetPiData";
 import axios from "axios";
@@ -103,7 +105,7 @@ const PiArea = () => {
   useEffect(() => {
     setWard(entireData[0]);
     setPI(entireData[1]);
-    console.log(entireData);
+    //console.log(entireData);
   }, [entireData]);
 
   // db저장 submit 함수

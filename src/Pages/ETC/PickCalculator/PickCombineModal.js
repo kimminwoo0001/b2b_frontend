@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useSelector, useDispatch } from "react-redux";
 import {
   InitailizeState,
@@ -104,7 +106,7 @@ function PickCombineModal({ openModal, setOpenModal }) {
     const url = `${API}/lolapi/filter/patch`;
     const params = { league: filters.league }
     axiosRequest(undefined, url, params, function (e) {
-      console.log(e);
+      //console.log(e);
       // setPatchFilter(result.data.patch);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -155,7 +157,7 @@ function PickCombineModal({ openModal, setOpenModal }) {
     };
 
     axiosRequest(undefined, url, params, function (e) {
-      console.log(e);
+      //console.log(e);
       // setOppPlayerFilter(result.data.player);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용

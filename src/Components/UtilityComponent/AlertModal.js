@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import Modal from "react-modal";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -48,12 +50,12 @@ const AlertModal = () => {
     (state) => state.ModalReducer
   );
   const pagePath = document.location.pathname;
-  console.log(isOpen, desc, semiDesc);
+  // console.log(isOpen, desc, semiDesc);
 
   useEffect(() => {
-    console.log("모달 창 useEffect");
+    console.log("Open");
     if (isOpen) {
-      console.log("모달 창 열림");
+      console.log("Close");
     }
   }, [isOpen]);
 

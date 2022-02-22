@@ -10,7 +10,6 @@ import MyTeam from "../../screens/MyTeam";
 import SearchFilter from "../../screens/SearchFilter";
 import InterestedPlayer from "../../screens/InterestedPlayer";
 import { useState } from "react";
-import { useEffect } from "react";
 
 const SoloRankTab = () => {
   const { t } = useTranslation();

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 
 import { useSelector, useDispatch } from "react-redux";
 import BanReport from "./BanReport/BanReport";
@@ -86,7 +88,7 @@ function TeamTabs() {
               )}
 
               {pagePath !== goTeamCompare &&
-                !filters.league.includes("LPL")  ? (
+                !filters.league.includes("LPL") ? (
                 <TabItem
                   onClick={() => {
                     dispatch(HandleTab(1));
@@ -102,7 +104,7 @@ function TeamTabs() {
                 <div></div>
               )}
 
-              {pagePath !== goTeamReport || (pagePath === goTeamReport && !filters.league.includes("LPL"))?  (
+              {pagePath !== goTeamReport || (pagePath === goTeamReport && !filters.league.includes("LPL")) ? (
                 <TabItem
                   onClick={() => {
                     // dispatch(HandleTab(2));

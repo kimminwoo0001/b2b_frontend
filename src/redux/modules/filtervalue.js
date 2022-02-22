@@ -413,7 +413,6 @@ export default function FilterReducer(state = initialState, action) {
     case INITIAL_STATE:
       return initialState;
     case LEAGUE:
-      console.log(state);
       if (state.league.length === 0) {
         return { ...state, league: [action.payload] };
       }
@@ -460,7 +459,6 @@ export default function FilterReducer(state = initialState, action) {
     case OPP_TEAM:
       return { ...state, oppteam: action.payload };
     case PLAYER:
-      console.log("PLAYER", PLAYER)
       if (state.player === action.payload) {
         return { ...state, player: "" };
       } else {
@@ -493,6 +491,7 @@ export default function FilterReducer(state = initialState, action) {
     case HANDLE_CLICK:
       return { ...state, click: action.payload };
     case LOADING:
+      console.log("LOADING", action.payload)
       return { ...state, loading: action.payload };
     case POSITION:
       return { ...state, position: action.payload };
@@ -708,7 +707,7 @@ export default function FilterReducer(state = initialState, action) {
       return {
         ...state,
         league: action.payload,
-      } 
+      }
     default:
       return state;
   }

@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useSelector, useDispatch } from "react-redux";
 import { setTableHeaders, TableHeaders } from "../../redux/modules/tablevalue";
 import { useDetectOutsideClick } from "../SelectFilter/useDetectOustsideClick";
@@ -80,7 +82,7 @@ const ExportUtil = ({ filename = "none", tableid }) => {
         } else {
           columnData = columnData.toString().replace(/"/g, '""').replace(regex, ''); // escape double quotes
         }
-        console.log(result);
+        // console.log(result);
         result =
           type === "csv"
             ? result + '"' + columnData + '",'

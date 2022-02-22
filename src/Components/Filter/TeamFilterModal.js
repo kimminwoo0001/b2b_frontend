@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useSelector, useDispatch } from "react-redux";
 import {
   CopyResetYear as ResetYear,
@@ -224,7 +226,7 @@ const TeamFilterModal = () => {
       seasonList = seasonList.filter(
         (item, pos) => seasonList.indexOf(item) === pos
       );
-      console.log("sortedSeasonList", seasonList);
+      // console.log("sortedSeasonList", seasonList);
 
       let updateSeason = [];
       for (const season of filters.season) {
@@ -656,7 +658,7 @@ const TeamFilterModal = () => {
                       onClick={() => {
                         dispatch(Patch(patch));
                         //fetchingTeamFilter(patch);
-                        console.log(filters.league);
+                        // console.log(filters.league);
                       }}
                     >
                       <input

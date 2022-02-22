@@ -78,6 +78,5 @@ export default function checkRequest(data) {
     }
   }
 
-  console.log(returnValue);
   return returnValue;
 }

@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import qs from "qs";
 import { useSelector, useDispatch } from "react-redux";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import GameLists from "./GameLists";
 import LoadingImg from "../../../Components/LoadingImg/MapLoading";
 import { useTranslation } from "react-i18next";

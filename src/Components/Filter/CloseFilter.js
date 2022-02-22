@@ -1,5 +1,7 @@
 import React, { useState, memo } from "react";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useSelector, useDispatch } from "react-redux";
 import FilterHeader from "./FilterHeader";
 import { goPlayerCompare, goTeamCompare } from "../../lib/pagePath";

@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 
 import Nav from "../../Components/Nav/Nav";
 import SideBar from "../../Components/SideBar/SideBar";
@@ -21,7 +23,6 @@ function Home() {
 
   return (
     <ErrorBoundary>
-      {console.log("홈 실행")}
       {copyvalue?.openFilterModal === goTeamCompare && <TeamFilterModal />}
       {copyvalue?.openFilterModal === goPlayerCompare && <PlayerFilterModal />}
       <Nav />

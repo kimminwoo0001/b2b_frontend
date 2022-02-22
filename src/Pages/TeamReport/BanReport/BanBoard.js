@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -39,7 +41,7 @@ function BanBoard() {
         dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
       })
     } catch (e) {
-      console.log(e);
+      //console.log(e);
     } finally {
     }
   };

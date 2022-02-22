@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import SideBarItem from "./SideBarItem";
@@ -156,7 +158,6 @@ function Sidebar() {
     menus[11],
     menus[7],
     menus[8],
-    menus[12],
   ];
   return (
     <>

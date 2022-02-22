@@ -1,5 +1,7 @@
 import React from "react";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useTranslation } from "react-i18next";
 
 
@@ -33,7 +35,7 @@ function SelectPosition({ position, setPosition }) {
       <PositionButtons>
         {POSITION.map((pos, idx) => {
           return (
-            <PositionButton 
+            <PositionButton
               isActive={position.length === 5}
               value={pos} isClicked={pos === "all" ? position.legnth === 5 :
                 position.find((e) => e === pos) && position.length !== 5} position={pos} onClick={pushPosition}>
@@ -76,7 +78,7 @@ const PositionButtons = styled.div`
 
 
 const PositionButton = styled.button`
-  background-image: url(${ props => props.isClicked ? `Images/${props.position}-sel.png` : `Images/${props.position}.png` });
+  background-image: url(${props => props.isClicked ? `Images/${props.position}-sel.png` : `Images/${props.position}.png`});
   display: flex;
   align-items: center;
   justify-content: center;
@@ -97,7 +99,7 @@ const PositionButton = styled.button`
   }
 
   ${(props) =>
-  props.isActive &&
+    props.isActive &&
     css`
       background-color: #23212a;
       color: #ffffff;
