@@ -107,11 +107,22 @@ const typoStyle = {
     color: ${theme.colors.text};
     letter-spacing: 0.025em;
   `,
+  button_13: css`
+    font-family: Spoqa Han Sans;
+    ${fontsStyle.size[13]};
+    ${fontsStyle.weight[700]};
+    color: ${theme.colors.text};
+  `,
 
   button_popin: css`
     font-family: Poppins;
     ${fontsStyle.size[12]};
     ${fontsStyle.weight[700]};
+    color: ${theme.colors.text};
+  `,
+  button_18: css`
+    ${fontsStyle.size[18]};
+    ${fontsStyle.weight[400]};
     color: ${theme.colors.text};
   `,
 

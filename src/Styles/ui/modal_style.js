@@ -1,3 +1,5 @@
+import { colors } from ".";
+
 export const modalStyle = {
   overlay: {
     position: "fixed",
@@ -15,13 +17,15 @@ export const modalStyle = {
     position: "relative",
     inset: 0,
     border: "none",
-    borderRadius: 0,
     padding: 0,
     width: "fit-content",
     height: "fit-content",
-    overflow: "auto",
+    overflow: "visible",
+    backgroundColor: colors.bg_box,
+    color: colors.text,
     WebkitOverflowScrolling: "touch",
     outline: "none",
+    borderRadius: "20px",
   },
 };
 
