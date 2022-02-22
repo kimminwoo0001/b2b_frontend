@@ -18,6 +18,7 @@ import {
 
 import {
   setLeagueFilter,
+  setOppSeasonFilter,
   setPatchFilter,
   setPlayerFilter,
   setSeasonFilter,
@@ -65,6 +66,7 @@ const CompareSideFilter = () => {
 
   const [champInfo, setChampInfo] = useState();
   const [oppChampInfo, setOppChampInfo] = useState();
+  const [patchList, setPatchList] = useState([]);
 
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
@@ -264,37 +266,54 @@ const CompareSideFilter = () => {
         (item, pos) => seasonList.indexOf(item) === pos
       );
     }
-
-    dispatch(setSeasonFilter(seasonList));
+    if(player === junglevalue.oppplayer) {
+      dispatch(setOppSeasonFilter(seasonList))
+    }else {
+      dispatch(setSeasonFilter(seasonList));
+    }
   }
 
+
   const fetchPatchFilter = (year, league, season) => {
+
     // dispatch(Loading(true))
+    const selectedSeasons = Object.keys(season).filter(key => season[key] === true)
     const url = `${API}/lolapi/filter/patch`;
     const params = {
       league: league,
       year: year,
-      season: season,
+      season: selectedSeasons,
       token: user.token,
       id: user.id,
     };
     axiosRequest(undefined, url, params, function (e) {
       const patchResponse = e ?? [];
-      dispatch(setPatchFilter(patchResponse));
-      dispatch(SetPatch(patchResponse));
+      setPatchList(patchResponse);
       // dispatch(Loading(false));
     }, function (e) {
       // dispatch(Loading(false));
     });
   }
 
+
+
+  useEffect(() => {    
+    // dispatch(setPatchFilter([...selector.patchFilter.concat(patchList.filter((item, idx) => patchList.indexOf(item) !== idx))]));
+    dispatch(setPatchFilter([...selector.patchFilter.concat(patchList)]));
+
+  },[patchList])
+
+
   const GetChampion = () => {
+    const selectedSeasons = Object.keys(junglevalue.season).filter(key => junglevalue.season[key] === true)
+    const selectedPatches = Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key]===true)
+
     const url = `${API}/lolapi/jungle/player-champions`;
     const params = {
       league: junglevalue.league,
       year: junglevalue.year,
-      season: junglevalue.season,
-      patch: junglevalue.patch,
+      season: selectedSeasons,
+      patch: selectedPatches,
       team: junglevalue.team[0],
       player: junglevalue.player[0],
       token: user.token,
@@ -309,18 +328,21 @@ const CompareSideFilter = () => {
   }
 
   const GetOppChampion = () => {
+    const selectedOppSeasons = Object.keys(junglevalue.oppseason).filter(key => junglevalue.oppseason[key] === true)
+    const selectedPatches = Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key]===true)
     const selectedChamps = Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === true);
+    console.log(selectedOppSeasons)
     const url = `${API}/lolapi/jungle/opp-champions`;
     const params = {
-      league: junglevalue.league,
-      year: junglevalue.year,
-      season: junglevalue.season,
-      patch: junglevalue.patch,
-      team: junglevalue.team[0],
-      player: junglevalue.player[0],
+      league: junglevalue.oppleague,
+      year: junglevalue.oppyear,
+      season: selectedOppSeasons,
+      patch: selectedPatches,
+      team: junglevalue.oppteam[0],
+      player: junglevalue.oppplayer[0],
       champion:selectedChamps ,
       token: user.token,
-      id: user.id,
+      id: user.id, 
     };
     axiosRequest(undefined, url, params, function(e) {
       setOppChampInfo(e)
@@ -373,6 +395,33 @@ useEffect(() => {
   }, [selector.seasonFilter])
 
 
+  useEffect(() => {
+    if (junglevalue.oppplayer.includes("") || junglevalue.oppplayer.length === 0) {
+      return;
+    }
+    const result = initializedFalseValue(selector.oppseasonFilter);
+
+    dispatch(SetFilterData({
+      ...junglevalue,
+      oppseason: result,
+    }))
+  }, [selector.oppseasonFilter])
+
+
+  useEffect(() => {
+    if (Object.keys(junglevalue.oppseason).length === 0) {
+      return;
+    }
+    const result = initializedFalseValue(selector.patchFilter);
+
+    dispatch(SetFilterData({
+      ...junglevalue,
+      patch: result,
+    }))
+  }, [selector.patchFilter])
+
+
+
   // team
   useEffect(() => {
     fetchLeagueFilter(junglevalue.year);
@@ -409,19 +458,30 @@ useEffect(() => {
   }, [junglevalue.oppplayer])
 
 
+  
   // patch
+
+
   useEffect(() => {
-    if(!junglevalue.oppseason.length > 0) {
+    if(Object.keys(junglevalue.season).length === 0) {
       return;
     }
     fetchPatchFilter(junglevalue.year, junglevalue.league, junglevalue.season);
+  },[junglevalue.season])
+
+
+  useEffect(() => {
+    if(Object.keys(junglevalue.oppseason).length === 0) {
+      return;
+    }
+    fetchPatchFilter(junglevalue.oppyear, junglevalue.oppleague, junglevalue.oppseason);
   },[junglevalue.oppseason])
 
 
   useEffect(() => {
-    if(junglevalue.patch.length === 0) {
-      return;
-    }
+    // if(Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key] === true).length === 0) {
+    //   return;
+    // }
 
     if (isInitialMount.current) {
       isInitialMount.current = false;
@@ -443,6 +503,9 @@ useEffect(() => {
   },[junglevalue.champion])
   
  
+  useEffect(() => {
+    fetchYearFilter();
+  }, [])
 
 
   return (
@@ -579,6 +642,8 @@ useEffect(() => {
                     <SFilterGroup>
                    {junglevalue.player.length === 0 ? 
                     <SInitialStatement> {t("video.jungle.selectSeason")}</SInitialStatement> : 
+                    <SChekcboxAllWrapper>
+
                       <SCheckboxAll
                       name="season"
                       value="all"
@@ -587,6 +652,8 @@ useEffect(() => {
                     >
                     {t("video.jungle.selectAll")}
                     </SCheckboxAll>
+                    </SChekcboxAllWrapper>
+
                     }
                     <SCheckboxWrapper>
                         {selector.seasonFilter?.map((season,idx) => {
@@ -738,19 +805,21 @@ useEffect(() => {
                   <SRow >
                     {/* <STitle>{t("video.jungle.season")}</STitle> */}
                     <SFilterGroup>
-                   {junglevalue.oppplayer.length === 0 ? 
+                   {junglevalue.oppplayer.includes("") || junglevalue.oppplayer.length === 0? 
                     <SInitialStatement> {t("video.jungle.selectSeason")}</SInitialStatement> : 
+                    <SChekcboxAllWrapper>
                       <SCheckboxAll
                       name="oppseason"
                       value="all"
                       onChange={handleChange}
-                      checked={selector.seasonFilter.length > 0 && selector.seasonFilter.length === Object.keys(junglevalue.oppseason).length && !Object.values(junglevalue.oppseason).includes(false)}
+                      checked={selector.oppseasonFilter.length > 0 && selector.oppseasonFilter.length === Object.keys(junglevalue.oppseason).length && !Object.values(junglevalue.oppseason).includes(false)}
                     >
                     {t("video.jungle.selectAll")}
                     </SCheckboxAll>
+                    </SChekcboxAllWrapper>
                     }
                     <SCheckboxWrapper>
-                        {selector.seasonFilter?.map((oppseason,idx) => {
+                        {selector.oppseasonFilter?.map((oppseason,idx) => {
                           return (
                             <Checkbox
                             name="oppseason"
@@ -796,7 +865,7 @@ useEffect(() => {
 
         {/* step3 : 패치 선택 */}
         <div css={{ marginBottom: 30 }}>
-          <Accordion act={junglevalue.oppseason && junglevalue.oppseason.length >0  && !junglevalue.oppseason.includes("")}>
+          <Accordion act={junglevalue.oppseason && Object.keys(junglevalue.oppseason).length >0  && !Object.values(junglevalue.oppseason).includes(false)}>
             <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
               <S.Title>
                 <S.TitleLabel>STEP 03</S.TitleLabel>
@@ -804,35 +873,47 @@ useEffect(() => {
               </S.Title>
             </AccordionSummary>
             <AccordionDetails>
-              <DropdownContainer
-                label="patch"
-                onChange={(e) => {
-                  handleDropdownChange(e);
-                }}
+            <SRow>
+              <SFilterGroup>
+                {Object.keys(junglevalue.oppseason).filter(key => junglevalue.oppseason[key] === true).length === 0 ?  
+                <SInitialStatement>{t("video.jungle.selectPatch")}</SInitialStatement> : 
+                <SChekcboxAllWrapper>
+
+                <SCheckboxAll
+                name="patch"
+                value="all"
+                onChange={handleChange}
+                checked={selector.patchFilter?.filter((item,idx) => selector.patchFilter.indexOf(item) === idx).length === Object.keys(junglevalue.patch).length && !Object.values(junglevalue.patch).includes(false)}
               >
-                <DropdownLabel css={[dropdownStyle.select_head]}>
-                  <em css={typoStyle.select_red}>2</em> 패치
-                </DropdownLabel>
-                <DropdownList>
-                  {selector.patchFilter?.map((patch,idx) => {
-                    return (
-                      <DropdownItem
-                      css={[dropdownStyle.select_item]}
+              {t("video.jungle.selectAll")}
+              </SCheckboxAll>
+              </SChekcboxAllWrapper>
+
+                }
+                <SCheckboxWrapper>
+                {selector.patchFilter?.filter((item,idx) => selector.patchFilter.indexOf(item) === idx).sort().map((patch) => {
+                  return (
+                    <Checkbox
+                      name="patch"
                       value={patch}
+                      onChange={handleChange}
+                      checked={junglevalue["patch"][patch]}
                     >
                       {patch}
-                    </DropdownItem>
-                    )
-                  })}
-                </DropdownList>
-              </DropdownContainer>
+                    </Checkbox>
+                  )
+                })}
+                </SCheckboxWrapper>
+              </SFilterGroup>
+           </SRow>
             </AccordionDetails>
           </Accordion>
         </div>
 
+       
         {/* step4 : 우리팀 플레이한 챔피언 선택 */}
         <div css={{ marginBottom: 30 }}>
-          <Accordion act={junglevalue.patch.length >0}>
+          <Accordion act={Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key]=== true).length >0}>
             <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
               <S.Title>
                 <S.TitleLabel>STEP 04</S.TitleLabel>
@@ -1008,22 +1089,25 @@ const STitle = styled.div`
   flex: 1;
 `;
 
+const SChekcboxAllWrapper = styled.div`
+ padding-bottom: 5px;
+ border-bottom: 1px solid #433f4e; 
+ margin-bottom: 5px;
+`
+
 const SCheckboxAll = styled(Checkbox)`
   opacity: ${props => props.name === "year" || props.name === "team" ? 0.3 : 1};
-  
-
 `;
 
 const SInitialStatement = styled.div`
 opacity: 0.3;
-margin: 5px 0 0 5px;
+/* margin: 5px 0 0 0; */
 `;
 
 const SFilterGroup = styled.div`
   /* display: flex; */
   /* flex-direction: column; */
   /* flex-flow: wrap; */
-
   width: 335px;
   min-height: 34px;
   ${typoStyle.contents}
@@ -1034,11 +1118,11 @@ const SFilterGroup = styled.div`
   padding: 10px;
 
   label {
-    margin-right: 22px;
+    margin-right: 10px;
   }
 
   ${SCheckboxAll} {
-    margin-bottom: 16px;
+    /* margin-bottom: 16px; */
   
   }
 `;

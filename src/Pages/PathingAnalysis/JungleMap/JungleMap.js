@@ -10,6 +10,8 @@ import Compare from "./screens/Compare";
 import Sequence from "./screens/Sequence";
 import AlertModal from "../../../Components/UtilityComponent/AlertModal";
 import { JungleInit } from "../../../redux/modules/junglevalue";
+import { SelectorInitailizeState } from "../../../redux/modules/selectorvalue";
+
 
 // subtab data
 
@@ -34,6 +36,7 @@ const JungleMap = () => {
             onClick={() => {
               setIndex(index)
               dispatch(JungleInit());
+              dispatch(SelectorInitailizeState());
             }
             }
           >

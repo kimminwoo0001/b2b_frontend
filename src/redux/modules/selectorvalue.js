@@ -6,6 +6,9 @@ export const SET_TEAM_FILTER = "filterSelector/SET_TEAM_FILTER";
 export const SET_PLAYER_FILTER = "filterSelector/SET_PLAYER_FILTER";
 export const SET_PATCH_FILTER = "filterSelector/SET_PATCH_FILTER";
 
+export const SET_OPP_SEASON_FILTER = "filterSelector/SET_OPP_SEASON_FILTER";
+
+
 export const setLeagueFilter = (payload) => {
   return {
     type: SET_LEAGUE_FILTER,
@@ -23,6 +26,13 @@ export const setYearFilter = (payload) => {
 export const setSeasonFilter = (payload) => {
   return {
     type: SET_SEASON_FILTER,
+    payload
+  };
+};
+
+export const setOppSeasonFilter = (payload) => {
+  return {
+    type: SET_OPP_SEASON_FILTER,
     payload
   };
 };
@@ -61,6 +71,7 @@ const initialState = {
   teamFilter: [],
   playerFilter: [],
   patchFilter: [],
+  oppseasonFilter:[],
 }
 
 export default function SelectorReducer(state = initialState, action) {
@@ -96,6 +107,12 @@ export default function SelectorReducer(state = initialState, action) {
       return {
         ...state,
         patchFilter: action.payload
+      }
+
+    case SET_OPP_SEASON_FILTER:
+      return {
+        ...state,
+        oppseasonFilter: action.payload
       }
     default:
       return state;
