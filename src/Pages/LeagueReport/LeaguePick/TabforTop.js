@@ -137,13 +137,13 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
               </tr>
             </thead>
             <tbody>
-              {/* {items.length === 0 && (
+              {importantPicks === undefined && (
                 <LoadingImage>
                   <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
                 </LoadingImage>
-              )} */}
-              {items && items.length === 0 ? (
-                <NoData>{t("league.draft.noItemPickData")}</NoData>
+              )}
+              {importantPicks !== undefined && items && items.length === 0 ? (
+                <NoData>{t("league.draft.noData")}</NoData>
               ) : (
                 ""
               )}
@@ -219,13 +219,13 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
               </tr>
             </thead>
             <tbody>
-              {/* {tiers.length === 0 && (
+              {tier === undefined && (
                 <LoadingImage>
                   <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
                 </LoadingImage>
-              )} */}
-              {tiers && tiers.length === 0 ? (
-                <NoData>{t("league.draft.noTiersPickData")}</NoData>
+              )}
+              {tier !== undefined && tiers && tiers.length === 0 ? (
+                <NoData>{t("league.draft.noData")}</NoData>
               ) : (
                 ""
               )}
@@ -273,13 +273,13 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
             <span id="header-name">{t("league.draft.against")}</span>
           </Header>
           <MatchWrapper id="against-table">
-            {/* {pickDifference && pickDifference.length === 0 && (
+            {pickDifference === undefined && (
               <LoadingImage>
                 <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
               </LoadingImage>
-            )} */}
-            {pickDifference && pickDifference.length === 0 ? (
-              <NoData>{t("league.draft.noPickDifference")}</NoData>
+            )}
+            {pickDifference !== undefined && pickDifference && pickDifference.length === 0 ? (
+              <NoData>{t("league.draft.noData")}</NoData>
             ) : (
               ""
             )}
@@ -449,8 +449,13 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
               </UniqueNavBar>
             </thead>
             <tbody>
-              {uniquePick && uniquePick.length === 0 ? (
-                <NoData>{t("league.draft.noUniquePickData")}</NoData>
+              {uniquePick === undefined && (
+                <LoadingImage>
+                  <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
+                </LoadingImage>
+              )}
+              {uniquePick !== undefined && uniquePick && uniquePick.length === 0 ? (
+                <NoData>{t("league.draft.noData")}</NoData>
               ) : (
                 ""
               )}
