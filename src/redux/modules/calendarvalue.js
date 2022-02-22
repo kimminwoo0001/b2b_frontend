@@ -1,6 +1,6 @@
 export const CALENDAR_INIT = "calendarvalue/CALENDAR_INIT"
 export const SET_CALENDAR_ISOPEN = "calendarvalue/SET_CALENDAR_ISOPEN";
-export const SET_CALENDAR_ISSTARTSELECTOR = "calendarvalue/SET_CALENDAR_ISSTARTSELECTOR";
+//export const SET_CALENDAR_ISSTARTSELECTOR = "calendarvalue/SET_CALENDAR_ISSTARTSELECTOR";
 export const SET_CALENDAR_DAY_START_IDX = "calendarvalue/SET_CALENDAR_DAY_START_IDX";
 export const SET_CALENDAR_START_DATE = "calendarvalue/SET_CALENDAR_START_DATE";
 export const SET_CALENDAR_DAY_END_IDX = "calendarvalue/SET_CALENDAR_DAY_END_IDX";
@@ -8,6 +8,8 @@ export const SET_CALENDAR_END_DATE = "calendarvalue/SET_CALENDAR_END_DATE";
 export const SET_CALENDAR_IFNO = "calendarvalue/SET_CALENDAR_IFNO";
 export const SET_CALENDAR_SEASON_START_DATE = "calendarvalue/SET_CALENDAR_SEASON_START_DATE";
 export const SET_CALENDAR_SEASON_END_DATE = "calendarvalue/SET_CALENDAR_SEASON_END_DATE";
+export const SET_CALENDAR_SEASON_START_IDX = "calendarvalue/SET_CALENDAR_SEASON_START_IDX";
+export const SET_CALENDAR_SEASON_END_IDX = "calendarvalue/SET_CALENDAR_SEASON_END_IDX";
 
 
 
@@ -22,12 +24,12 @@ export const SetCalendarIsOpen = (payload) => {
     payload
   };
 }
-export const SetCalendarIsStartSelector = (payload) => {
-  return {
-    type: SET_CALENDAR_ISSTARTSELECTOR,
-    payload
-  };
-}
+// export const SetCalendarIsStartSelector = (payload) => {
+//   return {
+//     type: SET_CALENDAR_ISSTARTSELECTOR,
+//     payload
+//   };
+// }
 export const SetCalendarDayStartIdx = (payload) => {
   return {
     type: SET_CALENDAR_DAY_START_IDX,
@@ -71,16 +73,29 @@ export const SetCalendarSeasonEndDate = (payload) => {
     payload
   };
 }
+export const SetCalendarSeasonStartIdx = (payload) => {
+  return {
+    type: SET_CALENDAR_SEASON_START_IDX,
+    payload
+  };
+}
+export const SetCalendarSeasonEndIdx = (payload) => {
+  return {
+    type: SET_CALENDAR_SEASON_END_IDX,
+    payload
+  };
+}
 
 const initialState = {
   isOpen: false,
-  isStartSelector: false,
   startDayIdx: "",
   endDayIdx: "",
   startDate: "",
   endDate: "",
   seasonStartDate: "",
   seasonEndDate: "",
+  seasonStartIdx: "",
+  seasonEndIdx: "",
   info: [],
 }
 
@@ -93,11 +108,11 @@ export default function CalendarReducer(state = initialState, action) {
         ...state,
         isOpen: action.payload
       }
-    case SET_CALENDAR_ISSTARTSELECTOR:
-      return {
-        ...state,
-        isStartSelector: action.payload
-      }
+    // case SET_CALENDAR_ISSTARTSELECTOR:
+    //   return {
+    //     ...state,
+    //     isStartSelector: action.payload
+    //   }
     case SET_CALENDAR_DAY_START_IDX:
       return {
         ...state,
@@ -132,6 +147,16 @@ export default function CalendarReducer(state = initialState, action) {
       return {
         ...state,
         seasonEndDate: action.payload
+      }
+    case SET_CALENDAR_SEASON_START_IDX:
+      return {
+        ...state,
+        seasonStartIdx: action.payload
+      }
+    case SET_CALENDAR_SEASON_END_IDX:
+      return {
+        ...state,
+        seasonEndIdx: action.payload
       }
     default:
       return state;

@@ -31,8 +31,9 @@ import getFirstDay from "../../../lib/Calendar/getFirstDay";
 import getMonthWeeks from "../../../lib/Calendar/getMonthWeeks";
 import getLeafYaer from "../../../lib/Calendar/getLeafYear";
 
-const date = new Date();
 const weekDays = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+const START_DATE = "START_DATE";
+const END_DATE = "END_DATE";
 
 function CalendarFilter() {
   const calendar = useSelector((state) => state.CalendarReducer);
@@ -44,12 +45,13 @@ function CalendarFilter() {
   const leapYear = getLeafYaer(year);
   const monthDays = getMonthDayList(leapYear);
 
-  const [selectIdx, setSelectIdx] = useState(
-    calendar.isStartSelector ? calendar.startDayIdx : calendar.endDayIdx
+  const [activeLabel, setActiveLabel] = useState(
+    calendar.startDayIdx === "" ? START_DATE : END_DATE
   );
-  const [selectValue, setSelectValue] = useState(
-    calendar.isStartSelector ? calendar.startDate : calendar.endDate
-  );
+  const [selectStartIdx, setSelectStartIdx] = useState(calendar.startDayIdx);
+  const [selectEndIdx, setSelectEndIdx] = useState(calendar.endDayIdx);
+  const [selectStartValue, setSelectStartValue] = useState(calendar.startDate);
+  const [selectEndValue, setSelectEndValue] = useState(calendar.endDate);
   const [month, setMonth] = useState(new Date().getUTCMonth() + 1);
   const [lock, setLock] = useState(false);
 
@@ -141,14 +143,25 @@ function CalendarFilter() {
         setMonth(+date[1] - 1);
         autoMoveScroll(
           getMonthWeeks(+date[1] - 1, monthDays, firstDays) +
-            Math.floor((+date[2] + firstDays.getDay()) / 7) +
-            (calendar.isStartSelector ? -2 : 0)
+            Math.floor((+date[2] + firstDays.getDay()) / 7)
         );
       } else {
         autoMoveScroll(getMonthWeeks(month, monthDays, firstDays));
       }
     }
   }, [calendar.isOpen]);
+
+  const CancelDays = (active) => {
+    if (active === START_DATE) {
+      setSelectStartIdx("");
+      setSelectStartValue("");
+      setActiveLabel(START_DATE);
+    } else if (active === END_DATE) {
+      setSelectEndIdx("");
+      setSelectEndValue("");
+      setActiveLabel(END_DATE);
+    }
+  };
 
   return (
     <SCalendarFilter active={calendar.isOpen}>
@@ -157,7 +170,7 @@ function CalendarFilter() {
           <div className="date-info">
             <Link
               activeClass="active"
-              className="test1"
+              className="go-to-pre-month"
               to={`week-${getMonthWeeks(month - 1, monthDays, firstDays)}`}
               smooth={true}
               duration={500}
@@ -179,7 +192,7 @@ function CalendarFilter() {
             </div>
             <Link
               activeClass="active"
-              className="test1"
+              className="go-to-next-month"
               to={`week-${getMonthWeeks(month + 1, monthDays, firstDays)}`}
               smooth={true}
               duration={500}
@@ -191,7 +204,51 @@ function CalendarFilter() {
             >
               <img src="Images/ic-next.svg" alt="next" />
             </Link>
+            <SCalendarDaysInput
+              isActive={activeLabel === START_DATE}
+              onClick={() => {
+                setActiveLabel(START_DATE);
+              }}
+            >
+              <input
+                className="calendar-input"
+                type="text"
+                placeholder={t("utility.calendarFilter.inputStart")}
+                value={selectStartValue}
+              />
+              <img
+                className="calendar-icon"
+                src="Images/ic-cancle.svg"
+                alt=""
+                onClick={() => {
+                  CancelDays(START_DATE);
+                }}
+              />
+            </SCalendarDaysInput>
+            <div className="hyphen">-</div>
+            <SCalendarDaysInput
+              isActive={activeLabel === END_DATE}
+              onClick={() => {
+                setActiveLabel(END_DATE);
+              }}
+            >
+              <input
+                className="calendar-input"
+                type="text"
+                placeholder={t("utility.calendarFilter.inputEnd")}
+                value={selectEndValue}
+              />
+              <img
+                className="calendar-icon"
+                src="Images/ic-cancle.svg"
+                alt=""
+                onClick={() => {
+                  CancelDays(END_DATE);
+                }}
+              />
+            </SCalendarDaysInput>
           </div>
+
           <img
             className="close-btn"
             src="Images/ic_close_bk_30.svg"
@@ -233,11 +290,14 @@ function CalendarFilter() {
                       return (
                         <DayBox
                           info={getCalendarInfo(idx, idx2)}
-                          isStartSelector={calendar.isStartSelector}
-                          setSelectIdx={setSelectIdx}
-                          selectIdx={selectIdx}
-                          setSelectValue={setSelectValue}
-                          startDayIdx={calendar.startDayIdx}
+                          activeLabel={activeLabel}
+                          selectStartIdx={selectStartIdx}
+                          selectEndIdx={selectEndIdx}
+                          setActiveLabel={setActiveLabel}
+                          setSelectStartIdx={setSelectStartIdx}
+                          setSelectEndIdx={setSelectEndIdx}
+                          setSelectStartValue={setSelectStartValue}
+                          setSelectEndValue={setSelectEndValue}
                         />
                       );
                     })}
@@ -248,28 +308,22 @@ function CalendarFilter() {
           </div>
         </CalendarBody>
         <SCalendarConfirm
-          isSelect={selectIdx > -1}
+          isSelect={selectStartIdx !== "" && selectEndIdx !== ""}
           onClick={() =>
-            selectIdx >= 0
-              ? calendar.isStartSelector
-                ? batch(() => {
-                    dispatch(SetCalendarDayStartIdx(selectIdx));
-                    dispatch(SetCalendarStartDate(selectValue));
-                    dispatch(SetCalendarDayEndIdx(""));
-                    dispatch(SetCalendarEndDate(""));
-                    dispatch(SetCalendarIsOpen(false));
-                  })
-                : batch(() => {
-                    dispatch(SetCalendarDayEndIdx(selectIdx));
-                    dispatch(SetCalendarEndDate(selectValue));
-                    dispatch(SetCalendarIsOpen(false));
-                  })
+            selectStartIdx !== "" && selectEndIdx !== ""
+              ? batch(() => {
+                  dispatch(SetCalendarDayStartIdx(selectStartIdx));
+                  dispatch(SetCalendarStartDate(selectStartValue));
+                  dispatch(SetCalendarDayEndIdx(selectEndIdx));
+                  dispatch(SetCalendarEndDate(selectEndValue));
+                  dispatch(SetCalendarIsOpen(false));
+                })
               : batch(() => {
                   dispatch(
                     SetDesc(
                       t(
                         `utility.calendarFilter.desc.${
-                          calendar.isStartSelector ? "noStartIdx" : "noEndIdx"
+                          activeLabel === START_DATE ? "noStartIdx" : "noEndIdx"
                         }`
                       )
                     )
@@ -278,11 +332,7 @@ function CalendarFilter() {
                 })
           }
         >
-          <div className="label">
-            {calendar.isStartSelector
-              ? t("utility.calendarFilter.selectedStartDay")
-              : t("utility.calendarFilter.selectedEndDay")}
-          </div>
+          <div className="label">{t("utility.calendarFilter.Confirm")}</div>
         </SCalendarConfirm>
       </SCalendarContainer>
     </SCalendarFilter>
@@ -300,15 +350,11 @@ const SCalendarFilter = styled.div`
   align-items: center;
   background: rgba(0, 0, 0, 0.75);
   z-index: 1;
-  img {
-    width: 50px;
-    height: 50px;
-  }
 `;
 
 const SCalendarContainer = styled.div`
   width: 1200px;
-  height: 1145px;
+  height: 960px;
   margin: 30px 224px 123px 41px;
   padding: 0 0;
   border-radius: 20px;
@@ -323,20 +369,36 @@ const SCalendarContainer = styled.div`
     position: relative;
 
     .date-info {
-      width: 252px;
+      width: 100%;
       height: 36px;
       top: 30px;
       position: absolute;
       display: flex;
 
-      .active {
-        background-color: green;
+      .go-to-next-month {
+        margin-right: 20px;
+      }
+
+      .hyphen {
+        width: 16px;
+        height: 40px;
+        padding: 13px 5px 13px 6px;
+
+        font-family: SpoqaHanSans;
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: center;
+        color: ${theme.colors.text};
       }
 
       .date-view {
         width: 180px;
         height: 31px;
-        margin: 9px 0 2px;
+        margin: 2px 0 2px;
         font-family: SpoqaHanSansNeo;
         font-size: 30px;
         font-weight: bold;
@@ -349,8 +411,8 @@ const SCalendarContainer = styled.div`
         white-space: nowrap;
 
         img {
-          width: 50px;
-          height: 50px;
+          width: 36px;
+          height: 36px;
           object-fit: contain;
         }
       }
@@ -399,7 +461,7 @@ const CalendarBody = styled.div`
   #calendar-body {
     overflow: scroll;
     width: 100%;
-    height: 884px;
+    height: 699px;
     padding: 4px 0 0;
   }
 `;
@@ -424,4 +486,42 @@ const SCalendarConfirm = styled.div`
   letter-spacing: normal;
   text-align: center;
   color: ${theme.colors.text};
+`;
+
+const SCalendarDaysInput = styled.div`
+  width: 150px;
+  height: 37px;
+  margin: -1px 0px 0 1px;
+  border-radius: 20px;
+  border: solid 3px ${(props) => (props.isActive ? "#7056d9" : "rgba(0,0,0,0)")};
+  background-color: ${theme.colors.bg_box};
+  padding: 3px 7px 3px 15px;
+  font-family: SpoqaHanSansNeo;
+  font-size: 13px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.23;
+  letter-spacing: normal;
+  text-align: left;
+  color: ${theme.colors.text};
+
+  display: flex;
+  position: relative;
+
+  .calendar-input {
+    margin-top: 2px;
+    width: 78px;
+    cursor: pointer;
+    color: ${theme.colors.text};
+  }
+
+  .calendar-icon {
+    width: 34px;
+    height: 34px;
+    margin-top: -3px;
+    position: absolute;
+    right: 7px;
+    cursor: pointer;
+  }
 `;

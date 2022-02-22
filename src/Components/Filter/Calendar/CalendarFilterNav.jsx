@@ -13,12 +13,13 @@ import {
   SetCalendarDayStartIdx,
   SetCalendarEndDate,
   SetCalendarIsOpen,
-  SetCalendarIsStartSelector,
   SetCalendarStartDate,
 } from "../../../redux/modules/calendarvalue";
 import theme from "../../../Styles/Theme";
 import getLeafYaer from "../../../lib/Calendar/getLeafYear";
 import { SetDesc, SetIsOpen } from "../../../redux/modules/modalvalue";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const date = new Date();
 
@@ -63,47 +64,36 @@ const CalendarFilterNav = () => {
     const seasonStartDateNum = new Date(calendar.seasonStartDate).getTime();
     const calcuDateNum = new Date(calcuDate).getTime();
     const changeToStartSeason = calcuDateNum < seasonStartDateNum;
-
-    const startDate = changeToStartSeason ? calendar.startDate : calcuDate;
+    const startDate = changeToStartSeason
+      ? calendar.seasonStartDate
+      : calcuDate;
+    const startIdx =
+      getMonthDays(+startDate.split("-")[1] - 1, getMonthDayList(leapYear)) +
+      +startDate.split("-")[2] -
+      1;
+    const endIdx =
+      getMonthDays(+now.split("-")[1] - 1, getMonthDayList(leapYear)) +
+      +now.split("-")[2] -
+      1;
 
     batch(() => {
       dispatch(SetCalendarStartDate(startDate));
       dispatch(SetCalendarEndDate(now));
-      dispatch(
-        SetCalendarDayStartIdx(
-          getMonthDays(
-            +startDate.split("-")[1] - 1,
-            getMonthDayList(leapYear)
-          ) +
-            +startDate.split("-")[2] -
-            1
-        )
-      );
-      dispatch(
-        SetCalendarDayEndIdx(
-          getMonthDays(+now.split("-")[1] - 1, getMonthDayList(leapYear)) +
-            +now.split("-")[2] -
-            1
-        )
-      );
+      dispatch(SetCalendarDayStartIdx(startIdx));
+      dispatch(SetCalendarDayEndIdx(endIdx));
+      if (changeToStartSeason) {
+        dispatch(SetDesc(t("utility.calendarFilter.desc.changeToStartSeason")));
+        dispatch(SetIsOpen(true));
+      }
     });
-
-    if (changeToStartSeason) {
-      dispatch(SetDesc(t("utility.calendarFilter.desc.changeToStartSeason")));
-      dispatch(SetIsOpen(true));
-    }
   };
 
   return (
     <SCFContainer>
-      <div className="calendar-filter-label">
-        {t("utility.calendarFilter.dateSet")}
-      </div>
       <SCFDaysInput
         onClick={() => {
           batch(() => {
             dispatch(SetCalendarIsOpen(true));
-            dispatch(SetCalendarIsStartSelector(true));
           });
         }}
       >
@@ -120,7 +110,6 @@ const CalendarFilterNav = () => {
         onClick={() => {
           batch(() => {
             dispatch(SetCalendarIsOpen(true));
-            dispatch(SetCalendarIsStartSelector(false));
           });
         }}
       >

@@ -713,49 +713,48 @@
   },
   "soloRank": {
     "tab": {
-      "myTeam": "우리팀 솔로랭크",
-      "filterSearch": "필터검색",
-      "interestedPlayer": "관심선수 솔로랭크"
+      "myTeam": "My Team SoloRank",
+      "filterSearch": "Filter Search",
+      "interestedPlayer": "Interested Player SoloRank"
     },
     "myTeam": {
       "label": {
-        "leagueInfo": "리그정보",
-        "teamLogo": "팀 로고",
-        "teamAbbr": "팀 약자",
-        "teamName": "팀 이름",
-        "addInterestedPlayer": "관심선수 등록",
-        "soloRankID": "솔로랭크 ID",
-        "curTier8prevTier": "현재 티어 LP \n(이전 시즌 티어)",
-        "curSeason": "이번 시즌",
-        "recentDays": "최근 ##일",
-        "daysPlayedCham": "최근 ##일간\n플레이한 챔피언"
+        "leagueInfo": "League Info",
+        "teamLogo": "Team Logo",
+        "teamAbbr": "Team Abbreviation",
+        "teamName": "Team Name",
+        "addInterestedPlayer": "Add Interested Player",
+        "soloRankID": "SoloRank ID",
+        "curTier8prevTier": "Current Tier LP \n(Previous Tier)",
+        "curSeason": "Current Season",
+        "recentDays": "Last ##days",
+        "daysPlayedCham": "Last ##days\nplayed Champion"
       }
     }
   },
   "utility": {
     "calendarFilter": {
-      "dateSet": "날짜 설정",
-      "inputStart": "시작일 입력",
-      "inputEnd": "종료일 입력",
+      "dateSet": "set date",
+      "dateAdd": "add date",
+      "inputStart": "add start date",
+      "inputEnd": "add date",
       "date": {
-        "allSeason": "시즌 전체",
-        "recent3days": "최근 3일",
-        "recent5days": "최근 5일",
-        "recent7days": "최근 7일",
-        "recent15days": "최근 15일",
-        "recent1months": "최근 1개월",
-        "recent3months": "최근 3개월"
+        "allSeason": "whole season",
+        "recent3days": "last 3 days",
+        "recent5days": "last 5 days",
+        "recent7days": "last 7 days",
+        "recent15days": "last 15 days",
+        "recent1months": "last 1 month",
+        "recent3months": "last 3 months"
       },
-      "selectedStartDay": "시작일 선택 완료",
-      "selectedEndDay": "종료일 선택 완료",
+      "Confirm": "Confirm",
       "desc": {
-        "noStartIdx": "시작일을 선택이 필요합니다.",
-        "noEndIdx": "종료일을 선택이 필요합니다.",
-        "needStartIdx": "시작일을 먼저 선택해야 합니다.",
-        "wrongDate": "사용 가능한 날짜를 선택해야합니다.",
-        "changeToStartSeason": "시작일을 시즌의 시작일로 수정합니다.",
-        "changeToEndSeason": "종료일을 시즌의 종료일로 수정합니다.",
-        "changeToAllSeason": "시작일과 종료일을 시즌의 시작일과 종료일로 수정합니다."
+        "noStartIdx": "you need to select a start date.",
+        "noEndIdx": "you need to select a end date.",
+        "wrongDate": "Please select an available date.",
+        "changeToStartSeason": "Fix the start date to the start date of the season.",
+        "changeToEndSeason": "Fix the end date to the end date of the season.",
+        "changeToAllSeason": "Fix the start and end dates to the start and end dates of the season."
       }
     }
   }

@@ -176,10 +176,8 @@ function LeaguePick() {
           const date = e[i].date;
           const index = (getMonthDays(+date.split("-")[1] - 1, getMonthDayList(leapYear))) + +date.split("-")[2] - 1;
           e[i].index = index;
-          console.log(index)
           //res.push(e[i]);
         }
-
 
         batch(() => {
           dispatch(SetCalendarInfo(e));
@@ -237,16 +235,19 @@ function LeaguePick() {
   // };
 
   useEffect(() => {
-    if (calendar.endDate.length > 0 && filters.patch.length > 0) {
+    if (calendar.endDate.length > 0 && calendar.startDate.length > 0) {
       getPickData()
     }
     //fetchingPickData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [queryPosition, filters.patch]);
+  }, [queryPosition, calendar.info, calendar.endDate, calendar.startDate]);
 
   useEffect(() => {
-    getCalendarFilteData();
-  }, [])
+
+    if (filters.patch.length > 0) {
+      getCalendarFilteData();
+    }
+  }, [filters.patch])
 
   useEffect(() => {
     if (isInitialMount2.current) {

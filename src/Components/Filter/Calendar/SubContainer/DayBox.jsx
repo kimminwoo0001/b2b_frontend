@@ -1,28 +1,19 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
-import { useDispatch, useSelector } from "react-redux";
+import { batch, useDispatch, useSelector } from "react-redux";
 import theme from "../../../../Styles/Theme";
 import { useTranslation } from "react-i18next";
-import {
-  SetCalendarDayEndIdx,
-  SetCalendarDayStartIdx,
-} from "../../../../redux/modules/calendarvalue";
 import addZero from "../../../../lib/addZero";
 import { SetDesc, SetIsOpen } from "../../../../redux/modules/modalvalue";
 import MatchBox from "./MatchBox";
 import getMonthDays from "../../../../lib/Calendar/getMonthDays";
 import getMonthDayList from "../../../../lib/Calendar/getMonthDayList";
 import getLeafYaer from "../../../../lib/Calendar/getLeafYear";
+const START_DATE = "START_DATE";
+const END_DATE = "END_DATE";
 
-const checkClick = (
-  isStartSelector,
-  startDayIdx,
-  index,
-  year,
-  seasonStart,
-  seasonEnd
-) => {
+const checkClick = (index, year, seasonStart, seasonEnd) => {
   const leapYear = getLeafYaer(year);
   const seasonStartIdx =
     getMonthDays(+seasonStart.split("-")[1] - 1, getMonthDayList(leapYear)) +
@@ -32,51 +23,53 @@ const checkClick = (
     getMonthDays(+seasonEnd.split("-")[1] - 1, getMonthDayList(leapYear)) +
     +seasonEnd.split("-")[2] -
     1;
-  if (isStartSelector) {
-    if (-1 < index && seasonStartIdx <= index && index <= seasonEndIdx) {
-      return true;
-    } else {
-      return false;
-    }
+  if (seasonStartIdx <= index && index <= seasonEndIdx) {
+    return true;
   } else {
-    //const now = new Date();
-    if (
-      startDayIdx < index &&
-      seasonStartIdx <= index &&
-      index <= seasonEndIdx
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+    return false;
   }
-  return false;
 };
 
 const DayBox = ({
   info,
-  isStartSelector,
-  selectIdx,
-  setSelectIdx,
-  setSelectValue,
-  startDayIdx,
+  activeLabel,
+  selectStartIdx,
+  selectEndIdx,
+  setActiveLabel,
+  setSelectStartIdx,
+  setSelectEndIdx,
+  setSelectStartValue,
+  setSelectEndValue,
 }) => {
   const lang = useSelector((state) => state.LocaleReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { year, day, month, index, match } = info;
   const calendar = useSelector((state) => state.CalendarReducer);
-
-  if (match.length > 0) {
-    console.log("match:", match);
-  }
+  const getActiveLabel = (activeLabel, index) => {
+    const exception1 = activeLabel === END_DATE && index < selectStartIdx;
+    const exception2 = activeLabel === START_DATE && index > selectEndIdx;
+    if (activeLabel === START_DATE || exception1) {
+      batch(() => {
+        if (exception1 || exception2) {
+          setSelectEndIdx("");
+          setSelectEndValue("");
+        }
+        setActiveLabel(END_DATE);
+      });
+      return START_DATE;
+    } else {
+      if (selectStartIdx === "") {
+        setActiveLabel(START_DATE);
+      }
+      return END_DATE;
+    }
+  };
   return (
     <SCalendarDayBox
       isAble={
-        startDayIdx === index ||
+        selectStartIdx === index ||
         checkClick(
-          isStartSelector,
-          startDayIdx,
           index,
           year,
           calendar.seasonStartDate,
@@ -84,27 +77,30 @@ const DayBox = ({
         )
       }
       isActive={
-        selectIdx === index ||
-        (!isStartSelector && startDayIdx === index) ||
-        (!isStartSelector && startDayIdx <= index && index <= selectIdx)
+        selectStartIdx === index ||
+        selectEndIdx === index ||
+        (selectStartIdx !== "" &&
+          selectStartIdx <= index &&
+          index <= selectEndIdx)
       }
       onClick={() => {
         if (
           checkClick(
-            isStartSelector,
-            startDayIdx,
             index,
             year,
             calendar.seasonStartDate,
             calendar.seasonEndDate
           )
         ) {
-          if (selectIdx !== index) {
-            setSelectIdx(index);
-            setSelectValue(`${year}-${addZero(month)}-${addZero(day + 1)}`);
+          if (getActiveLabel(activeLabel, index) === START_DATE) {
+            setSelectStartIdx(index);
+            setSelectStartValue(
+              `${year}-${addZero(month)}-${addZero(day + 1)}`
+            );
+            setActiveLabel(END_DATE);
           } else {
-            setSelectIdx();
-            setSelectValue();
+            setSelectEndIdx(index);
+            setSelectEndValue(`${year}-${addZero(month)}-${addZero(day + 1)}`);
           }
         } else {
           dispatch(SetDesc(t("utility.calendarFilter.desc.wrongDate")));
@@ -120,9 +116,11 @@ const DayBox = ({
             : `${month}/${day + 1}`}
         </div>
       )}
-      {match.map((data) => {
-        return <MatchBox text={data} />;
-      })}
+      <div className="match-box-container">
+        {match.map((data) => {
+          return <MatchBox text={data} />;
+        })}
+      </div>
     </SCalendarDayBox>
   );
 };
@@ -131,7 +129,7 @@ export default DayBox;
 
 const SCalendarDayBox = styled.div`
   width: 145px;
-  height: 181px;
+  height: 123px;
   margin: 0 10px 20px;
   //padding: 9px 0 10px;
   border-radius: 20px;
@@ -142,6 +140,12 @@ const SCalendarDayBox = styled.div`
   &:hover {
     background-color: ${(props) =>
       props.isActive ? theme.colors.point_hover : theme.colors.bg_hover};
+  }
+
+
+  .match-box-container {
+    height: 74px;
+    overflow: scroll;
   }
 
   .header-day {
