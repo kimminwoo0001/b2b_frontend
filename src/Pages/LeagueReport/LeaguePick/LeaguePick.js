@@ -127,6 +127,7 @@ function LeaguePick() {
       url,
       params,
       function (e) {
+        console.log("pick", e);
         //주요픽 데이터 저장
         setImportantPicks(e.importantPick);
         //주요픽간의전적 저장

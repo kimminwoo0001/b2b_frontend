@@ -137,10 +137,15 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
               </tr>
             </thead>
             <tbody>
-              {items.length === 0 && (
+              {/* {items.length === 0 && (
                 <LoadingImage>
                   <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
                 </LoadingImage>
+              )} */}
+              {items && items.length === 0 ? (
+                <NoData>{t("league.draft.noItemPickData")}</NoData>
+              ) : (
+                ""
               )}
               {items?.map((data, idx) => {
                 return (
@@ -214,10 +219,15 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
               </tr>
             </thead>
             <tbody>
-              {tiers.length === 0 && (
+              {/* {tiers.length === 0 && (
                 <LoadingImage>
                   <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
                 </LoadingImage>
+              )} */}
+              {tiers && tiers.length === 0 ? (
+                <NoData>{t("league.draft.noTiersPickData")}</NoData>
+              ) : (
+                ""
               )}
               {tiers?.map((data, idx) => {
                 let tierData = 0;
@@ -263,10 +273,15 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
             <span id="header-name">{t("league.draft.against")}</span>
           </Header>
           <MatchWrapper id="against-table">
-            {pickDifference && pickDifference.length === 0 && (
+            {/* {pickDifference && pickDifference.length === 0 && (
               <LoadingImage>
                 <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
               </LoadingImage>
+            )} */}
+            {pickDifference && pickDifference.length === 0 ? (
+              <NoData>{t("league.draft.noPickDifference")}</NoData>
+            ) : (
+              ""
             )}
             {pickDifference?.map((pick, idx) => {
               return (
@@ -540,6 +555,7 @@ const MainPicks = styled.div`
   margin-right: 22px;
   margin-bottom: 22px;
   border-radius: 20px;
+  position: relative;
 `;
 
 const Header = styled.div`
@@ -688,6 +704,7 @@ const PickTable = styled.table`
     }
   }
   > tbody {
+    position: relative;
     display: block;
     border-radius: 20px;
     height: 470px;
@@ -760,6 +777,8 @@ const MatchWrapper = styled.div`
     background-color: #696777;
     border-radius: 3px;
   }
+  
+  position: relative;
 `;
 
 const MatchHistory = styled.div`
@@ -1115,6 +1134,7 @@ const TierTable = styled.table`
   }
 
   > tbody {
+    position: relative;
     display: block;
     height: 185px;
     overflow: auto;

@@ -176,6 +176,9 @@
       "l": "패",
       "tier": "티어",
       "noUniquePickData": "유니크 픽 데이터가 없습니다.",
+      "noPickDifference": "주요 픽 간 전적 데이터가 없습니다.",
+      "noTiersPickData": "챔피언 티어 데이터가 없습니다.",
+      "noItemPickData": "대회 주요 픽 데이터가 없습니다.",
       "team": "팀",
       "oppTeam": "상대 팀"
     },
