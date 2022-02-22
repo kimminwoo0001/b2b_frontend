@@ -4,6 +4,7 @@ import IconDel from "../../Ui/Icons/IconDel";
 import { motion, AnimatePresence } from "framer-motion/dist/framer-motion";
 import {
   borderRadiusStyle,
+  boxshadowStyle,
   buttonStyle,
   colors,
   inputStyle,
@@ -179,6 +180,7 @@ const QueryListContainer = styled(motion.div)`
   ${spacing.paddingX(4)};
   ${spacing.paddingY(5)};
   ${borderRadiusStyle[10]};
+  ${boxshadowStyle.modal}
   overflow: auto;
   ${scrollbarStyle.hidden};
   background-color: ${colors.bg_select};
