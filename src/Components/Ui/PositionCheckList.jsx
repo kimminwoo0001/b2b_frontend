@@ -11,10 +11,10 @@ import {
 import { useUpdateEffect } from "../../Hooks";
 
 // 포지션 정보
-const positionList = {
+const POSITION_IMG = {
   all: "ALL",
   top: <img src="images/position/ico-position-top.svg" alt="top" />,
-  jun: <img src="images/position/ico-position-jug.svg" alt="jun" />,
+  jug: <img src="images/position/ico-position-jug.svg" alt="jug" />,
   mid: <img src="images/position/ico-position-mid.svg" alt="mid" />,
   bot: <img src="images/position/ico-position-bot.svg" alt="bot" />,
   sup: <img src="images/position/ico-position-sup.svg" alt="sup" />,
@@ -24,29 +24,31 @@ const PositionCheckList = ({
   all = true,
   defaultColor = "rgba(255,255,255,0.3)",
   hoverColor = colors.bg_checkbox,
-  onChange,
+  position = {
+    all: false,
+    top: false,
+    jug: false,
+    mid: false,
+    bot: false,
+    sup: false,
+  },
+  setPosition,
   ...props
 }) => {
-  const [postionData, setPositionData] = useState(() =>
-    Object.keys(positionList).reduce((a, c) => {
-      a[c] = false;
-      return a;
-    }, {})
-  );
-
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
 
     if (value === "all") {
-      setPositionData((prev) => {
+      setPosition((prev) => {
         let newPosition = { ...prev };
+        console.log(value);
         for (let key in newPosition) {
           newPosition[key] = checked;
         }
         return newPosition;
       });
     } else {
-      setPositionData((prev) => {
+      setPosition((prev) => {
         const newPosition = { ...prev };
         newPosition[value] = checked;
 
@@ -61,33 +63,27 @@ const PositionCheckList = ({
     }
   };
 
-  useUpdateEffect(() => {
-    if (onChange) {
-      onChange(postionData);
-    }
-  }, [postionData, onChange]);
-
   return (
     <div {...props}>
       <SList>
-        {Object.keys(positionList)
+        {Object.keys(position)
           .filter((pos) => {
             if (!all) return pos !== "all";
             return true;
           })
-          .map((position, i) => {
+          .map((key, i) => {
             return (
-              <SListItem key={position + i}>
+              <SListItem key={key + i}>
                 <SCustomCheckbox
                   name={"position"}
-                  value={position}
+                  value={key}
                   onChange={handleChange}
-                  checked={postionData[position]}
+                  checked={position[key]}
                   defaultcolor={defaultColor}
                   hovercolor={hoverColor}
                 >
                   <SIcon>
-                    <span>{positionList[position]}</span>
+                    <span>{POSITION_IMG[key]}</span>
                   </SIcon>
                 </SCustomCheckbox>
               </SListItem>
