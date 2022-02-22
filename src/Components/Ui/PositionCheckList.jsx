@@ -2,36 +2,51 @@ import React, { useEffect, useState } from "react";
 import CustomCheckbox from "./CustomCheckbox";
 import styled from "@emotion/styled";
 import { isObjEqual } from "../../lib/isObjEqual";
-import { transitionStyle, typoStyle } from "../../Styles/ui";
+import {
+  borderRadiusStyle,
+  colors,
+  transitionStyle,
+  typoStyle,
+} from "../../Styles/ui";
+import { useUpdateEffect } from "../../Hooks";
 
-const PositionCheckList = ({ onChange, ...props }) => {
-  const [position, setPosition] = useState({
-    all: false,
-    top: false,
-    jun: false,
-    mid: false,
-    bot: false,
-    sup: false,
-  });
+// 포지션 정보
+const positionList = {
+  all: "ALL",
+  top: <img src="images/position/ico-position-top.svg" alt="top" />,
+  jun: <img src="images/position/ico-position-jug.svg" alt="jun" />,
+  mid: <img src="images/position/ico-position-mid.svg" alt="mid" />,
+  bot: <img src="images/position/ico-position-bot.svg" alt="bot" />,
+  sup: <img src="images/position/ico-position-sup.svg" alt="sup" />,
+};
+
+const PositionCheckList = ({
+  all = true,
+  defaultColor = "rgba(255,255,255,0.3)",
+  hoverColor = colors.bg_checkbox,
+  onChange,
+  ...props
+}) => {
+  const [postionData, setPositionData] = useState(() =>
+    Object.keys(positionList).reduce((a, c) => {
+      a[c] = false;
+      return a;
+    }, {})
+  );
 
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
 
     if (value === "all") {
-      setPosition((prev) => {
+      setPositionData((prev) => {
         let newPosition = { ...prev };
         for (let key in newPosition) {
           newPosition[key] = checked;
         }
-
-        if (onChange) {
-          onChange(newPosition);
-        }
-
         return newPosition;
       });
     } else {
-      setPosition((prev) => {
+      setPositionData((prev) => {
         const newPosition = { ...prev };
         newPosition[value] = checked;
 
@@ -41,100 +56,43 @@ const PositionCheckList = ({ onChange, ...props }) => {
           newPosition.all = false;
         }
 
-        if (onChange) {
-          onChange(newPosition);
-        }
-
         return newPosition;
       });
     }
   };
 
+  useUpdateEffect(() => {
+    if (onChange) {
+      onChange(postionData);
+    }
+  }, [postionData, onChange]);
+
   return (
     <div {...props}>
       <SList>
-        <SListItem>
-          <SCustomCheckbox
-            name={"position"}
-            value={"all"}
-            onChange={handleChange}
-            checked={position.all}
-          >
-            <SIcon>
-              <span>ALL</span>
-            </SIcon>
-          </SCustomCheckbox>
-        </SListItem>
-        <SListItem>
-          <SCustomCheckbox
-            name={"position"}
-            value={"top"}
-            onChange={handleChange}
-            checked={position.top}
-          >
-            <SIcon>
-              <span>
-                <img src="images/position/ico-position-top.svg" alt="top" />
-              </span>
-            </SIcon>
-          </SCustomCheckbox>
-        </SListItem>
-        <SListItem>
-          <SCustomCheckbox
-            name={"position"}
-            value={"jun"}
-            onChange={handleChange}
-            checked={position.jun}
-          >
-            <SIcon>
-              <span>
-                <img src="images/position/ico-position-jug.svg" alt="top" />
-              </span>
-            </SIcon>
-          </SCustomCheckbox>
-        </SListItem>
-        <SListItem>
-          <SCustomCheckbox
-            name={"position"}
-            value={"mid"}
-            onChange={handleChange}
-            checked={position.mid}
-          >
-            <SIcon>
-              <span>
-                <img src="images/position/ico-position-mid.svg" alt="mid" />
-              </span>
-            </SIcon>
-          </SCustomCheckbox>
-        </SListItem>
-        <SListItem>
-          <SCustomCheckbox
-            name={"position"}
-            value={"bot"}
-            onChange={handleChange}
-            checked={position.bot}
-          >
-            <SIcon>
-              <span>
-                <img src="images/position/ico-position-bot.svg" alt="bot" />
-              </span>
-            </SIcon>
-          </SCustomCheckbox>
-        </SListItem>
-        <SListItem>
-          <SCustomCheckbox
-            name={"position"}
-            value={"sup"}
-            onChange={handleChange}
-            checked={position.sup}
-          >
-            <SIcon>
-              <span>
-                <img src="images/position/ico-position-sup.svg" alt="sup" />
-              </span>
-            </SIcon>
-          </SCustomCheckbox>
-        </SListItem>
+        {Object.keys(positionList)
+          .filter((pos) => {
+            if (!all) return pos !== "all";
+            return true;
+          })
+          .map((position, i) => {
+            return (
+              <SListItem key={position + i}>
+                <SCustomCheckbox
+                  name={"position"}
+                  value={position}
+                  onChange={handleChange}
+                  checked={postionData[position]}
+                  defaultcolor={defaultColor}
+                  hovercolor={hoverColor}
+                >
+                  <SIcon>
+                    <span>{positionList[position]}</span>
+                  </SIcon>
+                </SCustomCheckbox>
+              </SListItem>
+            );
+          })}
       </SList>
     </div>
   );
@@ -145,13 +103,12 @@ const SList = styled.ul`
 `;
 
 const SCustomCheckbox = styled(CustomCheckbox)`
-  border-radius: 10px;
   overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.3);
-
+  ${borderRadiusStyle[10]}
+  ${transitionStyle.background}
+  background-color: ${({ defaultcolor }) => defaultcolor};
   &.is-active {
-    background-color: ${({ theme }) => theme.colors.bg_checkbox};
-
+    background-color: ${({ hovercolor }) => hovercolor};
     span {
       opacity: 1;
     }
