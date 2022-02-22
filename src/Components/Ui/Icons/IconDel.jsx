@@ -1,13 +1,19 @@
 import styled from "@emotion/styled/macro";
 import React from "react";
-import { colors } from "../../../Styles/ui";
+import { colors, transitionStyle } from "../../../Styles/ui";
 
-const IconDel = ({ size = 20 }) => {
+const IconDel = ({
+  size = 20,
+  color = colors.default,
+  hoverColor = colors.default_hover,
+}) => {
   return (
     <SVG
       xmlns="http://www.w3.org/2000/svg"
       width={size}
       height={size}
+      color={color}
+      hoverColor={hoverColor}
       style={{ fill: "none" }}
       viewBox="0 0 20 20"
     >
@@ -32,12 +38,19 @@ const IconDel = ({ size = 20 }) => {
 
 const SVG = styled.svg`
   .background {
-    fill: ${colors.default};
+    fill: ${({ color }) => color};
+    ${transitionStyle.background};
   }
   .text {
     fill: ${colors.text};
     stroke: ${colors.text};
     stroke-width: 0.5px;
+  }
+
+  &:hover {
+    .background {
+      fill: ${({ hoverColor }) => hoverColor};
+    }
   }
 `;
 
