@@ -136,12 +136,24 @@ function CalendarFilter() {
 
       if (calendar.seasonStartDate) {
         const date = calendar.seasonStartDate.split("-");
-        console.log("month", month);
+        console.log(
+          "date",
+          getMonthWeeks(
+            +date[1] - 1,
+            monthDays,
+            firstDays,
+            +firstDays.getDay() + +date[2]
+          )
+        );
 
         setMonth(+date[1] - 1);
         autoMoveScroll(
-          getMonthWeeks(+date[1] - 1, monthDays, firstDays) +
-            Math.floor((+date[2] + firstDays.getDay()) / 7)
+          getMonthWeeks(
+            +date[1] - 1,
+            monthDays,
+            firstDays,
+            +firstDays.getDay() + +date[2]
+          ) - 1
         );
       } else {
         autoMoveScroll(getMonthWeeks(month, monthDays, firstDays));
