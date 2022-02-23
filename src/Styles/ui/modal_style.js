@@ -21,6 +21,8 @@ export const modalStyle = {
       inset: 0,
       border: "none",
       padding: 0,
+      minWidth: "380px",
+      maxWidth: "500px",
       width: "fit-content",
       height: "fit-content",
       overflow: "visible",
