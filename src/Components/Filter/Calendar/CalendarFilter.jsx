@@ -54,7 +54,7 @@ function CalendarFilter() {
   const [lock, setLock] = useState(false);
 
   const getIdx = (idx, idx2) => {
-    return idx * 7 + idx2 - firstDays.getDay();
+    return idx * 7 + idx2 - (firstDays.getDay() - 1);
   };
 
   const getCalendarInfo = (idx, idx2) => {
@@ -111,7 +111,7 @@ function CalendarFilter() {
     if (lock) {
       return;
     }
-    let currentIdx = (+to.split("-")[1] + 1) * 7 - firstDays.getDay();
+    let currentIdx = (+to.split("-")[1] + 1) * 7 - (firstDays.getDay() - 1);
 
     for (let i = 0; i < monthDays.length; i++) {
       if (currentIdx - monthDays[i] >= 0) {
@@ -142,7 +142,7 @@ function CalendarFilter() {
             +date[1] - 1,
             monthDays,
             firstDays,
-            +firstDays.getDay() + +date[2]
+            +firstDays.getDay() - 1 + +date[2]
           )
         );
 
@@ -152,7 +152,7 @@ function CalendarFilter() {
             +date[1] - 1,
             monthDays,
             firstDays,
-            +firstDays.getDay() + +date[2]
+            +firstDays.getDay() - 1 + +date[2]
           ) - 1
         );
       } else {
@@ -280,7 +280,7 @@ function CalendarFilter() {
             {[
               ...Array(
                 Math.floor(
-                  (365 + (leapYear ? 1 : 0) + firstDays.getDay()) / 7
+                  (365 + (leapYear ? 1 : 0) + firstDays.getDay() - 1) / 7
                 ) + 1
               ),
             ].map((week, idx) => {
