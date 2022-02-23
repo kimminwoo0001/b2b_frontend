@@ -74,6 +74,7 @@ const ModalAddTeamPlayer = ({ onSubmit, onClose }) => {
     bot: false,
     sup: false,
   });
+
   // state - common
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [isLocalSearchList, setIsLocalSearchList] = useDetectOutsideClick(
@@ -193,7 +194,7 @@ const ModalAddTeamPlayer = ({ onSubmit, onClose }) => {
             <fieldset>
               <legend>포지션</legend>
               <PositionCheckList
-                all={false}
+                multi={false}
                 position={position}
                 setPosition={setPosition}
                 defaultColor={colors.bg_checkbox}

@@ -71,7 +71,7 @@ const ModalPlayerSearch = ({ name, onSelect = () => {} }) => {
     }
 
     onSelect(selectedObj);
-  }, [selectedObj, onSelect]);
+  }, [selectedObj]);
 
   return (
     <Container ref={queryList}>

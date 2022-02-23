@@ -22,6 +22,7 @@ const POSITION_IMG = {
 
 const PositionCheckList = ({
   all = true,
+  multi = true,
   defaultColor = "rgba(255,255,255,0.3)",
   hoverColor = colors.bg_checkbox,
   position = {
@@ -32,16 +33,14 @@ const PositionCheckList = ({
     bot: false,
     sup: false,
   },
-  setPosition,
+  setPosition = () => {},
   ...props
 }) => {
-  const handleChange = (e) => {
+  const handleChangeMulti = (e) => {
     const { name, value, checked } = e.target;
-
     if (value === "all") {
       setPosition((prev) => {
         let newPosition = { ...prev };
-        console.log(value);
         for (let key in newPosition) {
           newPosition[key] = checked;
         }
@@ -62,13 +61,24 @@ const PositionCheckList = ({
       });
     }
   };
-
+  const handleChangeSingle = (e) => {
+    const { name, value, checked } = e.target;
+    if (position[value]) return setPosition({ ...position, [value]: checked });
+    setPosition((prev) => {
+      const newPosition = { ...prev };
+      for (let key in newPosition) {
+        newPosition[key] = !checked;
+      }
+      newPosition[value] = checked;
+      return newPosition;
+    });
+  };
   return (
     <div {...props}>
       <SList>
         {Object.keys(position)
           .filter((pos) => {
-            if (!all) return pos !== "all";
+            if (!all || !multi) return pos !== "all";
             return true;
           })
           .map((key, i) => {
@@ -77,7 +87,7 @@ const PositionCheckList = ({
                 <SCustomCheckbox
                   name={"position"}
                   value={key}
-                  onChange={handleChange}
+                  onChange={multi ? handleChangeMulti : handleChangeSingle}
                   checked={position[key]}
                   defaultcolor={defaultColor}
                   hovercolor={hoverColor}
