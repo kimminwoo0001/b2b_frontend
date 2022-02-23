@@ -58,27 +58,29 @@ const Compare = () => {
   }
 
    const fetchCampSelectionRate = () => {
-    const {year,oppyear,league,oppleague,season,oppseason,team,oppteam,player,oppplayer} = junglevalue;
+    const {year,oppyear,league,oppleague,team,oppteam,player,oppplayer} = junglevalue;
     const selectedPatches = Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key] === true);    
+    const selectedSeasons = Object.keys(junglevalue.season).filter(key => junglevalue.season[key] === true);    
+    const selectedOppSeasons = Object.keys(junglevalue.oppseason).filter(key => junglevalue.oppseason[key] === true);    
     const champArr = Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === true)
     const oppChampArr = Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true)
 
     const url = `${API}/lolapi/jungle/jungle-passing`;
     const params = {
       league: league,
-      oppleague: oppleague,
       year: year,
-      oppyear: oppyear, 
-      season: season,
-      oppseaon:oppseason,
+      season: selectedSeasons,
       patch: selectedPatches,
       team: team[0],
       player: player[0],
       champion:champArr ,
+      oppleague: oppleague,
+      oppyear: oppyear,
+      oppseason:selectedOppSeasons,
       oppteam: oppteam[0],
       oppplayer: oppplayer[0],
       oppchampion: oppChampArr,
-      side:"all",
+      // side:"all",
       token: user.token,
       id: user.id,
     };
@@ -103,7 +105,7 @@ const Compare = () => {
     !junglevalue.isClicked) {
       return;
     }
-    // fetchCampSelectionRate();
+    fetchCampSelectionRate();
   }, [junglevalue.isClicked])
 
   return (

@@ -304,48 +304,74 @@ const CompareSideFilter = () => {
   },[patchList])
 
 
-  const GetChampion = () => {
-    const selectedSeasons = Object.keys(junglevalue.season).filter(key => junglevalue.season[key] === true)
-    const selectedPatches = Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key]===true)
+  // const GetChampion = () => {
+    
+  //   const selectedSeasons = Object.keys(junglevalue.season).filter(key => junglevalue.season[key] === true)
+  //   const selectedPatches = Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key]===true)
 
+  //   const url = `${API}/lolapi/jungle/player-champions`;
+  //   const params = {
+  //     league: junglevalue.league,
+  //     year: junglevalue.year,
+  //     season: selectedSeasons,
+  //     patch: selectedPatches,
+  //     team: junglevalue.team[0],
+  //     player: junglevalue.player[0],
+  //     token: user.token,
+  //     id: user.id,
+  //   };
+  //   axiosRequest(undefined, url, params, function(e) {
+  //     setChampInfo(e);
+  //     // console.log(e.data);
+  //   }, function (objStore) {
+  //     dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+  //   })
+  // }
+
+  const GetChampion = () => {
+    const seasonArr =Object.keys(junglevalue.season).filter(key => junglevalue.season[key] === true)
+    const patchArr =  Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key] === true)
     const url = `${API}/lolapi/jungle/player-champions`;
     const params = {
       league: junglevalue.league,
       year: junglevalue.year,
-      season: selectedSeasons,
-      patch: selectedPatches,
-      team: junglevalue.team[0],
+      season: seasonArr,
+      patch: patchArr,
+      team: junglevalue.team[0] ,
       player: junglevalue.player[0],
       token: user.token,
       id: user.id,
     };
     axiosRequest(undefined, url, params, function(e) {
+
       setChampInfo(e);
-      // console.log(e.data);
+      console.log("우리팀:",e);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
     })
   }
 
+
+
+
   const GetOppChampion = () => {
-    const selectedOppSeasons = Object.keys(junglevalue.oppseason).filter(key => junglevalue.oppseason[key] === true)
-    const selectedPatches = Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key]===true)
-    const selectedChamps = Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === true);
-    console.log(selectedOppSeasons)
-    const url = `${API}/lolapi/jungle/opp-champions`;
+    const seasonArr =Object.keys(junglevalue.oppseason).filter(key => junglevalue.oppseason[key] === true)
+    const patchArr =  Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key] === true)
+    const url = `${API}/lolapi/jungle/player-champions`;
     const params = {
       league: junglevalue.oppleague,
       year: junglevalue.oppyear,
-      season: selectedOppSeasons,
-      patch: selectedPatches,
+      season: seasonArr,
+      patch: patchArr,
       team: junglevalue.oppteam[0],
       player: junglevalue.oppplayer[0],
-      champion:selectedChamps ,
       token: user.token,
-      id: user.id, 
+      id: user.id,
     };
     axiosRequest(undefined, url, params, function(e) {
-      setOppChampInfo(e)
+
+      setOppChampInfo(e);
+      console.log("상대팀:",e);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
     })
@@ -479,14 +505,14 @@ useEffect(() => {
 
 
   useEffect(() => {
-    // if(Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key] === true).length === 0) {
-    //   return;
-    // }
+    if(Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key] === true).length === 0) {
+      return;
+    }
 
     if (isInitialMount.current) {
       isInitialMount.current = false;
     } else {
-    GetChampion();
+    GetChampion(junglevalue.league, junglevalue.year, junglevalue.season, junglevalue.team, junglevalue.player);
     }
   
   },[junglevalue.patch])
@@ -498,7 +524,7 @@ useEffect(() => {
     if (isInitialMount2.current) {
       isInitialMount2.current = false;
     } else {
-    GetOppChampion();
+      GetOppChampion(junglevalue.oppleague, junglevalue.oppyear, junglevalue.oppseason, junglevalue.oppteam, junglevalue.oppplayer);
     }
   },[junglevalue.champion])
   
@@ -562,17 +588,27 @@ useEffect(() => {
                       }}
                     >
                       <DropdownLabel css={[dropdownStyle.select_head]}>
-                        <S.SelectLabel>{t("video.jungle.selectLeague")}</S.SelectLabel>
+                        <S.SelectLabel>
+                          {t("video.jungle.selectLeague")}</S.SelectLabel>
                       </DropdownLabel>
                       <DropdownList>
                         {selector.leagueFilter?.map((league,idx) => {
                           return  (
+                            <SLeagueWrapper>
+                            <img
+                            className="leagueLogo"
+                            width="24px"
+                            height="24px"
+                            src={ `Images/ico-league-${league.toLowerCase()}.png`}
+                            alt="leagueLogo"
+                          /> 
                             <DropdownItem
                             css={[dropdownStyle.select_item]}
                             value={league}
                           >
                             {league}
                           </DropdownItem>
+                          </SLeagueWrapper>
                           )
                         })}
                       </DropdownList>
@@ -638,12 +674,13 @@ useEffect(() => {
                   {/* 시즌 */}
                   <div className="group-col-1">
                   <SRow >
-                    {/* <STitle>{t("video.jungle.season")}</STitle> */}
                     <SFilterGroup>
                    {junglevalue.player.length === 0 ? 
                     <SInitialStatement> {t("video.jungle.selectSeason")}</SInitialStatement> : 
+                    
+                    <>
+                    <STitle>{t("video.jungle.selectSeason")}</STitle>
                     <SChekcboxAllWrapper>
-
                       <SCheckboxAll
                       name="season"
                       value="all"
@@ -653,6 +690,7 @@ useEffect(() => {
                     {t("video.jungle.selectAll")}
                     </SCheckboxAll>
                     </SChekcboxAllWrapper>
+                    </>
 
                     }
                     <SCheckboxWrapper>
@@ -733,12 +771,21 @@ useEffect(() => {
                       <DropdownList>
                         {selector.leagueFilter?.map((league,idx) => {
                           return (
+                            <SLeagueWrapper>
+                            <img
+                            className="leagueLogo"
+                            width="24px"
+                            height="24px"
+                            src={ `Images/ico-league-${league.toLowerCase()}.png`}
+                            alt="leagueLogo"
+                          /> 
                             <DropdownItem
                             css={[dropdownStyle.select_item]}
                             value={league}
                           >
                             {league}
                           </DropdownItem>
+                          </SLeagueWrapper>
                           )
                         })}
                       </DropdownList>
@@ -803,10 +850,11 @@ useEffect(() => {
                   {/* 시즌 */}
                   <div className="group-col-1">
                   <SRow >
-                    {/* <STitle>{t("video.jungle.season")}</STitle> */}
                     <SFilterGroup>
                    {junglevalue.oppplayer.includes("") || junglevalue.oppplayer.length === 0? 
-                    <SInitialStatement> {t("video.jungle.selectSeason")}</SInitialStatement> : 
+                    <SInitialStatement> {t("video.jungle.selectSeason")}</SInitialStatement> :
+                    <>
+                    <STitle>{t("video.jungle.selectSeason")}</STitle>
                     <SChekcboxAllWrapper>
                       <SCheckboxAll
                       name="oppseason"
@@ -817,6 +865,7 @@ useEffect(() => {
                     {t("video.jungle.selectAll")}
                     </SCheckboxAll>
                     </SChekcboxAllWrapper>
+                    </>
                     }
                     <SCheckboxWrapper>
                         {selector.oppseasonFilter?.map((oppseason,idx) => {
@@ -1020,14 +1069,14 @@ useEffect(() => {
                 <S.Body>
                   {oppChampInfo?.map((oppChamp,idx) => {
                     return (
-                      <S.Row isActive={Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).includes(oppChamp.champs)}>
+                      <S.Row isActive={Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).includes(oppChamp.champ)}>
                       {/* 체크 */}
                       <S.Col1>
                         <Checkbox
                           name="oppchampion"
-                          value={oppChamp.champs}
+                          value={oppChamp.champ}
                           onChange={handleChange}
-                          checked={Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).includes(oppChamp.champs)}
+                          checked={Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).includes(oppChamp.champ)}
                           />
                       </S.Col1>
                       {/* 본문 */}
@@ -1036,10 +1085,10 @@ useEffect(() => {
                           <Avatar
                             css={{ marginRight: 5 }}
                             size={20}
-                            src={`Images/champion/${oppChamp.champs}.png`}
+                            src={`Images/champion/${oppChamp.champ}.png`}
                             alt="oppChampLogo"
                           />
-                        <span>{`${oppChamp.champs} (${oppChamp.blue_champ + oppChamp.red_champ})`}</span>
+                        <span>{`${oppChamp.champ} (${oppChamp.blue_champ + oppChamp.red_champ})`}</span>
                         </S.Champ>
                       </S.Col2>
   
@@ -1087,6 +1136,7 @@ const SRow = styled.div`
 `;
 const STitle = styled.div`
   flex: 1;
+  margin: 0 0 13px 5px;
 `;
 
 const SChekcboxAllWrapper = styled.div`
@@ -1131,3 +1181,9 @@ const SFilterGroup = styled.div`
 const SCheckboxWrapper = styled.div`
 flex:1
 `;
+
+
+const SLeagueWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`

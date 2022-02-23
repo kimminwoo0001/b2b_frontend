@@ -285,7 +285,7 @@ dispatch(SetFilterData(({
                 }}
               >
                 <DropdownLabel css={[dropdownStyle.select_head]} onClick={() => GetPlayerInfo()}>
-                  {`${junglevalue.player !== "" ? junglevalue.player : t("video.jungle.selectPlayer")}`}
+                  {`${junglevalue.player && junglevalue.player !== "" ? junglevalue.player : t("video.jungle.selectPlayer")}`}
                 </DropdownLabel>
                 <DropdownList>
                   {playerInfo?.map((info,idx) => {
@@ -309,7 +309,7 @@ dispatch(SetFilterData(({
 
         {/* step2 - 챔피언 체크박스 */}
         <div css={{ marginBottom: 30 }}>
-          <Accordion act={junglevalue.player.length}>
+          <Accordion act={junglevalue.player && junglevalue.player.length}>
             <AccordionSummary css={{ marginBottom: 13 }} onClick={() => {}}>
               <SStepContainer>
                 <SLabel>STEP 02</SLabel>

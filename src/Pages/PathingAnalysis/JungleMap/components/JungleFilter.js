@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   League,
@@ -58,6 +58,7 @@ const JungleFilter = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [toggleFoldBtn, setToggleFoldBtn] = useState(false);
+  const isInitialMount = useRef(false);
 
 
 
@@ -146,9 +147,7 @@ const JungleFilter = () => {
 
   const fetchSeasonFilter = () => {
     let seasonList = [];
-    // console.log("야옹2");
     if (junglevalue.year.length !== 0) {
-      // console.log("야옹");
       const result = Object.keys(junglevalue.league).filter(key => junglevalue.league[key] === true)
       for (let year of junglevalue.year) {
         for (let league of result) {
@@ -170,8 +169,6 @@ const JungleFilter = () => {
     if (junglevalue.year.length !== 0 && Object.keys(junglevalue.season).length !== 0) {
       const selectedLeagues = Object.keys(junglevalue.league).filter(key => junglevalue.league[key] === true)
       const selectedSeasons = Object.keys(junglevalue.season).filter(key => junglevalue.season[key] === true)
-      // console.log("result --------", result)
-      // console.log("result2 --------", result2)
       for (let year of junglevalue.year) {
         for (let league of selectedLeagues) {
           for (let season of selectedSeasons) {
@@ -183,7 +180,6 @@ const JungleFilter = () => {
           }
         }
       }
-      // console.log("result3---------",teamList);
       // 공통되는 팀이 아닌 경우로만 sorting
       teamList = teamList.filter((item, pos) => teamList.indexOf(item) === pos);
 
@@ -207,13 +203,18 @@ const JungleFilter = () => {
     axiosRequest(undefined, url, params, function (e) {
       const patchResponse = e ?? [];
       dispatch(setPatchFilter(patchResponse));
-      dispatch(SetPatch(patchResponse));
+      const datas = { ...junglevalue.patch }
+      const list = Object.keys(junglevalue.patch);
+      const a = list.map((data) => {
+        return datas[data] = true;
+      })
+      dispatch(SetFilterData({ ...junglevalue, patch: datas }));
+      
       dispatch(Loading(false));
     }, function (e) {
       dispatch(Loading(false));
     });
   }
-
   
 
   // 연도 설정 후 리그필터 호출
@@ -246,7 +247,6 @@ const JungleFilter = () => {
       return;
     }
     fetchTeamFilter();
-    // fetchPatchFilter();
   }, [junglevalue.season])
 
 
@@ -261,7 +261,7 @@ const JungleFilter = () => {
     if(junglevalue.patch.length === 0) {
       return;
     }
-    dispatch(SetJunglePlayer(""));
+    // dispatch(SetJunglePlayer(""));
   }, [junglevalue.patch])
 
 
@@ -293,8 +293,8 @@ const JungleFilter = () => {
     if (junglevalue.team.length === 0) {
       return;
     }
-    const result = initializedFalseValue(selector.patchFilter);
-
+    const result = initializedFalseValue(selector.patchFilter, true);
+    console.log(result);
     dispatch(SetFilterData({
       ...junglevalue,
       patch: result,
@@ -466,7 +466,13 @@ const JungleFilter = () => {
        <SRow>
        <STitle>{t("video.jungle.selectedFilter")}</STitle>
        <SFilterGroup>
-         <SResetWrapper onClick={() => dispatch(JungleInit())}>
+         <SResetWrapper onClick={() => {
+          dispatch(JungleInit())
+          if(toggleFoldBtn) {
+            setToggleFoldBtn(!toggleFoldBtn)
+          }
+         }
+          }>
             <SResetImg src="Images/ico_reset.svg" alt="reset"/>
             <SResetTitle>{t("video.jungle.reset")}</SResetTitle>
         </SResetWrapper>
@@ -474,7 +480,10 @@ const JungleFilter = () => {
 
         {/* 선택된 필터 노출 */}
         <SelectedJungleFilter 
-        filterData={junglevalue} />
+        filterData={junglevalue}
+        toggleFoldBtn={toggleFoldBtn}
+        setToggleFoldBtn={setToggleFoldBtn}
+         />
         </SCheckboxWrapper>
        </SFilterGroup>
    

@@ -1,4 +1,4 @@
-//API: 기본
+// API: 기본
 // export const API = "https://nunu.gg:8443";
 // export const API = "http://192.168.0.50:8080"; // 테스트 서버
 // export const API = "http://nunu.gg:8903"; // 테스트 서버

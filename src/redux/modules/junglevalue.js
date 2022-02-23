@@ -20,15 +20,17 @@ export const JungleInit = () => {
   };
 }
 
-export const ResetJungleLeague = () => {
+export const ResetJungleLeague = (payload) => {
   return {
     type: RESET_JUNGLE_LEAGUE,
+    payload,
   }
 }
 
-export const ResetJungleSeason = () => {
+export const ResetJungleSeason = (payload) => {
   return {
     type: RESET_JUNGLE_SEASON,
+    payload,
   }
 }
 export const ResetJungleTeam = () => {
@@ -37,9 +39,10 @@ export const ResetJungleTeam = () => {
   }
 }
 
-export const ResetJunglePatch = () => {
+export const ResetJunglePatch = (payload) => {
   return {
     type: RESET_JUNGLE_PATCH,
+    payload,
   }
 }
 
@@ -123,7 +126,7 @@ export default function JungleMapReducer(state = initialState, action) {
     case RESET_JUNGLE_LEAGUE:
         return {
           ...state,
-          league: {},
+          league: {...state.league, [action.payload]:false},
           season: {},
           team:[],
           patch : {},
@@ -131,7 +134,7 @@ export default function JungleMapReducer(state = initialState, action) {
     case RESET_JUNGLE_SEASON:
         return {
           ...state,
-          season: {},
+          season: {...state.season, [action.payload] : false},
           team:[],
           patch : {},
         }
@@ -142,11 +145,12 @@ export default function JungleMapReducer(state = initialState, action) {
           team:[],
           patch : {},
         }
-    case RESET_JUNGLE_PATCH:
-        return {
-          ...state,
-          patch : {},
-        }   
+
+  case RESET_JUNGLE_PATCH:
+      return {
+        ...state,
+        patch: {...state.patch, [action.payload]:false},
+      };
 
     case SET_IS_JUNGLING_CLICKED:
       return {
