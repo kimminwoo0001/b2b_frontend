@@ -3,8 +3,8 @@
 // export const API = "http://192.168.0.50:8080"; // 테스트 서버
 // export const API = "http://nunu.gg:8903"; // 테스트 서버
 // export const API = "http://nunu.gg:8787"; // 테스트 서버
-// export const API = "http://teamsnowball.co:5003"; // 테스트 서버 - 이세님
-export const API = "http://teamsnowball.co:8007"; // 테스트 서버 - 광균님
+export const API = "http://teamsnowball.co:5003"; // 테스트 서버 - 이세님
+// export const API = "http://teamsnowball.co:8007"; // 테스트 서버 - 광균님
 // export const API = "http://192.168.0.36:8082"; // 테스트 서버 - 민규님
 
 //API2: 영상보고서

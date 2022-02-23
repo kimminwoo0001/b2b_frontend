@@ -13,7 +13,7 @@ import { dropdownStyle } from "../../../../Styles/ui";
 import ItemBox from "./SubComponent/ItemBox";
 import * as S from "./styled/MTStyledTable";
 import { API } from "../../../config";
-import axiosRequest from "../../../../lib/axios/axiosRequest";
+
 import { Loading } from "../../../../redux/modules/filtervalue";
 import { SetModalInfo } from "../../../../redux/modules/modalvalue";
 
@@ -53,37 +53,15 @@ const useSortableData2 = (tiers, config = null) => {
   return { tiers: sortedItems, requestSorts, sortConfig };
 };
 
-const MTCategory = () => {
+const MTCategory = ({ selectedDay, setSelectedDay }) => {
   // 챔피언 티어 오름차 내림차  정렬 상태값
   const tier = [];
   const { tiers, requestSorts } = useSortableData2(tier ? tier : []);
-  const user = useSelector((state) => state.UserReducer);
-  const [selectedDay, setSelectedDay] = useState("30");
+  
+
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  
 
-  const getMyTeamSoloRankInfo = () => {
-    const url = `${API}/lolapi/...`;
-    const params = {
-      days: selectedDay,
-      token: user.token,
-    };
-
-    axiosRequest(
-      undefined,
-      url,
-      params,
-      function (e) {
-        console.log("pick", e);
-        //주요픽 데이터 저장
-        dispatch(Loading(false));
-      },
-      function (objStore) {
-        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
-        dispatch(Loading(false));
-      }
-    );
-  };
   return (
     // 테이블 헤더 카테고리
     <S.TableHead>

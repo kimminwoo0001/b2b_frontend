@@ -23,7 +23,7 @@ const exTeamLine = "DK 정글";
 const exPlayerNickName = "Canyon";
 const exPlayerName = "김건부";
 
-const MTContent = () => {
+const MTContent = ({ selectedDay, setSelectedDay }) => {
   const { openModal } = useModal();
   const { t } = useTranslation();
 
@@ -40,7 +40,7 @@ const MTContent = () => {
       {/* 테이블 */}
       <S.table.Table>
         {/* 테이블 헤더 */}
-        <MTCategory />
+        <MTCategory selectedDay={selectedDay} setSelectedDay={setSelectedDay} />
         <S.table.TableBody>
           {/* 반복 */}
           <MTPlayerList
