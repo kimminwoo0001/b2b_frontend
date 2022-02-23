@@ -220,7 +220,6 @@ const JungleFilter = () => {
 
   // 리그 설정 후 시즌필터 호출
   useEffect(() => {
-    console.log("야옹3")
     if (Object.keys(filterData.league).length === 0) {
       return;
     }
