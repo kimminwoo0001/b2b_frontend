@@ -472,7 +472,18 @@ const SCalendarContainer = styled.div`
 
 const CalendarBody = styled.div`
   #calendar-body {
-    overflow: scroll;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #434050;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      margin: 5px;
+    }
     width: 100%;
     height: 699px;
     padding: 4px 0 0;
