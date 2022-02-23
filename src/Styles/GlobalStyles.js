@@ -3,6 +3,9 @@ import { reset } from "styled-reset";
 
 export const GlobalStyles = createGlobalStyle`
 ${reset}
+:root {
+  --delay: 200ms
+}
   * {
   box-sizing: border-box;
   }
@@ -41,18 +44,19 @@ ${reset}
 
   /* react-modal */
 
-  /* 1. overlay transition */  
-  .ReactModal__Overlay {
-    opacity: 0;
-    background-color: red;
-  }
-
-  .ReactModal__Overlay--after-open{
-      opacity: 1;
-  }
-
-  .ReactModal__Overlay--before-close{
-      opacity: 0;
-  }
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity var(--delay) ease-in-out;
+}
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+.item-exit {
+  opacity: 1;
+}
+.item-exit-active {
+  opacity: 0;
+  transition: opacity var(--delay) ease-in;
+}
   
 `;
