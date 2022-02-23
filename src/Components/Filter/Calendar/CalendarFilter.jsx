@@ -45,13 +45,11 @@ function CalendarFilter() {
   const leapYear = getLeafYaer(year);
   const monthDays = getMonthDayList(leapYear);
 
-  const [activeLabel, setActiveLabel] = useState(
-    calendar.startDayIdx === "" ? START_DATE : END_DATE
-  );
-  const [selectStartIdx, setSelectStartIdx] = useState(calendar.startDayIdx);
-  const [selectEndIdx, setSelectEndIdx] = useState(calendar.endDayIdx);
-  const [selectStartValue, setSelectStartValue] = useState(calendar.startDate);
-  const [selectEndValue, setSelectEndValue] = useState(calendar.endDate);
+  const [activeLabel, setActiveLabel] = useState(START_DATE);
+  const [selectStartIdx, setSelectStartIdx] = useState("");
+  const [selectEndIdx, setSelectEndIdx] = useState("");
+  const [selectStartValue, setSelectStartValue] = useState("");
+  const [selectEndValue, setSelectEndValue] = useState("");
   const [month, setMonth] = useState(new Date().getUTCMonth() + 1);
   const [lock, setLock] = useState(false);
 
@@ -136,14 +134,26 @@ function CalendarFilter() {
       scrollSpy.update();
       moveLock();
 
-      if (calendar.startDate) {
-        const date = calendar.startDate.split("-");
-        console.log("month", month);
+      if (calendar.seasonStartDate) {
+        const date = calendar.seasonStartDate.split("-");
+        console.log(
+          "date",
+          getMonthWeeks(
+            +date[1] - 1,
+            monthDays,
+            firstDays,
+            +firstDays.getDay() + +date[2]
+          )
+        );
 
         setMonth(+date[1] - 1);
         autoMoveScroll(
-          getMonthWeeks(+date[1] - 1, monthDays, firstDays) +
-            Math.floor((+date[2] + firstDays.getDay()) / 7)
+          getMonthWeeks(
+            +date[1] - 1,
+            monthDays,
+            firstDays,
+            +firstDays.getDay() + +date[2]
+          ) - 1
         );
       } else {
         autoMoveScroll(getMonthWeeks(month, monthDays, firstDays));
