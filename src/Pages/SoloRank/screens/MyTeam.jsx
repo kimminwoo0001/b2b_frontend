@@ -6,10 +6,13 @@ import MTContent from "../Component/MyTeam/MTContent";
 
 const MyTeam = () => {
   return (
-    <div>
+    <>
+      {/* 팀 정보 헤더 */}
       <MTHeader />
+
+      {/* 팀 선수 테이블 */}
       <MTContent />
-    </div>
+    </>
   );
 };
 

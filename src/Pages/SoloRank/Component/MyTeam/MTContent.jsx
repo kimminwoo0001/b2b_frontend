@@ -6,7 +6,15 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import MTCategory from "./MTCategory";
 import theme from "../../../../Styles/Theme";
-import MTPlayerHeader from "./SubComponent/MTPlayerHeader";
+import MTPlayerList from "./SubComponent/MTPlayerList";
+
+// styled components
+import * as table from "./styled/MTStyledTable";
+import * as layout from "./styled/MTStyledLayout";
+import { useModal } from "../../../../Hooks";
+import Modals, { modalList } from "../../../../Components/Modals/Modals";
+
+const S = { table, layout };
 
 const inquireDayList = [1, 3, 5, 7, 15, 30];
 
@@ -16,35 +24,52 @@ const exPlayerNickName = "Canyon";
 const exPlayerName = "김건부";
 
 const MTContent = () => {
+  const { openModal } = useModal();
+  const { t } = useTranslation();
+
+  const handleClick = () => {
+    openModal(modalList.addTeamPlayer, {
+      onSubmit: () => {
+        console.log("submit시 action을 등록");
+      },
+    });
+  };
+
   return (
-    <SWrapper>
-      <MTCategory />
-      <SPlayerContainer>
-        <MTPlayerHeader
-          isLike={isLike}
-          teamLine={exTeamLine}
-          nickName={exPlayerNickName}
-          name={exPlayerName}
-        />
-      </SPlayerContainer>
-    </SWrapper>
+    <S.layout.Container>
+      {/* 테이블 */}
+      <S.table.Table>
+        {/* 테이블 헤더 */}
+        <MTCategory />
+        <S.table.TableBody>
+          {/* 반복 */}
+          <MTPlayerList
+            id={"showmaker"}
+            isLike={isLike}
+            teamLine={exTeamLine}
+            nickName={exPlayerNickName}
+            name={exPlayerName}
+          />
+
+          <MTPlayerList
+            id={"showmaker"}
+            isLike={isLike}
+            teamLine={exTeamLine}
+            nickName={exPlayerNickName}
+            name={exPlayerName}
+          />
+
+          <S.table.AddPlayerPopupButton onClick={handleClick}>
+            <span>+</span>
+            <div>
+              <h5>{t("soloRank.myTeam.label.addPlayer")}</h5>
+              <span>{t("soloRank.myTeam.desc.addPlayer")}</span>
+            </div>
+          </S.table.AddPlayerPopupButton>
+        </S.table.TableBody>
+      </S.table.Table>
+    </S.layout.Container>
   );
 };
 
 export default MTContent;
-
-const SWrapper = styled.section`
-  width: 1110px;
-  height: 1346px;
-  margin: 20px 0 0;
-`;
-
-const SPlayerContainer = styled.div`
-  width: 1110px;
-  height: 370px;
-  margin: 10px 0 10px;
-  padding: 0 0 0 14px;
-  border-radius: 20px;
-  background-color: ${theme.colors.bg_select};
-  position: relative;
-`;

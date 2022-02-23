@@ -67,7 +67,7 @@ const SCheckboxContainer = styled.label`
     }
 
     &.is-active {
-      background-image: url("Images/btn_check_on.svg");
+      background-image: url("Images/btn_check_on_white.svg");
     }
   }
 

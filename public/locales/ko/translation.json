@@ -22,7 +22,9 @@
       "game": "경기",
       "player": "선수",
       "winrate": "승률",
-      "ID": "ID"
+      "ID": "ID",
+      "win": "승",
+      "lose": "패"
     },
     "button": {
       "add": "추가"
@@ -724,7 +726,13 @@
         "curTier8prevTier": "현재 티어 LP \n(이전 시즌 티어)",
         "curSeason": "이번 시즌",
         "recentDays": "최근 ##일",
-        "daysPlayedCham": "최근 ##일간\n플레이한 챔피언"
+        "daysPlayedCham": "최근 ##일간\n플레이한 챔피언",
+        "addPlayer": "우리팀 소속 선수 등록",
+        "addSoloRankID": "솔로랭크 ID 추가"
+      },
+      "desc": {
+        "addPlayer": "우리팀 소속으로 솔로랭크를 확인할 선수를 등록하세요.",
+        "addSoloRankID": "ID는 최대 6개 까지 등록 가능합니다."
       }
     }
   },

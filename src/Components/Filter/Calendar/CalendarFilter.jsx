@@ -30,6 +30,7 @@ import getMonthDayList from "../../../lib/Calendar/getMonthDayList";
 import getFirstDay from "../../../lib/Calendar/getFirstDay";
 import getMonthWeeks from "../../../lib/Calendar/getMonthWeeks";
 import getLeafYaer from "../../../lib/Calendar/getLeafYear";
+import { colors } from "../../../Styles/ui";
 
 const weekDays = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 const START_DATE = "START_DATE";
@@ -225,6 +226,7 @@ function CalendarFilter() {
                 type="text"
                 placeholder={t("utility.calendarFilter.inputStart")}
                 value={selectStartValue}
+                readOnly
               />
               <img
                 className="calendar-icon"
@@ -247,6 +249,7 @@ function CalendarFilter() {
                 type="text"
                 placeholder={t("utility.calendarFilter.inputEnd")}
                 value={selectEndValue}
+                readOnly
               />
               <img
                 className="calendar-icon"
@@ -368,7 +371,7 @@ const SCalendarContainer = styled.div`
   margin: 30px 224px 123px 41px;
   padding: 0 0;
   border-radius: 20px;
-  background-color: ${theme.colors.bg_select};
+  background-color: ${colors.bg_select};
 
   .header {
     width: 100%;
@@ -402,7 +405,7 @@ const SCalendarContainer = styled.div`
         line-height: normal;
         letter-spacing: normal;
         text-align: center;
-        color: ${theme.colors.text};
+        color: ${colors.text};
       }
 
       .date-view {
@@ -417,7 +420,7 @@ const SCalendarContainer = styled.div`
         line-height: normal;
         letter-spacing: normal;
         text-align: center;
-        color: ${theme.colors.text};
+        color: ${colors.text};
         white-space: nowrap;
 
         img {
@@ -447,7 +450,7 @@ const SCalendarContainer = styled.div`
       line-height: 1;
       letter-spacing: normal;
       text-align: center;
-      color: ${theme.colors.text};
+      color: ${colors.text};
     }
   }
   .close-btn {
@@ -482,7 +485,7 @@ const SCalendarConfirm = styled.div`
   margin: 20px;
   border-radius: 20px;
   background-color: ${(props) =>
-    props.isSelect ? theme.colors.point : theme.colors.btn_nor};
+    props.isSelect ? colors.point : colors.btn_nor};
 
   .label {
     line-height: 60px;
@@ -495,7 +498,7 @@ const SCalendarConfirm = styled.div`
   line-height: 1;
   letter-spacing: normal;
   text-align: center;
-  color: ${theme.colors.text};
+  color: ${colors.text};
 `;
 
 const SCalendarDaysInput = styled.div`
@@ -504,7 +507,7 @@ const SCalendarDaysInput = styled.div`
   margin: -1px 0px 0 1px;
   border-radius: 20px;
   border: solid 3px ${(props) => (props.isActive ? "#7056d9" : "rgba(0,0,0,0)")};
-  background-color: ${theme.colors.bg_box};
+  background-color: ${colors.bg_box};
   padding: 3px 7px 3px 15px;
   font-family: SpoqaHanSansNeo;
   font-size: 13px;
@@ -514,7 +517,7 @@ const SCalendarDaysInput = styled.div`
   line-height: 1.23;
   letter-spacing: normal;
   text-align: left;
-  color: ${theme.colors.text};
+  color: ${colors.text};
 
   display: flex;
   position: relative;
@@ -523,7 +526,7 @@ const SCalendarDaysInput = styled.div`
     margin-top: 2px;
     width: 78px;
     cursor: pointer;
-    color: ${theme.colors.text};
+    color: ${colors.text};
   }
 
   .calendar-icon {

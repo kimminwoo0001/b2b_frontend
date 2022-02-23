@@ -22,19 +22,21 @@
   },
   "common": {
     "label": {
-      "recent": "Recent",
-      "game": "Game",
+      "recent": "Last",
+      "game": "G",
       "player": "Player",
       "winrate": "WinRate",
-      "ID": "ID"
+      "ID": "ID",
+      "win": "W",
+      "lose": "L"
     },
     "button": {
       "add": "add"
     },
     "date": {
-      "year": "y",
-      "month": "m",
-      "day": "d",
+      "year": "year",
+      "month": "month",
+      "day": "day",
       "weekDays": {
         "mon": "mon",
         "tue": "tue",
@@ -540,7 +542,18 @@
       "8min": "3'-8'",
       "side": "SIDE"
     },
-    "jungle": {}
+    "jungle": {
+      "Jungle Pathing": "Jungle Pathing",
+      "Compare Jungling": "Compare Jungling",
+      "year": "Year",
+      "league": "League",
+      "season": "Season",
+      "team": "Team",
+      "patch": "Patch",
+      "selectAll": "Select All",
+      "selectedFilter": "Selected Filter",
+      "reset": "Reset"
+    }
   },
   "alert": {
     "login": {

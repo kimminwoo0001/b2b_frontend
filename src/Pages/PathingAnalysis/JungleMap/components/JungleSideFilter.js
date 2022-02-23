@@ -1,7 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "@emotion/styled";
+import { API } from "../../../config"
+import axiosRequest from "../../../../lib/axios/axiosRequest";
+import { SetModalInfo } from "../../../../redux/modules/modalvalue";
+
 
 // UI tool kit
 import Accordion from "../../../../Components/Ui/Accordion/Accordion";
@@ -25,14 +30,26 @@ import {
   typoStyle,
   scrollbarStyle,
   buttonStyle,
+  borderRadiusStyle,
 } from "../../../../Styles/ui";
 import { isObjEqual } from "../../../../lib/isObjEqual";
+import { intlFormat } from "date-fns";
+
 
 const JungleSideFilter = () => {
+  const junglevalue = useSelector(state => state.JungleMapReducer);
+  const user = useSelector((state) => state.UserReducer);
+  const dispatch = useDispatch();
   const [filterState, setFilterState] = useState({
     step1: { all: false, gnar: false, teemo: false },
     step2: { all: false, gnar: false, teemo: false },
   });
+
+  const [playerInfo, setPlayerInfo] = useState();
+  const [champInfo, setChampInfo] = useState();
+  const [oppChampInfo, setOppChampInfo] = useState();
+  const [gameList, setGameList] = useState();
+
 
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
@@ -65,7 +82,6 @@ const JungleSideFilter = () => {
       });
     }
   };
-
   // 라디오버튼 체인지 관련로직
   const handleRadio = (e) => {
     const { value, name } = e.target;
@@ -78,13 +94,44 @@ const JungleSideFilter = () => {
   const [radioState, setRadioState] = useState("1경기");
   const radioRef = useRef([]);
 
+  const leagueArr =  Object.keys(junglevalue.league).filter(key => junglevalue.league[key] === true)
+  const seasonArr =  Object.keys(junglevalue.season).filter(key => junglevalue.season[key] === true)
+  const patchArr =  Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key] === true)
+
+  useEffect(() => {
+    console.log(junglevalue)
+  }, [])
+  
+  // STEP 01 챔피언 선택 api 호출
+  const GetPlayerInfo = () => {
+    console.log("finally got playeer info")
+    const url = `${API}/jungle/userinfo`;
+    const params = {
+      league: leagueArr,
+      year: junglevalue.year,
+      season: seasonArr,
+      patch: patchArr,
+      team: junglevalue.team,
+      token: user.token,
+      id: user.id,
+    };
+    axiosRequest(undefined, url, params, function(e) {
+      // setPlayerInfo(e);
+      console.log(e);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+    })
+  }
+
+
   return (
     <SWrapper>
       <SFilterContainer>
         {/* step1 - select 박스 */}
         <div css={{ marginBottom: 30 }}>
           <Accordion>
-            <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
+            <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {
+            }}>
               <SStepContainer>
                 <SLabel>STEP 01</SLabel>
                 <STeam>
@@ -105,28 +152,20 @@ const JungleSideFilter = () => {
                   console.log(e);
                 }}
               >
-                <DropdownLabel css={[dropdownStyle.select_head]}>
+                <DropdownLabel css={[dropdownStyle.select_head]} onClick={() => GetPlayerInfo()}>
                   챔피언선택
                 </DropdownLabel>
                 <DropdownList>
-                  <DropdownItem
-                    css={[dropdownStyle.select_item]}
-                    value={"메뉴1"}
-                  >
-                    메뉴1
-                  </DropdownItem>
-                  <DropdownItem
-                    css={[dropdownStyle.select_item]}
-                    value={"메뉴2"}
-                  >
-                    메뉴2
-                  </DropdownItem>
-                  <DropdownItem
-                    css={[dropdownStyle.select_item]}
-                    value={"메뉴3"}
-                  >
-                    메뉴3
-                  </DropdownItem>
+                  {playerInfo && playerInfo?.map((info) => {
+                    return (
+                      <DropdownItem
+                      css={[dropdownStyle.select_item]}
+                      value={info.name}
+                    >
+                      {info.name}
+                    </DropdownItem>
+                    )
+                  })}
                 </DropdownList>
               </DropdownContainer>
             </AccordionDetails>
@@ -437,7 +476,13 @@ const JungleSideFilter = () => {
 
       <SButtonContainer>
         <Button
-          css={[buttonStyle.color.main, buttonStyle.size.lg, typoStyle.body]}
+          css={[
+            buttonStyle.color.main,
+            buttonStyle.size.full,
+            buttonStyle.size.y_20,
+            typoStyle.body,
+            borderRadiusStyle.full,
+          ]}
         >
           정글동선 확인하기
         </Button>

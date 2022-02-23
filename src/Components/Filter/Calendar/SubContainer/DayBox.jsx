@@ -10,6 +10,7 @@ import MatchBox from "./MatchBox";
 import getMonthDays from "../../../../lib/Calendar/getMonthDays";
 import getMonthDayList from "../../../../lib/Calendar/getMonthDayList";
 import getLeafYaer from "../../../../lib/Calendar/getLeafYear";
+import { colors } from "../../../../Styles/ui";
 const START_DATE = "START_DATE";
 const END_DATE = "END_DATE";
 
@@ -134,18 +135,28 @@ const SCalendarDayBox = styled.div`
   //padding: 9px 0 10px;
   border-radius: 20px;
   background-color: ${(props) =>
-    props.isActive ? theme.colors.point : theme.colors.bg_button};
+    props.isActive ? colors.point : colors.bg_button};
   opacity: ${(props) => (props.isAble ? "1" : "0.3")};
 
   &:hover {
     background-color: ${(props) =>
-      props.isActive ? theme.colors.point_hover : theme.colors.bg_hover};
+      props.isActive ? colors.point_hover : colors.bg_hover};
   }
-
 
   .match-box-container {
     height: 74px;
-    overflow: scroll;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #434050;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      margin: 5px;
+    }
   }
 
   .header-day {
@@ -160,6 +171,6 @@ const SCalendarDayBox = styled.div`
     line-height: 1;
     letter-spacing: normal;
     text-align: left;
-    color: ${theme.colors.text};
+    color: ${colors.text};
   }
 `;

@@ -2,7 +2,7 @@ import { createGlobalStyle } from "styled-components";
 import { reset } from "styled-reset";
 
 export const GlobalStyles = createGlobalStyle`
- ${reset}
+${reset}
   * {
   box-sizing: border-box;
   }
@@ -37,4 +37,22 @@ export const GlobalStyles = createGlobalStyle`
     font-family:'Spoqa Han Sans';
     /* font-family: --apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,'Apple SD Gothic Neo', 'Open Sans', 'Helvetica Neue', sans-serif; */
   }
+
+
+  /* react-modal */
+
+  /* 1. overlay transition */  
+  .ReactModal__Overlay {
+    opacity: 0;
+    background-color: red;
+  }
+
+  .ReactModal__Overlay--after-open{
+      opacity: 1;
+  }
+
+  .ReactModal__Overlay--before-close{
+      opacity: 0;
+  }
+  
 `;

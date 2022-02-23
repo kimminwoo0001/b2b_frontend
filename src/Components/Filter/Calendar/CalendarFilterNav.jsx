@@ -102,6 +102,7 @@ const CalendarFilterNav = () => {
           type="text"
           placeholder={t("utility.calendarFilter.inputStart")}
           value={calendar.startDate}
+          readOnly
         />
         <img className="calendar-icon" src="Images/ic-calendar.svg" alt="" />
       </SCFDaysInput>
@@ -118,6 +119,7 @@ const CalendarFilterNav = () => {
           type="text"
           placeholder={t("utility.calendarFilter.inputEnd")}
           value={calendar.endDate}
+          readOnly
         />
         <img className="calendar-icon" src="Images/ic-calendar.svg" alt="" />
       </SCFDaysInput>

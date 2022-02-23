@@ -15,8 +15,10 @@ const Radio = forwardRef(({ children, checked, ...props }, ref) => {
 // style
 const SRadioContainer = styled.label`
   display: inline-flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  width: auto;
+  margin: 5px 0;
 
   > em {
     position: relative;

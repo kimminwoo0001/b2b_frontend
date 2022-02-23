@@ -12,7 +12,8 @@ import gamevalue from "./gamevalue";
 import videovalue from "./videovalue";
 import signvalue from "./signvalue";
 import copyvalue from "./copyvalue"
-import calendarvalue from "./calendarvalue"
+import junglevalue from "./junglevalue";
+import calendarvalue from "./calendarvalue";
 
 import { persistReducer } from "redux-persist";
 import storageSession from "redux-persist/lib/storage/session";
@@ -45,6 +46,7 @@ const appReducer = combineReducers({
   VideoReducer: videovalue,
   SignReducer: signvalue,
   CopyReducer: copyvalue,
+  JungleMapReducer: junglevalue,
   CalendarReducer: calendarvalue
 });
 

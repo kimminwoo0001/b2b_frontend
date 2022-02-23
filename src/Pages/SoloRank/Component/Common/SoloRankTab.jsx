@@ -25,6 +25,7 @@ const SoloRankTab = () => {
 
   return (
     <SContainer>
+      {/* 탭 헤더 */}
       <STab>
         {tab.map((tab, index) => (
           <STabItem
@@ -36,6 +37,8 @@ const SoloRankTab = () => {
           </STabItem>
         ))}
       </STab>
+
+      {/* 탭 컨텐츠 */}
       <SContents>{currentTab.component}</SContents>
     </SContainer>
   );
@@ -92,6 +95,5 @@ const STabItem = styled.li`
 `;
 
 const SContents = styled.div`
-  display: flex;
   ${testStyle.border2}
 `;
