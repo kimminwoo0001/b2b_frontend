@@ -8,9 +8,11 @@ import JungleSideFilter from "../components/JungleSideFilter";
 import SequenceDialog from "../components/SequenceDialog";
 import Map from "../components/Map";
 import * as S from "../components/styled/StyledJungleLayout";
+import { useState } from "react";
 
 const Sequence = () => {
   const junglevalue = useSelector((state) => state.JungleMapReducer);
+  const [position, setPosition] = useState();
   return (
     <S.SequenceContainer>
       {/* 메인 필터 */}
@@ -29,8 +31,8 @@ const Sequence = () => {
         <S.Container>
           {/* 맵 비디오 */}
           <S.VideoContainer>
-            <PositionCheckList onChange={(position) => console.log(position)} />
-            <Map />
+            <PositionCheckList onChange={(position) => setPosition(position)} />
+            <Map position={position} setPosition={setPosition}/>
           </S.VideoContainer>
           {/* 이벤트 다이얼로그 */}
           <S.DialogContainer>

@@ -146,7 +146,7 @@ function ObjectMapping() {
     // if (play === true && range === maxTime) {
     //   setPlay(false);
     // }
-  }, 300);
+  });
 
   // fast
   useInterval(() => {
@@ -156,7 +156,7 @@ function ObjectMapping() {
     // if (fast === true && range === maxTime) {
     //   setFast(false);
     // }
-  }, 100);
+  });
 
   // 동선 확인
   const handleConfirm = () => {

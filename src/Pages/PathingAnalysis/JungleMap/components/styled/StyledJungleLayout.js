@@ -41,7 +41,7 @@ export const SequenceContents = styled.section`
 export const VideoContainer = styled.div`
   height: 810px;
   margin-bottom: 20px;
-  ${testStyle.border6}
+  /* ${testStyle.border6} */
 `;
 
 export const DialogContainer = styled.div`

@@ -6,12 +6,12 @@ import { transitionStyle, typoStyle } from "../../Styles/ui";
 
 const PositionCheckList = ({ onChange, ...props }) => {
   const [position, setPosition] = useState({
-    all: false,
-    top: false,
-    jun: false,
-    mid: false,
-    bot: false,
-    sup: false,
+    all: true,
+    top: true,
+    jng: true,
+    mid: true,
+    bot: true,
+    sup: true,
   });
 
   const handleChange = (e) => {
@@ -82,9 +82,9 @@ const PositionCheckList = ({ onChange, ...props }) => {
         <SListItem>
           <SCustomCheckbox
             name={"position"}
-            value={"jun"}
+            value={"jng"}
             onChange={handleChange}
-            checked={position.jun}
+            checked={position.jng}
           >
             <SIcon>
               <span>

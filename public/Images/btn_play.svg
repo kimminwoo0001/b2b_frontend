@@ -1,6 +1,7 @@
+
 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
     <path style="fill:none" d="M0 0h50v50H0z"/>
     <g data-name="Group 2210">
-        <path data-name="Path 3183" d="M22.153 11.941 2.639.248A1.743 1.743 0 0 0 0 1.742v21.364a1.742 1.742 0 0 0 2.516 1.562L22.031 15a1.743 1.743 0 0 0 .122-3.057" transform="translate(14 12.999)" style="fill:#fff"/>
+        <path data-name="Path 3183" d="M17.337 9.345 2.065.194A1.364 1.364 0 0 0 0 1.364v16.719A1.363 1.363 0 0 0 1.969 19.3l15.273-7.568a1.364 1.364 0 0 0 .1-2.392" transform="translate(16 14.999)" style="fill:#fff"/>
     </g>
 </svg>
