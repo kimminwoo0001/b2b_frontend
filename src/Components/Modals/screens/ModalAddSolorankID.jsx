@@ -21,7 +21,7 @@ const ModalAddSolorankID = ({ onSubmit, onClose }) => {
   };
 
   return (
-    <ReactModal style={modalStyle} isOpen onRequestClose={onClose}>
+    <ReactModal style={modalStyle.reactModal} isOpen onRequestClose={onClose}>
       <S.layout.Container>
         {/* 모달창 닫기버튼 */}
         <S.layout.CloseButton onClick={onClose}>

@@ -1,40 +1,41 @@
 import { css } from "@emotion/react";
-import theme from "../Theme";
+import colors from "./colors";
+import transitionStyle from "./transition_styled";
 
 const buttonStyle = {
   color: {
     main: css`
-      background-color: ${theme.colors.point};
-
+      background-color: ${colors.point};
+      ${transitionStyle.background};
       &:disabled {
-        background-color: ${theme.colors.default};
-      }
-
-      &:not(:disabled):hover {
-        background-color: ${theme.colors.point_hover};
-      }
-    `,
-    default: css`
-      background-color: ${theme.colors.default};
-      &:disabled {
-        background-color: ${theme.colors.default};
+        background-color: ${colors.default};
       }
       &:not(:disabled):hover {
-        background-color: ${theme.colors.point};
+        background-color: ${colors.point_hover};
       }
     `,
     normal: css`
-      color: ${theme.colors.text_hover};
-      background-color: ${theme.colors.default};
-
+      color: ${colors.text_hover};
+      background-color: ${colors.default};
+      ${transitionStyle.background};
       &:disabled {
-        background-color: ${theme.colors.default};
+        background-color: ${colors.default};
       }
 
       &:not(:disabled):hover,
       &:not(:disabled).is-active {
-        color: ${theme.colors.text};
-        background-color: ${theme.colors.bg_select};
+        color: ${colors.text};
+        background-color: ${colors.default_hover};
+      }
+    `,
+    default: css`
+      background-color: ${colors.default};
+      ${transitionStyle.background};
+      &:disabled {
+        background-color: ${colors.default};
+      }
+      &:not(:disabled):hover {
+        background-color: ${colors.point};
       }
     `,
   },
