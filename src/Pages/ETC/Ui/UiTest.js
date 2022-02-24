@@ -22,6 +22,7 @@ import PositionCheckList from "../../../Components/Ui/PositionCheckList";
 import EventLog from "../../../Components/Ui/Dialog/EventLog";
 import Comp1 from "./Comp1";
 import ToggleSwitch from "../../../Components/Ui/ToggleSwitch/ToggleSwitch";
+import TestScorll from "./TestScroll";
 
 const UiTest = () => {
   const [filterState, setFilterState] = useState({
@@ -83,6 +84,9 @@ const UiTest = () => {
 
   return (
     <Container>
+      <section>
+        <TestScorll />
+      </section>
       <section>
         <Comp1 />
       </section>
