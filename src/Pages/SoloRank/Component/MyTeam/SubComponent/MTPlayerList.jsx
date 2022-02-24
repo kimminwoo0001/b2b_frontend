@@ -173,7 +173,10 @@ const MTPlayerHeader = ({
                   <S.ChampInfoText>
                     <Avatar
                       size={isOpen ? 34 : 24}
-                      src={`images/champion/${data.champion}.png`}
+                      src={`images/champion/${data.champion.replace(
+                        " ",
+                        ""
+                      )}.png`}
                       alt="data.champlion"
                     />
                     <div>

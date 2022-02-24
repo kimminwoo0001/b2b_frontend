@@ -16,13 +16,6 @@ import Modals, { modalList } from "../../../../Components/Modals/Modals";
 
 const S = { table, layout };
 
-const inquireDayList = [1, 3, 5, 7, 15, 30];
-
-const isLike = true;
-const exTeamLine = "DK 정글";
-const exPlayerNickName = "Canyon";
-const exPlayerName = "김건부";
-
 const MTContent = ({ selectedDay, setSelectedDay, playerInfo, myTeamName }) => {
   const { openModal } = useModal();
   const { t } = useTranslation();
