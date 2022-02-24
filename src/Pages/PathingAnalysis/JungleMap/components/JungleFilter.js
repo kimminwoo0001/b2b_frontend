@@ -103,7 +103,7 @@ const JungleFilter = () => {
 
   const fetchYearFilter = () => {
     let yearList = [];
-    const leagues = Object.keys(staticvalue.filterObjects).sort();
+    const leagues = Object.keys(staticvalue.filterObjects);
 
     let count = 0;
     for (let i = 0; i < leagues.length; i++) {
@@ -203,6 +203,7 @@ const JungleFilter = () => {
     axiosRequest(undefined, url, params, function (e) {
       const patchResponse = e ?? [];
       dispatch(setPatchFilter(patchResponse));
+      //  전체 패치 자동 선택
       const datas = { ...junglevalue.patch }
       const list = Object.keys(junglevalue.patch);
       const a = list.map((data) => {

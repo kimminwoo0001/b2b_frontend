@@ -420,8 +420,8 @@
       "object": "Object Pathing",
       "games": "Game Pathing",
       "heatmap": "Heatmap",
-      "jungle": "Jungle Pathing"
-
+      "jungle": "Jungle Pathing",
+      "wardPathing":"Ward & Object Pathing"
     },
     "vision": {
       "teamview": "Team-wide View",

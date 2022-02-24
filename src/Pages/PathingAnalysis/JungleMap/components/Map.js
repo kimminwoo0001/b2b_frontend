@@ -54,6 +54,14 @@ const Map = () => {
     })
   }
 
+
+  useEffect(() => {
+    console.log("1.mappingInfo:", mappingInfo);
+    console.log("2.mappingPosition:", mappingPosition);
+
+  }, [mappingInfo,mappingPosition])
+
+
   useEffect(() => {
     if(junglevalue.oppchampion && 
         Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key]=== true).length === 0 
@@ -65,10 +73,24 @@ const Map = () => {
 
 
     return (
-        <div>
-            
-        </div>
+        <SMapContainer>
+            <SWardPathingMap>
+
+            </SWardPathingMap>
+        </SMapContainer>
     );
 };
 
 export default Map;
+
+const SMapContainer = styled.section`
+
+`;
+
+const SWardPathingMap = styled.div`
+  background-image: url("Images/obj_map_summer.png");
+  /* position: relative; */
+  width: 700px;
+  height: 700px;
+`;
+

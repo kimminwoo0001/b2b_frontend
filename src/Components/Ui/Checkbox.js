@@ -12,6 +12,7 @@ const Checkbox = ({
   ...props
 }) => {
   return (
+    <SCheckboxContainerWrapper>
     <SCheckboxContainer className={disabled ? "is-disabled" : ""} {...props}>
       <input
         type="checkbox"
@@ -24,8 +25,15 @@ const Checkbox = ({
       <em className={checked ? "is-active" : ""}></em>
       <span>{children}</span>
     </SCheckboxContainer>
+    </SCheckboxContainerWrapper>
   );
 };
+
+const SCheckboxContainerWrapper = styled.div`
+  width: auto ;
+  padding: 4px 0;
+  display: inline-block;
+`
 
 const SCheckboxContainer = styled.label`
   display: inline-flex;

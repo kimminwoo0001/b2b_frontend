@@ -15,6 +15,7 @@ import GameMapping from "./GameMapping/GameMapping";
 import HitMap from "./HitMap/HitMap";
 import JungleMap from "./JungleMap/JungleMap";
 import { useTranslation } from "react-i18next";
+import WardObjectPathing from "./WardObjectPathing/WardObjectPathing";
 
 function VideoTabs() {
 
@@ -37,6 +38,7 @@ function VideoTabs() {
     2: <GameMapping />,
     3: <HitMap />,
     4: <JungleMap />,
+    5: <WardObjectPathing />
   };
 
   return (
@@ -125,6 +127,22 @@ function VideoTabs() {
           >
             <div>
               <span>{t("video.tab.jungle")}</span>
+            </div>
+          </TabContent>
+           {/* 와드 & 동선 통합 탭 */}
+           <TabContent
+            onClick={() => {
+              dispatch(HandleTab(5));
+              dispatch(Reset_MapTab());
+              if (filters.tab === 4) {
+              dispatch(ResetWardPathingTab());
+              dispatch(SelectorInitailizeState());
+              }
+            }}
+            changeColor={filters.tab === 5}
+          >
+            <div>
+              <span>{t("video.tab.wardPathing")}</span>
             </div>
           </TabContent>
         </TabContainer>
