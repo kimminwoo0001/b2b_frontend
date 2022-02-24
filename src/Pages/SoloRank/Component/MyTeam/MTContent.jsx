@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import MTCategory from "./MTCategory";
-import theme from "../../../../Styles/Theme";
+import { getPositon } from "../../../../lib/getPosition";
 import MTPlayerList from "./SubComponent/MTPlayerList";
 
 // styled components
@@ -23,7 +23,7 @@ const exTeamLine = "DK 정글";
 const exPlayerNickName = "Canyon";
 const exPlayerName = "김건부";
 
-const MTContent = ({ selectedDay, setSelectedDay }) => {
+const MTContent = ({ selectedDay, setSelectedDay, playerInfo, myTeamName }) => {
   const { openModal } = useModal();
   const { t } = useTranslation();
 
@@ -43,22 +43,20 @@ const MTContent = ({ selectedDay, setSelectedDay }) => {
         <MTCategory selectedDay={selectedDay} setSelectedDay={setSelectedDay} />
         <S.table.TableBody>
           {/* 반복 */}
-          <MTPlayerList
-            id={"showmaker"}
-            isLike={isLike}
-            teamLine={exTeamLine}
-            nickName={exPlayerNickName}
-            name={exPlayerName}
-          />
-
-          <MTPlayerList
-            id={"showmaker"}
-            isLike={isLike}
-            teamLine={exTeamLine}
-            nickName={exPlayerNickName}
-            name={exPlayerName}
-          />
-
+          {playerInfo.length > 0 &&
+            playerInfo.map((info) => {
+              return (
+                <MTPlayerList
+                  id={info.player}
+                  isLike={info.bookmark}
+                  teamLine={`${myTeamName} ${getPositon(info.role)}`}
+                  nickName={info.player}
+                  name={""}
+                  playChampion={info.playChampion}
+                  soloRankInfo={info.soloRankInfo}
+                />
+              );
+            })}
           <S.table.AddPlayerPopupButton onClick={handleClick}>
             <span>+</span>
             <div>

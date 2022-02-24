@@ -78,7 +78,7 @@ function LeaguePlayer() {
           changeColor={positionClicked === "jng"}
         >
           <div>
-            <span>{t("position.jg")}</span>
+            <span>{t("position.jng")}</span>
           </div>
         </TabItem>
         <TabItem

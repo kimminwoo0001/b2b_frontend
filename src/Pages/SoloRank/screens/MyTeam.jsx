@@ -14,6 +14,7 @@ const MyTeam = () => {
   const [selectedDay, setSelectedDay] = useState("30");
   const [headerInfo, setheaderInfo] = useState([]);
   const [playerInfo, setPlayerInfo] = useState([]);
+  const [myTeamName, setMyTeamName] = useState("");
   const user = useSelector((state) => state.UserReducer);
   const lang = useSelector((state) => state.LocaleReducer);
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ const MyTeam = () => {
           { text: e.playerCount + lang === "ko" ? "명" : "" },
         ]);
         setPlayerInfo(e.players);
+        setMyTeamName(e.team);
         dispatch(Loading(false));
       },
       function (objStore) {
@@ -63,6 +65,7 @@ const MyTeam = () => {
         selectedDay={selectedDay}
         setSelectedDay={setSelectedDay}
         playerInfo={playerInfo}
+        myTeamName={myTeamName}
       />
     </>
   );

@@ -276,7 +276,7 @@ function LeaguePick() {
           changeColor={positionTab === 1}
         >
           <div>
-            <span>{t("position.jg")}</span>
+            <span>{t("position.jng")}</span>
           </div>
         </TabItem>
 
