@@ -69,7 +69,7 @@ const ModalAddTeamPlayer = ({ onSubmit, onClose }) => {
   const [position, setPosition] = useState({
     all: false,
     top: false,
-    jug: false,
+    jng: false,
     mid: false,
     bot: false,
     sup: false,
