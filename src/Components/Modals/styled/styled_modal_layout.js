@@ -5,16 +5,17 @@ import {
   typoStyle,
   buttonStyle,
   borderRadiusStyle,
+  boxshadowStyle,
 } from "../../../Styles/ui";
 
 // 전체 레이아웃
 export const Container = styled.div`
   position: relative;
   width: 376px;
-  border-radius: 20px;
+  ${borderRadiusStyle[20]};
   background-color: ${colors.bg_box};
-  box-shadow: 0px 8px 16px 0 rgba(4, 0, 0, 0.4);
 `;
+
 export const Header = styled.header`
   ${spacing.paddingY(4)};
   ${typoStyle.popup_title};
@@ -31,7 +32,6 @@ export const Main = styled.div`
 export const Footer = styled.div`
   ${spacing.padding(5)};
 `;
-
 // 닫기버튼
 export const CloseButton = styled.button`
   position: absolute;
@@ -46,12 +46,18 @@ export const CloseButton = styled.button`
     height: 100%;
   }
 `;
-
 // 하단 버튼
 export const SubmitButton = styled.button`
   ${buttonStyle.color.main};
   ${buttonStyle.size.full};
-  ${spacing.paddingY(5)}
+  ${spacing.paddingY(4)}
+  ${typoStyle.button_18};
+  ${borderRadiusStyle[20]};
+`;
+export const CancelButton = styled.button`
+  ${buttonStyle.color.normal};
+  ${buttonStyle.size.full};
+  ${spacing.paddingY(4)}
   ${typoStyle.button_18};
   ${borderRadiusStyle[20]};
 `;

@@ -146,7 +146,7 @@ const ModalAddTeamPlayer = ({ onSubmit, onClose }) => {
   }, [selectedPlayer]);
 
   return (
-    <ReactModal isOpen style={modalStyle}>
+    <ReactModal isOpen style={modalStyle.reactModal} onRequestClose={onClose}>
       <S.layout.Container>
         {/* 모달창 닫기버튼 */}
         <S.layout.CloseButton onClick={onClose}>

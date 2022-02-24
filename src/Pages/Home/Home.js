@@ -18,7 +18,7 @@ function Home() {
   const copyvalue = useSelector((state) => state.CopyReducer);
   const { t } = useTranslation();
   if (document.title !== `${t("sidebar.part1")} - NUNU.GG`) {
-    document.title = `${t("sidebar.part1")} - NUNU.GG`
+    document.title = `${t("sidebar.part1")} - NUNU.GG`;
   }
 
   return (
@@ -44,8 +44,7 @@ const HomeWrapper = styled.div`
   min-height: 100vh;
   overflow: auto;
   display: flex;
-  background-color: #23212A;
-};
+  background-color: #23212a;
 `;
 
 const ContentWrapper = styled.div`

@@ -1,7 +1,6 @@
 import { css } from "@emotion/react";
 import fontsStyle from "./fonts_style";
 import colors from "./colors";
-import theme from "../Theme";
 
 const typoStyle = {
   // body text
@@ -9,14 +8,14 @@ const typoStyle = {
     font-family: Spoqa Han Sans;
     ${fontsStyle.size[18]};
     ${fontsStyle.weight[700]};
-    color: ${theme.colors.text};
+    color: ${colors.text};
   `,
 
   body: css`
     font-family: Spoqa Han Sans;
     ${fontsStyle.size[18]};
     ${fontsStyle.weight[400]};
-    color: ${theme.colors.text};
+    color: ${colors.text};
   `,
 
   // contents text
@@ -24,19 +23,19 @@ const typoStyle = {
     font-family: Spoqa Han Sans;
     ${fontsStyle.size[15]};
     ${fontsStyle.weight[400]}
-    color: ${theme.colors.text};
+    color: ${colors.text};
   `,
   contents_md: css`
     font-family: Spoqa Han Sans;
     ${fontsStyle.size[15]};
     ${fontsStyle.weight[500]};
-    color: ${theme.colors.text};
+    color: ${colors.text};
   `,
   contents_title: css`
     ${fontsStyle.size[16]}
     font-family: Spoqa Han Sans;
     ${fontsStyle.weight[400]};
-    color: ${theme.colors.text};
+    color: ${colors.text};
   `,
 
   /** info */
@@ -44,14 +43,14 @@ const typoStyle = {
     font-family: Spoqa Han Sans;
     ${fontsStyle.size[13]};
     ${fontsStyle.weight[400]};
-    color: ${theme.colors.info};
+    color: ${colors.info};
   `,
 
   info_md: css`
     font-family: Spoqa Han Sans;
     ${fontsStyle.size[15]};
     ${fontsStyle.weight[400]};
-    color: ${theme.colors.info};
+    color: ${colors.info};
   `,
 
   /* label */
@@ -59,14 +58,14 @@ const typoStyle = {
     font-family: Spoqa Han Sans;
     ${fontsStyle.size[15]};
     text-align: left;
-    color: ${theme.colors.info};
+    color: ${colors.info};
   `,
 
   /** error */
   error: css`
     font-family: Spoqa Han Sans;
     ${fontsStyle.size[11]};
-    color: ${theme.colors.error};
+    color: ${colors.error};
   `,
 
   /**  popup  */
@@ -74,13 +73,13 @@ const typoStyle = {
     font-family: Spoqa Han Sans;
     ${fontsStyle.size[18]};
     ${fontsStyle.weight[400]};
-    color: ${theme.colors.text};
+    color: ${colors.text};
   `,
   popup_title: css`
     font-family: Spoqa Han Sans;
     ${fontsStyle.size[17]}
     ${fontsStyle.weight[700]};
-    color: ${theme.colors.text};
+    color: ${colors.text};
   `,
 
   /** input type */
@@ -89,7 +88,7 @@ const typoStyle = {
     &::placeholder {
       font-family: Spoqa Han Sans;
       ${fontsStyle.size[13]};
-      color: ${theme.colors.point};
+      color: ${colors.point};
     }
   `,
 
@@ -97,33 +96,33 @@ const typoStyle = {
     font-family: Spoqa Han Sans;
     ${fontsStyle.weight[500]};
     ${fontsStyle.size[13]};
-    color: ${theme.colors.text};
+    color: ${colors.text};
   `,
 
   /** button type */
   button: css`
     font-family: Spoqa Han Sans;
     font-size: 14px;
-    color: ${theme.colors.text};
+    color: ${colors.text};
     letter-spacing: 0.025em;
   `,
   button_13: css`
     font-family: Spoqa Han Sans;
     ${fontsStyle.size[13]};
     ${fontsStyle.weight[700]};
-    color: ${theme.colors.text};
+    color: ${colors.text};
   `,
 
   button_popin: css`
     font-family: Poppins;
     ${fontsStyle.size[12]};
     ${fontsStyle.weight[700]};
-    color: ${theme.colors.text};
+    color: ${colors.text};
   `,
   button_18: css`
     ${fontsStyle.size[18]};
     ${fontsStyle.weight[400]};
-    color: ${theme.colors.text};
+    color: ${colors.text};
   `,
 
   /** select type **/
@@ -132,14 +131,14 @@ const typoStyle = {
     font-family: Spoqa Han Sans;
     text-align: left;
     ${fontsStyle.size[13]};
-    color: ${theme.colors.text};
+    color: ${colors.text};
   `,
 
   select_item: css`
     font-family: NotoSansKR, Apple SD Gothic Neo;
     ${fontsStyle.size[11]};
     letter-spacing: -0.55px;
-    color: ${theme.colors.text};
+    color: ${colors.text};
   `,
 
   select_red: css`
@@ -147,27 +146,27 @@ const typoStyle = {
     letter-spacing: normal;
     text-align: left;
     ${fontsStyle.size[13]};
-    color: ${theme.colors.badge_red};
+    color: ${colors.badge_red};
   `,
 
   /* table */
   table_head: css`
     font-family: Spoqa Han Sans;
     ${fontsStyle.size[15]};
-    color: ${theme.colors.vs};
+    color: ${colors.vs};
   `,
   table_text: css`
     font-family: Spoqa Han Sans;
     ${fontsStyle.size[15]};
     line-height: 1.4;
-    color: ${theme.colors.text};
+    color: ${colors.text};
   `,
 
   /* vs */
   vs: css`
     font-family: Spoqa Han Sans;
     ${fontsStyle.size[15]};
-    color: ${theme.colors.vs};
+    color: ${colors.vs};
     ${fontsStyle.weight[700]};
   `,
 
@@ -177,21 +176,21 @@ const typoStyle = {
     ${fontsStyle.size[18]};
     line-height: 22px;
     ${fontsStyle.weight[400]};
-    color: ${theme.colors.text};
+    color: ${colors.text};
   `,
   player_title: css`
     font-family: Spoqa Han Sans;
     ${fontsStyle.size[15]};
     line-height: 21px;
     ${fontsStyle.weight[700]};
-    color: ${theme.colors.text};
+    color: ${colors.text};
   `,
 
   /* event log */
   eventlog: css`
     line-height: 22px;
     ${fontsStyle.size[13]};
-    color: ${theme.colors.text};
+    color: ${colors.text};
 
     > div {
       vertical-align: middle;
