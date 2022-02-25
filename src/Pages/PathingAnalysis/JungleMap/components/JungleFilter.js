@@ -7,7 +7,6 @@ import { Loading } from "../../../../redux/modules/filtervalue";
 import {
   setLeagueFilter,
   setPatchFilter,
-  setPlayerFilter,
   setSeasonFilter,
   setTeamFilter,
   setYearFilter,
@@ -16,7 +15,6 @@ import {
   JungleInit,
   SetFilterData,
   SetJungleLeague,
-  SetJunglePlayer,
   SetJungleSeason,
 } from "../../../../redux/modules/junglevalue";
 // ui
@@ -67,7 +65,10 @@ const JungleFilter = () => {
     [seasonState]
   );
 
-  //
+  // 팀
+  const teamList = useSelector((state) => state.SelectorReducer.teamFilter);
+  const selectedTeam = useSelector((state) => state.JungleMapReducer.team);
+
   const selector = useSelector((state) => state.SelectorReducer);
   const junglevalue = useSelector((state) => state.JungleMapReducer);
 
@@ -147,42 +148,37 @@ const JungleFilter = () => {
 
     return [...new Set(seasonList)];
   };
-
-  const fetchTeamFilter = () => {
-    let teamList = [];
+  // 4. 선택배열(연도, 리그, 시즌) 로 리그데이터에서 팀선택값 가져오기
+  const getTeamData = (yearsArray, leagueArray, seasonArray) => {
+    if (!yearsArray || !leagueArray || !seasonArray) return;
     if (
-      junglevalue.year.length !== 0 &&
-      Object.keys(junglevalue.season).length !== 0
-    ) {
-      const selectedLeagues = Object.keys(leagueState).filter(
-        (key) => leagueState[key] === true
-      );
-      const selectedSeasons = Object.keys(junglevalue.season).filter(
-        (key) => junglevalue.season[key] === true
-      );
-      for (let year of junglevalue.year) {
-        for (let league of selectedLeagues) {
-          for (let season of selectedSeasons) {
-            const teamData = leagueData[league][year][season];
-            if (teamData) {
-              const teamKeys = Object.keys(teamData);
-              teamList = teamList.concat(teamKeys);
-            }
+      !Array.isArray(yearsArray) ||
+      !Array.isArray(leagueArray) ||
+      !Array.isArray(seasonArray)
+    )
+      return;
+    let teamList = [];
+    for (let year of yearsArray) {
+      for (let league of leagueArray) {
+        for (let season of seasonArray) {
+          const teamData = leagueData[league][year][season];
+          if (teamData) {
+            const teamKeys = Object.keys(teamData);
+            teamList = teamList.concat(teamKeys);
           }
         }
       }
-      // 공통되는 팀이 아닌 경우로만 sorting
-      teamList = teamList.filter((item, pos) => teamList.indexOf(item) === pos);
     }
-    dispatch(setTeamFilter(teamList));
+    return [...new Set(teamList)];
   };
 
+  // 5. 선택배열(연도,리그,시즌,팀) 리그데이터에서 패치선택값 받아오기
   const fetchPatchFilter = () => {
     const selectedLeagues = Object.keys(leagueState).filter(
       (key) => leagueState[key] === true
     );
-    const selectedSeasons = Object.keys(junglevalue.season).filter(
-      (key) => junglevalue.season[key] === true
+    const selectedSeasons = Object.keys(seasonState).filter(
+      (key) => seasonState[key] === true
     );
 
     dispatch(Loading(true));
@@ -218,14 +214,14 @@ const JungleFilter = () => {
 
   // effect hook - 유저의 선택 항목에 따라 선택가능한 조합들을 redux에 디스패치한다.
 
-  // 시작 - 페이지 인입시 선택가능한 연도를 selector module에 dispatch
+  // step0 - 페이지렌더 => 연도선택 가능 배열
   useEffect(() => {
     if (yearList.length > 0) return;
     const leagueYearData = getYearsData();
     dispatch(setYearFilter(leagueYearData));
   }, []);
 
-  // step1 - 연도를 선택 -> 해당 연도에 선택할수 있는 리그의 조합을 저장
+  // step1 - 연도선택 => 리그선택 가능 배열
   useEffect(() => {
     if (seletedYearList.length === 0) return;
     let leagueData = getLeagueData(seletedYearList);
@@ -245,23 +241,27 @@ const JungleFilter = () => {
     dispatch(setLeagueFilter(leagueData));
   }, [seletedYearList]);
 
-  // step2 - 리그선택 -> 해당 리그에 선택할수 있는 시즌의 조합
+  // step2 - 리그선택 => 시즌선택 가능 배열
   useEffect(() => {
+    if (seletedYearList.length === 0) return;
     const seasonList = getSeasonData(seletedYearList, selectedLeagues);
     dispatch(SetJungleSeason(initializedObjValue(seasonList)));
     dispatch(setSeasonFilter(seasonList));
   }, [selectedLeagues]);
 
-  /*
-
-
-  //시즌 설정 후 팀 필터 호출
+  // setp3 - 시즌선택 =? 팀선택 가능 배열
   useEffect(() => {
-    if (Object.keys(junglevalue.season).length === 0) {
-      return;
-    }
-    fetchTeamFilter();
-  }, [junglevalue.season]);
+    if (seletedYearList.length === 0) return;
+    const teamList = getTeamData(
+      seletedYearList,
+      selectedLeagues,
+      selectedSeasons
+    );
+    dispatch(setTeamFilter(teamList));
+  }, [selectedSeasons]);
+
+  /*
+ //시즌 설정 후 팀 필터 호출
 
   useEffect(() => {
     if (junglevalue.team.length === 0) {
@@ -398,14 +398,14 @@ const JungleFilter = () => {
                   value="all"
                   onChange={handleChange}
                   checked={
-                    selector.seasonFilter.length > 0 &&
-                    !Object.values(junglevalue.season).includes(false)
+                    seasonList.length > 0 &&
+                    !Object.values(seasonState).includes(false)
                   }
                 >
                   {t("video.jungle.selectAll")}
                 </SCheckboxAll>
                 <SCheckboxWrapper>
-                  {selector.seasonFilter?.map((season) => {
+                  {seasonList.map((season) => {
                     return (
                       <Checkbox
                         name="season"
@@ -422,36 +422,36 @@ const JungleFilter = () => {
             )}
           </SFilterGroup>
         </SRow>
-
         {/* 팀 */}
         <SRow toggleFoldBtn={toggleFoldBtn}>
           <STitle>{t("video.jungle.team")}</STitle>
           <SFilterGroup>
-            {Object.keys(junglevalue.season).length === 0 ||
-            !Object.values(junglevalue.season).includes(true) ? (
+            {Object.keys(seasonState).length === 0 ||
+            !Object.values(seasonState).includes(true) ? (
               <SInitialStatement>
                 {t("video.jungle.selectTeam")}
               </SInitialStatement>
             ) : (
-              <SCheckboxAll name="year" value="all" disabled={true}>
-                {t("video.jungle.selectAll")}
-              </SCheckboxAll>
+              <>
+                <SCheckboxAll name="year" value="all" disabled={true}>
+                  {t("video.jungle.selectAll")}
+                </SCheckboxAll>
+                <SCheckboxWrapper>
+                  {teamList.map((team) => {
+                    return (
+                      <Radio
+                        name="team"
+                        value={team}
+                        onChange={handleChange}
+                        checked={junglevalue.team.includes(team)}
+                      >
+                        {team}
+                      </Radio>
+                    );
+                  })}
+                </SCheckboxWrapper>
+              </>
             )}
-            <SCheckboxWrapper>
-              {Object.keys(junglevalue.season).length !== 0 &&
-                selector.teamFilter?.map((team) => {
-                  return (
-                    <Radio
-                      name="team"
-                      value={team}
-                      onChange={handleChange}
-                      checked={junglevalue.team.includes(team)}
-                    >
-                      {team}
-                    </Radio>
-                  );
-                })}
-            </SCheckboxWrapper>
           </SFilterGroup>
         </SRow>
 
