@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Loading } from "../../../../redux/modules/filtervalue";
 import {
@@ -17,6 +17,7 @@ import {
   SetFilterData,
   SetJungleLeague,
   SetJunglePlayer,
+  SetJungleSeason,
 } from "../../../../redux/modules/junglevalue";
 // ui
 import Radio from "../../../../Components/Ui/Radio";
@@ -28,13 +29,24 @@ import axiosRequest from "../../../../lib/axios/axiosRequest";
 import SelectedJungleFilter from "./SelectedJungleFilter";
 import { initializedObjValue } from "../../../../lib/initializedObjValue";
 
+const getTrueValueList = (obj) => {
+  if (typeof obj !== "object") return;
+  const trueArray = [];
+  for (let key in obj) {
+    if (obj[key] === true) {
+      trueArray.push(key);
+    }
+  }
+  return trueArray;
+};
+
 const JungleFilter = () => {
-  // 스태틱 벨류에서 리그 오브젝트 통째로 가지고 오기
+  // 기본 데이터
   const leagueData = useSelector(
     (state) => state.StaticValueReducer.filterObjects
   );
 
-  /* 필터정보: 선택가능값 , 선택한값 */
+  /* 필터정보: 선택가능값 , 리덕스 상태, true인 값 */
   // 연도
   const yearList = useSelector((state) => state.SelectorReducer.yearFilter);
   const seletedYearList = useSelector((state) => state.JungleMapReducer.year);
@@ -42,12 +54,22 @@ const JungleFilter = () => {
   // 리그
   const leagueList = useSelector((state) => state.SelectorReducer.leagueFilter);
   const leagueState = useSelector((state) => state.JungleMapReducer.league);
-  console.log("리그정보", Object.keys(leagueState).length);
-  const selectedLeagueList = null;
+  const selectedLeagues = useMemo(
+    () => getTrueValueList(leagueState),
+    [leagueState]
+  );
 
+  // 시즌
+  const seasonList = useSelector((state) => state.SelectorReducer.seasonFilter);
+  const seasonState = useSelector((state) => state.JungleMapReducer.season);
+  const selectedSeasons = useMemo(
+    () => getTrueValueList(seasonState),
+    [seasonState]
+  );
+
+  //
   const selector = useSelector((state) => state.SelectorReducer);
   const junglevalue = useSelector((state) => state.JungleMapReducer);
-  console.log(junglevalue);
 
   const user = useSelector((state) => state.UserReducer);
   const { t } = useTranslation();
@@ -89,9 +111,7 @@ const JungleFilter = () => {
     else handleChangeCheck(e);
   };
 
-  //  dispath filterValue data
-
-  // 1. 리그정보에서 연도가지고 오기
+  // 1. 리그데이터에서 연도선택값 가져오기
   const getYearsData = () => {
     let yearList = [];
     for (let key in leagueData) {
@@ -99,7 +119,7 @@ const JungleFilter = () => {
     }
     return [...new Set(yearList)].sort();
   };
-  // 2. 연도에 맞는 리그 데이터 가지고 오기
+  // 2. (연도선택배열)에서 리그데이터에서 리그선택값 가져오기
   const getLeagueData = (yearsArray) => {
     let leagueList = [];
 
@@ -113,26 +133,19 @@ const JungleFilter = () => {
 
     return leagueList;
   };
-
-  const fetchSeasonFilter = () => {
+  // 3. (연도선택배열,리그선택배열) 로 리그데이터에서 시즌선택값 가져오기
+  const getSeasonData = (yearsArray, leagueArray) => {
+    if (!yearsArray || !leagueArray) return;
     let seasonList = [];
-    if (junglevalue.year.length !== 0) {
-      const result = Object.keys(junglevalue.league).filter(
-        (key) => junglevalue.league[key] === true
-      );
-      for (let year of junglevalue.year) {
-        for (let league of result) {
-          const seasonKeys = Object.keys(leagueData[league][year]);
-          seasonList = seasonList.concat(seasonKeys);
-        }
+
+    for (let year of yearsArray) {
+      for (let league of leagueArray) {
+        const seasonKeys = Object.keys(leagueData[league][year]);
+        seasonList = seasonList.concat(seasonKeys);
       }
-      // 공통되는 시즌이 아닌 경우로만 sorting
-      seasonList = seasonList.filter(
-        (item, pos) => seasonList.indexOf(item) === pos
-      );
     }
 
-    dispatch(setSeasonFilter(seasonList));
+    return [...new Set(seasonList)];
   };
 
   const fetchTeamFilter = () => {
@@ -141,8 +154,8 @@ const JungleFilter = () => {
       junglevalue.year.length !== 0 &&
       Object.keys(junglevalue.season).length !== 0
     ) {
-      const selectedLeagues = Object.keys(junglevalue.league).filter(
-        (key) => junglevalue.league[key] === true
+      const selectedLeagues = Object.keys(leagueState).filter(
+        (key) => leagueState[key] === true
       );
       const selectedSeasons = Object.keys(junglevalue.season).filter(
         (key) => junglevalue.season[key] === true
@@ -165,8 +178,8 @@ const JungleFilter = () => {
   };
 
   const fetchPatchFilter = () => {
-    const selectedLeagues = Object.keys(junglevalue.league).filter(
-      (key) => junglevalue.league[key] === true
+    const selectedLeagues = Object.keys(leagueState).filter(
+      (key) => leagueState[key] === true
     );
     const selectedSeasons = Object.keys(junglevalue.season).filter(
       (key) => junglevalue.season[key] === true
@@ -212,7 +225,7 @@ const JungleFilter = () => {
     dispatch(setYearFilter(leagueYearData));
   }, []);
 
-  // step1 - 유저가 연도를 선택하면 해당 연도에 선택할수 있는 리그의 조합을 저장
+  // step1 - 연도를 선택 -> 해당 연도에 선택할수 있는 리그의 조합을 저장
   useEffect(() => {
     if (seletedYearList.length === 0) return;
     let leagueData = getLeagueData(seletedYearList);
@@ -221,7 +234,6 @@ const JungleFilter = () => {
      * 2021년일때 LPL 제외
      * 2022일때 LPL, MSI, WC
      */
-
     if (seletedYearList.includes("2021")) {
       leagueData = leagueData.filter((league) => league !== "LPL");
     } else if (seletedYearList.includes("2022")) {
@@ -229,19 +241,19 @@ const JungleFilter = () => {
         (league) => league !== "LPL" && league !== "WC" && league !== "MSI"
       );
     }
-
     dispatch(SetJungleLeague(initializedObjValue(leagueData)));
     dispatch(setLeagueFilter(leagueData));
   }, [seletedYearList]);
 
-  /*
-    // 리그 설정 후 시즌필터 호출
+  // step2 - 리그선택 -> 해당 리그에 선택할수 있는 시즌의 조합
   useEffect(() => {
-    if (Object.keys(junglevalue.league).length === 0) {
-      return;
-    }
-    fetchSeasonFilter();
-  }, [junglevalue.league]);
+    const seasonList = getSeasonData(seletedYearList, selectedLeagues);
+    dispatch(SetJungleSeason(initializedObjValue(seasonList)));
+    dispatch(setSeasonFilter(seasonList));
+  }, [selectedLeagues]);
+
+  /*
+
 
   //시즌 설정 후 팀 필터 호출
   useEffect(() => {
@@ -280,7 +292,7 @@ const JungleFilter = () => {
   }, [leagueList]);
 
   useEffect(() => {
-    if (Object.keys(junglevalue.league).length === 0) {
+    if (Object.keys(leagueState).length === 0) {
       return;
     }
     const result = initializedObjValue(selector.seasonFilter);
@@ -370,48 +382,47 @@ const JungleFilter = () => {
             )}
           </SFilterGroup>
         </SRow>
-
         {/* 시즌 */}
         <SRow toggleFoldBtn={toggleFoldBtn}>
           <STitle>{t("video.jungle.season")}</STitle>
           <SFilterGroup>
-            {Object.keys(junglevalue.league).length === 0 ||
-            !Object.values(junglevalue.league).includes(true) ? (
+            {Object.keys(leagueState).length === 0 ||
+            !Object.values(leagueState).includes(true) ? (
               <SInitialStatement>
                 {t("video.jungle.selectSeason")}
               </SInitialStatement>
             ) : (
-              <SCheckboxAll
-                name="season"
-                value="all"
-                onChange={handleChange}
-                checked={
-                  selector.seasonFilter.length > 0 &&
-                  selector.seasonFilter.length ===
-                    Object.keys(junglevalue.season).length &&
-                  !Object.values(junglevalue.season).includes(false)
-                }
-              >
-                {t("video.jungle.selectAll")}
-              </SCheckboxAll>
+              <>
+                <SCheckboxAll
+                  name="season"
+                  value="all"
+                  onChange={handleChange}
+                  checked={
+                    selector.seasonFilter.length > 0 &&
+                    !Object.values(junglevalue.season).includes(false)
+                  }
+                >
+                  {t("video.jungle.selectAll")}
+                </SCheckboxAll>
+                <SCheckboxWrapper>
+                  {selector.seasonFilter?.map((season) => {
+                    return (
+                      <Checkbox
+                        name="season"
+                        value={season}
+                        onChange={handleChange}
+                        checked={junglevalue["season"][season]}
+                      >
+                        {season}
+                      </Checkbox>
+                    );
+                  })}
+                </SCheckboxWrapper>
+              </>
             )}
-            <SCheckboxWrapper>
-              {Object.keys(junglevalue.season).length !== 0 &&
-                selector.seasonFilter?.map((season) => {
-                  return (
-                    <Checkbox
-                      name="season"
-                      value={season}
-                      onChange={handleChange}
-                      checked={junglevalue["season"][season]}
-                    >
-                      {season}
-                    </Checkbox>
-                  );
-                })}
-            </SCheckboxWrapper>
           </SFilterGroup>
         </SRow>
+
         {/* 팀 */}
         <SRow toggleFoldBtn={toggleFoldBtn}>
           <STitle>{t("video.jungle.team")}</STitle>
@@ -443,6 +454,7 @@ const JungleFilter = () => {
             </SCheckboxWrapper>
           </SFilterGroup>
         </SRow>
+
         {/* 패치 */}
         <SRow toggleFoldBtn={toggleFoldBtn}>
           <STitle>{t("video.jungle.patch")}</STitle>
@@ -483,6 +495,7 @@ const JungleFilter = () => {
             </SCheckboxWrapper>
           </SFilterGroup>
         </SRow>
+
         {/* 선택된 필터 */}
         {junglevalue.year.length > 0 ? (
           <SRow>

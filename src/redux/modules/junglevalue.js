@@ -7,6 +7,7 @@ export const SET_OPP_CHAMP = "junglevalue/SET_OPP_CHAMP";
 
 /** 리팩토링 추가 action */
 export const SET_JUNGLE_LEAGUE = "junglevalue/SET_LEAGUE";
+export const SET_JUNGLE_SEASON = "junglevalue/SET_SEASON";
 
 export const RESET_JUNGLE_LEAGUE = "junglevalue/RESET_LEAGUE";
 export const RESET_JUNGLE_SEASON = "junglevalue/RESET_JUNGLE_SEASON";
@@ -39,6 +40,10 @@ export const ResetJungleSeason = (payload) => {
     payload,
   };
 };
+export const SetJungleSeason = (payload) => ({
+  type: SET_JUNGLE_SEASON,
+  payload,
+});
 export const ResetJungleTeam = () => {
   return {
     type: RESET_JUNGLE_TEAM,
@@ -133,6 +138,11 @@ export default function JungleMapReducer(state = initialState, action) {
       return {
         ...state,
         league: { ...action.payload },
+      };
+    case SET_JUNGLE_SEASON:
+      return {
+        ...state,
+        season: { ...action.payload },
       };
     case RESET_JUNGLE_LEAGUE:
       return {
