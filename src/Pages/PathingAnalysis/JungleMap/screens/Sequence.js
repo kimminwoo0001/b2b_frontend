@@ -18,27 +18,32 @@ const Sequence = () => {
         <JungleFilter />
       </S.FilterContainer>
       {/* 사이드 필터와 맵 비디오  */}
-      {Object.keys(junglevalue.patch).length > 0 && Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key] === true).length > 0 && 
-      <S.FlexContainer>
-        {/* 사이드 필터 */}
-        <S.Sidebar>
-          <JungleSideFilter />
-        </S.Sidebar>
+      {Object.keys(junglevalue.patch).length > 0 &&
+        Object.keys(junglevalue.patch).filter(
+          (key) => junglevalue.patch[key] === true
+        ).length > 0 && (
+          <S.FlexContainer>
+            {/* 사이드 필터 */}
+            <S.Sidebar>
+              <JungleSideFilter />
+            </S.Sidebar>
 
-        {/*  맵 & 다이얼로그 */}
-        <S.Container>
-          {/* 맵 비디오 */}
-          <S.VideoContainer>
-            <PositionCheckList onChange={(position) => console.log(position)} />
-            <Map />
-          </S.VideoContainer>
-          {/* 이벤트 다이얼로그 */}
-          <S.DialogContainer>
-            <SequenceDialog />
-          </S.DialogContainer>
-        </S.Container>
-      </S.FlexContainer>
-}
+            {/*  맵 & 다이얼로그 */}
+            <S.Container>
+              {/* 맵 비디오 */}
+              <S.VideoContainer>
+                <PositionCheckList
+                  onChange={(position) => console.log(position)}
+                />
+                <Map />
+              </S.VideoContainer>
+              {/* 이벤트 다이얼로그 */}
+              <S.DialogContainer>
+                <SequenceDialog />
+              </S.DialogContainer>
+            </S.Container>
+          </S.FlexContainer>
+        )}
     </S.SequenceContainer>
   );
 };
