@@ -15,6 +15,7 @@ import {
   JungleInit,
   SetFilterData,
   SetJungleLeague,
+  SetJunglePatch,
   SetJungleSeason,
 } from "../../../../redux/modules/junglevalue";
 // ui
@@ -26,17 +27,7 @@ import { API } from "../../../config";
 import axiosRequest from "../../../../lib/axios/axiosRequest";
 import SelectedJungleFilter from "./SelectedJungleFilter";
 import { initializedObjValue } from "../../../../lib/initializedObjValue";
-
-const getTrueValueList = (obj) => {
-  if (typeof obj !== "object") return;
-  const trueArray = [];
-  for (let key in obj) {
-    if (obj[key] === true) {
-      trueArray.push(key);
-    }
-  }
-  return trueArray;
-};
+import { getTrueValueList } from "../../../../lib/getTureValueList";
 
 const JungleFilter = () => {
   // 기본 데이터
@@ -45,6 +36,7 @@ const JungleFilter = () => {
   );
 
   /* 필터정보: 선택가능값 , 리덕스 상태, true인 값 */
+
   // 연도
   const yearList = useSelector((state) => state.SelectorReducer.yearFilter);
   const seletedYearList = useSelector((state) => state.JungleMapReducer.year);
@@ -68,6 +60,14 @@ const JungleFilter = () => {
   // 팀
   const teamList = useSelector((state) => state.SelectorReducer.teamFilter);
   const selectedTeam = useSelector((state) => state.JungleMapReducer.team);
+
+  //패치
+  const patchList = useSelector((state) => state.SelectorReducer.patchFilter);
+  const patchState = useSelector((state) => state.JungleMapReducer.patch);
+  const seletedPatch = useMemo(
+    () => getTrueValueList(patchState),
+    [patchState]
+  );
 
   const selector = useSelector((state) => state.SelectorReducer);
   const junglevalue = useSelector((state) => state.JungleMapReducer);
@@ -132,7 +132,7 @@ const JungleFilter = () => {
       }
     });
 
-    return leagueList;
+    return [...new Set(leagueList)].sort();
   };
   // 3. (연도선택배열,리그선택배열) 로 리그데이터에서 시즌선택값 가져오기
   const getSeasonData = (yearsArray, leagueArray) => {
@@ -171,25 +171,24 @@ const JungleFilter = () => {
     }
     return [...new Set(teamList)];
   };
-
-  // 5. 선택배열(연도,리그,시즌,팀) 리그데이터에서 패치선택값 받아오기
-  const fetchPatchFilter = () => {
-    const selectedLeagues = Object.keys(leagueState).filter(
-      (key) => leagueState[key] === true
-    );
-    const selectedSeasons = Object.keys(seasonState).filter(
-      (key) => seasonState[key] === true
-    );
-
-    dispatch(Loading(true));
+  // 5. 선택배열(연도,리그,시즌) 리그데이터에서 패치선택값 받아오기
+  const getPatchData = async (yearsArray, leagueArray, seasonArray) => {
+    if (!yearsArray || !leagueArray || !seasonArray) return;
+    if (
+      !Array.isArray(yearsArray) ||
+      !Array.isArray(leagueArray) ||
+      !Array.isArray(seasonArray)
+    )
+      return;
     const url = `${API}/lolapi/filter/patch`;
     const params = {
-      league: selectedLeagues,
-      year: junglevalue.year,
-      season: selectedSeasons,
+      league: leagueArray,
+      year: yearsArray,
+      season: seasonArray,
       token: user.token,
       id: user.id,
     };
+
     axiosRequest(
       undefined,
       url,
@@ -197,13 +196,8 @@ const JungleFilter = () => {
       function (e) {
         const patchResponse = e ?? [];
         dispatch(setPatchFilter(patchResponse));
-        const datas = { ...junglevalue.patch };
-        const list = Object.keys(junglevalue.patch);
-        const a = list.map((data) => {
-          return (datas[data] = true);
-        });
-        dispatch(SetFilterData({ ...junglevalue, patch: datas }));
-
+        const patchState = initializedObjValue(patchResponse, true);
+        dispatch(SetJunglePatch(patchState));
         dispatch(Loading(false));
       },
       function (e) {
@@ -211,8 +205,6 @@ const JungleFilter = () => {
       }
     );
   };
-
-  // effect hook - 유저의 선택 항목에 따라 선택가능한 조합들을 redux에 디스패치한다.
 
   // step0 - 페이지렌더 => 연도선택 가능 배열
   useEffect(() => {
@@ -237,6 +229,7 @@ const JungleFilter = () => {
         (league) => league !== "LPL" && league !== "WC" && league !== "MSI"
       );
     }
+
     dispatch(SetJungleLeague(initializedObjValue(leagueData)));
     dispatch(setLeagueFilter(leagueData));
   }, [seletedYearList]);
@@ -249,9 +242,9 @@ const JungleFilter = () => {
     dispatch(setSeasonFilter(seasonList));
   }, [selectedLeagues]);
 
-  // setp3 - 시즌선택 =? 팀선택 가능 배열
+  // setp3-1 - 시즌선택 => 팀선택 가능 배열
   useEffect(() => {
-    if (seletedYearList.length === 0) return;
+    if (selectedLeagues.length === 0) return;
     const teamList = getTeamData(
       seletedYearList,
       selectedLeagues,
@@ -260,66 +253,12 @@ const JungleFilter = () => {
     dispatch(setTeamFilter(teamList));
   }, [selectedSeasons]);
 
-  /*
- //시즌 설정 후 팀 필터 호출
-
+  // step3-2 - 시즌선택 => 패치선택 배열
   useEffect(() => {
-    if (junglevalue.team.length === 0) {
-      return;
-    }
-    fetchPatchFilter();
-  }, [junglevalue.team]);
+    if (selectedSeasons.length === 0) return;
+    getPatchData(seletedYearList, selectedLeagues, selectedSeasons);
+  }, [selectedSeasons]);
 
-  useEffect(() => {
-    if (junglevalue.patch.length === 0) {
-      return;
-    }
-    // dispatch(SetJunglePlayer(""));
-  }, [junglevalue.patch]);
-
-  useEffect(() => {
-    if (junglevalue.year.length === 0) {
-      return;
-    }
-    const result = initializedObjValue(leagueList);
-
-    dispatch(
-      SetFilterData({
-        ...junglevalue,
-        league: result,
-      })
-    );
-  }, [leagueList]);
-
-  useEffect(() => {
-    if (Object.keys(leagueState).length === 0) {
-      return;
-    }
-    const result = initializedObjValue(selector.seasonFilter);
-
-    dispatch(
-      SetFilterData({
-        ...junglevalue,
-        season: result,
-      })
-    );
-  }, [selector.seasonFilter]);
-
-  useEffect(() => {
-    if (junglevalue.team.length === 0) {
-      return;
-    }
-    const result = initializedObjValue(selector.patchFilter, true);
-    console.log(result);
-    dispatch(
-      SetFilterData({
-        ...junglevalue,
-        patch: result,
-      })
-    );
-  }, [selector.patchFilter]);
-
-  */
   return (
     <SContainer>
       <SFilterContainer>
@@ -454,59 +393,58 @@ const JungleFilter = () => {
             )}
           </SFilterGroup>
         </SRow>
-
         {/* 패치 */}
         <SRow toggleFoldBtn={toggleFoldBtn}>
           <STitle>{t("video.jungle.patch")}</STitle>
           <SFilterGroup>
-            {junglevalue.team.length === 0 ? (
+            {selectedSeasons.length === 0 || selectedTeam.length === 0 ? (
               <SInitialStatement>
                 {t("video.jungle.selectPatch")}
               </SInitialStatement>
             ) : (
-              <SCheckboxAll
-                name="patch"
-                value="all"
-                onChange={handleChange}
-                checked={
-                  selector.patchFilter.length > 0 &&
-                  selector.patchFilter.length ===
-                    Object.keys(junglevalue.patch).length &&
-                  !Object.values(junglevalue.patch).includes(false)
-                }
-              >
-                {t("video.jungle.selectAll")}
-              </SCheckboxAll>
+              <>
+                <SCheckboxAll
+                  name="patch"
+                  value="all"
+                  onChange={handleChange}
+                  checked={
+                    selector.patchFilter.length > 0 &&
+                    selector.patchFilter.length ===
+                      Object.keys(junglevalue.patch).length &&
+                    !Object.values(junglevalue.patch).includes(false)
+                  }
+                >
+                  {t("video.jungle.selectAll")}
+                </SCheckboxAll>
+                <SCheckboxWrapper>
+                  {junglevalue.team.length > 0 &&
+                    selector.patchFilter?.map((patch) => {
+                      return (
+                        <Checkbox
+                          name="patch"
+                          value={patch}
+                          onChange={handleChange}
+                          checked={junglevalue["patch"][patch]}
+                        >
+                          {patch}
+                        </Checkbox>
+                      );
+                    })}
+                </SCheckboxWrapper>
+              </>
             )}
-            <SCheckboxWrapper>
-              {junglevalue.team.length > 0 &&
-                selector.patchFilter?.map((patch) => {
-                  return (
-                    <Checkbox
-                      name="patch"
-                      value={patch}
-                      onChange={handleChange}
-                      checked={junglevalue["patch"][patch]}
-                    >
-                      {patch}
-                    </Checkbox>
-                  );
-                })}
-            </SCheckboxWrapper>
           </SFilterGroup>
         </SRow>
 
         {/* 선택된 필터 */}
-        {junglevalue.year.length > 0 ? (
+        {junglevalue.year.length > 0 && (
           <SRow>
             <STitle>{t("video.jungle.selectedFilter")}</STitle>
             <SFilterGroup>
               <SResetWrapper
                 onClick={() => {
                   dispatch(JungleInit());
-                  if (toggleFoldBtn) {
-                    setToggleFoldBtn(!toggleFoldBtn);
-                  }
+                  setToggleFoldBtn(false);
                 }}
               >
                 <SResetImg src="Images/ico_reset.svg" alt="reset" />
@@ -514,19 +452,13 @@ const JungleFilter = () => {
               </SResetWrapper>
               <SCheckboxWrapper>
                 {/* 선택된 필터 노출 */}
-                <SelectedJungleFilter
-                  filterData={junglevalue}
-                  toggleFoldBtn={toggleFoldBtn}
-                  setToggleFoldBtn={setToggleFoldBtn}
-                />
+                <SelectedJungleFilter setToggle={setToggleFoldBtn} />
               </SCheckboxWrapper>
             </SFilterGroup>
           </SRow>
-        ) : (
-          <></>
         )}
       </SFilterContainer>
-      {junglevalue.year.length > 0 ? (
+      {junglevalue.year.length > 0 && (
         <FoldUpBtn onClick={handleFoldUp}>
           {!toggleFoldBtn ? (
             <img src="Images/btn_fold_up.png" alt="foldup" />
@@ -534,8 +466,6 @@ const JungleFilter = () => {
             <img src="Images/btn_fold_down.png" alt="folddown" />
           )}
         </FoldUpBtn>
-      ) : (
-        <></>
       )}
     </SContainer>
   );
@@ -566,12 +496,10 @@ const SCheckboxAll = styled(Checkbox)`
   opacity: ${(props) =>
     props.name === "year" || props.name === "team" ? 0.3 : 1};
 `;
-
 const SInitialStatement = styled.div`
   opacity: 0.3;
   margin: 5px 0 0 5px;
 `;
-
 const SFilterGroup = styled.div`
   display: flex;
   flex-direction: column;
@@ -593,7 +521,6 @@ const SFilterGroup = styled.div`
     margin-right: 36px;
   }
 `;
-
 const SResetWrapper = styled.div`
   margin-right: 36px;
   display: inline-flex;
@@ -607,7 +534,6 @@ const SResetImg = styled.img`
 const SCheckboxWrapper = styled.div`
   flex: 1;
 `;
-
 const FoldUpBtn = styled.button`
   position: absolute;
   bottom: 5px;
