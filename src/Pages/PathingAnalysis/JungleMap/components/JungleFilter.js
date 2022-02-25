@@ -112,7 +112,7 @@ const JungleFilter = () => {
     else handleChangeCheck(e);
   };
 
-  // 1. 리그데이터에서 연도선택값 가져오기
+  // 1. () => 리그데이터에서 연도선택값 가져오기
   const getYearsData = () => {
     let yearList = [];
     for (let key in leagueData) {
@@ -120,7 +120,7 @@ const JungleFilter = () => {
     }
     return [...new Set(yearList)].sort();
   };
-  // 2. (연도선택배열)에서 리그데이터에서 리그선택값 가져오기
+  // 2. (연도) => 리그데이터에서 리그선택값 가져오기
   const getLeagueData = (yearsArray) => {
     let leagueList = [];
 
@@ -134,7 +134,7 @@ const JungleFilter = () => {
 
     return [...new Set(leagueList)].sort();
   };
-  // 3. (연도선택배열,리그선택배열) 로 리그데이터에서 시즌선택값 가져오기
+  // 3. (연도,리그) => 리그데이터에서 시즌선택값 가져오기
   const getSeasonData = (yearsArray, leagueArray) => {
     if (!yearsArray || !leagueArray) return;
     let seasonList = [];
@@ -148,7 +148,7 @@ const JungleFilter = () => {
 
     return [...new Set(seasonList)];
   };
-  // 4. 선택배열(연도, 리그, 시즌) 로 리그데이터에서 팀선택값 가져오기
+  // 4. (연도,리그,시즌) 로 리그데이터에서 팀선택값 가져오기
   const getTeamData = (yearsArray, leagueArray, seasonArray) => {
     if (!yearsArray || !leagueArray || !seasonArray) return;
     if (
@@ -171,7 +171,7 @@ const JungleFilter = () => {
     }
     return [...new Set(teamList)];
   };
-  // 5. 선택배열(연도,리그,시즌) 리그데이터에서 패치선택값 받아오기
+  // 5. (연도,리그,시즌) 리그데이터에서 패치선택값 받아오기
   const getPatchData = async (yearsArray, leagueArray, seasonArray) => {
     if (!yearsArray || !leagueArray || !seasonArray) return;
     if (
@@ -458,6 +458,8 @@ const JungleFilter = () => {
           </SRow>
         )}
       </SFilterContainer>
+
+      {/* 접는버튼 */}
       {junglevalue.year.length > 0 && (
         <FoldUpBtn onClick={handleFoldUp}>
           {!toggleFoldBtn ? (

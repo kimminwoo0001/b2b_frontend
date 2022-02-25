@@ -137,6 +137,8 @@ export default function JungleMapReducer(state = initialState, action) {
         ...state,
         player: action.payload,
       };
+
+    // set
     case SET_JUNGLE_LEAGUE:
       return {
         ...state,
@@ -152,12 +154,12 @@ export default function JungleMapReducer(state = initialState, action) {
         ...state,
         patch: { ...action.payload },
       };
-
     case SET_CHAMP:
       return action.payload;
     case SET_OPP_CHAMP:
       return action.payload;
 
+    // reset
     case RESET_JUNGLE_LEAGUE:
       return {
         ...state,
@@ -167,6 +169,7 @@ export default function JungleMapReducer(state = initialState, action) {
         patch: {},
       };
     case RESET_JUNGLE_SEASON:
+      console.log(action.payload);
       return {
         ...state,
         season: { ...state.season, [action.payload]: false },
@@ -178,7 +181,6 @@ export default function JungleMapReducer(state = initialState, action) {
       return {
         ...state,
         team: [],
-        patch: {},
       };
 
     case RESET_JUNGLE_PATCH:
