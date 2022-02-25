@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import * as S from "../styled/MTStyledTable";
@@ -31,6 +31,16 @@ const MTPlayerHeader = ({
 
   // 즐겨찾기 기능 관련
   const [isLike, setIsLike] = useState(bookmark === 0 ? false : true);
+
+  // close 시 데이터 셋
+  const [closeData, setCloseData] = useState({
+    name: "",
+    tier: 0,
+    total: 0,
+    win: 0,
+    lose: 0,
+  });
+
   const handleFavorite = (e) => {
     const { name, checked, value } = e.target;
     console.log(name, checked, value);
@@ -49,6 +59,30 @@ const MTPlayerHeader = ({
     });
   };
 
+  useEffect(() => {
+    let allName = "";
+    let maxTier = 0;
+    let seasonTotal = 0;
+    let seasonwin = 0;
+    let seasonlose = 0;
+    let seasonWinrate = 0;
+    let lastDayTotal = 0;
+    let lastDayWin = 0;
+    let lastDayLose = 0;
+    let lastDayWinrate = 0;
+
+    for (let data of soloRankInfo) {
+      allName += data.summonerName;
+      seasonTotal += data.lastSeason.total;
+      seasonwin += data.lastSeason.win;
+      seasonlose += data.lastSeason.lose;
+      seasonWinrate += data.lastSeason.winrate;
+      lastDayTotal += data.lastDay.total;
+      lastDayWin += data.lastDay.win;
+      lastDayLose += data.lastDay.lose;
+      lastDayWinrate += data.lastDay.winrate;
+    }
+  }, []);
   return (
     // 관심선수
     <S.TableItemRow>
