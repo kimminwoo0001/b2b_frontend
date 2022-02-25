@@ -49,12 +49,46 @@ const Compare = () => {
   const [oppTeamSide, setOppTeamSide] = useState("blue");
 
 
-
   const secToMin = (sec) => {
     let mm = Math.floor(sec / 60);
     let ss = Math.floor(sec % 60);
 
     return `${mm}${t("solo.playerboard.min")} ${ss}${t("solo.playerboard.sec")}`;
+  }
+
+  const refineJungleRate = (param) => {
+    let data = [];
+    
+    let sideArr = [];
+    let isMatched = [];
+    
+    let monsteridsArr = [];
+    let jgRatesArr = [];
+    let order = [];
+    let i ;
+
+    for(i = 0; i < param.campRate.length; i++) {
+      sideArr = sideArr.concat((param.campRate[i].side).split(","));
+      isMatched = isMatched.concat((param.campRate[i].sides).split(","));
+      monsteridsArr = monsteridsArr.concat((param.campRate[i].monsterids).split(","));
+      jgRatesArr = jgRatesArr.concat((param.campRate[i].jg_rates).split(","));   
+      for(let k = 0; k < sideArr.length; k++) {
+        order.push(param.campRate[i].order)
+      }
+    }
+
+
+
+    for(let j = 0; j < sideArr.length; j++) {
+      data[j] = {
+        jg_rates: jgRatesArr[j],
+        monsterids: monsteridsArr[j],
+        order: order[j],
+        side : sideArr[j],
+        sides: isMatched[j]
+    }
+  }
+  return data;
   }
 
    const fetchCampSelectionRate = () => {
@@ -80,25 +114,38 @@ const Compare = () => {
       oppteam: oppteam[0],
       oppplayer: oppplayer[0],
       oppchampion: oppChampArr,
-      // side:"all",
       token: user.token,
       id: user.id,
     };
     axiosRequest(undefined, url, params, function(e) {
-      setTeam(e["team1"]);
-      setOppTeam(e["team2"]);
+        setTeam(e["team1"]);
+        setOppTeam(e["team2"]);
+        dispatch(SetIsJunglingClicked(false));
 
-      setTeamBlue(e["team1"].campRate.filter(team => team.side === "blue"))
-      setTeamRed(e["team1"].campRate.filter(team => team.side === "red"))    
+        const returnedTeamData = refineJungleRate(e["team1"])
+        const returnedOppTeamData = refineJungleRate(e["team2"])
 
-      setOppTeamBlue(e["team2"].campRate.filter(team => team.side === "blue"))
-      setOppTeamRed(e["team2"].campRate.filter(team => team.side === "red"))
+        let blueTeam = [];
+        let redTeam = [];
+        let blueOppTeam = [];
+        let redOppTeam = [];
 
-      dispatch(SetIsJunglingClicked(false));
+        blueTeam = returnedTeamData.filter((data) => (data.side === "blue"));
+        redTeam = returnedTeamData.filter((data) => (data.side === "red"));
+        blueOppTeam = returnedOppTeamData.filter((data) => (data.side === "blue"));
+        redOppTeam = returnedOppTeamData.filter((data) => (data.side === "red"));
+
+        setTeamBlue(blueTeam);
+        setTeamRed(redTeam);
+        setOppTeamBlue(blueOppTeam);
+        setOppTeamRed(redOppTeam)
+
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
     })
   }
+
+  console.log(teamBlue,teamRed)
 
   useEffect(() => {
     if((Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).length === 0) || 
@@ -184,7 +231,7 @@ const Compare = () => {
                         <tbody>
                         {teamBlue?.map((teamCamp,idx) => (
                         <tr>
-                        <td>{teamCamp.order}</td>
+                        <td>{idx+1}</td>
                         <td>
                           <S.table.TableData>
                             <Avatar
@@ -194,28 +241,8 @@ const Compare = () => {
                               color={"blue"}
                             />
                             <div>
-                              <p>{`${(teamCamp.jg_rates.split(',')[0]*100).toFixed(2)}%`}</p>
-                              <p>{`${teamCamp.monsterids.split(',')[0]}`}</p>
-                            </div>
-                          </S.table.TableData>
-                        </td>
-                        <td>
-                          <S.table.TableData>
-                            {!teamCamp.monsterids.split(',')[1] ? <></> :
-                            <Avatar
-                            src={"images/champion/teemo.png"}
-                            alt={"칼날부리"}
-                            size={36}
-                            color={"blue"}
-                          />
-                            }
-                            <div>
-                            {!teamCamp.jg_rates.split(',')[1] ? <></> : 
-                              <p>{`${(teamCamp.jg_rates.split(',')[1]*100).toFixed(2)}%`}</p>
-                            }
-                            {teamCamp.monsterids.split(',')[1] === undefined ? <></> : 
-                              <p>{`${teamCamp.monsterids.split(',')[1]}`}</p>
-                            }
+                              <p>{`${(teamCamp.jg_rates.split('')[0]*100).toFixed(2)}%`}</p>
+                              <p>{`${teamCamp.monsterids.split('')[0]}`}</p>
                             </div>
                           </S.table.TableData>
                         </td>
@@ -225,7 +252,7 @@ const Compare = () => {
                         <tbody>
                         {teamRed?.map((teamCamp,idx) => (
                         <tr>
-                        <td>{teamCamp.order}</td>
+                        <td>{idx+1}</td>
                         <td>
                           <S.table.TableData>
                             <Avatar
@@ -235,28 +262,8 @@ const Compare = () => {
                               color={"red"}
                             />
                             <div>
-                              <p>{`${(teamCamp.jg_rates.split(',')[0]*100).toFixed(2)}%`}</p>
-                              <p>{`${teamCamp.monsterids.split(',')[0]}`}</p>
-                            </div>
-                          </S.table.TableData>
-                        </td>
-                        <td>
-                          <S.table.TableData>
-                            {!teamCamp.monsterids.split(',')[1] ? <></> :
-                            <Avatar
-                            src={"images/champion/teemo.png"}
-                            alt={"칼날부리"}
-                            size={36}
-                            color={"red"}
-                          />
-                            }
-                            <div>
-                            {!teamCamp.jg_rates.split(',')[1] ? <></> : 
-                              <p>{`${(teamCamp.jg_rates.split(',')[1]*100).toFixed(2)}%`}</p>
-                            }
-                            {teamCamp.monsterids.split(',')[1] === undefined ? <></> : 
-                              <p>{`${teamCamp.monsterids.split(',')[1]}`}</p>
-                            }
+                              <p>{`${(teamCamp.jg_rates.split('')[0]*100).toFixed(2)}%`}</p>
+                              <p>{`${teamCamp.monsterids.split('')[0]}`}</p>
                             </div>
                           </S.table.TableData>
                         </td>

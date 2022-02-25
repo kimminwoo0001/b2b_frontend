@@ -102,8 +102,9 @@ const Map = ({position, setPosition}) => {
         setMaxTime(e?.position.length - 1);
         setMappingPosition(e.position);
         setMappingInfo(e.info)
-        dispatch(SetIsJungleMappingClicked(false));
       }
+      // dispatch(SetIsJungleMappingClicked(false));
+
      
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용

@@ -30,6 +30,8 @@ const Sequence = () => {
         {/*  맵 & 다이얼로그 */}
         <S.Container>
           {/* 맵 비디오 */}
+          {junglevalue.isMappingClicked &&
+          <>
           <S.VideoContainer>
             <PositionCheckList onChange={(position) => setPosition(position)} />
             <Map position={position} setPosition={setPosition}/>
@@ -38,6 +40,8 @@ const Sequence = () => {
           <S.DialogContainer>
             <SequenceDialog />
           </S.DialogContainer>
+          </>
+          }
         </S.Container>
       </S.FlexContainer>
 }

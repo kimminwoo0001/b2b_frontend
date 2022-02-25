@@ -6,6 +6,7 @@ import { SelectorInitailizeState } from "../../redux/modules/selectorvalue";
 import { InitializeGameState } from "../../redux/modules/gamevalue";
 import styled, { css } from "styled-components";
 import { CompareModal, CopyFvInit, SetCopyFilters, SetOpenFilterModal } from "../../redux/modules/copyvalue";
+import { JungleInit } from "../../redux/modules/junglevalue";
 
 const useTitle = (initialTitle) => {
   const [title, setTitle] = useState(initialTitle);
@@ -30,6 +31,7 @@ const SideBarItem = ({ menu, idx }) => {
         changeTitle(`${menu.name} - NUNU.GG`)
         dispatch(SelectorInitailizeState());
         dispatch(InitializeGameState());
+        dispatch(JungleInit());
         // dispatch(InitailizeState());
         if (menu.modal) {
           batch(() => {
