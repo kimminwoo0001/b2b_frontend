@@ -405,7 +405,6 @@ const initialState = {
   gameid: "",
   menu_num: "",
   filterMenuState: true,
-  checkedInputs: []
 };
 
 export default function FilterReducer(state = initialState, action) {

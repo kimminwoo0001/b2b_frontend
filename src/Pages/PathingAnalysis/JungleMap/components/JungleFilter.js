@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   League,
@@ -36,7 +36,7 @@ import {
   setTeamFilter,
   setYearFilter,
 } from "../../../../redux/modules/selectorvalue";
-import { JungleInit, SetFilterData } from '../../../../redux/modules/junglevalue';
+import { JungleInit, SetFilterData, SetJunglePlayer } from '../../../../redux/modules/junglevalue';
 
 
 import Radio from "../../../../Components/Ui/Radio";
@@ -46,7 +46,8 @@ import { useTranslation } from "react-i18next";
 import { API } from '../../../config';
 import axiosRequest from '../../../../lib/axios/axiosRequest';
 import SelectedJungleFilter from "./SelectedJungleFilter";
-
+import { initializedFalseValue } from '../../../../lib/initializedFalseValue';
+import { FlexContainer } from "./styled/StyledJungleLayout";
 
 
 const JungleFilter = () => {
@@ -57,23 +58,16 @@ const JungleFilter = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [toggleFoldBtn, setToggleFoldBtn] = useState(false);
+  const isInitialMount = useRef(false);
 
-  // const [filterData, setFilterData] = useState({
-  //   year: [],
-  //   league: {},
-  //   season: {},
-  //   team: [],
-  //   patch: {},
-  // });
+
 
   const handleFoldUp = () => {
-    console.log("------------Fold Btn Clicked----------");
     setToggleFoldBtn(!toggleFoldBtn);
   }
 
 
   const handleChange = (e) => {
-
     const { name, value, type, checked } = e.target;
     if (type === "radio") {
       if (name === "year") {
@@ -97,11 +91,8 @@ const JungleFilter = () => {
         const a = list.map((data) => {
           return datas[data] = checked;
         })
-        //  console.log("야옹", datas)
         dispatch(SetFilterData({ ...junglevalue, [name]: datas }));
       } else {
-        // console.log("=====checked:", filterData.season)
-        // console.log("=====checked:", checked)
         dispatch(SetFilterData({
           ...junglevalue,
           [name]: { ...junglevalue[name], [value]: checked },
@@ -109,8 +100,6 @@ const JungleFilter = () => {
       }
     }
   };
-  // console.log("filterData.league =====> ",filterData.league);
-
 
   const fetchYearFilter = () => {
     let yearList = [];
@@ -156,13 +145,9 @@ const JungleFilter = () => {
     dispatch(setLeagueFilter(leagueList));
   }
 
-  console.log(junglevalue);
-
   const fetchSeasonFilter = () => {
     let seasonList = [];
-    // console.log("야옹2");
     if (junglevalue.year.length !== 0) {
-      // console.log("야옹");
       const result = Object.keys(junglevalue.league).filter(key => junglevalue.league[key] === true)
       for (let year of junglevalue.year) {
         for (let league of result) {
@@ -184,8 +169,6 @@ const JungleFilter = () => {
     if (junglevalue.year.length !== 0 && Object.keys(junglevalue.season).length !== 0) {
       const selectedLeagues = Object.keys(junglevalue.league).filter(key => junglevalue.league[key] === true)
       const selectedSeasons = Object.keys(junglevalue.season).filter(key => junglevalue.season[key] === true)
-      // console.log("result --------", result)
-      // console.log("result2 --------", result2)
       for (let year of junglevalue.year) {
         for (let league of selectedLeagues) {
           for (let season of selectedSeasons) {
@@ -197,7 +180,6 @@ const JungleFilter = () => {
           }
         }
       }
-      // console.log("result3---------",teamList);
       // 공통되는 팀이 아닌 경우로만 sorting
       teamList = teamList.filter((item, pos) => teamList.indexOf(item) === pos);
 
@@ -221,15 +203,18 @@ const JungleFilter = () => {
     axiosRequest(undefined, url, params, function (e) {
       const patchResponse = e ?? [];
       dispatch(setPatchFilter(patchResponse));
-      dispatch(SetPatch(patchResponse));
+      const datas = { ...junglevalue.patch }
+      const list = Object.keys(junglevalue.patch);
+      const a = list.map((data) => {
+        return datas[data] = true;
+      })
+      dispatch(SetFilterData({ ...junglevalue, patch: datas }));
+
       dispatch(Loading(false));
     }, function (e) {
       dispatch(Loading(false));
     });
   }
-
-
-
 
 
   // 연도 설정 후 리그필터 호출
@@ -262,7 +247,6 @@ const JungleFilter = () => {
       return;
     }
     fetchTeamFilter();
-    // fetchPatchFilter();
   }, [junglevalue.season])
 
 
@@ -273,28 +257,19 @@ const JungleFilter = () => {
     fetchPatchFilter();
   }, [junglevalue.team])
 
-
-  // 최초 checkbox state의 value값을 false 처리
-  const initializedLeagueValue = (param) => {
-    let newArray = [];
-    for (let i = 0; i < param.length; i++) {
-      newArray.push(param[i])
+  useEffect(() => {
+    if (junglevalue.patch.length === 0) {
+      return;
     }
-    const result = newArray.sort().reduce((newObj, key) => {
+    // dispatch(SetJunglePlayer(""));
+  }, [junglevalue.patch])
 
-      newObj[key] = false;
-      return newObj;
-    },
-      {}
-    )
-    return result;
-  }
 
   useEffect(() => {
     if (junglevalue.year.length === 0) {
       return;
     }
-    const result = initializedLeagueValue(selector.leagueFilter);
+    const result = initializedFalseValue(selector.leagueFilter);
 
     dispatch(SetFilterData({
       ...junglevalue,
@@ -306,7 +281,7 @@ const JungleFilter = () => {
     if (Object.keys(junglevalue.league).length === 0) {
       return;
     }
-    const result = initializedLeagueValue(selector.seasonFilter);
+    const result = initializedFalseValue(selector.seasonFilter);
 
     dispatch(SetFilterData({
       ...junglevalue,
@@ -318,23 +293,18 @@ const JungleFilter = () => {
     if (junglevalue.team.length === 0) {
       return;
     }
-    const result = initializedLeagueValue(selector.patchFilter);
-
+    const result = initializedFalseValue(selector.patchFilter, true);
+    console.log(result);
     dispatch(SetFilterData({
       ...junglevalue,
       patch: result,
     }))
   }, [selector.patchFilter])
 
-
   // 첫 렌더 시 연도 필터 가져오기
   useEffect(() => {
     fetchYearFilter();
   }, [])
-
-  useEffect(() => {
-    console.log(junglevalue)
-  }, [junglevalue.year, junglevalue.league, junglevalue.season, junglevalue.team, junglevalue.patch])
 
 
   return (
@@ -342,34 +312,46 @@ const JungleFilter = () => {
       <SFilterContainer>
         {/* 연도 */}
         <SRow toggleFoldBtn={toggleFoldBtn}>
-          <STitle>연도</STitle>
+          <STitle>{t("video.jungle.year")}</STitle>
           <SFilterGroup>
-            {selector.yearFilter?.map((year) => {
-              return (
-                <Radio
-                  name="year"
-                  value={year}
-                  onChange={handleChange}
-                  checked={junglevalue.year.includes(year)}
-                >
-                  {year}
-                </Radio>
-              )
-            })}
+            <SCheckboxAll
+              name="year"
+              value="all"
+              disabled={true}
+            >
+              {t("video.jungle.selectAll")}
+            </SCheckboxAll>
+            <SCheckboxWrapper>
+
+              {selector.yearFilter?.map((year) => {
+                return (
+                  <Radio
+                    name="year"
+                    value={year}
+                    onChange={handleChange}
+                    checked={junglevalue.year.includes(year)}
+                  >
+                    {year}
+                  </Radio>
+                )
+              })}
+            </SCheckboxWrapper>
           </SFilterGroup>
         </SRow>
         {/* 리그 */}
         <SRow toggleFoldBtn={toggleFoldBtn}>
-          <STitle>리그</STitle>
+          <STitle>
+            {t("video.jungle.league")}
+          </STitle>
           <SFilterGroup>
-            {junglevalue.year.length === 0 ? <SInitialStatement>리그 선택</SInitialStatement> :
+            {junglevalue.year.length === 0 ? <SInitialStatement> {t("video.jungle.selectLeague")}</SInitialStatement> :
               <SCheckboxAll
                 name="league"
                 value="all"
                 onChange={handleChange}
                 checked={selector.leagueFilter.length > 0 && selector.leagueFilter.length === Object.keys(junglevalue.league).length && !Object.values(junglevalue.league).includes(false)}
               >
-                전체선택
+                {t("video.jungle.selectAll")}
               </SCheckboxAll>
             }
             <SCheckboxWrapper>
@@ -377,9 +359,9 @@ const JungleFilter = () => {
                 return (
                   <Checkbox
                     name="league"
-                    value={league}
+                    value="all"
                     onChange={handleChange}
-                    checked={junglevalue["league"][league]}
+                    checked={selector.leagueFilter.length > 0 && selector.leagueFilter.length === Object.keys(junglevalue.league).length && !Object.values(junglevalue.league).includes(false)}
                   >
                     {league}
                   </Checkbox>
@@ -390,16 +372,16 @@ const JungleFilter = () => {
         </SRow>
         {/* 시즌 */}
         <SRow toggleFoldBtn={toggleFoldBtn}>
-          <STitle>시즌</STitle>
+          <STitle>{t("video.jungle.season")}</STitle>
           <SFilterGroup>
-            {Object.keys(junglevalue.league).length === 0 || !Object.values(junglevalue.league).includes(true) ? <SInitialStatement>시즌 선택</SInitialStatement> :
+            {Object.keys(junglevalue.league).length === 0 || !Object.values(junglevalue.league).includes(true) ? <SInitialStatement>{t("video.jungle.selectSeason")}</SInitialStatement> :
               <SCheckboxAll
                 name="season"
                 value="all"
                 onChange={handleChange}
                 checked={selector.seasonFilter.length > 0 && selector.seasonFilter.length === Object.keys(junglevalue.season).length && !Object.values(junglevalue.season).includes(false)}
               >
-                전체선택
+                {t("video.jungle.selectAll")}
               </SCheckboxAll>
             }
             <SCheckboxWrapper>
@@ -407,9 +389,9 @@ const JungleFilter = () => {
                 return (
                   <Checkbox
                     name="season"
-                    value={season}
+                    value="all"
                     onChange={handleChange}
-                    checked={junglevalue["season"][season]}
+                    checked={selector.seasonFilter.length > 0 && selector.seasonFilter.length === Object.keys(junglevalue.season).length && !Object.values(junglevalue.season).includes(false)}
                   >
                     {season}
                   </Checkbox>
@@ -420,35 +402,47 @@ const JungleFilter = () => {
         </SRow>
         {/* 팀 */}
         <SRow toggleFoldBtn={toggleFoldBtn}>
-          <STitle>팀</STitle>
+          <STitle>{t("video.jungle.team")}</STitle>
           <SFilterGroup>
-            {(Object.keys(junglevalue.season).length === 0 || !Object.values(junglevalue.season).includes(true)) && <SInitialStatement>팀 선택</SInitialStatement>}
-            {Object.keys(junglevalue.season).length !== 0 && selector.teamFilter?.map((team) => {
-              return (
-                <Radio
-                  name="team"
-                  value={team}
-                  onChange={handleChange}
-                  checked={junglevalue.team.includes(team)}
-                >
-                  {team}
-                </Radio>
-              )
-            })}
+
+            {(Object.keys(junglevalue.season).length === 0 || !Object.values(junglevalue.season).includes(true)) ? <SInitialStatement>{t("video.jungle.selectTeam")}</SInitialStatement>
+              :
+              <SCheckboxAll
+                name="year"
+                value="all"
+                disabled={true}
+              >
+                {t("video.jungle.selectAll")}
+              </SCheckboxAll>
+            }
+            <SCheckboxWrapper>
+              {Object.keys(junglevalue.season).length !== 0 && selector.teamFilter?.map((team) => {
+                return (
+                  <Radio
+                    name="team"
+                    value={team}
+                    onChange={handleChange}
+                    checked={junglevalue.team.includes(team)}
+                  >
+                    {team}
+                  </Radio>
+                )
+              })}
+            </SCheckboxWrapper>
           </SFilterGroup>
         </SRow>
         {/* 패치 */}
         <SRow toggleFoldBtn={toggleFoldBtn}>
-          <STitle>패치</STitle>
+          <STitle>{t("video.jungle.patch")}</STitle>
           <SFilterGroup>
-            {junglevalue.team.length === 0 ? <SInitialStatement>패치 선택</SInitialStatement> :
+            {junglevalue.team.length === 0 ? <SInitialStatement>{t("video.jungle.selectPatch")}</SInitialStatement> :
               <SCheckboxAll
                 name="patch"
                 value="all"
                 onChange={handleChange}
                 checked={selector.patchFilter.length > 0 && selector.patchFilter.length === Object.keys(junglevalue.patch).length && !Object.values(junglevalue.patch).includes(false)}
               >
-                전체선택
+                {t("video.jungle.selectAll")}
               </SCheckboxAll>
             }
             <SCheckboxWrapper>
@@ -456,9 +450,9 @@ const JungleFilter = () => {
                 return (
                   <Checkbox
                     name="patch"
-                    value={patch}
+                    value="all"
                     onChange={handleChange}
-                    checked={junglevalue["patch"][patch]}
+                    checked={selector.patchFilter.length > 0 && selector.patchFilter.length === Object.keys(junglevalue.patch).length && !Object.values(junglevalue.patch).includes(false)}
                   >
                     {patch}
                   </Checkbox>
@@ -470,26 +464,42 @@ const JungleFilter = () => {
         {/* 선택된 필터 */}
         {junglevalue.year.length > 0 ?
           <SRow>
-            <STitle>선택된 필터</STitle>
+            <STitle>{t("video.jungle.selectedFilter")}</STitle>
             <SFilterGroup>
-              <SResetWrapper>
-                <SResetImg src="Images/ico_reset.png" alt="reset" />
-                <SResetTitle>초기화</SResetTitle>
+              <SResetWrapper onClick={() => {
+                dispatch(JungleInit())
+                if (toggleFoldBtn) {
+                  setToggleFoldBtn(!toggleFoldBtn)
+                }
+              }
+              }>
+                <SResetImg src="Images/ico_reset.svg" alt="reset" />
+                <SResetTitle>{t("video.jungle.reset")}</SResetTitle>
               </SResetWrapper>
-              {/* 선택된 필터 노출 */}
-              <SelectedJungleFilter filterData={junglevalue} />
+              <SCheckboxWrapper>
+
+                {/* 선택된 필터 노출 */}
+                <SelectedJungleFilter
+                  filterData={junglevalue}
+                  toggleFoldBtn={toggleFoldBtn}
+                  setToggleFoldBtn={setToggleFoldBtn}
+                />
+              </SCheckboxWrapper>
             </SFilterGroup>
 
           </SRow>
           : <></>
         }
       </SFilterContainer>
-      <FoldUpBtn onClick={handleFoldUp}>
-        {!toggleFoldBtn ?
-          <img src="Images/btn_fold_up.png" alt="foldup" /> :
-          <img src="Images/btn_fold_down.png" alt="folddown" />
-        }
-      </FoldUpBtn>
+      {junglevalue.year.length > 0 ?
+        <FoldUpBtn onClick={handleFoldUp}>
+          {!toggleFoldBtn ?
+            <img src="Images/btn_fold_up.png" alt="foldup" /> :
+            <img src="Images/btn_fold_down.png" alt="folddown" />
+          }
+        </FoldUpBtn>
+        : <></>
+      }
     </SContainer>
   );
 };
@@ -515,19 +525,21 @@ const SResetTitle = styled.span`
 ${typoStyle.contents}
 `;
 
-const SCheckboxAll = styled(Checkbox)``;
+const SCheckboxAll = styled(Checkbox)`
+  opacity: ${props => props.name === "year" || props.name === "team" ? 0.3 : 1};
 
-const SResetImg = styled.img``;
-
+`;
 
 const SInitialStatement = styled.div`
 opacity: 0.3;
+margin: 5px 0 0 5px;
 `;
 
 const SFilterGroup = styled.div`
   display: flex;
+  flex-direction: column;
   flex-flow: wrap;
-  align-items: center;
+
   width: 1004px;
   min-height: 44px;
   ${typoStyle.contents}
@@ -545,16 +557,29 @@ const SFilterGroup = styled.div`
   }
 `;
 
+
 const SResetWrapper = styled.div`
-    margin-right: 36px;`
+  margin-right: 36px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`
   ;
 
-const SCheckboxWrapper = styled.div``;
+const SResetImg = styled.img`
+    margin-right: 3px;
+`
+  ;
+
+const SCheckboxWrapper = styled.div`
+flex:1
+`;
 
 const FoldUpBtn = styled.button`
 position: absolute;
 bottom: 5px;
-right: -70px;
+right: -55px;
 `;
 
 export default JungleFilter;

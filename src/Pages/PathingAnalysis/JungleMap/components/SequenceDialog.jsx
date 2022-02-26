@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { useTranslation } from "react-i18next";
+
 // ui
 import EventLog from "../../../../Components/Ui/Dialog/EventLog";
 import Avatar from "../../../../Components/Ui/Avatar";
@@ -7,11 +9,12 @@ import Avatar from "../../../../Components/Ui/Avatar";
 import { scrollbarStyle, typoStyle } from "../../../../Styles/ui";
 
 const SequenceDialog = ({ ...props }) => {
+  const {t} = useTranslation();
   return (
     <SContainer {...props}>
       <SDialogContainer color={"red"}>
         <h4>
-          <em aria-hidden></em>RED사이드
+          <em aria-hidden></em>RED {t("video.jungle.side")}
         </h4>
         <SEventlogContainer>
           <EventLog index={1} time={"02:00"} color="red">
@@ -127,7 +130,7 @@ const SequenceDialog = ({ ...props }) => {
       </SDialogContainer>
       <SDialogContainer color={"blue"}>
         <h4>
-          <em aria-hidden></em>BLUE사이드
+          <em aria-hidden></em>BLUE {t("video.jungle.side")}
         </h4>
         <SEventlogContainer>
           <EventLog index={1} time={"02:00"} color="blue">

@@ -6,6 +6,8 @@ import styled from "@emotion/styled";
 import { API } from "../../../config"
 import axiosRequest from "../../../../lib/axios/axiosRequest";
 import { SetModalInfo } from "../../../../redux/modules/modalvalue";
+import {SetJunglePlayer, SetIsJungleMappingClicked, SetFilterData} from '../../../../redux/modules/junglevalue';
+import { useTranslation } from "react-i18next";
 
 
 // UI tool kit
@@ -33,95 +35,225 @@ import {
   borderRadiusStyle,
 } from "../../../../Styles/ui";
 import { isObjEqual } from "../../../../lib/isObjEqual";
-import { intlFormat } from "date-fns";
-
+import { initializedFalseValue } from "../../../../lib/initializedFalseValue";
 
 const JungleSideFilter = () => {
   const junglevalue = useSelector(state => state.JungleMapReducer);
   const user = useSelector((state) => state.UserReducer);
+  const lang = useSelector((state) => state.LocaleReducer);
+  const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [filterState, setFilterState] = useState({
-    step1: { all: false, gnar: false, teemo: false },
-    step2: { all: false, gnar: false, teemo: false },
-  });
+  const isInitialMount = useRef(true);
+  const isInitialMount2 = useRef(true);
+
+
+  const [radioState, setRadioState] = useState();
+  const radioRef = useRef([]);
 
   const [playerInfo, setPlayerInfo] = useState();
   const [champInfo, setChampInfo] = useState();
   const [oppChampInfo, setOppChampInfo] = useState();
   const [gameList, setGameList] = useState();
 
-
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
-
     // 전체선택
     if (value === "all") {
-      setFilterState((prev) => {
-        const newData = {
-          ...prev,
-        };
-
-        for (let key in newData[name]) {
-          newData[name][key] = checked;
-        }
-        return newData;
-      });
+      const datas = { ...junglevalue[name] }
+        const list = Object.keys(junglevalue[name]);
+        const a = list.map((data) => {
+          return datas[data] = checked;
+        })
+        dispatch(SetFilterData({ ...junglevalue, [name]: datas }));
     }
     // 개별선택
     else {
-      setFilterState((prev) => {
-        const newData = { ...prev };
-        newData[name] = { ...newData[name], [value]: checked };
+      dispatch(SetFilterData({
+        ...junglevalue,
+        [name]: { ...junglevalue[name], [value]: checked },
+      }));
 
-        if (isObjEqual(newData[name])) {
-          newData[name].all = checked;
-        } else {
-          newData[name].all = false;
-        }
-        return newData;
-      });
+      // setFilterState((prev) => {
+      //   const newData = { ...prev };
+      //   newData[name] = { ...newData[name], [value]: checked };
+      //   // if (isObjEqual(newData[name])) {
+      //   //   newData[name].all = checked;
+      //   // } else {
+      //   //   newData[name].all = false;
+      //   // }
+      //   return newData;
+      // });
     }
   };
   // 라디오버튼 체인지 관련로직
   const handleRadio = (e) => {
     const { value, name } = e.target;
-    setRadioState(value);
+    // setRadioState(value);
+    dispatch(SetFilterData({...junglevalue, [name]: [value] }));
   };
   // 상위 이벤트
   const handleClickGameItem = (num) => {
     radioRef.current[num].click();
   };
-  const [radioState, setRadioState] = useState("1경기");
-  const radioRef = useRef([]);
+  
 
   const leagueArr =  Object.keys(junglevalue.league).filter(key => junglevalue.league[key] === true)
   const seasonArr =  Object.keys(junglevalue.season).filter(key => junglevalue.season[key] === true)
   const patchArr =  Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key] === true)
 
+
   useEffect(() => {
-    console.log(junglevalue)
-  }, [])
-  
-  // STEP 01 챔피언 선택 api 호출
+    if(junglevalue.player === "") {
+      return;
+    }
+    GetChampion();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[junglevalue.player])
+
+
+  useEffect(() => {
+    if(junglevalue.champion &&Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === true).length === 0
+   ) {
+      return; 
+    } 
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+    GetOppChampion();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [junglevalue.champion])
+
+
+  useEffect(() => {
+    if(junglevalue.oppchampion && Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).length === 0) {
+      return; 
+    } 
+    if (isInitialMount2.current) {
+      isInitialMount2.current = false;
+    } else {
+    GetGameList();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [junglevalue.oppchampion])
+
+
+
+  // STEP 01 선수 선택 api 호출
   const GetPlayerInfo = () => {
-    console.log("finally got playeer info")
-    const url = `${API}/jungle/userinfo`;
+    const url = `${API}/lolapi/jungle/userinfo`;
     const params = {
       league: leagueArr,
       year: junglevalue.year,
       season: seasonArr,
       patch: patchArr,
-      team: junglevalue.team,
+      team: junglevalue.team[0],
       token: user.token,
       id: user.id,
     };
     axiosRequest(undefined, url, params, function(e) {
-      // setPlayerInfo(e);
-      console.log(e);
+      setPlayerInfo(e);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
     })
   }
+
+  // STEP 02 챔피언 선택 api 호출
+  const GetChampion = () => {
+    const url = `${API}/lolapi/jungle/player-champions`;
+    const params = {
+      league: leagueArr,
+      year: junglevalue.year,
+      season: seasonArr,
+      patch: patchArr,
+      team: junglevalue.team[0],
+      player: junglevalue.player,
+      token: user.token,
+      id: user.id,
+    };
+    axiosRequest(undefined, url, params, function(e) {
+      setChampInfo(e);
+      // console.log(e.data);
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+    })
+  }
+
+  // STEP 03 상대 챔피언 선택 api 호출
+  const GetOppChampion = () => {
+    const selectedChamps = junglevalue.champion && Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === true);
+    const url = `${API}/lolapi/jungle/opp-champions`;
+    const params = {
+      league: leagueArr,
+      year: junglevalue.year,
+      season: seasonArr,
+      patch: patchArr,
+      team: junglevalue.team[0],
+      player: junglevalue.player,
+      champion: selectedChamps,
+      token: user.token,
+      id: user.id,
+    };
+    axiosRequest(undefined, url, params, function(e) {
+      setOppChampInfo(e)
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+    })
+  }
+
+  // STEP 04 동선 확인할 경기 리스트 api 호출
+  const GetGameList = () => {
+    const selectedChamps = junglevalue.champion && Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === true);
+    const selectedOppChamps = junglevalue.oppchampion && Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true);
+    const url = `${API}/lolapi/jungle/object-game`;
+    const params = {
+      league: leagueArr,
+      year: junglevalue.year,
+      season: seasonArr,
+      patch: patchArr,
+      team: junglevalue.team[0],
+      player: junglevalue.player,
+      champion: selectedChamps,
+      oppchampion: selectedOppChamps,
+      side:"all",
+      token: user.token,
+      id: user.id,
+    };
+    axiosRequest(undefined, url, params, function(e) {
+      setGameList(e.game)
+    }, function (objStore) {
+      dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+    })
+  }
+
+
+
+
+  // champInfo 있을 시 모든 value를 객체 및 false처리
+useEffect(() => {
+  let newArr = [];
+  for(let key in champInfo) {
+    newArr.push(champInfo[key].champ);      
+  }
+  const result = initializedFalseValue(newArr);
+  dispatch(SetFilterData(({
+    ...junglevalue,
+    champion: result,
+  })))
+}, [champInfo])
+
+ // oppChampInfo 있을 시 모든 value를 객체 밒 false처리
+useEffect(() => {
+let newArr = [];
+for(let key in oppChampInfo) {
+  newArr.push(oppChampInfo[key].champs);      
+}
+const result = initializedFalseValue(newArr);
+dispatch(SetFilterData(({
+  ...junglevalue,
+  oppchampion: result,
+})))
+}, [oppChampInfo])
 
 
   return (
@@ -129,7 +261,7 @@ const JungleSideFilter = () => {
       <SFilterContainer>
         {/* step1 - select 박스 */}
         <div css={{ marginBottom: 30 }}>
-          <Accordion>
+          <Accordion act={Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key] === true).length > 0}> 
             <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {
             }}>
               <SStepContainer>
@@ -138,30 +270,33 @@ const JungleSideFilter = () => {
                   <Avatar
                     css={{ marginRight: 3 }}
                     size={20}
-                    src="images/LCK_CL_LOGO/DK.C.png"
-                    alt="담원기아"
+                    src={`Images/TeamLogo/${junglevalue.team}.png`}
+                    alt="TeamLogo"
                   />
-                  <span>DK 선수선택</span>
+                  <span>{junglevalue.team} {t("video.jungle.selectPlayer")}</span>
                 </STeam>
               </SStepContainer>
             </AccordionSummary>
             <AccordionDetails>
               <DropdownContainer
-                label="champion"
+                label="player"
                 onChange={(e) => {
                   console.log(e);
                 }}
               >
                 <DropdownLabel css={[dropdownStyle.select_head]} onClick={() => GetPlayerInfo()}>
-                  챔피언선택
+                  {`${junglevalue.player && junglevalue.player !== "" ? junglevalue.player : t("video.jungle.selectPlayer")}`}
                 </DropdownLabel>
                 <DropdownList>
-                  {playerInfo && playerInfo?.map((info) => {
+                  {playerInfo?.map((info,idx) => {
                     return (
                       <DropdownItem
+                      key={info.name+idx}
                       css={[dropdownStyle.select_item]}
                       value={info.name}
+                      onClick ={() => dispatch(SetJunglePlayer(info.name))}
                     >
+                      {/* {`${lang === "ko" ? info.nativeName : info.name}`} */}
                       {info.name}
                     </DropdownItem>
                     )
@@ -174,12 +309,12 @@ const JungleSideFilter = () => {
 
         {/* step2 - 챔피언 체크박스 */}
         <div css={{ marginBottom: 30 }}>
-          <Accordion>
+          <Accordion act={junglevalue.player && junglevalue.player.length}>
             <AccordionSummary css={{ marginBottom: 13 }} onClick={() => {}}>
               <SStepContainer>
                 <SLabel>STEP 02</SLabel>
                 <STeam>
-                  <span>플레이 한 챔피언 선택</span>
+                  <span>{t("video.jungle.champLabel")}</span>
                 </STeam>
               </SStepContainer>
             </AccordionSummary>
@@ -188,68 +323,49 @@ const JungleSideFilter = () => {
                 <SHead>
                   <div css={Col1}>
                     <Checkbox
-                      name="step1"
+                      name="champion"
                       value="all"
                       onChange={handleChange}
-                      checked={filterState.step1.all}
+                      checked={junglevalue.champion && Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === false).length === 0}
                     />
                   </div>
-                  <div css={Col2}>챔피언(경기수)</div>
-                  <div css={[Col3]}>진영별</div>
-                  <div css={[Col3]}>경기수</div>
+                  <div css={Col2}>{`${t("video.jungle.champTitle")}(${t("video.jungle.numOfMatches")})`}</div>
+                  <div css={[Col3]}>{t("video.jungle.numOfMatches")}</div>
+                  <div css={[Col3]}>{t("video.jungle.matchesBySide")}</div>
                 </SHead>
 
                 <SBody>
-                  <SRow isActive={filterState.step1["gnar"]}>
-                    {/* 체크 */}
-                    <div css={Col1}>
-                      <Checkbox
-                        name="step1"
-                        value="gnar"
-                        onChange={handleChange}
-                        checked={filterState.step1.gnar}
-                      />
-                    </div>
-
-                    {/* 본문 */}
-                    <SChamp css={Col2}>
-                      <Avatar
-                        css={{ marginRight: 5 }}
-                        size={20}
-                        src="images/champion/teemo.png"
-                        alt="티모"
-                      />
-                      <span>나르 (48)</span>
-                    </SChamp>
-
-                    {/* 경기수 */}
-                    <SRed>24</SRed>
-                    <SBlue>24</SBlue>
-                  </SRow>
-
-                  <SRow isActive={filterState.step1["teemo"]}>
-                    <div css={Col1}>
-                      <Checkbox
-                        name="step1"
-                        value="teemo"
-                        onChange={handleChange}
-                        checked={filterState.step1.teemo}
-                      />
-                    </div>
-
-                    <SChamp css={Col2}>
-                      <Avatar
-                        css={{ marginRight: 5 }}
-                        size={20}
-                        src="images/champion/teemo.png"
-                        alt="티모"
-                      />
-                      <span>나르 (48)</span>
-                    </SChamp>
-
-                    <SRed>24</SRed>
-                    <SBlue>24</SBlue>
-                  </SRow>
+                  {champInfo?.map((champ,idx) => {
+                    return (
+                      <SRow isActive ={junglevalue.champion &&Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === true).includes(champ.champ)}>
+                      {/* 체크 */}
+                      <div css={Col1}>
+                        <Checkbox
+                          name="champion"
+                          value={champ.champ}
+                          onChange={handleChange}
+                          checked={junglevalue.champion &&Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === true).includes(champ.champ)}
+                        />
+                      </div>
+  
+                      {/* 본문 */}
+                      <SChamp css={Col2}>
+                        <Avatar
+                          css={{ marginRight: 5 }}
+                          size={20}
+                          src={`Images/champion/${champ.champ}.png`}
+                          alt="champLogo"
+                        />
+                        <span>{`${champ.champ} (${champ.blue_champ + champ.red_champ})`}</span>
+                      </SChamp>
+  
+                      {/* 경기수 */}
+                      <SRed>{champ.red_champ}</SRed>
+                      <SBlue>{champ.blue_champ}</SBlue>
+                    </SRow>
+  
+                    )
+                  })}
                 </SBody>
               </STable>
             </AccordionDetails>
@@ -258,12 +374,12 @@ const JungleSideFilter = () => {
 
         {/* stpe3 - 상대팀 챔피언 체크박스 */}
         <div css={{ marginBottom: 30 }}>
-          <Accordion>
+          <Accordion act={junglevalue.champion && Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === true).length}>
             <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
               <SStepContainer>
-                <SLabel>STEP 02</SLabel>
+                <SLabel>STEP 03</SLabel>
                 <STeam>
-                  <span>플레이 한 챔피언 선택</span>
+                  <span>{t("video.jungle.oppChampLabel")}</span>
                 </STeam>
               </SStepContainer>
             </AccordionSummary>
@@ -272,67 +388,47 @@ const JungleSideFilter = () => {
                 <SHead>
                   <div css={Col1}>
                     <Checkbox
-                      name="step2"
+                      name="oppchampion"
                       value="all"
                       onChange={handleChange}
-                      checked={filterState.step2.all}
+                      checked={junglevalue.oppchampion && Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === false).length === 0}
                     />
                   </div>
-                  <div css={Col2}>챔피언(경기수)</div>
-                  <div css={[Col3]}>진영별</div>
-                  <div css={[Col3]}>경기수</div>
+                  <div css={Col2}>{`${t("video.jungle.champTitle")}(${t("video.jungle.numOfMatches")})`}</div>
+                  <div css={[Col3]}>{t("video.jungle.numOfMatches")}</div>
+                  <div css={[Col3]}>{t("video.jungle.matchesBySide")}</div>
                 </SHead>
 
                 <SBody>
-                  <SRow isActive={filterState.step2["gnar"]}>
+                  {oppChampInfo?.map((oppChamp,idx) => {
+                    return (
+                      <SRow isActive ={junglevalue.oppchampion && Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).includes(oppChamp.champs)}>
                     {/* 체크 */}
                     <div css={Col1}>
                       <Checkbox
-                        name="step2"
-                        value="gnar"
+                        name="oppchampion"
+                        value={oppChamp.champs}
                         onChange={handleChange}
-                        checked={filterState.step2.gnar}
-                      />
+                        checked={junglevalue.oppchampion && Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).includes(oppChamp.champs)}
+                        />
                     </div>
                     {/* 본문 */}
                     <SChamp css={Col2}>
                       <Avatar
                         css={{ marginRight: 5 }}
                         size={20}
-                        src="images/champion/teemo.png"
-                        alt="티모"
+                        src={`Images/champion/${oppChamp.champs}.png`}
+                        alt="oppChampLogo"
                       />
-                      <span>나르 (48)</span>
+                        <span>{`${oppChamp.champs} (${oppChamp.blue_champ + oppChamp.red_champ})`}</span>
                     </SChamp>
 
-                    {/* 경기수 */}
-                    <SRed>24</SRed>
-                    <SBlue>24</SBlue>
+              {/* 경기수 */}
+                    <SRed>{oppChamp.red_champ}</SRed>
+                    <SBlue>{oppChamp.blue_champ}</SBlue>
                   </SRow>
-
-                  <SRow isActive={filterState.step2["teemo"]}>
-                    <div css={Col1}>
-                      <Checkbox
-                        name="step2"
-                        value="teemo"
-                        onChange={handleChange}
-                        checked={filterState.step2.teemo}
-                      />
-                    </div>
-
-                    <SChamp css={Col2}>
-                      <Avatar
-                        css={{ marginRight: 5 }}
-                        size={20}
-                        src="images/champion/teemo.png"
-                        alt="티모"
-                      />
-                      <span>트위스티드 페이트 같이 이름이 길면 (7)</span>
-                    </SChamp>
-
-                    <SRed>24</SRed>
-                    <SBlue>24</SBlue>
-                  </SRow>
+                    )
+                  })}
                 </SBody>
               </STable>
             </AccordionDetails>
@@ -341,12 +437,12 @@ const JungleSideFilter = () => {
 
         {/* step4 - 경기체크 */}
         <div>
-          <Accordion css={{ marginBottom: 30 }}>
+          <Accordion  act={junglevalue.oppchampion && Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).length}>
             <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
               <SStepContainer>
-                <SLabel>STEP 03</SLabel>
+                <SLabel>STEP 04</SLabel>
                 <STeam>
-                  <span>동선을 확인할 경기 선택</span>
+                  <span>{t("video.jungle.selectGame")}</span>
                 </STeam>
               </SStepContainer>
             </AccordionSummary>
@@ -354,20 +450,24 @@ const JungleSideFilter = () => {
             <AccordionDetails>
               <SGameList>
                 {/* 경기 정보 item */}
-                {Array.from({ length: 5 }, (_, i) => i + 1).map((item) => (
+                {gameList?.map((game, idx) => (
                   <SGameItem
-                    isActive={radioState === `${item}경기`}
-                    key={`경기정보${item}`}
-                    onClick={() => handleClickGameItem(item)}
+                    // isActive={radioState === `${idx+1}경기`}
+                    isActive={junglevalue.gameid == game.gameid}
+                    key={`경기정보${idx+1}`}
+                    onClick={() => handleClickGameItem(idx+1)}
                   >
                     {/* 라디오버튼 */}
                     <SRadioContainer>
                       <Radio
-                        name="game"
-                        value={`${item}경기`}
-                        ref={(el) => (radioRef.current[item] = el)}
+                        name="gameid"
+                        // value={`${idx+1}경기`}
+                        value={game.gameid}
+                        ref={(el) => (radioRef.current[idx+1] = el)}
                         onChange={handleRadio}
-                        checked={radioState === `${item}경기`}
+                        // checked={radioState === `${idx+1}경기`}
+                        checked={junglevalue.gameid == game.gameid}
+
                       />
                     </SRadioContainer>
                     {/* 경기정보 */}
@@ -377,93 +477,53 @@ const JungleSideFilter = () => {
                         <STeam>
                           <Avatar
                             size={24}
-                            src={"images/LCK_CL_LOGO/DK.C.png"}
+                            src={`Images/TeamLogo/${game.team}.png`}
                             color={"blue"}
-                            alt={"티원"}
+                            alt="teamLogo"
                           />
                           <Versus spacing={6} />
                           <Avatar
                             size={24}
-                            src={"images/LCK_CL_LOGO/T1s.C.png"}
+                            src={`Images/TeamLogo/${game.oppteam}.png`}
                             color={"red"}
-                            alt={"티원"}
+                            alt="oppTeamLogo"
                           />
                         </STeam>
                         <span>
-                          Win
-                          <em>2021-03-19</em>
+                          {game.win.toUpperCase()}
+                          <em>{game.date.slice(0,10)}</em>
                         </span>
                       </SInfo>
-
                       {/* 경기 이름 */}
-                      <SName>LCK 1R 1SET 같이 이름이 길면 12312313123</SName>
-
+                      <SName>{`${game.league.toUpperCase()} ${game.set} SET`}</SName>
                       <STeamSlideContainer>
                         <STeamSide>
-                          <Avatar
-                            src="images/champion/nunu.png"
-                            alt="누누"
-                            color={"blue"}
-                            size={20}
-                          />
-                          <Avatar
-                            src="images/champion/nunu.png"
-                            alt="누누"
-                            color={"blue"}
-                            size={20}
-                          />
-                          <Avatar
-                            src="images/champion/nunu.png"
-                            alt="누누"
-                            color={"blue"}
-                            size={20}
-                          />
-                          <Avatar
-                            src="images/champion/nunu.png"
-                            alt="누누"
-                            color={"blue"}
-                            size={20}
-                          />
-                          <Avatar
-                            src="images/champion/nunu.png"
-                            alt="누누"
-                            color={"blue"}
-                            size={20}
-                          />
+                          {game?.champion?.map((champ,idx) => {
+                            return (
+                              <Avatar
+                              key={champ+idx}
+                              src={`Images/champion/${champ}.png`}
+                              alt="champion"
+                              color={"blue"}
+                              size={20}
+                            />
+                            )
+                          })}
                         </STeamSide>
                         <Versus spacing={8} />
                         <STeamSide>
-                          <Avatar
-                            color={"red"}
-                            src="images/champion/nunu.png"
-                            alt="누누"
-                            size={20}
-                          />
-                          <Avatar
-                            color={"red"}
-                            src="images/champion/nunu.png"
-                            alt="누누"
-                            size={20}
-                          />
-                          <Avatar
-                            color={"red"}
-                            src="images/champion/nunu.png"
-                            alt="누누"
-                            size={20}
-                          />
-                          <Avatar
-                            color={"red"}
-                            src="images/champion/nunu.png"
-                            alt="누누"
-                            size={20}
-                          />
-                          <Avatar
-                            color={"red"}
-                            src="images/champion/nunu.png"
-                            alt="누누"
-                            size={20}
-                          />
-                        </STeamSide>
+                          {game?.oppchampion?.map((oppchamp, idx) => {
+                            return (
+                              <Avatar
+                              key={oppchamp+idx}
+                              color={"red"}
+                              src={`Images/champion/${oppchamp}.png`}
+                              alt="oppChampion"
+                              size={20}
+                            />
+                            )
+                          })}                        
+                          </STeamSide>
                       </STeamSlideContainer>
                     </SInfoContainer>
                   </SGameItem>
@@ -476,6 +536,7 @@ const JungleSideFilter = () => {
 
       <SButtonContainer>
         <Button
+          disabled={junglevalue.oppChampion && Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).length === 0}
           css={[
             buttonStyle.color.main,
             buttonStyle.size.full,
@@ -483,8 +544,11 @@ const JungleSideFilter = () => {
             typoStyle.body,
             borderRadiusStyle.full,
           ]}
+          onClick={() => {
+            dispatch(SetIsJungleMappingClicked(true));
+          }}
         >
-          정글동선 확인하기
+          {t("video.jungle.confirm")}
         </Button>
       </SButtonContainer>
     </SWrapper>
@@ -494,9 +558,14 @@ const JungleSideFilter = () => {
 // 레이아웃
 const SWrapper = styled.div`
   display: flex;
-  height: 100%;
+  /* height: 100%; */
+  /* min-height: 427px; */
   flex-direction: column;
   justify-content: space-between;
+  background-color: ${({ theme }) => theme.colors.bg_light};
+  border-radius: 20px;
+
+
 `;
 
 const SFilterContainer = styled.div`
@@ -565,6 +634,7 @@ const SGameList = styled.div`
 const SGameItem = styled.div`
   display: flex;
   align-items: center;
+  margin: 10px 0;
   padding: 16px 8px;
   border-radius: 20px;
   cursor: pointer;
@@ -596,7 +666,7 @@ const SInfo = styled.div`
 
 const SName = styled.div`
   width: 100%;
-  margin-bottom: 6px;
+  margin: 5px 0 ;
   ${typoStyle.noWrap}
 `;
 const STeamSlideContainer = styled.div`

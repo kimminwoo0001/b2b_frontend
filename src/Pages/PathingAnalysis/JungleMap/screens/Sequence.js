@@ -6,6 +6,7 @@ import PositionCheckList from "../../../../Components/Ui/PositionCheckList";
 import JungleFilter from "../components/JungleFilter";
 import JungleSideFilter from "../components/JungleSideFilter";
 import SequenceDialog from "../components/SequenceDialog";
+import Map from "../components/Map";
 import * as S from "../components/styled/StyledJungleLayout";
 
 const Sequence = () => {
@@ -16,8 +17,8 @@ const Sequence = () => {
       <S.FilterContainer>
         <JungleFilter />
       </S.FilterContainer>
-      {/* {Object.keys(junglevalue.patch).length !== 0 && Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key] === true).length > 0 && } */}
       {/* 사이드 필터와 맵 비디오  */}
+      {Object.keys(junglevalue.patch).length > 0 && Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key] === true).length > 0 && 
       <S.FlexContainer>
         {/* 사이드 필터 */}
         <S.Sidebar>
@@ -29,6 +30,7 @@ const Sequence = () => {
           {/* 맵 비디오 */}
           <S.VideoContainer>
             <PositionCheckList onChange={(position) => console.log(position)} />
+            <Map />
           </S.VideoContainer>
           {/* 이벤트 다이얼로그 */}
           <S.DialogContainer>
@@ -36,6 +38,7 @@ const Sequence = () => {
           </S.DialogContainer>
         </S.Container>
       </S.FlexContainer>
+}
     </S.SequenceContainer>
   );
 };

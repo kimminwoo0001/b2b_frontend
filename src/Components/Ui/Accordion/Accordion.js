@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMemo } from "react";
 
 import { createContext } from "react";
@@ -9,8 +9,9 @@ export const AccordionContext = createContext({
   setIsActive: () => {},
 });
 
-const Accordion = ({ children, ...props }) => {
-  const [isActive, setIsActive] = useState(true);
+const Accordion = ({ children, act = false, ...props }) => {
+  const [isActive, setIsActive] = useState(act);
+
   const contextValue = useMemo(
     () => ({
       setIsActive,
@@ -18,6 +19,10 @@ const Accordion = ({ children, ...props }) => {
     }),
     [setIsActive, isActive]
   );
+
+    useEffect(() => {
+      setIsActive(act);
+    },[act])
 
   return (
     <div {...props}>

@@ -15,7 +15,6 @@ export const Sidebar = styled.aside`
   width: 376px;
   border-radius: 20px;
   margin-right: 20px;
-  background-color: ${({ theme }) => theme.colors.bg_light};
 `;
 
 // 메인 컨텐츠
@@ -28,14 +27,14 @@ export const SequenceContainer = styled.section`
 `;
 
 export const FilterContainer = styled.div`
-  height: 348px;
+  /* height: 348px; */
   margin-bottom: 30px;
-  ${testStyle.border3}
+  /* ${testStyle.border3} */
 `;
 
 export const SequenceContents = styled.section`
   width: 700px;
-  height: 1115px;
+  /* height: 1115px; */
   ${testStyle.border5}
 `;
 
@@ -55,5 +54,5 @@ export const CompareContainer = styled.div`
 `;
 
 export const CompareTableContainer = styled.div``;
-export const CompareTable = styled.dic``;
+export const CompareTable = styled.div``;
 export const TextTableContainer = styled.div``;
