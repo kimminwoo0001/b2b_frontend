@@ -41,8 +41,10 @@ const MTContent = ({ selectedDay, setSelectedDay, playerInfo, myTeamName }) => {
               return (
                 <MTPlayerList
                   id={info.player}
-                  isLike={info.bookmark}
-                  teamLine={`${myTeamName} ${getPositon(info.role)}`}
+                  bookmark={info.bookmark}
+                  teamLine={`${myTeamName} ${t(
+                    `position.${getPositon(info.position)}`
+                  )}`}
                   nickName={info.player}
                   name={""}
                   playChampion={info.playChampion}

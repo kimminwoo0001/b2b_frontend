@@ -37,8 +37,8 @@ const MyTeam = () => {
           },
           { logo: `Images/TeamLogo/${e.team}.png` },
           { text: e.team },
-          { text: "" },
-          { text: e.playerCount + lang === "ko" ? "명" : "" },
+          // { text: "" },
+          { text: e.playerCount + (lang === "ko" ? "명" : "") },
         ]);
         setPlayerInfo(e.players);
         setMyTeamName(e.team);
