@@ -32,6 +32,7 @@ const JungleMap = () => {
               key={tab.title}
               className={index === currentIndex ? "is-active" : ""}
               onClick={() => {
+                if (currentIndex === index) return;
                 setIndex(index);
                 dispatch(JungleInit());
                 dispatch(SelectorInitailizeState());

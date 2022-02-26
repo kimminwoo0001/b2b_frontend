@@ -19,13 +19,12 @@ const SelectedJungleFilter = ({ setToggle }) => {
   const patch = useSelector((state) => state.JungleMapReducer.patch);
   const dispatch = useDispatch();
 
-  console.log("칩 렌더");
-
   return (
     <SelectedArea>
-      {year.map((year) => {
+      {year.map((year, _) => {
         return (
           <SelectedData
+            key={"chip" + year + _}
             data={year}
             deleteBtn={() => {
               dispatch(JungleInit());
@@ -34,9 +33,10 @@ const SelectedJungleFilter = ({ setToggle }) => {
           />
         );
       })}
-      {getTrueValueList(league).map((league) => {
+      {getTrueValueList(league).map((league, _) => {
         return (
           <SelectedData
+            key={"chip" + league + _}
             data={league}
             deleteBtn={() => {
               dispatch(ResetJungleLeague(league));
@@ -45,9 +45,10 @@ const SelectedJungleFilter = ({ setToggle }) => {
           />
         );
       })}
-      {getTrueValueList(season).map((season) => {
+      {getTrueValueList(season).map((season, _) => {
         return (
           <SelectedData
+            key={"chip" + season + _}
             data={season}
             deleteBtn={() => {
               dispatch(ResetJungleSeason(season));
@@ -57,9 +58,10 @@ const SelectedJungleFilter = ({ setToggle }) => {
         );
       })}
       {team.length > 0 &&
-        team.map((team) => {
+        team.map((team, _) => {
           return (
             <SelectedData
+              key={"chip" + team + _}
               data={team}
               deleteBtn={() => {
                 dispatch(ResetJungleTeam());
@@ -69,9 +71,10 @@ const SelectedJungleFilter = ({ setToggle }) => {
           );
         })}
       {team.length > 0 &&
-        getTrueValueList(patch).map((patch) => {
+        getTrueValueList(patch).map((patch, _) => {
           return (
             <SelectedData
+              key={"chip" + patch + _}
               data={patch}
               deleteBtn={() => {
                 dispatch(ResetJunglePatch(patch));

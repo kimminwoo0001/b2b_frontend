@@ -17,9 +17,8 @@ import JungleMap from "./JungleMap/JungleMap";
 import { useTranslation } from "react-i18next";
 
 function VideoTabs() {
-
   const filters = useSelector((state) => state.FilterReducer);
-  const [team, setTeam] = useState("")
+  const [team, setTeam] = useState("");
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -29,7 +28,7 @@ function VideoTabs() {
       dispatch(Reset_MapTab());
       dispatch(Reset_Object_MapTab());
     }
-  }, [filters.team])
+  }, [filters.team]);
 
   const VideoTab = {
     0: <WardMapping />,
@@ -47,10 +46,6 @@ function VideoTabs() {
             onClick={() => {
               dispatch(HandleTab(0));
               dispatch(Reset_MapTab());
-              if (filters.tab === 4) {
-                dispatch(ResetWardPathingTab());
-                dispatch(SelectorInitailizeState());
-              }
             }}
             changeColor={filters.tab === 0}
           >
@@ -61,13 +56,8 @@ function VideoTabs() {
           <TabContent
             onClick={() => {
               dispatch(HandleTab(1));
-              dispatch(Reset_MapTab()); 
+              dispatch(Reset_MapTab());
               dispatch(Reset_Object_MapTab());
-              if (filters.tab === 4) {
-              dispatch(ResetWardPathingTab());
-              dispatch(SelectorInitailizeState());
-
-              }
             }}
             changeColor={filters.tab === 1}
           >
@@ -96,10 +86,6 @@ function VideoTabs() {
             onClick={() => {
               dispatch(HandleTab(3));
               dispatch(Reset_MapTab());
-              if (filters.tab === 4) {
-              dispatch(ResetWardPathingTab());
-              dispatch(SelectorInitailizeState());
-              }
             }}
             changeColor={filters.tab === 3}
           >
@@ -112,14 +98,9 @@ function VideoTabs() {
             onClick={() => {
               dispatch(HandleTab(4));
               dispatch(Reset_MapTab());
-              dispatch(SelectorInitailizeState());
-              if (filters.tab === 4) {
-              dispatch(ResetWardPathingTab());
-              dispatch(SelectorInitailizeState());
-              }
+              // dispatch(SelectorInitailizeState());
               // dispatch(InitializeGameState());
               // dispatch(InitailizeState());
-
             }}
             changeColor={filters.tab === 4}
           >

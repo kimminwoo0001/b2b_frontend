@@ -1,7 +1,7 @@
 /**
- * @desc key가 string이고 value가 boolean인 객체를 받아 true인 key만 리턴한다
- * @param {{[key]:string : boolean}} obj
- * @returns {string[]} trueList
+ * @desc boolean 값을 가지는 객체를 돌면서 true인 key값을 배열로 리턴하는 함수
+ * @param {{string : boolean}} obj [key: string] value: boolean 인 객체
+ * @returns {string[]} 객체의 value가 true인 key값의 배열
  */
 export const getTrueValueList = (obj) => {
   if (typeof obj !== "object") return;

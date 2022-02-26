@@ -6,8 +6,10 @@ export const SET_CHAMP = "junglevalue/SET_CHAMP";
 export const SET_OPP_CHAMP = "junglevalue/SET_OPP_CHAMP";
 
 /** 리팩토링 추가 action */
+export const SET_JUNGLE_YEAR = "junglevalue/SET_JUNGLE_YEAR";
 export const SET_JUNGLE_LEAGUE = "junglevalue/SET_LEAGUE";
 export const SET_JUNGLE_SEASON = "junglevalue/SET_SEASON";
+export const SET_JUNGLE_TEAM = "junglevalue/SET_TEAM";
 export const SET_JUNGLE_PATCH = "junglevalue/SET_PATCH";
 
 export const RESET_JUNGLE_LEAGUE = "junglevalue/RESET_LEAGUE";
@@ -24,12 +26,20 @@ export const JungleInit = () => {
   };
 };
 // set
+export const SetJunlgeYear = (payload) => ({
+  type: SET_JUNGLE_YEAR,
+  payload,
+});
 export const SetJungleLeague = (payload) => ({
   type: SET_JUNGLE_LEAGUE,
   payload,
 });
 export const SetJungleSeason = (payload) => ({
   type: SET_JUNGLE_SEASON,
+  payload,
+});
+export const SetJungleTeam = (payload) => ({
+  type: SET_JUNGLE_TEAM,
   payload,
 });
 export const SetJunglePatch = (payload) => ({
@@ -138,7 +148,12 @@ export default function JungleMapReducer(state = initialState, action) {
         player: action.payload,
       };
 
-    // set
+    // set - 경기 리스트 받아오는 정보
+    case SET_JUNGLE_YEAR:
+      return {
+        ...state,
+        year: [...action.payload],
+      };
     case SET_JUNGLE_LEAGUE:
       return {
         ...state,
@@ -149,17 +164,24 @@ export default function JungleMapReducer(state = initialState, action) {
         ...state,
         season: { ...action.payload },
       };
+    case SET_JUNGLE_TEAM:
+      return {
+        ...state,
+        team: [...action.payload],
+      };
     case SET_JUNGLE_PATCH:
       return {
         ...state,
         patch: { ...action.payload },
       };
+
+    // set - 개별 경기정보 선수데이터
     case SET_CHAMP:
       return action.payload;
     case SET_OPP_CHAMP:
       return action.payload;
 
-    // reset
+    // reset - 경기리스트 관련
     case RESET_JUNGLE_LEAGUE:
       return {
         ...state,
@@ -176,13 +198,11 @@ export default function JungleMapReducer(state = initialState, action) {
         team: [],
         patch: {},
       };
-
     case RESET_JUNGLE_TEAM:
       return {
         ...state,
         team: [],
       };
-
     case RESET_JUNGLE_PATCH:
       return {
         ...state,
@@ -194,12 +214,12 @@ export default function JungleMapReducer(state = initialState, action) {
         ...state,
         isClicked: action.payload,
       };
-
     case SET_IS_JUNGLE_MAPPING_CLICKED:
       return {
         ...state,
         isMappingClicked: action.payload,
       };
+
     default:
       return state;
   }
