@@ -166,8 +166,10 @@ const MTPlayerHeader = ({
                 return (
                   <S.OpenList key={"header" + i}>
                     {/* 아이디 */}
-                    <div className="table-col2" css={typoStyle.noWrap}>
-                      <span>{data.summonerName ?? ""}</span>
+                    <div className="table-col2">
+                      <span css={typoStyle.noWrap}>
+                        {data.summonerName ?? ""}
+                      </span>
                     </div>
                     {/* 티어 */}
                     <div className="table-col3">
@@ -227,8 +229,8 @@ const MTPlayerHeader = ({
         ) : (
           // 클로즈 ui
           <S.CloseList>
-            <div className="table-col2" css={typoStyle.noWrap}>
-              <span>{closeData.name}</span>
+            <div className="table-col2">
+              <span css={typoStyle.noWrap}>{closeData.name}</span>
             </div>
             {/* 티어 */}
             <div className="table-col3">
