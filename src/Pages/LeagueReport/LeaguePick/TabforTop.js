@@ -796,7 +796,7 @@ const MatchWrapper = styled.div`
   position: relative;
 `;
 
-const Matchnavigate = styled.div`
+const MatchHistory = styled.div`
   width: 538px;
   height: 551px;
   margin-right: 22px;

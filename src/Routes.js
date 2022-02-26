@@ -38,14 +38,9 @@ function Routor() {
   //const token = sessionStorage.getItem("token");
   const user = useSelector((state) => state.UserReducer);
 
-  const PrivateRoute = ({ children, ...rest }) => (
-    <Route
-      {...rest}
-      render={(props) =>
-        user.token ? children : <Navigate to="/login" />
-      }
-    />
-  );
+  const PrivateRoute = ({ children }) => {
+    return user.token ? children : <Navigate to="/login" />
+  }
 
   if (user.id && user.name && user.token) {
     ChannelService.boot({
