@@ -13,7 +13,6 @@ const MTHeader = ({ headerInfo }) => {
     t("soloRank.myTeam.label.leagueInfo"),
     t("soloRank.myTeam.label.teamLogo"),
     t("soloRank.myTeam.label.teamAbbr"),
-    t("soloRank.myTeam.label.teamName"),
     t("common.label.player"),
   ];
 
