@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Redirect,
+  Navigate,
   useNavigate,
 } from "react-router-dom";
 import Home from "./Pages/Home/Home";
@@ -42,7 +42,7 @@ function Routor() {
     <Route
       {...rest}
       render={(props) =>
-        user.token ? children : <Login />
+        user.token ? children : <Navigate to="/login" />
       }
     />
   );
@@ -73,7 +73,6 @@ function Routor() {
         <PrivateRoute path={goPathAnalysis} element={<Video />} />
         <PrivateRoute path={goProGameReport} element={<GameReport />} />
         <PrivateRoute
-
           path={proGameReportDetail}
           element={GameReportDetail}
         />
