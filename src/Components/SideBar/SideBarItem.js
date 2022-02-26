@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MenuNum, InitailizeState } from "../../redux/modules/filtervalue";
 import { batch, useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { SelectorInitailizeState } from "../../redux/modules/selectorvalue";
 import { InitializeGameState } from "../../redux/modules/gamevalue";
 /** @jsxImportSource @emotion/react */
@@ -21,7 +21,7 @@ const useTitle = (initialTitle) => {
 
 const SideBarItem = ({ menu, idx }) => {
   const dispatch = useDispatch();
-  let history = useHistory();
+  let navigate = useNavigate();
   const changeTitle = useTitle(null);
   const filters = useSelector((state) => state.FilterReducer);
 
@@ -44,7 +44,7 @@ const SideBarItem = ({ menu, idx }) => {
             dispatch(InitailizeState());
             dispatch(MenuNum(menu.idx));
           })
-          history.push(menu.path);
+          navigate(menu.path);
         }
       }}
       changeColor={menu.changeColor}

@@ -15,7 +15,7 @@ import {
   SetSelectedResult,
   SetSemiDesc,
 } from "../../redux/modules/modalvalue";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { API } from "../config";
 import signAxiosReq from "../../lib/axios/signAxiosReq";
 import axiosRequest from "../../lib/axios/axiosRequest";
@@ -34,7 +34,7 @@ const CheckLogin = ({}) => {
   const user = useSelector((state) => state.UserReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  let history = useHistory();
+  let navigate = useNavigate();
   const signType = "IC";
 
   const { selectedResult } = useSelector((state) => state.ModalReducer);
@@ -148,7 +148,7 @@ const CheckLogin = ({}) => {
               dispatch(UserChargeTime(token.charge_time));
               dispatch(UserName(token.name));
               dispatch(UserTeamName(token.teamName));
-              history.push(goHome);
+              navigate(goHome);
             });
           }
         },
@@ -163,7 +163,7 @@ const CheckLogin = ({}) => {
               param,
               function (success) {
                 dispatch(UserID(user.id));
-                history.push(goCheckLogin);
+                navigate(goCheckLogin);
               },
               function (data) {
                 dispatch(SetIsSelector(false));

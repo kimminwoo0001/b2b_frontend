@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -50,7 +50,7 @@ const TeamFilterModal = () => {
     false
   );
   const pagePath = document.location.pathname;
-  const history = useHistory();
+  const navigate = useNavigate();
   const isInitialMount = useRef(true);
 
   const [league, setLeague] = useState(filters.league);
@@ -310,7 +310,7 @@ const TeamFilterModal = () => {
 
   const handleConfirm = () => {
     if (filters.team && filters.oppteam) {
-      history.push(filters.openFilterModal)
+      navigate(filters.openFilterModal)
       dispatch(CompareModal(false));
       dispatch(GetOppTeam(filters.oppteam));
       dispatch(

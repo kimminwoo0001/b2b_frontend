@@ -33,7 +33,7 @@ const axiosRequest = async (
           } else {
             // console.log(check.objStore);
             // sessionStorage.clear();
-            //history.push("/login");
+            //navigate("/login");
           }
         } else {
           failCallback(check.objStore);
@@ -60,7 +60,7 @@ const axiosRequest = async (
             // console.log(e.data.response);
           } else {
             //sessionStorage.clear();
-            //history.push("/login");
+            //navigate("/login");
           }
         } else {
           failCallback(check.objStore);

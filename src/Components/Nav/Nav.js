@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { UserLogout } from "../../redux/modules";
 import { API } from "../../Pages/config";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LocaleDropdown from "./LocaleDropdown";
 import DataProcess from "../DataProcessing/DataProcess";
 import SearchBox from "./SearchBox";
@@ -23,7 +23,7 @@ function Nav() {
   const user = useSelector((state) => state.UserReducer);
   const { i18n } = useTranslation();
   const dispatch = useDispatch();
-  let history = useHistory();
+  let navigate = useNavigate();
   const { t } = useTranslation();
   const [alertDesc, setAlertDesc] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -48,7 +48,7 @@ function Nav() {
       dispatch(Loading(false))
       sessionStorage.clear();
       dispatch(UserLogout());
-      history.push(goLogin)
+      navigate(goLogin)
     });
   };
 
@@ -67,7 +67,7 @@ function Nav() {
               className="logo"
               src="/Images/logo.png"
               alt="profile"
-              onClick={() => history.push(goHome)}
+              onClick={() => navigate(goHome)}
             />
             <SearchBox />
           </div>

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
@@ -69,7 +69,7 @@ function PlayerFilterModal() {
     false
   );
 
-  let history = useHistory();
+  let navigate = useNavigate();
 
   useEffect(() => {
     // fetchYearFilter();
@@ -430,7 +430,7 @@ function PlayerFilterModal() {
   // 확인하기 버튼 조건
   const handleConfirm = () => {
     if (filters.oppplayer) {
-      history.push(filters.openFilterModal)
+      navigate(filters.openFilterModal)
       dispatch(Reset_Map(filters))
       dispatch(InitalCopy())
       dispatch(GetOppPlayer(filters.oppplayer));

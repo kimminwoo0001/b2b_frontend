@@ -31,7 +31,7 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
 const persistor = persistStore(store);
-// export const history = syncHistoryWithStore(createBrowserHistory, store);
+// export const navigate =  syncHistoryWithStore(createBrowserHistory, store);
 
 /* 모달 렌더링 관련*/
 ReactModal.setAppElement("#root");

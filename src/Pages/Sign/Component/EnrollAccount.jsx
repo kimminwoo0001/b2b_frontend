@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import SetInputBox from "./SetInputBox";
 import CheckBox from "../../../Components/UtilityComponent/CheckBox";
@@ -58,7 +58,7 @@ const EnrollAccount = ({ id, authCode, signType }) => {
   const pwValidateRef = useRef();
   const lang = sessionStorage.getItem("i18nextLng");
 
-  let history = useHistory();
+  let navigate = useNavigate();
 
   const onChange = (e) => {
     const { value, id } = e.target;
@@ -220,7 +220,7 @@ const EnrollAccount = ({ id, authCode, signType }) => {
             dispatch(SetDesc(t(`sign.${id}.confirmSuccess`)));
             dispatch(SetSemiDesc(""));
             //dispatch(SetConfirmFuncId("login"));
-            history.push(goLogin);
+            navigate(goLogin);
           }
           dispatch(Loading(false));
         },

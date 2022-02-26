@@ -1,10 +1,10 @@
 import React from "react";
 import {
   BrowserRouter as Router,
-  Switch,
+  Routes,
   Route,
   Redirect,
-  useHistory,
+  useNavigate,
 } from "react-router-dom";
 import Home from "./Pages/Home/Home";
 import League from "./Pages/LeagueReport/League";
@@ -34,15 +34,15 @@ import { goChangePw, goCheckLogin, goError, goHome, goLeagueReport, goLogin, goP
 // import Utility from "./Pages/ETC/Utility/Utility";
 // import PickCalculator from "./Pages/ETC/PickCalculator/PickCalculator";
 
-function Routes() {
+function Routor() {
   //const token = sessionStorage.getItem("token");
   const user = useSelector((state) => state.UserReducer);
 
-  const PrivateRoute = ({ component: Component, ...rest }) => (
+  const PrivateRoute = ({ children, ...rest }) => (
     <Route
       {...rest}
       render={(props) =>
-        user.token ? <Component {...props} /> : <Redirect to="/login" />
+        user.token ? children : <Login />
       }
     />
   );
@@ -65,35 +65,35 @@ function Routes() {
       <AlertModal />
       <Loading />
 
-      <Switch>
-        <PrivateRoute exact path={goHome} component={Home} />
-        <PrivateRoute exact path={goLeagueReport} component={League} />
-        <PrivateRoute exact path={goTeamReport} component={Team} />
-        <PrivateRoute exact path={goPlayerReport} component={Solo} />
-        <PrivateRoute exact path={goPathAnalysis} component={Video} />
-        <PrivateRoute exact path={goProGameReport} component={GameReport} />
+      <Routes>
+        <PrivateRoute path={goHome} element={<Home />} />
+        <PrivateRoute path={goLeagueReport} element={<League />} />
+        <PrivateRoute path={goTeamReport} element={<Team />} />
+        <PrivateRoute path={goPlayerReport} element={<Solo />} />
+        <PrivateRoute path={goPathAnalysis} element={<Video />} />
+        <PrivateRoute path={goProGameReport} element={<GameReport />} />
         <PrivateRoute
-          exact
+
           path={proGameReportDetail}
-          component={GameReportDetail}
+          element={GameReportDetail}
         />
-        {/* <PrivateRoute exact path="/utility" component={Utility} />
-        <PrivateRoute exact path="/calculator" component={PickCalculator} /> */}
-        <PrivateRoute exact path={goTeamCompare} component={TeamCompare} />
-        <PrivateRoute exact path={goPlayerCompare} component={PlayerCompare} />
-        <PrivateRoute exact path={goSoloRank} component={SoloRank} />
+        {/* <PrivateRoute  path="/utility" element={Utility} />
+        <PrivateRoute  path="/calculator" element={PickCalculator} /> */}
+        <PrivateRoute path={goTeamCompare} element={<TeamCompare />} />
+        <PrivateRoute path={goPlayerCompare} element={<PlayerCompare />} />
+        <PrivateRoute path={goSoloRank} element={<SoloRank />} />
         {/* pi only */}
-        <PrivateRoute exact path={goPiArea} component={PiArea} />
-        <Route exact path={goError} component={NotFound} />
-        <Route exact path={goLogin} component={Login} />
-        <Route exact path={goCheckLogin} component={CheckLogin} />
-        <Route exact path={goSignUp} component={SingUp} />
-        <Route exact path={goChangePw} component={ChangePW} />
-        <Route exact path={goUiTest} component={UiTest} />
-        <Route exact path={goServerTest} component={ServerTest} />
-      </Switch>
+        <PrivateRoute path={goPiArea} element={<PiArea />} />
+        <Route path={goError} element={<NotFound />} />
+        <Route path={goLogin} element={<Login />} />
+        <Route path={goCheckLogin} element={<CheckLogin />} />
+        <Route path={goSignUp} element={<SingUp />} />
+        <Route path={goChangePw} element={<ChangePW />} />
+        <Route path={goUiTest} element={<UiTest />} />
+        <Route path={goServerTest} element={<ServerTest />} />
+      </Routes>
       <Footer />
     </Router>
   );
 }
-export default Routes;
+export default Routor;

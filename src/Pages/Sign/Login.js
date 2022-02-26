@@ -16,7 +16,7 @@ import {
   UserName,
   UserTeamName,
 } from "../../redux/modules/user";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Language } from "../../redux/modules/locale";
 import AlertModal from "../../Components/UtilityComponent/AlertModal";
 import { useTranslation } from "react-i18next";
@@ -48,7 +48,7 @@ function Login() {
   const { handleSubmit, register } = useForm();
   const dispatch = useDispatch();
   const [info, setInfo] = useState({ id: "", password: "" });
-  let history = useHistory();
+  let navigate = useNavigate();
   const { t } = useTranslation();
 
   console.log(user);
@@ -75,14 +75,14 @@ function Login() {
         dispatch(UserToken(getCookie("user-token")));
         dispatch(UserChargeTime(getCookie("user-charge_time")));
         dispatch(UserName(getCookie("user-name")));
-        history.push(goHome);
+        navigate(goHome);
       });
     }
   }, []);
 
   useEffect(() => {
     if (user.token && user.token.length > 0) {
-      history.push(goHome);
+      navigate(goHome);
     }
   }, [user.token]);
 
@@ -118,7 +118,7 @@ function Login() {
                 dispatch(UserToken(token.token));
                 dispatch(UserChargeTime(token.charge_time));
                 dispatch(UserName(token.name));
-                history.push(goHome);
+                navigate(goHome);
               });
             }
             dispatch(Loading(false));
@@ -136,7 +136,7 @@ function Login() {
                 param,
                 function (success) {
                   dispatch(UserID(id));
-                  history.push(goCheckLogin);
+                  navigate(goCheckLogin);
                   dispatch(Loading(false));
                 },
                 function (data) {
@@ -236,7 +236,7 @@ function Login() {
               <div className="left">
                 <span
                   onClick={() => {
-                    history.push(goSignUp);
+                    navigate(goSignUp);
                   }}
                 >
                   {t("sign.signUp")}
@@ -248,7 +248,7 @@ function Login() {
               <div className="right">
                 <span
                   onClick={() => {
-                    history.push(goChangePw);
+                    navigate(goChangePw);
                   }}
                 >
                   {t("sign.changePW")}

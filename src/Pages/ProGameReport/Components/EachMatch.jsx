@@ -3,7 +3,7 @@ import React, { memo, useEffect, useState } from "react";
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
 import { useSelector, useDispatch, batch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   SetBlueTeam,
   SetDetailDataSet,
@@ -43,7 +43,7 @@ const TOTAL_SET = [0, 1, 2, 3, 4];
 
 const EachMatch = ({ matchData, team }) => {
   const dispatch = useDispatch();
-  let history = useHistory();
+  let navigate = useNavigate();
   const { t } = useTranslation();
   const {
     date,
@@ -160,7 +160,7 @@ const EachMatch = ({ matchData, team }) => {
                 dispatch(SetStatusLogDataset(e?.actionLog));
                 dispatch(SetPlayersStatusDataset(e?.status));
                 dispatch(SetTimeLineDataset(timeLineSet));
-                history.push(proGameReportDetail);
+                navigate(proGameReportDetail);
               });
             } else {
               dispatch(SetIsSelector(false));

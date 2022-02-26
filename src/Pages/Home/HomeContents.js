@@ -1,6 +1,6 @@
 import React, { useState, useEffect, memo } from "react";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
@@ -29,7 +29,7 @@ const HomeContents = memo(() => {
   const [doneRune, setDoneRune] = useState(false);
 
   const { t } = useTranslation();
-  let history = useHistory();
+  let navigate = useNavigate();
   const dispatch = useDispatch();
 
   //리그마다 데이터 저장하는 상태값
