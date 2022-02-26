@@ -48,6 +48,39 @@ const Compare = () => {
   const [teamSide, setTeamSide] = useState("blue");
   const [oppTeamSide, setOppTeamSide] = useState("blue");
 
+  const MATCHED_IMAGES = {
+    0 : "Blue Sentinel",
+    1 : "Gromp",
+    2 : "Murk Wolves",
+    3 : "Raptors",
+    4 : "Red Brambleback",
+    5 : "Krugs",
+    6 : "Scuttler",
+    7 : "Blue Sentinel",
+    8 : "Gromp",
+    9 : "Murk Wolves",
+    10 : "Raptors",
+    11 : "Red Brambleback",
+    12 : "Krugs",
+    13 : "Scuttler"
+  }
+
+  const MATCHED_CAMPS = {
+    0 : t("video.jungle.monsters.blueSentinel"),
+    1 : t("video.jungle.monsters.gromp"),
+    2 : t("video.jungle.monsters.murkWolves"),
+    3 : t("video.jungle.monsters.raptors"),
+    4 : t("video.jungle.monsters.redBrambleback"),
+    5 : t("video.jungle.monsters.krugs"),
+    6 : t("video.jungle.monsters.scuttler"),
+    7 : t("video.jungle.monsters.blueSentinel"),
+    8 : t("video.jungle.monsters.gromp"),
+    9 : t("video.jungle.monsters.murkWolves"),
+    10 : t("video.jungle.monsters.raptors"),
+    11 : t("video.jungle.monsters.redBrambleback"),
+    12 : t("video.jungle.monsters.krugs"),
+    13 : t("video.jungle.monsters.scuttler"),
+  }
 
   const secToMin = (sec) => {
     let mm = Math.floor(sec / 60);
@@ -56,39 +89,32 @@ const Compare = () => {
     return `${mm}${t("solo.playerboard.min")} ${ss}${t("solo.playerboard.sec")}`;
   }
 
-  const refineJungleRate = (param) => {
-    let data = [];
-    
-    let sideArr = [];
-    let isMatched = [];
-    
-    let monsteridsArr = [];
-    let jgRatesArr = [];
-    let order = [];
-    let i ;
+  const convertingCampRate = (campRate) => {
+    const side = campRate.side.split(',');
+    const monsterids = campRate.monsterids.split(',');
+    const sides = campRate.sides.split(',');
+    const jg_rates = campRate.jg_rates.split(',');
+    const orderNo = campRate.order;
 
-    for(i = 0; i < param.campRate.length; i++) {
-      sideArr = sideArr.concat((param.campRate[i].side).split(","));
-      isMatched = isMatched.concat((param.campRate[i].sides).split(","));
-      monsteridsArr = monsteridsArr.concat((param.campRate[i].monsterids).split(","));
-      jgRatesArr = jgRatesArr.concat((param.campRate[i].jg_rates).split(","));   
-      for(let k = 0; k < sideArr.length; k++) {
-        order.push(param.campRate[i].order)
-      }
+    const result = [];
+    for (let i = 0; i < side.length; i++) {
+        result[i] = {
+            side: side[i],
+            monsterids: monsterids[i],
+            sides: sides[i],
+            jg_rates: jg_rates[i],
+            order: orderNo,
+        };
+    }
+    return result;
+}
+
+  const convert = (campRate) => {
+    for (let i = 0; i < campRate.length; i++) {
+        campRate[i] = convertingCampRate(campRate[i]);
     }
 
-
-
-    for(let j = 0; j < sideArr.length; j++) {
-      data[j] = {
-        jg_rates: jgRatesArr[j],
-        monsterids: monsteridsArr[j],
-        order: order[j],
-        side : sideArr[j],
-        sides: isMatched[j]
-    }
-  }
-  return data;
+    return campRate;
   }
 
    const fetchCampSelectionRate = () => {
@@ -122,18 +148,13 @@ const Compare = () => {
         setOppTeam(e["team2"]);
         dispatch(SetIsJunglingClicked(false));
 
-        const returnedTeamData = refineJungleRate(e["team1"])
-        const returnedOppTeamData = refineJungleRate(e["team2"])
-
-        let blueTeam = [];
-        let redTeam = [];
-        let blueOppTeam = [];
-        let redOppTeam = [];
-
-        blueTeam = returnedTeamData.filter((data) => (data.side === "blue"));
-        redTeam = returnedTeamData.filter((data) => (data.side === "red"));
-        blueOppTeam = returnedOppTeamData.filter((data) => (data.side === "blue"));
-        redOppTeam = returnedOppTeamData.filter((data) => (data.side === "red"));
+        const returnedTeamData = convert(e["team1"].campRate)
+        const returnedOppTeamData = convert(e["team2"].campRate)
+    
+        const blueTeam = returnedTeamData.map((data) => data.filter(item => item.side === "blue"));
+        const redTeam = returnedTeamData.map((data) => data.filter(item => item.side === "red"));
+        const blueOppTeam = returnedOppTeamData.map((data) => data.filter(data => data.side === "blue"));
+        const redOppTeam = returnedOppTeamData.map((data) => data.filter(data => data.side === "red"));
 
         setTeamBlue(blueTeam);
         setTeamRed(redTeam);
@@ -144,8 +165,6 @@ const Compare = () => {
       dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
     })
   }
-
-  console.log(teamBlue,teamRed)
 
   useEffect(() => {
     if((Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).length === 0) || 
@@ -229,43 +248,56 @@ const Compare = () => {
                     </thead>
                     {teamSide === "blue" ?
                         <tbody>
-                        {teamBlue?.map((teamCamp,idx) => (
-                        <tr>
-                        <td>{idx+1}</td>
-                        <td>
-                          <S.table.TableData>
-                            <Avatar
-                              src={"images/champion/teemo.png"}
-                              alt={"칼날부리"}
-                              size={36}
-                              color={"blue"}
-                            />
-                            <div>
-                              <p>{`${(teamCamp.jg_rates.split('')[0]*100).toFixed(2)}%`}</p>
-                              <p>{`${teamCamp.monsterids.split('')[0]}`}</p>
-                            </div>
-                          </S.table.TableData>
-                        </td>
-                      </tr>
-                        ))}
+                        {teamBlue?.map((teamCamp,idx) => {
+                          return   (
+                            <tr>
+                            <td>{idx+1}</td>
+                            <td>
+                              {teamCamp.map((el) => {
+                                return (
+                                  <S.table.TableData>
+                                  <Avatar
+                                    src={`Images/jungleMonster/${MATCHED_IMAGES[el.monsterids]}.png`}
+                                    alt={MATCHED_CAMPS[el.monsterids]}
+                                    size={36}
+                                    color={el.sides === "n" ? el.side : el.sides }
+                                  />
+                                  <div>
+                                    <p>{`${(el.jg_rates *100).toFixed(2)}%`}</p>
+                                    <p>{`${MATCHED_CAMPS[el.monsterids]}`}</p>
+                                  </div>
+                                </S.table.TableData>
+                                )
+                              })}
+                            
+                            </td>
+                          </tr>
+                            )
+                        }
+                        )}
                       </tbody> :
                         <tbody>
                         {teamRed?.map((teamCamp,idx) => (
                         <tr>
                         <td>{idx+1}</td>
                         <td>
-                          <S.table.TableData>
+                        {teamCamp.map((el) => {
+                          return (
+                            <S.table.TableData>
                             <Avatar
-                              src={"images/champion/teemo.png"}
-                              alt={"칼날부리"}
+                              src={`Images/jungleMonster/${MATCHED_IMAGES[el.monsterids]}.png`}
+                              alt={MATCHED_CAMPS[el.monsterids]}
                               size={36}
-                              color={"red"}
+                              color={el.sides === "n" ? el.side : el.sides }
                             />
                             <div>
-                              <p>{`${(teamCamp.jg_rates.split('')[0]*100).toFixed(2)}%`}</p>
-                              <p>{`${teamCamp.monsterids.split('')[0]}`}</p>
+                            <p>{`${(el.jg_rates *100).toFixed(2)}%`}</p>
+                            <p>{`${MATCHED_CAMPS[el.monsterids]}`}</p>
                             </div>
                           </S.table.TableData>
+                          )
+                        })
+                            }
                         </td>
                       </tr>
                         ))}
@@ -274,7 +306,7 @@ const Compare = () => {
             
                   </S.table.Table>
                 </S.table.TableContainer>
-    
+                  
                 {/* 두번째 테이블 */}
                 <S.table.TableContainer>
                   <S.table.TableHeader>
@@ -292,7 +324,6 @@ const Compare = () => {
                     <S.table.TableButtonGroup>
                       <Button
                         onClick={() => {
-                          // setActive(false)
                           setOppTeamSide("blue")                          
                         }
                         }
@@ -310,9 +341,7 @@ const Compare = () => {
                       </Button>
                       <Button
                         onClick={() => {
-                          // setActive(true)
                           setOppTeamSide("red")
-
                         }
                         }
                         className={cx([{ "is-active": oppTeamSide === "red"}])}
@@ -342,41 +371,24 @@ const Compare = () => {
                     <tbody>
                       {oppTeamBlue?.map((oppTeamCamp,idx) =>  (
                       <tr>
-                      <td>{oppTeamCamp.order}</td>
+                      <td>{idx+1}</td>
                       <td>
-                        <S.table.TableData>
+                      {oppTeamCamp.map((el) => {
+                        return (
+                          <S.table.TableData>
                           <Avatar
-                            src={"images/champion/teemo.png"}
-                            alt={"칼날부리"}
+                            src={`Images/jungleMonster/${MATCHED_IMAGES[el.monsterids]}.png`}
+                            alt={MATCHED_CAMPS[el.monsterids]}
                             size={36}
-                            color={"blue"}
+                            color={el.sides === "n" ? el.side : el.sides }
                           />
                           <div>
-                          <p>{`${(oppTeamCamp.jg_rates.split(',')[0]*100).toFixed(2)}%`}</p>
-                            <p>{`${oppTeamCamp.monsterids.split(',')[0]}`}</p>
+                            <p>{`${(el.jg_rates *100).toFixed(2)}%`}</p>
+                            <p>{`${MATCHED_CAMPS[el.monsterids]}`}</p>
                           </div>
                         </S.table.TableData>
-                      </td>
-                      <td>
-                        <S.table.TableData>
-                      {!oppTeamCamp.monsterids.split(',')[1] ? <></> :
-    
-                          <Avatar
-                            src={"images/champion/teemo.png"}
-                            alt={"칼날부리"}
-                            size={36}
-                            color={"blue"}
-                          />
-                      }
-                          <div>
-                          {!oppTeamCamp.jg_rates.split(',')[1] ? <></> : 
-                            <p>{`${(oppTeamCamp.jg_rates.split(',')[1]*100).toFixed(2)}%`}</p>
-                          }
-                          {oppTeamCamp.monsterids.split(',')[1] === undefined ? <></> : 
-                            <p>{`${oppTeamCamp.monsterids.split(',')[1]}`}</p>
-                          }
-                          </div>
-                        </S.table.TableData>
+                        )
+                      })}
                       </td>
                     </tr>
                       ))}
@@ -384,41 +396,24 @@ const Compare = () => {
                         <tbody>
                         {oppTeamRed?.map((oppTeamCamp,idx) =>  (
                         <tr>
-                        <td>{oppTeamCamp.order}</td>
+                        <td>{idx+1}</td>
                         <td>
+                        {oppTeamCamp.map((el) => {
+                        return (
                           <S.table.TableData>
-                            <Avatar
-                              src={"images/champion/teemo.png"}
-                              alt={"칼날부리"}
-                              size={36}
-                              color={"red"}
-                            />
-                            <div>
-                            <p>{`${(oppTeamCamp.jg_rates.split(',')[0]*100).toFixed(2)}%`}</p>
-                              <p>{`${oppTeamCamp.monsterids.split(',')[0]}`}</p>
-                            </div>
-                          </S.table.TableData>
-                        </td>
-                        <td>
-                          <S.table.TableData>
-                        {!oppTeamCamp.monsterids.split(',')[1] ? <></> :
-      
-                            <Avatar
-                              src={"images/champion/teemo.png"}
-                              alt={"칼날부리"}
-                              size={36}
-                              color={"red"}
-                            />
-                        }
-                            <div>
-                            {!oppTeamCamp.jg_rates.split(',')[1] ? <></> : 
-                              <p>{`${(oppTeamCamp.jg_rates.split(',')[1]*100).toFixed(2)}%`}</p>
-                            }
-                            {oppTeamCamp.monsterids.split(',')[1] === undefined ? <></> : 
-                              <p>{`${oppTeamCamp.monsterids.split(',')[1]}`}</p>
-                            }
-                            </div>
-                          </S.table.TableData>
+                          <Avatar
+                            src={`Images/jungleMonster/${MATCHED_IMAGES[el.monsterids]}.png`}
+                            alt={MATCHED_CAMPS[el.monsterids]}
+                            size={36}
+                            color={el.sides === "n" ? el.side : el.sides }
+                          />
+                          <div>
+                            <p>{`${(el.jg_rates *100).toFixed(2)}%`}</p>
+                            <p>{`${MATCHED_CAMPS[el.monsterids]}`}</p>
+                          </div>
+                        </S.table.TableData>
+                        )
+                      })}
                         </td>
                       </tr>
                         ))}
@@ -489,3 +484,4 @@ const Compare = () => {
 };
 
 export default Compare;
+

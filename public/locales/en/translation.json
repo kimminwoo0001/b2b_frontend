@@ -547,7 +547,16 @@
       "topGangkingCountsbyMatches":"Top Ganking Counts By Matches",
       "midGangkingCountsbyMatches":"Mid Ganking Counts By Matches",
       "botGangkingCountsbyMatches":"Bottom Ganking Counts By Matches",
-      "avgFirstGankingTime":"Avg First Ganking Time"
+      "avgFirstGankingTime":"Avg First Ganking Time",
+      "monsters" : {
+        "blueSentinel" : "Blue Sentinel",
+        "gromp" : "Gromp",
+        "murkWolves": "Murk Wolves",
+        "raptors" : "Raptors",
+        "redBrambleback" : "Red Brambleback",
+        "krugs" : "Krugs",
+        "scuttler" : "Scuttler"
+      }
     }
   },
   "alert": {

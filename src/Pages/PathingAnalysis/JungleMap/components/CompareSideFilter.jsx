@@ -655,7 +655,7 @@ useEffect(() => {
                       </DropdownLabel>
                       <DropdownList>
                         {selector.playerFilter?.filter(player => player.position === "jng").map((player,idx)  => {
-                          console.log(player);
+                          // console.log(player);
                           return (
                             <DropdownItem
                             css={[dropdownStyle.select_item]}

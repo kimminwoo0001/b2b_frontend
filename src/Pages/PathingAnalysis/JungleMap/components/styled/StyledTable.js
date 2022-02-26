@@ -86,6 +86,11 @@ export const Table = styled.table`
         text-align: center;
         ${spacing.paddingX(3)}
       }
+      td:nth-of-type(2) {
+        display: flex;
+        /* text-align: center; */
+        /* ${spacing.marginL(3)} */
+      }
     }
   }
 `;
@@ -93,6 +98,8 @@ export const Table = styled.table`
 export const TableData = styled.div`
   display: flex;
   align-items: center;
+  ${spacing.paddingX(3)}
+  
 
   > div:nth-of-type(1) {
     ${spacing.marginR(2)}
