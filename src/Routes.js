@@ -77,7 +77,7 @@ function Routor() {
         <Route path={goPlayerCompare} element={<PrivateRoute><PlayerCompare /></PrivateRoute>} />
         <Route path={goSoloRank} element={<PrivateRoute><SoloRank /></PrivateRoute>} />
         {/* pi only */}
-        <Route path={goPiArea} element={<PiArea />} />
+        <Route path={goPiArea} element={<PrivateRoute><PiArea /></PrivateRoute>} />
         <Route path={goError} element={<NotFound />} />
         <Route path={goLogin} element={<Login />} />
         <Route path={goCheckLogin} element={<CheckLogin />} />
