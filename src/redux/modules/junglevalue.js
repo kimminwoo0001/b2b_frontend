@@ -12,6 +12,8 @@ export const SET_JUNGLE_SEASON = "junglevalue/SET_SEASON";
 export const SET_JUNGLE_TEAM = "junglevalue/SET_TEAM";
 export const SET_JUNGLE_PATCH = "junglevalue/SET_PATCH";
 
+export const RESET_JUNGLE_SELECTED_PATCH =
+  "junglevalue/RESET_JUNGLE_SELECTED_PATCH";
 export const RESET_JUNGLE_LEAGUE = "junglevalue/RESET_LEAGUE";
 export const RESET_JUNGLE_SEASON = "junglevalue/RESET_JUNGLE_SEASON";
 export const RESET_JUNGLE_TEAM = "junglevalue/RESET_JUNGLE_TEAM";
@@ -48,6 +50,9 @@ export const SetJunglePatch = (payload) => ({
 });
 
 // reset
+export const ResetJungleSelectedPatch = () => ({
+  type: RESET_JUNGLE_SELECTED_PATCH,
+});
 export const ResetJungleLeague = (payload) => {
   return {
     type: RESET_JUNGLE_LEAGUE,
@@ -182,6 +187,11 @@ export default function JungleMapReducer(state = initialState, action) {
       return action.payload;
 
     // reset - 경기리스트 관련
+    case RESET_JUNGLE_SELECTED_PATCH:
+      return {
+        ...state,
+        patch: {},
+      };
     case RESET_JUNGLE_LEAGUE:
       return {
         ...state,

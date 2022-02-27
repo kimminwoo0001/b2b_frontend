@@ -22,7 +22,7 @@ import Theme from "./Styles/Theme";
 // import AlertModal from "./Components/UtilityComponent/AlertModal";
 
 const sagaMiddleware = createSagaMiddleware();
-const store = createStore(
+export const store = createStore(
   persistReducer,
   composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
