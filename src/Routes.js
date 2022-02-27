@@ -61,23 +61,23 @@ function Routor() {
       <Loading />
 
       <Routes>
-        <PrivateRoute path={goHome} element={<Home />} />
-        <PrivateRoute path={goLeagueReport} element={<League />} />
-        <PrivateRoute path={goTeamReport} element={<Team />} />
-        <PrivateRoute path={goPlayerReport} element={<Solo />} />
-        <PrivateRoute path={goPathAnalysis} element={<Video />} />
-        <PrivateRoute path={goProGameReport} element={<GameReport />} />
-        <PrivateRoute
+        <Route path={goHome} element={<PrivateRoute><Home /></PrivateRoute>} />
+        <Route path={goLeagueReport} element={<PrivateRoute><League /></PrivateRoute>} />
+        <Route path={goTeamReport} element={<PrivateRoute><Team /></PrivateRoute>} />
+        <Route path={goPlayerReport} element={<PrivateRoute><Solo /></PrivateRoute>} />
+        <Route path={goPathAnalysis} element={<PrivateRoute><Video /></PrivateRoute>} />
+        <Route path={goProGameReport} element={<PrivateRoute><GameReport /></PrivateRoute>} />
+        <Route
           path={proGameReportDetail}
           element={GameReportDetail}
         />
         {/* <PrivateRoute  path="/utility" element={Utility} />
         <PrivateRoute  path="/calculator" element={PickCalculator} /> */}
-        <PrivateRoute path={goTeamCompare} element={<TeamCompare />} />
-        <PrivateRoute path={goPlayerCompare} element={<PlayerCompare />} />
-        <PrivateRoute path={goSoloRank} element={<SoloRank />} />
+        <Route path={goTeamCompare} element={<PrivateRoute><TeamCompare /></PrivateRoute>} />
+        <Route path={goPlayerCompare} element={<PrivateRoute><PlayerCompare /></PrivateRoute>} />
+        <Route path={goSoloRank} element={<PrivateRoute><SoloRank /></PrivateRoute>} />
         {/* pi only */}
-        <PrivateRoute path={goPiArea} element={<PiArea />} />
+        <Route path={goPiArea} element={<PiArea />} />
         <Route path={goError} element={<NotFound />} />
         <Route path={goLogin} element={<Login />} />
         <Route path={goCheckLogin} element={<CheckLogin />} />
