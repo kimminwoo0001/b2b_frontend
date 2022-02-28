@@ -11,7 +11,7 @@ import IconDel from "../../../../../Components/Ui/Icons/IconDel";
 import { typoStyle } from "../../../../../Styles/ui";
 import { useModal } from "../../../../../Hooks";
 import { modalList } from "../../../../../Components/Modals/Modals";
-import { getTier } from "../../../../../lib/getTier";
+import { getTier } from "../../../../../lib/getRank";
 import { API } from "../../../../config";
 import { useSelector, useDispatch, batch } from "react-redux";
 import axiosRequest from "../../../../../lib/axios/axiosRequest";
@@ -91,14 +91,13 @@ const MTPlayerHeader = ({
   };
   // 선수등록
   const handleClickModalOpen = (e) => {
-    console.log(e.target);
     openModal(modalList.addSolorankID, {
       onSubmit: (e) => {
         console.log("submit시 action을 등록");
         const url = `${API}/lolapi/solorank/summoneradd`;
         const params = {
-          player: name,
-          summonerName: e.summonerName,
+          player: id,
+          summonerName: e.name,
           puuId: e.puuId,
           token: user.token,
         };
@@ -240,7 +239,7 @@ const MTPlayerHeader = ({
               })}
 
             {/* 버튼 - 선수 추가 modal */}
-            <S.AddPlayer name={id} onClick={handleClickModalOpen}>
+            <S.AddPlayer onClick={handleClickModalOpen}>
               <button>+</button>
               <div>
                 <p>{t("soloRank.myTeam.label.addSoloRankID")}</p>
