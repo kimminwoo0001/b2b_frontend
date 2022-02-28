@@ -203,6 +203,16 @@ const typoStyle = {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    width: inherit;
+  `,
+
+  /* 2줄 말줄임 스타일2  */
+  ellipsis_two: css`
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   `,
 
   /* rate  */

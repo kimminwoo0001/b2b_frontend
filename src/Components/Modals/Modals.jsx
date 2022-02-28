@@ -36,9 +36,9 @@ const Modals = () => {
           onClose(Component);
         };
 
-        const handleSubmit = async () => {
+        const handleSubmit = async (e) => {
           if (typeof onSubmit === "function") {
-            await onSubmit();
+            await onSubmit(e);
           }
           // 모달 닫기
           onClose(Component);

@@ -43,6 +43,7 @@ const MTPlayerHeader = ({
 
   // close 시 데이터 셋
   const [closeData, setCloseData] = useState({
+    count: 0,
     name: "",
     tier: 0,
     season: {
@@ -89,10 +90,30 @@ const MTPlayerHeader = ({
     console.log("선수아이디를 삭제하는 기능");
   };
   // 선수등록
-  const handleClickModalOpen = () => {
+  const handleClickModalOpen = (e) => {
+    console.log(e.target);
     openModal(modalList.addSolorankID, {
-      onSubmit: () => {
+      onSubmit: (e) => {
         console.log("submit시 action을 등록");
+        const url = `${API}/lolapi/solorank/summoneradd`;
+        const params = {
+          player: name,
+          summonerName: e.summonerName,
+          puuId: e.puuId,
+          token: user.token,
+        };
+        axiosRequest(
+          undefined,
+          url,
+          params,
+          function (e) {
+            console.log(e);
+          },
+          function (objStore) {
+            dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+            dispatch(Loading(false));
+          }
+        );
       },
     });
   };
@@ -124,6 +145,7 @@ const MTPlayerHeader = ({
     }
 
     setCloseData({
+      count: soloRankInfo.length,
       name: allName.substring(0, allName.length - 1),
       tier: maxTier,
       season: {
@@ -218,7 +240,7 @@ const MTPlayerHeader = ({
               })}
 
             {/* 버튼 - 선수 추가 modal */}
-            <S.AddPlayer onClick={handleClickModalOpen}>
+            <S.AddPlayer name={id} onClick={handleClickModalOpen}>
               <button>+</button>
               <div>
                 <p>{t("soloRank.myTeam.label.addSoloRankID")}</p>
@@ -230,7 +252,10 @@ const MTPlayerHeader = ({
           // 클로즈 ui
           <S.CloseList>
             <div className="table-col2">
-              <span css={typoStyle.noWrap}>{closeData.name}</span>
+              <span css={[typoStyle.ellipsis_two, { width: 100 }]}>
+                {closeData.name}
+              </span>
+              <span>{`(${closeData.count})`}</span>
             </div>
             {/* 티어 */}
             <div className="table-col3">
