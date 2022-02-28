@@ -53,6 +53,7 @@ function LeaguePlayer() {
       url,
       params,
       function (e) {
+        console.log("호출결과", e);
         setPlayerData(e);
         setIsLoading(false);
       },

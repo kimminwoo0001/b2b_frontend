@@ -10,7 +10,7 @@ const Arrow = ({ direction, size = 8, color = colors.text, ...props }) => {
   );
 };
 const SArrow = styled.span`
-  display: block;
+  display: inline-block;
   border: ${({ size }) => size}px solid transparent;
   margin: auto;
 

@@ -26,6 +26,10 @@ const fontsStyle = {
       font-size: 18px;
       line-height: 26px;
     `,
+    24: css`
+      font-size: 24px;
+      line-height: 32px;
+    `,
   },
   weight: {
     400: css`

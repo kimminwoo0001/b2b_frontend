@@ -212,6 +212,14 @@ const typoStyle = {
     ${fontsStyle.weight[400]};
     color: ${colors.badge_red};
   `,
+
+  /** Percent */
+  percent: css`
+    font-family: Spoqa Han Sans;
+    ${fontsStyle.size[24]};
+    ${fontsStyle.weight[700]};
+    color: ${colors.text};
+  `,
 };
 
 export default typoStyle;
