@@ -48,7 +48,12 @@ const ModalAddSolorankID = ({ onSubmit, onClose }) => {
 
         {/* 하단 submit 버튼 */}
         <S.layout.Footer>
-          <S.layout.SubmitButton disabled={!selectedPlayer}>
+          <S.layout.SubmitButton
+            disabled={!selectedPlayer}
+            onClick={() => {
+              onSubmit(selectedPlayer);
+            }}
+          >
             솔로랭크 ID 추가
           </S.layout.SubmitButton>
         </S.layout.Footer>

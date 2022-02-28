@@ -29,6 +29,9 @@ export const Row = styled.div`
     width: 170px;
     padding-left: 20px;
     padding-right: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
   .table-col3 {
     width: 230px;
