@@ -14,7 +14,7 @@ import { useUpdateEffect } from "../../Hooks";
 const POSITION_IMG = {
   all: "ALL",
   top: <img src="images/position/ico-position-top.svg" alt="top" />,
-  jug: <img src="images/position/ico-position-jug.svg" alt="jug" />,
+  jng: <img src="images/position/ico-position-jng.svg" alt="jng" />,
   mid: <img src="images/position/ico-position-mid.svg" alt="mid" />,
   bot: <img src="images/position/ico-position-bot.svg" alt="bot" />,
   sup: <img src="images/position/ico-position-sup.svg" alt="sup" />,
@@ -28,7 +28,7 @@ const PositionCheckList = ({
   position = {
     all: false,
     top: false,
-    jug: false,
+    jng: false,
     mid: false,
     bot: false,
     sup: false,

@@ -17,8 +17,8 @@ const PositionImage = [
     Icon: "Images/ico-position-top2.png",
   },
   {
-    Image: "Images/img-player-jug-none.png",
-    Icon: "Images/ico-position-jug2.png",
+    Image: "Images/img-player-jng-none.png",
+    Icon: "Images/ico-position-jng2.png",
   },
   {
     Image: "Images/img-player-mid-none.png",
