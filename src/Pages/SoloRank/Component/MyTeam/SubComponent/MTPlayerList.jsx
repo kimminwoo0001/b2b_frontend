@@ -90,23 +90,24 @@ const MTPlayerHeader = ({
     console.log("선수아이디를 삭제하는 기능");
   };
   // 선수등록
-  const handleClickModalOpen = () => {
+  const handleClickModalOpen = (e) => {
+    console.log(e.target);
     openModal(modalList.addSolorankID, {
       onSubmit: (e) => {
-        console.log(e);
         console.log("submit시 action을 등록");
         const url = `${API}/lolapi/solorank/summoneradd`;
         const params = {
           player: name,
+          summonerName: e.summonerName,
+          puuId: e.puuId,
           token: user.token,
         };
-
         axiosRequest(
           undefined,
           url,
           params,
           function (e) {
-            setIsLike("");
+            console.log(e);
           },
           function (objStore) {
             dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -239,7 +240,7 @@ const MTPlayerHeader = ({
               })}
 
             {/* 버튼 - 선수 추가 modal */}
-            <S.AddPlayer onClick={handleClickModalOpen}>
+            <S.AddPlayer name={id} onClick={handleClickModalOpen}>
               <button>+</button>
               <div>
                 <p>{t("soloRank.myTeam.label.addSoloRankID")}</p>
