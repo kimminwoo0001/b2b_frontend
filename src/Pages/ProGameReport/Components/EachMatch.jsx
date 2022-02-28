@@ -63,7 +63,7 @@ const EachMatch = ({ matchData, team }) => {
   const getGameDetailData = (gameId, gameFullTime) => {
     try {
       dispatch(Loading(true));
-      const url = `${API5}/api/test/test2`;
+      const url = `${API2}/lolapi/match/pga`;
       const params = {
         gameid: gameId,
       };
