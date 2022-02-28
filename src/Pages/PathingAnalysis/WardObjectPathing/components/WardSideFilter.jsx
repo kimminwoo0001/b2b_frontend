@@ -9,7 +9,6 @@ import { SetModalInfo } from "../../../../redux/modules/modalvalue";
 import {SetJunglePlayer, SetIsJungleMappingClicked, SetFilterData} from '../../../../redux/modules/junglevalue';
 import { useTranslation } from "react-i18next";
 
-
 // UI tool kit
 import Accordion from "../../../../Components/Ui/Accordion/Accordion";
 import AccordionDetails from "../../../../Components/Ui/Accordion/AccordionDetails";
@@ -36,8 +35,9 @@ import {
 } from "../../../../Styles/ui";
 import { isObjEqual } from "../../../../lib/isObjEqual";
 import { initializedFalseValue } from "../../../../lib/initializedFalseValue";
+import SelectObject from "../../ObjectMapping/SelectObject";
 
-const JungleSideFilter = () => {
+const WardSideFilter = () => {
   const junglevalue = useSelector(state => state.JungleMapReducer);
   const user = useSelector((state) => state.UserReducer);
   const lang = useSelector((state) => state.LocaleReducer);
@@ -46,10 +46,13 @@ const JungleSideFilter = () => {
   const isInitialMount = useRef(true);
   const isInitialMount2 = useRef(true);
 
-
   const [radioState, setRadioState] = useState();
   const radioRef = useRef([]);
 
+  const [side, setSide] = useState("all");
+  const [period, setPeriod] = useState("all");
+
+  
   const [playerInfo, setPlayerInfo] = useState();
   const [champInfo, setChampInfo] = useState();
   const [oppChampInfo, setOppChampInfo] = useState();
@@ -96,7 +99,6 @@ const JungleSideFilter = () => {
     radioRef.current[num].click();
   };
   
-
   const leagueArr =  Object.keys(junglevalue.league).filter(key => junglevalue.league[key] === true)
   const seasonArr =  Object.keys(junglevalue.season).filter(key => junglevalue.season[key] === true)
   const patchArr =  Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key] === true)
@@ -138,120 +140,154 @@ const JungleSideFilter = () => {
   }, [junglevalue.oppchampion])
 
 
+// mappingfilter/player response 가공
+const refinePlayerData = (data) => {
+    let refined = [];
+    for (let i = 0; i < data.length; i++) {
+        refined.push(data[i].name);
+    }
+    return refined;
+    };
+    
 
-  // STEP 01 선수 선택 api 호출
-  const GetPlayerInfo = () => {
-    const url = `${API}/lolapi/jungle/userinfo`;
+// STEP 01 선수 선택 api 호출
+const GetPlayerInfo = () => {
+    const url = `${API}/lolapi/mappingfilter/player`;
     const params = {
-      league: leagueArr,
-      year: junglevalue.year,
-      season: seasonArr,
-      patch: patchArr,
-      team: junglevalue.team[0],
-      token: user.token,
-      id: user.id,
+    league: leagueArr,
+    year: junglevalue.year,
+    season: seasonArr,
+    patch: patchArr,
+    team: junglevalue.team[0],
+    token: user.token,
+    id: user.id,
+    };
+    axiosRequest(
+      undefined,
+      url,
+      params,
+      function (e) {
+        // const refinedData = refinePlayerData(e);
+        setPlayerInfo(e);
+    },
+      function (objStore) {
+        dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      }
+    )
+}
+
+// STEP 02 챔피언 선택 api 호출
+const GetChampion = () => {
+    const url = `${API}/lolapi/mappingfilter/champion`;
+    const params = {
+    league: leagueArr,
+    year: junglevalue.year,
+    season: seasonArr,
+    patch: patchArr,
+    team: junglevalue.team[0],
+    player: junglevalue.player,
+    token: user.token,
+    id: user.id,
     };
     axiosRequest(undefined, url, params, function(e) {
-      setPlayerInfo(e);
+    // setChampInfo(e);
+    console.log(e);
     }, function (objStore) {
-      dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+    dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
     })
-  }
+}
 
-  // STEP 02 챔피언 선택 api 호출
-  const GetChampion = () => {
-    const url = `${API}/lolapi/jungle/player-champions`;
-    const params = {
-      league: leagueArr,
-      year: junglevalue.year,
-      season: seasonArr,
-      patch: patchArr,
-      team: junglevalue.team[0],
-      player: junglevalue.player,
-      token: user.token,
-      id: user.id,
-    };
-    axiosRequest(undefined, url, params, function(e) {
-      setChampInfo(e);
-      // console.log(e.data);
-    }, function (objStore) {
-      dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
-    })
-  }
+// const GetChampion = () => {
+//     const url = `${API}/lolapi/jungle/player-champions`;
+//     const params = {
+//       league: leagueArr,
+//       year: junglevalue.year,
+//       season: seasonArr,
+//       patch: patchArr,
+//       team: junglevalue.team[0],
+//       player: junglevalue.player,
+//       token: user.token,
+//       id: user.id,
+//     };
+//     axiosRequest(undefined, url, params, function(e) {
+//     //   setChampInfo(e);
+//       console.log(e);
+//     }, function (objStore) {
+//       dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+//     })
+//   }
 
-  // STEP 03 상대 챔피언 선택 api 호출
-  const GetOppChampion = () => {
+// STEP 03 상대 챔피언 선택 api 호출
+const GetOppChampion = () => {
     const selectedChamps = junglevalue.champion && Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === true);
     const url = `${API}/lolapi/jungle/opp-champions`;
     const params = {
-      league: leagueArr,
-      year: junglevalue.year,
-      season: seasonArr,
-      patch: patchArr,
-      team: junglevalue.team[0],
-      player: junglevalue.player,
-      champion: selectedChamps,
-      token: user.token,
-      id: user.id,
+    league: leagueArr,
+    year: junglevalue.year,
+    season: seasonArr,
+    patch: patchArr,
+    team: junglevalue.team[0],
+    player: junglevalue.player,
+    champion: selectedChamps,
+    token: user.token,
+    id: user.id,
     };
     axiosRequest(undefined, url, params, function(e) {
-      setOppChampInfo(e)
+    setOppChampInfo(e)
     }, function (objStore) {
-      dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+    dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
     })
-  }
+}
 
-  // STEP 04 동선 확인할 경기 리스트 api 호출
-  const GetGameList = () => {
+// STEP 04 동선 확인할 경기 리스트 api 호출
+const GetGameList = () => {
     const selectedChamps = junglevalue.champion && Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === true);
     const selectedOppChamps = junglevalue.oppchampion && Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true);
     const url = `${API}/lolapi/jungle/object-game`;
     const params = {
-      league: leagueArr,
-      year: junglevalue.year,
-      season: seasonArr,
-      patch: patchArr,
-      team: junglevalue.team[0],
-      player: junglevalue.player,
-      champion: selectedChamps,
-      oppchampion: selectedOppChamps,
-      side:"all",
-      token: user.token,
-      id: user.id,
+    league: leagueArr,
+    year: junglevalue.year,
+    season: seasonArr,
+    patch: patchArr,
+    team: junglevalue.team[0],
+    player: junglevalue.player,
+    champion: selectedChamps,
+    oppchampion: selectedOppChamps,
+    side:"all",
+    token: user.token,
+    id: user.id,
     };
     axiosRequest(undefined, url, params, function(e) {
-      setGameList(e.game)
+    setGameList(e.game)
     }, function (objStore) {
-      dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+    dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
     })
-  }
+}
 
 
-
-
-  // champInfo 있을 시 모든 value를 객체 및 false처리
-useEffect(() => {
-  let newArr = [];
-  for(let key in champInfo) {
-    newArr.push(champInfo[key].champ);      
-  }
-  const result = initializedFalseValue(newArr);
-  dispatch(SetFilterData(({
-    ...junglevalue,
-    champion: result,
-  })))
-}, [champInfo])
-
- // oppChampInfo 있을 시 모든 value를 객체 밒 false처리
+// champInfo 있을 시 모든 value를 객체 및 false처리
 useEffect(() => {
 let newArr = [];
-for(let key in oppChampInfo) {
-  newArr.push(oppChampInfo[key].champs);      
+for(let key in champInfo) {
+    newArr.push(champInfo[key].champ);      
 }
 const result = initializedFalseValue(newArr);
 dispatch(SetFilterData(({
-  ...junglevalue,
-  oppchampion: result,
+    ...junglevalue,
+    champion: result,
+})))
+}, [champInfo])
+
+// oppChampInfo 있을 시 모든 value를 객체 밒 false처리
+useEffect(() => {
+let newArr = [];
+for(let key in oppChampInfo) {
+newArr.push(oppChampInfo[key].champs);      
+}
+const result = initializedFalseValue(newArr);
+dispatch(SetFilterData(({
+...junglevalue,
+oppchampion: result,
 })))
 }, [oppChampInfo])
 
@@ -436,7 +472,7 @@ dispatch(SetFilterData(({
         </div>
 
         {/* step4 - 경기체크 */}
-        <div>
+        <div css={{ marginBottom: 30 }}>
           <Accordion  act={junglevalue.oppchampion && Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).length}>
             <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
               <SStepContainer>
@@ -448,6 +484,17 @@ dispatch(SetFilterData(({
             </AccordionSummary>
 
             <AccordionDetails>
+                <SideButtonWrapper>
+                    <SideButton onClick={() => setSide("all")} isActive={side === "all"}>
+                    ALL
+                    </SideButton>
+                    <SideButton onClick={() => setSide("blue")} isActive={side === "blue"}>
+                    BLUE
+                    </SideButton>
+                    <SideButton onClick={() => setSide("red")} isActive={side === "red"}>
+                    RED
+                    </SideButton>
+                </SideButtonWrapper>
               <SGameList>
                 {/* 경기 정보 item */}
                 {gameList?.map((game, idx) => (
@@ -532,8 +579,25 @@ dispatch(SetFilterData(({
             </AccordionDetails>
           </Accordion>
         </div>
-      </SFilterContainer>
 
+          {/* step5 - 오브젝트 설정 */}
+        <div>
+          <Accordion  act={junglevalue.gameid && junglevalue.gameid !== ""}>
+            <AccordionSummary css={{ marginBottom: 8 }} onClick={() => {}}>
+              <SStepContainer>
+                <SLabel>STEP 05</SLabel>
+                <STeam>
+                  <span>{t("video.object.step3")}</span>
+                </STeam>
+              </SStepContainer>
+            </AccordionSummary>
+            <AccordionDetails>
+                {/* 내용 */}
+                <SelectObject setPeriod={setPeriod} period={period}/>
+            </AccordionDetails>
+          </Accordion>
+        </div>
+      </SFilterContainer>
       <SButtonContainer>
         <Button
           disabled={junglevalue.oppChampion && Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).length === 0}
@@ -548,7 +612,7 @@ dispatch(SetFilterData(({
             dispatch(SetIsJungleMappingClicked(true));
           }}
         >
-          {t("video.jungle.confirm")}
+          {t("video.wardPathing.confirmWardPathing")}
         </Button>
       </SButtonContainer>
     </SWrapper>
@@ -581,6 +645,7 @@ const SButtonContainer = styled.div`
 const SStepContainer = styled.div`
   display: flex;
   align-items: center;
+  color: #ffffff;
 `;
 
 const SLabel = styled.p`
@@ -706,4 +771,27 @@ const SBlue = styled.div`
   color: ${({ theme }) => theme.colors.blue};
 `;
 
-export default JungleSideFilter;
+
+const SideButtonWrapper = styled.div`
+  margin-bottom: 9px;
+`;
+
+const SideButton = styled.button`
+  width: 62px;
+  height: 34px;
+  border-radius: 10px;
+  background-color: ${(props) => (props.isActive ? "#23212a" : "#3a3745")};
+  font-family: SpoqaHanSansNeo;
+  font-size: 13px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #fff;
+  opacity: ${(props) => (props.isActive ? 1.0 : 0.3)};
+  margin-right: 5px;
+`;
+
+export default WardSideFilter;

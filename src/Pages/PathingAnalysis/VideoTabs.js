@@ -16,6 +16,7 @@ import HitMap from "./HitMap/HitMap";
 import JungleMap from "./JungleMap/JungleMap";
 import { useTranslation } from "react-i18next";
 import WardObjectPathing from "./WardObjectPathing/WardObjectPathing";
+import { JungleInit } from "../../redux/modules/junglevalue";
 
 function VideoTabs() {
 
@@ -37,8 +38,8 @@ function VideoTabs() {
     1: <ObjectMapping />,
     2: <GameMapping />,
     3: <HitMap />,
-    4: <JungleMap />,
-    5: <WardObjectPathing />
+    4: <JungleMap />, 
+    5: <WardObjectPathing />  
   };
 
   return (
@@ -49,9 +50,10 @@ function VideoTabs() {
             onClick={() => {
               dispatch(HandleTab(0));
               dispatch(Reset_MapTab());
-              if (filters.tab === 4) {
+              if (filters.tab === 4 || filters.tab === 5) {
                 dispatch(ResetWardPathingTab());
                 dispatch(SelectorInitailizeState());
+                dispatch(JungleInit());
               }
             }}
             changeColor={filters.tab === 0}
@@ -65,10 +67,10 @@ function VideoTabs() {
               dispatch(HandleTab(1));
               dispatch(Reset_MapTab()); 
               dispatch(Reset_Object_MapTab());
-              if (filters.tab === 4) {
+              if (filters.tab === 4|| filters.tab === 5)  {
               dispatch(ResetWardPathingTab());
               dispatch(SelectorInitailizeState());
-
+              dispatch(JungleInit());
               }
             }}
             changeColor={filters.tab === 1}
@@ -115,9 +117,9 @@ function VideoTabs() {
               dispatch(HandleTab(4));
               dispatch(Reset_MapTab());
               dispatch(SelectorInitailizeState());
-              if (filters.tab === 4) {
+              if (filters.tab === 4 || filters.tab === 5) {
               dispatch(ResetWardPathingTab());
-              dispatch(SelectorInitailizeState());
+              dispatch(JungleInit());
               }
               // dispatch(InitializeGameState());
               // dispatch(InitailizeState());
@@ -134,9 +136,11 @@ function VideoTabs() {
             onClick={() => {
               dispatch(HandleTab(5));
               dispatch(Reset_MapTab());
-              if (filters.tab === 4) {
-              dispatch(ResetWardPathingTab());
               dispatch(SelectorInitailizeState());
+              if (filters.tab === 4 || filters.tab === 5) {
+              dispatch(ResetWardPathingTab());
+              dispatch(JungleInit());
+
               }
             }}
             changeColor={filters.tab === 5}

@@ -28,7 +28,7 @@ function Video() {
         <div
         // className={filters.filterMenuState ? "filter-open" : "filter-close"}
         >
-          {filters.tab === 4 ? "" : <Filter />}
+          {filters.tab === 4 || filters.tab === 5? "" : <Filter />}
 
         </div>
         {/* <div
@@ -37,7 +37,7 @@ function Video() {
           <CloseFilter />
         </div> */}
         <ContentWrapper>
-          {filters.team !== "" && filters.team.length > 0 || filters.tab === 4 ? (
+          {filters.team !== "" && filters.team.length > 0 || (filters.tab === 4  || filters.tab === 5) ? (
             <VideoTabs />
           ) : (
             <SelectFilter />

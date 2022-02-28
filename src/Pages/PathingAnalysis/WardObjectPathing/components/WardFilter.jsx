@@ -22,12 +22,11 @@ import { typoStyle } from "../../../../Styles/ui";
 import { useTranslation } from "react-i18next";
 import { API } from '../../../config';
 import axiosRequest from '../../../../lib/axios/axiosRequest';
-import SelectedJungleFilter from "./SelectedJungleFilter";
 import {initializedFalseValue} from '../../../../lib/initializedFalseValue';
-import { FlexContainer } from "./styled/StyledJungleLayout";
+import SelectedWardFilter from "./SelectedWardFilter";
 
 
-const JungleFilter = () => {
+const WardFilter = () => {
   const staticvalue = useSelector((state) => state.StaticValueReducer);
   const selector = useSelector((state) => state.SelectorReducer);
   const junglevalue = useSelector((state) => state.JungleMapReducer);
@@ -454,10 +453,10 @@ const JungleFilter = () => {
         <SCheckboxWrapper>
 
         {/* 선택된 필터 노출 */}
-        <SelectedJungleFilter 
-        filterData={junglevalue}
-        toggleFoldBtn={toggleFoldBtn}
-        setToggleFoldBtn={setToggleFoldBtn}
+         <SelectedWardFilter 
+          filterData={junglevalue}
+          toggleFoldBtn={toggleFoldBtn}
+          setToggleFoldBtn={setToggleFoldBtn}
          />
         </SCheckboxWrapper>
        </SFilterGroup>
@@ -478,6 +477,13 @@ const JungleFilter = () => {
       </SContainer>
   );
 };
+
+const FoldUpBtn = styled.button`
+position: absolute;
+bottom: 5px;
+right: -55px;
+`;
+
 
 const SContainer = styled.div`
 position: relative;
@@ -551,10 +557,5 @@ const SCheckboxWrapper = styled.div`
 flex:1
 `;
 
-const FoldUpBtn = styled.button`
-position: absolute;
-bottom: 5px;
-right: -55px;
-`;
 
-export default JungleFilter;
+export default WardFilter;

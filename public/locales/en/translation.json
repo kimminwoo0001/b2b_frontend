@@ -534,8 +534,9 @@
       "compareJungling":"Compare Jungling",
       "side":"SIDE",
       "champTitle":"Champion",
-      "numOfMatches":"Matches",
-      "matchesBySide":"By Side",
+      "numOfMatches2":"Matches",
+      "numOfMatches":"By Side",
+      "matchesBySide":"Match",
       "campSelectionRate":"Jungle Camp Selection Rate By Order",
       "selectionRate":"Camp Selection Rate By Order",
       "rank":"Rank",
@@ -557,7 +558,11 @@
         "krugs" : "Krugs",
         "scuttler" : "Scuttler"
       }
+    },
+    "wardPathing" : {
+      "confirmWardPathing": "Confirm Ward & Pathing"
     }
+
   },
   "alert": {
     "login": {

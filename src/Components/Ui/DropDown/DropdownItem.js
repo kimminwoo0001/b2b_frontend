@@ -35,6 +35,8 @@ const DropdownItem = ({ children, value, label, ...props }) => {
 const Item = styled.li`
   cursor: pointer;
   ${typoStyle.select_item}
+  display: flex;
+  align-items: center;
 `;
 
 export default DropdownItem;

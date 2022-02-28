@@ -61,8 +61,6 @@ const CompareSideFilter = () => {
   const user = useSelector((state) => state.UserReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const isInitialMount = useRef(true);
-  const isInitialMount2 = useRef(true);
 
   const [champInfo, setChampInfo] = useState();
   const [oppChampInfo, setOppChampInfo] = useState();
@@ -369,7 +367,6 @@ const CompareSideFilter = () => {
       id: user.id,
     };
     axiosRequest(undefined, url, params, function(e) {
-
       setOppChampInfo(e);
       console.log("상대팀:",e);
     }, function (objStore) {
@@ -396,7 +393,7 @@ useEffect(() => {
  useEffect(() => {
   let newArr = [];
   for(let key in oppChampInfo) {
-    newArr.push(oppChampInfo[key].champs);      
+    newArr.push(oppChampInfo[key].champ);      
   }
   const result = initializedFalseValue(newArr);
   dispatch(SetFilterData(({
@@ -489,7 +486,7 @@ useEffect(() => {
 
 
   useEffect(() => {
-    if(Object.keys(junglevalue.season).length === 0) {
+    if(Object.keys(junglevalue.season).filter(key => junglevalue.season[key] === true).length === 0) {
       return;
     }
     fetchPatchFilter(junglevalue.year, junglevalue.league, junglevalue.season);
@@ -497,7 +494,7 @@ useEffect(() => {
 
 
   useEffect(() => {
-    if(Object.keys(junglevalue.oppseason).length === 0) {
+    if(Object.keys(junglevalue.oppseason).filter(key => junglevalue.oppseason[key] === true).length === 0) {
       return;
     }
     fetchPatchFilter(junglevalue.oppyear, junglevalue.oppleague, junglevalue.oppseason);
@@ -508,24 +505,14 @@ useEffect(() => {
     if(Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key] === true).length === 0) {
       return;
     }
-
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-    } else {
-    GetChampion(junglevalue.league, junglevalue.year, junglevalue.season, junglevalue.team, junglevalue.player);
-    }
-  
+    GetChampion();
   },[junglevalue.patch])
 
   useEffect(() => {
     if(Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === true).length === 0) {
       return;
     }
-    if (isInitialMount2.current) {
-      isInitialMount2.current = false;
-    } else {
-      GetOppChampion(junglevalue.oppleague, junglevalue.oppyear, junglevalue.oppseason, junglevalue.oppteam, junglevalue.oppplayer);
-    }
+    GetOppChampion();
   },[junglevalue.champion])
   
  
@@ -588,24 +575,36 @@ useEffect(() => {
                       }}
                     >
                       <DropdownLabel css={[dropdownStyle.select_head]}>
-                        <S.SelectLabel>
-                          {t("video.jungle.selectLeague")}</S.SelectLabel>
+                          {junglevalue.league.length > 0 ? 
+                           <S.SelectLabel>
+                                <img
+                                className="leagueLogo"
+                                width="24px"
+                                height="24px"
+                                src={ `Images/ico-league-${junglevalue.league[0].toLowerCase()}.png`}
+                                alt="leagueLogo"
+                                /> 
+                                {junglevalue.league[0]}
+                           </S.SelectLabel> 
+                            :
+                         <S.SelectLabel> {t("video.jungle.selectLeague")}</S.SelectLabel>
+                          }
                       </DropdownLabel>
                       <DropdownList>
                         {selector.leagueFilter?.map((league,idx) => {
                           return  (
                             <SLeagueWrapper>
+                            <DropdownItem
+                            css={[dropdownStyle.select_item]}
+                            value={league}
+                          >
                             <img
                             className="leagueLogo"
                             width="24px"
                             height="24px"
                             src={ `Images/ico-league-${league.toLowerCase()}.png`}
                             alt="leagueLogo"
-                          /> 
-                            <DropdownItem
-                            css={[dropdownStyle.select_item]}
-                            value={league}
-                          >
+                            /> 
                             {league}
                           </DropdownItem>
                           </SLeagueWrapper>
@@ -990,8 +989,8 @@ useEffect(() => {
                     />
                   </S.Col1>
                   <S.Col2>{`${t("video.jungle.champTitle")}(${t("video.jungle.numOfMatches")})`}</S.Col2>
-                  <S.Col3>{t("video.jungle.numOfMatches")}</S.Col3>
                   <S.Col3>{t("video.jungle.matchesBySide")}</S.Col3>
+                  <S.Col3>{t("video.jungle.numOfMatches")}</S.Col3>
                 </S.Head>
 
                 <S.Body>
@@ -1062,8 +1061,8 @@ useEffect(() => {
                       checked={Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === false).length === 0}/>
                   </S.Col1>
                   <S.Col2>{`${t("video.jungle.champTitle")}(${t("video.jungle.numOfMatches")})`}</S.Col2>
-                  <S.Col3>{t("video.jungle.numOfMatches")}</S.Col3>
                   <S.Col3>{t("video.jungle.matchesBySide")}</S.Col3>
+                  <S.Col3>{t("video.jungle.numOfMatches")}</S.Col3>
                 </S.Head>
 
                 <S.Body>

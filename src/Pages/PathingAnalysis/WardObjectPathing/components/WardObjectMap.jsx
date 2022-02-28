@@ -49,7 +49,7 @@ function useIntervalNormal(callback) {
   }, []);
 }
 
-const Map = ({position, setPosition}) => {
+const WardObjectMap = ({position, setPosition}) => {
     const junglevalue = useSelector(state => state.JungleMapReducer);
     const user = useSelector((state) => state.UserReducer);
     const lang = useSelector((state) => state.LocaleReducer);
@@ -135,11 +135,6 @@ const Map = ({position, setPosition}) => {
     }
     GetMappingInfo();
   },[junglevalue.isMappingClicked])
-
-
-    useEffect(() => {
-      console.log(position);
-    },[range])
 
 
     return (
@@ -282,7 +277,7 @@ const Map = ({position, setPosition}) => {
     );
 };
 
-export default Map;
+export default WardObjectMap;
 
 const SMapContainer = styled.section`
 width: 700px;
@@ -296,6 +291,10 @@ const SWardPathingMap = styled.div`
 `;
 
 
+
+
+
+///////////////////// 
 const StyledTippy = styled(Tippy)``;
 
 const PlayerInfo = styled.div`

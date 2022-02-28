@@ -37,7 +37,6 @@ const Compare = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const [active, setActive] = useState(true);
   const [team,setTeam] = useState();
   const [oppTeam, setOppTeam] = useState();
   const [teamBlue, setTeamBlue] = useState();
@@ -117,7 +116,7 @@ const Compare = () => {
     return campRate;
   }
 
-   const fetchCampSelectionRate = () => {
+  const fetchCampSelectionRate = () => {
     const {year,oppyear,league,oppleague,team,oppteam,player,oppplayer} = junglevalue;
     const selectedPatches = Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key] === true);    
     const selectedSeasons = Object.keys(junglevalue.season).filter(key => junglevalue.season[key] === true);    

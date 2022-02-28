@@ -12,7 +12,14 @@ import { useState } from "react";
 
 const Sequence = () => {
   const junglevalue = useSelector((state) => state.JungleMapReducer);
-  const [position, setPosition] = useState();
+  const [position, setPosition] = useState(
+    { all: true,
+      top: true,
+      jng: true,
+      mid: true,
+      bot: true,
+      sup: true,
+    });
   return (
     <S.SequenceContainer>
       {/* 메인 필터 */}
