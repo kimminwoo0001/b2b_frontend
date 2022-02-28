@@ -294,6 +294,10 @@ const JungleFilter = () => {
                   {Object.keys(seasonState).map((season, _) => {
                     return (
                       <Checkbox
+                        css={{
+                          width: "calc(20% - 22px)",
+                          justifyContent: "flex-start",
+                        }}
                         key={season + _}
                         name="season"
                         value={season}
@@ -326,6 +330,10 @@ const JungleFilter = () => {
                   {teamList.map((team, _) => {
                     return (
                       <Radio
+                        css={{
+                          width: "calc(10% - 22px)",
+                          justifyContent: "flex-start",
+                        }}
                         key={team + _}
                         name="team"
                         value={team}
@@ -369,6 +377,10 @@ const JungleFilter = () => {
                     patchList.map((patch, _) => {
                       return (
                         <Checkbox
+                          css={{
+                            width: "calc(10% - 22px)",
+                            justifyContent: "flex-start",
+                          }}
                           key={patch + _}
                           name="patch"
                           value={patch}
@@ -449,6 +461,15 @@ const SInitialStatement = styled.div`
   opacity: 0.3;
   margin: 5px 0 0 5px;
 `;
+const SCheckboxWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+
+  label {
+    margin-right: 22px;
+  }
+`;
 const SFilterGroup = styled.div`
   display: flex;
   flex-direction: column;
@@ -461,10 +482,6 @@ const SFilterGroup = styled.div`
   border-radius: 10px;
   background-color: ${(props) => props.theme.colors.bg_box};
   padding: 10px;
-
-  label {
-    margin-right: 22px;
-  }
 
   ${SCheckboxAll} {
     margin-right: 36px;
@@ -480,9 +497,7 @@ const SResetWrapper = styled.div`
 const SResetImg = styled.img`
   margin-right: 3px;
 `;
-const SCheckboxWrapper = styled.div`
-  flex: 1;
-`;
+
 const FoldUpBtn = styled.button`
   position: absolute;
   bottom: 5px;

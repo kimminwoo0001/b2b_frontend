@@ -37,7 +37,7 @@ function VideoTabs() {
     1: <ObjectMapping />,
     2: <GameMapping />,
     3: <HitMap />,
-    // 4: <JungleMap />,
+    4: <JungleMap />,
   };
 
   return (
@@ -96,7 +96,7 @@ function VideoTabs() {
             </div>
           </TabContent>
           {/* 정글동선 탭 */}
-          {/* <TabContent
+          <TabContent
             onClick={() => {
               dispatch(HandleTab(4));
               dispatch(Reset_MapTab());
@@ -109,7 +109,7 @@ function VideoTabs() {
             <div>
               <span>{t("video.tab.jungle")}</span>
             </div>
-          </TabContent> */}
+          </TabContent>
         </TabContainer>
         <div>{VideoTab[filters.tab]}</div>
       </VideoTabsWrapper>

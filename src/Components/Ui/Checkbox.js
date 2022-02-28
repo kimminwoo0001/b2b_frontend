@@ -37,6 +37,7 @@ const SCheckboxContainer = styled.label`
   }
 
   > em {
+    flex-shrink: 0;
     position: relative;
     display: block;
     width: 24px;
