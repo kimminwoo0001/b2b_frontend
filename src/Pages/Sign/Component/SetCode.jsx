@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useTranslation } from "react-i18next";
 import SetInputBox from "./SetInputBox";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,7 +29,7 @@ const SetCode = ({ id, authCode, setAuthCode, setSignType, signType }) => {
 
   const onChange = (e) => {
     const { value, id } = e.target;
-    console.log("id", id);
+    //console.log("id", id);
 
     setAuthCode(value);
   };

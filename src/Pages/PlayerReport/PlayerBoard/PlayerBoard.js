@@ -1,5 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
 import { Line } from "react-chartjs-2";
 import Tippy from "@tippy.js/react";
@@ -58,8 +60,8 @@ function PlayerBoard() {
 
 
   const secToMin = (sec) => {
-    let mm = addZero(Math.floor(sec / 60));
-    let ss = addZero(Math.floor(sec % 60));
+    let mm = Math.floor(sec / 60);
+    let ss = Math.floor(sec % 60);
 
     return `${mm}${t("solo.playerboard.min")} ${ss}${t("solo.playerboard.sec")}`;
   }
@@ -81,7 +83,7 @@ function PlayerBoard() {
       patch: filters.patch,
       team: filters.team,
       player: filters.player,
-      champion: filters.champion_eng,
+      champion: filters.champion_eng.split(' (')[0], // 이 부분도 수정이 필요
       oppchampion: filters.oppchampion_eng,
       token: user.token,
       id: user.id,
@@ -158,7 +160,7 @@ function PlayerBoard() {
         const champArray = e.champion.map(
           (data) => `${data.kor}(${data.total}경기)`
         );
-        const champArrayEng = e.champion.map((data) => data.eng);
+        const champArrayEng = e.champion.map((data) => `${data.eng} (${data.total})`);
 
         // setChampFilter(e.champion);
         // setChampEng(e.championEng);
@@ -186,7 +188,7 @@ function PlayerBoard() {
       season: filters.season,
       patch: filters.patch,
       position: filters.position,
-      champion: filters.champion_eng,
+      champion: filters.champion_eng.split('(')[0], // 영어 이름 넣는거 수정이 필요함
       player: filters.player,
       token: user.token,
       id: user.id,
@@ -1288,6 +1290,7 @@ const PlayerOverView = styled.div`
     letter-spacing: -0.65px;
     text-align: left;
     color: rgb(240, 69, 69);
+    
   }
   .AgeValue {
     display: flex;
@@ -1613,6 +1616,7 @@ const MapCompetition = styled.tr`
   }
   .WinValue {
     width: 40px;
+    white-space: nowrap;
   }
   .SbrValue {
     color: rgb(240, 69, 69);

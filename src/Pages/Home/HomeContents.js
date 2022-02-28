@@ -1,7 +1,9 @@
 import React, { useState, useEffect, memo } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 
 import axios from "axios";
 import LoadingImg from "../../Components/LoadingImg/LoadingImg";
@@ -62,14 +64,14 @@ const HomeContents = memo(() => {
   // 홈 데이터 fetch 해오는 함수
 
   const fetchHomeData = () => {
-    console.log(user);
+    //console.log(user);
     try {
       const url = `${API}/lolapi/home/home`;
       const params = {
         token: user.token
       }
       axiosRequest(undefined, url, params, function (data) {
-        console.log("modal", modal);
+        //console.log("modal", modal);
         setLeagueDataset(data);
         setDoneHome(true);
       }, function (objStore) {
@@ -91,7 +93,7 @@ const HomeContents = memo(() => {
           id: user.id
         }
         axiosRequest(undefined, url, params, function (data) {
-          console.log(data);
+          //console.log(data);
           dispatch(SetFilterAllItems(data));
           setDoneFilter(true);
         }, function (objStore) {
@@ -125,7 +127,7 @@ const HomeContents = memo(() => {
     }
   }
 
-  console.log("전역 변수 테스트", staticvalue);
+  //console.log("전역 변수 테스트", staticvalue);
   return (
     <LeagueListWrapper>
       <BoxWrapper>

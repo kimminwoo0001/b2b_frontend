@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { transitionStyle, typoStyle } from ".";
-import theme from "../Theme";
+import colors from "./colors";
 
 const dropdownStyle = {
   select_head: css`
@@ -8,7 +8,7 @@ const dropdownStyle = {
     width: 100%;
     padding: 10px;
     border-radius: 10px;
-    background-color: ${theme.colors.bg_select};
+    background-color: ${colors.bg_select};
     cursor: pointer;
     ${typoStyle.select}
     ${transitionStyle.background}
@@ -19,7 +19,7 @@ const dropdownStyle = {
       top: 50%;
       transform: translateY(-50%);
       border: 3px solid transparent;
-      border-top: 5px solid ${theme.colors.info};
+      border-top: 5px solid ${colors.info};
     }
   `,
   select_list: {},
@@ -27,10 +27,10 @@ const dropdownStyle = {
     width: 100%;
     ${typoStyle.select}
     padding: 10px;
-    background-color: ${theme.colors.bg_select};
+    background-color: ${colors.bg_select};
 
     &:hover {
-      background-color: ${theme.colors.bg_light};
+      background-color: ${colors.bg_light};
     }
   `,
 

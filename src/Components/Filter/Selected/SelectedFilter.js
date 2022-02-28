@@ -1,5 +1,7 @@
 import React, { memo } from 'react';
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import SelectedData from './SelectedData';
@@ -51,7 +53,7 @@ const SelectedFilter = memo(({ pagePath, nameSolo, nameTeam, nameVideo, namePlay
       <SelectedArea>
         <header><label className={filters.patch.length === 0 && "not-selected"}>{t("label.patchVersion")}</label></header>
         <section>
-          {console.log(filters.patch)}
+          {/* {console.log(filters.patch)} */}
           {filters.patch.length > 0 && filters.patch?.map((data) => {
             return <SelectedData data={data} deleteBtn={() => { dispatch(Patch(data)); }} />
           })}

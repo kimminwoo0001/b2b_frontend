@@ -1,8 +1,10 @@
 import React, { memo, useEffect } from "react";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { goPlayerReport } from "../../lib/pagePath";
+import { goLeagueReport, goPlayerReport } from "../../lib/pagePath";
 
 const MultiSelectCb = memo(
   ({
@@ -13,14 +15,15 @@ const MultiSelectCb = memo(
     clickEvent,
     title,
     radioBtn = false,
+    playerPosition = false
   }) => {
     const { t } = useTranslation();
     const filters = useSelector((state) => state.FilterReducer);
     const pagePath = document.location.pathname;
     const isPlayerReportPage = pagePath === goPlayerReport;
-
     return (
-      <>
+
+      <SelectorWrapper isUpperLineNecessary={mapData === "LPL" && pagePath === goLeagueReport}>
         <Selecter
           key={idx}
           isChecked={filterData?.includes(mapData) ? true : false}
@@ -36,14 +39,28 @@ const MultiSelectCb = memo(
             checked={filterData?.includes(mapData) ? true : false}
             readOnly
           />
-          <span>{mapData === "11.6" ? "11.6 (P.O)" : mapData}</span>
+          {playerPosition && <img className="player-positon" src={`Images/ico-position-${playerPosition}.png`} alt="position" />}
+          <span
+            className="text"
+          >{(mapData === "11.6" ? "11.6 (P.O)" : mapData === "LPL" && pagePath === goLeagueReport ? `${mapData} (${t("filters.noMultipleSelection")})` : mapData)}</span>
         </Selecter>
-      </>
+      </SelectorWrapper>
+
     );
   }
 );
 
 export default MultiSelectCb;
+
+const SelectorWrapper = styled.div`
+${(props) =>
+    props.isUpperLineNecessary &&
+    css`
+border-top: 1px solid #433f4e;
+border-radius: 0px;
+`}
+
+`
 
 const Selecter = styled.div`
   display: flex;
@@ -54,6 +71,17 @@ const Selecter = styled.div`
   height: 30px;
   color: #84818e;
   cursor: pointer;
+
+  .player-positon {
+    width: 19px;
+    height: 19px;
+    object-fit: contain;
+    align-items: center;
+    margin-right: 6px;
+  }
+  
+
+
 
   ${(props) =>
     props.isChecked &&
@@ -143,7 +171,7 @@ const Selecter = styled.div`
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
-    line-height: 1.42;
+    line-height: 1.6;
     letter-spacing: normal;
     text-align: left;
     color: #fff;

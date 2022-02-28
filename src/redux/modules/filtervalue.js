@@ -49,11 +49,6 @@ export const SET_CHECKBOX_INPUTS = "filtervalue/SET_CHECKBOX_INPUTS";
 export const SET_CHAMPIONS = "filtervalue/SET_CHAMPIONS";
 export const SET_CHAMPIONS_ENG = "filtervalue/SET_CHAMPIONS_ENG";
 
-
-
-
-
-
 export const Reset_MapTab = (payload) => {
   return {
     type: RESET_MAPPINGTAB,
@@ -81,7 +76,6 @@ export const Champion = (champion) => {
     payload: champion,
   };
 };
-
 
 export const Opp_Champion = (champion) => {
   return {
@@ -353,16 +347,15 @@ export const ResetWardPathingTab = (payload) => {
   return {
     type: RESET_WARD_PATHING_TAB,
     payload,
-  }
-}
+  };
+};
 
 export const SetCheckedInputs = (payload) => {
   return {
     type: SET_CHECKBOX_INPUTS,
     payload,
-  }
-}
-
+  };
+};
 
 export const SetChampion = (payload) => {
   return {
@@ -412,7 +405,6 @@ export default function FilterReducer(state = initialState, action) {
     case INITIAL_STATE:
       return initialState;
     case LEAGUE:
-      console.log(state);
       if (state.league.length === 0) {
         return { ...state, league: [action.payload] };
       }
@@ -459,7 +451,6 @@ export default function FilterReducer(state = initialState, action) {
     case OPP_TEAM:
       return { ...state, oppteam: action.payload };
     case PLAYER:
-      console.log("PLAYER", PLAYER)
       if (state.player === action.payload) {
         return { ...state, player: "" };
       } else {
@@ -492,6 +483,7 @@ export default function FilterReducer(state = initialState, action) {
     case HANDLE_CLICK:
       return { ...state, click: action.payload };
     case LOADING:
+      console.log("LOADING", action.payload);
       return { ...state, loading: action.payload };
     case POSITION:
       return { ...state, position: action.payload };
@@ -692,7 +684,7 @@ export default function FilterReducer(state = initialState, action) {
         oppchampion: "",
         champion_eng: "",
         oppchampion_eng: "",
-      }
+      };
     case SET_CHAMPIONS:
       return {
         ...state,
@@ -702,6 +694,11 @@ export default function FilterReducer(state = initialState, action) {
       return {
         ...state,
         champion_eng: action.payload,
+      };
+    case SET_CHECKBOX_INPUTS:
+      return {
+        ...state,
+        league: action.payload,
       };
     default:
       return state;

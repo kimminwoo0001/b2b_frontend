@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 
 import Nav from "../../Components/Nav/Nav";
 import SideBar from "../../Components/SideBar/SideBar";
@@ -16,12 +18,11 @@ function Home() {
   const copyvalue = useSelector((state) => state.CopyReducer);
   const { t } = useTranslation();
   if (document.title !== `${t("sidebar.part1")} - NUNU.GG`) {
-    document.title = `${t("sidebar.part1")} - NUNU.GG`
+    document.title = `${t("sidebar.part1")} - NUNU.GG`;
   }
 
   return (
     <ErrorBoundary>
-      {console.log("홈 실행")}
       {copyvalue?.openFilterModal === goTeamCompare && <TeamFilterModal />}
       {copyvalue?.openFilterModal === goPlayerCompare && <PlayerFilterModal />}
       <Nav />
@@ -43,8 +44,7 @@ const HomeWrapper = styled.div`
   min-height: 100vh;
   overflow: auto;
   display: flex;
-  background-color: #23212A;
-};
+  background-color: #23212a;
 `;
 
 const ContentWrapper = styled.div`

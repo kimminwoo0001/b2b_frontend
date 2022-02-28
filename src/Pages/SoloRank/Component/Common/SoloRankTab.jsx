@@ -9,10 +9,11 @@ import { useSelector } from "react-redux";
 import MyTeam from "../../screens/MyTeam";
 import SearchFilter from "../../screens/SearchFilter";
 import InterestedPlayer from "../../screens/InterestedPlayer";
+import { useState } from "react";
 
 const SoloRankTab = () => {
   const { t } = useTranslation();
-  const SRTab = [
+  const tab = [
     { title: t("soloRank.tab.myTeam"), component: <MyTeam /> },
     { title: t("soloRank.tab.filterSearch"), component: <SearchFilter /> },
     {
@@ -20,14 +21,13 @@ const SoloRankTab = () => {
       component: <InterestedPlayer />,
     },
   ];
-  const { currentIndex, currentTab, setIndex } = useTab(0, SRTab);
-
-  console.log(currentTab);
+  const { currentIndex, currentTab, setIndex } = useTab(0, tab);
 
   return (
     <SContainer>
+      {/* 탭 헤더 */}
       <STab>
-        {SRTab.map((tab, index) => (
+        {tab.map((tab, index) => (
           <STabItem
             key={tab.title}
             className={index === currentIndex ? "is-active" : ""}
@@ -37,6 +37,8 @@ const SoloRankTab = () => {
           </STabItem>
         ))}
       </STab>
+
+      {/* 탭 컨텐츠 */}
       <SContents>{currentTab.component}</SContents>
     </SContainer>
   );
@@ -93,6 +95,5 @@ const STabItem = styled.li`
 `;
 
 const SContents = styled.div`
-  display: flex;
   ${testStyle.border2}
 `;

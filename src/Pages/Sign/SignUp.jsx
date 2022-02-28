@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import SetCode from "./Component/SetCode";
 import { useDispatch, useSelector } from "react-redux";
 import { SetSelectedResult } from "../../redux/modules/modalvalue";

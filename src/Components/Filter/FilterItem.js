@@ -1,9 +1,11 @@
 import React, { memo, useEffect, useState } from "react";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 import { SetLeague, SetSeason } from "../../redux/modules/filtervalue";
-import { goTeamReport, goPlayerReport } from "../../lib/pagePath";
+import { goTeamReport, goPlayerReport, goLeagueReport } from "../../lib/pagePath";
 
 const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
   const { t } = useTranslation();
@@ -19,23 +21,30 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
   };
 
   useEffect(() => {
-    if ([goTeamReport, goTeamReport].includes(pagePath)) {
+    if ([goTeamReport, goPlayerReport].includes(pagePath)) {
       return;
     }
 
-    if (
+    // 리그보고서이면서 LPL리그를 제외한 나머지 리그를 선택했을 때 전체선택 버튼 on 
+    if (pagePath === goLeagueReport &&
+      title === t("label.league") &&
+      filters.league.length > 0 && selector.leagueFilter.filter(league => league !== "LPL").length === filters.league.length
+    ) {
+      setChecked(true);
+    }
+    else if (
       title === t("label.league") &&
       filters.league.length > 0 &&
       selector.leagueFilter.length === filters.league.length
     ) {
-      console.log(
-        "selector.leagueFilter.length === filters.league.length :",
-        selector.leagueFilter.length === filters.league.length
-      );
-      console.log(
-        "selector.seasonFilter.length === filters.season.length :",
-        selector.seasonFilter.length === filters.season.length
-      );
+      // console.log(
+      //   "selector.leagueFilter.length === filters.league.length :",
+      //   selector.leagueFilter.length === filters.league.length
+      // );
+      // console.log(
+      //   "selector.seasonFilter.length === filters.season.length :",
+      //   selector.seasonFilter.length === filters.season.length
+      // );
       setChecked(true);
     } else if (title === t("label.league")) {
       setChecked(false);
@@ -48,14 +57,14 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
       filters.season.length > 0 &&
       selector.seasonFilter.length === filters.season.length
     ) {
-      console.log(
-        "selector.leagueFilter.length === filters.league.length :",
-        selector.leagueFilter.length === filters.league.length
-      );
-      console.log(
-        "selector.seasonFilter.length === filters.season.length :",
-        selector.seasonFilter.length === filters.season.length
-      );
+      // console.log(
+      //   "selector.leagueFilter.length === filters.league.length :",
+      //   selector.leagueFilter.length === filters.league.length
+      // );
+      // console.log(
+      //   "selector.seasonFilter.length === filters.season.length :",
+      //   selector.seasonFilter.length === filters.season.length
+      // );
       setChecked(true);
     } else if (title === t("label.season")) {
       setChecked(false);
@@ -63,7 +72,20 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
   }, [filters.season]);
 
   const handleCheckboxClick = () => {
-    if (
+    // 리그보고서에서 LPL(라디오버튼)을 제외한 나머지 리그만을 전체선택하도록 임시 설정
+    if (title === t("label.league") && pagePath === goLeagueReport && filters.league.length <
+      selector.leagueFilter.filter(league => league !== "LPL").length) {
+      setChecked(true);
+      dispatch(SetLeague(selector.leagueFilter.filter(league => league !== "LPL")));
+    } else if (
+      title === t("label.league") && pagePath === goLeagueReport && filters.league.length ===
+      selector.leagueFilter.filter(league => league !== "LPL").length
+    ) {
+      setChecked(false);
+      dispatch(SetLeague([]));
+    }
+    // 전체 선택
+    else if (
       title === t("label.league") &&
       filters.league.length >= 0 &&
       filters.league.length < selector.leagueFilter.length
@@ -71,6 +93,7 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
       setChecked(true);
       dispatch(SetLeague(selector.leagueFilter));
     } else if (
+      // 전체 선택 해제
       title === t("label.league") &&
       filters.league.length === selector.leagueFilter.length
     ) {
@@ -123,7 +146,7 @@ const FilterItem = memo(({ title, isHaveFilter, multiFilter }) => {
         </Header>
         <div className={viewSwitch ? "open-filter-item" : "close-filter-item"}>
           {/* 전체선택 */}
-          {![goTeamReport, goTeamReport].includes(pagePath) && filters.year.length > 0 &&
+          {![goTeamReport, goPlayerReport].includes(pagePath) && filters.year.length > 0 &&
             (title === t("label.league") ||
               (title === t("label.season") && filters.league.length > 0)) && (
               <div className="div-select-all">

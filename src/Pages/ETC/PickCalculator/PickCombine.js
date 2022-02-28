@@ -2,7 +2,9 @@ import React, { useRef, useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { Team, OppTeam } from "../../redux/modules/filtervalue";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useDetectOutsideClick } from "../../Components/SelectFilter/useDetectOustsideClick";
 import PickCombineModal from "./PickCombineModal";
 import { API } from "../config";
@@ -15,8 +17,8 @@ const PositionImage = [
     Icon: "Images/ico-position-top2.png",
   },
   {
-    Image: "Images/img-player-jug-none.png",
-    Icon: "Images/ico-position-jug2.png",
+    Image: "Images/img-player-jng-none.png",
+    Icon: "Images/ico-position-jng2.png",
   },
   {
     Image: "Images/img-player-mid-none.png",

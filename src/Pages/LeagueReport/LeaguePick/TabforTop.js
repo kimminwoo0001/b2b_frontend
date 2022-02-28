@@ -1,6 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useSelector } from "react-redux";
 import ExcelExport from "../../../Components/UtilityComponent/ExcelExport";
 
@@ -106,7 +108,7 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                   <div className="sorting">{t("league.draft.picks")}</div>
                 </th>
                 {/* <th className="PickCount" onClick={() => requestSort("ban")}> */}
-                <th className="PickCount" >
+                <th className="PickCount">
                   <div className="sorting">
                     {t("league.draft.ban")}
                     {/* <Sortingimage>
@@ -127,25 +129,32 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                   className="ProbRate"
                   onClick={() => requestSort("probRate")}
                 > */}
-                <th
-                  className="ProbRate">
+                <th className="ProbRate">
                   <div className="sorting">{t("league.draft.adjWr")}</div>
                 </th>
                 <th className="none"></th>
               </tr>
             </thead>
             <tbody>
-              {items.length === 0 && (
+              {importantPicks === undefined && (
                 <LoadingImage>
                   <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
                 </LoadingImage>
+              )}
+              {importantPicks !== undefined && items && items.length === 0 ? (
+                <NoData>{t("league.draft.noData")}</NoData>
+              ) : (
+                ""
               )}
               {items?.map((data, idx) => {
                 return (
                   <tr key={idx}>
                     <td className="ChampName">
                       <div className="ChampWrapper">
-                        <img src={`https://am-a.akamaihd.net/image?resize=90:&f=${data.championImage}`} alt="champIcon"></img>
+                        <img
+                          src={`https://am-a.akamaihd.net/image?resize=90:&f=${data.championImage}`}
+                          alt="champIcon"
+                        ></img>
                         <div>
                           {lang === "ko" ? data.championKor : data.champion}
                         </div>
@@ -175,7 +184,8 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
               <tr>
                 <th className="Champion">{t("league.draft.champion")}</th>
                 <th className="PickCount" onClick={() => requestSorts("pick")}>
-                  <div className="sorting">{t("league.draft.pick")}
+                  <div className="sorting">
+                    {t("league.draft.pick")}
                     <Sortingimage>
                       <img src="Images/ico-sorting-up.png" alt="up" />
                       <img src="Images/ico-sorting-down.png" alt="down" />
@@ -183,7 +193,8 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                   </div>
                 </th>
                 <th className="BanRate" onClick={() => requestSorts("ban")}>
-                  <div className="sorting">{t("league.draft.ban")}
+                  <div className="sorting">
+                    {t("league.draft.ban")}
                     <Sortingimage>
                       <img src="Images/ico-sorting-up.png" alt="up" />
                       <img src="Images/ico-sorting-down.png" alt="down" />
@@ -212,10 +223,15 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
               </tr>
             </thead>
             <tbody>
-              {tiers.length === 0 && (
+              {tier === undefined && (
                 <LoadingImage>
                   <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
                 </LoadingImage>
+              )}
+              {tier !== undefined && tiers && tiers.length === 0 ? (
+                <NoData>{t("league.draft.noData")}</NoData>
+              ) : (
+                ""
               )}
               {tiers?.map((data, idx) => {
                 let tierData = 0;
@@ -261,14 +277,24 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
             <span id="header-name">{t("league.draft.against")}</span>
           </Header>
           <MatchWrapper id="against-table">
-            {pickDifference && pickDifference.length === 0 && (
+            {pickDifference === undefined && (
               <LoadingImage>
                 <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
               </LoadingImage>
             )}
+            {pickDifference !== undefined &&
+            pickDifference &&
+            pickDifference.length === 0 ? (
+              <NoData>{t("league.draft.noData")}</NoData>
+            ) : (
+              ""
+            )}
             {pickDifference?.map((pick, idx) => {
               return (
-                <MatchContents key={idx}>
+                <MatchContents
+                  LPLnotSelected={!filters.league.includes("LPL")}
+                  key={idx}
+                >
                   <BlueSide>
                     <ChampInfo>
                       <img
@@ -286,45 +312,51 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                         )} ${pick?.champion.lose}${t("league.draft.l")}`}</div>
                       </div>
                     </ChampInfo>
-                    <KDA>
-                      <div className="Kda">KDA</div>
-                      <span className="Kills">
-                        {pick?.champion.kills.toFixed(0)}
-                      </span>
-                      <p className="Slash">/</p>
-                      <span className="Deaths">
-                        {pick?.champion.deaths.toFixed(0)}
-                      </span>
-                      <p className="Slash">/</p>
-                      <span className="Support">
-                        {pick?.champion.assists.toFixed(0)}
-                      </span>
-                      <span className="Rate">{`${pick?.champion.kda.toFixed(
-                        1
-                      )} : 1`}</span>
-                    </KDA>
-                    <Kills>
-                      <div className="KillRate">{t("league.draft.kp")}</div>
-                      <div className="RateNumber">
-                        {pick?.champion.kp.toFixed(0)}%
-                      </div>
-                    </Kills>
-                    <DPM>
-                      {filters.league.indexOf("lpl") === -1 ? (
-                        <div className="DPM">PR</div>
-                      ) : (
-                        <div></div>
-                      )}
-                      {filters.league.indexOf("lpl") === -1 ? (
-                        <div className="DPMNumber">{
-                          pick?.champion.pr === null ? t("league.pick.prNull") : pick?.champion.pr.toFixed(1)
-                        }
-
-                        </div>
-                      ) : (
-                        <div></div>
-                      )}
-                    </DPM>
+                    {!filters.league.includes("LPL") ? (
+                      <>
+                        <KDA>
+                          <div className="Kda">KDA</div>
+                          <span className="Kills">
+                            {pick?.champion.kills.toFixed(0)}
+                          </span>
+                          <p className="Slash">/</p>
+                          <span className="Deaths">
+                            {pick?.champion.deaths.toFixed(0)}
+                          </span>
+                          <p className="Slash">/</p>
+                          <span className="Support">
+                            {pick?.champion.assists.toFixed(0)}
+                          </span>
+                          <span className="Rate">{`${pick?.champion.kda.toFixed(
+                            1
+                          )} : 1`}</span>
+                        </KDA>
+                        <Kills>
+                          <div className="KillRate">{t("league.draft.kp")}</div>
+                          <div className="RateNumber">
+                            {pick?.champion.kp.toFixed(0)}%
+                          </div>
+                        </Kills>
+                        <DPM>
+                          {filters.league.indexOf("lpl") === -1 ? (
+                            <div className="DPM">PR</div>
+                          ) : (
+                            <div></div>
+                          )}
+                          {filters.league.indexOf("lpl") === -1 ? (
+                            <div className="DPMNumber">
+                              {pick?.champion.pr === null
+                                ? t("league.pick.prNull")
+                                : pick?.champion.pr.toFixed(1)}
+                            </div>
+                          ) : (
+                            <div></div>
+                          )}
+                        </DPM>
+                      </>
+                    ) : (
+                      <div></div>
+                    )}
                   </BlueSide>
                   <div className="Vs">VS</div>
                   <RedSide>
@@ -335,55 +367,65 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                             ? pick?.opp_champion.championKor
                             : pick?.opp_champion.champion}
                         </div>
-                        <div className="WinLose2">{`${pick?.opp_champion.win
-                          }${t("league.draft.w")} ${pick?.opp_champion.lose}${t(
-                            "league.draft.l"
-                          )}`}</div>
+                        <div className="WinLose2">{`${
+                          pick?.opp_champion.win
+                        }${t("league.draft.w")} ${pick?.opp_champion.lose}${t(
+                          "league.draft.l"
+                        )}`}</div>
                       </div>
                       <img
                         src={`https://am-a.akamaihd.net/image?resize=90:&f=${pick?.opp_champion.championImage}`}
                         alt="champIcon"
                       ></img>
                     </ChampInfo>
-                    <KDA>
-                      <span className="Kills">
-                        {pick?.opp_champion.kills.toFixed(0)}
-                      </span>
-                      <p className="Slash">/</p>
-                      <span className="Deaths">
-                        {pick?.opp_champion.deaths.toFixed(0)}
-                      </span>
-                      <p className="Slash">/</p>
-                      <span className="Support">
-                        {pick?.opp_champion.assists.toFixed(0)}
-                      </span>
-                      <span className="Rate">{`${pick?.opp_champion.kda.toFixed(
-                        1
-                      )} : 1`}</span>
-                      <div className="KdaTwo">KDA</div>
-                    </KDA>
-                    <Kills>
-                      <div className="RateNumber">
-                        {pick?.opp_champion.kp.toFixed(0)}%
-                      </div>
-                      <div className="KillRateTwo">{t("league.draft.kp")}</div>
-                    </Kills>
-                    <DPM>
-                      {filters.league.indexOf("lpl") === -1 ? (
-                        <div className="DPMNumber">
-                          {
-                            pick?.opp_champion.pr === null ? t("league.pick.prNull") : pick?.opp_champion.pr.toFixed(1)
-                          }
-                        </div>
-                      ) : (
-                        <div></div>
-                      )}
-                      {filters.league.indexOf("lpl") === -1 ? (
-                        <div className="DPMTwo">PR</div>
-                      ) : (
-                        <div></div>
-                      )}
-                    </DPM>
+
+                    {!filters.league.includes("LPL") ? (
+                      <>
+                        <KDA>
+                          <span className="Kills">
+                            {pick?.opp_champion.kills.toFixed(0)}
+                          </span>
+                          <p className="Slash">/</p>
+                          <span className="Deaths">
+                            {pick?.opp_champion.deaths.toFixed(0)}
+                          </span>
+                          <p className="Slash">/</p>
+                          <span className="Support">
+                            {pick?.opp_champion.assists.toFixed(0)}
+                          </span>
+                          <span className="Rate">{`${pick?.opp_champion.kda.toFixed(
+                            1
+                          )} : 1`}</span>
+                          <div className="KdaTwo">KDA</div>
+                        </KDA>
+                        <Kills>
+                          <div className="RateNumber">
+                            {pick?.opp_champion.kp.toFixed(0)}%
+                          </div>
+                          <div className="KillRateTwo">
+                            {t("league.draft.kp")}
+                          </div>
+                        </Kills>
+                        <DPM>
+                          {filters.league.indexOf("lpl") === -1 ? (
+                            <div className="DPMNumber">
+                              {pick?.opp_champion.pr === null
+                                ? t("league.pick.prNull")
+                                : pick?.opp_champion.pr.toFixed(1)}
+                            </div>
+                          ) : (
+                            <div></div>
+                          )}
+                          {filters.league.indexOf("lpl") === -1 ? (
+                            <div className="DPMTwo">PR</div>
+                          ) : (
+                            <div></div>
+                          )}
+                        </DPM>
+                      </>
+                    ) : (
+                      <div></div>
+                    )}
                   </RedSide>
                 </MatchContents>
               );
@@ -398,19 +440,37 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
               tableid="unique-table"
             />
           </Header>
-          <UniqueTable id="unique-table">
+          <UniqueTable
+            LPLnotSelected={!filters.league.includes("LPL")}
+            id="unique-table"
+          >
             <thead>
               <UniqueNavBar>
                 <th className="Champion">{t("league.draft.champion")}</th>
-                <th className="WinRate">{t("league.draft.player")}</th>
+                {!filters.league.includes("LPL") ? (
+                  <th className="WinRate">{t("league.draft.player")}</th>
+                ) : (
+                  <th className="Team">{t("league.draft.team")}</th>
+                )}
                 <th className="PickCount">{t("league.draft.result")}</th>
                 <th className="BanRate">{t("league.draft.opponent")}</th>
-                <th className="WinRate">{t("league.draft.oppplayer")}</th>
+                {!filters.league.includes("LPL") ? (
+                  <th className="WinRate">{t("league.draft.oppplayer")}</th>
+                ) : (
+                  <th className="OppTeam">{t("league.draft.oppTeam")}</th>
+                )}
               </UniqueNavBar>
             </thead>
             <tbody>
-              {uniquePick && uniquePick.length === 0 ? (
-                <NoData>{t("league.draft.noUniquePickData")}</NoData>
+              {uniquePick === undefined && (
+                <LoadingImage>
+                  <img src="Images/loadingSpinner_purple.gif" alt="Loading" />
+                </LoadingImage>
+              )}
+              {uniquePick !== undefined &&
+              uniquePick &&
+              uniquePick.length === 0 ? (
+                <NoData>{t("league.draft.noData")}</NoData>
               ) : (
                 ""
               )}
@@ -431,7 +491,11 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                         </span>
                       </div>
                     </td>
-                    <td className="PlayerUsed">{`${data.player} `}</td>
+                    {!filters.league.includes("LPL") ? (
+                      <td className="PlayerUsed">{`${data.player} `}</td>
+                    ) : (
+                      <td className="PlayerUsed">{`${data.team} `}</td>
+                    )}
                     <td className="Win">
                       <Result color={data.result === "Win"}>
                         {data.result}
@@ -453,7 +517,11 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                         </span>
                       </div>
                     </td>
-                    <td className="PlayerUsed">{`${data.oppPlayer} `}</td>
+                    {!filters.league.includes("LPL") ? (
+                      <td className="PlayerUsed">{`${data.oppPlayer} `}</td>
+                    ) : (
+                      <td className="PlayerUsed">{`${data.oppTeam} `}</td>
+                    )}
                   </UniqueMappingPicks>
                 );
               })}
@@ -507,6 +575,7 @@ const MainPicks = styled.div`
   margin-right: 22px;
   margin-bottom: 22px;
   border-radius: 20px;
+  position: relative;
 `;
 
 const Header = styled.div`
@@ -543,18 +612,19 @@ const UniqueTable = styled.table`
     > .Champion {
       padding: 0 0 0 10px;
       vertical-align: middle;
+      // text-align: ${(props) => (props.LPLnotSelected ? "left" : "center")};
       text-align: left;
+
       /* width: 155px; */
     }
     > .BanRate {
       padding: 0 0 0 10px;
       vertical-align: middle;
+      // text-align: ${(props) => (props.LPLnotSelected ? "left" : "center")};
       text-align: left;
     }
     > .PickCount {
       /* width: 60px; */
-  
-    
     }
     > th {
       vertical-align: middle;
@@ -589,8 +659,8 @@ const UniqueTable = styled.table`
       height: 31px;
       border: 1px solid rgb(58, 55, 69);
       img {
-        width: 19px;
-        height: 19px;
+        width: 26px;
+        height: 26px;
         border-radius: 20px;
         margin: 0 13px 0 10px;
       }
@@ -650,6 +720,7 @@ const PickTable = styled.table`
     }
   }
   > tbody {
+    position: relative;
     display: block;
     border-radius: 20px;
     height: 470px;
@@ -722,6 +793,8 @@ const MatchWrapper = styled.div`
     background-color: #696777;
     border-radius: 3px;
   }
+
+  position: relative;
 `;
 
 const MatchHistory = styled.div`
@@ -738,6 +811,8 @@ const MatchContents = styled.div`
   display: flex;
   align-items: center;
   border-bottom: 1px solid rgb(72, 70, 85);
+  max-height: ${(props) => !props.LPLnotSelected && "100px;"};
+
   .Vs {
     width: 20px;
     height: 24px;
@@ -1034,11 +1109,11 @@ const UniqueMappingPicks = styled.tr`
   width: 100%;
   height: 28px;
   border: 1px solid rgb(58, 55, 69);
-   span {
+  span {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-   }
+  }
 `;
 
 const TierTable = styled.table`
@@ -1074,6 +1149,7 @@ const TierTable = styled.table`
   }
 
   > tbody {
+    position: relative;
     display: block;
     height: 185px;
     overflow: auto;

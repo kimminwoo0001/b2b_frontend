@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 
 import Write from "./Write";
 import NewInquiry from "./NewInquiry";

@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { Form, Icon, Label, Menu, Table } from "semantic-ui-react";
 const _piColumnsCount = 11; // pi 컬럼 갯수
 const _piRowsCount = 10; // pi 로우 갯수
@@ -102,13 +104,13 @@ const SetPiData = ({ piData, setPi }) => {
         </Table.Header>
         <Table.Body>
           {newPiData?.map((data, row) => {
-            {console.log(newPiData)}
+            { console.log(newPiData) }
             return (
               <Table.Row
                 key={row}
                 ref={(ref) => (rowRef.current[row] = ref)}>
                 <Table.Cell>{POSITIONS2[row]}</Table.Cell>
-                {data?.map((data2, col) => {        
+                {data?.map((data2, col) => {
                   return (
                     <Table.Cell>
                       <Form.Input
