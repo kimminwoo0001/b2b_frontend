@@ -3,14 +3,14 @@ import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
 import { useState, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Loading } from "../../../../redux/modules/filtervalue";
+import { Loading } from "../../redux/modules/filtervalue";
 import {
   setLeagueFilter,
   setPatchFilter,
   setSeasonFilter,
   setTeamFilter,
   setYearFilter,
-} from "../../../../redux/modules/selectorvalue";
+} from "../../redux/modules/selectorvalue";
 import {
   JungleInit,
   ResetJungleSelectedPatch,
@@ -20,24 +20,24 @@ import {
   SetJungleSeason,
   SetJungleTeam,
   SetJunlgeYear,
-} from "../../../../redux/modules/junglevalue";
+} from "../../redux/modules/junglevalue";
 // ui
-import Radio from "../../../../Components/Ui/Radio";
-import Checkbox from "../../../../Components/Ui/Checkbox";
-import { typoStyle } from "../../../../Styles/ui";
+import Radio from "../Ui/Radio";
+import Checkbox from "../Ui/Checkbox";
+import { typoStyle } from "../../Styles/ui";
 import { useTranslation } from "react-i18next";
-import SelectedJungleFilter from "./SelectedJungleFilter";
-import { initializedObjValue } from "../../../../lib/initializedObjValue";
-import { getTrueValueList } from "../../../../lib/getTureValueList";
+import SelectedJungleFilter from "../../Pages/PathingAnalysis/JungleMap/components/SelectedJungleFilter";
+import { initializedObjValue } from "../../lib/initializedObjValue";
+import { getTrueValueList } from "../../lib/getTureValueList";
 import {
   findLegueData,
   findSeasonData,
   findTeamData,
   findYearData,
   getPatchData,
-} from "../../../../lib/searchLeagueData";
+} from "../../lib/searchLeagueData";
 
-const JungleFilter = () => {
+const TopFilter = () => {
   const user = useSelector((state) => state.UserReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -504,4 +504,4 @@ const FoldUpBtn = styled.button`
   right: -55px;
 `;
 
-export default JungleFilter;
+export default TopFilter;
