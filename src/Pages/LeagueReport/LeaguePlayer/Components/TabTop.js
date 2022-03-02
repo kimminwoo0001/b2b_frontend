@@ -128,7 +128,13 @@ function TabTop({ playerData, loading }) {
           })} */}
 
           {noLPLData?.map((playerData, index) => {
-            return <LeaguePlayerInfo playerData={playerData} index={index} />;
+            return (
+              <LeaguePlayerInfo
+                key={playerData.player + index}
+                playerData={playerData}
+                index={index}
+              />
+            );
           })}
         </>
       )}
