@@ -11,7 +11,7 @@ import IconDel from "../../../../../Components/Ui/Icons/IconDel";
 import { typoStyle } from "../../../../../Styles/ui";
 import { useModal } from "../../../../../Hooks";
 import { modalList } from "../../../../../Components/Modals/Modals";
-import { getTier } from "../../../../../lib/getRank";
+import { getRank, getTier } from "../../../../../lib/getRank";
 import { API } from "../../../../config";
 import { useSelector, useDispatch, batch } from "react-redux";
 import axiosRequest from "../../../../../lib/axios/axiosRequest";
@@ -197,7 +197,14 @@ const MTPlayerList = ({
                     </div>
                     {/* 티어 */}
                     <div className="table-col3">
-                      <p>{`${getTier(data.tier ?? 0)} ${""}LP`}</p>
+                      <p>
+                        {`${getTier(data.tier ?? 0)} ${
+                          data.leaguePoints > 0
+                            ? `${data.leaguePoint}LP`
+                            : `${getRank(data.rank)}`
+                        }
+                        `}
+                      </p>
                       {/* <span>{`S11 challenger / S10 Challenger`}</span> */}
                     </div>
                     {/* 이번시즌 */}
