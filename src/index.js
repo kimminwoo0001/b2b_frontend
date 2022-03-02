@@ -26,7 +26,7 @@ import Modals from "./Components/Modals/Modals";
 
 /* 리덕스 & 리덕스사가 & 세션스토리지에 리덕스 상태 보관 */
 const sagaMiddleware = createSagaMiddleware();
-const store = createStore(
+export const store = createStore(
   persistReducer,
   composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
