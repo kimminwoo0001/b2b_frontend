@@ -1,8 +1,8 @@
 // API: 기본
 // export const API = "https://nunu.gg:8443";
 // export const API = "http://teamsnowball.co:5003"; // 테스트 서버 - 이세님
-export const API = "http://teamsnowball.co:8007"; // 테스트 서버 - 광균님
-// export const API = "http://teamsnowball.co:5004"; // 테스트 서버 - 민규님
+// export const API = "http://teamsnowball.co:8007"; // 테스트 서버 - 광균님
+export const API = "http://teamsnowball.co:5004"; // 테스트 서버 - 민규님
 
 //API2: 영상보고서
 // export const API2 = "https://nunu.gg:8443";
