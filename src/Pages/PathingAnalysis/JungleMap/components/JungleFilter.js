@@ -178,13 +178,12 @@ const JungleFilter = () => {
       const patchResponse = e ?? [];
       dispatch(setPatchFilter(patchResponse));
       //  전체 패치 자동 선택
-      const datas = { ...junglevalue.patch }
-      const list = Object.keys(junglevalue.patch);
-      const a = list.map((data) => {
-        return datas[data] = true;
-      })
-      dispatch(SetFilterData({ ...junglevalue, patch: datas }));
+      const datas = { ...junglevalue.patch } 
+      for(const patch in datas) {
+        return datas[patch] = true;
+      }
       
+      dispatch(SetFilterData({ ...junglevalue, patch: datas }));
       dispatch(Loading(false));
     }, function (e) {
       dispatch(Loading(false));

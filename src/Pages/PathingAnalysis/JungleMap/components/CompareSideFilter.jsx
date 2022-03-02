@@ -243,11 +243,7 @@ const CompareSideFilter = () => {
           }
         }
       } 
-      // else {
-      //   dispatch(ResetPlayer());
-      // }
-      dispatch(setPlayerFilter(players));
-    
+      dispatch(setPlayerFilter(players));  
   };
 
   const fetchSeasonFilter = (years,leagues,player) => {
@@ -266,11 +262,22 @@ const CompareSideFilter = () => {
     }
     if(player === junglevalue.oppplayer) {
       dispatch(setOppSeasonFilter(seasonList))
+      //  전체 시즌 자동 선택
+      const datas = { ...junglevalue.oppseason } 
+      for(const oppseason in datas) {
+        return datas[oppseason] = true;
+      }
+      dispatch(SetFilterData({ ...junglevalue, oppseason: datas }));
     }else {
       dispatch(setSeasonFilter(seasonList));
+      //  전체 시즌 자동 선택
+      const datas = { ...junglevalue.season } 
+      for(const season in datas) {
+        return datas[season] = true;
+      }
+      dispatch(SetFilterData({ ...junglevalue, season: datas }));
     }
   }
-
 
   const fetchPatchFilter = (year, league, season) => {
 
@@ -287,18 +294,21 @@ const CompareSideFilter = () => {
     axiosRequest(undefined, url, params, function (e) {
       const patchResponse = e ?? [];
       setPatchList(patchResponse);
+      //  전체 패치 자동 선택
+      const datas = { ...junglevalue.patch } 
+      for(const patch in datas) {
+        return datas[patch] = true;
+      }
+      dispatch(SetFilterData({ ...junglevalue, patch: datas }));
       // dispatch(Loading(false));
     }, function (e) {
       // dispatch(Loading(false));
     });
   }
 
-
-
   useEffect(() => {    
-    // dispatch(setPatchFilter([...selector.patchFilter.concat(patchList.filter((item, idx) => patchList.indexOf(item) !== idx))]));
+    // 나의 팀 패치와 상대 팀 패치를 같이 보여줌
     dispatch(setPatchFilter([...selector.patchFilter.concat(patchList)]));
-
   },[patchList])
 
 
@@ -341,9 +351,7 @@ const CompareSideFilter = () => {
       id: user.id,
     };
     axiosRequest(undefined, url, params, function(e) {
-
       setChampInfo(e);
-      console.log("우리팀:",e);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
     })
@@ -368,7 +376,6 @@ const CompareSideFilter = () => {
     };
     axiosRequest(undefined, url, params, function(e) {
       setOppChampInfo(e);
-      console.log("상대팀:",e);
     }, function (objStore) {
       dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
     })
@@ -575,20 +582,7 @@ useEffect(() => {
                       }}
                     >
                       <DropdownLabel css={[dropdownStyle.select_head]}>
-                          {junglevalue.league.length > 0 ? 
-                           <S.SelectLabel>
-                                <img
-                                className="leagueLogo"
-                                width="24px"
-                                height="24px"
-                                src={ `Images/ico-league-${junglevalue.league[0].toLowerCase()}.png`}
-                                alt="leagueLogo"
-                                /> 
-                                {junglevalue.league[0]}
-                           </S.SelectLabel> 
-                            :
                          <S.SelectLabel> {t("video.jungle.selectLeague")}</S.SelectLabel>
-                          }
                       </DropdownLabel>
                       <DropdownList>
                         {selector.leagueFilter?.map((league,idx) => {

@@ -492,6 +492,8 @@ position: relative;
 const SFilterContainer = styled.section`
   width: 1096px;
   ${typoStyle.contents}
+  margin-top: 20px;
+
 `;
 const SRow = styled.div`
   display: ${props => props.toggleFoldBtn ? "none" : "flex"};
