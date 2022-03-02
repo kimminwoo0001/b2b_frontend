@@ -13,6 +13,8 @@ import { useSelector } from "react-redux";
 import TeamFilterModal from "../../Components/Filter/TeamFilterModal";
 import PlayerFilterModal from "../../Components/Filter/PlayerFilterModal";
 import { goPlayerCompare, goTeamCompare } from "../../lib/pagePath";
+import HomeAI from "./components/AI/HomeAI";
+import { spacing } from "../../Styles/ui";
 function Home() {
   // 홈 화면 컨테이너
   const copyvalue = useSelector((state) => state.CopyReducer);
@@ -29,6 +31,7 @@ function Home() {
       <HomeWrapper>
         <SideBar />
         <ContentWrapper>
+          <HomeAI />
           <HomeContents />
         </ContentWrapper>
       </HomeWrapper>
@@ -50,6 +53,8 @@ const HomeWrapper = styled.div`
 const ContentWrapper = styled.div`
   display: flex;
   width: 100%;
+  ${spacing.paddingT(8)};
+  ${spacing.paddingL(8)};
   flex-direction: column;
   /* overflow-y: auto; */
 `;
