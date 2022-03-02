@@ -3,12 +3,12 @@ import { jsx } from "@emotion/react";
 
 import { useSelector } from "react-redux";
 import PositionCheckList from "../../../../Components/Ui/PositionCheckList";
-import JungleFilter from "../components/JungleFilter";
 import JungleSideFilter from "../components/JungleSideFilter";
 import SequenceDialog from "../components/SequenceDialog";
 import Map from "../components/Map";
 import * as S from "../components/styled/StyledJungleLayout";
 import { getTrueValueList } from "../../../../lib/getTureValueList";
+import TopFilter from "../../../../Components/Filter/TopFilter";
 
 const Sequence = () => {
   const patchList = useSelector((state) => state.JungleMapReducer.patch);
@@ -19,7 +19,8 @@ const Sequence = () => {
     <S.SequenceContainer>
       {/* 메인 필터 */}
       <S.FilterContainer>
-        <JungleFilter />
+        {/* <JungleFilter /> */}
+        <TopFilter />
       </S.FilterContainer>
       {/* 사이드 필터와 맵 비디오  */}
       {teamList.length > 0 && selectedPatch.length > 0 && (

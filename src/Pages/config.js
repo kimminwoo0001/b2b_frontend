@@ -15,7 +15,7 @@ export const API3 = "https://nunu.gg:8443/LeagueCollectionPi";
 // export const API4 = "https://nunu.gg:8443/LeagueCollectionPi2";
 export const API4 = "http://192.168.0.36:8081/LeagueCollectionPi2";
 
-export const API5 = "http://teamsnowball.co:5002 ";
+export const API5 = "http://teamsnowball.co:5002";
 
 // 라이엇 최신 버전(json)
 export const recentVersion = "12.4.1";

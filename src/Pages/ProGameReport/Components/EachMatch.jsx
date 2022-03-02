@@ -63,12 +63,12 @@ const EachMatch = ({ matchData, team }) => {
   const getGameDetailData = (gameId, gameFullTime) => {
     try {
       dispatch(Loading(true));
-      const url = `${API2}/lolapi/match/pga`;
+      const url = `${API5}/api_mk2/match/pga`;
       const params = {
         gameid: gameId,
       };
       axiosRequest(
-        "GET",
+        undefined,
         url,
         params,
         function (e) {
@@ -160,8 +160,8 @@ const EachMatch = ({ matchData, team }) => {
                 dispatch(SetStatusLogDataset(e?.actionLog));
                 dispatch(SetPlayersStatusDataset(e?.status));
                 dispatch(SetTimeLineDataset(timeLineSet));
-                navigate(proGameReportDetail);
               });
+              navigate(proGameReportDetail);
             } else {
               dispatch(SetIsSelector(false));
               dispatch(SetIsOpen(true));
