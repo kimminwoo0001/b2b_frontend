@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { jsx } from "@emotion/react";
+import { useRef } from "react";
 import styled from "@emotion/styled/macro";
 import {
   borderRadiusStyle,
@@ -8,7 +9,6 @@ import {
   transitionStyle,
   typoStyle,
   scrollbarStyle,
-  buttonStyle,
 } from "../../../../Styles/ui";
 import { useTab } from "../../../../Hooks/useTab";
 import Button from "../../../../Components/Ui/Button";
@@ -24,7 +24,9 @@ const LEAGUE = [
 
 const HomeAI = ({ ...props }) => {
   const { currentIndex, setIndex } = useTab(0, LEAGUE);
+
   const handleClick = (index) => setIndex(index);
+
   return (
     <Container {...props}>
       <h2>리그일정 및 AI승부 예측</h2>
@@ -37,10 +39,14 @@ const HomeAI = ({ ...props }) => {
             >
               <Avatar
                 css={{ marginRight: 10 }}
+                src={
+                  index === 0 || index === 2
+                    ? `images/league/ico_league_${tab.title.toLocaleLowerCase()}_hover.png`
+                    : `images/league/ico_league_${tab.title.toLocaleLowerCase()}.png`
+                }
                 size={24}
-                src={`images/ico-league-${tab.title.toLocaleLowerCase()}.png`}
-                circle={false}
               />
+
               {tab.title}
             </ButtonLeague>
           ))}
@@ -93,6 +99,15 @@ const ButtonLeague = styled(Button)`
   &.is-active {
     background-color: ${colors.point};
   }
+`;
+
+const LeagueLogo = styled.div`
+  width: 24px;
+  height: 24px;
+  background-image: ${({ bg }) => bg};
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 `;
 
 const ContentsContainer = styled.article`

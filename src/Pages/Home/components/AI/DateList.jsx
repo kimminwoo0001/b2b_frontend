@@ -13,6 +13,7 @@ import { useState } from "react";
 import Versus from "../../../../Components/Ui/Versus";
 const DateList = ({ ...props }) => {
   const [isPast, setPast] = useState(true);
+
   return (
     <Container {...props}>
       {/* 날짜 */}
@@ -26,19 +27,20 @@ const DateList = ({ ...props }) => {
         {Array(4)
           .fill(1)
           .map((item, _) => (
-            <Game key={"gameInfo" + _}>
+            <GameList key={"gameInfo" + _}>
               <Team className="right">
                 <span>NS</span>
                 <span>50.0%</span>
               </Team>
               <TeamLogo>
                 <Avatar
-                  src={"images/TeamLogo/AF.png"}
+                  src={`images/team/ico_team_${"t1"}.png`}
                   size={50}
                   circle={false}
                 ></Avatar>
               </TeamLogo>
               {isPast ? (
+                // 경기 종료시 보여주는 UI
                 <>
                   <Side>
                     <Arrow direction={"L"} size={6} />
@@ -49,13 +51,14 @@ const DateList = ({ ...props }) => {
                   </Side>
                 </>
               ) : (
+                // 경기 시작전 보여주는 UI
                 <VSContainer>
                   <Versus size={18} />
                 </VSContainer>
               )}
               <TeamLogo>
                 <Avatar
-                  src={"images/TeamLogo/AF.png"}
+                  src={`images/team/ico_team_${"af"}.png`}
                   size={50}
                   circle={false}
                 ></Avatar>
@@ -64,7 +67,7 @@ const DateList = ({ ...props }) => {
                 <span>DK</span>
                 <span>50.0%</span>
               </Team>
-            </Game>
+            </GameList>
           ))}
       </GameInfo>
     </Container>
@@ -73,6 +76,8 @@ const DateList = ({ ...props }) => {
 
 const Container = styled.li`
   display: flex;
+  ${spacing.paddingY(4)};
+  border-bottom: 1px solid ${colors.bg_checkbox};
 `;
 const Date = styled.div`
   flex: 0 0 90px;
@@ -97,14 +102,16 @@ const Date = styled.div`
 const GameInfo = styled.ul`
   flex: 1 0;
 `;
-const Game = styled.li`
+const GameList = styled.li`
+  &:not(:last-of-type) {
+    ${spacing.marginB(2)};
+  }
   display: flex;
   justify-content: center;
   width: 100%;
   height: 76px;
   align-items: center;
   ${borderRadiusStyle[20]};
-  ${spacing.marginB(2)};
   background-color: ${colors.bg_checkbox};
 `;
 
