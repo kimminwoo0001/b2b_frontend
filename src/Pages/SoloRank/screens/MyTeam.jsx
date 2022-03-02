@@ -32,7 +32,7 @@ const MyTeam = () => {
       function (e) {
         setheaderInfo([
           {
-            logo: `Images/ico-league-${e.league}.png`,
+            logo: `Images/ico-league-${"LCK"}.png`,
             text: e.league,
           },
           { logo: `Images/TeamLogo/${e.team}.png` },
