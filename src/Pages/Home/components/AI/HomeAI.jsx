@@ -29,7 +29,19 @@ const HomeAI = ({ ...props }) => {
 
   return (
     <Container {...props}>
-      <h2>리그일정 및 AI승부 예측</h2>
+      <Header>
+        <h2>리그일정 및 AI승부 예측</h2>
+        <Toolbox>
+          <Avatar
+            css={{ marginRight: 5 }}
+            src={"/images/ico-notice-gy.png"}
+            size={14}
+          />
+          <span>
+            선택한 패치버전과 관계 없이 최근 2주간 플레이 정보만 보여줍니다.
+          </span>
+        </Toolbox>
+      </Header>
       <ContentsContainer className="전체감싸기">
         <ButtonContainer className="왼쪽">
           {LEAGUE.map((tab, index) => (
@@ -71,10 +83,20 @@ const Container = styled.div`
   ${typoStyle.contents};
   width: 1210px;
   ${spacing.marginB(10)};
-
+`;
+const Header = styled.div`
+  display: flex;
   h2 {
     ${typoStyle.body_title};
-    ${spacing.marginB(4)};
+    ${spacing.marginR(2)};
+  }
+  ${spacing.marginB(4)};
+`;
+const Toolbox = styled.div`
+  display: flex;
+  align-items: center;
+  span {
+    ${typoStyle.info};
   }
 `;
 const ButtonContainer = styled.div`
@@ -99,15 +121,6 @@ const ButtonLeague = styled(Button)`
   &.is-active {
     background-color: ${colors.point};
   }
-`;
-
-const LeagueLogo = styled.div`
-  width: 24px;
-  height: 24px;
-  background-image: ${({ bg }) => bg};
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
 `;
 
 const ContentsContainer = styled.article`
