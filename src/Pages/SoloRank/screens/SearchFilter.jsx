@@ -9,6 +9,7 @@ import { Loading } from "../../../redux/modules/filtervalue";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import axiosRequest from "../../../lib/axios/axiosRequest";
 import { API } from "../../config";
+import TopFilter from "../../../Components/Filter/TopFilter";
 
 const SearchFilter = () => {
   const [selectedDay, setSelectedDay] = useState("30");
@@ -57,6 +58,7 @@ const SearchFilter = () => {
 
   return (
     <>
+      <TopFilter />
       {/* 팀 선수 테이블 */}
       <MTContent
         selectedDay={selectedDay}
