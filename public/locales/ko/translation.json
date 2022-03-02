@@ -202,7 +202,32 @@
       "kda": "KDA",
       "sbr": "Performance Rating",
       "prInfo": "PR(Performance Rating)은 선수의 인게임 성적을 토대로, 다양한 지표를 복합적으로 계산해 선수의 전반적인 실력을 가늠 할 수 있는 지표입니다.",
-      "noLplData": "현재 LPL 리그의 선수정보 기능은 지원되지 않습니다. "
+      "noLplData": "현재 LPL 리그의 선수정보 기능은 지원되지 않습니다. ",
+
+      "record": "성적",
+      "career": "통산 성적",
+      "careerKda": "통산 KDA",
+
+      "games": "경기",
+      "win": "승",
+      "lose": "패",
+      "place": "위",
+
+      "commonStat": "일반 지표",
+      "championPool": "챔피언풀",
+      "firstPickRate": "선픽률",
+      "solokill": "솔로킬",
+      "dpm": "DPM",
+      "dtpm": "DTPM",
+      "cs": "10분 CS",
+
+      "PRStat": "PR 세부지표",
+      "pr": "PR",
+      "damage": "데미지",
+      "survival": "생존",
+      "killCatch": "킬캐치",
+      "lanePhase": "라인전",
+      "earlyFight": "초반교전"
     }
   },
   "team": {

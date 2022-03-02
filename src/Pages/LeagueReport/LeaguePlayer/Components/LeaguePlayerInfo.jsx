@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { jsx } from "@emotion/react";
-import React, { useState } from "react";
+import { useState } from "react";
+import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import styled from "@emotion/styled/macro";
 import { t } from "i18next";
 import { useSelector } from "react-redux";
@@ -21,6 +22,7 @@ import {
   Radar,
 } from "recharts";
 import CustomTick from "./CustomTick";
+import { useTranslation } from "react-i18next";
 
 /**
  *  플레이어 데이터 타입
@@ -40,36 +42,36 @@ import CustomTick from "./CustomTick";
 }
  */
 
-const data = [
-  {
-    subject: "데미지",
-    A: 10,
-    fullMark: 10,
-  },
-  {
-    subject: "킬캐치",
-    A: 6.6,
-    fullMark: 10,
-  },
-  {
-    subject: "초반교전",
-    A: 6.6,
-    fullMark: 10,
-  },
-  {
-    subject: "라인전",
-    A: 6.6,
-    fullMark: 10,
-  },
-  {
-    subject: "생존",
-    A: 6.6,
-    fullMark: 10,
-  },
-];
-
 const LeaguePlayerInfo = ({ playerData, index }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const data = [
+    {
+      subject: "데미지",
+      A: 10,
+      fullMark: 10,
+    },
+    {
+      subject: "킬캐치",
+      A: 6.6,
+      fullMark: 10,
+    },
+    {
+      subject: "초반교전",
+      A: 6.6,
+      fullMark: 10,
+    },
+    {
+      subject: "라인전",
+      A: 6.6,
+      fullMark: 10,
+    },
+    {
+      subject: "생존",
+      A: 6.6,
+      fullMark: 10,
+    },
+  ];
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleOpen = () => setIsOpen(!isOpen);
   const {
     image,
     team,
@@ -83,17 +85,24 @@ const LeaguePlayerInfo = ({ playerData, index }) => {
     kda,
     sbr,
   } = playerData;
+  const { t } = useTranslation();
+  const imgUrl =
+    image === "no-image"
+      ? "Images/player_error_image.png"
+      : `https://am-a.akamaihd.net/image?resize=90:&f=${image}`;
+
   const filters = useSelector((state) => state.FilterReducer);
   return (
     <div>
       <Container>
+        {/* 정보 요약 헤더 */}
         <Header>
           {/* 랭킹 */}
           <div className="player__rank">{index + 1}</div>
           {/* 이미지 */}
           <div className="player__img">
             <img
-              src={`https://am-a.akamaihd.net/image?resize=90:&f=${image}`}
+              src={imgUrl}
               alt="PlayerImage"
               className="PlayerImage"
               onError={(e) => {
@@ -155,131 +164,228 @@ const LeaguePlayerInfo = ({ playerData, index }) => {
             <div></div>
           )}
         </Header>
-        {isOpen && (
-          <Contents>
-            {/* 데이터 박스 */}
-            <DataBoxContainer>
-              <DataBox>
-                <span className="data__title">성적</span>
-                <p className="data__main">00.0%</p>
-                <span className="data__info">9999경기 9999승 9999패</span>
-              </DataBox>
-              <DataBox>
-                <span className="data__title">KDA</span>
-                <p className="data__main">3.42:1</p>
-                <span className="data__info">
-                  3.4/2.3/4.4
-                  <em>(264 / 242 / 323)</em>
-                </span>
-              </DataBox>
-              <DataBox>
-                <span className="data__title">통산 성적</span>
-                <p className="data__main">00.0%</p>
-                <span className="data__info">9999경기 9999승 9999패</span>
-              </DataBox>
-              <DataBox>
-                <span className="data__title">통산 KDA</span>
-                <p className="data__main">3.42:1</p>
-                <span className="data__info">
-                  3.4/2.3/4.4
-                  <em>(264 / 242 / 323)</em>
-                </span>
-              </DataBox>
-            </DataBoxContainer>
+        {/* 정보 상세 페이지 */}
+        <AnimatePresence>
+          {isOpen && (
+            <Contents
+              initial={{ scale: 0.4, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+            >
+              {/* 데이터 박스 */}
+              <DataBoxContainer>
+                <DataBox>
+                  <span className="data__title">
+                    {t("league.playerStat.record")}
+                  </span>
+                  <p className="data__main">00.0%</p>
+                  <span className="data__info">
+                    9999{t("league.playerStat.games")}
+                    &nbsp;9999{t("league.playerStat.win")}
+                    &nbsp;9999{t("league.playerStat.lose")}
+                  </span>
+                </DataBox>
+                <DataBox>
+                  <span className="data__title">
+                    {t("league.playerStat.kda")}
+                  </span>
+                  <p className="data__main">3.42:1</p>
+                  <span className="data__info">
+                    3.4/2.3/4.4
+                    <em>(264 / 242 / 323)</em>
+                  </span>
+                </DataBox>
+                <DataBox>
+                  <span className="data__title">
+                    {t("league.playerStat.career")}
+                  </span>
+                  <p className="data__main">00.0%</p>
+                  <span className="data__info">
+                    9999{t("league.playerStat.games")}
+                    &nbsp;9999{t("league.playerStat.win")}
+                    &nbsp;9999{t("league.playerStat.lose")}
+                  </span>
+                </DataBox>
+                <DataBox>
+                  <span className="data__title">
+                    {t("league.playerStat.careerKda")}
+                  </span>
+                  <p className="data__main">3.42:1</p>
+                  <span className="data__info">
+                    3.4/2.3/4.4
+                    <em>(264 / 242 / 323)</em>
+                  </span>
+                </DataBox>
+              </DataBoxContainer>
 
-            {/* 데이터 테이블 */}
-            <DataBoxContainer>
-              <DataTable>
-                <thead>
-                  <th rowSpan={2}>일반지표</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>챔피언 풀</td>
-                    <td>6개(리그1위)</td>
-                  </tr>
-                  <tr>
-                    <td>챔피언 풀</td>
-                    <td>6개(리그1위)</td>
-                  </tr>
-                  <tr>
-                    <td>챔피언 풀</td>
-                    <td>6개(리그1위)</td>
-                  </tr>
-                  <tr>
-                    <td>챔피언 풀</td>
-                    <td>6개(리그1위)</td>
-                  </tr>
-                  <tr>
-                    <td>챔피언 풀</td>
-                    <td>6개(리그1위)</td>
-                  </tr>
-                </tbody>
-              </DataTable>
-              <DataTable>
-                <thead>
-                  <th rowSpan={2}>일반지표</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>챔피언 풀</td>
-                    <td>6개(리그1위)</td>
-                  </tr>
-                  <tr>
-                    <td>챔피언 풀</td>
-                    <td>6개(리그1위)</td>
-                  </tr>
-                  <tr>
-                    <td>챔피언 풀</td>
-                    <td>6개(리그1위)</td>
-                  </tr>
-                  <tr>
-                    <td>챔피언 풀</td>
-                    <td>6개(리그1위)</td>
-                  </tr>
-                  <tr>
-                    <td>챔피언 풀</td>
-                    <td>6개(리그1위)</td>
-                  </tr>
-                </tbody>
-              </DataTable>
-              <Chart>
-                <RadarChart
-                  outerRadius={90}
-                  width={300}
-                  height={250}
-                  cy={"55%"}
-                  data={data}
-                  margin={{ left: 10 }}
-                >
-                  <PolarGrid stroke="#484557" />
-                  <PolarAngleAxis
-                    tickSize={12}
-                    dataKey="subject"
-                    tick={(props) => CustomTick({ ...props, data })}
-                  ></PolarAngleAxis>
-                  <PolarRadiusAxis
-                    axisLine={false}
-                    tick={false}
-                    tickCount={4}
-                    ticks={[0, 2, 5, 10]}
-                    domain={[0, 10]}
-                  />
+              {/* 데이터 테이블 */}
+              <DataBoxContainer>
+                <DataTable>
+                  <thead>
+                    <tr>
+                      <th colspan={2}>{t("league.playerStat.commonStat")}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{t("league.playerStat.championPool")}</td>
+                      <td>
+                        6 &nbsp;
+                        {t("")}({t("label.league")}
+                        &nbsp;1
+                        {t("league.playerStat.place")})
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>{t("league.playerStat.firstPickRate")}</td>
+                      <td>
+                        6 &nbsp; ({t("label.league")}
+                        &nbsp;1
+                        {t("league.playerStat.place")})
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>{t("league.playerStat.solokill")}</td>
+                      <td>
+                        6 &nbsp;
+                        {t("")}({t("label.league")}
+                        &nbsp;1
+                        {t("league.playerStat.place")})
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>{t("league.playerStat.dpm")}</td>
+                      <td>
+                        6 &nbsp;
+                        {t("")}({t("label.league")}
+                        &nbsp;1
+                        {t("league.playerStat.place")})
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>{t("league.playerStat.dtpm")}</td>
+                      <td>
+                        6 &nbsp;
+                        {t("")}({t("label.league")}
+                        &nbsp;1
+                        {t("league.playerStat.place")})
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>{t("league.playerStat.cs")}</td>
+                      <td>
+                        6 &nbsp;
+                        {t("")}({t("label.league")}
+                        &nbsp;1
+                        {t("league.playerStat.place")})
+                      </td>
+                    </tr>
+                  </tbody>
+                </DataTable>
+                <DataTable>
+                  <thead>
+                    <tr>
+                      <th colspan={2}>{t("league.playerStat.PRStat")}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{t("league.playerStat.pr")}</td>
+                      <td>
+                        6 &nbsp; ({t("label.league")}
+                        &nbsp;1
+                        {t("league.playerStat.place")})
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>{t("league.playerStat.damage")}</td>
+                      <td>
+                        6 &nbsp; ({t("label.league")}
+                        &nbsp;1
+                        {t("league.playerStat.place")})
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>{t("league.playerStat.survival")}</td>
+                      <td>
+                        6 &nbsp; ({t("label.league")}
+                        &nbsp;1
+                        {t("league.playerStat.place")})
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>{t("league.playerStat.killCatch")}</td>
+                      <td>
+                        6 &nbsp; ({t("label.league")}
+                        &nbsp;1
+                        {t("league.playerStat.place")})
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>{t("league.playerStat.lanePhase")}</td>
+                      <td>
+                        6 &nbsp; ({t("label.league")}
+                        &nbsp;1
+                        {t("league.playerStat.place")})
+                      </td>
+                    </tr>
 
-                  <Radar
-                    name="Mike"
-                    dataKey="A"
-                    stroke="#8069e3"
-                    fill="rgba(89,66,186,0.2)"
-                    fillOpacity={0.6}
-                  />
-                </RadarChart>
-              </Chart>
-            </DataBoxContainer>
-          </Contents>
-        )}
-        <Button>
-          <Arrow direction={"B"} size={5} color={colors.info} />
+                    <tr>
+                      <td>{t("league.playerStat.earlyFight")}</td>
+                      <td>
+                        200.6 &nbsp; ({t("label.league")}
+                        &nbsp;1
+                        {t("league.playerStat.place")})
+                      </td>
+                    </tr>
+                  </tbody>
+                </DataTable>
+                <Chart>
+                  <RadarChart
+                    outerRadius={90}
+                    width={300}
+                    height={250}
+                    cy={"55%"}
+                    data={data}
+                    margin={{ left: 10 }}
+                  >
+                    <PolarGrid stroke="#484557" />
+                    <PolarAngleAxis
+                      tickSize={12}
+                      dataKey="subject"
+                      tick={(props) => CustomTick({ ...props, data })}
+                    ></PolarAngleAxis>
+                    <PolarRadiusAxis
+                      axisLine={false}
+                      tick={false}
+                      tickCount={4}
+                      ticks={[0, 2, 5, 10]}
+                      domain={[0, 10]}
+                    />
+
+                    <Radar
+                      name="Mike"
+                      dataKey="A"
+                      stroke="#8069e3"
+                      fill="rgba(89,66,186,0.2)"
+                      fillOpacity={0.6}
+                    />
+                  </RadarChart>
+                </Chart>
+              </DataBoxContainer>
+            </Contents>
+          )}
+        </AnimatePresence>
+
+        <Button onClick={toggleOpen}>
+          <Arrow
+            css={{
+              transform: `translateY(5px) ${isOpen ? "rotate(180deg)" : ""}`,
+            }}
+            direction={"B"}
+            size={5}
+            color={colors.info}
+          />
         </Button>
       </Container>
     </div>
@@ -287,6 +393,7 @@ const LeaguePlayerInfo = ({ playerData, index }) => {
 };
 const Container = styled.div`
   position: relative;
+  margin-top: 10px;
   background-color: ${colors.bg_select};
   border-radius: 15px;
 `;
@@ -295,7 +402,7 @@ const Header = styled.div`
   align-items: center;
   width: calc(100% - 40px);
   height: 80px;
-  margin-top: 10px;
+
   ${typoStyle.table_head};
 
   /* 기본스타일 */
@@ -385,7 +492,8 @@ const Header = styled.div`
     }
   }
 `;
-const Contents = styled.div`
+
+const Contents = styled(motion.div)`
   width: calc(100% - 40px);
   ${spacing.paddingX(5)};
   ${spacing.paddingY(5)};
@@ -448,16 +556,23 @@ const DataTable = styled.table`
       &:nth-of-type(2n + 1) {
         background-color: ${colors.bg_checkbox};
       }
+      &:last-of-type {
+        td {
+          ${spacing.paddingB(2)};
+        }
+      }
       td {
         vertical-align: middle;
         ${spacing.paddingY(1)};
       }
       td:first-of-type {
         ${spacing.paddingL(5)};
-        width: 120px;
+        width: 220px;
       }
       td:nth-of-type(2) {
-        width: calc(100% - 120px);
+        ${spacing.paddingR(2)};
+        text-align: left;
+        width: calc(100% - 220px);
       }
     }
   }

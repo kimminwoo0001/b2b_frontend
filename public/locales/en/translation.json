@@ -206,7 +206,32 @@
       "kda": "KDA",
       "sbr": "Performance Rating ",
       "prInfo": "PR(Performance Rating) is an index that can measure a player's overall performance by calculating various indicators in a complex manner based on the player's in-game performance.",
-      "noLplData": "Player information for LPL league is not yet supported."
+      "noLplData": "Player information for LPL league is not yet supported.",
+
+      "record": "Record",
+      "career": "Career Record",
+      "careerKda": "Career KDA",
+
+      "games": "G",
+      "win": "W",
+      "lose": "L",
+      "place": "",
+
+      "commonStat": "Common Stat",
+      "championPool": "Champion Pool",
+      "firstPickRate": "First Pick Rate",
+      "solokill": "Solo Kill",
+      "dpm": "DPM",
+      "dtpm": "DTPM",
+      "cs": "CSD10",
+
+      "PRStat": "PR Detail Stat",
+      "pr": "PR",
+      "damage": "Damage",
+      "survival": "Survival",
+      "killCatch": "Kill Catch",
+      "lanePhase": "Lane Phase",
+      "earlyFight": "Early Fight"
     }
   },
   "team": {
