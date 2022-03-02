@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo } from "react";
 import styled from "@emotion/styled";
 import { transitionStyle } from "../../Styles/ui";
 
@@ -45,6 +45,7 @@ const SCheckboxContainer = styled.label`
   }
 
   > em {
+    flex-shrink: 0;
     position: relative;
     display: block;
     width: 24px;
@@ -84,4 +85,4 @@ const SCheckboxContainer = styled.label`
   }
 `;
 
-export default Checkbox;
+export default memo(Checkbox);

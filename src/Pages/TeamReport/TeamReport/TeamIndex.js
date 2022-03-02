@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import {
   CircularProgressbarWithChildren,
   buildStyles,
@@ -600,7 +602,6 @@ function TeamIndex() {
               <p className="Y">Y {t("team.analysis.gankCount")}</p>
             </div>
           </NavBar>
-          {console.log(gankCount)}
           {gankCount?.firstGankList === "NULL" ?
             <NoData>{t("league.leagueStat.noData2")}</NoData>
             :

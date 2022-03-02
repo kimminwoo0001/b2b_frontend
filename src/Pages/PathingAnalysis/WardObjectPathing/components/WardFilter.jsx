@@ -22,7 +22,7 @@ import { typoStyle } from "../../../../Styles/ui";
 import { useTranslation } from "react-i18next";
 import { API } from '../../../config';
 import axiosRequest from '../../../../lib/axios/axiosRequest';
-import {initializedFalseValue} from '../../../../lib/initializedFalseValue';
+import {initializedObjValue} from '../../../../lib/initializedObjValue';
 import SelectedWardFilter from "./SelectedWardFilter";
 
 
@@ -243,7 +243,7 @@ const WardFilter = () => {
     if (junglevalue.year.length === 0) {
       return;
     }
-    const result = initializedFalseValue(selector.leagueFilter);
+    const result = initializedObjValue(selector.leagueFilter);
 
     dispatch(SetFilterData({
       ...junglevalue,
@@ -255,7 +255,7 @@ const WardFilter = () => {
     if (Object.keys(junglevalue.league).length === 0) {
       return;
     }
-    const result = initializedFalseValue(selector.seasonFilter);
+    const result = initializedObjValue(selector.seasonFilter);
 
     dispatch(SetFilterData({
       ...junglevalue,
@@ -267,7 +267,7 @@ const WardFilter = () => {
     if (junglevalue.team.length === 0) {
       return;
     }
-    const result = initializedFalseValue(selector.patchFilter, true);
+    const result = initializedObjValue(selector.patchFilter, true);
     console.log(result);
     dispatch(SetFilterData({
       ...junglevalue,

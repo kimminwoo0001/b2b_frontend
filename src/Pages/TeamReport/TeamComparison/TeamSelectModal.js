@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 import qs from "qs";
@@ -23,7 +25,6 @@ function TeamSelectModal({ openModal, setOpenModal, setActiveTab }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("openModal", openModal);
     if (openModal) {
       fetchingTeamFilter();
     }

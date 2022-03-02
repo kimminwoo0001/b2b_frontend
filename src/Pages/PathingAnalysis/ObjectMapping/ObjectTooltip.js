@@ -1,5 +1,7 @@
 import React from "react";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 
 function ObjectTooltip({
   champion,
@@ -34,11 +36,11 @@ function ObjectTooltip({
         <OppInfo>
           <OppTeamLogo
             src={`Images/TeamLogo/${oppteam}.png`}
-            // color={side === "red" ? "#0075bf" : "#f04545"}
+          // color={side === "red" ? "#0075bf" : "#f04545"}
           ></OppTeamLogo>
           <OppChampLogo
             src={`Images/champion/${oppchampion}.png`}
-            // color={side === "red" ? "#0075bf" : "#f04545"}
+          // color={side === "red" ? "#0075bf" : "#f04545"}
           ></OppChampLogo>
         </OppInfo>
       </Bottom>

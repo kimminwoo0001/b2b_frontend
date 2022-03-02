@@ -1,5 +1,7 @@
 import React from "react";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import Tippy from "@tippy.js/react";
 import { useHistory } from "react-router-dom";
 import GameReportToolTip from "../Common/GameReportToolTip";

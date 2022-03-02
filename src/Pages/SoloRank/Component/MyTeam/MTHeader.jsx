@@ -1,19 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import ItemBox from "./SubComponent/ItemBox";
 
-const sample = [
-  { logo: "Images/ico-league-lck.png", text: "LCK" },
-  { logo: "Images/TeamLogo/DK.png" },
-  { text: "DK" },
-  { text: "DWG KIA" },
-  { text: "5명" },
-];
-const MTHeader = () => {
+const MTHeader = ({ headerInfo }) => {
   const { t } = useTranslation();
+
   const lebels = [
     t("soloRank.myTeam.label.leagueInfo"),
     t("soloRank.myTeam.label.teamLogo"),
@@ -24,19 +19,20 @@ const MTHeader = () => {
 
   return (
     <SWrapper>
-      {lebels.map((data, idx) => {
-        if (sample[idx].logo) {
-          return (
-            <ItemBox
-              label={data}
-              logo={sample[idx].logo}
-              text={sample[idx].text}
-            />
-          );
-        } else {
-          return <ItemBox label={data} text={sample[idx].text} />;
-        }
-      })}
+      {headerInfo.length > 0 &&
+        lebels.map((data, idx) => {
+          if (headerInfo[idx].logo) {
+            return (
+              <ItemBox
+                label={data}
+                logo={headerInfo[idx].logo}
+                text={headerInfo[idx].text}
+              />
+            );
+          } else {
+            return <ItemBox label={data} text={headerInfo[idx].text} />;
+          }
+        })}
     </SWrapper>
   );
 };

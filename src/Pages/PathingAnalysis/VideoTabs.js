@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useSelector, useDispatch } from "react-redux";
 import { SelectorInitailizeState } from "../../redux/modules/selectorvalue";
 import {
@@ -19,9 +21,8 @@ import WardObjectPathing from "./WardObjectPathing/WardObjectPathing";
 import { JungleInit } from "../../redux/modules/junglevalue";
 
 function VideoTabs() {
-
   const filters = useSelector((state) => state.FilterReducer);
-  const [team, setTeam] = useState("")
+  const [team, setTeam] = useState("");
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -31,7 +32,7 @@ function VideoTabs() {
       dispatch(Reset_MapTab());
       dispatch(Reset_Object_MapTab());
     }
-  }, [filters.team])
+  }, [filters.team]);
 
   const VideoTab = {
     0: <WardMapping />,
@@ -65,7 +66,7 @@ function VideoTabs() {
           <TabContent
             onClick={() => {
               dispatch(HandleTab(1));
-              dispatch(Reset_MapTab()); 
+              dispatch(Reset_MapTab());
               dispatch(Reset_Object_MapTab());
               if (filters.tab === 4|| filters.tab === 5)  {
               dispatch(ResetWardPathingTab());
@@ -100,10 +101,6 @@ function VideoTabs() {
             onClick={() => {
               dispatch(HandleTab(3));
               dispatch(Reset_MapTab());
-              if (filters.tab === 4) {
-              dispatch(ResetWardPathingTab());
-              dispatch(SelectorInitailizeState());
-              }
             }}
             changeColor={filters.tab === 3}
           >
@@ -123,7 +120,6 @@ function VideoTabs() {
               }
               // dispatch(InitializeGameState());
               // dispatch(InitailizeState());
-
             }}
             changeColor={filters.tab === 4}
           >

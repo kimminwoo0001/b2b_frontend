@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { API } from "../../config";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
@@ -120,11 +122,11 @@ function BanIndex() {
         dispatch(Baned5(e.Baneds[4].BanInfos));
 
         const isKor = lang === "ko";
-        console.log(Object.keys(e.phased[0]));
+        //console.log(Object.keys(e.phased[0]));
 
         let phaseArray1 = [];
         Object.keys(e.phased[0]).forEach((key) => {
-          console.log(key);
+          //console.log(key);
           const data = e.phased[0];
           phaseArray1.push({
             champion: isKor ? data[key].championKor : data[key].championKor,

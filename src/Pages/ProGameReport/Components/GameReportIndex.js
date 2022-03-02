@@ -1,6 +1,8 @@
 import React, { memo, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import EachMatch from "./EachMatch.jsx";
 import GameReportDetail from "./GameReportDetail";
 import axiosRequest from "../../../lib/axios/axiosRequest";

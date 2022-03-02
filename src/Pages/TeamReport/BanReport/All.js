@@ -1,5 +1,7 @@
 import React from "react";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import Tooltips from "./Tooltips";
@@ -413,7 +415,7 @@ function All({ phase1, phase2, phase2_1, phase2_2 }) {
           <PhaseWrapper>
             <PhaseContents>
               {phase1?.map((phase, idx) => {
-                console.log(phase);
+                //console.log(phase);
                 return (
                   <MapPhaseData key={idx}>
                     <img

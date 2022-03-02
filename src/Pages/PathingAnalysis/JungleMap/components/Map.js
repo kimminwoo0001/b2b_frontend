@@ -12,7 +12,7 @@ import { SetModalInfo } from "../../../../redux/modules/modalvalue";
 import {SetJunglePlayer, SetIsJungleMappingClicked, SetFilterData} from '../../../../redux/modules/junglevalue';
 import { useTranslation } from "react-i18next";
 import addZero from "../../../../lib/addZero";
-import { initializedFalseValue } from "../../../../lib/initializedFalseValue";
+import { initializedObjValue } from "../../../../lib/initializedObjValue";
 
 
 function useIntervalFast(callback) {

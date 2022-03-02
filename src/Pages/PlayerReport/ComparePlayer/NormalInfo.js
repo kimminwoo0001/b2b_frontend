@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Radar } from "react-chartjs-2";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { useSelector, useDispatch } from "react-redux";
 import { API } from "../../config";
 import axios from "axios";

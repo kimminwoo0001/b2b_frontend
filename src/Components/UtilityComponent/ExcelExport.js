@@ -1,52 +1,31 @@
-import React, { useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import React, { useRef } from "react";
+// 리덕스 상태관련
 import { useSelector, useDispatch } from "react-redux";
 import { setTableHeaders, TableHeaders } from "../../redux/modules/tablevalue";
-import { useDetectOutsideClick } from "../SelectFilter/useDetectOustsideClick";
+// 클립보드 & 엑셀 데이터 export 관련
 import * as clipboard from "clipboard-polyfill/text";
 import XLSX from "xlsx";
 import timeFormat from "../../lib/timeFormat";
-import Modal from "react-modal";
-import AlertModal from "./AlertModal";
-import { SetIsOpen, SetDesc } from "../../redux/modules/modalvalue";
-
-const customStyles = {
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.75)",
-  },
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    transform: "translate(-50%, -50%)",
-    background: "rgba(0, 0, 0, 0.75)",
-    border: "1px solid rgba(0, 0, 0, 0.75)",
-    overflow: "auto",
-    WebkitOverflowScrolling: "touch",
-    borderRadius: "4px",
-    outline: "none",
-    padding: "0px",
-  },
-};
+// UI 관련
+import styled from "@emotion/styled/macro";
+import { useTranslation } from "react-i18next";
+import { useDetectOutsideClick } from "../SelectFilter/useDetectOustsideClick";
+// 모달관련
+import { useModal } from "../../Hooks/index";
+import { modalList } from "../../Components/Modals/Modals";
 
 const ExportUtil = ({ filename = "none", tableid }) => {
-  const { t } = useTranslation();
+  // ref
   const dropdownRef = useRef(null);
   const tblHeaders = useRef([]);
-  const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
+  // hook
+  const { t } = useTranslation();
+  const { openModal } = useModal();
   const dispatch = useDispatch();
+  const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const tblvalue = useSelector((state) => state.TableReducer);
-  const { isOpen } = useSelector((state) => state.ModalReducer);
-
-  // const [isOpen, setIsOpen] = useState(false);
-  const [alertDesc, setAlertDesc] = useState("");
 
   const getTableHeaders = () => {
     const table = document.getElementById(tableid);
@@ -64,7 +43,6 @@ const ExportUtil = ({ filename = "none", tableid }) => {
     tblHeaders.current = result;
     dispatch(setTableHeaders(result));
   };
-
   function tabledata(type) {
     const BOM = "\uFEFF"; //바이트 순서 표식
     let result = BOM;
@@ -78,9 +56,12 @@ const ExportUtil = ({ filename = "none", tableid }) => {
         if (columnData == null || columnData.length === 0) {
           columnData = "".replace(/"/g, '""');
         } else {
-          columnData = columnData.toString().replace(/"/g, '""').replace(regex, ''); // escape double quotes
+          columnData = columnData
+            .toString()
+            .replace(/"/g, '""')
+            .replace(regex, ""); // escape double quotes
         }
-        console.log(result);
+        // console.log(result);
         result =
           type === "csv"
             ? result + '"' + columnData + '",'
@@ -153,25 +134,13 @@ const ExportUtil = ({ filename = "none", tableid }) => {
 
   const copyClipboard = () => {
     clipboard.writeText(tabledata("clipboard")).then(
-      function () {
-        // setAlertDesc(t("alert.desc.copy_y"));
-        // setIsOpen(true);
-        dispatch(SetDesc(t("alert.desc.copy_y")));
-        dispatch(SetIsOpen(true));
-      },
-      function () {
-        // setAlertDesc(t("alert.desc.copy_n"));
-        // setIsOpen(true);
-        dispatch(SetDesc(t("alert.desc.copy_n")));
-        dispatch(SetIsOpen(true));
-      }
+      () => openModal(modalList.alert, { text: t("alert.desc.copy_y") }),
+      () => openModal(modalList.alert, { text: t("alert.desc.copy_n") })
     );
   };
 
   return (
     <>
-      {/* <AlertModal desc={alertDesc} isOpen={isOpen} setIsOpen={setIsOpen} /> */}
-      <AlertModal />
       <DropDown>
         <div className="menu-container">
           <button
@@ -408,8 +377,7 @@ const DropDown = styled.div`
     transform: translateX(-20px);
     transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
     width: 210px;
-    z-index:9999;
-
+    z-index: 9999;
   }
 
   .menu.active {
@@ -466,7 +434,7 @@ const ExportFile = styled.div`
     }
     :hover {
       background-color: ${(props) =>
-    props.changeColor ? `#5942ba` : `#484655`};
+        props.changeColor ? `#5942ba` : `#484655`};
     }
   }
 `;

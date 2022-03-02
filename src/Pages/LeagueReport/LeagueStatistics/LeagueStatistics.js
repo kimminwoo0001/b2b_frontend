@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { Line, Bar } from "react-chartjs-2";
-import axios from "axios";
 import { API } from "../../config";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
-import qs from "qs";
 import axiosRequest from "../../../lib/axios/axiosRequest";
-import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
-import { Loading } from "../../../redux/modules/filtervalue";
+import { Loading, HandleTab } from "../../../redux/modules/filtervalue";
 
 function LeagueStatistics() {
   //리그 통합 지수 텝
@@ -42,6 +41,7 @@ function LeagueStatistics() {
   const [totalMatchY, setTotalMatchY] = useState();
 
   // const [chart, setChart] = useState();
+
 
   useEffect(() => {
     const { league, year, season } = filters;

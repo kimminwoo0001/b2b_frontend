@@ -16,7 +16,37 @@
     "part9": "Compare Players",
     "part10": "Item Simulator",
     "part11": "Team WR Calculator",
-    "part12": "Pro Game Analysis"
+    "part12": "Pro Game Analysis",
+    "part13": "Solo Rank",
+    "part14": "Item Calculator"
+  },
+  "common": {
+    "label": {
+      "recent": "Last",
+      "game": "G",
+      "player": "Player",
+      "winrate": "WinRate",
+      "ID": "ID",
+      "win": "W",
+      "lose": "L"
+    },
+    "button": {
+      "add": "add"
+    },
+    "date": {
+      "year": "year",
+      "month": "month",
+      "day": "day",
+      "weekDays": {
+        "mon": "mon",
+        "tue": "tue",
+        "wed": "wed",
+        "thu": "thu",
+        "fri": "fri",
+        "sat": "sat",
+        "sun": "sun"
+      }
+    }
   },
   "sign": {
     "signUp": "Sign up",
@@ -88,7 +118,7 @@
     "confirm": "Confirm",
     "notice": "Notice",
     "noData": "No new notifications",
-    "hello": "Hello.\nThe game data for the 2022 season has been updated.\nthank you."
+    "hello": "Hello.\nLPL data has been partially updated.\nthank you."
   },
   "home": {
     "rank": "Rank",
@@ -151,7 +181,9 @@
       "w": "W",
       "l": "L",
       "tier": "Tier",
-      "noUniquePickData": "There is no unique pick data."
+      "noData": "There is no data.",
+      "team": "Team",
+      "oppTeam": "Opponent Team"
     },
     "leagueStat": {
       "gameLength": "Game Length",
@@ -412,7 +444,8 @@
     "player": "Player",
     "NoCommonSeasons": "Please select seasons again.",
     "mainTeamChanged": "Main team has changed. Moves to the initial page.",
-    "sorry": "The game data for the 2022 season has been updated."
+    "sorry": "Performance Rating algorithms have been modified to better account for playmaking.",
+    "noMultipleSelection": "Multi Select Disabled"
   },
   "video": {
     "tab": {
@@ -510,21 +543,21 @@
       "8min": "3'-8'",
       "side": "SIDE"
     },
-    "jungle" : {
+    "jungle": {
       "JunglePathing": "Jungle Pathing",
-      "CompareJungling" : "Compare Jungling",
+      "CompareJungling": "Compare Jungling",
       "year": "Year",
-      "league" : "League",
-      "season" : "Season", 
-      "team" : "Team",
-      "patch" : "Patch",
+      "league": "League",
+      "season": "Season",
+      "team": "Team",
+      "patch": "Patch",
       "selectAll": "Select All",
-      "selectYear":"Select Year",
+      "selectYear": "Select Year",
       "selectLeague": "Select League",
-      "selectSeason" : "Select Season",
+      "selectSeason": "Select Season",
       "selectTeam": "Select Team",
       "selectPatch": "Select Patch",
-      "selectedFilter" : "Selected Filter",
+      "selectedFilter": "Selected Filter",
       "reset": "Reset",
       "selectPlayer": "Select a Player",
       "champLabel": "Player's Champion",
@@ -570,7 +603,8 @@
     },
     "logout": {
       "sessionExpires": "Your account validity time has expired and moves to the login page.",
-      "loginFail": "Invalid ID or Password. Please try again."
+      "loginFail": "Invalid ID or Password. Please try again.",
+      "duplication": "Duplicate login is confirmed and logged out."
     },
     "label": {
       "confirm": "Confirm",
@@ -584,7 +618,9 @@
       "serverError": "There is a problem with the server. Please contact the manager.",
       "tryLoginAgain": "You have logged out of your previous login account.\nPlease log in again.",
       "loginTimeOver": "Your account has expired.",
-      "MasterKey": "Key authentication is required."
+      "MasterKey": "Key authentication is required.",
+      "questionCancel": "Do you want to cancel?",
+      "questionContinue": "Will you continue??"
     }
   },
   "label": {
@@ -638,7 +674,26 @@
       },
       "status": {
         "subject": "Status Log",
-        "tooltipInfo": "Status logs after 15 minutes of game time are not yet supported."
+        "tooltipInfo": "Status logs after 15 minutes of game time are not yet supported.",
+        "ganking": {
+          "title": "Ganking",
+          "desc": "에 갱킹을 시도합니다."
+        },
+        "roaming": {
+          "title": "Roaming",
+          "desc": "에 로밍을 시도합니다."
+        },
+        "teamfight": {
+          "title": "Tean Fight"
+        },
+        "invade": {
+          "title": "Invade"
+        },
+        "teleport": {
+          "title": "Teleport",
+          "particicle": "이(가)",
+          "desc": "텔레포트를 사용합니다."
+        }
       },
       "detail": {
         "subject": "Detail Log"
@@ -678,7 +733,83 @@
         "tower": "Tower",
         "herald&baron": "Object",
         "dragon": "Dragon",
-        "tooltipInfo": "Data after 15 minutes is not yet supported."
+        "tooltipInfo": "Data after 15 minutes is not yet supported.",
+        "InLane": ""
+      }
+    },
+    "teamStatus": {
+      "player": {
+        "Ambush": "부쉬에 숨음",
+        "Diving": "다이브",
+        "TowerHugging": "타워 허깅",
+        "OppTowerPushing": "타워 푸쉬",
+        "Ganking": "Ganking",
+        "Dealt": "딜 교환",
+        "Dealing": "딜 교환",
+        "MovingToLane": "라인 복귀",
+        "Roaming": "Roaming",
+        "Jungling": "Jungling",
+        "CounterJungling": "카운터 정글",
+        "Dead": "죽음",
+        "TeleportToLane": "텔레포트",
+        "TeleportToOther": "텔레포트",
+        "InLane": "라인전"
+      }
+    },
+    "banPick": {
+      "firstPick": {
+        "top": "탑 선픽",
+        "jng": "정글 선픽",
+        "mid": "미드 선픽",
+        "ad": "원딜 선픽",
+        "sup": "서폿 선픽"
+      }
+    }
+  },
+  "soloRank": {
+    "tab": {
+      "myTeam": "My Team SoloRank",
+      "filterSearch": "Filter Search",
+      "interestedPlayer": "Interested Player SoloRank"
+    },
+    "myTeam": {
+      "label": {
+        "leagueInfo": "League Info",
+        "teamLogo": "Team Logo",
+        "teamAbbr": "Team Abbreviation",
+        "teamName": "Team Name",
+        "addInterestedPlayer": "Add Interested Player",
+        "soloRankID": "SoloRank ID",
+        "curTier8prevTier": "Current Tier LP \n(Previous Tier)",
+        "curSeason": "Current Season",
+        "recentDays": "Last ##days",
+        "daysPlayedCham": "Last ##days\nplayed Champion"
+      }
+    }
+  },
+  "utility": {
+    "calendarFilter": {
+      "dateSet": "set date",
+      "dateAdd": "add date",
+      "inputStart": "add start date",
+      "inputEnd": "add date",
+      "date": {
+        "allSeason": "whole season",
+        "recent3days": "last 3 days",
+        "recent5days": "last 5 days",
+        "recent7days": "last 7 days",
+        "recent15days": "last 15 days",
+        "recent1months": "last 1 month",
+        "recent3months": "last 3 months"
+      },
+      "Confirm": "Confirm",
+      "desc": {
+        "noStartIdx": "you need to select a start date.",
+        "noEndIdx": "you need to select a end date.",
+        "wrongDate": "Please select an available date.",
+        "changeToStartSeason": "Fix the start date to the start date of the season.",
+        "changeToEndSeason": "Fix the end date to the end date of the season.",
+        "changeToAllSeason": "Fix the start and end dates to the start and end dates of the season."
       }
     }
   }

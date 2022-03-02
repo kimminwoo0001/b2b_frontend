@@ -12,11 +12,9 @@ import AlertModal from "../../../Components/UtilityComponent/AlertModal";
 import { JungleInit } from "../../../redux/modules/junglevalue";
 import { SelectorInitailizeState } from "../../../redux/modules/selectorvalue";
 
-
 // subtab data
 
 const JungleMap = () => {
-  
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const JungleTab = [
@@ -26,33 +24,32 @@ const JungleMap = () => {
   const { currentIndex, currentTab, setIndex } = useTab(0, JungleTab);
   return (
     <>
-    <AlertModal />
-    <SContainer>
-      <STab>
-        {JungleTab.map((tab, index) => (
-          <STabItem
-            key={tab.title}
-            className={index === currentIndex ? "is-active" : ""}
-            onClick={() => {
-              setIndex(index)
-              dispatch(JungleInit());
-              dispatch(SelectorInitailizeState());
-            }
-            }
-          >
-            {tab.title}
-          </STabItem>
-        ))}
-      </STab>
-      <SContents>{currentTab.component}</SContents>
-    </SContainer>
+      <AlertModal />
+      <SContainer>
+        <STab>
+          {JungleTab.map((tab, index) => (
+            <STabItem
+              key={tab.title}
+              className={index === currentIndex ? "is-active" : ""}
+              onClick={() => {
+                if (currentIndex === index) return;
+                setIndex(index);
+                dispatch(JungleInit());
+                dispatch(SelectorInitailizeState());
+              }}
+            >
+              {tab.title}
+            </STabItem>
+          ))}
+        </STab>
+        <SContents>{currentTab.component}</SContents>
+      </SContainer>
     </>
   );
 };
 
 const SContainer = styled.section`
-  ${typoStyle.contents}
-  /* ${testStyle.border1} */
+  ${typoStyle.contents}/* ${testStyle.border1} */
 `;
 
 const STab = styled.ul`

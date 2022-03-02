@@ -9,6 +9,10 @@ import tableStyle from "./table_style";
 import scrollbarStyle from "./scrollbar_style";
 import colors from "./colors";
 import borderRadiusStyle from "./borderRadius_style";
+import inputStyle from "./input_style";
+import fontsStyle from "./fonts_style";
+import modalStyle from "./modal_style";
+import { boxshadowStyle } from "./boxshadow_style";
 
 export {
   colors,
@@ -22,4 +26,8 @@ export {
   dropdownStyle,
   scrollbarStyle,
   borderRadiusStyle,
+  inputStyle,
+  fontsStyle,
+  modalStyle,
+  boxshadowStyle,
 };

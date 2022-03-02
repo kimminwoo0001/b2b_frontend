@@ -1,7 +1,9 @@
 const colors = {
   // maincolor
   point: "#5942ba",
+  point_hover: "#6a55c1",
   default: "#484655",
+  default_hover: "#5b5966",
 
   // bordercolor
   border_light: "#433f4e",
@@ -12,8 +14,13 @@ const colors = {
   bg_light: "#2e2d38",
   bg_box: "#2f2d38",
   bg_select: "#23212a",
+  bg_select_hover: "#393840",
   bg_hover: "rgba(255,255,255,0.1)",
   bg_checkbox: "#3a3745",
+  bg_button: "#3a3745",
+
+  // btn
+  btn_nor: "#484655",
 
   //badge
   badge_red: "#f04545",
@@ -35,6 +42,7 @@ const colors = {
 
   // scrollbar
   bg_scrollbar: "#434050",
+  bg_scrollbar_default: "rgba(255,255,255,0.1)",
 };
 
 export default colors;

@@ -2,32 +2,48 @@ import React, { useEffect, useState } from "react";
 import CustomCheckbox from "./CustomCheckbox";
 import styled from "@emotion/styled";
 import { isObjEqual } from "../../lib/isObjEqual";
-import { transitionStyle, typoStyle } from "../../Styles/ui";
+import {
+  borderRadiusStyle,
+  colors,
+  transitionStyle,
+  typoStyle,
+} from "../../Styles/ui";
+import { useUpdateEffect } from "../../Hooks";
 
-const PositionCheckList = ({ onChange, ...props }) => {
-  const [position, setPosition] = useState({
-    all: true,
-    top: true,
-    jng: true,
-    mid: true,
-    bot: true,
-    sup: true,
-  });
+// 포지션 정보
+const POSITION_IMG = {
+  all: "ALL",
+  top: <img src="images/position/ico-position-top.svg" alt="top" />,
+  jng: <img src="images/position/ico-position-jng.svg" alt="jng" />,
+  mid: <img src="images/position/ico-position-mid.svg" alt="mid" />,
+  bot: <img src="images/position/ico-position-bot.svg" alt="bot" />,
+  sup: <img src="images/position/ico-position-sup.svg" alt="sup" />,
+};
 
-  const handleChange = (e) => {
+const PositionCheckList = ({
+  all = true,
+  multi = true,
+  defaultColor = "rgba(255,255,255,0.3)",
+  hoverColor = colors.bg_checkbox,
+  position = {
+    all: false,
+    top: false,
+    jng: false,
+    mid: false,
+    bot: false,
+    sup: false,
+  },
+  setPosition = () => {},
+  ...props
+}) => {
+  const handleChangeMulti = (e) => {
     const { name, value, checked } = e.target;
-
     if (value === "all") {
       setPosition((prev) => {
         let newPosition = { ...prev };
         for (let key in newPosition) {
           newPosition[key] = checked;
         }
-
-        if (onChange) {
-          onChange(newPosition);
-        }
-
         return newPosition;
       });
     } else {
@@ -41,100 +57,48 @@ const PositionCheckList = ({ onChange, ...props }) => {
           newPosition.all = false;
         }
 
-        if (onChange) {
-          onChange(newPosition);
-        }
-
         return newPosition;
       });
     }
   };
-
+  const handleChangeSingle = (e) => {
+    const { name, value, checked } = e.target;
+    if (position[value]) return setPosition({ ...position, [value]: checked });
+    setPosition((prev) => {
+      const newPosition = { ...prev };
+      for (let key in newPosition) {
+        newPosition[key] = !checked;
+      }
+      newPosition[value] = checked;
+      return newPosition;
+    });
+  };
   return (
     <div {...props}>
       <SList>
-        <SListItem>
-          <SCustomCheckbox
-            name={"position"}
-            value={"all"}
-            onChange={handleChange}
-            checked={position.all}
-          >
-            <SIcon>
-              <span>ALL</span>
-            </SIcon>
-          </SCustomCheckbox>
-        </SListItem>
-        <SListItem>
-          <SCustomCheckbox
-            name={"position"}
-            value={"top"}
-            onChange={handleChange}
-            checked={position.top}
-          >
-            <SIcon>
-              <span>
-                <img src="images/position/ico-position-top.svg" alt="top" />
-              </span>
-            </SIcon>
-          </SCustomCheckbox>
-        </SListItem>
-        <SListItem>
-          <SCustomCheckbox
-            name={"position"}
-            value={"jng"}
-            onChange={handleChange}
-            checked={position.jng}
-          >
-            <SIcon>
-              <span>
-                <img src="images/position/ico-position-jug.svg" alt="top" />
-              </span>
-            </SIcon>
-          </SCustomCheckbox>
-        </SListItem>
-        <SListItem>
-          <SCustomCheckbox
-            name={"position"}
-            value={"mid"}
-            onChange={handleChange}
-            checked={position.mid}
-          >
-            <SIcon>
-              <span>
-                <img src="images/position/ico-position-mid.svg" alt="mid" />
-              </span>
-            </SIcon>
-          </SCustomCheckbox>
-        </SListItem>
-        <SListItem>
-          <SCustomCheckbox
-            name={"position"}
-            value={"bot"}
-            onChange={handleChange}
-            checked={position.bot}
-          >
-            <SIcon>
-              <span>
-                <img src="images/position/ico-position-bot.svg" alt="bot" />
-              </span>
-            </SIcon>
-          </SCustomCheckbox>
-        </SListItem>
-        <SListItem>
-          <SCustomCheckbox
-            name={"position"}
-            value={"sup"}
-            onChange={handleChange}
-            checked={position.sup}
-          >
-            <SIcon>
-              <span>
-                <img src="images/position/ico-position-sup.svg" alt="sup" />
-              </span>
-            </SIcon>
-          </SCustomCheckbox>
-        </SListItem>
+        {Object.keys(position)
+          .filter((pos) => {
+            if (!all || !multi) return pos !== "all";
+            return true;
+          })
+          .map((key, i) => {
+            return (
+              <SListItem key={key + i}>
+                <SCustomCheckbox
+                  name={"position"}
+                  value={key}
+                  onChange={multi ? handleChangeMulti : handleChangeSingle}
+                  checked={position[key]}
+                  defaultcolor={defaultColor}
+                  hovercolor={hoverColor}
+                >
+                  <SIcon>
+                    <span>{POSITION_IMG[key]}</span>
+                  </SIcon>
+                </SCustomCheckbox>
+              </SListItem>
+            );
+          })}
       </SList>
     </div>
   );
@@ -145,13 +109,12 @@ const SList = styled.ul`
 `;
 
 const SCustomCheckbox = styled(CustomCheckbox)`
-  border-radius: 10px;
   overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.3);
-
+  ${borderRadiusStyle[10]}
+  ${transitionStyle.background}
+  background-color: ${({ defaultcolor }) => defaultcolor};
   &.is-active {
-    background-color: ${({ theme }) => theme.colors.bg_checkbox};
-
+    background-color: ${({ hovercolor }) => hovercolor};
     span {
       opacity: 1;
     }

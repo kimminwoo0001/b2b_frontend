@@ -3,6 +3,9 @@ import { reset } from "styled-reset";
 
 export const GlobalStyles = createGlobalStyle`
 ${reset}
+:root {
+  --delay: 200ms
+}
   * {
   box-sizing: border-box;
   }
@@ -37,4 +40,23 @@ ${reset}
     font-family:'Spoqa Han Sans';
     /* font-family: --apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,'Apple SD Gothic Neo', 'Open Sans', 'Helvetica Neue', sans-serif; */
   }
+
+
+  /* react-modal */
+
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity var(--delay) ease-in-out;
+}
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+.item-exit {
+  opacity: 1;
+}
+.item-exit-active {
+  opacity: 0;
+  transition: opacity var(--delay) ease-in;
+}
+  
 `;

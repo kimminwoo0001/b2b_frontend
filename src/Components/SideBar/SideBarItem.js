@@ -4,7 +4,9 @@ import { batch, useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { SelectorInitailizeState } from "../../redux/modules/selectorvalue";
 import { InitializeGameState } from "../../redux/modules/gamevalue";
-import styled, { css } from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { CompareModal, CopyFvInit, SetCopyFilters, SetOpenFilterModal } from "../../redux/modules/copyvalue";
 import { JungleInit } from "../../redux/modules/junglevalue";
 

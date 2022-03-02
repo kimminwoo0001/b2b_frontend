@@ -34,7 +34,7 @@ import {
   borderRadiusStyle,
 } from "../../../../Styles/ui";
 import { isObjEqual } from "../../../../lib/isObjEqual";
-import { initializedFalseValue } from "../../../../lib/initializedFalseValue";
+import { initializedObjValue } from "../../../../lib/initializedObjValue";
 import SelectObject from "../../ObjectMapping/SelectObject";
 
 const WardSideFilter = () => {
@@ -271,7 +271,7 @@ let newArr = [];
 for(let key in champInfo) {
     newArr.push(champInfo[key].champ);      
 }
-const result = initializedFalseValue(newArr);
+const result = initializedObjValue(newArr);
 dispatch(SetFilterData(({
     ...junglevalue,
     champion: result,
@@ -284,7 +284,7 @@ let newArr = [];
 for(let key in oppChampInfo) {
 newArr.push(oppChampInfo[key].champs);      
 }
-const result = initializedFalseValue(newArr);
+const result = initializedObjValue(newArr);
 dispatch(SetFilterData(({
 ...junglevalue,
 oppchampion: result,

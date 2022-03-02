@@ -21,10 +21,27 @@
       "recent": "최근",
       "game": "경기",
       "player": "선수",
-      "winrate": "승률"
+      "winrate": "승률",
+      "ID": "ID",
+      "win": "승",
+      "lose": "패"
     },
     "button": {
       "add": "추가"
+    },
+    "date": {
+      "year": "년",
+      "month": "월",
+      "day": "일",
+      "weekDays": {
+        "mon": "월",
+        "tue": "화",
+        "wed": "수",
+        "thu": "목",
+        "fri": "금",
+        "sat": "토",
+        "sun": "일"
+      }
     }
   },
   "sign": {
@@ -97,7 +114,7 @@
     "confirm": "확인",
     "notice": "알림",
     "noData": "새로운 알림이 없습니다.",
-    "hello": "안녕하세요. nunu.gg 운영진입니다.\n22년도 시즌데이터가 업데이트 되었습니다.\n감사합니다."
+    "hello": "안녕하세요. nunu.gg 운영진입니다.\nLPL데이터가 일부 업데이트 되었습니다.\n감사합니다."
   },
   "home": {
     "rank": "순위",
@@ -160,7 +177,9 @@
       "w": "승",
       "l": "패",
       "tier": "티어",
-      "noUniquePickData": "유니크 픽 데이터가 없습니다."
+      "noData": "데이터가 없습니다.",
+      "team": "팀",
+      "oppTeam": "상대 팀"
     },
     "leagueStat": {
       "gameLength": "평균 게임 시간",
@@ -421,7 +440,8 @@
     "player": "선수",
     "NoCommonSeasons": "시즌을 다시 선택해주세요.",
     "mainTeamChanged": "메인 팀이 변경되어 비교 데이터가 초기화됩니다.",
-    "sorry": "22년도 시즌데이터가 업데이트 되었습니다."
+    "sorry": "선수의 플레이메이킹을 보다 잘 반영할 수 있도록 PR 알고리즘이 일부 업데이트 되었습니다.",
+    "noMultipleSelection": "중복 선택 불가"
   },
   "video": {
     "tab": {
@@ -475,6 +495,7 @@
       "step3": "오브젝트 설정",
       "step4": "포지션 설정",
       "apply": "동선 확인하기",
+      "team": "팀",
       "player": "선수 선택",
       "champ": "챔피언",
       "team2": "상대 팀",
@@ -521,19 +542,19 @@
     },
     "jungle": {
       "JunglePathing": "경기별 정글 동선",
-      "CompareJungling" : "정글링 비교",
+      "CompareJungling": "정글링 비교",
       "year": "연도",
-      "league" : "리그",
-      "season" : "시즌", 
-      "team" : "팀",
-      "patch" : "패치",
+      "league": "리그",
+      "season": "시즌",
+      "team": "팀",
+      "patch": "패치",
       "selectAll": "전체 선택",
-      "selectYear":"연도 선택",
+      "selectYear": "연도 선택",
       "selectLeague": "리그 선택",
-      "selectSeason" : "시즌 선택",
+      "selectSeason": "시즌 선택",
       "selectTeam": "팀 선택",
       "selectPatch": "패치 선택",
-      "selectedFilter" : "선택된 필터",
+      "selectedFilter": "선택된 필터",
       "reset": "초기화",
       "selectPlayer": "선수 선택",
       "champLabel": "플레이 한 챔피언 선택",
@@ -592,11 +613,11 @@
       "email_check": "이메일 형식이 올바르지 않습니다.",
       "login_fail": "로그인 실패 : 시간 제한이 초과되었습니다.",
       "serverError": "서버에 문제가 생겼습니다. 관리자에게 문의해주세요.",
-      "questionCancel": "취소하시겠습니까?",
-      "questionContinue": "계속하시겠습니까?",
       "tryLoginAgain": "이전 로그인 계정을 로그아웃 하였습니다.",
       "loginTimeOver": "계정의 사용 기간이 만료되었습니다.",
-      "MasterKey": "키 인증이 필요합니다."
+      "MasterKey": "키 인증이 필요합니다.",
+      "questionCancel": "취소하시겠습니까?",
+      "questionContinue": "계속하시겠습니까?"
     }
   },
   "label": {
@@ -759,7 +780,39 @@
         "curTier8prevTier": "현재 티어 LP \n(이전 시즌 티어)",
         "curSeason": "이번 시즌",
         "recentDays": "최근 ##일",
-        "daysPlayedCham": "최근 ##일간\n플레이한 챔피언"
+        "daysPlayedCham": "최근 ##일간\n플레이한 챔피언",
+        "addPlayer": "우리팀 소속 선수 등록",
+        "addSoloRankID": "솔로랭크 ID 추가"
+      },
+      "desc": {
+        "addPlayer": "우리팀 소속으로 솔로랭크를 확인할 선수를 등록하세요.",
+        "addSoloRankID": "ID는 최대 6개 까지 등록 가능합니다."
+      }
+    }
+  },
+  "utility": {
+    "calendarFilter": {
+      "dateSet": "날짜 설정",
+      "inputStart": "시작일 입력",
+      "inputEnd": "종료일 입력",
+      "date": {
+        "allSeason": "시즌 전체",
+        "recent3days": "최근 3일",
+        "recent5days": "최근 5일",
+        "recent7days": "최근 7일",
+        "recent15days": "최근 15일",
+        "recent1months": "최근 1개월",
+        "recent3months": "최근 3개월"
+      },
+      "Confirm": "날짜 선택 완료",
+      "desc": {
+        "noStartIdx": "시작일을 선택이 필요합니다.",
+        "noEndIdx": "종료일을 선택이 필요합니다.",
+        "needStartIdx": "시작일을 먼저 선택해야 합니다.",
+        "wrongDate": "사용 가능한 날짜를 선택해야합니다.",
+        "changeToStartSeason": "시작일을 시즌의 시작일로 수정합니다.",
+        "changeToEndSeason": "종료일을 시즌의 종료일로 수정합니다.",
+        "changeToAllSeason": "시작일과 종료일을 시즌의 시작일과 종료일로 수정합니다."
       }
     }
   }

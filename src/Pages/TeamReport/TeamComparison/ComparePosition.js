@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
-import styled from "styled-components";
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import { Line } from "react-chartjs-2";
 import { API } from "../../config";
 import axios from "axios";
@@ -19,7 +21,7 @@ function mycomparator(a, b) {
   if (Math.floor(a) - Math.floor(b) > 0) {
     num1 = 1;
   } else if (Math.floor(a) - Math.floor(b) < 0) {
-    console.log(Math.floor(a) + "," + Math.floor(b));
+    // console.log(Math.floor(a) + "," + Math.floor(b));
     num1 = -1;
   } else {
     num1 = 0;

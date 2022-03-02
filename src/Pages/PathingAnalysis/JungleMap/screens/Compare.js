@@ -26,7 +26,7 @@ import {
 // ui Style components
 import * as table from "../components/styled/StyledTable";
 import * as layout from "../components/styled/StyledJungleLayout";
-import { SetIsJunglingClicked } from '../../../../redux/modules/junglevalue';
+import { SetIsJunglingClicked } from "../../../../redux/modules/junglevalue";
 
 // 스타일 컴포넌트 임포트
 const S = { table, layout };
@@ -85,8 +85,10 @@ const Compare = () => {
     let mm = Math.floor(sec / 60);
     let ss = Math.floor(sec % 60);
 
-    return `${mm}${t("solo.playerboard.min")} ${ss}${t("solo.playerboard.sec")}`;
-  }
+    return `${mm}${t("solo.playerboard.min")} ${ss}${t(
+      "solo.playerboard.sec"
+    )}`;
+  };
 
   const convertingCampRate = (campRate) => {
     const side = campRate.side.split(',');
@@ -132,10 +134,10 @@ const Compare = () => {
       patch: selectedPatches,
       team: team[0],
       player: player[0],
-      champion:champArr ,
+      champion: champArr,
       oppleague: oppleague,
       oppyear: oppyear,
-      oppseason:selectedOppSeasons,
+      oppseason: selectedOppSeasons,
       oppteam: oppteam[0],
       oppplayer: oppplayer[0],
       oppchampion: oppChampArr,
@@ -166,12 +168,16 @@ const Compare = () => {
   }
 
   useEffect(() => {
-    if((Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).length === 0) || 
-    !junglevalue.isClicked) {
+    if (
+      Object.keys(junglevalue.oppchampion).filter(
+        (key) => junglevalue.oppchampion[key] === true
+      ).length === 0 ||
+      !junglevalue.isClicked
+    ) {
       return;
     }
     fetchCampSelectionRate();
-  }, [junglevalue.isClicked])
+  }, [junglevalue.isClicked]);
 
   return (
     <S.layout.CompareContainer>
@@ -180,18 +186,19 @@ const Compare = () => {
         <S.layout.Sidebar>
           <CompareSideFilter />
         </S.layout.Sidebar>
-        { Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).length > 0  &&
-           
-              <S.layout.Contents>
-              {/* 비교테이블 */}
-              <S.layout.FlexContainer css={spacing.marginB(5)}>
-                {/* 첫번째 테이블 */}
-                <S.table.TableContainer css={spacing.marginR(5)}>
-                  <S.table.TableHeader>
-                    {/* 제목 */}
-                    <S.table.TableTitle>
-                      <Avatar
-                     src={`Images/TeamLogo/${junglevalue.team}.png`}
+        {Object.keys(junglevalue.oppchampion).filter(
+          (key) => junglevalue.oppchampion[key] === true
+        ).length > 0 && (
+          <S.layout.Contents>
+            {/* 비교테이블 */}
+            <S.layout.FlexContainer css={spacing.marginB(5)}>
+              {/* 첫번째 테이블 */}
+              <S.table.TableContainer css={spacing.marginR(5)}>
+                <S.table.TableHeader>
+                  {/* 제목 */}
+                  <S.table.TableTitle>
+                    <Avatar
+                      src={`Images/TeamLogo/${junglevalue.team}.png`}
                       alt="teamLogo"
                         size={20}
                         block={false}
@@ -304,10 +311,10 @@ const Compare = () => {
                   }
             
                   </S.table.Table>
-                </S.table.TableContainer>
+              </S.table.TableContainer>
                   
                 {/* 두번째 테이블 */}
-                <S.table.TableContainer>
+              <S.table.TableContainer>
                   <S.table.TableHeader>
                     {/* 제목 */}
                     <S.table.TableTitle>
@@ -419,64 +426,71 @@ const Compare = () => {
                       </tbody>
 }
                   </S.table.Table>
-                </S.table.TableContainer>
-              </S.layout.FlexContainer>
-    
-              {/* 텍스트테이블 */}
-              <S.layout.Container>
-                <S.table.TextTable>
-                  {/* 선수명 */}
-                  <thead>
-                    <tr>
-                      <th>{team?.countRate[0]?.player}</th>
-                      <th></th>
-                      <th>
-                        <Versus size={18} />
-                      </th>
-                      <th></th>
-                      <th>{oppTeam?.countRate[0]?.player}</th>
-                    </tr>
-                  </thead>
-    
-                  {/* 선수비교 데이터 */}
-                  <tbody>
-                    {/* 각 행 */}
-                    <tr>
-                      <td>{`${(team?.countRate[0]?.counter_jg*100).toFixed(2)}%`}</td>
-                      <td>
-                        {team?.countRate[0]?.counter_jg*100 > oppTeam?.countRate[0]?.counter_jg*100 && 
+              </S.table.TableContainer>
+            </S.layout.FlexContainer>
+            {/* 텍스트테이블 */}
+            <S.layout.Container>
+              <S.table.TextTable>
+                {/* 선수명 */}
+                <thead>
+                  <tr>
+                    <th>{team?.countRate[0]?.player}</th>
+                    <th></th>
+                    <th>
+                      <Versus size={18} />
+                    </th>
+                    <th></th>
+                    <th>{oppTeam?.countRate[0]?.player}</th>
+                  </tr>
+                </thead>
+
+                {/* 선수비교 데이터 */}
+                <tbody>
+                  {/* 각 행 */}
+                  <tr>
+                    <td>{`${(team?.countRate[0]?.counter_jg * 100).toFixed(
+                      2
+                    )}%`}</td>
+                    <td>
+                      {team?.countRate[0]?.counter_jg * 100 >
+                        oppTeam?.countRate[0]?.counter_jg * 100 && (
                         <Arrow direction={"L"} />
-                        }
-                      </td>
-                      <td>{t("video.jungle.counterjungleRate")}</td>
-                      <td>
-                      {team?.countRate[0]?.counter_jg*100 < oppTeam?.countRate[0]?.counter_jg*100 && 
+                      )}
+                    </td>
+                    <td>{t("video.jungle.counterjungleRate")}</td>
+                    <td>
+                      {team?.countRate[0]?.counter_jg * 100 <
+                        oppTeam?.countRate[0]?.counter_jg * 100 && (
                         <Arrow direction={"R"} />
-                      }
-                      </td>
-                      <td>{`${(oppTeam?.countRate[0]?.counter_jg*100).toFixed(2)}%`}</td>
-                    </tr>
-    
-                    <tr>
-                      <td>{secToMin(team?.sixTime[0]?.realcount)}</td>
-                      <td>
-                        {team?.sixTime[0]?.realcount > oppTeam?.sixTime[0]?.realcount &&
+                      )}
+                    </td>
+                    <td>{`${(oppTeam?.countRate[0]?.counter_jg * 100).toFixed(
+                      2
+                    )}%`}</td>
+                  </tr>
+
+                  <tr>
+                    <td>{secToMin(team?.sixTime[0]?.realcount)}</td>
+                    <td>
+                      {team?.sixTime[0]?.realcount >
+                        oppTeam?.sixTime[0]?.realcount && (
                         <Arrow direction={"L"} />
-                        }
-                      </td>
-                      <td>{t("video.jungle.avgJunglingTimeForSixthCamp")}</td>
-                      <td>
-                        {team?.sixTime[0]?.realcount < oppTeam?.sixTime[0]?.realcount &&
+                      )}
+                    </td>
+                    <td>{t("video.jungle.avgJunglingTimeForSixthCamp")}</td>
+                    <td>
+                      {team?.sixTime[0]?.realcount <
+                        oppTeam?.sixTime[0]?.realcount && (
                         <Arrow direction={"R"} />
-                        }
-                      </td>
-                      <td>{secToMin(oppTeam?.sixTime[0]?.realcount)}</td>
-                    </tr>
-                  </tbody>
-                </S.table.TextTable>
-              </S.layout.Container>
-            </S.layout.Contents>   
-        }
+                      )}
+                    </td>
+                    <td>{secToMin(oppTeam?.sixTime[0]?.realcount)}</td>
+                  </tr>
+                </tbody>
+              </S.table.TextTable>
+            </S.layout.Container>
+          </S.layout.Contents>
+        )}
       </S.layout.FlexContainer>
     </S.layout.CompareContainer>
   );
