@@ -16,7 +16,13 @@ import Modals, { modalList } from "../../../../Components/Modals/Modals";
 
 const S = { table, layout };
 
-const MTContent = ({ selectedDay, setSelectedDay, playerInfo, myTeamName }) => {
+const MTContent = ({
+  selectedDay,
+  setSelectedDay,
+  playerInfo,
+  myTeamName,
+  isMyTeamTab = false,
+}) => {
   const { openModal } = useModal();
   const { t } = useTranslation();
 
@@ -45,20 +51,24 @@ const MTContent = ({ selectedDay, setSelectedDay, playerInfo, myTeamName }) => {
                   teamLine={`${myTeamName} ${t(
                     `position.${getPositon(info.position)}`
                   )}`}
+                  role={info.position}
                   nickName={info.player}
                   name={""}
                   playChampion={info.playChampion}
                   soloRankInfo={info.soloRankInfo}
+                  isMyTeamTab={isMyTeamTab}
                 />
               );
             })}
-          <S.table.AddPlayerPopupButton onClick={handleClick}>
-            <span>+</span>
-            <div>
-              <h5>{t("soloRank.myTeam.label.addPlayer")}</h5>
-              <span>{t("soloRank.myTeam.desc.addPlayer")}</span>
-            </div>
-          </S.table.AddPlayerPopupButton>
+          {isMyTeamTab && (
+            <S.table.AddPlayerPopupButton onClick={handleClick}>
+              <span>+</span>
+              <div>
+                <h5>{t("soloRank.myTeam.label.addPlayer")}</h5>
+                <span>{t("soloRank.myTeam.desc.addPlayer")}</span>
+              </div>
+            </S.table.AddPlayerPopupButton>
+          )}
         </S.table.TableBody>
       </S.table.Table>
     </S.layout.Container>

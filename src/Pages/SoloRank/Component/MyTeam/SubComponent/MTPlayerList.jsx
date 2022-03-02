@@ -20,14 +20,16 @@ import { Loading } from "../../../../../redux/modules/filtervalue";
 
 const getMaxTier = (tier, rank, lp) => {};
 
-const MTPlayerHeader = ({
+const MTPlayerList = ({
   id,
   bookmark,
   teamLine,
   nickName,
   name,
+  role,
   playChampion,
   soloRankInfo,
+  isMyTeamTab,
 }) => {
   const user = useSelector((state) => state.UserReducer);
   const { t } = useTranslation();
@@ -97,6 +99,7 @@ const MTPlayerHeader = ({
         const url = `${API}/lolapi/solorank/summoneradd`;
         const params = {
           player: id,
+          role: role,
           summonerName: e.name,
           puuId: e.puuId,
           token: user.token,
@@ -239,13 +242,15 @@ const MTPlayerHeader = ({
               })}
 
             {/* 버튼 - 선수 추가 modal */}
-            <S.AddPlayer onClick={handleClickModalOpen}>
-              <button>+</button>
-              <div>
-                <p>{t("soloRank.myTeam.label.addSoloRankID")}</p>
-                <span>{t("soloRank.myTeam.desc.addSoloRankID")}</span>
-              </div>
-            </S.AddPlayer>
+            {isMyTeamTab && (
+              <S.AddPlayer onClick={handleClickModalOpen}>
+                <button>+</button>
+                <div>
+                  <p>{t("soloRank.myTeam.label.addSoloRankID")}</p>
+                  <span>{t("soloRank.myTeam.desc.addSoloRankID")}</span>
+                </div>
+              </S.AddPlayer>
+            )}
           </>
         ) : (
           // 클로즈 ui
@@ -359,4 +364,4 @@ const MTPlayerHeader = ({
   );
 };
 
-export default MTPlayerHeader;
+export default MTPlayerList;

@@ -19,8 +19,8 @@ const InterestedPlayer = () => {
   const lang = useSelector((state) => state.LocaleReducer);
   const dispatch = useDispatch();
 
-  const getMyTeamSoloRankInfo = () => {
-    const url = `${API}/lolapi/solorank/teamlist`;
+  const getBookMarkListInfo = () => {
+    const url = `${API}/lolapi/solorank/bookmarklist`;
     const params = {
       days: selectedDay,
       token: user.token,
@@ -52,7 +52,7 @@ const InterestedPlayer = () => {
   };
 
   useState(() => {
-    getMyTeamSoloRankInfo();
+    getBookMarkListInfo();
   }, [selectedDay]);
 
   return (

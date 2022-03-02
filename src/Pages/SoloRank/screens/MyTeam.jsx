@@ -66,6 +66,7 @@ const MyTeam = () => {
         setSelectedDay={setSelectedDay}
         playerInfo={playerInfo}
         myTeamName={myTeamName}
+        isMyTeamTab={true}
       />
     </>
   );
