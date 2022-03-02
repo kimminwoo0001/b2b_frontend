@@ -21,7 +21,7 @@ import { Loading } from "../../../../../redux/modules/filtervalue";
 const getMaxTier = (tier, rank, lp) => {};
 
 const MTPlayerList = ({
-  id,
+  player,
   bookmark,
   teamLine,
   nickName,
@@ -98,12 +98,13 @@ const MTPlayerList = ({
         console.log("submit시 action을 등록");
         const url = `${API}/lolapi/solorank/summoneradd`;
         const params = {
-          player: id,
+          player: player,
           role: role,
-          summonerName: e.name,
+          summonerId: e.summonerId,
           puuId: e.puuId,
           token: user.token,
         };
+        dispatch(Loading(true));
         axiosRequest(
           undefined,
           url,
@@ -171,7 +172,7 @@ const MTPlayerList = ({
       {/* 선수정보 & 등록 */}
       <div className="table-item-col1">
         <S.InfoId>
-          <S.Star name={id} checked={isLike} onChange={handleFavorite}>
+          <S.Star name={player} checked={isLike} onChange={handleFavorite}>
             <IconStar isActive={isLike} />
           </S.Star>
           <span>{teamLine}</span>
@@ -198,12 +199,9 @@ const MTPlayerList = ({
                     {/* 티어 */}
                     <div className="table-col3">
                       <p>
-                        {`${getTier(data.tier ?? 0)} ${
-                          data.leaguePoints > 0
-                            ? `${data.leaguePoint}LP`
-                            : `${getRank(data.rank)}`
-                        }
-                        `}
+                        {`${getRank(data.rank, data.tier)}  ${
+                          data.tier > 0 ? `${data.leaguePoints}LP` : ""
+                        }`}
                       </p>
                       {/* <span>{`S11 challenger / S10 Challenger`}</span> */}
                     </div>
@@ -241,7 +239,11 @@ const MTPlayerList = ({
                     </div>
 
                     {/* 선수삭제 버튼 */}
-                    <button onClick={handleDelete}>
+                    <button
+                      onClick={() => {
+                        handleDelete();
+                      }}
+                    >
                       <IconDel />
                     </button>
                   </S.OpenList>

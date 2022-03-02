@@ -15,7 +15,7 @@ import {
 } from "../../../Styles/ui";
 
 import ModalPlayerListItem from "./ModalPlalyerListItem";
-import { API } from "../../../Pages/config";
+import { API, recentVersion } from "../../../Pages/config";
 import axiosRequest from "../../../lib/axios/axiosRequest";
 import { useSelector, useDispatch } from "react-redux";
 import { Loading } from "../../../redux/modules/filtervalue";
@@ -135,14 +135,12 @@ const ModalPlayerSearch = ({ name, onSelect = () => {} }) => {
                 <ModalPlayerListItem
                   onClick={() => handleClickSelect(player)}
                   key={"player" + index}
-                  src={`https://ddragon.leagueoflegends.com/cdn/12.4.1/img/profileicon/${player.profileIconId}.png`}
-                  alt={player.id}
-                  id={player.id}
-                  tier={`${getTier(player.tier)} ${
-                    player.leaguePoints > 0
-                      ? `${player.leaguePoint}LP`
-                      : `${getRank(player.rank)}`
-                  } `}
+                  src={`https://ddragon.leagueoflegends.com/cdn/${recentVersion}/img/profileicon/${player.profileIconId}.png`}
+                  alt={player.name}
+                  id={player.name}
+                  tier={`${getRank(player.rank, player.tier)}  ${
+                    player.tier === 0 ? `${player.leaguePoints}LP` : ""
+                  }`}
                 />
               ))
             ) : (

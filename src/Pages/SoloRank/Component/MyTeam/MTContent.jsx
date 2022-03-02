@@ -46,7 +46,7 @@ const MTContent = ({
             playerInfo.map((info) => {
               return (
                 <MTPlayerList
-                  id={info.player}
+                  player={info.player}
                   bookmark={info.bookmark}
                   teamLine={`${myTeamName} ${t(
                     `position.${getPositon(info.position)}`

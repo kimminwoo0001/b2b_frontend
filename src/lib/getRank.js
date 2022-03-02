@@ -15,12 +15,19 @@ export const getTier = (TierNumber) => {
   }
 };
 
-export const getRank = (RankNumber) => {
-  switch (RankNumber) {
-    case 1: return "- I"
-    case 2: return "- II"
-    case 3: return "- III"
-    case 4: return "- IV"
-    default: return ""
+export const getRank = (RankNumber, TierNumber) => {
+  if ([1, 2].includes(TierNumber)) {
+    return `${getTier(TierNumber)} -`
+  } else if (TierNumber <= 0) {
+    return `${getTier(TierNumber)}`
+  }
+  else {
+    switch (RankNumber) {
+      case 1: return `${getTier(TierNumber)} I - `
+      case 2: return `${getTier(TierNumber)} II - `
+      case 3: return `${getTier(TierNumber)} III - `
+      case 4: return `${getTier(TierNumber)} IV - `
+      default: return ""
+    }
   }
 };
