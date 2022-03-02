@@ -19,9 +19,8 @@ import JungleMap from "./JungleMap/JungleMap";
 import { useTranslation } from "react-i18next";
 
 function VideoTabs() {
-
   const filters = useSelector((state) => state.FilterReducer);
-  const [team, setTeam] = useState("")
+  const [team, setTeam] = useState("");
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -31,14 +30,14 @@ function VideoTabs() {
       dispatch(Reset_MapTab());
       dispatch(Reset_Object_MapTab());
     }
-  }, [filters.team])
+  }, [filters.team]);
 
   const VideoTab = {
     0: <WardMapping />,
     1: <ObjectMapping />,
     2: <GameMapping />,
     3: <HitMap />,
-    // 4: <JungleMap />,
+    4: <JungleMap />,
   };
 
   return (
@@ -49,10 +48,6 @@ function VideoTabs() {
             onClick={() => {
               dispatch(HandleTab(0));
               dispatch(Reset_MapTab());
-              if (filters.tab === 4) {
-                dispatch(ResetWardPathingTab());
-                dispatch(SelectorInitailizeState());
-              }
             }}
             changeColor={filters.tab === 0}
           >
@@ -65,11 +60,6 @@ function VideoTabs() {
               dispatch(HandleTab(1));
               dispatch(Reset_MapTab());
               dispatch(Reset_Object_MapTab());
-              if (filters.tab === 4) {
-                dispatch(ResetWardPathingTab());
-                dispatch(SelectorInitailizeState());
-
-              }
             }}
             changeColor={filters.tab === 1}
           >
@@ -98,10 +88,6 @@ function VideoTabs() {
             onClick={() => {
               dispatch(HandleTab(3));
               dispatch(Reset_MapTab());
-              if (filters.tab === 4) {
-                dispatch(ResetWardPathingTab());
-                dispatch(SelectorInitailizeState());
-              }
             }}
             changeColor={filters.tab === 3}
           >
@@ -110,25 +96,20 @@ function VideoTabs() {
             </div>
           </TabContent>
           {/* 정글동선 탭 */}
-          {/* <TabContent
+          <TabContent
             onClick={() => {
               dispatch(HandleTab(4));
               dispatch(Reset_MapTab());
-              dispatch(SelectorInitailizeState());
-              if (filters.tab === 4) {
-                dispatch(ResetWardPathingTab());
-                dispatch(SelectorInitailizeState());
-              }
+              // dispatch(SelectorInitailizeState());
               // dispatch(InitializeGameState());
               // dispatch(InitailizeState());
-
             }}
             changeColor={filters.tab === 4}
           >
             <div>
               <span>{t("video.tab.jungle")}</span>
             </div>
-          </TabContent> */}
+          </TabContent>
         </TabContainer>
         <div>{VideoTab[filters.tab]}</div>
       </VideoTabsWrapper>

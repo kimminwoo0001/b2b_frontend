@@ -1,10 +1,10 @@
-import React, { useState, useRef, forwardRef } from "react";
+import React, { useState, useRef, forwardRef, memo } from "react";
 import styled from "@emotion/styled";
 import { transitionStyle } from "../../Styles/ui";
 
-const Radio = forwardRef(({ children, checked, ...props }, ref) => {
+const Radio = forwardRef(({ children, checked, className, ...props }, ref) => {
   return (
-    <SRadioContainer>
+    <SRadioContainer className={className}>
       <input type="radio" checked={checked} {...props} ref={ref} />
       <em className={checked ? "is-active" : ""}></em>
       <span>{children}</span>
@@ -21,6 +21,7 @@ const SRadioContainer = styled.label`
   margin: 5px 0;
 
   > em {
+    flex-shrink: 0;
     position: relative;
     display: block;
     width: 24px;
@@ -59,4 +60,4 @@ const SRadioContainer = styled.label`
   }
 `;
 
-export default Radio;
+export default memo(Radio);
