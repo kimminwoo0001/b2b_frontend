@@ -48,6 +48,7 @@ const Sequence = () => {
           <S.VideoContainer>
             <PositionCheckList onChange={(position) => setPosition(position)} />
             <Map position={position} setPosition={setPosition}/>
+            
           </S.VideoContainer>
           {/* 이벤트 다이얼로그 */}
           <S.DialogContainer>

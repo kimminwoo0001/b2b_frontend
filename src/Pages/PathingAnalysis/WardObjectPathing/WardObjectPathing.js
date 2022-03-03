@@ -8,6 +8,7 @@ import WardFilter from "./components/WardFilter";
 import WardSideFilter from "./components/WardSideFilter";
 import WardObjectMap from "./components/WardObjectMap";
 import PositionCheckList from "../../../Components/Ui/PositionCheckList";
+import ToggleSwitch from "../../../Components/Ui/ToggleSwitch/ToggleSwitch";
 
 import * as S from "./components/styled/StyledWardPathingLayout";
 
@@ -35,7 +36,16 @@ const junglevalue = useSelector((state) => state.JungleMapReducer);
           {/* 맵 비디오 */}
           {junglevalue.isMappingClicked &&
           <S.VideoContainer>
-            <PositionCheckList onChange={(position) => setPosition(position)} />
+            <S.VideoNavContainer>
+              <PositionCheckList onChange={(position) => setPosition(position)} />
+              <S.ToggleSwitchContainer>
+                <S.Ward>
+                  <S.WardIcon src="Images/ic_trinketward.svg"></S.WardIcon>
+                  <S.WardText>와드</S.WardText>
+                </S.Ward>
+                <ToggleSwitch />
+               </S.ToggleSwitchContainer>
+            </S.VideoNavContainer>
             {/* <Map position={position} setPosition={setPosition}/> */}
             <WardObjectMap />
           </S.VideoContainer>

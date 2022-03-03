@@ -45,6 +45,7 @@ const WardSideFilter = () => {
   const dispatch = useDispatch();
   const isInitialMount = useRef(true);
   const isInitialMount2 = useRef(true);
+  const isInitialMount3 = useRef(true);
 
   const [radioState, setRadioState] = useState();
   const radioRef = useRef([]);
@@ -52,8 +53,8 @@ const WardSideFilter = () => {
   const [side, setSide] = useState("all");
   const [period, setPeriod] = useState("all");
 
-  
   const [playerInfo, setPlayerInfo] = useState();
+  const [playerPosition,setPlayerPosition] = useState();
   const [champInfo, setChampInfo] = useState();
   const [oppChampInfo, setOppChampInfo] = useState();
   const [gameList, setGameList] = useState();
@@ -63,11 +64,10 @@ const WardSideFilter = () => {
     // 전체선택
     if (value === "all") {
       const datas = { ...junglevalue[name] }
-        const list = Object.keys(junglevalue[name]);
-        const a = list.map((data) => {
-          return datas[data] = checked;
-        })
-        dispatch(SetFilterData({ ...junglevalue, [name]: datas }));
+        for(let key in datas) {
+          datas[key] = checked;
+        }
+       return dispatch(SetFilterData({ ...junglevalue, [name]: datas }));
     }
     // 개별선택
     else {
@@ -76,18 +76,8 @@ const WardSideFilter = () => {
         [name]: { ...junglevalue[name], [value]: checked },
       }));
 
-      // setFilterState((prev) => {
-      //   const newData = { ...prev };
-      //   newData[name] = { ...newData[name], [value]: checked };
-      //   // if (isObjEqual(newData[name])) {
-      //   //   newData[name].all = checked;
-      //   // } else {
-      //   //   newData[name].all = false;
-      //   // }
-      //   return newData;
-      // });
-    }
   };
+}
   // 라디오버튼 체인지 관련로직
   const handleRadio = (e) => {
     const { value, name } = e.target;
@@ -104,55 +94,9 @@ const WardSideFilter = () => {
   const patchArr =  Object.keys(junglevalue.patch).filter(key => junglevalue.patch[key] === true)
 
 
-  useEffect(() => {
-    if(junglevalue.player === "") {
-      return;
-    }
-    GetChampion();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[junglevalue.player])
-
-
-  useEffect(() => {
-    if(junglevalue.champion &&Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === true).length === 0
-   ) {
-      return; 
-    } 
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-    } else {
-    GetOppChampion();
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [junglevalue.champion])
-
-
-  useEffect(() => {
-    if(junglevalue.oppchampion && Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).length === 0) {
-      return; 
-    } 
-    if (isInitialMount2.current) {
-      isInitialMount2.current = false;
-    } else {
-    GetGameList();
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [junglevalue.oppchampion])
-
-
-// mappingfilter/player response 가공
-const refinePlayerData = (data) => {
-    let refined = [];
-    for (let i = 0; i < data.length; i++) {
-        refined.push(data[i].name);
-    }
-    return refined;
-    };
-    
-
 // STEP 01 선수 선택 api 호출
 const GetPlayerInfo = () => {
-    const url = `${API}/lolapi/mappingfilter/player`;
+    const url = `${API}/lolapi/ward-passing/userinfo`;
     const params = {
     league: leagueArr,
     year: junglevalue.year,
@@ -167,7 +111,6 @@ const GetPlayerInfo = () => {
       url,
       params,
       function (e) {
-        // const refinedData = refinePlayerData(e);
         setPlayerInfo(e);
     },
       function (objStore) {
@@ -178,49 +121,29 @@ const GetPlayerInfo = () => {
 
 // STEP 02 챔피언 선택 api 호출
 const GetChampion = () => {
-    const url = `${API}/lolapi/mappingfilter/champion`;
+    const url = `${API}/lolapi/ward-passing/player-champions`;
     const params = {
-    league: leagueArr,
-    year: junglevalue.year,
-    season: seasonArr,
-    patch: patchArr,
-    team: junglevalue.team[0],
-    player: junglevalue.player,
-    token: user.token,
-    id: user.id,
+      league: leagueArr,
+      year: junglevalue.year,
+      season: seasonArr,
+      patch: patchArr,
+      team: junglevalue.team[0],
+      player: junglevalue.player,
+      role: playerPosition,
+      token: user.token,
+      id: user.id,
     };
     axiosRequest(undefined, url, params, function(e) {
-    // setChampInfo(e);
-    console.log(e);
+      setChampInfo(e);
     }, function (objStore) {
-    dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+      dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
     })
-}
-
-// const GetChampion = () => {
-//     const url = `${API}/lolapi/jungle/player-champions`;
-//     const params = {
-//       league: leagueArr,
-//       year: junglevalue.year,
-//       season: seasonArr,
-//       patch: patchArr,
-//       team: junglevalue.team[0],
-//       player: junglevalue.player,
-//       token: user.token,
-//       id: user.id,
-//     };
-//     axiosRequest(undefined, url, params, function(e) {
-//     //   setChampInfo(e);
-//       console.log(e);
-//     }, function (objStore) {
-//       dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
-//     })
-//   }
+  }
 
 // STEP 03 상대 챔피언 선택 api 호출
 const GetOppChampion = () => {
     const selectedChamps = junglevalue.champion && Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === true);
-    const url = `${API}/lolapi/jungle/opp-champions`;
+    const url = `${API}/lolapi/ward-passing/opp-champions`;
     const params = {
     league: leagueArr,
     year: junglevalue.year,
@@ -228,6 +151,7 @@ const GetOppChampion = () => {
     patch: patchArr,
     team: junglevalue.team[0],
     player: junglevalue.player,
+    role: playerPosition,
     champion: selectedChamps,
     token: user.token,
     id: user.id,
@@ -243,7 +167,7 @@ const GetOppChampion = () => {
 const GetGameList = () => {
     const selectedChamps = junglevalue.champion && Object.keys(junglevalue.champion).filter(key => junglevalue.champion[key] === true);
     const selectedOppChamps = junglevalue.oppchampion && Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true);
-    const url = `${API}/lolapi/jungle/object-game`;
+    const url = `${API}/lolapi/ward-passing/object-game`;
     const params = {
     league: leagueArr,
     year: junglevalue.year,
@@ -253,7 +177,7 @@ const GetGameList = () => {
     player: junglevalue.player,
     champion: selectedChamps,
     oppchampion: selectedOppChamps,
-    side:"all",
+    side:side,
     token: user.token,
     id: user.id,
     };
@@ -263,6 +187,48 @@ const GetGameList = () => {
     dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
     })
 }
+
+useEffect(() => {
+  if (junglevalue.player === "") {
+    return;
+  }
+  if(isInitialMount.current) {
+    isInitialMount.current = false;
+  }else {
+    GetChampion();
+  }
+// eslint-disable-next-line react-hooks/exhaustive-deps
+},[junglevalue.player])
+
+
+useEffect(() => {
+  if(junglevalue.champion &&
+    Object.keys(junglevalue.champion)
+    .filter(key => junglevalue.champion[key] === true).length === 0
+ ) {return;} 
+
+ if(isInitialMount2.current) {
+   isInitialMount2.current = false;
+ }else{
+   GetOppChampion();
+ }
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [junglevalue.champion])
+
+
+useEffect(() => {
+  if(junglevalue.oppchampion && Object.keys(junglevalue.oppchampion).filter(key => junglevalue.oppchampion[key] === true).length === 0) {
+    return; 
+  } 
+
+  if(isInitialMount3.current) {
+    isInitialMount3.current = false;
+  }else{
+  GetGameList();
+  }
+  
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [side,junglevalue.oppchampion])
 
 
 // champInfo 있을 시 모든 value를 객체 및 false처리
@@ -330,7 +296,10 @@ oppchampion: result,
                       key={info.name+idx}
                       css={[dropdownStyle.select_item]}
                       value={info.name}
-                      onClick ={() => dispatch(SetJunglePlayer(info.name))}
+                      onClick ={() => {
+                        dispatch(SetJunglePlayer(info.name))
+                        setPlayerPosition(info.role)
+                      }}
                     >
                       {/* {`${lang === "ko" ? info.nativeName : info.name}`} */}
                       {info.name}
@@ -732,6 +701,7 @@ const SInfo = styled.div`
 const SName = styled.div`
   width: 100%;
   margin: 5px 0 ;
+  color:#ffffff;
   ${typoStyle.noWrap}
 `;
 const STeamSlideContainer = styled.div`

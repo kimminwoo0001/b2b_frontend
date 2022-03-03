@@ -44,6 +44,35 @@ export const VideoContainer = styled.div`
   /* ${testStyle.border6} */
 `;
 
+export const VideoNavContainer = styled.div`
+display: flex;
+justify-content: space-between;
+align-items: center;
+`
+
+export const ToggleSwitchContainer = styled.div`
+width: 120px;
+display: flex;
+align-items: center;
+justify-content: space-evenly;
+`
+
+export const Ward = styled.div`
+display: flex;
+align-items: center;
+`;
+
+export const WardIcon = styled.img`
+width: 21px;
+height: 21px;
+margin-right: 3px;
+`;
+
+export const WardText = styled.span`
+font-size: 16px;
+color: #ffffff;
+`
+
 export const DialogContainer = styled.div`
   height: 280px;
 `;

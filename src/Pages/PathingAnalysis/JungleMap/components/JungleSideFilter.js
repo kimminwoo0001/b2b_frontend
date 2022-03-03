@@ -62,11 +62,10 @@ const JungleSideFilter = () => {
     // 전체선택
     if (value === "all") {
       const datas = { ...junglevalue[name] };
-      const list = Object.keys(junglevalue[name]);
-      const a = list.map((data) => {
-        return (datas[data] = checked);
-      });
-      dispatch(SetFilterData({ ...junglevalue, [name]: datas }));
+      for (let key in datas) {
+        datas[key] = checked;
+      }
+      return dispatch(SetFilterData({ ...junglevalue, [name]: datas }));
     }
     // 개별선택
     else {
