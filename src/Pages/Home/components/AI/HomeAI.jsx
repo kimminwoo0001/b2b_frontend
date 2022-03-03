@@ -125,6 +125,15 @@ const ButtonLeague = styled(Button)`
       `url(images/league/ico_league_${league}.png)`};
   }
 
+  /* LCK 로고 관련 */
+  &:nth-of-type(1) {
+    ${LeagueLogo} {
+      background-image: ${({ league }) =>
+        `url(images/league/ico_league_${league}_hover.png)`};
+    }
+  }
+
+  /* hover시 버튼색 변화 & LCS 로고 색변화 */
   &:hover,
   &.is-active {
     background-color: ${colors.point};
