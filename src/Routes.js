@@ -4,7 +4,6 @@ import {
   Routes,
   Route,
   Navigate,
-  useNavigate,
 } from "react-router-dom";
 import Home from "./Pages/Home/Home";
 import League from "./Pages/LeagueReport/League";
@@ -69,7 +68,7 @@ function Routor() {
         <Route path={goProGameReport} element={<PrivateRoute><GameReport /></PrivateRoute>} />
         <Route
           path={proGameReportDetail}
-          element={GameReportDetail}
+          element={<PrivateRoute><GameReportDetail /></PrivateRoute>}
         />
         {/* <PrivateRoute  path="/utility" element={Utility} />
         <PrivateRoute  path="/calculator" element={PickCalculator} /> */}

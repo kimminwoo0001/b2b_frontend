@@ -4,19 +4,25 @@ import styled from "@emotion/styled/macro";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import MTCategory from "./MTCategory";
+import MTCategory from "./SRCategory";
 import { getPositon } from "../../../../lib/getPosition";
-import MTPlayerList from "./SubComponent/MTPlayerList";
+import MTPlayerList from "../MTPlayerList";
 
 // styled components
-import * as table from "./styled/MTStyledTable";
-import * as layout from "./styled/MTStyledLayout";
+import * as table from "../styled/MTStyledTable";
+import * as layout from "../styled/MTStyledLayout";
 import { useModal } from "../../../../Hooks";
 import Modals, { modalList } from "../../../../Components/Modals/Modals";
 
 const S = { table, layout };
 
-const MTContent = ({ selectedDay, setSelectedDay, playerInfo, myTeamName }) => {
+const MTContent = ({
+  selectedDay,
+  setSelectedDay,
+  playerInfo,
+  myTeamName,
+  isMyTeamTab = false,
+}) => {
   const { openModal } = useModal();
   const { t } = useTranslation();
 
@@ -40,25 +46,29 @@ const MTContent = ({ selectedDay, setSelectedDay, playerInfo, myTeamName }) => {
             playerInfo.map((info) => {
               return (
                 <MTPlayerList
-                  id={info.player}
+                  player={info.player}
                   bookmark={info.bookmark}
                   teamLine={`${myTeamName} ${t(
                     `position.${getPositon(info.position)}`
                   )}`}
+                  role={info.position}
                   nickName={info.player}
                   name={""}
                   playChampion={info.playChampion}
                   soloRankInfo={info.soloRankInfo}
+                  isMyTeamTab={isMyTeamTab}
                 />
               );
             })}
-          <S.table.AddPlayerPopupButton onClick={handleClick}>
-            <span>+</span>
-            <div>
-              <h5>{t("soloRank.myTeam.label.addPlayer")}</h5>
-              <span>{t("soloRank.myTeam.desc.addPlayer")}</span>
-            </div>
-          </S.table.AddPlayerPopupButton>
+          {isMyTeamTab && (
+            <S.table.AddPlayerPopupButton onClick={handleClick}>
+              <span>+</span>
+              <div>
+                <h5>{t("soloRank.myTeam.label.addPlayer")}</h5>
+                <span>{t("soloRank.myTeam.desc.addPlayer")}</span>
+              </div>
+            </S.table.AddPlayerPopupButton>
+          )}
         </S.table.TableBody>
       </S.table.Table>
     </S.layout.Container>

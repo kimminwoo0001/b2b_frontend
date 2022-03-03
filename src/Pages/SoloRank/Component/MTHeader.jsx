@@ -4,7 +4,7 @@ import styled from "@emotion/styled/macro";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import ItemBox from "./SubComponent/ItemBox";
+import ItemBox from "./Common/SRItemBox";
 
 const MTHeader = ({ headerInfo }) => {
   const { t } = useTranslation();

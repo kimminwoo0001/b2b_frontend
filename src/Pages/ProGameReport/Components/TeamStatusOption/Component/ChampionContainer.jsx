@@ -78,10 +78,8 @@ const ChampTeamContainer = styled.div`
   padding: 15px 10px 20px 11px;
   border-radius: 10px;
   box-sizing: border-box;
-  border: solid 2px ${(props) =>
-    props.isActive ? `#0075bf` : `rgba(0,0,0,0)`};
+  border: solid 2px ${(props) => (props.isActive ? `#0075bf` : `rgba(0,0,0,0)`)};
   background-color: #23212a;
-}
   .name {
     ${(props) => props.isDeath && `opacity: 0.3;`}
     font-family: SpoqaHanSansNeo;
@@ -114,17 +112,17 @@ const ChampTeamContainer = styled.div`
         width: 60px;
         height: 60px;
         border: solid 2px
-        ${(props) => (props.isActive ? `#1580b6` : `rgba(0,0,0,0)`)};
+          ${(props) => (props.isActive ? `#1580b6` : `rgba(0,0,0,0)`)};
         background-image: url(https://ddragon.leagueoflegends.com/cdn/11.24.1/img/champion/${(
           props
         ) => props.champImg}.png);
-       background-size: 60px;
-       ${(props) => props.isDeath && `mix-blend-mode: luminosity;`}
-     }
+        background-size: 60px;
+        ${(props) => props.isDeath && `mix-blend-mode: luminosity;`}
+      }
 
       .champ-revive-count {
         //display:  ${(props) => (props.isDeath ? "block" : "none")};
-        display:  none;
+        display: none;
         ${(props) => (props.isDeath ? `opacity: 1` : `opacity: 0`)};
         width: 25px;
         height: 25px;
@@ -145,15 +143,12 @@ const ChampTeamContainer = styled.div`
     }
   }
 
- 
-
   .champ-status-bar {
     ${(props) => props.isDeath && `opacity: 0.3;`}
     width: 100%;
     height: 23px;
     margin: 6px 0px 0 0px;
 
-   
     .usable {
       height: 10px;
       //padding: 0 10px 0 5px;

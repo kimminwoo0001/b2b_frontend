@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef } from "react";
+import React, { useCallback, useState, useRef, useEffect } from "react";
 import styled from "@emotion/styled";
 import IconDel from "../../Ui/Icons/IconDel";
 import { motion, AnimatePresence } from "framer-motion/dist/framer-motion";
@@ -15,11 +15,12 @@ import {
 } from "../../../Styles/ui";
 
 import ModalPlayerListItem from "./ModalPlalyerListItem";
-import { API } from "../../../Pages/config";
+import { API, recentVersion } from "../../../Pages/config";
 import axiosRequest from "../../../lib/axios/axiosRequest";
 import { useSelector, useDispatch } from "react-redux";
 import { Loading } from "../../../redux/modules/filtervalue";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
+import { getRank, getTier } from "../../../lib/getRank";
 
 // transition variants
 const dropdownVariants = {
@@ -39,27 +40,28 @@ const ModalPlayerSearch = ({ name, onSelect = () => {} }) => {
   // hook
   const queryList = useRef(null);
   const [isListOpen, setIsListOpen] = useDetectOutsideClick(queryList, false);
-
   const [query, setQuery] = useState("");
   const [selectedObj, setSelectedObj] = useState(null);
   const [queryResult, setQueryResult] = useState(null);
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.UserReducer);
 
   const handleClickSearch = (e) => {
     e.preventDefault();
     setIsListOpen(true);
     // 쿼리로 api 검색
     const url = `${API}/lolapi/solorank/summoner`;
-    const params = {};
+    const params = {
+      summonerName: query,
+      token: user.token,
+    };
     console.log(query, selectedObj, queryResult);
-    // const result = await fetch('url', query)
     axiosRequest(
       undefined,
       url,
       params,
       function (e) {
-        const response = e ?? [];
-        console.log(response);
+        setQueryResult([e.result]);
         dispatch(Loading(false));
       },
       function (e) {
@@ -67,12 +69,6 @@ const ModalPlayerSearch = ({ name, onSelect = () => {} }) => {
         dispatch(Loading(false));
       }
     );
-    setQueryResult([
-      {
-        id: "Hide on bush",
-        tier: "Master - 351LP",
-      },
-    ]);
   };
 
   const handleChangeQuery = useCallback((e) => {
@@ -95,6 +91,10 @@ const ModalPlayerSearch = ({ name, onSelect = () => {} }) => {
 
     onSelect(selectedObj);
   }, [selectedObj]);
+
+  useEffect(() => {
+    console.log("queryResult", queryResult);
+  }, [queryResult]);
 
   return (
     <Container ref={queryList}>
@@ -135,10 +135,12 @@ const ModalPlayerSearch = ({ name, onSelect = () => {} }) => {
                 <ModalPlayerListItem
                   onClick={() => handleClickSelect(player)}
                   key={"player" + index}
-                  src={"images/champion/nunu.png"}
-                  alt={player.id}
-                  id={player.id}
-                  tier={player.tier}
+                  src={`https://ddragon.leagueoflegends.com/cdn/${recentVersion}/img/profileicon/${player.profileIconId}.png`}
+                  alt={player.name}
+                  id={player.name}
+                  tier={`${getRank(player.rank, player.tier)}  ${
+                    player.tier !== 0 ? `${player.leaguePoints}LP` : ""
+                  }`}
                 />
               ))
             ) : (

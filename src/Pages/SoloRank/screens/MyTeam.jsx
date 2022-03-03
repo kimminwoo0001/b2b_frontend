@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
-import MTHeader from "../Component/MyTeam/MTHeader";
-import MTContent from "../Component/MyTeam/MTContent";
+import MTHeader from "../Component/MTHeader";
+import MTContent from "../Component/Common/SRContent";
 import { API } from "../../config";
 import { useState } from "react";
 import { useSelector, useDispatch, batch } from "react-redux";
@@ -32,7 +32,7 @@ const MyTeam = () => {
       function (e) {
         setheaderInfo([
           {
-            logo: `Images/ico-league-${e.league}.png`,
+            logo: `Images/ico-league-${"LCK"}.png`,
             text: e.league,
           },
           { logo: `Images/TeamLogo/${e.team}.png` },
@@ -59,6 +59,7 @@ const MyTeam = () => {
     <>
       {/* 팀 정보 헤더 */}
       <MTHeader headerInfo={headerInfo} />
+      
 
       {/* 팀 선수 테이블 */}
       <MTContent
@@ -66,6 +67,7 @@ const MyTeam = () => {
         setSelectedDay={setSelectedDay}
         playerInfo={playerInfo}
         myTeamName={myTeamName}
+        isMyTeamTab={true}
       />
     </>
   );

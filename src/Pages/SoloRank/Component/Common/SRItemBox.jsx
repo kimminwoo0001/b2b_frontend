@@ -30,7 +30,6 @@ const SItemBox = styled.div`
     text-align: center;
     color: ${({ theme }) => theme.colors.text};
   }
-
   .content {
     width: 100%;
     text-align: center;
@@ -41,7 +40,6 @@ const SItemBox = styled.div`
       object-fit: contain;
       vertical-align: top;
     }
-
     .text {
       height: 22px;
       margin: 2px 0 0 0px;

@@ -10,8 +10,8 @@ import DropdownLabel from "../../../../Components/Ui/DropDown/DropdownLabel";
 import DropdownList from "../../../../Components/Ui/DropDown/DropdownList";
 import Sortingimage from "../../../../Components/Ui/Sortingimage";
 import { dropdownStyle } from "../../../../Styles/ui";
-import ItemBox from "./SubComponent/ItemBox";
-import * as S from "./styled/MTStyledTable";
+import ItemBox from "./SRItemBox";
+import * as S from "../styled/MTStyledTable";
 import { API } from "../../../config";
 
 import { Loading } from "../../../../redux/modules/filtervalue";
@@ -57,10 +57,8 @@ const MTCategory = ({ selectedDay, setSelectedDay }) => {
   // 챔피언 티어 오름차 내림차  정렬 상태값
   const tier = [];
   const { tiers, requestSorts } = useSortableData2(tier ? tier : []);
-  
 
   const { t } = useTranslation();
-  
 
   return (
     // 테이블 헤더 카테고리

@@ -3,31 +3,33 @@ import { jsx, css } from "@emotion/react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import * as S from "../styled/MTStyledTable";
-import IconStar from "../../../../../Components/Ui/Icons/IconStar";
-import Avatar from "../../../../../Components/Ui/Avatar";
-import Arrow from "../../../../../Components/Ui/Arrow";
-import IconDel from "../../../../../Components/Ui/Icons/IconDel";
-import { typoStyle } from "../../../../../Styles/ui";
-import { useModal } from "../../../../../Hooks";
-import { modalList } from "../../../../../Components/Modals/Modals";
-import { getTier } from "../../../../../lib/getTier";
-import { API } from "../../../../config";
+import * as S from "./styled/MTStyledTable";
+import IconStar from "../../../Components/Ui/Icons/IconStar";
+import Avatar from "../../../Components/Ui/Avatar";
+import Arrow from "../../../Components/Ui/Arrow";
+import IconDel from "../../../Components/Ui/Icons/IconDel";
+import { typoStyle } from "../../../Styles/ui";
+import { useModal } from "../../../Hooks";
+import { modalList } from "../../../Components/Modals/Modals";
+import { getRank, getTier } from "../../../lib/getRank";
+import { API } from "../../config";
 import { useSelector, useDispatch, batch } from "react-redux";
-import axiosRequest from "../../../../../lib/axios/axiosRequest";
-import { SetModalInfo } from "../../../../../redux/modules/modalvalue";
-import { Loading } from "../../../../../redux/modules/filtervalue";
+import axiosRequest from "../../../lib/axios/axiosRequest";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
+import { Loading } from "../../../redux/modules/filtervalue";
 
 const getMaxTier = (tier, rank, lp) => {};
 
-const MTPlayerHeader = ({
-  id,
+const MTPlayerList = ({
+  player,
   bookmark,
   teamLine,
   nickName,
   name,
+  role,
   playChampion,
   soloRankInfo,
+  isMyTeamTab,
 }) => {
   const user = useSelector((state) => state.UserReducer);
   const { t } = useTranslation();
@@ -91,17 +93,18 @@ const MTPlayerHeader = ({
   };
   // 선수등록
   const handleClickModalOpen = (e) => {
-    console.log(e.target);
     openModal(modalList.addSolorankID, {
       onSubmit: (e) => {
         console.log("submit시 action을 등록");
         const url = `${API}/lolapi/solorank/summoneradd`;
         const params = {
-          player: name,
-          summonerName: e.summonerName,
+          player: player,
+          role: role,
+          summonerId: e.summonerId,
           puuId: e.puuId,
           token: user.token,
         };
+        dispatch(Loading(true));
         axiosRequest(
           undefined,
           url,
@@ -169,7 +172,7 @@ const MTPlayerHeader = ({
       {/* 선수정보 & 등록 */}
       <div className="table-item-col1">
         <S.InfoId>
-          <S.Star name={id} checked={isLike} onChange={handleFavorite}>
+          <S.Star name={player} checked={isLike} onChange={handleFavorite}>
             <IconStar isActive={isLike} />
           </S.Star>
           <span>{teamLine}</span>
@@ -195,7 +198,11 @@ const MTPlayerHeader = ({
                     </div>
                     {/* 티어 */}
                     <div className="table-col3">
-                      <p>{`${getTier(data.tier ?? 0)} ${""}LP`}</p>
+                      <p>
+                        {`${getRank(data.rank, data.tier)}  ${
+                          data.tier > 0 ? `${data.leaguePoints}LP` : ""
+                        }`}
+                      </p>
                       {/* <span>{`S11 challenger / S10 Challenger`}</span> */}
                     </div>
                     {/* 이번시즌 */}
@@ -232,7 +239,11 @@ const MTPlayerHeader = ({
                     </div>
 
                     {/* 선수삭제 버튼 */}
-                    <button onClick={handleDelete}>
+                    <button
+                      onClick={() => {
+                        handleDelete();
+                      }}
+                    >
                       <IconDel />
                     </button>
                   </S.OpenList>
@@ -240,13 +251,15 @@ const MTPlayerHeader = ({
               })}
 
             {/* 버튼 - 선수 추가 modal */}
-            <S.AddPlayer name={id} onClick={handleClickModalOpen}>
-              <button>+</button>
-              <div>
-                <p>{t("soloRank.myTeam.label.addSoloRankID")}</p>
-                <span>{t("soloRank.myTeam.desc.addSoloRankID")}</span>
-              </div>
-            </S.AddPlayer>
+            {isMyTeamTab && (
+              <S.AddPlayer onClick={handleClickModalOpen}>
+                <button>+</button>
+                <div>
+                  <p>{t("soloRank.myTeam.label.addSoloRankID")}</p>
+                  <span>{t("soloRank.myTeam.desc.addSoloRankID")}</span>
+                </div>
+              </S.AddPlayer>
+            )}
           </>
         ) : (
           // 클로즈 ui
@@ -360,4 +373,4 @@ const MTPlayerHeader = ({
   );
 };
 
-export default MTPlayerHeader;
+export default MTPlayerList;
