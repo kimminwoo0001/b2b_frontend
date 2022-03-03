@@ -139,7 +139,7 @@ const ModalPlayerSearch = ({ name, onSelect = () => {} }) => {
                   alt={player.name}
                   id={player.name}
                   tier={`${getRank(player.rank, player.tier)}  ${
-                    player.tier === 0 ? `${player.leaguePoints}LP` : ""
+                    player.tier !== 0 ? `${player.leaguePoints}LP` : ""
                   }`}
                 />
               ))

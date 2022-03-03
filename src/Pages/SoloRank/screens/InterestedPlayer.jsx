@@ -8,7 +8,7 @@ import axiosRequest from "../../../lib/axios/axiosRequest";
 import { Loading } from "../../../redux/modules/filtervalue";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import { API } from "../../config";
-import MTContent from "../Component/MyTeam/MTContent";
+import MTContent from "../Component/Common/SRContent";
 
 const InterestedPlayer = () => {
   const [selectedDay, setSelectedDay] = useState("30");
@@ -30,18 +30,20 @@ const InterestedPlayer = () => {
       url,
       params,
       function (e) {
-        setheaderInfo([
-          {
-            logo: `Images/ico-league-${e.league}.png`,
-            text: e.league,
-          },
-          { logo: `Images/TeamLogo/${e.team}.png` },
-          { text: e.team },
-          // { text: "" },
-          { text: e.playerCount + (lang === "ko" ? "명" : "") },
-        ]);
-        setPlayerInfo(e.players);
-        setMyTeamName(e.team);
+        if (Object.keys(e).length !== 0) {
+          setheaderInfo([
+            {
+              logo: `Images/ico-league-${e.league}.png`,
+              text: e.league,
+            },
+            { logo: `Images/TeamLogo/${e.team}.png` },
+            { text: e.team },
+            // { text: "" },
+            { text: e.playerCount + (lang === "ko" ? "명" : "") },
+          ]);
+          setPlayerInfo(e.players);
+          setMyTeamName(e.team);
+        }
         dispatch(Loading(false));
       },
       function (objStore) {

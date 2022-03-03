@@ -3,20 +3,20 @@ import { jsx, css } from "@emotion/react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import * as S from "../styled/MTStyledTable";
-import IconStar from "../../../../../Components/Ui/Icons/IconStar";
-import Avatar from "../../../../../Components/Ui/Avatar";
-import Arrow from "../../../../../Components/Ui/Arrow";
-import IconDel from "../../../../../Components/Ui/Icons/IconDel";
-import { typoStyle } from "../../../../../Styles/ui";
-import { useModal } from "../../../../../Hooks";
-import { modalList } from "../../../../../Components/Modals/Modals";
-import { getRank, getTier } from "../../../../../lib/getRank";
-import { API } from "../../../../config";
+import * as S from "./styled/MTStyledTable";
+import IconStar from "../../../Components/Ui/Icons/IconStar";
+import Avatar from "../../../Components/Ui/Avatar";
+import Arrow from "../../../Components/Ui/Arrow";
+import IconDel from "../../../Components/Ui/Icons/IconDel";
+import { typoStyle } from "../../../Styles/ui";
+import { useModal } from "../../../Hooks";
+import { modalList } from "../../../Components/Modals/Modals";
+import { getRank, getTier } from "../../../lib/getRank";
+import { API } from "../../config";
 import { useSelector, useDispatch, batch } from "react-redux";
-import axiosRequest from "../../../../../lib/axios/axiosRequest";
-import { SetModalInfo } from "../../../../../redux/modules/modalvalue";
-import { Loading } from "../../../../../redux/modules/filtervalue";
+import axiosRequest from "../../../lib/axios/axiosRequest";
+import { SetModalInfo } from "../../../redux/modules/modalvalue";
+import { Loading } from "../../../redux/modules/filtervalue";
 
 const getMaxTier = (tier, rank, lp) => {};
 

@@ -4,13 +4,13 @@ import styled from "@emotion/styled/macro";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import MTCategory from "./MTCategory";
+import MTCategory from "./SRCategory";
 import { getPositon } from "../../../../lib/getPosition";
-import MTPlayerList from "./SubComponent/MTPlayerList";
+import MTPlayerList from "../MTPlayerList";
 
 // styled components
-import * as table from "./styled/MTStyledTable";
-import * as layout from "./styled/MTStyledLayout";
+import * as table from "../styled/MTStyledTable";
+import * as layout from "../styled/MTStyledLayout";
 import { useModal } from "../../../../Hooks";
 import Modals, { modalList } from "../../../../Components/Modals/Modals";
 

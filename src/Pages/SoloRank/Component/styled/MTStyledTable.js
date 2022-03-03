@@ -5,9 +5,9 @@ import {
   colors,
   spacing,
   typoStyle,
-} from "../../../../../Styles/ui";
-import CustomCheckBox from "../../../../../Components/Ui/CustomCheckbox";
-import theme from "../../../../../Styles/Theme";
+} from "../../../../Styles/ui";
+import CustomCheckBox from "../../../../Components/Ui/CustomCheckbox";
+import theme from "../../../../Styles/Theme";
 
 export const Table = styled.div`
   width: 100%;

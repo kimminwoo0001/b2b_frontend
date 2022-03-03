@@ -4,12 +4,13 @@ import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch, batch } from "react-redux";
-import MTContent from "../Component/MyTeam/MTContent";
+import MTContent from "../Component/Common/SRContent";
 import { Loading } from "../../../redux/modules/filtervalue";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import axiosRequest from "../../../lib/axios/axiosRequest";
 import { API } from "../../config";
 import TopFilter from "../../../Components/Filter/TopFilter";
+import FSHeader from "../Component/FSHeader";
 
 const SearchFilter = () => {
   const [selectedDay, setSelectedDay] = useState("30");
@@ -58,7 +59,7 @@ const SearchFilter = () => {
 
   return (
     <>
-      <TopFilter />
+      <FSHeader />
       {/* 팀 선수 테이블 */}
       <MTContent
         selectedDay={selectedDay}
