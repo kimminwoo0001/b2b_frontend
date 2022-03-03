@@ -12,18 +12,21 @@ import TopFilter from "../../../../Components/Filter/TopFilter";
 
 const Sequence = () => {
   const patchList = useSelector((state) => state.JungleMapReducer.patch);
-  const teamList = useSelector((state) => state.JungleMapReducer.team);
   const selectedPatch = getTrueValueList(patchList);
+
+  const teamList = useSelector((state) => state.JungleMapReducer.team);
+  const variousTeamList = useSelector((state) => state.JungleMapReducer.teams);
+  const selectedTeams = getTrueValueList(variousTeamList);
 
   return (
     <S.SequenceContainer>
       {/* 메인 필터 */}
       <S.FilterContainer>
         {/* <JungleFilter /> */}
-        <TopFilter />
+        <TopFilter needsMultipleTeams={false} />
       </S.FilterContainer>
       {/* 사이드 필터와 맵 비디오  */}
-      {teamList.length > 0 && selectedPatch.length > 0 && (
+      {(teamList.length > 0 || selectedTeams.length > 0) && selectedPatch.length > 0 && (
         <S.FlexContainer>
           {/* 사이드 필터 */}
           <S.Sidebar>

@@ -7,6 +7,7 @@ import {
   ResetJungleLeague,
   ResetJungleSeason,
   ResetJungleTeam,
+  ResetJungleTeams,
   ResetJunglePatch,
 } from "../../../../redux/modules/junglevalue";
 import { getTrueValueList } from "../../../../lib/getTureValueList";
@@ -15,7 +16,10 @@ const SelectedJungleFilter = ({ setToggle }) => {
   const year = useSelector((state) => state.JungleMapReducer.year);
   const league = useSelector((state) => state.JungleMapReducer.league);
   const season = useSelector((state) => state.JungleMapReducer.season);
+  //팀 단일, 다중 구분
   const team = useSelector((state) => state.JungleMapReducer.team);
+  const teams = useSelector((state) => state.JungleMapReducer.teams);
+  
   const patch = useSelector((state) => state.JungleMapReducer.patch);
   const dispatch = useDispatch();
 
@@ -57,6 +61,18 @@ const SelectedJungleFilter = ({ setToggle }) => {
           />
         );
       })}
+         {getTrueValueList(teams).map((team, _) => {
+      return (
+        <SelectedData
+          key={"chip" + team + _}
+          data={team}
+          deleteBtn={() => {
+            dispatch(ResetJungleTeams(team));
+            setToggle(false);
+          }}
+        />
+      );
+    })}
       {team.length > 0 &&
         team.map((team, _) => {
           return (
@@ -70,7 +86,8 @@ const SelectedJungleFilter = ({ setToggle }) => {
             />
           );
         })}
-      {team.length > 0 &&
+ 
+      {(team.length > 0 || getTrueValueList(teams).length > 0 )&& 
         getTrueValueList(patch).map((patch, _) => {
           return (
             <SelectedData

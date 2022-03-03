@@ -11,7 +11,7 @@ import {
   setTeamFilter,
   setYearFilter,
 } from "../../redux/modules/selectorvalue";
-import {
+import JungleMapReducer, {
   JungleInit,
   ResetJungleSelectedPatch,
   SetFilterData,
@@ -19,6 +19,7 @@ import {
   SetJunglePatch,
   SetJungleSeason,
   SetJungleTeam,
+  SetJungleTeams,
   SetJunlgeYear,
 } from "../../redux/modules/junglevalue";
 // ui
@@ -37,7 +38,7 @@ import {
   getPatchData,
 } from "../../lib/searchLeagueData";
 
-const TopFilter = () => {
+const TopFilter = ({needsMultipleTeams = false}) => {
   const user = useSelector((state) => state.UserReducer);
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -67,15 +68,24 @@ const TopFilter = () => {
   );
 
   // 팀
+  // 단일
   const teamList = useSelector((state) => state.SelectorReducer.teamFilter);
   const selectedTeam = useSelector((state) => state.JungleMapReducer.team);
+  // 다중
+  const teamState = useSelector((state) => state.JungleMapReducer.teams);
+  const selectedTeams= useMemo(
+    () => getTrueValueList(teamState),
+    [teamState]
+  );
+
+  
 
   //패치
   const patchList = useSelector((state) => state.SelectorReducer.patchFilter);
   const patchState = useSelector((state) => state.JungleMapReducer.patch);
   const selectedPatch = useMemo(
     () => getTrueValueList(patchState),
-    [patchList]
+    [patchState]
   );
 
   const junglevalue = useSelector((state) => state.JungleMapReducer);
@@ -144,6 +154,11 @@ const TopFilter = () => {
       );
     }
 
+    // 연도 변경 시 하위 값 초기화
+    dispatch(SetJungleSeason({}));
+    dispatch(SetJungleTeam([]));
+    dispatch(SetJungleTeams({}));
+
     // 리그데이터 설정
     dispatch(setLeagueFilter(leagueData));
     dispatch(SetJungleLeague(initializedObjValue(leagueData)));
@@ -155,6 +170,11 @@ const TopFilter = () => {
     dispatch(ResetJungleSelectedPatch());
     if (selectedLeagues.length === 0) return;
     const seasonList = getSeasonData(seletedYearList, selectedLeagues);
+
+    // 리그 변경 시 하위 값 초기화
+    dispatch(SetJungleSeason({}));
+    dispatch(SetJungleTeam([]));
+    dispatch(SetJungleTeams({}));
 
     // 시즌데이터 설정
     dispatch(SetJungleSeason(initializedObjValue(seasonList)));
@@ -173,11 +193,16 @@ const TopFilter = () => {
       selectedSeasons
     );
 
+    if(needsMultipleTeams) {
+      dispatch(SetJungleTeams(initializedObjValue(teamList)))
+    }
     // 1. 패치선택 가능 정보 받아오기
     fetchData();
 
-    // 2. 팀선택 가능배열 받아오기
+    // 2. 팀선택 가능배열 받아오기 (단일/다중선택 구분)
+    // 시즌 변경 시 하위 값 초기화
     dispatch(SetJungleTeam([]));
+    dispatch(SetJunglePatch({}));
     dispatch(setTeamFilter(teamList));
 
     async function fetchData() {
@@ -323,29 +348,65 @@ const TopFilter = () => {
               </SInitialStatement>
             ) : (
               <>
-                <SCheckboxAll name="year" value="all" disabled={true}>
+               {!needsMultipleTeams ?
+               <>
+                <SCheckboxAll name="team" value="all" disabled={true}>
+                {t("video.jungle.selectAll")}
+                </SCheckboxAll> 
+                <SCheckboxWrapper>
+                {teamList.map((team, _) => {
+                  return (       
+                    <Radio
+                      css={{
+                        width: "calc(10% - 22px)",
+                        justifyContent: "flex-start",
+                      }}
+                      key={team + _}
+                      name="team"
+                      value={team}
+                      onChange={handleChange}
+                      checked={selectedTeam.includes(team)}
+                    >
+                      {team}
+                    </Radio>
+                  );
+                })}
+                </SCheckboxWrapper>
+                </>
+                : 
+                <>
+                <SCheckboxAll 
+                name="teams" 
+                value="all" 
+                onChange={handleChange}
+                checked={
+                  Object.keys(teamState).length > 0 &&
+                    !Object.values(teamState).includes(false)
+                }>
                   {t("video.jungle.selectAll")}
                 </SCheckboxAll>
                 <SCheckboxWrapper>
-                  {teamList.map((team, _) => {
-                    return (
-                      <Radio
-                        css={{
-                          width: "calc(10% - 22px)",
-                          justifyContent: "flex-start",
-                        }}
-                        key={team + _}
-                        name="team"
-                        value={team}
-                        onChange={handleChange}
-                        checked={selectedTeam.includes(team)}
-                      >
-                        {team}
-                      </Radio>
-                    );
-                  })}
+                {Object.keys(teamState).map((team, _) => {
+                  return (
+                    <Checkbox
+                      css={{
+                        width: "calc(20% - 22px)",
+                        justifyContent: "flex-start",
+                      }}
+                      key={team + _}
+                      name="teams"
+                      value={team}
+                      onChange={handleChange}
+                      checked={teamState[team]}
+                    >
+                      {team}
+                    </Checkbox>
+                  );
+                })}
                 </SCheckboxWrapper>
-              </>
+                </> 
+                } 
+             </>
             )}
           </SFilterGroup>
         </SRow>
@@ -354,7 +415,7 @@ const TopFilter = () => {
           <STitle>{t("video.jungle.patch")}</STitle>
           <SFilterGroup>
             {selectedSeasons.length === 0 ||
-            selectedTeam.length === 0 ||
+            (selectedTeam.length === 0 && selectedTeams.length === 0) || 
             Object.keys(patchState).length === 0 ? (
               <SInitialStatement>
                 {t("video.jungle.selectPatch")}
@@ -373,7 +434,7 @@ const TopFilter = () => {
                   {t("video.jungle.selectAll")}
                 </SCheckboxAll>
                 <SCheckboxWrapper>
-                  {selectedTeam.length > 0 &&
+                  {(selectedTeam.length > 0 || selectedTeams.length > 0) &&
                     patchList.map((patch, _) => {
                       return (
                         <Checkbox

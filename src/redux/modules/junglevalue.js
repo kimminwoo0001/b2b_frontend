@@ -10,6 +10,7 @@ export const SET_JUNGLE_YEAR = "junglevalue/SET_JUNGLE_YEAR";
 export const SET_JUNGLE_LEAGUE = "junglevalue/SET_LEAGUE";
 export const SET_JUNGLE_SEASON = "junglevalue/SET_SEASON";
 export const SET_JUNGLE_TEAM = "junglevalue/SET_TEAM";
+export const SET_JUNGLE_TEAMS = "junglevalue/SET_TEAMS";
 export const SET_JUNGLE_PATCH = "junglevalue/SET_PATCH";
 
 export const RESET_JUNGLE_SELECTED_PATCH =
@@ -17,6 +18,7 @@ export const RESET_JUNGLE_SELECTED_PATCH =
 export const RESET_JUNGLE_LEAGUE = "junglevalue/RESET_LEAGUE";
 export const RESET_JUNGLE_SEASON = "junglevalue/RESET_JUNGLE_SEASON";
 export const RESET_JUNGLE_TEAM = "junglevalue/RESET_JUNGLE_TEAM";
+export const RESET_JUNGLE_TEAMS = "junglevalue/RESET_JUNGLE_TEAMS";
 export const RESET_JUNGLE_PATCH = "junglevalue/RESET_JUNGLE_PATCH";
 export const SET_IS_JUNGLING_CLICKED = "junglevalue/SET_IS_JUNGLING_CLICKED";
 export const SET_IS_JUNGLE_MAPPING_CLICKED =
@@ -42,6 +44,11 @@ export const SetJungleSeason = (payload) => ({
 });
 export const SetJungleTeam = (payload) => ({
   type: SET_JUNGLE_TEAM,
+  payload,
+});
+
+export const SetJungleTeams = (payload) => ({
+  type: SET_JUNGLE_TEAMS,
   payload,
 });
 export const SetJunglePatch = (payload) => ({
@@ -73,6 +80,12 @@ export const ResetJungleTeam = () => {
   };
 };
 
+export const ResetJungleTeams = (payload) => {
+  return {
+    type: RESET_JUNGLE_TEAMS,
+    payload
+  }
+}
 export const ResetJunglePatch = (payload) => {
   return {
     type: RESET_JUNGLE_PATCH,
@@ -130,6 +143,7 @@ const initialState = {
   season: {},
   oppseason: {},
   team: [],
+  teams:{},
   oppteam: [],
   patch: {},
   player: "",
@@ -174,6 +188,11 @@ export default function JungleMapReducer(state = initialState, action) {
         ...state,
         team: [...action.payload],
       };
+    case SET_JUNGLE_TEAMS:
+      return {
+        ...state,
+        teams: {...action.payload},
+      };    
     case SET_JUNGLE_PATCH:
       return {
         ...state,
@@ -212,6 +231,12 @@ export default function JungleMapReducer(state = initialState, action) {
       return {
         ...state,
         team: [],
+      };
+    case RESET_JUNGLE_TEAMS:
+      console.log(action.payload);
+      return {
+        ...state,
+        teams: { ...state.teams, [action.payload]: false },
       };
     case RESET_JUNGLE_PATCH:
       return {
