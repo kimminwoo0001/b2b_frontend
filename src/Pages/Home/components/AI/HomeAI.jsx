@@ -47,18 +47,10 @@ const HomeAI = ({ ...props }) => {
           {LEAGUE.map((tab, index) => (
             <ButtonLeague
               className={currentIndex === index ? "is-active" : ""}
+              league={tab.title.toLocaleLowerCase()}
               onClick={() => handleClick(index)}
             >
-              <Avatar
-                css={{ marginRight: 10 }}
-                src={
-                  index === 0 || index === 2
-                    ? `images/league/ico_league_${tab.title.toLocaleLowerCase()}_hover.png`
-                    : `images/league/ico_league_${tab.title.toLocaleLowerCase()}.png`
-                }
-                size={24}
-              />
-
+              <LeagueLogo />
               {tab.title}
             </ButtonLeague>
           ))}
@@ -105,6 +97,17 @@ const ButtonContainer = styled.div`
     ${spacing.marginR(5)};
   }
 `;
+
+const LeagueLogo = styled.div`
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  ${transitionStyle.background}
+`;
 const ButtonLeague = styled(Button)`
   ${spacing.padding(5)};
   ${borderRadiusStyle[20]};
@@ -117,9 +120,21 @@ const ButtonLeague = styled(Button)`
   background-color: ${colors.bg_box};
   cursor: pointer;
 
+  ${LeagueLogo} {
+    background-image: ${({ league }) =>
+      `url(images/league/ico_league_${league}.png)`};
+  }
+
   &:hover,
   &.is-active {
     background-color: ${colors.point};
+
+    &:nth-of-type(3) {
+      ${LeagueLogo} {
+        background-image: ${({ league }) =>
+          `url(images/league/ico_league_${league}_hover.png)`};
+      }
+    }
   }
 `;
 
