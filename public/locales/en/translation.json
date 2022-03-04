@@ -582,6 +582,7 @@
       "midGangkingCountsbyMatches":"Mid Ganking Counts By Matches",
       "botGangkingCountsbyMatches":"Bottom Ganking Counts By Matches",
       "avgFirstGankingTime":"Avg First Ganking Time",
+      "noData": "No Data",
       "monsters" : {
         "blueSentinel" : "Blue Sentinel",
         "gromp" : "Gromp",
@@ -593,7 +594,8 @@
       }
     },
     "wardPathing" : {
-      "confirmWardPathing": "Confirm Ward & Pathing"
+      "confirmWardPathing": "Confirm Ward & Pathing",
+      "ward": "Ward"
     }
 
   },

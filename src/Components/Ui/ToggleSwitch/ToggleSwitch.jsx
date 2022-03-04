@@ -8,11 +8,16 @@ const ToggleSwitch = ({
   className,
   checked = false,
   disabled = false,
+  onChange = () => {}, 
   ...props
 }) => {
+  console.log(checked);
+  const handleToggleSwitch = () => {
+    onChange(!checked);
+  }
   return (
     <ToggleContainer className={className}>
-      <input type="checkbox" checked={checked} disabled={disabled} {...props} />
+      <input type="checkbox" onChange={handleToggleSwitch} checked={checked} disabled={disabled} {...props} />
       <div
         className={cx([{ "is-active": checked }, { "is-disabled": disabled }])}
       >

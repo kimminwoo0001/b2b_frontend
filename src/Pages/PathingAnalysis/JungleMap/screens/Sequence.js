@@ -13,15 +13,6 @@ import { getTrueValueList } from "../../../../lib/getTureValueList";
 
 const Sequence = () => {
   const junglevalue = useSelector((state) => state.JungleMapReducer);
-  const [position, setPosition] = useState(
-    { all: true,
-      top: true,
-      jng: true,
-      mid: true,
-      bot: true,
-      sup: true,
-    });
-
   const patchList = useSelector((state) => state.JungleMapReducer.patch);
   const teamList = useSelector((state) => state.JungleMapReducer.team);
   const selectedPatch = getTrueValueList(patchList);
@@ -46,9 +37,7 @@ const Sequence = () => {
           {junglevalue.isMappingClicked &&
           <>
           <S.VideoContainer>
-            <PositionCheckList onChange={(position) => setPosition(position)} />
-            <Map position={position} setPosition={setPosition}/>
-            
+            <Map />
           </S.VideoContainer>
           {/* 이벤트 다이얼로그 */}
           <S.DialogContainer>

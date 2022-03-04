@@ -70,11 +70,14 @@ const CompareSideFilter = () => {
     // 전체선택
     if (value === "all") {
       const datas = { ...junglevalue[name] };
-      const list = Object.keys(junglevalue[name]);
-      const a = list.map((data) => {
-        return (datas[data] = checked);
-      });
-      dispatch(SetFilterData({ ...junglevalue, [name]: datas }));
+      // const list = Object.keys(junglevalue[name]);
+      // const a = list.map((data) => {
+      //   return (datas[data] = checked);
+      // });
+      for(let key in datas) {
+        datas[key] = checked;
+      }
+      return dispatch(SetFilterData({ ...junglevalue, [name]: datas }));
     }
     // 개별선택
     else {
@@ -273,16 +276,15 @@ const CompareSideFilter = () => {
       dispatch(setOppSeasonFilter(seasonList))
       //  전체 시즌 자동 선택
       const datas = { ...junglevalue.oppseason } 
-      for(const oppseason in datas) {
-        return datas[oppseason] = true;
+      for(let oppseason in datas) {
+          datas[oppseason] = true;
       }
       dispatch(SetFilterData({ ...junglevalue, oppseason: datas }));
     }else {
       dispatch(setSeasonFilter(seasonList));
-      //  전체 시즌 자동 선택
       const datas = { ...junglevalue.season } 
-      for(const season in datas) {
-        return datas[season] = true;
+      for(let season in datas) {
+        datas[season] = true;
       }
       dispatch(SetFilterData({ ...junglevalue, season: datas }));
     }
@@ -462,6 +464,7 @@ useEffect(() => {
 
   useEffect(() => {
     fetchSeasonFilter(junglevalue.year, junglevalue.league, junglevalue.player);
+
   }, [junglevalue.player]);
 
   // oppteam
@@ -487,6 +490,7 @@ useEffect(() => {
       junglevalue.oppleague,
       junglevalue.oppplayer
     );
+
   }, [junglevalue.oppplayer]);
 
   // patch

@@ -13,6 +13,7 @@ import {SetJunglePlayer, SetIsJungleMappingClicked, SetFilterData} from '../../.
 import { useTranslation } from "react-i18next";
 import addZero from "../../../../lib/addZero";
 import { initializedObjValue } from "../../../../lib/initializedObjValue";
+import PositionCheckList from "../../../../Components/Ui/PositionCheckList";
 
 
 function useIntervalFast(callback) {
@@ -49,12 +50,20 @@ function useIntervalNormal(callback) {
   }, []);
 }
 
-const Map = ({position, setPosition}) => {
+const Map = () => {
     const junglevalue = useSelector(state => state.JungleMapReducer);
     const user = useSelector((state) => state.UserReducer);
     const lang = useSelector((state) => state.LocaleReducer);
     const { t } = useTranslation();
     const dispatch = useDispatch();
+    const [position, setPosition] = useState({
+      all: true,
+      top: true,
+      jng: true,
+      mid: true,
+      bot: true,
+      sup: true,
+    })
 
     // mapping data 
     const [mappingPosition, setMappingPosition] = useState();
@@ -143,6 +152,8 @@ const Map = ({position, setPosition}) => {
 
 
     return (
+      <>
+       <PositionCheckList position={position} setPosition={(position) => setPosition(position)}/>
         <SMapContainer>
             <SWardPathingMap>
             {mappingInfo?.filter(info => position &&  Object.keys(position).filter(key => position[key] === true).includes(info.position)).map((info,idx) => {
@@ -279,6 +290,7 @@ const Map = ({position, setPosition}) => {
                 </TimeStamp>
             </RangeWrapper>
         </SMapContainer>
+        </>
     );
 };
 

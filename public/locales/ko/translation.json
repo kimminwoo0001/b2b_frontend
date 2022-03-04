@@ -579,19 +579,21 @@
       "midGangkingCountsbyMatches":"경기당 미드 갱킹횟수",
       "botGangkingCountsbyMatches":"경기당 바텀 갱킹횟수",
       "avgFirstGankingTime":"평균 첫 갱킹시간",
+      "noData": "데이터 준비중",
       "monsters" : {
-        "blueSentinel" : "푸른 파수꾼(블루)",
-        "gromp" : "심술 두꺼비",
-        "murkWolves": "어스름 늑대",
+        "blueSentinel" : "블루",
+        "gromp" : "심술두꺼비",
+        "murkWolves": "어스름늑대",
         "raptors" : "칼날부리",
-        "redBrambleback" : "붉은 덩굴정령(레드)",
+        "redBrambleback" : "레드",
         "krugs" : "돌거북",
         "scuttler" : "바위게"
       }
 
     },
     "wardPathing" : {
-      "confirmWardPathing": "와드 & 동선 확인하기"
+      "confirmWardPathing": "와드 & 동선 확인하기",
+      "ward": "와드"
     }
   },
   "alert": {

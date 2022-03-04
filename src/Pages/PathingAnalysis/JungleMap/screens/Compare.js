@@ -147,7 +147,7 @@ const Compare = () => {
     axiosRequest(undefined, url, params, function(e) {
         setTeam(e["team1"]);
         setOppTeam(e["team2"]);
-        dispatch(SetIsJunglingClicked(false));
+        // dispatch(SetIsJunglingClicked(false));
 
         const returnedTeamData = convert(e["team1"].campRate)
         const returnedOppTeamData = convert(e["team2"].campRate)
@@ -188,15 +188,15 @@ const Compare = () => {
         </S.layout.Sidebar>
         {Object.keys(junglevalue.oppchampion).filter(
           (key) => junglevalue.oppchampion[key] === true
-        ).length > 0 && (
+        ).length > 0 && junglevalue.isClicked &&  (
           <S.layout.Contents>
             {/* 비교테이블 */}
             <S.layout.FlexContainer css={spacing.marginB(5)}>
               {/* 첫번째 테이블 */}
               <S.table.TableContainer css={spacing.marginR(5)}>
-                <S.table.TableHeader>
+                  <S.table.TableHeader>
                   {/* 제목 */}
-                  <S.table.TableTitle>
+                    <S.table.TableTitle>
                     <Avatar
                       src={`Images/TeamLogo/${junglevalue.team}.png`}
                       alt="teamLogo"
@@ -254,6 +254,7 @@ const Compare = () => {
                     </thead>
                     {teamSide === "blue" ?
                         <tbody>
+                        {teamBlue?.length === 0 && <S.table.NoTableData>{t("video.jungle.noData")}</S.table.NoTableData>}
                         {teamBlue?.map((teamCamp,idx) => {
                           return   (
                             <tr>
@@ -280,9 +281,11 @@ const Compare = () => {
                           </tr>
                             )
                         }
-                        )}
+                        )
+                        }
                       </tbody> :
                         <tbody>
+                        {teamRed?.length === 0 && <S.table.NoTableData>{t("video.jungle.noData")}</S.table.NoTableData>}
                         {teamRed?.map((teamCamp,idx) => (
                         <tr>
                         <td>{idx+1}</td>
@@ -375,6 +378,7 @@ const Compare = () => {
                     </thead>
                     {oppTeamSide === "blue" ?
                     <tbody>
+                      {oppTeamBlue?.length === 0 && <S.table.NoTableData>{t("video.jungle.noData")}</S.table.NoTableData>}
                       {oppTeamBlue?.map((oppTeamCamp,idx) =>  (
                       <tr>
                       <td>{idx+1}</td>
@@ -400,6 +404,7 @@ const Compare = () => {
                       ))}
                     </tbody>:
                         <tbody>
+                        {oppTeamRed?.length === 0 && <S.table.NoTableData>{t("video.jungle.noData")}</S.table.NoTableData>}    
                         {oppTeamRed?.map((oppTeamCamp,idx) =>  (
                         <tr>
                         <td>{idx+1}</td>
@@ -434,13 +439,13 @@ const Compare = () => {
                 {/* 선수명 */}
                 <thead>
                   <tr>
-                    <th>{team?.countRate[0]?.player}</th>
+                    <th>{team?.countRate[0] === null ? t("video.jungle.noData"):  team?.countRate[0]?.player}</th>
                     <th></th>
                     <th>
                       <Versus size={18} />
                     </th>
                     <th></th>
-                    <th>{oppTeam?.countRate[0]?.player}</th>
+                    <th>{oppTeam?.countRate[0] === null ? t("video.jungle.noData") :oppTeam?.countRate[0]?.player}</th>
                   </tr>
                 </thead>
 
@@ -448,7 +453,7 @@ const Compare = () => {
                 <tbody>
                   {/* 각 행 */}
                   <tr>
-                    <td>{`${(team?.countRate[0]?.counter_jg * 100).toFixed(
+                    <td>{team?.countRate[0] === null ? t("video.jungle.noData") :`${(team?.countRate[0]?.counter_jg * 100).toFixed(
                       2
                     )}%`}</td>
                     <td>
@@ -464,13 +469,13 @@ const Compare = () => {
                         <Arrow direction={"R"} />
                       )}
                     </td>
-                    <td>{`${(oppTeam?.countRate[0]?.counter_jg * 100).toFixed(
+                    <td>{oppTeam?.countRate[0] === null ?t("video.jungle.noData")  :`${(oppTeam?.countRate[0]?.counter_jg * 100).toFixed(
                       2
                     )}%`}</td>
                   </tr>
 
                   <tr>
-                    <td>{secToMin(team?.sixTime[0]?.realcount)}</td>
+                    <td>{team?.sixTime[0] === null ?t("video.jungle.noData")  :secToMin(team?.sixTime[0]?.realcount)}</td>
                     <td>
                       {team?.sixTime[0]?.realcount >
                         oppTeam?.sixTime[0]?.realcount && (
@@ -484,7 +489,7 @@ const Compare = () => {
                         <Arrow direction={"R"} />
                       )}
                     </td>
-                    <td>{secToMin(oppTeam?.sixTime[0]?.realcount)}</td>
+                    <td>{oppTeam?.sixTime[0] === null ? t("video.jungle.noData") : secToMin(oppTeam?.sixTime[0]?.realcount)}</td>
                   </tr>
                 </tbody>
               </S.table.TextTable>

@@ -7,6 +7,8 @@ import { API } from '../../../config';
 import axiosRequest from "../../../../lib/axios/axiosRequest";
 import Tippy from "@tippy.js/react";
 import ObjectTooltip from "../../ObjectMapping/ObjectTooltip";
+import PositionCheckList from "../../../../Components/Ui/PositionCheckList";
+import ToggleSwitch from "../../../../Components/Ui/ToggleSwitch/ToggleSwitch";
 
 import { SetModalInfo } from "../../../../redux/modules/modalvalue";
 import {SetJunglePlayer, SetIsJungleMappingClicked, SetFilterData} from '../../../../redux/modules/junglevalue';
@@ -49,12 +51,21 @@ function useIntervalNormal(callback) {
   }, []);
 }
 
-const WardObjectMap = ({position, setPosition}) => {
+const WardObjectMap = () => {
     const junglevalue = useSelector(state => state.JungleMapReducer);
     const user = useSelector((state) => state.UserReducer);
     const lang = useSelector((state) => state.LocaleReducer);
     const { t } = useTranslation();
     const dispatch = useDispatch();
+    const [position, setPosition] = useState ({
+      all: true,
+      top: true,
+      jng: true,
+      mid: true,
+      bot: true,
+      sup: true,
+    })
+    const [checked,setChecked] = useState(false);
 
     // mapping data 
     const [mappingPosition, setMappingPosition] = useState();
@@ -111,14 +122,11 @@ const WardObjectMap = ({position, setPosition}) => {
     })
   }
 
-
-  
   useIntervalNormal(() => {
     if(play === true && range < maxTime) {
       setRange(parseInt(range) + 1);
     }
   },300)
-
 
   useIntervalFast(() => {
     if(playFast === true && range < maxTime) {
@@ -138,6 +146,17 @@ const WardObjectMap = ({position, setPosition}) => {
 
 
     return (
+      <>
+         <SVideoNavContainer>
+          <PositionCheckList position={position} setPosition={(position) => setPosition(position)}/>
+          <SToggleSwitchContainer>
+            <SWard>
+              <SWardIcon src="Images/ic_trinketward.svg"></SWardIcon>
+              <SWardText>{t("video.wardPathing.ward")}</SWardText>
+            </SWard>
+            <ToggleSwitch  checked={checked} onChange={(checked) => setChecked(checked) } />
+            </SToggleSwitchContainer>
+        </SVideoNavContainer>
         <SMapContainer>
             <SWardPathingMap>
             {mappingInfo?.filter(info => position &&  Object.keys(position).filter(key => position[key] === true).includes(info.position)).map((info,idx) => {
@@ -274,6 +293,7 @@ const WardObjectMap = ({position, setPosition}) => {
                 </TimeStamp>
             </RangeWrapper>
         </SMapContainer>
+        </>
     );
 };
 
@@ -356,3 +376,33 @@ const TimeStamp = styled.div`
     color: #6b6979;
   }
 `;
+
+
+export const SVideoNavContainer = styled.div`
+display: flex;
+justify-content: space-between;
+align-items: center;
+`
+
+export const SToggleSwitchContainer = styled.div`
+width: 120px;
+display: flex;
+align-items: center;
+justify-content: space-evenly;
+`
+
+export const SWard = styled.div`
+display: flex;
+align-items: center;
+`;
+
+export const SWardIcon = styled.img`
+width: 21px;
+height: 21px;
+margin-right: 3px;
+`;
+
+export const SWardText = styled.span`
+font-size: 16px;
+color: #ffffff;
+`

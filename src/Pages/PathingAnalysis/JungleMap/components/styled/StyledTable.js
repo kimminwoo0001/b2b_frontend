@@ -39,6 +39,7 @@ export const TableTitle = styled.h6`
 
 export const Table = styled.table`
   width: 100%;
+  position: relative;
 
   /* 회색 테이블헤더 */
   thead {
@@ -65,7 +66,7 @@ export const Table = styled.table`
 
     tr {
       position: relative;
-      ${spacing.paddingX(3)}
+      /* ${spacing.paddingX(3)} */
       &::after {
         content: "";
         position: absolute;
@@ -89,15 +90,25 @@ export const Table = styled.table`
       td:nth-of-type(2) {
         display: flex;
         /* text-align: center; */
-        /* ${spacing.marginL(3)} */
+        /* ${spacing.marginL(1)} */
       }
     }
   }
 `;
 
+export const NoTableData = styled.div`
+position: absolute; 
+left: 50%; 
+top: 50%;
+transform: translate(-50%, -50%); 
+
+color: #fff;
+`
+
 export const TableData = styled.div`
   display: flex;
   align-items: center;
+  flex:1;
   ${spacing.paddingX(3)}
   
 
@@ -159,3 +170,5 @@ export const TextTable = styled.table`
     }
   }
 `;
+
+
