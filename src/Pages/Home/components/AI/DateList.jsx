@@ -9,45 +9,72 @@ import {
   borderRadiusStyle,
 } from "../../../../Styles/ui";
 import Arrow from "../../../../Components/Ui/Arrow";
-import { useState } from "react";
-import Versus from "../../../../Components/Ui/Versus";
-const DateList = ({ ...props }) => {
-  const [isPast, setPast] = useState(true);
 
+import Versus from "../../../../Components/Ui/Versus";
+import dayjs from "dayjs";
+import ko from "dayjs/locale/ko";
+import { useSelector } from "react-redux";
+import { forwardRef } from "react";
+const DateList = forwardRef(({ list, ...props }, ref) => {
+  const { isComplete, date, scheduleList } = list;
+
+  // 경기 날짜 관련
+  const locale = useSelector((state) => state.LocaleReducer);
+  const gameDate = locale === "ko" ? dayjs(date).locale(ko) : dayjs(date);
+  const isToday = dayjs(date).format("YYYYMMDD") === dayjs().format("YYYYMMDD");
   return (
-    <Container {...props}>
+    <Container ref={ref} {...props}>
       {/* 날짜 */}
-      <Date>
-        <span>3.2</span>
-        <span>수요일</span>
-      </Date>
+      <DateContainer>
+        <span>{gameDate.format(`M.D`)}</span>
+        <span>
+          {gameDate.format("dddd")} {isToday ? "(오늘)" : ""}
+        </span>
+      </DateContainer>
 
       {/* AI 예측결과 */}
-      <GameInfo>
-        {Array(4)
-          .fill(1)
-          .map((item, _) => (
+      <GameInfo className={isComplete ? "is-complete" : ""}>
+        {scheduleList.map((games, _) => {
+          const {
+            winner,
+            homeTeam,
+            homeScore,
+            homeWinRate,
+            awayTeam,
+            awayScore,
+            awayWinRate,
+          } = games;
+
+          return (
             <GameList key={"gameInfo" + _}>
               <Team className="right">
-                <span>NS</span>
-                <span>50.0%</span>
+                <span>
+                  {homeTeam?.name ? `${homeTeam.name.toUpperCase()}` : "TBD"}
+                </span>
+                <span>{homeWinRate ? `${homeWinRate.toFixed(1)} %` : ""}</span>
               </Team>
               <TeamLogo>
                 <Avatar
-                  src={`images/team/ico_team_${"t1"}.png`}
+                  src={`images/team/ico_team_${homeTeam?.name}.png`}
+                  alt={homeTeam?.name ?? "TBD"}
+                  onError={(e) =>
+                    (e.target.src = `images/team/ico_team_tbd.png`)
+                  }
                   size={50}
                   circle={false}
                 ></Avatar>
               </TeamLogo>
-              {isPast ? (
+              {isComplete ? (
                 // 경기 종료시 보여주는 UI
                 <>
                   <Side>
-                    <Arrow direction={"L"} size={6} />
+                    {winner === "home" && <Arrow direction={"L"} size={6} />}
                   </Side>
-                  <Score>2 : 0</Score>
+                  <Score>
+                    {homeScore} : {awayScore}
+                  </Score>
                   <Side>
-                    <Arrow direction={"R"} size={6} />
+                    {winner === "away" && <Arrow direction={"R"} size={6} />}
                   </Side>
                 </>
               ) : (
@@ -58,28 +85,35 @@ const DateList = ({ ...props }) => {
               )}
               <TeamLogo>
                 <Avatar
-                  src={`images/team/ico_team_${"af"}.png`}
+                  src={`images/team/ico_team_${awayTeam?.name}.png`}
                   size={50}
+                  onError={(e) =>
+                    (e.target.src = `images/team/ico_team_tbd.png`)
+                  }
+                  alt={awayTeam?.name ?? "TBD"}
                   circle={false}
                 ></Avatar>
               </TeamLogo>
               <Team className="left">
-                <span>DK</span>
-                <span>50.0%</span>
+                <span>
+                  {awayTeam?.name ? `${awayTeam.name.toUpperCase()}` : "TBD"}
+                </span>
+                <span>{awayWinRate ? `${awayWinRate.toFixed(1)} %` : ""}</span>
               </Team>
             </GameList>
-          ))}
+          );
+        })}
       </GameInfo>
     </Container>
   );
-};
+});
 
 const Container = styled.li`
   display: flex;
   ${spacing.paddingY(4)};
   border-bottom: 1px solid ${colors.bg_checkbox};
 `;
-const Date = styled.div`
+const DateContainer = styled.div`
   flex: 0 0 90px;
   display: flex;
   flex-direction: column;
@@ -101,6 +135,12 @@ const Date = styled.div`
 `;
 const GameInfo = styled.ul`
   flex: 1 0;
+
+  &.is-complete {
+    > li {
+      background-color: ${colors.bg_box};
+    }
+  }
 `;
 const GameList = styled.li`
   &:not(:last-of-type) {
@@ -130,10 +170,10 @@ const Team = styled.div`
   height: 100%;
 
   &.right {
-    text-align: right;
+    align-items: flex-end;
   }
   &.left {
-    text-align: left;
+    align-items: flex-start;
   }
 
   span {

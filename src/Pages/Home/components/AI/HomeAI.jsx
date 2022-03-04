@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { jsx } from "@emotion/react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled/macro";
 import {
   borderRadiusStyle,
@@ -14,6 +14,7 @@ import { useTab } from "../../../../Hooks/useTab";
 import Button from "../../../../Components/Ui/Button";
 import Avatar from "../../../../Components/Ui/Avatar";
 import DateList from "./DateList";
+import dayjs from "dayjs";
 
 const LEAGUE = [
   { title: "LCK" },
@@ -22,10 +23,222 @@ const LEAGUE = [
   { title: "LPL" },
 ];
 
+// mok data
+const DATE_DATA = [
+  {
+    isComplete: true,
+    league: "LCK",
+    date: 1645994400000,
+    scheduleList: [
+      {
+        time: 1646294400000,
+        winner: "away",
+
+        // 홈팀 정보
+        homeTeam: {
+          name: "t1",
+        },
+        homeScore: 2,
+        homeWinRate: 58.96,
+
+        // 원정팀 정보
+        awayTeam: {
+          name: "geng",
+        },
+        awayScore: 0,
+        awayWinRate: 42.04,
+      },
+    ],
+  },
+  {
+    isComplete: true,
+    league: "LCK",
+    date: 1646094400000,
+    scheduleList: [
+      {
+        time: 1646294400000,
+        winner: "home",
+
+        // 홈팀 정보
+        homeTeam: {
+          name: "t1",
+        },
+        homeScore: 2,
+        homeWinRate: 58.96,
+
+        // 원정팀 정보
+        awayTeam: {
+          name: "geng",
+        },
+        awayScore: 0,
+        awayWinRate: 42.04,
+      },
+      {
+        time: 1646294400000,
+        winner: "home",
+
+        homeTeam: {
+          name: "sb_v2",
+        },
+        homeScore: 2,
+        homeWinRate: 58.96,
+
+        awayTeam: {
+          name: "bron",
+        },
+        awayScore: 0,
+        awayWinRate: 42.04,
+      },
+    ],
+  },
+  {
+    isComplete: false,
+    league: "LCK",
+    date: 1646294400000,
+    scheduleList: [
+      {
+        time: 1646294400000,
+
+        homeTeam: {
+          name: "t1",
+        },
+        homeScore: 0,
+        homeWinRate: 58.96,
+
+        awayTeam: {
+          name: "geng",
+        },
+        awayScore: 0,
+        awayWinRate: 42.04,
+      },
+      {
+        time: 1646294400000,
+
+        homeTeam: {
+          name: "t1",
+        },
+        homeScore: 0,
+        homeWinRate: 58.96,
+
+        awayTeam: {
+          name: "geng",
+        },
+        awayScore: 0,
+        awayWinRate: 42.04,
+      },
+    ],
+  },
+  {
+    isComplete: false,
+    league: "LCK",
+    date: 1646394400000,
+    scheduleList: [
+      {
+        time: 1646394400000,
+
+        homeTeam: {
+          name: "t1",
+        },
+        homeScore: 0,
+        homeWinRate: 58.96,
+
+        awayTeam: {
+          name: "geng",
+        },
+        awayScore: 0,
+        awayWinRate: 42.04,
+      },
+      {
+        time: 1646294400000,
+
+        homeTeam: {
+          name: "t1",
+        },
+        homeScore: 0,
+        homeWinRate: 58.96,
+
+        awayTeam: {
+          name: "geng",
+        },
+        awayScore: 0,
+        awayWinRate: 42.04,
+      },
+    ],
+  },
+  {
+    isComplete: false,
+    league: "LCK",
+    date: 1646494400000,
+    scheduleList: [
+      {
+        time: 1646294400000,
+
+        homeTeam: {
+          // name: "t1",
+        },
+        homeScore: 0,
+        // homeWinRate: 58.96,
+
+        awayTeam: {
+          name: "geng",
+        },
+        awayScore: 0,
+        awayWinRate: 42.04,
+      },
+      {
+        time: 1646294400000,
+
+        homeTeam: {
+          name: "t1",
+        },
+        homeScore: 0,
+        homeWinRate: 58.96,
+
+        // awayTeam: {
+        // name: "geng",
+        // },
+        awayScore: 0,
+        // awayWinRate: 42.04,
+      },
+    ],
+  },
+];
+
 const HomeAI = ({ ...props }) => {
   const { currentIndex, setIndex } = useTab(0, LEAGUE);
-
+  const scrollContainerRef = useRef(null);
+  const dayListRef = useRef([]);
   const handleClick = (index) => setIndex(index);
+  const [recentDate, setRecentDate] = useState();
+
+  // 오늘 or 가장 가까운 다음 경기 찾기
+  useEffect(() => {
+    let index;
+
+    const recentDate = DATE_DATA.some((item, i) => {
+      index = i;
+      return item.date - dayjs() >= 0;
+    });
+
+    if (!recentDate) {
+      index = DATE_DATA.length - 1;
+    }
+
+    setRecentDate(index);
+  }, [DATE_DATA]);
+
+  // 오늘 or 가장 가까운 다음 경기로 스크롤
+  useEffect(() => {
+    if (!scrollContainerRef.current || !dayListRef.current || !recentDate)
+      return;
+    const { top: containerTop } =
+      scrollContainerRef.current.getBoundingClientRect();
+
+    const { top: childTop } =
+      dayListRef.current[recentDate].getBoundingClientRect();
+
+    scrollContainerRef.current.scrollTo({ top: childTop - containerTop });
+  }, [recentDate]);
 
   return (
     <Container {...props}>
@@ -42,10 +255,12 @@ const HomeAI = ({ ...props }) => {
           </span>
         </Toolbox>
       </Header>
-      <ContentsContainer className="전체감싸기">
-        <ButtonContainer className="왼쪽">
+      <ContentsContainer>
+        {/* tab 메뉴  */}
+        <TabContainer>
           {LEAGUE.map((tab, index) => (
             <ButtonLeague
+              key={"tab" + tab.title}
               className={currentIndex === index ? "is-active" : ""}
               league={tab.title.toLocaleLowerCase()}
               onClick={() => handleClick(index)}
@@ -54,16 +269,20 @@ const HomeAI = ({ ...props }) => {
               {tab.title}
             </ButtonLeague>
           ))}
-        </ButtonContainer>
+        </TabContainer>
 
-        <Contents className="오른쪽">
-          <h3>이번주일정</h3>
-          <ScrollContainer className="스크롤컨테이너">
-            {Array(2)
-              .fill(1)
-              .map((item, _) => (
-                <DateList key={"dataetat" + _} />
-              ))}
+        {/* 경기일정 컨텐츠 */}
+        <Contents>
+          <ScrollContainer ref={scrollContainerRef}>
+            {DATE_DATA.map((gameList, index) => (
+              <DateList
+                key={gameList.date}
+                ref={(el) => {
+                  dayListRef.current[index] = el;
+                }}
+                list={gameList}
+              />
+            ))}
           </ScrollContainer>
         </Contents>
       </ContentsContainer>
@@ -91,7 +310,7 @@ const Toolbox = styled.div`
     ${typoStyle.info};
   }
 `;
-const ButtonContainer = styled.div`
+const TabContainer = styled.div`
   button:not(:last-of-type) {
     ${spacing.marginB(2)};
     ${spacing.marginR(5)};
