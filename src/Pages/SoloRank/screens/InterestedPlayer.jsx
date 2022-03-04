@@ -9,6 +9,7 @@ import { Loading } from "../../../redux/modules/filtervalue";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import { API } from "../../config";
 import MTContent from "../Component/Common/SRContent";
+import IPHeader from "../Component/IPHeader";
 
 const InterestedPlayer = () => {
   const [selectedDay, setSelectedDay] = useState("30");
@@ -59,6 +60,7 @@ const InterestedPlayer = () => {
 
   return (
     <>
+      <IPHeader />
       {/* 팀 선수 테이블 */}
       <MTContent
         selectedDay={selectedDay}

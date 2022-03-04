@@ -14,16 +14,18 @@ import FSHeader from "../Component/FSHeader";
 
 const SearchFilter = () => {
   const [selectedDay, setSelectedDay] = useState("30");
-  const [headerInfo, setheaderInfo] = useState([]);
   const [playerInfo, setPlayerInfo] = useState([]);
   const [myTeamName, setMyTeamName] = useState("");
+
   const user = useSelector((state) => state.UserReducer);
   const lang = useSelector((state) => state.LocaleReducer);
   const dispatch = useDispatch();
 
-  const getMyTeamSoloRankInfo = () => {
-    const url = `${API}/lolapi/solorank/teamlist`;
+  const getSeachFilterPlayer = (team, patch) => {
+    const url = `${API}/lolapi/solorank/filterlist`;
     const params = {
+      team: team[0],
+      patch: patch,
       days: selectedDay,
       token: user.token,
     };
@@ -32,19 +34,11 @@ const SearchFilter = () => {
       url,
       params,
       function (e) {
-        setheaderInfo([
-          {
-            logo: `Images/ico-league-${e.league}.png`,
-            text: e.league,
-          },
-          { logo: `Images/TeamLogo/${e.team}.png` },
-          { text: e.team },
-          // { text: "" },
-          { text: e.playerCount + (lang === "ko" ? "명" : "") },
-        ]);
-        setPlayerInfo(e.players);
-        setMyTeamName(e.team);
-        dispatch(Loading(false));
+        if (Object.keys(e).length !== 0) {
+          setPlayerInfo(e.players);
+          setMyTeamName(e.team);
+          dispatch(Loading(false));
+        }
       },
       function (objStore) {
         dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -53,13 +47,9 @@ const SearchFilter = () => {
     );
   };
 
-  useState(() => {
-    getMyTeamSoloRankInfo();
-  }, [selectedDay]);
-
   return (
     <>
-      <FSHeader />
+      <FSHeader getSeachFilterPlayer={getSeachFilterPlayer} />
       {/* 팀 선수 테이블 */}
       <MTContent
         selectedDay={selectedDay}

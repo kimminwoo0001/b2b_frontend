@@ -25,6 +25,23 @@ const MTContent = ({
 }) => {
   const { openModal } = useModal();
   const { t } = useTranslation();
+  const [closeData, setCloseData] = useState({
+    count: 0,
+    name: "",
+    tier: 0,
+    season: {
+      total: 0,
+      win: 0,
+      lose: 0,
+      winrate: 0,
+    },
+    lastDay: {
+      total: 0,
+      win: 0,
+      lose: 0,
+      winrate: 0,
+    },
+  });
 
   const handleClick = () => {
     openModal(modalList.addTeamPlayer, {
@@ -33,6 +50,73 @@ const MTContent = ({
       },
     });
   };
+
+  useEffect(() => {
+    playerInfo.map((info, piIdx) => {
+      let allName = "";
+      let maxTier = 9;
+      let maxRank = 0;
+      let maxLP = 0;
+      let seasonTotal = 0;
+      let seasonWin = 0;
+      let seasonlose = 0;
+      let seasonWinrate = 0;
+      let lastDayTotal = 0;
+      let lastDayWin = 0;
+      let lastDayLose = 0;
+      let lastDayWinrate = 0;
+
+      for (let data of info.soloRankInfo) {
+        allName += (data.summonerName ?? "") + ",";
+        if (data.lastSeason) {
+          seasonTotal += +data.lastSeason.total;
+          seasonWin += +data.lastSeason.win;
+          seasonlose += +data.lastSeason.lose;
+        }
+        if (data.lastDay) {
+          lastDayTotal += +data.lastDay.total;
+          lastDayWin += +data.lastDay.win;
+          lastDayLose += +data.lastDay.lose;
+        }
+
+        if (data.tier > 0 && data.tier <= maxTier) {
+          if (maxTier !== data.tier) {
+            maxRank = 0;
+          }
+          maxTier = data.tier;
+
+          if (maxRank < data.rank) {
+            maxRank = data.rank;
+            maxLP = 0;
+          }
+
+          if (maxLP < data.leaguePoints) {
+            maxLP = data.leaguePoints;
+          }
+        }
+      }
+
+      playerInfo[piIdx].closeData = {
+        count: info.soloRankInfo.length,
+        name: allName.substring(0, allName.length - 1),
+        tier: maxTier,
+        rank: maxRank,
+        leaguePoints: maxLP,
+        season: {
+          total: seasonTotal,
+          win: seasonWin,
+          lose: seasonlose,
+          winrate: Math.round((seasonWin / seasonTotal) * 100),
+        },
+        lastDay: {
+          total: lastDayTotal,
+          win: lastDayWin,
+          lose: lastDayLose,
+          winrate: Math.round((lastDayWin / lastDayTotal) * 100),
+        },
+      };
+    });
+  }, [playerInfo]);
 
   return (
     <S.layout.Container>
@@ -57,6 +141,7 @@ const MTContent = ({
                   playChampion={info.playChampion}
                   soloRankInfo={info.soloRankInfo}
                   isMyTeamTab={isMyTeamTab}
+                  closeData={info.closeData}
                 />
               );
             })}

@@ -4,11 +4,12 @@ import styled from "@emotion/styled/macro";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
-import TopFilter from "../../../Components/Filter/TopFilter";
-import Button from "../../../Components/Ui/Button";
-import { borderRadiusStyle, buttonStyle, typoStyle } from "../../../Styles/ui";
+import * as table from "./styled/MTStyledTable";
+import * as layout from "./styled/MTStyledLayout";
 
-const FSHeader = ({ getSeachFilterPlayer }) => {
+const S = { table, layout };
+
+const IPHeader = ({ getSeachFilterPlayer }) => {
   const { t } = useTranslation();
   const { team, patch } = useSelector((state) => state.JungleMapReducer);
 
@@ -22,34 +23,23 @@ const FSHeader = ({ getSeachFilterPlayer }) => {
 
   return (
     <SWrapper>
-      <TopFilter />
-      <SButtonContainer>
-        <Button
-          disabled={selectedPatches.length === 0 || team.length === 0}
-          css={[
-            buttonStyle.color.main,
-            buttonStyle.size.full,
-            buttonStyle.size.y_16,
-            typoStyle.search_btn,
-            borderRadiusStyle[20],
-          ]}
-          onClick={() => {
-            getSeachFilterPlayer(team, selectedPatches);
-          }}
-        >
-          {t("soloRank.searchFilter.label.searchSoloRank")}
-        </Button>
-      </SButtonContainer>
+      <S.table.AddPlayerPopupButton onClick={""}>
+        <span>+</span>
+        <div>
+          <h5>{t("soloRank.InterestedPlayer.label.addPlayer")}</h5>
+          <span>{t("soloRank.InterestedPlayer.desc.addPlayer")}</span>
+        </div>
+      </S.table.AddPlayerPopupButton>
     </SWrapper>
   );
 };
 
-export default FSHeader;
+export default IPHeader;
 
 const SWrapper = styled.div`
   width: 1110px;
   height: auto;
-  margin: 10px 0 20px;
+  margin: 10px 0 30px;
   //padding: 22px 100px 21px;
   border-radius: 20px;
 `;

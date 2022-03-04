@@ -82,6 +82,12 @@ const buttonStyle = {
       padding-top: 8px;
       padding-bottom: 8px;
     `,
+
+    y_16: css`
+      padding-top: 16px;
+      padding-bottom: 16px;
+    `,
+
   },
 };
 

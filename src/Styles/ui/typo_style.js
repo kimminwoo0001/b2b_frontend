@@ -222,6 +222,13 @@ const typoStyle = {
     ${fontsStyle.weight[400]};
     color: ${colors.badge_red};
   `,
+
+  /* SoloRank Search Button */
+  search_btn: css`
+    font-family: Spoqa Han Sans;
+    ${fontsStyle.size[14]};
+    color: ${colors.text};
+  `
 };
 
 export default typoStyle;

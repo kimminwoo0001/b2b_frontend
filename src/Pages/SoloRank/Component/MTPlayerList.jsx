@@ -30,6 +30,7 @@ const MTPlayerList = ({
   playChampion,
   soloRankInfo,
   isMyTeamTab,
+  closeData,
 }) => {
   const user = useSelector((state) => state.UserReducer);
   const { t } = useTranslation();
@@ -44,23 +45,6 @@ const MTPlayerList = ({
   const [isLike, setIsLike] = useState(bookmark === 0 ? false : true);
 
   // close 시 데이터 셋
-  const [closeData, setCloseData] = useState({
-    count: 0,
-    name: "",
-    tier: 0,
-    season: {
-      total: 0,
-      win: 0,
-      lose: 0,
-      winrate: 0,
-    },
-    lastDay: {
-      total: 0,
-      win: 0,
-      lose: 0,
-      winrate: 0,
-    },
-  });
 
   const handleFavorite = (e) => {
     const { name, checked, value } = e.target;
@@ -88,8 +72,33 @@ const MTPlayerList = ({
     );
   };
   // 선수삭제
-  const handleDelete = (e) => {
-    console.log("선수아이디를 삭제하는 기능");
+  const handleDelete = (summonerId) => {
+    const title = t("soloRank.myTeam.label.deletSoloRankId");
+    const text = t("soloRank.myTeam.desc.deletSoloRankId");
+    const subtext = "";
+    const onCancel = () => {};
+    const onSubmit = () => {
+      const url = `${API}/lolapi/solorank/summonerdrop`;
+      const params = {
+        summonerId: summonerId,
+        token: user.token,
+      };
+      dispatch(Loading(true));
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (e) {
+          console.log(e);
+          dispatch(Loading(false));
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+          dispatch(Loading(false));
+        }
+      );
+    };
+    openModal(modalList.confirm, { title, text, subtext, onCancel, onSubmit });
   };
   // 선수등록
   const handleClickModalOpen = (e) => {
@@ -111,6 +120,7 @@ const MTPlayerList = ({
           params,
           function (e) {
             console.log(e);
+            dispatch(Loading(false));
           },
           function (objStore) {
             dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -121,50 +131,7 @@ const MTPlayerList = ({
     });
   };
 
-  useEffect(() => {
-    let allName = "";
-    let maxTier = 0;
-    let seasonTotal = 0;
-    let seasonWin = 0;
-    let seasonlose = 0;
-    let seasonWinrate = 0;
-    let lastDayTotal = 0;
-    let lastDayWin = 0;
-    let lastDayLose = 0;
-    let lastDayWinrate = 0;
-
-    for (let data of soloRankInfo) {
-      allName += (data.summonerName ?? "") + ",";
-      if (data.lastSeason) {
-        seasonTotal += +data.lastSeason.total;
-        seasonWin += +data.lastSeason.win;
-        seasonlose += +data.lastSeason.lose;
-      }
-      if (data.lastDay) {
-        lastDayTotal += +data.lastDay.total;
-        lastDayWin += +data.lastDay.win;
-        lastDayLose += +data.lastDay.lose;
-      }
-    }
-
-    setCloseData({
-      count: soloRankInfo.length,
-      name: allName.substring(0, allName.length - 1),
-      tier: maxTier,
-      season: {
-        total: seasonTotal,
-        win: seasonWin,
-        lose: seasonlose,
-        winrate: Math.round(seasonWin / seasonTotal),
-      },
-      lastDay: {
-        total: lastDayTotal,
-        win: lastDayWin,
-        lose: lastDayLose,
-        winrate: Math.round(lastDayWin / lastDayTotal),
-      },
-    });
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     // 관심선수
@@ -239,13 +206,15 @@ const MTPlayerList = ({
                     </div>
 
                     {/* 선수삭제 버튼 */}
-                    <button
-                      onClick={() => {
-                        handleDelete();
-                      }}
-                    >
-                      <IconDel />
-                    </button>
+                    {isMyTeamTab && (
+                      <button
+                        onClick={() => {
+                          handleDelete(data.summonerId);
+                        }}
+                      >
+                        <IconDel />
+                      </button>
+                    )}
                   </S.OpenList>
                 );
               })}
@@ -272,7 +241,11 @@ const MTPlayerList = ({
             </div>
             {/* 티어 */}
             <div className="table-col3">
-              <p>{`${closeData.tier}`}</p>
+              <p>
+                {`${getRank(closeData.rank, closeData.tier)}  ${
+                  closeData.tier > 0 ? `${closeData.leaguePoints}LP` : ""
+                }`}
+              </p>
               {/* <span>{`S11 challenger / S10 Challenger`}</span> */}
             </div>
             {/* 이번시즌 */}
