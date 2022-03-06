@@ -78,7 +78,6 @@ const useSortableData2 = (tiers, config = null) => {
 
 function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
   //주요픽 정렬 오름차 내림차 상태 값
-
   const { items, requestSort } = useSortableData(
     importantPicks ? importantPicks : []
   );

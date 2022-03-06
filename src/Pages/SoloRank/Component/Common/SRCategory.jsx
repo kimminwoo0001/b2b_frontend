@@ -25,6 +25,7 @@ const useSortableData2 = (tiers, config = null) => {
   const sortedItems = React.useMemo(() => {
     let sortableItems = [...tiers];
     if (sortConfig !== null) {
+      console.log("sortableItems", sortableItems);
       sortableItems.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
           return sortConfig.direction === "ascending" ? -1 : 1;
@@ -53,10 +54,22 @@ const useSortableData2 = (tiers, config = null) => {
   return { tiers: sortedItems, requestSorts, sortConfig };
 };
 
-const MTCategory = ({ selectedDay, setSelectedDay }) => {
+const MTCategory = ({
+  selectedDay,
+  setSelectedDay,
+  playerInfoSet,
+  setPlayerInfoSet,
+}) => {
   // 챔피언 티어 오름차 내림차  정렬 상태값
-  const tier = [];
-  const { tiers, requestSorts } = useSortableData2(tier ? tier : []);
+  const { playerInfos, requestSorts } = useSortableData2(
+    playerInfoSet ? playerInfoSet : []
+  );
+
+  console.log("playerInfoSet.closeData", playerInfoSet);
+
+  useEffect(() => {
+    setPlayerInfoSet(playerInfos);
+  }, [playerInfos]);
 
   const { t } = useTranslation();
 
@@ -86,16 +99,31 @@ const MTCategory = ({ selectedDay, setSelectedDay }) => {
                 );
               })}
             <Sortingimage
-              requestSorts={requestSorts}
-              key={"curTier8prevTier"}
+              onClick={() => {
+                console.log("cdCalRankPoint");
+                requestSorts("cdCalRankPoint");
+              }}
+              key={"cdCalRankPoint"}
             />
           </span>
         </div>
         {/* col4. 이번시즌 */}
-        <div className="table-col4">
+        <div
+          className="table-col4"
+          onClick={() => {
+            console.log(requestSorts("cdSeasonTotal"));
+          }}
+        >
           <span>
             {t("soloRank.myTeam.label.curSeason")}
-            <Sortingimage requestSorts={requestSorts} key={"curSeason"} />
+            <Sortingimage>
+              <img src="Images/ico-sorting-up.png" alt="up" />
+              <img src="Images/ico-sorting-down.png" alt="down" />
+            </Sortingimage>
+            {/* <Sortingimage
+              onClick={() => requestSorts("cdSeasonTotal")}
+              key={"cdSeasonTotal"}
+            /> */}
           </span>
         </div>
         {/* col5. 이번시즌 승률 */}
@@ -103,8 +131,8 @@ const MTCategory = ({ selectedDay, setSelectedDay }) => {
           <span>
             {t("common.label.winrate")}
             <Sortingimage
-              requestSorts={requestSorts}
-              key={"curSeason-winrate"}
+              onClick={() => requestSorts("cdSseasonWinrate")}
+              key={"cdSseasonWinrate"}
             />
           </span>
         </div>
@@ -112,7 +140,10 @@ const MTCategory = ({ selectedDay, setSelectedDay }) => {
         <div className="table-col6">
           <span>
             {t("soloRank.myTeam.label.recentDays").replace("##", selectedDay)}
-            <Sortingimage requestSorts={requestSorts} key={"recentDays"} />
+            <Sortingimage
+              onClick={() => requestSorts("cdLastDayTotal")}
+              key={"cdLastDayTotal"}
+            />
           </span>
         </div>
         {/* col7. 최근 30일 승률 */}
@@ -120,8 +151,8 @@ const MTCategory = ({ selectedDay, setSelectedDay }) => {
           <span>
             {t("common.label.winrate")}
             <Sortingimage
-              requestSorts={requestSorts}
-              key={"recentDays-winrate"}
+              onClick={() => "cdLastDayWinrate"}
+              key={"cdLastDayWinrate"}
             />
           </span>
         </div>

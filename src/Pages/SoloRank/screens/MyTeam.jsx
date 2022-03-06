@@ -59,7 +59,6 @@ const MyTeam = () => {
     <>
       {/* 팀 정보 헤더 */}
       <MTHeader headerInfo={headerInfo} />
-      
 
       {/* 팀 선수 테이블 */}
       <MTContent
@@ -68,6 +67,7 @@ const MyTeam = () => {
         playerInfo={playerInfo}
         myTeamName={myTeamName}
         isMyTeamTab={true}
+        getInfoFunc={getMyTeamSoloRankInfo}
       />
     </>
   );

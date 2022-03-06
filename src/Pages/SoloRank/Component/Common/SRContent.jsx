@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import MTCategory from "./SRCategory";
 import { getPositon } from "../../../../lib/getPosition";
-import MTPlayerList from "../MTPlayerList";
+import MTPlayerList from "./SRPlayerList";
 
 // styled components
 import * as table from "../styled/MTStyledTable";
@@ -22,31 +22,17 @@ const MTContent = ({
   playerInfo,
   myTeamName,
   isMyTeamTab = false,
+  getInfoFunc,
 }) => {
   const { openModal } = useModal();
   const { t } = useTranslation();
-  const [closeData, setCloseData] = useState({
-    count: 0,
-    name: "",
-    tier: 0,
-    season: {
-      total: 0,
-      win: 0,
-      lose: 0,
-      winrate: 0,
-    },
-    lastDay: {
-      total: 0,
-      win: 0,
-      lose: 0,
-      winrate: 0,
-    },
-  });
+  const [playerInfoSet, setPlayerInfoSet] = useState(playerInfo);
 
   const handleClick = () => {
     openModal(modalList.addTeamPlayer, {
       onSubmit: () => {
         console.log("submit시 action을 등록");
+        getInfoFunc();
       },
     });
   };
@@ -60,11 +46,9 @@ const MTContent = ({
       let seasonTotal = 0;
       let seasonWin = 0;
       let seasonlose = 0;
-      let seasonWinrate = 0;
       let lastDayTotal = 0;
       let lastDayWin = 0;
       let lastDayLose = 0;
-      let lastDayWinrate = 0;
 
       for (let data of info.soloRankInfo) {
         allName += (data.summonerName ?? "") + ",";
@@ -96,26 +80,25 @@ const MTContent = ({
         }
       }
 
-      playerInfo[piIdx].closeData = {
-        count: info.soloRankInfo.length,
-        name: allName.substring(0, allName.length - 1),
-        tier: maxTier,
-        rank: maxRank,
-        leaguePoints: maxLP,
-        season: {
-          total: seasonTotal,
-          win: seasonWin,
-          lose: seasonlose,
-          winrate: Math.round((seasonWin / seasonTotal) * 100),
-        },
-        lastDay: {
-          total: lastDayTotal,
-          win: lastDayWin,
-          lose: lastDayLose,
-          winrate: Math.round((lastDayWin / lastDayTotal) * 100),
-        },
+      playerInfo[piIdx] = {
+        ...playerInfo[piIdx],
+        cdCount: info.soloRankInfo.length,
+        cdName: allName.substring(0, allName.length - 1),
+        cdTier: maxTier,
+        cdRank: maxRank,
+        cdLeaguePoints: maxLP,
+        cdCalRankPoint: (10 - +maxTier) * 1000 + +maxRank * 100 + +maxLP,
+        cdSeasonTotal: seasonTotal,
+        cdSeasonWin: seasonWin,
+        cdSseasonLose: seasonlose,
+        cdSeasonWinrate: Math.round((seasonWin / seasonTotal) * 100),
+        cdLastDayTotal: lastDayTotal,
+        cdLastDayWin: lastDayWin,
+        cdLastDayLose: lastDayLose,
+        cdLastDayWinrate: Math.round((lastDayWin / lastDayTotal) * 100),
       };
     });
+    setPlayerInfoSet(playerInfo);
   }, [playerInfo]);
 
   return (
@@ -123,25 +106,24 @@ const MTContent = ({
       {/* 테이블 */}
       <S.table.Table>
         {/* 테이블 헤더 */}
-        <MTCategory selectedDay={selectedDay} setSelectedDay={setSelectedDay} />
+        <MTCategory
+          selectedDay={selectedDay}
+          setSelectedDay={setSelectedDay}
+          playerInfoSet={playerInfoSet}
+          setPlayerInfoSet={setPlayerInfoSet}
+        />
         <S.table.TableBody>
           {/* 반복 */}
-          {playerInfo.length > 0 &&
-            playerInfo.map((info) => {
+          {playerInfoSet.length > 0 &&
+            playerInfoSet.map((info) => {
               return (
                 <MTPlayerList
-                  player={info.player}
-                  bookmark={info.bookmark}
                   teamLine={`${myTeamName} ${t(
                     `position.${getPositon(info.position)}`
                   )}`}
-                  role={info.position}
-                  nickName={info.player}
-                  name={""}
-                  playChampion={info.playChampion}
-                  soloRankInfo={info.soloRankInfo}
                   isMyTeamTab={isMyTeamTab}
-                  closeData={info.closeData}
+                  getInfoFunc={getInfoFunc}
+                  info={info}
                 />
               );
             })}

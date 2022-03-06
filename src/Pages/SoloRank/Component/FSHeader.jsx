@@ -1,31 +1,29 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
+
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 import TopFilter from "../../../Components/Filter/TopFilter";
 import Button from "../../../Components/Ui/Button";
+import { getTrueValueList } from "../../../lib/getTureValueList";
 import { borderRadiusStyle, buttonStyle, typoStyle } from "../../../Styles/ui";
 
 const FSHeader = ({ getSeachFilterPlayer }) => {
   const { t } = useTranslation();
-  const { team, patch } = useSelector((state) => state.JungleMapReducer);
+  const { teams, patch } = useSelector((state) => state.JungleMapReducer);
+  const selectedTeams = getTrueValueList(teams);
+  const selectedPatches = getTrueValueList(patch);
 
   const dispatch = useDispatch();
 
-  const selectedPatches = Object.keys(patch).filter(
-    (key) => patch[key] === true
-  );
-
-  console.log("selectedPatches", selectedPatches);
-
   return (
     <SWrapper>
-      <TopFilter />
+      <TopFilter needsMultipleTeams={true} />
       <SButtonContainer>
         <Button
-          disabled={selectedPatches.length === 0 || team.length === 0}
+          disabled={selectedPatches.length === 0 || selectedTeams.length === 0}
           css={[
             buttonStyle.color.main,
             buttonStyle.size.full,
@@ -34,7 +32,7 @@ const FSHeader = ({ getSeachFilterPlayer }) => {
             borderRadiusStyle[20],
           ]}
           onClick={() => {
-            getSeachFilterPlayer(team, selectedPatches);
+            getSeachFilterPlayer(selectedTeams, selectedPatches);
           }}
         >
           {t("soloRank.searchFilter.label.searchSoloRank")}

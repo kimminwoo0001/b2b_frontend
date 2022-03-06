@@ -21,6 +21,7 @@ const InterestedPlayer = () => {
   const dispatch = useDispatch();
 
   const getBookMarkListInfo = () => {
+    dispatch(Loading(true));
     const url = `${API}/lolapi/solorank/bookmarklist`;
     const params = {
       days: selectedDay,

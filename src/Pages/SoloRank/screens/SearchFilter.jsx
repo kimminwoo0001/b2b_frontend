@@ -22,9 +22,10 @@ const SearchFilter = () => {
   const dispatch = useDispatch();
 
   const getSeachFilterPlayer = (team, patch) => {
+    dispatch(Loading(true));
     const url = `${API}/lolapi/solorank/filterlist`;
     const params = {
-      team: team[0],
+      team: team,
       patch: patch,
       days: selectedDay,
       token: user.token,

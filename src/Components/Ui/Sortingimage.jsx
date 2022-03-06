@@ -5,11 +5,7 @@ import { typoStyle } from "../../Styles/ui";
 
 const Sortingimage = ({ requestSorts, key }) => {
   return (
-    <SSortingimage
-      onClick={() => {
-        requestSorts(key);
-      }}
-    >
+    <SSortingimage>
       <img src="Images/btn-sort-up.svg" alt="up" />
       <img src="Images/btn-sort-down.svg" alt="down" />
     </SSortingimage>

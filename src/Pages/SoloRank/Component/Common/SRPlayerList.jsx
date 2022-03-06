@@ -3,35 +3,46 @@ import { jsx, css } from "@emotion/react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import * as S from "./styled/MTStyledTable";
-import IconStar from "../../../Components/Ui/Icons/IconStar";
-import Avatar from "../../../Components/Ui/Avatar";
-import Arrow from "../../../Components/Ui/Arrow";
-import IconDel from "../../../Components/Ui/Icons/IconDel";
-import { typoStyle } from "../../../Styles/ui";
-import { useModal } from "../../../Hooks";
-import { modalList } from "../../../Components/Modals/Modals";
-import { getRank, getTier } from "../../../lib/getRank";
-import { API } from "../../config";
+import * as S from "../styled/MTStyledTable";
+import IconStar from "../../../../Components/Ui/Icons/IconStar";
+import Avatar from "../../../../Components/Ui/Avatar";
+import Arrow from "../../../../Components/Ui/Arrow";
+import IconDel from "../../../../Components/Ui/Icons/IconDel";
+import { typoStyle } from "../../../../Styles/ui";
+import { useModal } from "../../../../Hooks";
+import { modalList } from "../../../../Components/Modals/Modals";
+import { getRank, getTier } from "../../../../lib/getRank";
+import { API } from "../../../config";
 import { useSelector, useDispatch, batch } from "react-redux";
-import axiosRequest from "../../../lib/axios/axiosRequest";
-import { SetModalInfo } from "../../../redux/modules/modalvalue";
-import { Loading } from "../../../redux/modules/filtervalue";
+import axiosRequest from "../../../../lib/axios/axiosRequest";
+import { SetModalInfo } from "../../../../redux/modules/modalvalue";
+import { Loading } from "../../../../redux/modules/filtervalue";
 
 const getMaxTier = (tier, rank, lp) => {};
 
-const MTPlayerList = ({
-  player,
-  bookmark,
-  teamLine,
-  nickName,
-  name,
-  role,
-  playChampion,
-  soloRankInfo,
-  isMyTeamTab,
-  closeData,
-}) => {
+const MTPlayerList = ({ teamLine, isMyTeamTab, getInfoFunc, info }) => {
+  const {
+    player,
+    bookmark,
+    position: role,
+    player: nickName,
+    playChampion,
+    soloRankInfo,
+    cdCount,
+    cdName,
+    cdTier,
+    cdRank,
+    cdLeaguePoints,
+    cdCalRankPoint,
+    cdSeasonTotal,
+    cdSeasonWin,
+    cdSeasonLose,
+    cdSeasonWinrate,
+    cdLastDayTotal,
+    cdLastDayWin,
+    cdLastDayLose,
+    cdLastDayWinrate,
+  } = info;
   const user = useSelector((state) => state.UserReducer);
   const { t } = useTranslation();
   const { openModal } = useModal();
@@ -91,6 +102,7 @@ const MTPlayerList = ({
         function (e) {
           console.log(e);
           dispatch(Loading(false));
+          getInfoFunc();
         },
         function (objStore) {
           dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
@@ -120,6 +132,7 @@ const MTPlayerList = ({
           params,
           function (e) {
             console.log(e);
+            getInfoFunc();
             dispatch(Loading(false));
           },
           function (objStore) {
@@ -144,7 +157,7 @@ const MTPlayerList = ({
           </S.Star>
           <span>{teamLine}</span>
           <h4 css={typoStyle.noWrap}>{nickName}</h4>
-          <h5>{name}</h5>
+          {/* <h5>{name}</h5> */}
         </S.InfoId>
       </div>
 
@@ -235,41 +248,39 @@ const MTPlayerList = ({
           <S.CloseList>
             <div className="table-col2">
               <span css={[typoStyle.ellipsis_two, { width: 100 }]}>
-                {closeData.name}
+                {cdName}
               </span>
-              <span>{`(${closeData.count})`}</span>
+              <span>{`(${cdCount})`}</span>
             </div>
             {/* 티어 */}
             <div className="table-col3">
               <p>
-                {`${getRank(closeData.rank, closeData.tier)}  ${
-                  closeData.tier > 0 ? `${closeData.leaguePoints}LP` : ""
+                {`${getRank(cdRank, cdTier)}  ${
+                  cdTier > 0 ? `${cdLeaguePoints}LP` : ""
                 }`}
               </p>
               {/* <span>{`S11 challenger / S10 Challenger`}</span> */}
             </div>
             {/* 이번시즌 */}
             <div className="table-col4">
-              <span>{`${closeData.season.total}${t(
-                "common.label.game"
-              )}`}</span>
-              <span>{`${closeData.season.win}${t("common.label.win")} ${
-                closeData.season.lose
+              <span>{`${cdSeasonTotal}${t("common.label.game")}`}</span>
+              <span>{`${cdSeasonWin}${t("common.label.win")} ${
+                cdSeasonLose
               }${t("common.label.lose")}`}</span>
             </div>
             {/* 시즌 승률 */}
-            <div className="table-col5">{`${closeData.season.winrate}%`}</div>
+            <div className="table-col5">{`${cdSeasonWinrate}%`}</div>
             {/* 최근 */}
             <div className="table-col6">
-              <span>{`${closeData.lastDay.total}${t(
+              <span>{`${cdLastDayTotal}${t(
                 "common.label.game"
               )}`}</span>
-              <span>{`${closeData.lastDay.win}${t("common.label.win")} ${
-                closeData.lastDay.lose
+              <span>{`${cdLastDayWin}${t("common.label.win")} ${
+                cdLastDayLose
               }${t("common.label.lose")}`}</span>
             </div>
             {/* 최근 승률 */}
-            <div className="table-col7">{`${closeData.lastDay.winrate}%`}</div>
+            <div className="table-col7">{`${cdLastDayWinrate}%`}</div>
           </S.CloseList>
         )}
       </ul>
