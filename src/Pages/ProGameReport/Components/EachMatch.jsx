@@ -63,7 +63,7 @@ const EachMatch = ({ matchData, team }) => {
   const getGameDetailData = (gameId, gameFullTime) => {
     try {
       dispatch(Loading(true));
-      const url = `${API5}/api_mk2/match/pga`;
+      const url = `${API2}/lolapi/match/pga`;
       const params = {
         gameid: gameId,
       };
@@ -92,21 +92,21 @@ const EachMatch = ({ matchData, team }) => {
               const timefight = e.actionLog.filter(
                 (e) => e.type === "matchLog"
               );
-              const blueKills = e.log.event.filter(
+              const blueKills = e.log.events.filter(
                 (e) => e.type === "CHAMPION_KILL" && e.participantid < 6
               );
-              const redKills = e.log.event.filter(
+              const redKills = e.log.events.filter(
                 (e) => e.type === "CHAMPION_KILL" && e.participantid > 5
               );
-              const buildDestroy = e.log.event.filter(
+              const buildDestroy = e.log.events.filter(
                 (e) => e.type === "BUILDING_KILL"
               );
-              const objectKill = e.log.event.filter(
+              const objectKill = e.log.events.filter(
                 (e) =>
                   e.type === "ELITE_MONSTER_KILL" &&
                   ["RIFTHERALD", "BARON_NASHOR"].includes(e.subType)
               );
-              const dragonKill = e.log.event.filter(
+              const dragonKill = e.log.events.filter(
                 (e) =>
                   e.type === "ELITE_MONSTER_KILL" &&
                   e.subType.includes("DRAGON")

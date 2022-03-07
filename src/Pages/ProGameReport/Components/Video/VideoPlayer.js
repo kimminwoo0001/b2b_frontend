@@ -33,7 +33,7 @@ const VideoPlayer = ({ video, startTime }) => {
   const curTime = currentTime < 0 ? 0 : currentTime;
 
   // log option
-  const eventLogDataset = gamevalue.logDataset.event;
+  const eventLogDataset = gamevalue.logDataset.events;
   const currentItemDataset =
     gamevalue.playerDataset[gamevalue.selectedParticipant].currentItem;
   const liveDataset = gamevalue.liveDataset;

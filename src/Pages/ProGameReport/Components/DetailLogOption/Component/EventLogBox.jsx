@@ -27,7 +27,7 @@ const EventLogBox = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const eventLog = gamevalue.logDataset.event;
+  const eventLog = gamevalue.logDataset.events;
 
   if (eventLog[0].type !== "NONE") {
     eventLog.unshift({
