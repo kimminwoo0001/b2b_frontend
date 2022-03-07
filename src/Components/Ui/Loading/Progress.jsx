@@ -47,7 +47,7 @@ const ProgressBar = styled.div`
   height: 100%;
   border-radius: 999px;
   background-color: ${colors.point};
-  animation: loading 2s linear infinite;
+  animation: loading 1.5s linear infinite;
 
   @keyframes loading {
     0% {
