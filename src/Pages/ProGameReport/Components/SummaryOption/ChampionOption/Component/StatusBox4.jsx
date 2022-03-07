@@ -46,69 +46,59 @@ const StatusBox4 = () => {
 
   return (
     <RunesContainer>
-      <RunesBox>
-        <div className="main-rune">
-          <img
-            src={`https://ddragon.leagueoflegends.com/cdn/img/${mainRune[0]}`}
-            alt=""
-          />
-        </div>
-        <div className="sub-rune">
-          <img
-            src={`https://ddragon.leagueoflegends.com/cdn/img/${mainRune[1]}`}
-            alt=""
-          />
-        </div>
-        <div className="sub-rune">
-          <img
-            src={`https://ddragon.leagueoflegends.com/cdn/img/${mainRune[2]}`}
-            alt=""
-          />
-        </div>
-        <div className="sub-rune">
-          <img
-            src={`https://ddragon.leagueoflegends.com/cdn/img/${mainRune[3]}`}
-            alt=""
-          />
-        </div>
-        <div className="sub-rune">
-          <img
-            src={`https://ddragon.leagueoflegends.com/cdn/img/${mainRune[4]}`}
-            alt=""
-          />
-        </div>
-      </RunesBox>
-      <RunesBox>
-        <div className="main-rune">
-          <img
-            src={`https://ddragon.leagueoflegends.com/cdn/img/${subRune[0]}`}
-            alt=""
-          />
-        </div>
-        <div className="sub-rune">
-          <img
-            src={`https://ddragon.leagueoflegends.com/cdn/img/${subRune[1]}`}
-            alt=""
-          />
-        </div>
-        <div className="sub-rune">
-          <img
-            src={`https://ddragon.leagueoflegends.com/cdn/img/${subRune[2]}`}
-            alt=""
-          />
-        </div>
-      </RunesBox>
-      <RuneStatsBox>
-        <div className="rune-stat">
-          <img src={`Images/icon/${statRune[0]}.png`} alt="" />
-        </div>
-        <div className="rune-stat">
-          <img src={`Images/icon/${statRune[1]}.png`} alt="" />
-        </div>
-        <div className="rune-stat">
-          <img src={`Images/icon/${statRune[2]}.png`} alt="" />
-        </div>
-      </RuneStatsBox>
+      <MainRuneBox>
+        <img
+          src={`https://ddragon.leagueoflegends.com/cdn/img/${mainRune[1]}`}
+          alt=""
+        />
+      </MainRuneBox>
+      <SubRuneBox>
+        <RunesBox>
+          <div className="sub-rune">
+            <img
+              src={`https://ddragon.leagueoflegends.com/cdn/img/${mainRune[2]}`}
+              alt=""
+            />
+          </div>
+          <div className="sub-rune">
+            <img
+              src={`https://ddragon.leagueoflegends.com/cdn/img/${mainRune[3]}`}
+              alt=""
+            />
+          </div>
+          <div className="sub-rune">
+            <img
+              src={`https://ddragon.leagueoflegends.com/cdn/img/${mainRune[4]}`}
+              alt=""
+            />
+          </div>
+        </RunesBox>
+        <RunesBox>
+          <div className="sub-rune">
+            <img
+              src={`https://ddragon.leagueoflegends.com/cdn/img/${subRune[1]}`}
+              alt=""
+            />
+          </div>
+          <div className="sub-rune">
+            <img
+              src={`https://ddragon.leagueoflegends.com/cdn/img/${subRune[2]}`}
+              alt=""
+            />
+          </div>
+        </RunesBox>
+        <RuneStatsBox>
+          <div className="rune-stat">
+            <img src={`Images/icon/${statRune[0]}.png`} alt="" />
+          </div>
+          <div className="rune-stat">
+            <img src={`Images/icon/${statRune[1]}.png`} alt="" />
+          </div>
+          <div className="rune-stat">
+            <img src={`Images/icon/${statRune[2]}.png`} alt="" />
+          </div>
+        </RuneStatsBox>
+      </SubRuneBox>
     </RunesContainer>
   );
 };
@@ -116,33 +106,34 @@ const StatusBox4 = () => {
 export default StatusBox4;
 
 const RunesContainer = styled.div`
-  width: 126px;
-  height: 83px;
-  margin: 22px 6px 19.5px 15px;
+  width: auto;
+  height: 76px;
+  margin: 14px 10px 19.5px 5px;
+  display: flex;
 `;
+
+const MainRuneBox = styled.div`
+  width: 76px;
+  height: 76px;
+  margin: 0 3px 0 0;
+  object-fit: contain;
+
+  img {
+  }
+`;
+
+const SubRuneBox = styled.div``;
 
 const RunesBox = styled.div`
   width: 126px;
   height: 26px;
-  margin: 0 0 7px;
+  margin: 0 0 0px;
   display: flex;
-
-  .main-rune {
-    width: 26px;
-    height: 26px;
-    margin: 0 4px 0 0;
-    object-fit: contain;
-
-    img {
-      width: 26px;
-      height: 26px;
-    }
-  }
 
   .sub-rune {
     width: 21px;
     height: 21px;
-    margin: 2px 3px 3px 0px;
+    margin: 0px 3px 0px 0px;
     object-fit: contain;
 
     img {
@@ -154,7 +145,7 @@ const RunesBox = styled.div`
 
 const RuneStatsBox = styled.div`
   height: 16px;
-  margin: 8px 0px 0 0;
+  margin: 6px 0px 0 0;
   display: flex;
 
   .rune-stat {

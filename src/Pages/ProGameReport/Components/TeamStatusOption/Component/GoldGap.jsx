@@ -24,7 +24,7 @@ export default GoldGap;
 
 const GoldContainer = styled.div`
   position: absolute;
-  top: 35%;
+  top: 33%;
   left: 39%;
   width: 48px;
   height: 20px;

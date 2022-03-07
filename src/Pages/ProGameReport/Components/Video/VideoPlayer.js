@@ -472,6 +472,7 @@ const TwtichVideoContainer = styled.div`
         width: 79px;
         height: 17px;
         margin: 0 10px 0 0;
+        white-space: nowrap;
 
         span {
           font-family: SpoqaHanSansNeo;

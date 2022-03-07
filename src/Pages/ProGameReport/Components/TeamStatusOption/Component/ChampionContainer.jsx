@@ -5,6 +5,7 @@ import styled from "@emotion/styled/macro";
 import ChampionEventBox from "./ChampionEventBox";
 import { useSelector, useDispatch } from "react-redux";
 import { SetSelectedPlayer } from "../../../../../redux/modules/gamevalue";
+import { colors } from "../../../../../Styles/ui";
 
 const ChampionContainer = ({
   player,
@@ -16,6 +17,7 @@ const ChampionContainer = ({
   time,
   isMax,
   playerStatusTime,
+  level,
 }) => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const dispatch = useDispatch();
@@ -39,7 +41,9 @@ const ChampionContainer = ({
       </div>
       <div className="champ-pic-box">
         <div className="champ-pic">
-          <div className="img-box"></div>
+          <div className="img-box">
+            <div className="level">{level}</div>
+          </div>
           <div className="champ-revive-count">21</div>
         </div>
         <Superiority winner={winner}>
@@ -74,12 +78,12 @@ export default ChampionContainer;
 
 const ChampTeamContainer = styled.div`
   width: 113px;
-  height: 187px;
-  padding: 15px 10px 20px 11px;
-  border-radius: 10px;
+  height: 155px;
+  padding: 5px 10px 20px 11px;
+  border-radius: 20px;
   box-sizing: border-box;
   border: solid 2px ${(props) => (props.isActive ? `#0075bf` : `rgba(0,0,0,0)`)};
-  background-color: #23212a;
+
   .name {
     ${(props) => props.isDeath && `opacity: 0.3;`}
     font-family: SpoqaHanSansNeo;
@@ -90,7 +94,7 @@ const ChampTeamContainer = styled.div`
     line-height: 1.69;
     letter-spacing: normal;
     text-align: left;
-    color: #fff;
+    color: ${colors.text};
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -98,7 +102,7 @@ const ChampTeamContainer = styled.div`
 
   .champ-pic-box {
     display: flex;
-    margin: 8px 0 0 0;
+    margin: 4px 0 0 0;
 
     .champ-pic {
       width: 60px;
@@ -108,6 +112,7 @@ const ChampTeamContainer = styled.div`
       position: relative;
 
       .img-box {
+        position: relative;
         border-radius: 30px;
         width: 60px;
         height: 60px;
@@ -117,7 +122,28 @@ const ChampTeamContainer = styled.div`
           props
         ) => props.champImg}.png);
         background-size: 60px;
+        background-position: center center;
         ${(props) => props.isDeath && `mix-blend-mode: luminosity;`}
+      }
+
+      .level {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        padding: 5px 4px 3px;
+        background-color: ${colors.black};
+        border-radius: 30px;
+        bottom: -5px;
+
+        font-family: SpoqaHanSansNeo;
+        font-size: 10px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: center;
+        color: ${colors.text};
       }
 
       .champ-revive-count {
@@ -147,7 +173,7 @@ const ChampTeamContainer = styled.div`
     ${(props) => props.isDeath && `opacity: 0.3;`}
     width: 100%;
     height: 23px;
-    margin: 6px 0px 0 0px;
+    margin: 0px 0px 0 0px;
 
     .usable {
       height: 10px;

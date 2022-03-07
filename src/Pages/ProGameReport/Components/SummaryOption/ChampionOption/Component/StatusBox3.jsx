@@ -103,13 +103,13 @@ const StatusBox3 = () => {
 export default StatusBox3;
 
 const ChampStatContainer = styled.div`
-  width: 320px;
+  width: auto;
   height: 87px;
   margin: 23px 0px 15.5px 0px;
 `;
 
 const PerformanceContainer = styled.div`
-  width: 320px;
+  width: auto;
   height: 45px;
   margin: 0 0 10px;
   display: flex;

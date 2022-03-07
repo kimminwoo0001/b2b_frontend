@@ -94,7 +94,7 @@ const ChampionEventBox = ({
     <EventBox isDeath={isDeath || isMax} isOpp={isOpp}>
       {/* {isOpp && <div className="event-img"></div>} */}
       <div className="desc">
-        <div className="time">{event.time > 0 && secToMS(event.time)}</div>
+        {/* <div className="time">{event.time > 0 && secToMS(event.time)}</div> */}
         <div className="status">{event.text}</div>
       </div>
       {/* {!isOpp && <div className="event-img"></div>} */}
@@ -106,13 +106,13 @@ export default ChampionEventBox;
 
 const EventBox = styled.div`
   ${(props) => props.isDeath && `opacity: 0.3;`};
-  margin: 10px 0 6px 2px;
+  margin: 4px 0 4px 2px;
   width: 100%;
-  height: 28px;
+  height: 21px;
   display: flex;
   .desc {
     width: 88px;
-    height: 28px;
+    // height: 28px;
     .time {
       height: 13px;
       font-family: SpoqaHanSansNeo;
@@ -127,7 +127,7 @@ const EventBox = styled.div`
     }
     .status {
       font-family: SpoqaHanSansNeo;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: normal;
       font-stretch: normal;
       font-style: normal;
