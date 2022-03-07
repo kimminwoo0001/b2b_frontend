@@ -25,7 +25,7 @@ export default TeamStatusNav;
 const ChampNavConatiner = styled.div`
   display: flex;
   width: 240px;
-  height: 85px;
+  height: 80px;
   margin: 0 0 10px;
   padding: 55px 0 0 0;
   box-shadow: 5px 5px 30px 0 rgba(0, 0, 0, 0.15);

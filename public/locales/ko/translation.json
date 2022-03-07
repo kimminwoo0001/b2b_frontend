@@ -733,8 +733,7 @@
         "Jungling": "정글링",
         "CounterJungling": "카운터 정글",
         "Dead": "죽음",
-        "TeleportToLane": "텔레포트",
-        "TeleportToOther": "텔레포트",
+        "Teleport": "텔레포트",
         "InLane": "라인전"
       }
     },

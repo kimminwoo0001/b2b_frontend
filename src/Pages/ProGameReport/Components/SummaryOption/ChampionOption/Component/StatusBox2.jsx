@@ -14,10 +14,10 @@ const StatusBox2 = () => {
     <StatusContainer>
       <FlexBox>
         <StatusDesc>
-          <StatusTime>
+          {/* <StatusTime>
             {gamevalue.selectedStatusTime > 0 &&
               secToMS(gamevalue.selectedStatusTime)}
-          </StatusTime>
+          </StatusTime> */}
           <StatusText>{gamevalue.selectedStatusText}</StatusText>
         </StatusDesc>
       </FlexBox>
@@ -72,7 +72,7 @@ const StatusText = styled.div`
   height: 19px;
   margin: 4px 0 0;
   font-family: SpoqaHanSansNeo;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;

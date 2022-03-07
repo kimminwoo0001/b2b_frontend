@@ -5,6 +5,7 @@ import styled from "@emotion/styled/macro";
 import ChampionEventBox from "./ChampionEventBox";
 import { useSelector, useDispatch } from "react-redux";
 import { SetSelectedPlayer } from "../../../../../redux/modules/gamevalue";
+import { colors } from "../../../../../Styles/ui";
 
 const ChampionOppContainer = ({
   player,
@@ -16,6 +17,7 @@ const ChampionOppContainer = ({
   time,
   isMax,
   playerStatusTime,
+  level,
 }) => {
   const gamevalue = useSelector((state) => state.GameReportReducer);
   const dispatch = useDispatch();
@@ -46,7 +48,9 @@ const ChampionOppContainer = ({
           />
         </Superiority>
         <div className="champ-pic">
-          <div className="img-box"></div>
+          <div className="img-box">
+            <div className="level">{level}</div>
+          </div>
           <div className="champ-revive-count">8</div>
         </div>
       </div>
@@ -75,12 +79,12 @@ export default ChampionOppContainer;
 
 const ChampOppTeamContainer = styled.div`
   width: 113px;
-  height: 187px;
-  padding: 15px 11px 20px 10px;
-  border-radius: 10px;
+  height: 155px;
+  padding: 5px 11px 20px 10px;
+  border-radius: 20px;
   box-sizing: border-box;
   border: solid 2px ${(props) => (props.isActive ? `#f04545` : `rgba(0,0,0,0)`)};
-  background-color: #23212a;
+  background-color: ${colors.bg_select};
 
   .name {
     ${(props) => props.isDeath && `opacity: 0.3;`}
@@ -101,7 +105,7 @@ const ChampOppTeamContainer = styled.div`
 
   .champ-pic-box {
     display: flex;
-    margin: 8px 0 0 0;
+    margin: 4px 0 0 0;
 
     .champ-pic {
       width: 60px;
@@ -119,8 +123,30 @@ const ChampOppTeamContainer = styled.div`
         background-image: url(https://ddragon.leagueoflegends.com/cdn/11.24.1/img/champion/${(
           props
         ) => props.champImg}.png);
+        background-position: center center;
         background-size: 60px;
         ${(props) => props.isDeath && `mix-blend-mode: luminosity;`}
+      }
+
+      .level {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        padding: 5px 4px 3px;
+        background-color: ${colors.black};
+        border-radius: 30px;
+        bottom: -5px;
+        right: 0;
+
+        font-family: SpoqaHanSansNeo;
+        font-size: 10px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: center;
+        color: ${colors.text};
       }
 
       .champ-revive-count {
@@ -150,7 +176,7 @@ const ChampOppTeamContainer = styled.div`
     ${(props) => props.isDeath && `opacity: 0.3;`}
     width: 100%;
     height: 23px;
-    margin: 6px 0 0 2px;
+    margin: 0px 0 0 0px;
     .usable {
       height: 10px;
       //padding: 0 10px 0 5px;

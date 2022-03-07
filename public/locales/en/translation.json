@@ -542,16 +542,16 @@
       "8min": "3'-8'",
       "side": "SIDE"
     },
-    "jungle" : {
+    "jungle": {
       "JunglePathing": "Jungle Pathing",
-      "CompareJungling" : "Compare Jungling",
+      "CompareJungling": "Compare Jungling",
       "year": "Year",
       "league": "League",
       "season": "Season",
       "team": "Team",
       "patch": "Patch",
       "selectAll": "Select All",
-      "selectYear":"Select Year",
+      "selectYear": "Select Year",
       "selectLeague": "Select League",
       "selectSeason": "Select Season",
       "selectTeam": "Select Team",
@@ -574,12 +574,12 @@
       "myTeam": "Select Team",
       "oppTeam": "Select Opponent Team",
       "counterjungleRate": "Counter Jungle Rate",
-      "avgJunglingTimeForSixthCamp":"Avg Jungling Time for 6 Camps",
-      "avgFirstReturnTime":"Avg First Return Time",
-      "topGangkingCountsbyMatches":"Top Ganking Counts By Matches",
-      "midGangkingCountsbyMatches":"Mid Ganking Counts By Matches",
-      "botGangkingCountsbyMatches":"Bottom Ganking Counts By Matches",
-      "avgFirstGankingTime":"Avg First Ganking Time"
+      "avgJunglingTimeForSixthCamp": "Avg Jungling Time for 6 Camps",
+      "avgFirstReturnTime": "Avg First Return Time",
+      "topGangkingCountsbyMatches": "Top Ganking Counts By Matches",
+      "midGangkingCountsbyMatches": "Mid Ganking Counts By Matches",
+      "botGangkingCountsbyMatches": "Bottom Ganking Counts By Matches",
+      "avgFirstGankingTime": "Avg First Ganking Time"
     }
   },
   "alert": {
@@ -736,9 +736,8 @@
         "Roaming": "Roaming",
         "Jungling": "Jungling",
         "CounterJungling": "카운터 정글",
-        "Dead": "죽음",
-        "TeleportToLane": "텔레포트",
-        "TeleportToOther": "텔레포트",
+        "Dead": "Dead",
+        "Teleport": "Teleport",
         "InLane": "라인전"
       }
     },
