@@ -16,6 +16,7 @@ import { API } from "../../../config";
 
 import { Loading } from "../../../../redux/modules/filtervalue";
 import { SetModalInfo } from "../../../../redux/modules/modalvalue";
+import ObjCompare from "../../../../lib/compareObj";
 
 const inquireDayList = ["1", "3", "5", "7", "15", "30"];
 // 챔피언 티어 데이터 sorting Hooks
@@ -36,6 +37,7 @@ const useSortableData2 = (tiers, config = null) => {
         return 0;
       });
     }
+    console.log("sortableItems", sortableItems);
     return sortableItems;
   }, [tiers, sortConfig]);
 
@@ -51,7 +53,7 @@ const useSortableData2 = (tiers, config = null) => {
     setSortConfig({ key, direction });
   };
 
-  return { tiers: sortedItems, requestSorts, sortConfig };
+  return { playerInfos: sortedItems, requestSorts, sortConfig };
 };
 
 const MTCategory = ({
@@ -65,10 +67,12 @@ const MTCategory = ({
     playerInfoSet ? playerInfoSet : []
   );
 
-  console.log("playerInfoSet.closeData", playerInfoSet);
+  console.log("playerInfos", playerInfos);
 
   useEffect(() => {
-    setPlayerInfoSet(playerInfos);
+    if (ObjCompare(playerInfos, playerInfoSet) === false) {
+      setPlayerInfoSet(playerInfos);
+    }
   }, [playerInfos]);
 
   const { t } = useTranslation();
@@ -108,22 +112,23 @@ const MTCategory = ({
           </span>
         </div>
         {/* col4. 이번시즌 */}
-        <div
-          className="table-col4"
-          onClick={() => {
-            console.log(requestSorts("cdSeasonTotal"));
-          }}
-        >
+        <div className="table-col4">
           <span>
             {t("soloRank.myTeam.label.curSeason")}
-            <Sortingimage>
+            {/* <Sortingimage
+              onClick={() => {
+                requestSorts("cdSeasonTotal");
+              }}
+            >
               <img src="Images/ico-sorting-up.png" alt="up" />
               <img src="Images/ico-sorting-down.png" alt="down" />
-            </Sortingimage>
-            {/* <Sortingimage
-              onClick={() => requestSorts("cdSeasonTotal")}
+            </Sortingimage> */}
+            <Sortingimage
+              onClick={() => {
+                requestSorts("cdSeasonTotal");
+              }}
               key={"cdSeasonTotal"}
-            /> */}
+            />
           </span>
         </div>
         {/* col5. 이번시즌 승률 */}
@@ -131,8 +136,8 @@ const MTCategory = ({
           <span>
             {t("common.label.winrate")}
             <Sortingimage
-              onClick={() => requestSorts("cdSseasonWinrate")}
-              key={"cdSseasonWinrate"}
+              onClick={() => requestSorts("cdSeasonWinrate")}
+              key={"cdSeasonWinrate"}
             />
           </span>
         </div>
@@ -151,7 +156,7 @@ const MTCategory = ({
           <span>
             {t("common.label.winrate")}
             <Sortingimage
-              onClick={() => "cdLastDayWinrate"}
+              onClick={() => requestSorts("cdLastDayWinrate")}
               key={"cdLastDayWinrate"}
             />
           </span>

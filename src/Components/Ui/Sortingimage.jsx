@@ -3,9 +3,9 @@ import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { typoStyle } from "../../Styles/ui";
 
-const Sortingimage = ({ requestSorts, key }) => {
+const Sortingimage = ({ onClick, key }) => {
   return (
-    <SSortingimage>
+    <SSortingimage onClick={onClick}>
       <img src="Images/btn-sort-up.svg" alt="up" />
       <img src="Images/btn-sort-down.svg" alt="down" />
     </SSortingimage>
