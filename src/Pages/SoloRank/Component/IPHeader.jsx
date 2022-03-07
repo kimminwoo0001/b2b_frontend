@@ -6,6 +6,8 @@ import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 import * as table from "./styled/MTStyledTable";
 import * as layout from "./styled/MTStyledLayout";
+import { useModal } from "../../../Hooks";
+import { modalList } from "../../../Components/Modals/Modals";
 
 const S = { table, layout };
 
@@ -14,7 +16,7 @@ const IPHeader = ({ getSeachFilterPlayer }) => {
   const { team, patch } = useSelector((state) => state.JungleMapReducer);
 
   const dispatch = useDispatch();
-
+  const { openModal } = useModal();
   const selectedPatches = Object.keys(patch).filter(
     (key) => patch[key] === true
   );
@@ -23,7 +25,9 @@ const IPHeader = ({ getSeachFilterPlayer }) => {
 
   return (
     <SWrapper>
-      <S.table.AddPlayerPopupButton onClick={""}>
+      <S.table.AddPlayerPopupButton
+        onClick={() => openModal(modalList.addFavoritePlayer)}
+      >
         <span>+</span>
         <div>
           <h5>{t("soloRank.InterestedPlayer.label.addPlayer")}</h5>
