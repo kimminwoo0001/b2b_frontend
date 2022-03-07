@@ -11,6 +11,7 @@ import ErrorBoundary from "../../Components/ErrorBoundary";
 import Nav from "../../Components/Nav/Nav";
 import { useSelector, useDispatch, batch } from "react-redux";
 import SoloRankTab from "./Component/Common/SoloRankTab";
+import { colors } from "../../Styles/ui";
 
 const SoloRank = () => {
   //const filters = useSelector((state) => state.FilterReducer);
@@ -44,7 +45,7 @@ const Wrapper = styled.div`
   min-height: 100vh;
   overflow: auto;
   display: flex;
-  background-color: #000000;
+  background-color: ${colors.bg_gnb};
   overflow: hidden;
 
   .filter-close {
@@ -59,6 +60,7 @@ const ContentWrapper = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
-  background-color: #16151a;
+  background-color: ${colors.bg_gnb};
   padding: 0px 0;
+  margin-left: 30px;
 `;

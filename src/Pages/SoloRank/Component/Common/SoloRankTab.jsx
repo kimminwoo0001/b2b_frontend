@@ -49,7 +49,6 @@ export default SoloRankTab;
 const SContainer = styled.section`
   width: 1110px;
   ${typoStyle.contents}
-  ${testStyle.border1}
 `;
 
 const STab = styled.ul`
@@ -95,5 +94,6 @@ const STabItem = styled.li`
 `;
 
 const SContents = styled.div`
-  ${testStyle.border2}
+  // ${testStyle.border2}
+  margin-bottom: 80px;
 `;
