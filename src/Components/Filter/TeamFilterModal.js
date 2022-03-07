@@ -343,7 +343,7 @@ const TeamFilterModal = () => {
     <>
       <BackScreen
         teamModal={filters.compareModal}
-      // onClick={() => setTeamModal(false)}
+        // onClick={() => setTeamModal(false)}
       ></BackScreen>
       <TeamModalWrapper teamModal={filters.compareModal}>
         <ModalNav>
@@ -439,8 +439,9 @@ const TeamFilterModal = () => {
                       </button>
                       <nav
                         ref={dropdownRef}
-                        className={`menu ${isActiveLeague ? "active" : "inactive"
-                          }`}
+                        className={`menu ${
+                          isActiveLeague ? "active" : "inactive"
+                        }`}
                       >
                         <ul>
                           {selector.leagueFilter?.map((league, idx) => {
@@ -508,8 +509,9 @@ const TeamFilterModal = () => {
                       </button>
                       <nav
                         ref={dropdownRef}
-                        className={`menu ${isActiveLeague ? "active" : "inactive"
-                          }`}
+                        className={`menu ${
+                          isActiveLeague ? "active" : "inactive"
+                        }`}
                       >
                         <ul>
                           {selector.leagueFilter?.map((league, idx) => {
@@ -1192,9 +1194,9 @@ const SelectedYear = styled.div`
 
     background-clip: content-box;
     background: ${(props) =>
-    props.radioBtn
-      ? `url("/Images/btn_radio_off.svg")`
-      : `url("/Images/btn_check_off.svg")`}
+        props.radioBtn
+          ? `url("/Images/btn_radio_off.svg")`
+          : `url("/Images/btn_check_off.svg")`}
       no-repeat;
     margin-right: 8px;
 
@@ -1203,9 +1205,9 @@ const SelectedYear = styled.div`
       border: #5942ba;
       border-radius: 2px;
       background: ${(props) =>
-    props.radioBtn
-      ? `url("/Images/btn_radio_on.svg")`
-      : `url("/Images/btn_check_on.svg")`}
+          props.radioBtn
+            ? `url("/Images/btn_radio_on.svg")`
+            : `url("/Images/btn_check_on.svg")`}
         no-repeat;
       float: right;
     }
@@ -1312,7 +1314,7 @@ const ButtonBox = styled.div`
     height: 60px;
     border-radius: 20px;
     background-color: ${(props) =>
-    props.isAllTeamSelected ? "#5942ba" : "#484655"};
+      props.isAllTeamSelected ? "#5942ba" : "#484655"};
     cursor: ${(props) => (props.isAllTeamSelected ? "pointer" : "not-allowed")};
     font-family: NotoSansKR, Apple SD Gothic Neo;
     font-size: 15px;
@@ -1354,8 +1356,8 @@ const MapTeams = styled.div`
     text-align: left;
     color: #fff;
     ${(props) =>
-    props.currentTeam &&
-    css`
+      props.currentTeam &&
+      css`
         color: #fff;
       `}
   }

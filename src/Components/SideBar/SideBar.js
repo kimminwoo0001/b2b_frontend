@@ -6,8 +6,17 @@ import styled from "@emotion/styled/macro";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import SideBarItem from "./SideBarItem";
-import { goHome, goLeagueReport, goPathAnalysis, goPlayerCompare, goPlayerReport, goProGameReport, goSoloRank, goTeamCompare, goTeamReport } from "../../lib/pagePath";
-
+import {
+  goHome,
+  goLeagueReport,
+  goPathAnalysis,
+  goPlayerCompare,
+  goPlayerReport,
+  goProGameReport,
+  goSoloRank,
+  goTeamCompare,
+  goTeamReport,
+} from "../../lib/pagePath";
 
 function Sidebar() {
   //팀 비교 모달창 상태 값
@@ -166,7 +175,7 @@ function Sidebar() {
         <MenuList>
           {usingValue.length > 0 &&
             usingValue.map((menu, idx) => (
-              <SideBarItem menu={menu} idx={idx} />
+              <SideBarItem key={menu.path} menu={menu} idx={idx} />
             ))}
         </MenuList>
       </SideBarWrapper>

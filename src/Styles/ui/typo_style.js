@@ -18,7 +18,7 @@ const typoStyle = {
     color: ${colors.text};
   `,
 
-  // contents text
+  /* contents text */
   contents: css`
     font-family: Spoqa Han Sans;
     ${fontsStyle.size[15]};
@@ -196,6 +196,14 @@ const typoStyle = {
       vertical-align: middle;
       margin: 0 2px;
     }
+  `,
+
+  /* badge */
+  badge: css`
+    ${fontsStyle.size[11]}
+    color: ${colors.text};
+    line-height: 22px;
+    font-family: Spoqa Han Sans;
   `,
 
   /* 말줄임 스타일  */

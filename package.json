@@ -15,6 +15,7 @@
     "chart.js": "2.9.4",
     "clipboard-polyfill": "^3.0.3",
     "date-fns": "^2.20.2",
+    "dayjs": "^1.10.8",
     "deep-eql": "^4.0.0",
     "framer-motion": "4.1.17",
     "gsap": "^3.8.0",

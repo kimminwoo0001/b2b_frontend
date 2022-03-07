@@ -13,6 +13,7 @@ const colors = {
   bg_gnb: "#16151c",
   bg_light: "#2e2d38",
   bg_box: "#2f2d38",
+  bg_box_hover: "rgba(47,45,56,0.1)",
   bg_select: "#23212a",
   bg_select_hover: "#393840",
   bg_hover: "rgba(255,255,255,0.1)",

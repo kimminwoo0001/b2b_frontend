@@ -1,21 +1,25 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { forwardRef } from "react";
 
-const Avatar = ({
-  src,
-  alt,
-  circle = true,
-  size = 20,
-  color,
-  block = true,
-  ...props
-}) => {
-  return (
-    <SAvarta color={color} size={size} circle={circle} block={block} {...props}>
-      <img src={src} alt={alt} />
-    </SAvarta>
-  );
-};
+const Avatar = forwardRef(
+  (
+    { src, alt, circle = true, size = 20, color, block = true, ...props },
+    ref
+  ) => {
+    return (
+      <SAvarta
+        ref={ref}
+        color={color}
+        size={size}
+        circle={circle}
+        block={block}
+        {...props}
+      >
+        <img src={src} alt={alt} />
+      </SAvarta>
+    );
+  }
+);
 
 const SAvarta = styled.div`
   display: ${({ block }) => (block ? "block" : "inline-block")};

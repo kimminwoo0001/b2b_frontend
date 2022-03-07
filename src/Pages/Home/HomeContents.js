@@ -10,7 +10,10 @@ import LoadingImg from "../../Components/LoadingImg/LoadingImg";
 import { API, recentVersion } from "../config";
 import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../../redux/modules/filtervalue";
-import { SetFilterAllItems, SetRunesJson } from "../../redux/modules/staticvalue";
+import {
+  SetFilterAllItems,
+  SetRunesJson,
+} from "../../redux/modules/staticvalue";
 
 import axiosRequest from "../../lib/axios/axiosRequest";
 import LeagueRank from "./LeagueRank";
@@ -21,7 +24,7 @@ const HomeContents = memo(() => {
   const filters = useSelector((state) => state.FilterReducer);
   const staticvalue = useSelector((state) => state.StaticValueReducer);
   const user = useSelector((state) => state.UserReducer);
-  const modal = useSelector((state) => state.ModalReducer)
+  const modal = useSelector((state) => state.ModalReducer);
 
   // check
   const [doneHome, setDoneHome] = useState(false);
@@ -59,7 +62,7 @@ const HomeContents = memo(() => {
     if (doneHome === true && doneFilter === true && doneRune === true) {
       dispatch(Loading(false));
     }
-  }, [doneHome, doneFilter, doneRune])
+  }, [doneHome, doneFilter, doneRune]);
 
   // 홈 데이터 fetch 해오는 함수
 
@@ -68,16 +71,22 @@ const HomeContents = memo(() => {
     try {
       const url = `${API}/lolapi/home/home`;
       const params = {
-        token: user.token
-      }
-      axiosRequest(undefined, url, params, function (data) {
-        //console.log("modal", modal);
-        setLeagueDataset(data);
-        setDoneHome(true);
-      }, function (objStore) {
-        dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-        dispatch(Loading(false));
-      })
+        token: user.token,
+      };
+      axiosRequest(
+        undefined,
+        url,
+        params,
+        function (data) {
+          //console.log("modal", modal);
+          setLeagueDataset(data);
+          setDoneHome(true);
+        },
+        function (objStore) {
+          dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+          dispatch(Loading(false));
+        }
+      );
       //
     } catch (e) {
       console.log(e);
@@ -90,16 +99,22 @@ const HomeContents = memo(() => {
         const url = `${API}/lolapi/filter/filterCall`;
         const params = {
           token: user.token,
-          id: user.id
-        }
-        axiosRequest(undefined, url, params, function (data) {
-          //console.log(data);
-          dispatch(SetFilterAllItems(data));
-          setDoneFilter(true);
-        }, function (objStore) {
-          dispatch(SetModalInfo(objStore)) // 오류 발생 시, Alert 창을 띄우기 위해 사용
-          dispatch(Loading(false));
-        })
+          id: user.id,
+        };
+        axiosRequest(
+          undefined,
+          url,
+          params,
+          function (data) {
+            //console.log(data);
+            dispatch(SetFilterAllItems(data));
+            setDoneFilter(true);
+          },
+          function (objStore) {
+            dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+            dispatch(Loading(false));
+          }
+        );
       } catch (e) {
         console.log(e);
         dispatch(Loading(false));
@@ -112,11 +127,13 @@ const HomeContents = memo(() => {
   const fetchRunesObject = () => {
     if (staticvalue.runesObjects === null) {
       try {
-        fetch(`https://ddragon.leagueoflegends.com/cdn/${recentVersion}/data/ko_KR/runesReforged.json`)
-          .then(res => res.json())
-          .then(out => dispatch(SetRunesJson(out)))
-          .then(e => setDoneRune(true))
-          .catch(err => console.log("Not load Rune Dataset."));
+        fetch(
+          `https://ddragon.leagueoflegends.com/cdn/${recentVersion}/data/ko_KR/runesReforged.json`
+        )
+          .then((res) => res.json())
+          .then((out) => dispatch(SetRunesJson(out)))
+          .then((e) => setDoneRune(true))
+          .catch((err) => console.log("Not load Rune Dataset."));
         //dispatch(Loading(false));
       } catch (e) {
         console.log(e);
@@ -125,7 +142,7 @@ const HomeContents = memo(() => {
     } else {
       setDoneRune(true);
     }
-  }
+  };
 
   //console.log("전역 변수 테스트", staticvalue);
   return (
@@ -267,7 +284,6 @@ const LeagueListWrapper = styled.div`
   display: flex;
   width: 1210px;
   flex-wrap: wrap;
-  margin: 30px 0 26.3px 40px;
 `;
 
 const BoxWrapper = styled.div``;

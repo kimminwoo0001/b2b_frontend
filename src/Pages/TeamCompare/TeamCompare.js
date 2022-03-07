@@ -22,7 +22,7 @@ function TeamCompare() {
   const { t } = useTranslation();
 
   if (document.title !== `${t("sidebar.part8")} - NUNU.GG`) {
-    document.title = `${t("sidebar.part8")} - NUNU.GG`
+    document.title = `${t("sidebar.part8")} - NUNU.GG`;
   }
 
   return (
@@ -33,24 +33,26 @@ function TeamCompare() {
       <Nav />
       <TeamWrapper>
         <SideBar />
-        {filters.openFilterModal === goTeamCompare && filters.oppteam.length > 0 && filters.compareModal ?
-          (
-            <CloseFilter />
-          ) : (
-            <>
-              <div
-                className={filters.filterMenuState ? "filter-open" : "filter-close"}
-              >
-                <Filter />
-              </div>
-              {/* <div
+        {filters.openFilterModal === goTeamCompare &&
+        filters.oppteam.length > 0 &&
+        filters.compareModal ? (
+          <CloseFilter />
+        ) : (
+          <>
+            <div
+              className={
+                filters.filterMenuState ? "filter-open" : "filter-close"
+              }
+            >
+              <Filter />
+            </div>
+            {/* <div
           className={filters.filterMenuState ? "filter-close" : "filter-open"}
         >
           <CloseFilter />
         </div> */}
-            </>
-          )
-        }
+          </>
+        )}
         <ContentWrapper>
           {filters.team !== "" ? <TeamTabs /> : <SelectFilter />}
         </ContentWrapper>

@@ -282,8 +282,8 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
               </LoadingImage>
             )}
             {pickDifference !== undefined &&
-              pickDifference &&
-              pickDifference.length === 0 ? (
+            pickDifference &&
+            pickDifference.length === 0 ? (
               <NoData>{t("league.draft.noData")}</NoData>
             ) : (
               ""
@@ -366,10 +366,11 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                             ? pick?.opp_champion.championKor
                             : pick?.opp_champion.champion}
                         </div>
-                        <div className="WinLose2">{`${pick?.opp_champion.win
-                          }${t("league.draft.w")} ${pick?.opp_champion.lose}${t(
-                            "league.draft.l"
-                          )}`}</div>
+                        <div className="WinLose2">{`${
+                          pick?.opp_champion.win
+                        }${t("league.draft.w")} ${pick?.opp_champion.lose}${t(
+                          "league.draft.l"
+                        )}`}</div>
                       </div>
                       <img
                         src={`https://am-a.akamaihd.net/image?resize=90:&f=${pick?.opp_champion.championImage}`}
@@ -466,8 +467,8 @@ function TabforBot({ importantPicks, pickDifference, tier, uniquePick }) {
                 </LoadingImage>
               )}
               {uniquePick !== undefined &&
-                uniquePick &&
-                uniquePick.length === 0 ? (
+              uniquePick &&
+              uniquePick.length === 0 ? (
                 <NoData>{t("league.draft.noData")}</NoData>
               ) : (
                 ""
