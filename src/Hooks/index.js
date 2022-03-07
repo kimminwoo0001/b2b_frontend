@@ -2,5 +2,6 @@ import { useTab } from "./useTab";
 import { useDetectOutsideClick } from "./useDetectOutsideClick";
 import { useModal } from "./useModal";
 import { useUpdateEffect } from "./useUpdateEffect";
+import { useAsync } from "./useAsync";
 
-export { useTab, useDetectOutsideClick, useModal, useUpdateEffect };
+export { useTab, useAsync, useDetectOutsideClick, useModal, useUpdateEffect };

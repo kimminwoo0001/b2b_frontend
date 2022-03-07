@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { jsx } from "@emotion/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import styled from "@emotion/styled/macro";
 import {
   borderRadiusStyle,
@@ -15,6 +15,8 @@ import Button from "../../../../Components/Ui/Button";
 import Avatar from "../../../../Components/Ui/Avatar";
 import DateList from "./DateList";
 import dayjs from "dayjs";
+import { useAsync } from "../../../../Hooks";
+import { delay } from "../../../../lib/delay";
 
 const LEAGUE = [
   { title: "LCK" },
@@ -205,40 +207,32 @@ const DATE_DATA = [
 ];
 
 const HomeAI = ({ ...props }) => {
-  const { currentIndex, setIndex } = useTab(0, LEAGUE);
   const scrollContainerRef = useRef(null);
   const dayListRef = useRef([]);
+  const { currentIndex, setIndex, currentTab } = useTab(0, LEAGUE);
+  const currentTabName = currentTab.title.toLowerCase();
+  const getData = async (tabname) => {
+    const result = await delay(2000, DATE_DATA);
+    return result;
+  };
+  const [{ loading, data, error }, fetch] = useAsync(getData, [currentTabName]);
   const handleClick = (index) => setIndex(index);
-  const [recentDate, setRecentDate] = useState();
 
-  // 오늘 or 가장 가까운 다음 경기 찾기
   useEffect(() => {
-    let index;
+    if (!data && !Array.isArray(data)) return;
 
-    const recentDate = DATE_DATA.some((item, i) => {
+    let index;
+    data.some((item, i) => {
       index = i;
       return item.date - dayjs() >= 0;
     });
 
-    if (!recentDate) {
-      index = DATE_DATA.length - 1;
-    }
-
-    setRecentDate(index);
-  }, [DATE_DATA]);
-
-  // 오늘 or 가장 가까운 다음 경기로 스크롤
-  useEffect(() => {
-    if (!scrollContainerRef.current || !dayListRef.current || !recentDate)
-      return;
     const { top: containerTop } =
       scrollContainerRef.current.getBoundingClientRect();
-
-    const { top: childTop } =
-      dayListRef.current[recentDate].getBoundingClientRect();
+    const { top: childTop } = dayListRef.current[index].getBoundingClientRect();
 
     scrollContainerRef.current.scrollTo({ top: childTop - containerTop });
-  }, [recentDate]);
+  }, [data]);
 
   return (
     <Container {...props}>
@@ -274,15 +268,19 @@ const HomeAI = ({ ...props }) => {
         {/* 경기일정 컨텐츠 */}
         <Contents>
           <ScrollContainer ref={scrollContainerRef}>
-            {DATE_DATA.map((gameList, index) => (
-              <DateList
-                key={gameList.date}
-                ref={(el) => {
-                  dayListRef.current[index] = el;
-                }}
-                list={gameList}
-              />
-            ))}
+            {loading ? (
+              <div>Loading...</div>
+            ) : (
+              data?.map((gameList, index) => (
+                <DateList
+                  key={currentTabName + gameList.date}
+                  ref={(el) => {
+                    dayListRef.current[index] = el;
+                  }}
+                  list={gameList}
+                />
+              ))
+            )}
           </ScrollContainer>
         </Contents>
       </ContentsContainer>
