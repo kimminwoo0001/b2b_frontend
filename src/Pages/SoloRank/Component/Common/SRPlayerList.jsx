@@ -264,20 +264,18 @@ const MTPlayerList = ({ teamLine, isMyTeamTab, getInfoFunc, info }) => {
             {/* 이번시즌 */}
             <div className="table-col4">
               <span>{`${cdSeasonTotal}${t("common.label.game")}`}</span>
-              <span>{`${cdSeasonWin}${t("common.label.win")} ${
-                cdSeasonLose
-              }${t("common.label.lose")}`}</span>
+              <span>{`${cdSeasonWin}${t("common.label.win")} ${cdSeasonLose}${t(
+                "common.label.lose"
+              )}`}</span>
             </div>
             {/* 시즌 승률 */}
             <div className="table-col5">{`${cdSeasonWinrate}%`}</div>
             {/* 최근 */}
             <div className="table-col6">
-              <span>{`${cdLastDayTotal}${t(
-                "common.label.game"
-              )}`}</span>
-              <span>{`${cdLastDayWin}${t("common.label.win")} ${
-                cdLastDayLose
-              }${t("common.label.lose")}`}</span>
+              <span>{`${cdLastDayTotal}${t("common.label.game")}`}</span>
+              <span>{`${cdLastDayWin}${t(
+                "common.label.win"
+              )} ${cdLastDayLose}${t("common.label.lose")}`}</span>
             </div>
             {/* 최근 승률 */}
             <div className="table-col7">{`${cdLastDayWinrate}%`}</div>
@@ -297,7 +295,7 @@ const MTPlayerList = ({ teamLine, isMyTeamTab, getInfoFunc, info }) => {
                   <S.ChampInfoText>
                     <Avatar
                       size={isOpen ? 34 : 24}
-                      src={`images/champion/${data.championEng.replace(
+                      src={`Images/champion/${data.championEng.replace(
                         " ",
                         ""
                       )}.png`}
