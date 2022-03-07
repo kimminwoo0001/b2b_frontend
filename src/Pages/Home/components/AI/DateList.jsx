@@ -11,16 +11,25 @@ import {
 import Arrow from "../../../../Components/Ui/Arrow";
 
 import Versus from "../../../../Components/Ui/Versus";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import ko from "dayjs/locale/ko";
 import { useSelector } from "react-redux";
 import { forwardRef } from "react";
+
+const utc = require("dayjs/plugin/utc");
+const timezone = require("dayjs/plugin/timezone");
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 const DateList = forwardRef(({ list, ...props }, ref) => {
   const { isComplete, date, scheduleList } = list;
 
   // 경기 날짜 관련
   const locale = useSelector((state) => state.LocaleReducer);
-  const gameDate = locale === "ko" ? dayjs(date).locale(ko) : dayjs(date);
+  const gameDate =
+    locale === "ko"
+      ? dayjs(date).tz(dayjs.tz.guess()).locale(ko)
+      : dayjs(date).tz(dayjs.tz.guess());
   const isToday = dayjs(date).format("YYYYMMDD") === dayjs().format("YYYYMMDD");
   return (
     <Container ref={ref} {...props}>
@@ -43,10 +52,12 @@ const DateList = forwardRef(({ list, ...props }, ref) => {
             awayTeam,
             awayScore,
             awayWinRate,
+            title,
           } = games;
 
           return (
             <GameList key={"gameInfo" + _}>
+              {title && <Label>{title}</Label>}
               <Team className="right">
                 <span>
                   {homeTeam?.name ? `${homeTeam.name.toUpperCase()}` : "TBD"}
@@ -143,6 +154,7 @@ const GameInfo = styled.ul`
   }
 `;
 const GameList = styled.li`
+  position: relative;
   &:not(:last-of-type) {
     ${spacing.marginB(2)};
   }
@@ -153,6 +165,16 @@ const GameList = styled.li`
   align-items: center;
   ${borderRadiusStyle[20]};
   background-color: ${colors.bg_checkbox};
+`;
+
+const Label = styled.div`
+  position: absolute;
+  left: 30px;
+  background-color: ${colors.point};
+  ${spacing.paddingY(0.5)}
+  ${spacing.paddingX(3)}
+  ${borderRadiusStyle.full}
+  ${typoStyle.badge}
 `;
 
 const VSContainer = styled.div`

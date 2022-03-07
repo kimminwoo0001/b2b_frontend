@@ -17,6 +17,7 @@ import DateList from "./DateList";
 import dayjs from "dayjs";
 import { useAsync } from "../../../../Hooks";
 import { delay } from "../../../../lib/delay";
+import Progress from "../../../../Components/Ui/Loading/Progress";
 
 const LEAGUE = [
   { title: "LCK" },
@@ -173,6 +174,7 @@ const DATE_DATA = [
     date: 1646494400000,
     scheduleList: [
       {
+        title: "playoff",
         time: 1646294400000,
 
         homeTeam: {
@@ -269,7 +271,9 @@ const HomeAI = ({ ...props }) => {
         <Contents>
           <ScrollContainer ref={scrollContainerRef}>
             {loading ? (
-              <div>Loading...</div>
+              <ProgressContainer>
+                <Progress text={"데이터를 받아오는 중입니다"} />
+              </ProgressContainer>
             ) : (
               data?.map((gameList, index) => (
                 <DateList
@@ -380,6 +384,14 @@ const Contents = styled.div`
 const ScrollContainer = styled.ul`
   height: 355px;
   ${scrollbarStyle.scroll_4}
+`;
+
+const ProgressContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 `;
 
 export default HomeAI;
