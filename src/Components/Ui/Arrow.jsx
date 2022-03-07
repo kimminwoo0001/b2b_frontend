@@ -3,8 +3,10 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { colors } from "../../Styles/ui";
 
-// 기본  사이즈 8px
-// 기본 컬러 white
+/**
+ * 앱의 기본적인 화살표를 구현하기 위한 컴포넌트 입니다.
+ */
+
 const Arrow = ({ direction, size = 8, color = colors.text, ...props }) => {
   return (
     <SArrow direction={direction} size={size} color={color} {...props}></SArrow>

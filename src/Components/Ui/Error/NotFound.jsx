@@ -1,6 +1,11 @@
-import styled from "@emotion/styled";
 import React from "react";
+import styled from "@emotion/styled";
+import PropTypes from "prop-types";
 import { spacing, typoStyle } from "../../../Styles/ui";
+
+/**
+ * 기본적인 컴포넌트 단의 error state를 렌더하기 위한 컴포넌트 입니다.
+ */
 
 const NotFound = ({ text, props }) => {
   return (
@@ -25,5 +30,16 @@ const ImgContainer = styled.div`
 const TextContainer = styled.div`
   ${typoStyle.contents_title}
 `;
+
+NotFound.propTypes = {
+  /**
+   * 컬러
+   */
+  text: PropTypes.string,
+};
+
+NotFound.default = {
+  text: "낫파운드",
+};
 
 export default NotFound;

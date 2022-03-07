@@ -1,4 +1,5 @@
 import { colors } from "../src/Styles/ui";
+import { GlobalStyles } from "../src/Styles/GlobalStyles";
 
 export const parameters = {
   // action
@@ -9,6 +10,15 @@ export const parameters = {
       color: /(background|color)$/i,
       date: /Date$/,
     },
+  },
+  colors: {
+    default: "white",
+    value: [
+      {
+        name: "white",
+        value: colors.text,
+      },
+    ],
   },
   // background
   backgrounds: {
@@ -25,3 +35,12 @@ export const parameters = {
     ],
   },
 };
+
+export const decorators = [
+  (Story, context) => (
+    <>
+      <GlobalStyles />
+      <Story {...context} />
+    </>
+  ),
+];

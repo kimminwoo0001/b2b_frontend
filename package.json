@@ -109,5 +109,8 @@
     "@storybook/react": "^6.4.19",
     "@storybook/testing-library": "^0.0.9",
     "redux-devtools": "^3.7.0"
+  },
+  "resolutions": {
+    "babel-loader": "8.1.0"
   }
 }

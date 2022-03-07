@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import { reset } from "styled-reset";
+import { colors } from "./ui";
 
 export const GlobalStyles = createGlobalStyle`
 ${reset}
