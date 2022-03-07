@@ -61,6 +61,7 @@ const ProgressBar = styled.div`
 
 const TextContainer = styled.div`
   ${typoStyle.select}
+  text-align: center;
 `;
 
 export default Progress;
