@@ -6,6 +6,7 @@ import ModalSolorankID from "./screens/ModalAddSolorankID";
 import ModalAddTeamPlayer from "./screens/ModalAddTeamPlayer";
 import ModalAlert from "./screens/ModalAlert";
 import ModalConfirm from "./screens/ModalConfirm";
+import ModalAddFavoritePlayer from "./screens/ModalAddFavoritePlayer";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 export const modalList = {
@@ -14,6 +15,7 @@ export const modalList = {
   confirm: ModalConfirm,
   addSolorankID: ModalSolorankID,
   addTeamPlayer: ModalAddTeamPlayer,
+  addFavoritePlayer: ModalAddFavoritePlayer,
 };
 
 const Modals = () => {
