@@ -4,7 +4,7 @@ import NotFound from "../../Components/Ui/Error/NotFound";
 
 export default {
   title: "UI/NotFound",
-  compoent: NotFound,
+  component: NotFound,
   argTypes: {
     text: string,
   },

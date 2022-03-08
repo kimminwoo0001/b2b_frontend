@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { spacing, typoStyle } from "../../../Styles/ui";
 
 /**
- * 기본적인 컴포넌트 단의 error state를 렌더하기 위한 컴포넌트 입니다.
+ * ### 기본적인 컴포넌트 단의 error state를 렌더하기 위한 컴포넌트 입니다.
  */
 
 const NotFound = ({ text, props }) => {
@@ -33,9 +33,9 @@ const TextContainer = styled.div`
 
 NotFound.propTypes = {
   /**
-   * 컬러
+   * NotFound 아이콘 아래 삽입할 메시지입니다
    */
-  text: PropTypes.string,
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
 };
 
 NotFound.default = {
