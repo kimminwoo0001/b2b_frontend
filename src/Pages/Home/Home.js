@@ -31,7 +31,7 @@ function Home() {
       <HomeWrapper>
         <SideBar />
         <ContentWrapper>
-          <HomeAI />
+          {/* <HomeAI /> */}
           <HomeContents />
         </ContentWrapper>
       </HomeWrapper>

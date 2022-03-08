@@ -412,11 +412,11 @@ function ComparePosition() {
                 yAxes: [
                   {
                     ticks: {
-                      stepSize: 3,
+                      stepSize: 2,
                       fontColor: "#84818e",
                       fontSize: 15,
                       min: 0,
-                      max: 15,
+                      max: 10,
                     },
                     gridLines: {
                       color: "rgb(58, 55, 69)",
@@ -479,11 +479,11 @@ function ComparePosition() {
                 yAxes: [
                   {
                     ticks: {
-                      stepSize: 3,
+                      stepSize: 2,
                       fontColor: "#84818e",
                       fontSize: 15,
                       min: 0,
-                      max: 15,
+                      max: 10,
                     },
                     gridLines: {
                       color: "rgb(58, 55, 69)",
@@ -546,11 +546,11 @@ function ComparePosition() {
                 yAxes: [
                   {
                     ticks: {
-                      stepSize: 3,
+                      stepSize: 2,
                       fontColor: "#84818e",
                       fontSize: 15,
                       min: 0,
-                      max: 15,
+                      max: 10
                     },
                     gridLines: {
                       color: "rgb(58, 55, 69)",
@@ -613,11 +613,11 @@ function ComparePosition() {
                 yAxes: [
                   {
                     ticks: {
-                      stepSize: 3,
+                      stepSize: 2,
                       fontColor: "#84818e",
                       fontSize: 15,
                       min: 0,
-                      max: 15,
+                      max: 10,
                     },
                     gridLines: {
                       color: "rgb(58, 55, 69)",
@@ -681,11 +681,11 @@ function ComparePosition() {
                 yAxes: [
                   {
                     ticks: {
-                      stepSize: 3,
+                      stepSize: 2,
                       fontColor: "#84818e",
                       fontSize: 15,
                       min: 0,
-                      max: 15,
+                      max: 10,
                     },
                     gridLines: {
                       color: "rgb(58, 55, 69)",
