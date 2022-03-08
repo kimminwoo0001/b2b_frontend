@@ -1,25 +1,35 @@
-import { bool } from "prop-types";
 import PositionCheckList from "../../Components/Ui/PositionCheckList";
+import { bool, func } from "prop-types";
+import { useState } from "react";
 
 export default {
-  titie: "UI/PositionCheckList",
+  title: "UI/PositionCheckList",
   component: PositionCheckList,
   argTypes: {
     all: bool,
     multi: bool,
-    defaultColor: { control: "colors" },
-    hoverColor: { control: "colors" },
-    position: {
-      all: bool,
-      top: bool,
-      jng: bool,
-      mid: bool,
-      bot: bool,
-      sup: bool,
-    },
+    defaultColor: { control: "color" },
+    hoverColor: { control: "color" },
   },
 };
 
-const Template = (args) => <PositionCheckList {...args} />;
+const Template = (args) => {
+  const [position, setPosition] = useState({
+    all: false,
+    top: false,
+    jng: false,
+    mid: false,
+    bot: false,
+    sup: false,
+  });
+
+  return (
+    <PositionCheckList
+      position={position}
+      setPosition={setPosition}
+      {...args}
+    />
+  );
+};
 
 export const Default = Template.bind({});
