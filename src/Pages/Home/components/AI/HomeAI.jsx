@@ -16,7 +16,6 @@ import Avatar from "../../../../Components/Ui/Avatar";
 import DateList from "./DateList";
 import dayjs from "dayjs";
 import { useAsync } from "../../../../Hooks";
-import { delay } from "../../../../lib/delay";
 import Progress from "../../../../Components/Ui/Loading/Progress";
 import axios from "axios";
 import { API } from "../../../config";
@@ -58,8 +57,11 @@ const HomeAI = ({ ...props }) => {
       data: params,
       headers: { "content-type": "application/x-www-form-urlencoded" },
     });
-    console.log(result.data.response);
-    return result.data.response;
+    if (result.data.status === "201") {
+      return result.data.response;
+    } else {
+      throw result.data.response;
+    }
   };
 
   const [{ loading, data, error }, fetch] = useAsync(
@@ -75,7 +77,6 @@ const HomeAI = ({ ...props }) => {
     let index;
     data.some((daylist, i) => {
       index = i;
-      console.log(daylist.unix_date - dayjs(now).unix(), i);
       return daylist.unix_date - dayjs(now).unix() >= 0;
     });
 
@@ -125,7 +126,10 @@ const HomeAI = ({ ...props }) => {
                 <Progress text={"데이터를 받아오는 중입니다"} />
               </ProgressContainer>
             ) : error ? (
-              <NotFound text="정보를 받아오지 못 했습니다" />
+              <NotFound
+                css={{ height: "100%" }}
+                text="정보를 받아오지 못 했습니다"
+              />
             ) : (
               data?.map((gameList, index) => (
                 <DateList
