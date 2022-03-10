@@ -47,29 +47,39 @@ const DateList = forwardRef(({ list, ...props }, ref) => {
           const {
             winner,
             homeTeam: {
-              teamName: homeName,
               score: homeScore,
+              teamShort: homeShort,
               winRate: homeWinRate,
             },
             awayTeam: {
-              teamName: awayName,
               score: awayScore,
+              teamShort: awayShort,
               winRate: awayWinRate,
             },
             title,
           } = games;
 
+          const [league, ...rest] = title.split("Season/");
+
+          const abc = rest
+            .join(" ")
+            .replace(/2_W/g, " W")
+            .replace(/\s{2}|Season/gi, "")
+            .split("_");
+          abc.pop();
+          const labelText = abc.join(" ");
+
           return (
             <GameList key={"gameInfo" + _}>
-              {title && <Label>{title}</Label>}
+              {title && <Label>{labelText}</Label>}
               <Team className="right">
-                <span>{homeName ? `${homeName.toUpperCase()}` : "TBD"}</span>
+                <span>{homeShort ? `${homeShort.toUpperCase()}` : "TBD"}</span>
                 <span>{homeWinRate ? `${homeWinRate.toFixed(1)} %` : ""}</span>
               </Team>
               <TeamLogo>
                 <Avatar
-                  src={`images/team/ico_team_${homeName}.png`}
-                  alt={homeName ?? "TBD"}
+                  src={`images/team/ico_team_${homeShort}.png`}
+                  alt={homeShort ?? "TBD"}
                   onError={(e) =>
                     (e.target.src = `images/team/ico_team_tbd.png`)
                   }
@@ -98,17 +108,17 @@ const DateList = forwardRef(({ list, ...props }, ref) => {
               )}
               <TeamLogo>
                 <Avatar
-                  src={`images/team/ico_team_${awayName}.png`}
+                  src={`images/team/ico_team_${awayShort}.png`}
                   size={50}
                   onError={(e) =>
                     (e.target.src = `images/team/ico_team_tbd.png`)
                   }
-                  alt={awayName ?? "TBD"}
+                  alt={awayShort ?? "TBD"}
                   circle={false}
                 ></Avatar>
               </TeamLogo>
               <Team className="left">
-                <span>{awayName ? `${awayName.toUpperCase()}` : "TBD"}</span>
+                <span>{awayShort ? `${awayShort.toUpperCase()}` : "TBD"}</span>
                 <span>{awayWinRate ? `${awayWinRate.toFixed(1)} %` : ""}</span>
               </Team>
             </GameList>
