@@ -77,7 +77,10 @@ const HomeAI = ({ ...props }) => {
     let index;
     data.some((daylist, i) => {
       index = i;
-      return daylist.unix_date - dayjs(now).unix() >= 0;
+      const gameDate = dayjs(daylist.scheduleList[0].time)
+        .utc(true)
+        .format("YYYY-MM-DD");
+      return dayjs(gameDate).unix() - dayjs(now).unix() >= 0;
     });
 
     const { top: containerTop } =

@@ -15,6 +15,7 @@ import dayjs from "dayjs";
 import ko from "dayjs/locale/ko";
 import { useSelector } from "react-redux";
 import { forwardRef } from "react";
+import { useTranslation } from "react-i18next";
 
 const utc = require("dayjs/plugin/utc");
 const timezone = require("dayjs/plugin/timezone");
@@ -22,23 +23,26 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 const DateList = forwardRef(({ list, ...props }, ref) => {
-  const { isComplete, date, scheduleList } = list;
-
+  const { scheduleList } = list;
+  const { t } = useTranslation();
   // 경기 날짜 관련
   const locale = useSelector((state) => state.LocaleReducer);
-  const gameDate =
-    locale === "ko"
-      ? dayjs(date).tz(dayjs.tz.guess()).locale(ko)
-      : dayjs(date).tz(dayjs.tz.guess());
-  const isToday = dayjs(date).format("YYYYMMDD") === dayjs().format("YYYYMMDD");
+  const gameDate = dayjs(scheduleList[0].time).utc(true).tz(dayjs.tz.guess());
+  const localeGameDate = locale === "ko" ? gameDate.locale(ko) : gameDate;
+  const now = dayjs().format("YYYYMMDD");
+
+  // 오늘 , 경기가 끝났는지 판별
+  const isToday = dayjs(scheduleList[0].time).format("YYYYMMDD") === now;
+  const isComplete = gameDate.unix() < dayjs(now).unix();
 
   return (
     <Container ref={ref} {...props}>
       {/* 날짜 */}
       <DateContainer>
-        <span>{gameDate.format(`M.D`)}</span>
+        <span>{localeGameDate.format(`M.D`)}</span>
         <span>
-          {gameDate.format("dddd")} {isToday ? "(오늘)" : ""}
+          {localeGameDate.format("dddd")}{" "}
+          {isToday ? `(${t("league.schedule.today")})` : ""}
         </span>
       </DateContainer>
 
@@ -60,15 +64,17 @@ const DateList = forwardRef(({ list, ...props }, ref) => {
             title,
           } = games;
 
+          // 경기정보 텍스트 포멧팅
           const [league, ...rest] = title.split("Season/");
 
-          const abc = rest
+          const splitText = rest
             .join(" ")
             .replace(/2_W/g, " W")
             .replace(/\s{2}|Season/gi, "")
             .split("_");
-          abc.pop();
-          const labelText = abc.join(" ");
+          splitText.pop();
+
+          const labelText = splitText.join(" ");
 
           return (
             <GameList key={"gameInfo" + _}>
