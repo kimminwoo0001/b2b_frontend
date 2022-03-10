@@ -1,8 +1,9 @@
+/** @jsxImportSource @emotion/react */
+import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled";
-import React from "react";
 import { spacing, typoStyle } from "../../../Styles/ui";
 
-const NotFound = ({ text, props }) => {
+const NotFound = ({ text, ...props }) => {
   return (
     <Container {...props}>
       <ImgContainer>
