@@ -11,10 +11,11 @@ import {
 import Arrow from "../../../../Components/Ui/Arrow";
 
 import Versus from "../../../../Components/Ui/Versus";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import ko from "dayjs/locale/ko";
 import { useSelector } from "react-redux";
 import { forwardRef } from "react";
+import { useTranslation } from "react-i18next";
 
 const utc = require("dayjs/plugin/utc");
 const timezone = require("dayjs/plugin/timezone");
@@ -22,22 +23,26 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 const DateList = forwardRef(({ list, ...props }, ref) => {
-  const { isComplete, date, scheduleList } = list;
-
+  const { scheduleList } = list;
+  const { t } = useTranslation();
   // 경기 날짜 관련
   const locale = useSelector((state) => state.LocaleReducer);
-  const gameDate =
-    locale === "ko"
-      ? dayjs(date).tz(dayjs.tz.guess()).locale(ko)
-      : dayjs(date).tz(dayjs.tz.guess());
-  const isToday = dayjs(date).format("YYYYMMDD") === dayjs().format("YYYYMMDD");
+  const gameDate = dayjs(scheduleList[0].time).utc(true).tz(dayjs.tz.guess());
+  const localeGameDate = locale === "ko" ? gameDate.locale(ko) : gameDate;
+  const now = dayjs().format("YYYYMMDD");
+
+  // 오늘 , 경기가 끝났는지 판별
+  const isToday = dayjs(scheduleList[0].time).format("YYYYMMDD") === now;
+  const isComplete = gameDate.unix() < dayjs(now).unix();
+
   return (
     <Container ref={ref} {...props}>
       {/* 날짜 */}
       <DateContainer>
-        <span>{gameDate.format(`M.D`)}</span>
+        <span>{localeGameDate.format(`M.D`)}</span>
         <span>
-          {gameDate.format("dddd")} {isToday ? "(오늘)" : ""}
+          {localeGameDate.format("dddd")}{" "}
+          {isToday ? `(${t("league.schedule.today")})` : ""}
         </span>
       </DateContainer>
 
@@ -46,28 +51,46 @@ const DateList = forwardRef(({ list, ...props }, ref) => {
         {scheduleList.map((games, _) => {
           const {
             winner,
-            homeTeam,
-            homeScore,
-            homeWinRate,
-            awayTeam,
-            awayScore,
-            awayWinRate,
+            homeTeam: {
+              score: homeScore,
+              teamShort: homeShort,
+              winRate: homeWinRate,
+            },
+            awayTeam: {
+              score: awayScore,
+              teamShort: awayShort,
+              winRate: awayWinRate,
+            },
             title,
           } = games;
 
+          // 경기정보 텍스트 포멧팅
+          const [league, ...rest] = title.split("Season/");
+
+          const splitText = rest
+            .join(" ")
+            .replace(/2_W/g, " W")
+            .replace(/\s{2}|Season/gi, "")
+            .split("_");
+          splitText.pop();
+
+          const labelText = splitText.join(" ");
+
           return (
             <GameList key={"gameInfo" + _}>
-              {title && <Label>{title}</Label>}
+              {title && <Label>{labelText}</Label>}
               <Team className="right">
+                <span>{homeShort ? `${homeShort.toUpperCase()}` : "TBD"}</span>
                 <span>
-                  {homeTeam?.name ? `${homeTeam.name.toUpperCase()}` : "TBD"}
+                  {homeShort !== "TBD" && homeWinRate
+                    ? `${homeWinRate.toFixed(1)} %`
+                    : ""}
                 </span>
-                <span>{homeWinRate ? `${homeWinRate.toFixed(1)} %` : ""}</span>
               </Team>
               <TeamLogo>
                 <Avatar
-                  src={`images/team/ico_team_${homeTeam?.name}.png`}
-                  alt={homeTeam?.name ?? "TBD"}
+                  src={`images/team/ico_team_${homeShort}.png`}
+                  alt={homeShort ?? "TBD"}
                   onError={(e) =>
                     (e.target.src = `images/team/ico_team_tbd.png`)
                   }
@@ -96,20 +119,22 @@ const DateList = forwardRef(({ list, ...props }, ref) => {
               )}
               <TeamLogo>
                 <Avatar
-                  src={`images/team/ico_team_${awayTeam?.name}.png`}
+                  src={`images/team/ico_team_${awayShort}.png`}
                   size={50}
                   onError={(e) =>
                     (e.target.src = `images/team/ico_team_tbd.png`)
                   }
-                  alt={awayTeam?.name ?? "TBD"}
+                  alt={awayShort ?? "TBD"}
                   circle={false}
                 ></Avatar>
               </TeamLogo>
               <Team className="left">
+                <span>{awayShort ? `${awayShort.toUpperCase()}` : "TBD"}</span>
                 <span>
-                  {awayTeam?.name ? `${awayTeam.name.toUpperCase()}` : "TBD"}
+                  {homeShort !== "TBD" && awayWinRate
+                    ? `${awayWinRate.toFixed(1)} %`
+                    : ""}
                 </span>
-                <span>{awayWinRate ? `${awayWinRate.toFixed(1)} %` : ""}</span>
               </Team>
             </GameList>
           );
