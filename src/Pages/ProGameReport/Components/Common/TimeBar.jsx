@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
 import { useSelector } from "react-redux";
+import { colors } from "../../../../Styles/ui";
 
-const TimeBar = ({ hidebar = false }) => {
+const TimeBar = ({ hidebar = false, timeLineBar = false }) => {
   const videovalue = useSelector((state) => state.VideoReducer);
   const gamevalue = useSelector((state) => state.GameReportReducer);
 
@@ -31,6 +32,7 @@ const TimeBar = ({ hidebar = false }) => {
         {hidebar && (
           <TimeBarHideBar itemBuild={gamevalue.champTab === 1}></TimeBarHideBar>
         )}
+        {timeLineBar && <TimeLineBarStick></TimeLineBarStick>}
       </TimeBarContainer>
       <RangeInput
         min={minValue}
@@ -60,6 +62,17 @@ const TimeBarHideBar = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   top: -90px;
   left: 0;
+`;
+
+const TimeLineBarStick = styled.div`
+  position: absolute;
+  width: 1px;
+  margin-left: ${(props) => (props.itemBuild ? "0" : "10")}px;
+  height: 250px;
+  background-color: ${colors.text};
+  bottom: -14px;
+  left: 0;
+  z-index: 1;
 `;
 const RangeInput = styled.input`
   -webkit-appearance: none; /* Override default CSS styles */

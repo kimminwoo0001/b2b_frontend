@@ -37,9 +37,6 @@ const StatusBox3 = () => {
     .map((e) => e.detail.kills)
     .reduce((pre, cur) => pre + cur);
 
-  console.log("killAsist", killAsist);
-  console.log("teamKill", teamKill);
-
   return (
     <ChampStatContainer>
       <PerformanceContainer>

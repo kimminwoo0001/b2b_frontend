@@ -21,7 +21,6 @@ const GankingRoamingStatusBox = ({ gankingData, idx, isActive, id }) => {
   const player = info.player;
   const championEng = info.championEng;
   const type = getBuildType(data.dest);
-  console.log("type", type, data.dest);
 
   function getBuildType(dest) {
     let result = {

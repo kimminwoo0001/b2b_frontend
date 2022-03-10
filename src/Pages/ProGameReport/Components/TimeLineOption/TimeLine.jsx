@@ -228,7 +228,7 @@ const TimeLine = () => {
       <TimeLineDataContainer>
         <TimeBarTitle />
         <div className="time-bar">
-          <TimeBar />
+          <TimeBar timeLineBar={true} />
         </div>
       </TimeLineDataContainer>
     </TimeLineContainer>
