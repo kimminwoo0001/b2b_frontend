@@ -11,7 +11,7 @@ import {
 import Arrow from "../../../../Components/Ui/Arrow";
 
 import Versus from "../../../../Components/Ui/Versus";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import ko from "dayjs/locale/ko";
 import { useSelector } from "react-redux";
 import { forwardRef } from "react";
@@ -31,6 +31,7 @@ const DateList = forwardRef(({ list, ...props }, ref) => {
       ? dayjs(date).tz(dayjs.tz.guess()).locale(ko)
       : dayjs(date).tz(dayjs.tz.guess());
   const isToday = dayjs(date).format("YYYYMMDD") === dayjs().format("YYYYMMDD");
+
   return (
     <Container ref={ref} {...props}>
       {/* 날짜 */}
@@ -74,7 +75,11 @@ const DateList = forwardRef(({ list, ...props }, ref) => {
               {title && <Label>{labelText}</Label>}
               <Team className="right">
                 <span>{homeShort ? `${homeShort.toUpperCase()}` : "TBD"}</span>
-                <span>{homeWinRate ? `${homeWinRate.toFixed(1)} %` : ""}</span>
+                <span>
+                  {homeShort !== "TBD" && homeWinRate
+                    ? `${homeWinRate.toFixed(1)} %`
+                    : ""}
+                </span>
               </Team>
               <TeamLogo>
                 <Avatar
@@ -119,7 +124,11 @@ const DateList = forwardRef(({ list, ...props }, ref) => {
               </TeamLogo>
               <Team className="left">
                 <span>{awayShort ? `${awayShort.toUpperCase()}` : "TBD"}</span>
-                <span>{awayWinRate ? `${awayWinRate.toFixed(1)} %` : ""}</span>
+                <span>
+                  {homeShort !== "TBD" && awayWinRate
+                    ? `${awayWinRate.toFixed(1)} %`
+                    : ""}
+                </span>
               </Team>
             </GameList>
           );
