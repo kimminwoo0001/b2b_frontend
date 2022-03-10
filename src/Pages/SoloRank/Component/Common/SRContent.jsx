@@ -13,6 +13,11 @@ import * as table from "../styled/MTStyledTable";
 import * as layout from "../styled/MTStyledLayout";
 import { useModal } from "../../../../Hooks";
 import Modals, { modalList } from "../../../../Components/Modals/Modals";
+import { API } from "../../../config";
+import { useSelector, useDispatch, batch } from "react-redux";
+import { Loading } from "../../../../redux/modules/filtervalue";
+import axiosRequest from "../../../../lib/axios/axiosRequest";
+import { SetModalInfo } from "../../../../redux/modules/modalvalue";
 
 const S = { table, layout };
 
@@ -24,14 +29,40 @@ const MTContent = ({
   isMyTeamTab = false,
   getInfoFunc,
 }) => {
+  const user = useSelector((state) => state.UserReducer);
   const { openModal } = useModal();
   const { t } = useTranslation();
   const [playerInfoSet, setPlayerInfoSet] = useState(playerInfo);
+  const dispatch = useDispatch();
 
   const handleClick = () => {
     openModal(modalList.addTeamPlayer, {
-      onSubmit: () => {
+      onSubmit: (e) => {
         console.log("submit시 action을 등록");
+        const url = `${API}/lolapi/solorank/summoneradd`;
+        const params = {
+          player: e.nickname,
+          role: e.position,
+          summonerId: e.selectedSoloRankIds,
+          puuId: e.selectedSoloRankPuuids,
+          token: user.token,
+        };
+        console.log(params);
+        // dispatch(Loading(true));
+        // axiosRequest(
+        //   undefined,
+        //   url,
+        //   params,
+        //   function (e) {
+        //     console.log(e);
+        //     getInfoFunc();
+        //     dispatch(Loading(false));
+        //   },
+        //   function (objStore) {
+        //     dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+        //     dispatch(Loading(false));
+        //   }
+        // );
         getInfoFunc();
       },
     });

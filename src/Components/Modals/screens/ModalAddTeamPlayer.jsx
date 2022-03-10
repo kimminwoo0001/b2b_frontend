@@ -23,38 +23,6 @@ import {
 } from "../../../Styles/ui";
 import * as layout from "../styled/styled_modal_layout";
 
-// 샘플데이터
-const playerList = [
-  {
-    logo: "images/champion/nunu.png",
-    team: "t1",
-    pos: 1,
-    id: "Faker",
-    name: "이상혁",
-  },
-  {
-    team: "t2",
-    logo: "images/champion/teemo.png",
-    id: "Faker2",
-    pos: 2,
-    name: "이상혁2",
-  },
-  {
-    team: "t3",
-    logo: "images/champion/teemo.png",
-    pos: 3,
-    id: "Faker3",
-    name: "이상혁3",
-  },
-  {
-    team: "t4",
-    logo: "images/champion/teemo.png",
-    pos: 4,
-    id: "Faker4",
-    name: "이상혁4",
-  },
-];
-
 //  styled component
 const S = {
   layout,
@@ -81,6 +49,8 @@ const ModalAddTeamPlayer = ({ onSubmit, onClose }) => {
     searchInputRef,
     false
   );
+  const [selectedSoloRankIds, setSelectedSoloRankIds] = useState([]);
+  const [selectedSoloRankPuuids, setSelectedSoloRankPuuids] = useState([]);
 
   // event callback
   const handleChangeInputs = (e) => {
@@ -112,8 +82,9 @@ const ModalAddTeamPlayer = ({ onSubmit, onClose }) => {
       return newPosition;
     });
   }, []);
+
   const handleSelectSoloRankId = useCallback((data) => {
-    console.log(data);
+    console.log("handleSelectSoloRankId", data);
   }, []);
   // general function
   const searchQuery = useCallback(
@@ -132,6 +103,10 @@ const ModalAddTeamPlayer = ({ onSubmit, onClose }) => {
   useEffect(() => {
     !selectedPlayer && searchQuery(nickname);
   }, [nickname]);
+
+  useEffect(() => {
+    console.log("selectedSoloRankIds", selectedSoloRankIds);
+  }, [selectedSoloRankIds]);
 
   //  selected -> nickname, name, position
   useEffect(() => {
@@ -163,20 +138,29 @@ const ModalAddTeamPlayer = ({ onSubmit, onClose }) => {
           <Form>
             <fieldset>
               <legend>선수닉네임</legend>
-              <ModalLocalPlayerSearch
+              <input
+                type="text"
+                css={[inputStyle.color.main, inputStyle.size[13]]}
+                name="nickname"
+                value={nickname}
+                readOnly={selectedPlayer}
+                onChange={handleChangeInputs}
+                autoComplete="off"
+              />
+              {/* <ModalLocalPlayerSearch
                 ref={searchInputRef}
                 value={nickname}
                 isOpen={isLocalSearchList}
                 onClear={handleClickClear}
                 options={playerList}
                 name="nickname"
-                onSelect={handleSelectPlayer}
+                // onSelect={handleSelectPlayer}
                 onChange={handleChangeInputs}
                 readOnly={selectedPlayer}
-              />
+              /> */}
             </fieldset>
 
-            <fieldset>
+            {/* <fieldset>
               <legend>선수명</legend>
               <InputContainer>
                 <input
@@ -189,7 +173,7 @@ const ModalAddTeamPlayer = ({ onSubmit, onClose }) => {
                   autoComplete="off"
                 />
               </InputContainer>
-            </fieldset>
+            </fieldset> */}
 
             <fieldset>
               <legend>포지션</legend>
@@ -205,16 +189,55 @@ const ModalAddTeamPlayer = ({ onSubmit, onClose }) => {
 
           {/* 솔로랭크 아이디 */}
           <SearchContainer>
-            <ModalPlayerSearch name="solo1" onSelect={handleSelectSoloRankId} />
-            <ModalPlayerSearch name="solo2" onSelect={handleSelectSoloRankId} />
-            <ModalPlayerSearch name="solo3" onSelect={handleSelectSoloRankId} />
-            <ModalPlayerSearch name="solo4" onSelect={handleSelectSoloRankId} />
+            <ModalPlayerSearch
+              name="solo1"
+              onSelect={handleSelectSoloRankId}
+              selectedSoloRankIds={selectedSoloRankIds}
+              setSelectedSoloRankIds={setSelectedSoloRankIds}
+              selectedSoloRankPuuids={selectedSoloRankPuuids}
+              setSelectedSoloRankPuuids={setSelectedSoloRankPuuids}
+            />
+            <ModalPlayerSearch
+              name="solo2"
+              onSelect={handleSelectSoloRankId}
+              selectedSoloRankIds={selectedSoloRankIds}
+              setSelectedSoloRankIds={setSelectedSoloRankIds}
+              selectedSoloRankPuuids={selectedSoloRankPuuids}
+              setSelectedSoloRankPuuids={setSelectedSoloRankPuuids}
+            />
+            <ModalPlayerSearch
+              name="solo3"
+              onSelect={handleSelectSoloRankId}
+              selectedSoloRankIds={selectedSoloRankIds}
+              setSelectedSoloRankIds={setSelectedSoloRankIds}
+              selectedSoloRankPuuids={selectedSoloRankPuuids}
+              setSelectedSoloRankPuuids={setSelectedSoloRankPuuids}
+            />
+            <ModalPlayerSearch
+              name="solo4"
+              onSelect={handleSelectSoloRankId}
+              selectedSoloRankIds={selectedSoloRankIds}
+              setSelectedSoloRankIds={setSelectedSoloRankIds}
+              selectedSoloRankPuuids={selectedSoloRankPuuids}
+              setSelectedSoloRankPuuids={setSelectedSoloRankPuuids}
+            />
           </SearchContainer>
         </S.layout.Main>
 
         {/* 하단 submit 버튼 */}
         <S.layout.Footer>
-          <S.layout.SubmitButton>선수등록</S.layout.SubmitButton>
+          <S.layout.SubmitButton
+            onClick={() => {
+              onSubmit({
+                nickname,
+                position,
+                selectedSoloRankIds,
+                selectedSoloRankPuuids,
+              });
+            }}
+          >
+            선수등록
+          </S.layout.SubmitButton>
         </S.layout.Footer>
       </S.layout.Container>
     </ReactModal>

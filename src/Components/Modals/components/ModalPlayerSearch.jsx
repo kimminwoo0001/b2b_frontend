@@ -36,7 +36,14 @@ const dropdownVariants = {
 };
 
 /** 추후 렌더링 상의 해야함 -> query change 될때마다 리렌더 되고 있음. */
-const ModalPlayerSearch = ({ name, onSelect = () => {} }) => {
+const ModalPlayerSearch = ({
+  name,
+  onSelect = () => {},
+  selectedSoloRankIds,
+  setSelectedSoloRankIds,
+  selectedSoloRankPuuids,
+  setSelectedSoloRankPuuids,
+}) => {
   // hook
   const queryList = useRef(null);
   const [isListOpen, setIsListOpen] = useDetectOutsideClick(queryList, false);
@@ -61,6 +68,9 @@ const ModalPlayerSearch = ({ name, onSelect = () => {} }) => {
       url,
       params,
       function (e) {
+        if (e.result?.error && e.result?.error === "404") {
+          return;
+        }
         setQueryResult([e.result]);
         dispatch(Loading(false));
       },
@@ -76,13 +86,31 @@ const ModalPlayerSearch = ({ name, onSelect = () => {} }) => {
     setQuery(value);
   }, []);
   const handleClickClear = useCallback(() => {
+    setSelectedSoloRankIds(
+      selectedSoloRankIds.filter((el) => el !== selectedObj.summonerId)
+    );
+    setSelectedSoloRankPuuids(
+      selectedSoloRankPuuids.filter((el) => el !== selectedObj.puuId)
+    );
     setQuery("");
     setSelectedObj(null);
-  }, []);
-  const handleClickSelect = useCallback((player) => {
-    setSelectedObj(player);
-    setIsListOpen(false);
-  }, []);
+  }, [selectedSoloRankIds]);
+
+  const handleClickSelect = useCallback(
+    (player) => {
+      setSelectedObj(player);
+
+      if (selectedSoloRankIds.includes(player.summonerId) === false) {
+        setSelectedSoloRankIds([...selectedSoloRankIds, player.summonerId]);
+      }
+      if (selectedSoloRankPuuids.includes(player.summonerId) === false) {
+        setSelectedSoloRankPuuids([...selectedSoloRankPuuids, player.puuId]);
+      }
+
+      setIsListOpen(false);
+    },
+    [selectedSoloRankIds]
+  );
 
   useUpdateEffect(() => {
     if (selectedObj && selectedObj.id) {
