@@ -227,6 +227,7 @@ const ModalAddTeamPlayer = ({ onSubmit, onClose }) => {
         {/* 하단 submit 버튼 */}
         <S.layout.Footer>
           <S.layout.SubmitButton
+            disabled={selectedSoloRankIds.length === 0}
             onClick={() => {
               onSubmit({
                 nickname,

@@ -48,21 +48,21 @@ const MTContent = ({
           token: user.token,
         };
         console.log(params);
-        // dispatch(Loading(true));
-        // axiosRequest(
-        //   undefined,
-        //   url,
-        //   params,
-        //   function (e) {
-        //     console.log(e);
-        //     getInfoFunc();
-        //     dispatch(Loading(false));
-        //   },
-        //   function (objStore) {
-        //     dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
-        //     dispatch(Loading(false));
-        //   }
-        // );
+        dispatch(Loading(true));
+        axiosRequest(
+          undefined,
+          url,
+          params,
+          function (e) {
+            console.log(e);
+            getInfoFunc();
+            dispatch(Loading(false));
+          },
+          function (objStore) {
+            dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
+            dispatch(Loading(false));
+          }
+        );
         getInfoFunc();
       },
     });
