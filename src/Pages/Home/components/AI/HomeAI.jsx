@@ -22,6 +22,7 @@ import { API } from "../../../config";
 import { useSelector } from "react-redux";
 import NotFound from "../../../../Components/Ui/Error/NotFound";
 
+// dayjs 확장
 const utc = require("dayjs/plugin/utc");
 const timezone = require("dayjs/plugin/timezone");
 dayjs.extend(utc);
@@ -34,13 +35,27 @@ const LEAGUE = [
   { title: "LPL" },
 ];
 
+const getRecentDateIndex = (data) => {
+  let index;
+  const now = dayjs().tz(dayjs.tz.guess()).format("YYYY-MM-DD");
+
+  data.some((daylist, i) => {
+    index = i;
+    const gameDate = dayjs(daylist.scheduleList[0].time)
+      .utc(true)
+      .format("YYYY-MM-DD");
+    return dayjs(gameDate).unix() - dayjs(now).unix() >= 0;
+  });
+
+  return index;
+};
+
 const HomeAI = ({ ...props }) => {
   const scrollContainerRef = useRef(null);
   const dayListRef = useRef([]);
   const { currentIndex, setIndex, currentTab } = useTab(0, LEAGUE);
   const currentTabName = currentTab.title.toLowerCase();
   const user = useSelector((state) => state.UserReducer);
-  const now = dayjs().tz(dayjs.tz.guess()).format("YYYY-MM-DD");
 
   const getData = async (tabname) => {
     if (!tabname) return;
@@ -69,20 +84,14 @@ const HomeAI = ({ ...props }) => {
     [currentTabName]
   );
 
+  // handler
   const handleClick = (index) => setIndex(index);
 
+  // 오늘 or 다음경기 찾아서 스크롤
   useEffect(() => {
     if (!data && !Array.isArray(data)) return;
 
-    let index;
-    data.some((daylist, i) => {
-      index = i;
-      const gameDate = dayjs(daylist.scheduleList[0].time)
-        .utc(true)
-        .format("YYYY-MM-DD");
-      return dayjs(gameDate).unix() - dayjs(now).unix() >= 0;
-    });
-
+    const index = getRecentDateIndex(data);
     const { top: containerTop } =
       scrollContainerRef.current.getBoundingClientRect();
     const { top: childTop } = dayListRef.current[index].getBoundingClientRect();
@@ -136,7 +145,7 @@ const HomeAI = ({ ...props }) => {
             ) : (
               data?.map((gameList, index) => (
                 <DateList
-                  key={currentTabName + gameList.date}
+                  key={currentTabName + index}
                   ref={(el) => {
                     dayListRef.current[index] = el;
                   }}
