@@ -22,7 +22,6 @@ import { InitializeGameState, SetGameId } from "../../redux/modules/gamevalue";
 import { SetTeam } from "../../redux/modules/filtervalue";
 import { goPlayerCompare, goTeamCompare } from "../../lib/pagePath";
 
-
 function GameReport() {
   const filters = useSelector((state) => state.FilterReducer);
   const gamevalue = useSelector((state) => state.GameReportReducer);
@@ -33,10 +32,10 @@ function GameReport() {
 
   useEffect(() => {
     dispatch(InitializeGameState());
-  }, [])
+  }, []);
 
   if (document.title !== `${t("sidebar.part12")} - NUNU.GG`) {
-    document.title = `${t("sidebar.part12")} - NUNU.GG`
+    document.title = `${t("sidebar.part12")} - NUNU.GG`;
   }
 
   return (
@@ -45,25 +44,32 @@ function GameReport() {
       {copyvalue?.openFilterModal === "/teamCompare" && <TeamFilterModal />}
       {copyvalue?.openFilterModal === "/playerCompare" && <PlayerFilterModal />}
       <GameWrapper>
-        {checkGameId && filters.team !== "" && filters.team.length > 0 ? "" :
+        {checkGameId && filters.team !== "" && filters.team.length > 0 ? (
+          ""
+        ) : (
           <>
             <SideBar />
-            <div
-              className={filters.filterMenuState ? "filter-open" : "filter-close"}
-            >
-              <Filter />
-            </div>
-            <div
-              className={filters.filterMenuState ? "filter-close" : "filter-open"}
-            >
-              <CloseFilter />
-            </div>
-          </>}
+          </>
+        )}
         <ContentWrapper>
           {filters.team !== "" && filters.team.length > 0 ? (
             <GameReportTab />
           ) : (
-            <SelectFilter />
+            // <SelectFilter />
+            <Temporal>
+              <iframe
+                style={{
+                  paddingLeft: 10,
+                }}
+                width="1422"
+                height="800"
+                src="https://www.youtube.com/embed/c6e38xOmXfw"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </Temporal>
           )}
         </ContentWrapper>
       </GameWrapper>
@@ -146,11 +152,8 @@ const ContentWrapper = styled.div`
   width: 100%;
   flex-direction: column;
   padding: 0px 0;
-
 `;
-
 
 const Temporal = styled.div`
   padding: 40px 0;
-
-`
+`;
