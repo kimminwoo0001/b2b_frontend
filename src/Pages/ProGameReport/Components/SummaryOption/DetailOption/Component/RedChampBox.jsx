@@ -5,7 +5,6 @@ import styled from "@emotion/styled/macro";
 import transferValuetoWidth from "../../../../lib/transferValuetoWidth";
 import { useSelector, useDispatch } from "react-redux";
 import thousand from "../../../../../../lib/thousand";
-import { ContinuousColorLegend } from "react-vis";
 
 const detailBoxWidth = 253;
 

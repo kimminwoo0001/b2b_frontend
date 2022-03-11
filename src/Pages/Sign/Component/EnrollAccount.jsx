@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import contentTOU from "../../../lib/content/contentTOU";
 import contentPICACU from "../../../lib/content/contentPICAUA";
 import checkEmail from "../lib/checkEmail";
-import { number } from "prop-types";
 import {
   SetConfirmFuncId,
   SetDesc,
