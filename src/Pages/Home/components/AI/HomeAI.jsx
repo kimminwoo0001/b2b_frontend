@@ -22,6 +22,7 @@ import { API } from "../../../config";
 import { useSelector } from "react-redux";
 import NotFound from "../../../../Components/Ui/Error/NotFound";
 
+// dayjs 확장
 const utc = require("dayjs/plugin/utc");
 const timezone = require("dayjs/plugin/timezone");
 dayjs.extend(utc);
@@ -34,13 +35,25 @@ const LEAGUE = [
   { title: "LPL" },
 ];
 
+const getRecentDateIndex = (data) => {
+  let index;
+  const now = dayjs().tz(dayjs.tz.guess()).format("YYYY-MM-DD");
+
+  data.some((daylist, i) => {
+    index = i;
+    const gameDate = dayjs(daylist[0].time).format("YYYY-MM-DD");
+    return dayjs(gameDate).unix() - dayjs(now).unix() >= 0;
+  });
+
+  return index;
+};
+
 const HomeAI = ({ ...props }) => {
   const scrollContainerRef = useRef(null);
   const dayListRef = useRef([]);
   const { currentIndex, setIndex, currentTab } = useTab(0, LEAGUE);
   const currentTabName = currentTab.title.toLowerCase();
   const user = useSelector((state) => state.UserReducer);
-  const now = dayjs().tz(dayjs.tz.guess()).format("YYYY-MM-DD");
 
   const getData = async (tabname) => {
     if (!tabname) return;
@@ -57,6 +70,7 @@ const HomeAI = ({ ...props }) => {
       data: params,
       headers: { "content-type": "application/x-www-form-urlencoded" },
     });
+
     if (result.data.status === "201") {
       return result.data.response;
     } else {
@@ -69,26 +83,36 @@ const HomeAI = ({ ...props }) => {
     [currentTabName]
   );
 
+  const convertedDate = data?.map((schedule) => {
+    schedule.time = dayjs(schedule.time)
+      .utc(true)
+      .tz(dayjs.tz.guess())
+      .format("YYYY-MM-DD hh:mm:ss");
+
+    return schedule;
+  });
+
+  const dateObj = convertedDate?.reduce((a, b) => {
+    if (a.hasOwnProperty(b.time.slice(0, 10))) {
+      a[b.time.slice(0, 10)].push(b);
+    } else {
+      a[b.time.slice(0, 10)] = [b];
+    }
+    return a;
+  }, {});
+
+  // handler
   const handleClick = (index) => setIndex(index);
 
+  // 오늘 or 다음경기 찾아서 스크롤
   useEffect(() => {
-    if (!data && !Array.isArray(data)) return;
-
-    let index;
-    data.some((daylist, i) => {
-      index = i;
-      const gameDate = dayjs(daylist.scheduleList[0].time)
-        .utc(true)
-        .format("YYYY-MM-DD");
-      return dayjs(gameDate).unix() - dayjs(now).unix() >= 0;
-    });
-
+    if (!dateObj || !Array.isArray(Object.values(dateObj))) return;
+    const index = getRecentDateIndex(Object.values(dateObj));
     const { top: containerTop } =
       scrollContainerRef.current.getBoundingClientRect();
     const { top: childTop } = dayListRef.current[index].getBoundingClientRect();
-
     scrollContainerRef.current.scrollTo({ top: childTop - containerTop });
-  }, [data]);
+  }, [dateObj]);
 
   return (
     <Container {...props}>
@@ -134,13 +158,14 @@ const HomeAI = ({ ...props }) => {
                 text="정보를 받아오지 못 했습니다"
               />
             ) : (
-              data?.map((gameList, index) => (
+              dateObj &&
+              Object.values(dateObj)?.map((scheduleList, index) => (
                 <DateList
-                  key={currentTabName + gameList.date}
+                  key={currentTabName + index}
                   ref={(el) => {
                     dayListRef.current[index] = el;
                   }}
-                  list={gameList}
+                  list={scheduleList}
                 />
               ))
             )}
@@ -214,9 +239,20 @@ const ButtonLeague = styled(Button)`
   }
 
   /* hover시 버튼색 변화 & LCS 로고 색변화 */
-  &:hover,
+
   &.is-active {
     background-color: ${colors.point};
+
+    &:nth-of-type(3) {
+      ${LeagueLogo} {
+        background-image: ${({ league }) =>
+          `url(images/league/ico_league_${league}_hover.png)`};
+      }
+    }
+  }
+
+  &:hover {
+    background-color: ${colors.bg_box_hover};
 
     &:nth-of-type(3) {
       ${LeagueLogo} {

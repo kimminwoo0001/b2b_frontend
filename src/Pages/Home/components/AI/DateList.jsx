@@ -17,22 +17,23 @@ import { useSelector } from "react-redux";
 import { forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 
+// dayjs 확장
 const utc = require("dayjs/plugin/utc");
 const timezone = require("dayjs/plugin/timezone");
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
 const DateList = forwardRef(({ list, ...props }, ref) => {
-  const { scheduleList } = list;
+  const firstGameTime = list[0].time;
   const { t } = useTranslation();
   // 경기 날짜 관련
   const locale = useSelector((state) => state.LocaleReducer);
-  const gameDate = dayjs(scheduleList[0].time).utc(true).tz(dayjs.tz.guess());
+  const gameDate = dayjs(firstGameTime);
   const localeGameDate = locale === "ko" ? gameDate.locale(ko) : gameDate;
-  const now = dayjs().format("YYYYMMDD");
+  const now = dayjs().tz(dayjs.tz.guess()).format("YYYYMMDD");
 
   // 오늘 , 경기가 끝났는지 판별
-  const isToday = dayjs(scheduleList[0].time).format("YYYYMMDD") === now;
+  const isToday = dayjs(firstGameTime).format("YYYYMMDD") === now;
   const isComplete = gameDate.unix() < dayjs(now).unix();
 
   return (
@@ -48,7 +49,7 @@ const DateList = forwardRef(({ list, ...props }, ref) => {
 
       {/* AI 예측결과 */}
       <GameInfo className={isComplete ? "is-complete" : ""}>
-        {scheduleList.map((games, _) => {
+        {list.map((games, _) => {
           const {
             winner,
             homeTeam: {
