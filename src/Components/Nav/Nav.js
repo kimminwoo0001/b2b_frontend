@@ -12,10 +12,11 @@ import LocaleDropdown from "./LocaleDropdown";
 import DataProcess from "../DataProcessing/DataProcess";
 import SearchBox from "./SearchBox";
 import AlertModal from "../UtilityComponent/AlertModal";
-import axiosRequest from "./../../lib/axios/axiosRequest"
+import axiosRequest from "./../../lib/axios/axiosRequest";
 import NoticeDropdown from "./NoticeDropdown";
 import { Loading } from "../../redux/modules/filtervalue";
 import { goHome, goLogin } from "../../lib/pagePath";
+import { spacing } from "../../Styles/ui";
 
 function Nav() {
   // locale 값을 store에 저장된 값을 가져옴
@@ -41,14 +42,14 @@ function Nav() {
 
   // 로그아웃 함수, 로그아웃 이벤트가 발생되면 session 값을 clear하고 로그인 페이지로 이동시킴
   const handleLogOut = async () => {
-    dispatch(Loading(true))
+    dispatch(Loading(true));
     const url = `${API}/lolapi/logout`;
     const info = `id=${user.id}&charge_time=${user.charge_time}&lang=${lang}`;
     axiosRequest("POST", url, info, function (e) {
-      dispatch(Loading(false))
+      dispatch(Loading(false));
       sessionStorage.clear();
       dispatch(UserLogout());
-      navigate(goLogin)
+      navigate(goLogin);
     });
   };
 
@@ -62,15 +63,15 @@ function Nav() {
       {/* <AlertModal desc={alertDesc} isOpen={isOpen} setIsOpen={setIsOpen} />/ */}
       <NavWrapper>
         <div className="nav-left">
-          <div className="nav-flex">
+          <div className="logo">
             <img
-              className="logo"
               src="/Images/logo.png"
               alt="profile"
               onClick={() => navigate(goHome)}
             />
-            <SearchBox />
           </div>
+
+          <SearchBox />
         </div>
         <div className="nav-mid">
           <DataProcess />
@@ -112,24 +113,32 @@ export default Nav;
 
 const NavWrapper = styled.div`
   width: 100%;
+
   height: 66px;
-  padding: 12px 25px 0 0;
+  padding: 0 25px 0 0;
   background-color: #16151c;
   border-bottom: 1px solid #484655;
   display: flex;
   position: relative;
+
   .nav-left {
-    display: table-cell;
-    vertical-align: middle;
-    width: auto;
-    position: absolute;
-    left: 0;
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
     .logo {
+      ${spacing.paddingL(3)};
       width: 158px;
       height: 37px;
-      margin: 3px 18px 13px 24px;
-      object-fit: contain;
       cursor: pointer;
+
+      img {
+        object-fit: contain;
+        object-position: center;
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 
@@ -138,14 +147,31 @@ const NavWrapper = styled.div`
   }
 
   .nav-mid {
-    position: absolute;
+    flex: 1.3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* position: absolute;
     left: 43%;
-    top: 40%;
+    top: 40%; */
+
+    label {
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+
+    @media screen and (max-width: 1200px) {
+      display: none;
+    }
   }
 
   .nav-right {
-    position: absolute;
-    right: 1%;
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    /* position: absolute;
+    right: 1%; */
   }
 `;
 const ContentsWrapper = styled.div`
