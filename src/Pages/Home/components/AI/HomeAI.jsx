@@ -16,8 +16,16 @@ import Avatar from "../../../../Components/Ui/Avatar";
 import DateList from "./DateList";
 import dayjs from "dayjs";
 import { useAsync } from "../../../../Hooks";
-import { delay } from "../../../../lib/delay";
 import Progress from "../../../../Components/Ui/Loading/Progress";
+import axios from "axios";
+import { API } from "../../../config";
+import { useSelector } from "react-redux";
+import NotFound from "../../../../Components/Ui/Error/NotFound";
+
+const utc = require("dayjs/plugin/utc");
+const timezone = require("dayjs/plugin/timezone");
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const LEAGUE = [
   { title: "LCK" },
@@ -26,207 +34,53 @@ const LEAGUE = [
   { title: "LPL" },
 ];
 
-// mok data
-const DATE_DATA = [
-  {
-    isComplete: true,
-    league: "LCK",
-    date: 1645994400000,
-    scheduleList: [
-      {
-        time: 1646294400000,
-        winner: "away",
-
-        // 홈팀 정보
-        homeTeam: {
-          name: "t1",
-        },
-        homeScore: 2,
-        homeWinRate: 58.96,
-
-        // 원정팀 정보
-        awayTeam: {
-          name: "geng",
-        },
-        awayScore: 0,
-        awayWinRate: 42.04,
-      },
-    ],
-  },
-  {
-    isComplete: true,
-    league: "LCK",
-    date: 1646094400000,
-    scheduleList: [
-      {
-        time: 1646294400000,
-        winner: "home",
-
-        // 홈팀 정보
-        homeTeam: {
-          name: "t1",
-        },
-        homeScore: 2,
-        homeWinRate: 58.96,
-
-        // 원정팀 정보
-        awayTeam: {
-          name: "geng",
-        },
-        awayScore: 0,
-        awayWinRate: 42.04,
-      },
-      {
-        time: 1646294400000,
-        winner: "home",
-
-        homeTeam: {
-          name: "sb_v2",
-        },
-        homeScore: 2,
-        homeWinRate: 58.96,
-
-        awayTeam: {
-          name: "bron",
-        },
-        awayScore: 0,
-        awayWinRate: 42.04,
-      },
-    ],
-  },
-  {
-    isComplete: false,
-    league: "LCK",
-    date: 1646294400000,
-    scheduleList: [
-      {
-        time: 1646294400000,
-
-        homeTeam: {
-          name: "t1",
-        },
-        homeScore: 0,
-        homeWinRate: 58.96,
-
-        awayTeam: {
-          name: "geng",
-        },
-        awayScore: 0,
-        awayWinRate: 42.04,
-      },
-      {
-        time: 1646294400000,
-
-        homeTeam: {
-          name: "t1",
-        },
-        homeScore: 0,
-        homeWinRate: 58.96,
-
-        awayTeam: {
-          name: "geng",
-        },
-        awayScore: 0,
-        awayWinRate: 42.04,
-      },
-    ],
-  },
-  {
-    isComplete: false,
-    league: "LCK",
-    date: 1646394400000,
-    scheduleList: [
-      {
-        time: 1646394400000,
-
-        homeTeam: {
-          name: "t1",
-        },
-        homeScore: 0,
-        homeWinRate: 58.96,
-
-        awayTeam: {
-          name: "geng",
-        },
-        awayScore: 0,
-        awayWinRate: 42.04,
-      },
-      {
-        time: 1646294400000,
-
-        homeTeam: {
-          name: "t1",
-        },
-        homeScore: 0,
-        homeWinRate: 58.96,
-
-        awayTeam: {
-          name: "geng",
-        },
-        awayScore: 0,
-        awayWinRate: 42.04,
-      },
-    ],
-  },
-  {
-    isComplete: false,
-    league: "LCK",
-    date: 1646494400000,
-    scheduleList: [
-      {
-        title: "playoff",
-        time: 1646294400000,
-
-        homeTeam: {
-          // name: "t1",
-        },
-        homeScore: 0,
-        // homeWinRate: 58.96,
-
-        awayTeam: {
-          name: "geng",
-        },
-        awayScore: 0,
-        awayWinRate: 42.04,
-      },
-      {
-        time: 1646294400000,
-
-        homeTeam: {
-          name: "t1",
-        },
-        homeScore: 0,
-        homeWinRate: 58.96,
-
-        // awayTeam: {
-        // name: "geng",
-        // },
-        awayScore: 0,
-        // awayWinRate: 42.04,
-      },
-    ],
-  },
-];
-
 const HomeAI = ({ ...props }) => {
   const scrollContainerRef = useRef(null);
   const dayListRef = useRef([]);
   const { currentIndex, setIndex, currentTab } = useTab(0, LEAGUE);
   const currentTabName = currentTab.title.toLowerCase();
+  const user = useSelector((state) => state.UserReducer);
+  const now = dayjs().tz(dayjs.tz.guess()).format("YYYY-MM-DD");
+
   const getData = async (tabname) => {
-    const result = await delay(2000, DATE_DATA);
-    return result;
+    if (!tabname) return;
+    const url = `${API}/lolapi/home/schedule`;
+    const params = {
+      league: tabname,
+      token: user.token,
+      id: user.id,
+    };
+
+    const result = await axios({
+      method: "post",
+      url,
+      data: params,
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+    });
+    if (result.data.status === "201") {
+      return result.data.response;
+    } else {
+      throw result.data.response;
+    }
   };
-  const [{ loading, data, error }, fetch] = useAsync(getData, [currentTabName]);
+
+  const [{ loading, data, error }, fetch] = useAsync(
+    () => getData(currentTabName),
+    [currentTabName]
+  );
+
   const handleClick = (index) => setIndex(index);
 
   useEffect(() => {
     if (!data && !Array.isArray(data)) return;
 
     let index;
-    data.some((item, i) => {
+    data.some((daylist, i) => {
       index = i;
-      return item.date - dayjs() >= 0;
+      const gameDate = dayjs(daylist.scheduleList[0].time)
+        .utc(true)
+        .format("YYYY-MM-DD");
+      return dayjs(gameDate).unix() - dayjs(now).unix() >= 0;
     });
 
     const { top: containerTop } =
@@ -274,6 +128,11 @@ const HomeAI = ({ ...props }) => {
               <ProgressContainer>
                 <Progress text={"데이터를 받아오는 중입니다"} />
               </ProgressContainer>
+            ) : error ? (
+              <NotFound
+                css={{ height: "100%" }}
+                text="정보를 받아오지 못 했습니다"
+              />
             ) : (
               data?.map((gameList, index) => (
                 <DateList
