@@ -223,9 +223,20 @@ const ButtonLeague = styled(Button)`
   }
 
   /* hover시 버튼색 변화 & LCS 로고 색변화 */
-  &:hover,
+
   &.is-active {
     background-color: ${colors.point};
+
+    &:nth-of-type(3) {
+      ${LeagueLogo} {
+        background-image: ${({ league }) =>
+          `url(images/league/ico_league_${league}_hover.png)`};
+      }
+    }
+  }
+
+  &:hover {
+    background-color: ${colors.bg_box_hover};
 
     &:nth-of-type(3) {
       ${LeagueLogo} {
