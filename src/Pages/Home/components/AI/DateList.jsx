@@ -1,25 +1,25 @@
 /** @jsxImportSource @emotion/react */
-import { jsx } from "@emotion/react";
-import styled from "@emotion/styled/macro";
-import Avatar from "../../../../Components/Ui/Avatar";
+import { jsx } from '@emotion/react';
+import styled from '@emotion/styled/macro';
+import Avatar from '../../../../Components/Ui/Avatar';
 import {
   spacing,
   typoStyle,
   colors,
   borderRadiusStyle,
-} from "../../../../Styles/ui";
-import Arrow from "../../../../Components/Ui/Arrow";
+} from '../../../../Styles/ui';
+import Arrow from '../../../../Components/Ui/Arrow';
 
-import Versus from "../../../../Components/Ui/Versus";
-import dayjs from "dayjs";
-import ko from "dayjs/locale/ko";
-import { useSelector } from "react-redux";
-import { forwardRef } from "react";
-import { useTranslation } from "react-i18next";
+import Versus from '../../../../Components/Ui/Versus';
+import dayjs from 'dayjs';
+import ko from 'dayjs/locale/ko';
+import { useSelector } from 'react-redux';
+import { forwardRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // dayjs 확장
-const utc = require("dayjs/plugin/utc");
-const timezone = require("dayjs/plugin/timezone");
+const utc = require('dayjs/plugin/utc');
+const timezone = require('dayjs/plugin/timezone');
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
@@ -29,11 +29,11 @@ const DateList = forwardRef(({ list, ...props }, ref) => {
   // 경기 날짜 관련
   const locale = useSelector((state) => state.LocaleReducer);
   const gameDate = dayjs(firstGameTime);
-  const localeGameDate = locale === "ko" ? gameDate.locale(ko) : gameDate;
-  const now = dayjs().tz(dayjs.tz.guess()).format("YYYYMMDD");
+  const localeGameDate = locale === 'ko' ? gameDate.locale(ko) : gameDate;
+  const now = dayjs().tz(dayjs.tz.guess()).format('YYYYMMDD');
 
   // 오늘 , 경기가 끝났는지 판별
-  const isToday = dayjs(firstGameTime).format("YYYYMMDD") === now;
+  const isToday = dayjs(firstGameTime).format('YYYYMMDD') === now;
   const isComplete = gameDate.unix() < dayjs(now).unix();
 
   return (
@@ -42,13 +42,13 @@ const DateList = forwardRef(({ list, ...props }, ref) => {
       <DateContainer>
         <span>{localeGameDate.format(`M.D`)}</span>
         <span>
-          {localeGameDate.format("dddd")}{" "}
-          {isToday ? `(${t("league.schedule.today")})` : ""}
+          {localeGameDate.format('dddd')}{' '}
+          {isToday ? `(${t('league.schedule.today')})` : ''}
         </span>
       </DateContainer>
 
       {/* AI 예측결과 */}
-      <GameInfo className={isComplete ? "is-complete" : ""}>
+      <GameInfo className={isComplete ? 'is-complete' : ''}>
         {list.map((games, _) => {
           const {
             winner,
@@ -66,34 +66,34 @@ const DateList = forwardRef(({ list, ...props }, ref) => {
           } = games;
 
           // 경기정보 텍스트 포멧팅
-          const [league, ...rest] = title.split("Season/");
+          const [league, ...rest] = title.split('Season/');
 
           const splitText = rest
-            .join(" ")
-            .replace(/2_W/g, " W")
-            .replace(/\s{2}|Season/gi, "")
-            .split("_");
+            .join(' ')
+            .replace(/2_W/g, ' W')
+            .replace(/\s{2}|Season/gi, '')
+            .split('_');
           splitText.pop();
 
-          const labelText = splitText.join(" ");
+          const labelText = splitText.join(' ');
 
           return (
-            <GameList key={"gameInfo" + _}>
+            <GameList key={'gameInfo' + _}>
               {title && <Label>{labelText}</Label>}
               <Team className="right">
-                <span>{homeShort ? `${homeShort.toUpperCase()}` : "TBD"}</span>
+                <span>{homeShort ? `${homeShort.toUpperCase()}` : 'TBD'}</span>
                 <span>
-                  {homeShort !== "TBD" && homeWinRate
+                  {homeShort !== 'TBD' && homeWinRate
                     ? `${homeWinRate.toFixed(1)} %`
-                    : ""}
+                    : ''}
                 </span>
               </Team>
               <TeamLogo>
                 <Avatar
-                  src={`images/team/ico_team_${homeShort}.png`}
-                  alt={homeShort ?? "TBD"}
+                  src={`Images/team/ico_team_${homeShort}.png`}
+                  alt={homeShort ?? 'TBD'}
                   onError={(e) =>
-                    (e.target.src = `images/team/ico_team_tbd.png`)
+                    (e.target.src = `Images/team/ico_team_tbd.png`)
                   }
                   size={50}
                   circle={false}
@@ -103,13 +103,13 @@ const DateList = forwardRef(({ list, ...props }, ref) => {
                 // 경기 종료시 보여주는 UI
                 <>
                   <Side>
-                    {winner === "home" && <Arrow direction={"L"} size={6} />}
+                    {winner === 'home' && <Arrow direction={'L'} size={6} />}
                   </Side>
                   <Score>
                     {homeScore} : {awayScore}
                   </Score>
                   <Side>
-                    {winner === "away" && <Arrow direction={"R"} size={6} />}
+                    {winner === 'away' && <Arrow direction={'R'} size={6} />}
                   </Side>
                 </>
               ) : (
@@ -120,21 +120,21 @@ const DateList = forwardRef(({ list, ...props }, ref) => {
               )}
               <TeamLogo>
                 <Avatar
-                  src={`images/team/ico_team_${awayShort}.png`}
+                  src={`Images/team/ico_team_${awayShort}.png`}
                   size={50}
                   onError={(e) =>
-                    (e.target.src = `images/team/ico_team_tbd.png`)
+                    (e.target.src = `Images/team/ico_team_tbd.png`)
                   }
-                  alt={awayShort ?? "TBD"}
+                  alt={awayShort ?? 'TBD'}
                   circle={false}
                 ></Avatar>
               </TeamLogo>
               <Team className="left">
-                <span>{awayShort ? `${awayShort.toUpperCase()}` : "TBD"}</span>
+                <span>{awayShort ? `${awayShort.toUpperCase()}` : 'TBD'}</span>
                 <span>
-                  {homeShort !== "TBD" && awayWinRate
+                  {homeShort !== 'TBD' && awayWinRate
                     ? `${awayWinRate.toFixed(1)} %`
-                    : ""}
+                    : ''}
                 </span>
               </Team>
             </GameList>
