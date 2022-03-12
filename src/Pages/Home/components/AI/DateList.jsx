@@ -90,7 +90,7 @@ const DateList = forwardRef(({ list, ...props }, ref) => {
               </Team>
               <TeamLogo>
                 <Avatar
-                  src={`Images/team/ico_team_${homeShort}.png`}
+                  src={`Images/team/ico_team_${homeShort.toLowerCase()}.png`}
                   alt={homeShort ?? 'TBD'}
                   onError={(e) =>
                     (e.target.src = `Images/team/ico_team_tbd.png`)
@@ -120,7 +120,7 @@ const DateList = forwardRef(({ list, ...props }, ref) => {
               )}
               <TeamLogo>
                 <Avatar
-                  src={`Images/team/ico_team_${awayShort}.png`}
+                  src={`Images/team/ico_team_${awayShort.toLowerCase()}.png`}
                   size={50}
                   onError={(e) =>
                     (e.target.src = `Images/team/ico_team_tbd.png`)

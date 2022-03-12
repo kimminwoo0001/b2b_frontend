@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import { jsx } from "@emotion/react";
-import { useEffect, useRef } from "react";
-import styled from "@emotion/styled/macro";
+import { jsx } from '@emotion/react';
+import { useEffect, useRef } from 'react';
+import styled from '@emotion/styled/macro';
 import {
   borderRadiusStyle,
   colors,
@@ -9,39 +9,39 @@ import {
   transitionStyle,
   typoStyle,
   scrollbarStyle,
-} from "../../../../Styles/ui";
-import { useTab } from "../../../../Hooks/useTab";
-import Button from "../../../../Components/Ui/Button";
-import Avatar from "../../../../Components/Ui/Avatar";
-import DateList from "./DateList";
-import dayjs from "dayjs";
-import { useAsync } from "../../../../Hooks";
-import Progress from "../../../../Components/Ui/Loading/Progress";
-import axios from "axios";
-import { API } from "../../../config";
-import { useSelector } from "react-redux";
-import NotFound from "../../../../Components/Ui/Error/NotFound";
+} from '../../../../Styles/ui';
+import { useTab } from '../../../../Hooks/useTab';
+import Button from '../../../../Components/Ui/Button';
+import Avatar from '../../../../Components/Ui/Avatar';
+import DateList from './DateList';
+import dayjs from 'dayjs';
+import { useAsync } from '../../../../Hooks';
+import Progress from '../../../../Components/Ui/Loading/Progress';
+import axios from 'axios';
+import { API } from '../../../config';
+import { useSelector } from 'react-redux';
+import NotFound from '../../../../Components/Ui/Error/NotFound';
 
 // dayjs 확장
-const utc = require("dayjs/plugin/utc");
-const timezone = require("dayjs/plugin/timezone");
+const utc = require('dayjs/plugin/utc');
+const timezone = require('dayjs/plugin/timezone');
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
 const LEAGUE = [
-  { title: "LCK" },
-  { title: "LEC" },
-  { title: "LCS" },
-  { title: "LPL" },
+  { title: 'LCK' },
+  { title: 'LEC' },
+  { title: 'LCS' },
+  { title: 'LPL' },
 ];
 
 const getRecentDateIndex = (data) => {
   let index;
-  const now = dayjs().tz(dayjs.tz.guess()).format("YYYY-MM-DD");
+  const now = dayjs().tz(dayjs.tz.guess()).format('YYYY-MM-DD');
 
   data.some((daylist, i) => {
     index = i;
-    const gameDate = dayjs(daylist[0].time).format("YYYY-MM-DD");
+    const gameDate = dayjs(daylist[0].time).format('YYYY-MM-DD');
     return dayjs(gameDate).unix() - dayjs(now).unix() >= 0;
   });
 
@@ -65,13 +65,13 @@ const HomeAI = ({ ...props }) => {
     };
 
     const result = await axios({
-      method: "post",
+      method: 'post',
       url,
       data: params,
-      headers: { "content-type": "application/x-www-form-urlencoded" },
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
     });
 
-    if (result.data.status === "201") {
+    if (result.data.status === '201') {
       return result.data.response;
     } else {
       throw result.data.response;
@@ -87,7 +87,7 @@ const HomeAI = ({ ...props }) => {
     schedule.time = dayjs(schedule.time)
       .utc(true)
       .tz(dayjs.tz.guess())
-      .format("YYYY-MM-DD hh:mm:ss");
+      .format('YYYY-MM-DD hh:mm:ss');
 
     return schedule;
   });
@@ -121,7 +121,7 @@ const HomeAI = ({ ...props }) => {
         <Toolbox>
           <Avatar
             css={{ marginRight: 5 }}
-            src={"/images/ico-notice-gy.png"}
+            src={'Images/ico-notice-gy.png'}
             size={14}
           />
           <span>
@@ -134,8 +134,8 @@ const HomeAI = ({ ...props }) => {
         <TabContainer>
           {LEAGUE.map((tab, index) => (
             <ButtonLeague
-              key={"tab" + tab.title}
-              className={currentIndex === index ? "is-active" : ""}
+              key={'tab' + tab.title}
+              className={currentIndex === index ? 'is-active' : ''}
               league={tab.title.toLocaleLowerCase()}
               onClick={() => handleClick(index)}
             >
@@ -150,11 +150,11 @@ const HomeAI = ({ ...props }) => {
           <ScrollContainer ref={scrollContainerRef}>
             {loading ? (
               <ProgressContainer>
-                <Progress text={"데이터를 받아오는 중입니다"} />
+                <Progress text={'데이터를 받아오는 중입니다'} />
               </ProgressContainer>
             ) : error ? (
               <NotFound
-                css={{ height: "100%" }}
+                css={{ height: '100%' }}
                 text="정보를 받아오지 못 했습니다"
               />
             ) : (
@@ -227,14 +227,14 @@ const ButtonLeague = styled(Button)`
 
   ${LeagueLogo} {
     background-image: ${({ league }) =>
-      `url(images/league/ico_league_${league}.png)`};
+      `url(Images/league/ico_league_${league}.png)`};
   }
 
   /* LCK 로고 관련 */
   &:nth-of-type(1) {
     ${LeagueLogo} {
       background-image: ${({ league }) =>
-        `url(images/league/ico_league_${league}_hover.png)`};
+        `url(Images/league/ico_league_${league}_hover.png)`};
     }
   }
 
@@ -246,7 +246,7 @@ const ButtonLeague = styled(Button)`
     &:nth-of-type(3) {
       ${LeagueLogo} {
         background-image: ${({ league }) =>
-          `url(images/league/ico_league_${league}_hover.png)`};
+          `url(Images/league/ico_league_${league}_hover.png)`};
       }
     }
   }
@@ -257,7 +257,7 @@ const ButtonLeague = styled(Button)`
     &:nth-of-type(3) {
       ${LeagueLogo} {
         background-image: ${({ league }) =>
-          `url(images/league/ico_league_${league}_hover.png)`};
+          `url(Images/league/ico_league_${league}_hover.png)`};
       }
     }
   }
