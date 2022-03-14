@@ -2,6 +2,16 @@ import React, { useEffect, useState, useRef } from "react";
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend,
+} from "chart.js";
 import { Line } from "react-chartjs-2";
 import { API } from "../../config";
 import axios from "axios";
@@ -12,9 +22,19 @@ import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import axiosRequest from "../../../lib/axios/axiosRequest";
 import { useDispatch } from "react-redux";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
-import { Loading, HandleTab } from '../../../redux/modules/filtervalue';
+import { Loading, HandleTab } from "../../../redux/modules/filtervalue";
 import { goTeamReport } from "../../../lib/pagePath";
+import { lineOptions } from "../../../Styles/chart/option";
 
+ChartJS.register(
+  CategoryScale,
+  PointElement,
+  LineElement,
+  LinearScale,
+  Filler,
+  Tooltip,
+  Legend
+);
 
 function mycomparator(a, b) {
   var num1 = 0;
@@ -51,8 +71,6 @@ function ComparePosition() {
   const isInitialMount = useRef(true);
   const [isActive, setIsActive] = useState(false);
 
-
-
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
@@ -61,8 +79,7 @@ function ComparePosition() {
         dispatch(HandleTab(0));
       }
     }
-  }, [filters.team])
-
+  }, [filters.team]);
 
   useEffect(() => {
     GetPositionGraphData();
@@ -333,7 +350,6 @@ function ComparePosition() {
 
   if (!isActive) return <></>;
 
-
   return (
     <ComparePositionWrapper>
       <DisplayTeams>
@@ -383,49 +399,7 @@ function ComparePosition() {
               );
             })}
           </LegendWrapper>
-          <Line
-            data={topData}
-            options={{
-              legend: {
-                display: false,
-              },
-              tooltips: {
-                mode: "x",
-              },
-              hover: {
-                animationDuration: 100,
-              },
-
-              // responsive: false,
-              maintainAspectRatio: false,
-              scales: {
-                xAxes: [
-                  {
-                    ticks: {
-                      fontColor: "#84818e",
-                      fontSize: 15,
-                    },
-                    gridLines: { color: "rgb(47, 45, 56)" },
-                    offset: true,
-                  },
-                ],
-                yAxes: [
-                  {
-                    ticks: {
-                      stepSize: 2,
-                      fontColor: "#84818e",
-                      fontSize: 15,
-                      min: 0,
-                      max: 10,
-                    },
-                    gridLines: {
-                      color: "rgb(58, 55, 69)",
-                    },
-                  },
-                ],
-              },
-            }}
-          />
+          <Line data={topData} options={lineOptions} />
         </CompareSBR>
       </TopGraph>
       <JngGraph>
@@ -452,47 +426,7 @@ function ComparePosition() {
               );
             })}
           </LegendWrapper>
-          <Line
-            data={jngData}
-            options={{
-              legend: {
-                display: false,
-              },
-              tooltips: {
-                mode: "x",
-              },
-              hover: {
-                animationDuration: 100,
-              },
-              maintainAspectRatio: false,
-              scales: {
-                xAxes: [
-                  {
-                    ticks: {
-                      fontColor: "#84818e",
-                      fontSize: 15,
-                    },
-                    gridLines: { color: "rgb(47, 45, 56)" },
-                    offset: true,
-                  },
-                ],
-                yAxes: [
-                  {
-                    ticks: {
-                      stepSize: 2,
-                      fontColor: "#84818e",
-                      fontSize: 15,
-                      min: 0,
-                      max: 10,
-                    },
-                    gridLines: {
-                      color: "rgb(58, 55, 69)",
-                    },
-                  },
-                ],
-              },
-            }}
-          />
+          <Line data={jngData} options={lineOptions} />
         </CompareSBR>
       </JngGraph>
       <MidGraph>
@@ -519,47 +453,7 @@ function ComparePosition() {
               );
             })}
           </LegendWrapper>
-          <Line
-            data={midData}
-            options={{
-              legend: {
-                display: false,
-              },
-              tooltips: {
-                mode: "x",
-              },
-              hover: {
-                animationDuration: 100,
-              },
-              maintainAspectRatio: false,
-              scales: {
-                xAxes: [
-                  {
-                    ticks: {
-                      fontColor: "#84818e",
-                      fontSize: 15,
-                    },
-                    gridLines: { color: "rgb(47, 45, 56)" },
-                    offset: true,
-                  },
-                ],
-                yAxes: [
-                  {
-                    ticks: {
-                      stepSize: 2,
-                      fontColor: "#84818e",
-                      fontSize: 15,
-                      min: 0,
-                      max: 10
-                    },
-                    gridLines: {
-                      color: "rgb(58, 55, 69)",
-                    },
-                  },
-                ],
-              },
-            }}
-          />
+          <Line data={midData} options={lineOptions} />
         </CompareSBR>
       </MidGraph>
       <BotGraph>
@@ -586,47 +480,7 @@ function ComparePosition() {
               );
             })}
           </LegendWrapper>
-          <Line
-            data={botData}
-            options={{
-              legend: {
-                display: false,
-              },
-              tooltips: {
-                mode: "x",
-              },
-              hover: {
-                animationDuration: 100,
-              },
-              maintainAspectRatio: false,
-              scales: {
-                xAxes: [
-                  {
-                    ticks: {
-                      fontColor: "#84818e",
-                      fontSize: 15,
-                    },
-                    gridLines: { color: "rgb(47, 45, 56)" },
-                    offset: true,
-                  },
-                ],
-                yAxes: [
-                  {
-                    ticks: {
-                      stepSize: 2,
-                      fontColor: "#84818e",
-                      fontSize: 15,
-                      min: 0,
-                      max: 10,
-                    },
-                    gridLines: {
-                      color: "rgb(58, 55, 69)",
-                    },
-                  },
-                ],
-              },
-            }}
-          />
+          <Line data={botData} options={lineOptions} />
         </CompareSBR>
       </BotGraph>
       <SupGraph>
@@ -653,48 +507,7 @@ function ComparePosition() {
               );
             })}
           </LegendWrapper>
-          <Line
-            data={supData}
-            options={{
-              legend: {
-                display: false,
-              },
-              tooltips: {
-                mode: "x",
-                padding: 100,
-              },
-              hover: {
-                animationDuration: 100,
-              },
-              maintainAspectRatio: false,
-              scales: {
-                xAxes: [
-                  {
-                    ticks: {
-                      fontColor: "#84818e",
-                      fontSize: 15,
-                    },
-                    gridLines: { color: "rgb(47, 45, 56)" },
-                    offset: true,
-                  },
-                ],
-                yAxes: [
-                  {
-                    ticks: {
-                      stepSize: 2,
-                      fontColor: "#84818e",
-                      fontSize: 15,
-                      min: 0,
-                      max: 10,
-                    },
-                    gridLines: {
-                      color: "rgb(58, 55, 69)",
-                    },
-                  },
-                ],
-              },
-            }}
-          />
+          <Line data={supData} options={lineOptions} />
         </CompareSBR>
       </SupGraph>
     </ComparePositionWrapper>
@@ -706,8 +519,8 @@ export default ComparePosition;
 const ComparePositionWrapper = styled.div``;
 
 const DisplayTeams = styled.div`
-display: flex;
-/* justify-content: center; */
+  display: flex;
+  /* justify-content: center; */
   width: 100%;
   background-color: #16151a;
   position: relative;

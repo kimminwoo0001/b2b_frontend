@@ -1,5 +1,17 @@
 import { colors } from "../ui";
-
+export const tooltip = {
+  intersect: false,
+  enabled: true,
+  backgroundColor: colors.border_light,
+  titleFont: { size: 12 },
+  body: { size: 10 },
+  displayColors: true,
+  boxPadding: 8,
+  boxWidth: 4,
+  boxHeight: 4,
+  usePointStyle: true,
+  cornerRadius: 10,
+};
 export const lineOptions = {
   responsive: true,
   maintainAspectRatio: false,
@@ -44,17 +56,7 @@ export const lineOptions = {
     },
   },
   plugins: {
-    tooltip: {
-      intersect: false,
-      backgroundColor: "#1d1d1d",
-      titleFontSize: 12,
-      bodyFontSize: 10,
-      displayColors: true,
-      boxWidth: 4,
-      boxHeight: 4,
-      cornerRadius: 10,
-      usePointStyle: true,
-    },
+    tooltip,
     legend: {
       display: false,
       position: "top",
@@ -106,15 +108,9 @@ export const barOptions = {
     },
   },
   plugins: {
-    tooltips: {
-      intersect: false,
-      backgroundColor: "#1d1d1d",
-      titleFontSize: 12,
-      bodyFontSize: 10,
-      displayColors: true,
-      boxWidth: 2,
-      boxHeight: 2,
-      cornerRadius: 10,
+    tooltip: {
+      ...tooltip,
+      usePointStyle: false,
     },
     legend: {
       display: false,
@@ -161,19 +157,7 @@ export const radarOptions = {
     },
   },
   plugins: {
-    tooltip: {
-      intersect: false,
-      enabled: true,
-      backgroundColor: colors.border_light,
-      titleFont: { size: 12 },
-      body: { size: 10 },
-      displayColors: true,
-      boxPadding: 8,
-      boxWidth: 4,
-      boxHeight: 4,
-      usePointStyle: true,
-      cornerRadius: 10,
-    },
+    tooltip,
     legend: {
       display: true,
       position: "top",
