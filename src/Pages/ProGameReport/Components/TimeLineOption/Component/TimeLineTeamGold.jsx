@@ -4,7 +4,25 @@ import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
 import { useDispatch, useSelector } from "react-redux";
 import TimeLineTeamGoldLabel from "./TimeLineTeamGoldLabel";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+} from "chart.js";
 import { Line } from "react-chartjs-2";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Filler
+);
 
 //=> up(ctx, "#0075bf") || down(ctx, "#f04545")
 
