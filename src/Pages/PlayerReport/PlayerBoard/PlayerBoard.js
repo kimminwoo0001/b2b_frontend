@@ -3,6 +3,16 @@ import React, { useRef, useEffect, useState } from "react";
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
 import { useDetectOutsideClick } from "../../../Components/SelectFilter/useDetectOustsideClick";
+// import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+} from "chart.js";
 import { Line } from "react-chartjs-2";
 import Tippy from "@tippy.js/react";
 import BoardToolTip from "./BoardToolTip";
@@ -22,7 +32,18 @@ import axiosRequest from "../../../lib/axios/axiosRequest";
 import ExcelExport from "../../../Components/UtilityComponent/ExcelExport";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import orderStats from "../../../lib/orderStats";
-import addZero from '../../../lib/addZero';
+import addZero from "../../../lib/addZero";
+import { lineOptions } from "../../../Styles/chart/option";
+import { colors, spacing, typoStyle } from "../../../Styles/ui";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Filler
+);
 
 function PlayerBoard() {
   //선수 보고서 => 선수 상황판
@@ -58,13 +79,14 @@ function PlayerBoard() {
     false
   );
 
-
   const secToMin = (sec) => {
     let mm = Math.floor(sec / 60);
     let ss = Math.floor(sec % 60);
 
-    return `${mm}${t("solo.playerboard.min")} ${ss}${t("solo.playerboard.sec")}`;
-  }
+    return `${mm}${t("solo.playerboard.min")} ${ss}${t(
+      "solo.playerboard.sec"
+    )}`;
+  };
 
   useEffect(() => {
     GetPlayerBoardData();
@@ -83,7 +105,7 @@ function PlayerBoard() {
       patch: filters.patch,
       team: filters.team,
       player: filters.player,
-      champion: filters.champion_eng.split(' (')[0], // 이 부분도 수정이 필요
+      champion: filters.champion_eng.split(" (")[0], // 이 부분도 수정이 필요
       oppchampion: filters.oppchampion_eng,
       token: user.token,
       id: user.id,
@@ -102,7 +124,7 @@ function PlayerBoard() {
         // setUserPlayerTotal(Object.values(data.soloInfo.userPlayerTotal));
         setSbr(e.stats.sbrStats);
 
-        // 라인전 지표 
+        // 라인전 지표
         // const lineResult = orderStats(e.stats.lineStats)
         setLine(e.stats.lineStats);
 
@@ -160,7 +182,9 @@ function PlayerBoard() {
         const champArray = e.champion.map(
           (data) => `${data.kor}(${data.total}경기)`
         );
-        const champArrayEng = e.champion.map((data) => `${data.eng} (${data.total})`);
+        const champArrayEng = e.champion.map(
+          (data) => `${data.eng} (${data.total})`
+        );
 
         // setChampFilter(e.champion);
         // setChampEng(e.championEng);
@@ -188,7 +212,7 @@ function PlayerBoard() {
       season: filters.season,
       patch: filters.patch,
       position: filters.position,
-      champion: filters.champion_eng.split('(')[0], // 영어 이름 넣는거 수정이 필요함
+      champion: filters.champion_eng.split("(")[0], // 영어 이름 넣는거 수정이 필요함
       player: filters.player,
       token: user.token,
       id: user.id,
@@ -217,7 +241,7 @@ function PlayerBoard() {
     labels: match?.x,
     datasets: [
       {
-        fill: true,
+        fill: false,
         lineTension: 0,
         backgroundColor: "#314444",
         borderColor: "#f14444",
@@ -246,7 +270,11 @@ function PlayerBoard() {
       <PlayerInfoSection>
         <PlayerOverView>
           <img
-            src={info?.Image ? `https://am-a.akamaihd.net/image?resize=90:&f=${info?.Image}` : "Images/player_error_image.png"}
+            src={
+              info?.Image
+                ? `https://am-a.akamaihd.net/image?resize=90:&f=${info?.Image}`
+                : "Images/player_error_image.png"
+            }
             width="94px"
             height="74px"
             alt="PlayerIcon"
@@ -285,8 +313,9 @@ function PlayerBoard() {
             <div className="AttendValue">
               <span className="Wins">{`${matchInfo?.match}${t(
                 "solo.playerboard.games"
-              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${matchInfo?.loss
-                }${t("solo.playerboard.lose")}`}</span>
+              )} ${matchInfo?.win}${t("solo.playerboard.win")} ${
+                matchInfo?.loss
+              }${t("solo.playerboard.lose")}`}</span>
               <span className="WinRate">{`${matchInfo?.winrate.toFixed(
                 1
               )}%`}</span>
@@ -460,49 +489,54 @@ function PlayerBoard() {
                 <tbody>
                   {line?.map((title, idx) => {
                     console.log("title", title);
-                    return (
-                      title.data === "NULL"
-                        || title.name === "갱 성공률 (%)" && filters.year.includes("2022") ?
-                        "" :
-                        <MapStat key={idx}>
-                          <Tippy // options
-                            duration={0}
-                            delay={[300, 0]}
-                            content={
-                              <BoardToolTip
-                                title={lang === "ko" ? title.name : title.eng}
-                              />
-                            }
-                            placement="top"
-                          >
-                            <td className="StatNum">
-                              {lang === "ko" ? title.name : title.eng}
-                            </td>
-                          </Tippy>
-                          <LeagueValue>{title.name === "솔로킬" || title.name.includes("횟수")
-                            ? title.leaguedata.toFixed(2) : title.leaguedata.toFixed(1)}</LeagueValue>
-                          <td className="Icon">
-                            <img
-                              src={
-                                title.leaguedata <= title.data
-                                  ? "Images/ico-point-high.png"
-                                  : "Images/ico-point-low-blue.png"
-                              }
-                              width="17px"
-                              height="11px"
-                              alt="pointIcon"
-                            ></img>
+                    return title.data === "NULL" ||
+                      (title.name === "갱 성공률 (%)" &&
+                        filters.year.includes("2022")) ? (
+                      ""
+                    ) : (
+                      <MapStat key={idx}>
+                        <Tippy // options
+                          duration={0}
+                          delay={[300, 0]}
+                          content={
+                            <BoardToolTip
+                              title={lang === "ko" ? title.name : title.eng}
+                            />
+                          }
+                          placement="top"
+                        >
+                          <td className="StatNum">
+                            {lang === "ko" ? title.name : title.eng}
                           </td>
-                          <PlayerValue
-                            className="playerValue"
-                            changeColor={title.leaguedata > title.data}
-                          >
-                            {
-                              title.name === "솔로킬" || title.name.includes("횟수")
-                                ? title.data.toFixed(2) : title.data.toFixed(1)
+                        </Tippy>
+                        <LeagueValue>
+                          {title.name === "솔로킬" ||
+                          title.name.includes("횟수")
+                            ? title.leaguedata.toFixed(2)
+                            : title.leaguedata.toFixed(1)}
+                        </LeagueValue>
+                        <td className="Icon">
+                          <img
+                            src={
+                              title.leaguedata <= title.data
+                                ? "Images/ico-point-high.png"
+                                : "Images/ico-point-low-blue.png"
                             }
-                          </PlayerValue>
-                        </MapStat>
+                            width="17px"
+                            height="11px"
+                            alt="pointIcon"
+                          ></img>
+                        </td>
+                        <PlayerValue
+                          className="playerValue"
+                          changeColor={title.leaguedata > title.data}
+                        >
+                          {title.name === "솔로킬" ||
+                          title.name.includes("횟수")
+                            ? title.data.toFixed(2)
+                            : title.data.toFixed(1)}
+                        </PlayerValue>
+                      </MapStat>
                     );
                   })}
                 </tbody>
@@ -524,45 +558,50 @@ function PlayerBoard() {
                 </thead>
                 <tbody>
                   {engage?.map((title, idx) => {
-                    return (
-                      title.data === "NULL" ? "" :
-                        <MapStat key={idx}>
-                          <Tippy // options
-                            duration={0}
-                            delay={[300, 0]}
-                            content={
-                              <BoardToolTip
-                                title={lang === "ko" ? title.name : title.eng}
-                              />
-                            }
-                            placement="top"
-                          >
-                            <td className="StatNum">
-                              {lang === "ko" ? title.name : title.eng}
-                            </td>
-                          </Tippy>
-                          <LeagueValue>{title.name.includes("빈도")
-                            ? title.leaguedata.toFixed(2) : title.leaguedata.toFixed(1)}</LeagueValue>
-                          <td className="Icon">
-                            <img
-                              src={
-                                title.leaguedata <= title.data
-                                  ? "Images/ico-point-high.png"
-                                  : "Images/ico-point-low-blue.png"
-                              }
-                              width="17px"
-                              height="11px"
-                              alt="pointIcon"
-                            ></img>
+                    return title.data === "NULL" ? (
+                      ""
+                    ) : (
+                      <MapStat key={idx}>
+                        <Tippy // options
+                          duration={0}
+                          delay={[300, 0]}
+                          content={
+                            <BoardToolTip
+                              title={lang === "ko" ? title.name : title.eng}
+                            />
+                          }
+                          placement="top"
+                        >
+                          <td className="StatNum">
+                            {lang === "ko" ? title.name : title.eng}
                           </td>
-                          <PlayerValue
-                            className="playerValue"
-                            changeColor={title.leaguedata > title.data}
-                          >
-                            {title.name.includes("빈도")
-                              ? title.data.toFixed(2) : title.data.toFixed(1)}
-                          </PlayerValue>
-                        </MapStat>
+                        </Tippy>
+                        <LeagueValue>
+                          {title.name.includes("빈도")
+                            ? title.leaguedata.toFixed(2)
+                            : title.leaguedata.toFixed(1)}
+                        </LeagueValue>
+                        <td className="Icon">
+                          <img
+                            src={
+                              title.leaguedata <= title.data
+                                ? "Images/ico-point-high.png"
+                                : "Images/ico-point-low-blue.png"
+                            }
+                            width="17px"
+                            height="11px"
+                            alt="pointIcon"
+                          ></img>
+                        </td>
+                        <PlayerValue
+                          className="playerValue"
+                          changeColor={title.leaguedata > title.data}
+                        >
+                          {title.name.includes("빈도")
+                            ? title.data.toFixed(2)
+                            : title.data.toFixed(1)}
+                        </PlayerValue>
+                      </MapStat>
                     );
                   })}
                 </tbody>
@@ -584,49 +623,62 @@ function PlayerBoard() {
                 </thead>
                 <tbody>
                   {personality?.map((title, idx) => {
-                    return (
-                      title.data === 'NULL' ? "" :
-                        <MapStat key={idx}>
-                          <Tippy // options
-                            duration={0}
-                            delay={[300, 0]}
-                            content={
-                              <BoardToolTip
-                                title={lang === "ko" ? title.name : title.eng}
-                              />
-                            }
-                            placement="top"
-                          >
-                            <td className="StatNum">
-                              {lang === "ko" ? title.name === "첫 텔레포트 사용 시간 (초)"
-                                ? "첫 텔레포트 시간" : title.name : title.eng === "First Teleport Time (sec)"
-                                ? "First Teleport Time" : title.eng}
-                            </td>
-                          </Tippy>
-                          <LeagueValue>{title.name === "첫 텔레포트 사용 시간 (초)" ?
-                            secToMin(title.leaguedata.toFixed(1))
-                            : title.name === "텔레포트 선제 사용빈도" || title.name === "교전 참여 횟수" ? title.leaguedata.toFixed(2) : title.leaguedata.toFixed(1)}</LeagueValue>
-                          <td className="Icon">
-                            <img
-                              src={
-                                title.leaguedata <= title.data
-                                  ? "Images/ico-point-high.png"
-                                  : "Images/ico-point-low-blue.png"
-                              }
-                              width="17px"
-                              height="11px"
-                              alt="pointIcon"
-                            ></img>
+                    return title.data === "NULL" ? (
+                      ""
+                    ) : (
+                      <MapStat key={idx}>
+                        <Tippy // options
+                          duration={0}
+                          delay={[300, 0]}
+                          content={
+                            <BoardToolTip
+                              title={lang === "ko" ? title.name : title.eng}
+                            />
+                          }
+                          placement="top"
+                        >
+                          <td className="StatNum">
+                            {lang === "ko"
+                              ? title.name === "첫 텔레포트 사용 시간 (초)"
+                                ? "첫 텔레포트 시간"
+                                : title.name
+                              : title.eng === "First Teleport Time (sec)"
+                              ? "First Teleport Time"
+                              : title.eng}
                           </td>
-                          <PlayerValue
-                            className="playerValue"
-                            changeColor={title.leaguedata > title.data}
-                          >
-                            {title.name === "첫 텔레포트 사용 시간 (초)" ?
-                              secToMin(title.data.toFixed(1))
-                              : title.name === "텔레포트 선제 사용빈도" || title.name === "교전 참여 횟수" ? title.data.toFixed(2) : title.data.toFixed(1)}
-                          </PlayerValue>
-                        </MapStat>
+                        </Tippy>
+                        <LeagueValue>
+                          {title.name === "첫 텔레포트 사용 시간 (초)"
+                            ? secToMin(title.leaguedata.toFixed(1))
+                            : title.name === "텔레포트 선제 사용빈도" ||
+                              title.name === "교전 참여 횟수"
+                            ? title.leaguedata.toFixed(2)
+                            : title.leaguedata.toFixed(1)}
+                        </LeagueValue>
+                        <td className="Icon">
+                          <img
+                            src={
+                              title.leaguedata <= title.data
+                                ? "Images/ico-point-high.png"
+                                : "Images/ico-point-low-blue.png"
+                            }
+                            width="17px"
+                            height="11px"
+                            alt="pointIcon"
+                          ></img>
+                        </td>
+                        <PlayerValue
+                          className="playerValue"
+                          changeColor={title.leaguedata > title.data}
+                        >
+                          {title.name === "첫 텔레포트 사용 시간 (초)"
+                            ? secToMin(title.data.toFixed(1))
+                            : title.name === "텔레포트 선제 사용빈도" ||
+                              title.name === "교전 참여 횟수"
+                            ? title.data.toFixed(2)
+                            : title.data.toFixed(1)}
+                        </PlayerValue>
+                      </MapStat>
                     );
                   })}
                 </tbody>
@@ -818,54 +870,115 @@ function PlayerBoard() {
           </TopBox>
         </AbilityContents>
       </AbilitySection> */}
-      <RecordWrapper>
-        <RecordSection>
-          <CompetitionRecord>
-            <TableNav>
-              <span className="StatTitle">
-                {t("solo.playerboard.champStat")}
-              </span>
-              <ExcelExport
-                filename={t("solo.playerboard.champStat")}
-                tableid="competition-table"
-              />
-            </TableNav>
-            <CompetitionTable id="competition-table">
-              <TableTitle>
-                <tr>
-                  <th className="Champion">{t("solo.playerboard.champion")}</th>
-                  <th className="PickCount">{t("solo.playerboard.picks")}</th>
-                  <th className="WinRate">{t("solo.playerboard.winrate")}</th>
-                  <th className="SBR">{t("solo.playerboard.sbr")}</th>
-                </tr>
-              </TableTitle>
-              <tbody>
-                {champRecord?.map((data, idx) => {
-                  return (
-                    <MapCompetition key={idx}>
-                      <td>
-                        <div className="ChampName">
-                          <img
-                            src={`https://am-a.akamaihd.net/image?resize=90:&f=${data.championImage}`}
-                            alt="ChampImage"
-                          />
-                          <div>
-                            {lang === "ko" ? data?.champion : data.championEn}
+
+      {/* 테이블 */}
+      <BottomContainer>
+        <article>
+          <RecordSection>
+            <CompetitionRecord>
+              <TableNav>
+                <span className="StatTitle">
+                  {t("solo.playerboard.champStat")}
+                </span>
+                <ExcelExport
+                  filename={t("solo.playerboard.champStat")}
+                  tableid="competition-table"
+                />
+              </TableNav>
+              <CompetitionTable id="competition-table">
+                <TableTitle>
+                  <tr>
+                    <th className="Champion">
+                      {t("solo.playerboard.champion")}
+                    </th>
+                    <th className="PickCount">{t("solo.playerboard.picks")}</th>
+                    <th className="WinRate">{t("solo.playerboard.winrate")}</th>
+                    <th className="SBR">{t("solo.playerboard.sbr")}</th>
+                  </tr>
+                </TableTitle>
+                <tbody>
+                  {champRecord?.map((data, idx) => {
+                    return (
+                      <MapCompetition key={idx}>
+                        <td>
+                          <div className="ChampName">
+                            <img
+                              src={`https://am-a.akamaihd.net/image?resize=90:&f=${data.championImage}`}
+                              alt="ChampImage"
+                            />
+                            <div>
+                              {lang === "ko" ? data?.champion : data.championEn}
+                            </div>
                           </div>
-                        </div>
-                      </td>
-                      <td className="PickValue">{data?.total}</td>
-                      <td className="WinValue">{`${data?.sum.toFixed(
-                        0
-                      )} %`}</td>
-                      <td className="SbrValue">{data?.sbr.toFixed(1)}</td>
-                    </MapCompetition>
-                  );
-                })}
-              </tbody>
-            </CompetitionTable>
-          </CompetitionRecord>
-          {/* 그래프 시작 */}
+                        </td>
+                        <td className="PickValue">{data?.total}</td>
+                        <td className="WinValue">{`${data?.sum.toFixed(
+                          0
+                        )} %`}</td>
+                        <td className="SbrValue">{data?.sbr.toFixed(1)}</td>
+                      </MapCompetition>
+                    );
+                  })}
+                </tbody>
+              </CompetitionTable>
+            </CompetitionRecord>
+          </RecordSection>
+
+          <GraphSection>
+            <TotalRecord>
+              <TableNav>
+                <span className="StatTitle">
+                  {t("solo.playerboard.carrer")}
+                </span>
+                <ExcelExport
+                  filename={t("solo.playerboard.carrer")}
+                  tableid="record-table"
+                />
+              </TableNav>
+              <RecordTable id="record-table">
+                <thead>
+                  <tr>
+                    <th className="Team">{t("solo.playerboard.team")}</th>
+                    <th className="PickCount">
+                      {t("solo.playerboard.gamePlayed")}
+                    </th>
+                    <th className="WinRate">{t("solo.playerboard.winrate")}</th>
+                    <th className="KDA">{t("solo.playerboard.kda")}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {carrer?.map((career, idx) => {
+                    return (
+                      <tr key={idx}>
+                        <td className="TeamName">{career.team}</td>
+                        <td className="PickValue">{career.total}</td>
+                        <td className="WinValue">{`${career.winning.toFixed(
+                          1
+                        )}%`}</td>
+                        <td className="KDA">
+                          <div className="KDAValue">
+                            <span className="Kills">{career.kill}</span>
+                            <p className="Slash">/</p>
+                            <span className="Deaths">{career.death}</span>
+                            <p className="Slash">/</p>
+                            <span className="Support">{career.assists}</span>
+                            <span className="Rate">
+                              &nbsp;{`${career.kda.toFixed(2)}:1`}
+                            </span>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </RecordTable>
+            </TotalRecord>
+          </GraphSection>
+        </article>
+
+        {/* 그래프 섹션 */}
+        <article>
+          {/* line graph: 최근 경기 퍼포먼스 추세 */}
           <Player>
             <NavBar>
               <div className="Title">
@@ -879,105 +992,11 @@ function PlayerBoard() {
               </div>
             </NavBar>
             <PlayerCharts>
-              <Line
-                data={MatchChart}
-                options={{
-                  tooltips: {
-                    intersect: false,
-                    backgroundColor: "#1d1d1d",
-                    titleFontSize: 12,
-                    bodyFontSize: 10,
-                    displayColors: true,
-                    boxWidth: 2,
-                    boxHeight: 2,
-                    cornerRadius: 10,
-                  },
-                  legend: {
-                    display: false,
-                  },
-                  hover: {
-                    animationDuration: 100,
-                  },
-                  maintainAspectRatio: false,
-                  scales: {
-                    xAxes: [
-                      {
-                        ticks: {
-                          fontColor: "#84818e",
-                          fontSize: 15,
-                        },
-                        gridLines: { color: "rgb(47, 45, 56)" },
-                        offset: true,
-                      },
-                    ],
-                    yAxes: [
-                      {
-                        ticks: {
-                          stepSize: graphDomain?.matchGraph["row"],
-                          fontColor: "#84818e",
-                          fontSize: 15,
-                          min: graphDomain?.matchGraph["min"],
-                          max: graphDomain?.matchGraph["max"],
-                        },
-                        gridLines: {
-                          color: "rgb(58, 55, 69)",
-                        },
-                      },
-                    ],
-                  },
-                }}
-              />
+              <Line data={MatchChart} options={lineOptions} />
             </PlayerCharts>
           </Player>
-        </RecordSection>
-        <GraphSection>
-          <TotalRecord>
-            <TableNav>
-              <span className="StatTitle">{t("solo.playerboard.carrer")}</span>
-              <ExcelExport
-                filename={t("solo.playerboard.carrer")}
-                tableid="record-table"
-              />
-            </TableNav>
-            <RecordTable id="record-table">
-              <thead>
-                <tr>
-                  <th className="Team">{t("solo.playerboard.team")}</th>
-                  <th className="PickCount">
-                    {t("solo.playerboard.gamePlayed")}
-                  </th>
-                  <th className="WinRate">{t("solo.playerboard.winrate")}</th>
-                  <th className="KDA">{t("solo.playerboard.kda")}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {carrer?.map((career, idx) => {
-                  return (
-                    <tr key={idx}>
-                      <td className="TeamName">{career.team}</td>
-                      <td className="PickValue">{career.total}</td>
-                      <td className="WinValue">{`${career.winning.toFixed(
-                        1
-                      )}%`}</td>
-                      <td className="KDA">
-                        <div className="KDAValue">
-                          <span className="Kills">{career.kill}</span>
-                          <p className="Slash">/</p>
-                          <span className="Deaths">{career.death}</span>
-                          <p className="Slash">/</p>
-                          <span className="Support">{career.assists}</span>
-                          <span className="Rate">
-                            &nbsp;{`${career.kda.toFixed(2)}:1`}
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </RecordTable>
-          </TotalRecord>
-          {/* 그래프 시작 */}
+
+          {/* line graph: 시즌별 성적 */}
           <Player>
             <NavBar>
               <div className="Title">
@@ -991,58 +1010,11 @@ function PlayerBoard() {
               </div>
             </NavBar>
             <PlayerCharts>
-              <Line
-                data={SeasonChart}
-                options={{
-                  tooltips: {
-                    intersect: false,
-                    backgroundColor: "#1d1d1d",
-                    titleFontSize: 12,
-                    bodyFontSize: 10,
-                    displayColors: true,
-                    boxWidth: 2,
-                    boxHeight: 2,
-                    cornerRadius: 10,
-                  },
-                  legend: {
-                    display: false,
-                  },
-                  hover: {
-                    animationDuration: 100,
-                  },
-                  maintainAspectRatio: false,
-                  scales: {
-                    xAxes: [
-                      {
-                        ticks: {
-                          fontColor: "#84818e",
-                          fontSize: 15,
-                        },
-                        gridLines: { color: "rgb(47, 45, 56)" },
-                        offset: true,
-                      },
-                    ],
-                    yAxes: [
-                      {
-                        ticks: {
-                          stepSize: graphDomain?.seasonGraph["row"],
-                          fontColor: "#84818e",
-                          fontSize: 15,
-                          min: graphDomain?.seasonGraph["min"],
-                          max: graphDomain?.seasonGraph["max"],
-                        },
-                        gridLines: {
-                          color: "rgb(58, 55, 69)",
-                        },
-                      },
-                    ],
-                  },
-                }}
-              />
+              <Line data={SeasonChart} options={lineOptions} />
             </PlayerCharts>
           </Player>
-        </GraphSection>
-      </RecordWrapper>
+        </article>
+      </BottomContainer>
     </PlayerBoardWrapper>
   );
 }
@@ -1159,6 +1131,15 @@ const AbilitySection = styled.div`
   min-height: 300px;
   background-color: rgb(47, 45, 56);
   border-radius: 20px;
+`;
+
+const BottomContainer = styled.section`
+  > article {
+    display: flex;
+    > div:first-child {
+      ${spacing.marginR(5)};
+    }
+  }
 `;
 
 const RecordSection = styled.div`
@@ -1290,7 +1271,6 @@ const PlayerOverView = styled.div`
     letter-spacing: -0.65px;
     text-align: left;
     color: rgb(240, 69, 69);
-    
   }
   .AgeValue {
     display: flex;
@@ -1504,17 +1484,9 @@ const CompetitionRecord = styled.div`
 `;
 const TableNav = styled.div`
   width: 100%;
-  height: 50px;
-  padding: 15px 0 0 15px;
   border-bottom: 1px solid rgb(35, 33, 42);
-
-  font-family: "Spoqa Han Sans";
-  color: #fff;
-  font-size: 16px;
-  font-weight: medium;
-  > .StatTitle {
-    font-weight: bold;
-  }
+  ${spacing.padding(4)};
+  ${typoStyle.contents_title};
 `;
 
 const TotalRecord = styled.div`
@@ -1546,7 +1518,6 @@ const CompetitionTable = styled.table`
 const TableTitle = styled.thead`
   > tr {
     width: 100%;
-    height: 28px;
     background-color: rgb(58, 55, 69);
     > .Champion {
       width: 340px;
@@ -1554,6 +1525,7 @@ const TableTitle = styled.thead`
       padding-left: 15px;
     }
     > th {
+      ${spacing.paddingY(1)};
       font-family: "Spoqa Han Sans";
       font-size: 15px;
       font-weight: bold;
@@ -1564,6 +1536,7 @@ const TableTitle = styled.thead`
     }
   }
 `;
+
 const SoloTableTitle = styled.thead`
   > tr {
     width: 100%;
@@ -1585,19 +1558,23 @@ const SoloTableTitle = styled.thead`
     }
   }
 `;
+
 const MapCompetition = styled.tr`
   width: 100%;
   height: 28px;
   border-bottom: 1px solid rgb(58, 55, 69);
-  :last-child {
+
+  &:last-child {
     border-bottom: none;
+
+    > td {
+      padding-bottom: 10px;
+    }
   }
 
   > td {
-    font-family: "Spoqa Han Sans";
-    font-size: 15px;
-    letter-spacing: -0.6px;
-    color: rgb(255, 255, 255);
+    ${spacing.paddingY(1)};
+    ${typoStyle.contents};
     text-align: center;
     vertical-align: middle;
 
@@ -1606,6 +1583,7 @@ const MapCompetition = styled.tr`
       display: flex;
       align-items: center;
       vertical-align: middle;
+
       img {
         margin: 0 10px 0 15px;
         width: 19px;
@@ -1637,11 +1615,6 @@ const WinRateValue = styled.div`
     css`
       color: rgb(240, 69, 69);
     `}
-`;
-
-const RecordWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
 `;
 
 const RecordTable = styled.table`
@@ -1715,64 +1688,37 @@ const NavBar = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 42.5px;
-  border-bottom: 1px solid rgb(35, 33, 42);
-  background-color: #23212a;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  ${spacing.padding(4)};
+  ${typoStyle.contents_md}
 
-  .AverageTime {
-    width: 61px;
-    height: 17px;
-    font-family: "Spoqa Han Sans";
-    font-size: 15px;
-    line-height: 2.08;
-    color: #fff;
-    margin-left: 15px;
-    font-weight: bold;
-  }
-  .X {
-    width: auto;
-    height: 17px;
-    font-family: "Spoqa Han Sans";
-    font-size: 15px;
-    text-align: left;
-    color: rgb(132, 129, 142);
-    margin-right: 15px;
+  .X, .Y {
+    color: ${colors.info};
+    ${spacing.marginR(4)}
     ::first-letter {
-      color: #f14444;
+      color: ${colors.badge_red};
     }
   }
-  .Y {
-    width: auto;
-    height: 17px;
-    font-family: "Spoqa Han Sans";
-    font-size: 15px;
-    text-align: left;
-    color: rgb(132, 129, 142);
-    margin-right: 16px;
-    ::first-letter {
-      color: #f14444;
-    }
-  }
+
   .Legend {
     display: flex;
   }
 `;
 
-const PlayerCharts = styled.div`
-  padding: 23px;
-  height: 226.5px;
-  background-color: #23212a;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+const Player = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: ${colors.bg_select};
+  ${spacing.marginT(5)};
+  width: 538px;
+  height: 275px;
+  border-radius: 20px;
 `;
 
-const Player = styled.div`
-  margin-top: 22px;
-  width: 538px;
-  height: 270px;
-  border-radius: 20px;
+const PlayerCharts = styled.div`
+  flex: 1;
+  ${spacing.paddingX(5)};
+  ${spacing.paddingB(5)};
+  height: 100%;
 `;
 
 const DropDownContainer = styled.div`
