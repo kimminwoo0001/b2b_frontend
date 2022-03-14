@@ -3,6 +3,16 @@ import { useTranslation } from "react-i18next";
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
 import styled from "@emotion/styled/macro";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  BarElement,
+} from "chart.js";
 import { Line, Bar } from "react-chartjs-2";
 import { API } from "../../config";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,6 +20,17 @@ import LoadingImg from "../../../Components/LoadingImg/LoadingImg";
 import axiosRequest from "../../../lib/axios/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
 import { Loading, HandleTab } from "../../../redux/modules/filtervalue";
+import { barOptions, lineOptions } from "../../../Styles/chart/option";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Tooltip,
+  Filler
+);
 
 function LeagueStatistics() {
   //리그 통합 지수 텝
@@ -42,7 +63,6 @@ function LeagueStatistics() {
 
   // const [chart, setChart] = useState();
 
-
   useEffect(() => {
     const { league, year, season } = filters;
     if (league.length > 0 && year.length > 0 && season.length > 0) {
@@ -54,7 +74,7 @@ function LeagueStatistics() {
 
   // 리그통합지수 데이터 featch 함수
   const fetchingStatisticData = () => {
-    dispatch(Loading(true))
+    dispatch(Loading(true));
     const url = `${API}/lolapi/league/totalinfo`;
     const params = {
       league: filters.league,
@@ -121,18 +141,16 @@ function LeagueStatistics() {
         console.log(firstGankY);
         console.log(TotalY);
 
-
-        dispatch(Loading(false))
+        dispatch(Loading(false));
         console.log(firstGankY);
         console.log(totalMatchY);
       },
       function (objStore) {
         dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
-        dispatch(Loading(false))
+        dispatch(Loading(false));
       }
     );
   };
-
 
   //현재 패치버전 색 교체
   // const colorChange = () => {
@@ -255,7 +273,6 @@ function LeagueStatistics() {
     ],
   };
 
-
   return (
     <StatisticsWrapper>
       <TopBox>
@@ -272,7 +289,20 @@ function LeagueStatistics() {
             </div>
           </NavBar>
           <GameTimeCharts>
-            <Line data={averageGameTime} options={averageGameTimeOptions} />
+            <Line
+              data={averageGameTime}
+              options={{
+                ...lineOptions,
+                scales: {
+                  ...lineOptions.scales,
+                  y: {
+                    ...lineOptions.scales.y,
+                    min: gameLengthData?.min,
+                    max: gameLengthData?.max,
+                  },
+                },
+              }}
+            />
           </GameTimeCharts>
         </GameTime>
         <SupportCounts>
@@ -287,60 +317,26 @@ function LeagueStatistics() {
               <p className="Y">Y {t("league.leagueStat.yPressure")}</p>
             </div>
           </NavBar>
-          {supportTimeY && supportTimeY.length === 0 ?
-            <NoData>{t("league.leagueStat.noData2")}</NoData> :
+          {supportTimeY && supportTimeY.length === 0 ? (
+            <NoData>{t("league.leagueStat.noData2")}</NoData>
+          ) : (
             <GameTimeCharts>
               <Bar
                 data={averageSupport}
                 options={{
-                  tooltips: {
-                    intersect: false,
-                    backgroundColor: "#1d1d1d",
-                    titleFontSize: 12,
-                    bodyFontSize: 10,
-                    displayColors: true,
-                    boxWidth: 2,
-                    boxHeight: 2,
-                    cornerRadius: 10,
-                  },
-                  hover: {
-                    animationDuration: 100,
-                  },
-                  legend: {
-                    display: false,
-                  },
-                  maintainAspectRatio: false,
+                  ...barOptions,
                   scales: {
-                    xAxes: [
-                      {
-                        ticks: {
-                          fontColor: "#84818e",
-                          fontSize: 15,
-                        },
-                        gridLines: { color: "rgb(47, 45, 56)" },
-                        offset: true,
-                      },
-                    ],
-                    yAxes: [
-                      {
-                        ticks: {
-                          stepSize: supportTimeData?.row,
-                          fontColor: "#84818e",
-                          fontSize: 15,
-                          // min: supportTimeData?.min,
-                          min: 0,
-                          max: supportTimeData?.max,
-                        },
-                        gridLines: {
-                          color: "rgb(58, 55, 69)",
-                        },
-                      },
-                    ],
+                    ...barOptions.scales,
+                    y: {
+                      ...barOptions.scales.y,
+                      stepSize: supportTimeData?.row,
+                      max: supportTimeData?.max,
+                    },
                   },
                 }}
               />
             </GameTimeCharts>
-          }
+          )}
         </SupportCounts>
       </TopBox>
       <BottomBox>
@@ -356,62 +352,25 @@ function LeagueStatistics() {
               <p className="Y">Y {t("league.leagueStat.teamFight")}</p>
             </div>
           </NavBar>
-          {totalMatchY && totalMatchY.length === 0 ?
-            <NoData>{t("league.leagueStat.noData2")}</NoData> :
+          {totalMatchY && totalMatchY.length === 0 ? (
+            <NoData>{t("league.leagueStat.noData2")}</NoData>
+          ) : (
             <GameTimeCharts>
-              {console.log("firstFight:", firstFight)}
-              {console.log("totalMatchData:", totalMatchData)}
               <Line
                 data={firstFight}
                 options={{
-                  tooltips: {
-                    intersect: false,
-                    backgroundColor: "#1d1d1d",
-                    titleFontSize: 12,
-                    bodyFontSize: 10,
-                    displayColors: true,
-                    boxWidth: 2,
-                    boxHeight: 2,
-                    cornerRadius: 10,
-                  },
-                  legend: {
-                    display: false,
-                  },
-                  hover: {
-                    animationDuration: 100,
-                  },
-                  maintainAspectRatio: false,
+                  ...lineOptions,
                   scales: {
-                    xAxes: [
-                      {
-                        ticks: {
-                          fontColor: "#84818e",
-                          fontSize: 15,
-                        },
-                        gridLines: { color: "rgb(47, 45, 56)" },
-                        offset: true,
-                      },
-                    ],
-                    yAxes: [
-                      {
-                        ticks: {
-                          stepSize: totalMatchData?.row,
-                          fontColor: "#84818e",
-                          fontSize: 15,
-                          min: totalMatchData?.min,
-                          max: totalMatchData?.max,
-                        },
-                        gridLines: {
-                          color: "rgb(58, 55, 69)",
-                        },
-                      },
-                    ],
+                    y: {
+                      ...lineOptions.scales.y,
+                      min: totalMatchData?.min,
+                      max: totalMatchData?.max,
+                    },
                   },
                 }}
               />
-            }
             </GameTimeCharts>
-          }
+          )}
         </FirstEncounter>
         <FirstGank>
           <NavBar>
@@ -423,61 +382,25 @@ function LeagueStatistics() {
               <p className="Y">Y {t("league.leagueStat.time")}</p>
             </div>
           </NavBar>
-          {firstGankY && firstGankY.length === 0 ?
+          {firstGankY && firstGankY.length === 0 ? (
             <NoData>{t("league.leagueStat.noData2")}</NoData>
-            :
+          ) : (
             <GameTimeCharts>
               <Line
                 data={averageGank}
                 options={{
-                  tooltips: {
-                    intersect: false,
-                    backgroundColor: "#1d1d1d",
-                    titleFontSize: 12,
-                    bodyFontSize: 10,
-                    displayColors: true,
-                    boxWidth: 2,
-                    boxHeight: 2,
-                    cornerRadius: 10,
-                  },
-                  legend: {
-                    display: false,
-                  },
-                  hover: {
-                    animationDuration: 100,
-                  },
-                  maintainAspectRatio: false,
+                  ...lineOptions,
                   scales: {
-                    xAxes: [
-                      {
-                        ticks: {
-                          fontColor: "#84818e",
-                          fontSize: 15,
-                        },
-                        gridLines: { color: "rgb(47, 45, 56)" },
-                        offset: true,
-                      },
-                    ],
-                    yAxes: [
-                      {
-                        ticks: {
-                          stepSize: 0.5,
-                          fontColor: "#84818e",
-                          fontSize: 15,
-                          min: firstGankData?.min,
-                          max: firstGankData?.max,
-                        },
-                        gridLines: {
-                          color: "rgb(58, 55, 69)",
-                        },
-                      },
-                    ],
+                    y: {
+                      ...lineOptions.scales.y,
+                      min: firstGankData?.min,
+                      max: firstGankData?.max,
+                    },
                   },
                 }}
               />
-            }
             </GameTimeCharts>
-          }
+          )}
         </FirstGank>
       </BottomBox>
     </StatisticsWrapper>
@@ -512,7 +435,6 @@ const SupportCounts = styled.div`
   background-color: rgb(47, 45, 56);
   border-radius: 20px;
   position: relative;
-
 `;
 
 const BottomBox = styled.div`
@@ -603,16 +525,13 @@ const GameTimeCharts = styled.div`
   height: 226.5px;
 `;
 
-
 const NoData = styled.div`
-background-color: #2f2d38;
-color: #fff;
-width: 530px;
-text-align: center;
-position: absolute;
-left: 50%;
-top: 60%;
-transform: translate(-50%, -50%);
-
-
+  background-color: #2f2d38;
+  color: #fff;
+  width: 530px;
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  transform: translate(-50%, -50%);
 `;
