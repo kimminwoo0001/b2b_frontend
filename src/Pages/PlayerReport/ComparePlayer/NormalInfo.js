@@ -1,7 +1,16 @@
-import React, { useRef, useEffect, useState } from "react";
-import { Radar } from "react-chartjs-2";
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
+import { useRef, useEffect, useState } from "react";
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Radar } from "react-chartjs-2";
 import styled from "@emotion/styled/macro";
 import { useSelector, useDispatch } from "react-redux";
 import { API } from "../../config";
@@ -20,11 +29,21 @@ import {
   ResetChampion2,
   ResetOppChampion,
   ResetTeam,
-  ResetFilter2
+  ResetFilter2,
 } from "../../../redux/modules/filtervalue";
 import qs from "qs";
 import axiosRequest from "../../../lib/axios/axiosRequest";
 import { SetModalInfo } from "../../../redux/modules/modalvalue";
+import { radarOptions } from "../../../Styles/chart/option";
+
+ChartJS.register(
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend
+);
 
 function NormalInfo() {
   //기본정보 탭
@@ -58,10 +77,15 @@ function NormalInfo() {
       return;
     }
 
-
     GetComparisonStat();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.oppplayer, filters.player, filters.patch, filters.year, filters.resetchamp]);
+  }, [
+    filters.oppplayer,
+    filters.player,
+    filters.patch,
+    filters.year,
+    filters.resetchamp,
+  ]);
 
   // const resetChamp = useCallback(() => {
   //   dispatch(ResetChampion());
@@ -102,14 +126,15 @@ function NormalInfo() {
           loss: copy.loss.toFixed(1),
           match: copy.match !== "NULL" ? copy.match.toFixed(1) : 50,
           gold: copy.gold.toFixed(1),
-        }
+        };
         const oppPlayer = {
           line: copyoppData.line.toFixed(1),
           investment: copyoppData.investment.toFixed(1),
           loss: copyoppData.loss.toFixed(1),
-          match: copyoppData.match !== "NULL" ? copyoppData.match.toFixed(1) : 50,
+          match:
+            copyoppData.match !== "NULL" ? copyoppData.match.toFixed(1) : 50,
           gold: copyoppData.gold.toFixed(1),
-        }
+        };
         //상대 선수 데이터
         setPlayer(player);
         setOppPlayer(oppPlayer);
@@ -127,7 +152,7 @@ function NormalInfo() {
               backgroundColor: "rgba(240, 69, 69, 0.2)",
               borderColor: "#f04545",
               pointBackgroundColor: "rgba(240, 69, 69, 0.2)",
-              poingBorderColor: "#f04545",
+              pointBorderColor: "#f04545",
               pointHoverBackgroundColor: "#f04545",
               pointHoverBorderColor: "rgba(240, 69, 69, 0.2)",
               data: [
@@ -137,14 +162,14 @@ function NormalInfo() {
                 player?.match,
                 player?.gold,
               ],
-              pointStyle: "line",
+              pointStyle: "circle",
             },
             {
               label: filters.oppplayer,
               backgroundColor: "rgba(0, 117, 191, 0.2)",
               borderColor: "#0075bf",
               pointBackgroundColor: "rgba(0, 117, 191, 0.2)",
-              poingBorderColor: "#0075bf",
+              pointBorderColor: "#0075bf",
               pointHoverBackgroundColor: "#0075bf",
               pointHoverBorderColor: "rgba(0, 117, 191, 0.2)",
               data: [
@@ -154,20 +179,18 @@ function NormalInfo() {
                 oppPlayer?.match,
                 oppPlayer?.gold,
               ],
-              pointStyle: "line",
+              pointStyle: "circle",
             },
           ],
-        })
+        });
         // setLoading(false);
         dispatch(Loading(false));
         setIsAllFetchDone(true);
-
       },
       function (objStore) {
         dispatch(SetModalInfo(objStore)); // 오류 발생 시, Alert 창을 띄우기 위해 사용
         // setLoading(false);
         dispatch(Loading(false));
-
       }
     );
   };
@@ -226,9 +249,6 @@ function NormalInfo() {
     );
   };
 
-
-
-
   // 오각형 그래프 세팅
   // const RadarData = {
   //   labels: [
@@ -278,53 +298,6 @@ function NormalInfo() {
   // console.log("RadarData", RadarData);
 
   //오각형 그래프 옵션
-  const options = {
-    tooltips: {
-      intersect: false,
-      enabled: true,
-      backgroundColor: "#1d1d1d",
-      titleFontSize: 12,
-      bodyFontSize: 10,
-      displayColors: true,
-      boxWidth: 2,
-      boxHeight: 2,
-      cornerRadius: 10,
-      callbacks: {
-        title: function (tooltipItem, data) {
-          return data.labels[tooltipItem[0].index];
-        },
-      },
-    },
-    hover: {
-      animationDuration: 100,
-    },
-    legend: {
-      display: true,
-      position: "top",
-      align: "start",
-      labels: {
-        usePointStyle: true,
-        fontColor: "rgb(255, 255, 255)",
-      },
-    },
-    scale: {
-      ticks: {
-        min: 0,
-        max: 100,
-        stepSize: 20,
-        showLabelBackdrop: false,
-        backdropColor: "rgba(203, 197, 11, 1)",
-      },
-      angleLines: {
-        color: "rgb(67, 63, 78)",
-        lineWidth: 1,
-      },
-      gridLines: {
-        color: "rgb(67, 63, 78)",
-      },
-    },
-  };
-
 
   if (!isAllFetchDone) return <></>;
 
@@ -589,7 +562,7 @@ function NormalInfo() {
           </DropDownContainer>
         </ChampionSettingNav> */}
         <CompareChart>
-          {RadarData && <Radar type="radar" data={RadarData} options={options} />}
+          {RadarData && <Radar data={RadarData} options={radarOptions} />}
         </CompareChart>
       </NormalCompare>
     </NormalInfoWrapper>

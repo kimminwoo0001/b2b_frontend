@@ -13,7 +13,9 @@ export const lineOptions = {
         labelOffset: true,
         borderColor: colors.info,
         color: colors.info,
-        fontSize: 15,
+        font: {
+          size: 15,
+        },
         padding: 0,
       },
       grid: {
@@ -29,7 +31,9 @@ export const lineOptions = {
         labelOffset: true,
         color: colors.info,
         stepSize: 2,
-        fontSize: 15,
+        font: {
+          size: 15,
+        },
         padding: 10,
       },
 
@@ -62,6 +66,7 @@ export const lineOptions = {
 };
 
 export const barOptions = {
+  maintainAspectRatio: false,
   hover: {
     animationDuration: 100,
   },
@@ -72,7 +77,9 @@ export const barOptions = {
         labelOffset: true,
         borderColor: colors.info,
         color: colors.info,
-        fontSize: 15,
+        font: {
+          size: 15,
+        },
         padding: 0,
       },
       grid: {
@@ -87,7 +94,9 @@ export const barOptions = {
         labelOffset: true,
         borderColor: colors.info,
         color: colors.info,
-        fontSize: 15,
+        font: {
+          size: 15,
+        },
         padding: 10,
       },
       grid: {
@@ -96,7 +105,6 @@ export const barOptions = {
       },
     },
   },
-  maintainAspectRatio: false,
   plugins: {
     tooltips: {
       intersect: false,
@@ -110,6 +118,76 @@ export const barOptions = {
     },
     legend: {
       display: false,
+    },
+  },
+};
+
+export const radarOptions = {
+  maintainAspectRatio: false,
+  responsive: true,
+  interaction: {
+    mode: "index",
+  },
+  hover: {
+    animationDuration: 100,
+  },
+  scales: {
+    r: {
+      min: 0,
+      max: 100,
+      pointLabels: {
+        padding: 15,
+        color: colors.info,
+        font: {
+          family: "'Spoqa Han Sans'",
+          size: 15,
+        },
+      },
+      ticks: {
+        display: false,
+
+        stepSize: 20,
+        showLabelBackdrop: false,
+        backdropColor: "rgba(203, 197, 11, 1)",
+      },
+      angleLines: {
+        color: "#7f7c89",
+        lineWidth: 1,
+      },
+      grid: {
+        lineWidth: 1,
+        color: colors.border_light,
+      },
+    },
+  },
+  plugins: {
+    tooltip: {
+      intersect: false,
+      enabled: true,
+      backgroundColor: colors.border_light,
+      titleFont: { size: 12 },
+      body: { size: 10 },
+      displayColors: true,
+      boxPadding: 8,
+      boxWidth: 4,
+      boxHeight: 4,
+      usePointStyle: true,
+      cornerRadius: 10,
+    },
+    legend: {
+      display: true,
+      position: "top",
+      align: "start",
+      labels: {
+        // usePointStyle: true,
+        boxWidth: 28,
+        boxHeight: 3,
+
+        font: {
+          size: 15,
+        },
+        color: colors.text,
+      },
     },
   },
 };
