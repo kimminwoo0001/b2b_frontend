@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import { jsx } from '@emotion/react';
-import { useEffect, useRef } from 'react';
-import styled from '@emotion/styled/macro';
+import { useCallback, useEffect, useRef } from "react";
+import { jsx } from "@emotion/react";
+import styled from "@emotion/styled/macro";
 import {
   borderRadiusStyle,
   colors,
@@ -102,7 +102,7 @@ const HomeAI = ({ ...props }) => {
   }, {});
 
   // handler
-  const handleClick = (index) => setIndex(index);
+  const handleClick = useCallback((index) => setIndex(index), []);
 
   // 오늘 or 다음경기 찾아서 스크롤
   useEffect(() => {
